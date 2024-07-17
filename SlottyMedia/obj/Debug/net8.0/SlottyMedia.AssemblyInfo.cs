@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SlottyMedia")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c100176e7a02f0b06d48835054a9e4c7d8493f64")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+398efa938aebb09b9e9fe383a8910d53d5278738")]
 [assembly: System.Reflection.AssemblyProductAttribute("SlottyMedia")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SlottyMedia")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
