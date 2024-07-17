@@ -10,5 +10,8 @@
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.6"/>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.6" PrivateAssets="all"/>
     </ItemGroup>
+    <Target Name="TailwindWatch" BeforeTargets="Build">
+        <Exec Command="npx tailwindcss -i ./Styles/app.css -o ./wwwroot/css/app.css"></Exec>
+    </Target>
 
 </Project>
