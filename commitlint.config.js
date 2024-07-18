@@ -15,8 +15,7 @@ module.exports = {
         'ci',
         'test',
         'revert',
-        'perf',
-        'vercel',
+        'perf'
       ],
     ],
   },
