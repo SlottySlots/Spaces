@@ -1,17 +1,23 @@
-# Welcome to MkDocs
+# Welcome to SlottyMedia
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Welcome! 🥳
 
-## Commands
+## What's SlottyMedia?
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+SlottyMedia is a project currently developed by 5 students. We are currently studying at Corporate State University Baden-Württemberg Heidenheim.
 
-## Project layout
+Contributors:
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+* <a href="https://github.com/ReySKR">@ReySKR</a>
+* <a href="https://github.com/deadmade">@deadmade</a>
+* <a href="https://github.com/MarioDiCaprio">@MarioDiCaprio</a>
+* <a href="https://github.com/AleynaCikrik">@Aly</a>
+* <a href="https://github.com/rubennlr">@rubennlr</a>
+
+Main idea for SlottyMedia is providing a social media platform which combines twitter and reddit:
+
+- You'll have the best social media layout inspired by twitter.
+- You'll have the topic and thread based system by reddit.
+
+
+
