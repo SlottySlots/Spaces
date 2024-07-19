@@ -3,4 +3,5 @@ nav:
   - Home: index.md
   - Build: build.md
   - Database: database.md
+  - MVVM: mvvm.md
 theme: material
