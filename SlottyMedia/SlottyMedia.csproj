@@ -6,6 +6,10 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\static\login\" />
+    </ItemGroup>
+
     
     
 </Project>
