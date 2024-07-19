@@ -3,7 +3,11 @@ module.exports = {
     content: ["./**/*.{html,razor,cshtml}"],
     theme: {
         extend: {},
+        fontFamily: {
+            'quicksand': ['Quicksand', 'sans-serif']
+        },
         colors: {
+            'transparent': 'rgba(255,255,255,0)',
             'savoy-blue': {
                 '50': '#f1f3fd',
                 '100': '#e0e5f9',
