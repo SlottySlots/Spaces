@@ -6,6 +6,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Backend\Models\" />
+      <Folder Include="Backend\Services\" />
+      <Folder Include="Backend\ViewModel\" />
+    </ItemGroup>
+
     
     
 </Project>
