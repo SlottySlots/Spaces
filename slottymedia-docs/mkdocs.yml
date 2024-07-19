@@ -2,4 +2,5 @@ site_name: SlottyMedia Docs
 nav:
   - Home: index.md
   - Build: build.md
+  - MVVM: mvvm.md
 theme: material
