@@ -1,0 +1,9 @@
+# Node files
+node_modules
+
+# IDEA settings
+.idea
+
+# build files
+SlottyMedia/bin
+SlottyMedia/obj
