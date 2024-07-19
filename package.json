@@ -4,6 +4,7 @@
   "description": "Current docs available under: https://slottyslots.github.io/SlottyMedia/",
   "main": "index.js",
   "scripts": {
+    "debug": "tailwindcss -i ./SlottyMedia/wwwroot/app.css -o ./SlottyMedia/wwwroot/app.min.css --watch & dotnet watch run --project ./SlottyMedia/SlottyMedia.csproj",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky"
   },
