@@ -16,7 +16,7 @@
   /* 2 */
   border-style: solid;
   /* 2 */
-  border-color: #e5e7eb;
+  border-color: currentColor;
   /* 2 */
 }
 
@@ -560,6 +560,11 @@ video {
 
 .table {
   display: table;
+}
+
+.bg-grape {
+  --tw-bg-opacity: 1;
+  background-color: rgb(114 50 189 / var(--tw-bg-opacity));
 }
 
 .px-3 {
