@@ -7,8 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Backend\Services\" />
-      <Folder Include="Backend\ViewModel\" />
+      <PackageReference Include="Supabase" Version="1.0.5" />
     </ItemGroup>
 
     

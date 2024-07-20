@@ -1,3 +1,6 @@
+using SlottyMedia.Backend.Interfaces;
+using SlottyMedia.Backend.Services;
+using SlottyMedia.Backend.ViewModel;
 using SlottyMedia.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// Viewmodel
+builder.Services.AddScoped<CounterVm>();
+
+// Services
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
