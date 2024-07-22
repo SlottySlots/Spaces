@@ -1,7 +1,7 @@
 ﻿@page "/counter"
 @rendermode InteractiveServer
 
-@inject Backend.ViewModel.CounterVm CounterVm
+@inject Backend.ViewModel.Interfaces.ICounterVm CounterVm
 
 <PageTitle>Counter</PageTitle>
 
@@ -11,7 +11,14 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
-<p>Ich mag dich nicht! @CounterVm.User.UserName</p>
+@if (CounterVm.User != null)
+{
+    <p>@CounterVm.User.UserName</p>
+}
+else
+{
+    <p>Loading...</p>
+}
 
 @code {
     private int currentCount = 0;
@@ -20,11 +27,11 @@
     {
         currentCount++;
     }
-    
+
     protected override async Task OnInitializedAsync()
     {
         await CounterVm.GetUserById("c2f581fe-d2a1-433e-b9d1-6ea6ed7151c6");
     }
-    
+
 
 }
