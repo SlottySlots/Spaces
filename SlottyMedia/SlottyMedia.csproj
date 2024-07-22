@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Folder Include="wwwroot\static\login\" />
       <Folder Include="Backend\Models\" />
       <Folder Include="Backend\Services\" />
       <Folder Include="Backend\ViewModel\" />
