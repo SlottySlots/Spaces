@@ -22,6 +22,10 @@ After you've cloned the repo make sure to install all needed packages for the ho
 
 ```npm i```
 
+and run:
+
+```npm run init```
+
 Now it should be configured 🚀
 
 ---
