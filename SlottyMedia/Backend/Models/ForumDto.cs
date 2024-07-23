@@ -3,6 +3,9 @@ using Supabase.Postgrest.Models;
 
 namespace SlottyMedia.Backend.Models;
 
+/// <summary>
+/// This class represents the Forum table in the database.
+/// </summary>
 [Table("Forum")]
 public class ForumDto : BaseModel
 {

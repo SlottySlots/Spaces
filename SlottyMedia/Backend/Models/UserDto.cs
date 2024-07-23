@@ -3,6 +3,9 @@ using Supabase.Postgrest.Models;
 
 namespace SlottyMedia.Backend.Models;
 
+/// <summary>
+/// This class represents the User table in the database.
+/// </summary>
 [Table("User")]
 public class UserDto : BaseModel
 {

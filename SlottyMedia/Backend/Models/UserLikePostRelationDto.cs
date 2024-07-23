@@ -3,6 +3,9 @@ using Supabase.Postgrest.Models;
 
 namespace SlottyMedia.Backend.Models;
 
+/// <summary>
+/// This class represents the User_Like_Post_Relation table in the database.
+/// </summary>
 [Table("User_Like_Post_Relation")]
 public class UserLikePostRelationDto : BaseModel
 {

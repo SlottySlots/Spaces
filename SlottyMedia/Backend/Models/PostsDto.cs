@@ -3,6 +3,9 @@ using Supabase.Postgrest.Models;
 
 namespace SlottyMedia.Backend.Models;
 
+/// <summary>
+/// This class represents the Posts table in the database.
+/// </summary>
 [Table("Posts")]
 public class PostsDto : BaseModel
 {
