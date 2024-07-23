@@ -5,6 +5,8 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <DotNetToolsPath Condition="'$(OS)' == 'Windows_NT'">%USERPROFILE%\.dotnet\tools</DotNetToolsPath>
+        <DotNetToolsPath Condition="'$(OS)' != 'Windows_NT'">$HOME/.dotnet/tools</DotNetToolsPath>
     </PropertyGroup>
     
     <ItemGroup>
@@ -19,7 +21,7 @@
     </ItemGroup>
 
     <Target Name="GenerateDocumentation" AfterTargets="Build">
-        <Exec Command="xmldoc2md ./bin/Debug/net8.0/SlottyMedia.dll ../slottymedia-docs/docs/code" />
+        <Exec Command="$(DotNetToolsPath)/xmldoc2md ./bin/Debug/net8.0/SlottyMedia.dll ../slottymedia-docs/docs/code" />
     </Target>
     
 </Project>
