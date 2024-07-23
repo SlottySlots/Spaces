@@ -28,6 +28,25 @@ and run:
 
 Now it should be configured 🚀
 
+## How to Set Up Supabase
+To store our secrets, we use the .NET User Secrets Tool. Follow these steps to access the tool:
+
+- Right-click on your project.
+- Navigate to Tools -> .NET User Secrets.
+
+Configure the file that opens as follows:
+
+```json
+{
+  "SupabaseSettings": {
+    "Url": "Paste_the_URL_here",
+    "Key": "Paste_the_Key_here"
+  }
+}
+```
+You can find the required URL and the anonymous public key in the Supabase dashboard at the following link:
+[Supabase API Settings](https://supabase.com/dashboard/project/oxihxgwmffwsuzthwaqo/settings/api)
+
 ---
 
 ## How should my commit messages look like?
