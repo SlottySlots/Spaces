@@ -9,7 +9,7 @@ public class UserLikePostRelationDto : BaseModel
     [PrimaryKey("userLikePostRelationID", true)]
     public int UserLikePostRelationId { get; set; }
 
-    [Reference(typeof(UserDto))] public string UserId { get; set; }
+    [Column("userID")] public string UserId { get; set; }
 
     [Reference(typeof(PostsDto))] public int PostId { get; set; }
 

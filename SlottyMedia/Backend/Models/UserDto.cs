@@ -8,8 +8,8 @@ public class UserDto : BaseModel
 {
     [PrimaryKey("userID", false)] public string UserId { get; set; }
 
-    // [Reference(typeof(RoleDto), columnName: "role")]
-    // public int RoleId { get; set; }
+    [Column("roleID")]
+    public string RoleId { get; set; }
 
     [Column("userName")] public string UserName { get; set; }
 

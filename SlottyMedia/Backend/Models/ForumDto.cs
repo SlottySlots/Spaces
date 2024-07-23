@@ -8,7 +8,7 @@ public class ForumDto : BaseModel
 {
     [PrimaryKey("forumID", true)] public int ForumId { get; set; }
 
-    [Reference(typeof(UserDto))] public string CreatorUserId { get; set; }
+    [Column("creator_userID")] public string CreatorUserId { get; set; }
 
     [Column("forumTopic")] public string ForumTopic { get; set; }
 

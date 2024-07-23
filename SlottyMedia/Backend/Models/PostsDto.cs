@@ -8,9 +8,9 @@ public class PostsDto : BaseModel
 {
     [PrimaryKey("postID", true)] public int PostId { get; set; }
 
-    [Reference(typeof(UserDto))] public string UserId { get; set; }
+    [Column("creator_userID")] public string UserId { get; set; }
 
-    [Reference(typeof(ForumDto))] public int ForumId { get; set; }
+    [Column("associated_forumID")] public int ForumId { get; set; }
 
     [Column("headline")] public string Headline { get; set; }
 
