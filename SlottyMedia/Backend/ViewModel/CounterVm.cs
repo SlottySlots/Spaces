@@ -5,23 +5,41 @@ using SlottyMedia.Backend.ViewModel.Interfaces;
 
 namespace SlottyMedia.Backend.ViewModel;
 
+/// <summary>
+/// This class represents the Counter ViewModel.
+/// </summary>
 public class CounterVm : ICounterVm, INotifyPropertyChanged
 {
     private UserDto _user;
     private readonly IUserService _userService;
-    public event PropertyChangedEventHandler PropertyChanged;
 
+    /// <summary>
+    /// Event that is triggered when a property value changes.
+    /// </summary>
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CounterVm"/> class. It creates a new UserDto object and sets the UserService.
+    /// </summary>
+    /// <param name="userService">The user service to interact with the database.</param>
     public CounterVm(IUserService userService)
     {
         _user = new UserDto();
         _userService = userService;
     }
 
+    /// <summary>
+    /// This method is called when a property value changes, to notify the View.
+    /// </summary>
+    /// <param name="propertyName">The name of the property</param>
     protected void OnPropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
+    /// <summary>
+    /// Gets or sets the User object. This object can be accessed by the View. When the User object changes, the View will be notified.
+    /// </summary>
     public UserDto User
     {
         get => _user;
@@ -32,8 +50,21 @@ public class CounterVm : ICounterVm, INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Gets a user by their ID.
+    /// </summary>
+    /// <param name="userId">The ID of the user to retrieve.</param>
+    /// <returns></returns>
     public async Task GetUserById(string userId)
     {
-        User = await _userService.GetUserById(userId);
+        var user = await _userService.GetUserById(userId);
+        if (user is not null)
+        {
+            User = user;
+        }
+        else
+        {
+            //TODO: Handle the case where the user is not found.    
+        }
     }
 }
