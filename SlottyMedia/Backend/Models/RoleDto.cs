@@ -9,11 +9,27 @@ namespace SlottyMedia.Backend.Models;
 [Table("Role")]
 public class RoleDto : BaseModel
 {
-    [PrimaryKey("roleID", true)] public string RoleId { get; set; }
+    /// <summary>
+    /// The ID of the Role. This is the Primary Key. It is auto-generated.
+    /// </summary>
+    [PrimaryKey("roleID", true)]
+    public string RoleId { get; set; }
 
-    [Column("role")] public string RoleName { get; set; }
+    /// <summary>
+    /// The Name of the Role.
+    /// </summary>
+    [Column("role")]
+    public string RoleName { get; set; }
 
-    [Column("description")] public string Description { get; set; }
+    /// <summary>
+    /// The Description of the Role.
+    /// </summary>
+    [Column("description")]
+    public string Description { get; set; }
 
-    [Column("created_at")] public DateTime CreatedAt { get; set; }
+    /// <summary>
+    /// The Date and Time the Role was created.
+    /// </summary>
+    [Column("created_at")]
+    public DateTime CreatedAt { get; set; }
 }

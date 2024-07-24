@@ -9,11 +9,27 @@ namespace SlottyMedia.Backend.Models;
 [Table("Forum")]
 public class ForumDto : BaseModel
 {
-    [PrimaryKey("forumID", true)] public int ForumId { get; set; }
+    /// <summary>
+    /// The ID of the Forum. This is the Primary Key. It is auto-generated.
+    /// </summary>
+    [PrimaryKey("forumID", true)]
+    public int ForumId { get; set; }
 
-    [Column("creator_userID")] public string CreatorUserId { get; set; }
+    /// <summary>
+    /// The ID of the User who created the Forum. This is a Foreign Key to the User Table.
+    /// </summary>
+    [Column("creator_userID")]
+    public string CreatorUserId { get; set; }
 
-    [Column("forumTopic")] public string ForumTopic { get; set; }
+    /// <summary>
+    /// The Title of the Forum.
+    /// </summary>
+    [Column("forumTopic")]
+    public string ForumTopic { get; set; }
 
-    [Column("created_at")] public DateTime CreatedAt { get; set; }
+    /// <summary>
+    /// Created Date and Time of the Forum.
+    /// </summary>
+    [Column("created_at")]
+    public DateTime CreatedAt { get; set; }
 }
