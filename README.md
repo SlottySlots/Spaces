@@ -4,7 +4,6 @@
     <img src="slottymedia-docs/resources/LoginPageScreen.png" alt="Picture of login screen"/>
     <br/>
     <p align="center">
-    An awesome README template to jumpstart your projects!
     <br />
     <a href="https://slottyslots.github.io/SlottyMedia"><strong>Documentation »</strong></a>
     </p>
