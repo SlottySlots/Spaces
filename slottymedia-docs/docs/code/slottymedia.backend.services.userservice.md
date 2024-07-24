@@ -13,7 +13,7 @@ Implements [IUserService](./slottymedia.backend.services.interfaces.iuserservice
 
 ### **UserService(Client)**
 
-This constructor creates a new UserService object..
+This constructor creates a new UserService object.
 
 ```csharp
 public UserService(Client supabaseClient)

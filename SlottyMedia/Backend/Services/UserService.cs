@@ -10,7 +10,7 @@ public class UserService : IUserService
     private readonly Client _supabaseClient;
 
     /// <summary>
-    /// This constructor creates a new UserService object..
+    /// This constructor creates a new UserService object.
     /// </summary>
     /// <param name="supabaseClient">Supabase Client to interact with the database</param>
     public UserService(Client supabaseClient)
