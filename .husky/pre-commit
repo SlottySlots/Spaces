@@ -1,1 +1,1 @@
-gitleaks protect -v 
+gitleaks detect -v 
