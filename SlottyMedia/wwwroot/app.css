@@ -10,6 +10,9 @@ html, body {
     font-family: Quicksand, sans-serif;
 }
 
+.card {
+    @apply p-2 rounded-[24px] border border-athens-gray shadow-shade bg-white;
+}
 
 .hot-btn {
     padding: 10px;
