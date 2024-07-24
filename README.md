@@ -3,7 +3,11 @@
     <br/>
     <img src="slottymedia-docs/resources/LoginPageScreen.png" alt="Picture of login screen"/>
     <br/>
-    <a href="https://slottyslots.github.io/SlottyMedia">Documentation</a>
+    <p align="center">
+    An awesome README template to jumpstart your projects!
+    <br />
+    <a href="https://slottyslots.github.io/SlottyMedia"><strong>Documentation »</strong></a>
+    </p>
 </div>
 <br/>
 <hr>
