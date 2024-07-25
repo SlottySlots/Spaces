@@ -15,6 +15,7 @@ public class DatabaseActions : IDatabaseActions
 
     public DatabaseActions(Supabase.Client supabaseClient)
     {
+        
         _supabaseClient = supabaseClient;
     }
 
@@ -30,7 +31,7 @@ public class DatabaseActions : IDatabaseActions
         {
             var insertedItem = await _supabaseClient.From<T>().Insert(item);
             if (insertedItem.Model is null)
-                throw new DatabaseExceptions("The Item could not be inserted into the database.");
+                throw new Exception("The Item could not be inserted into the database.");
             return insertedItem.Model;
         }
         catch (Exception e)
@@ -51,7 +52,7 @@ public class DatabaseActions : IDatabaseActions
         {
             var updatedItem = await _supabaseClient.From<T>().Update(item);
             if (updatedItem.Model is null)
-                throw new DatabaseExceptions("The Item could not be updated in the database.");
+                throw new Exception("The Item could not be updated in the database.");
             return updatedItem.Model;
         }
         catch (Exception e)
@@ -71,7 +72,7 @@ public class DatabaseActions : IDatabaseActions
         try
         {
             var result = await _supabaseClient.From<T>().Delete(item);
-            if (result != null) throw new DatabaseExceptions("The Item could not be deleted from the database.");
+            if (result != null) throw new Exception("The Item could not be deleted from the database.");
             return true;
         }
         catch (Exception e)
@@ -92,8 +93,9 @@ public class DatabaseActions : IDatabaseActions
         try
         {
             var result = await _supabaseClient.From<T>().Filter(field, Constants.Operator.Equals, value).Single();
-            if (result is null) throw new DatabaseExceptions($"The Entity with the Value {value} in the Field {field} in the " +
-                                                             $"Table {typeof(T)} could not be found in the database.");
+            if (result is null)
+                throw new Exception($"The Entity with the Value {value} in the Field {field} in the " +
+                                    $"Table {typeof(T)} could not be found in the database.");
             return result;
         }
         catch (Exception e)

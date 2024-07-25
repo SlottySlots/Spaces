@@ -13,7 +13,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 // Add Supabase
-builder.Services.AddScoped(_ =>
+builder.Services.AddSingleton(_ =>
     new Client(
         builder.Configuration["SupabaseSettings:Url"],
         builder.Configuration["SupabaseSettings:Key"],
@@ -24,13 +24,13 @@ builder.Services.AddScoped(_ =>
         }));
 
 // Viewmodel
-builder.Services.AddScoped<ICounterVm, CounterVm>();
+builder.Services.AddSingleton<ICounterVm, CounterVm>();
 
 // Services
-builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddSingleton<IUserService, UserService>();
 
 // Model
-builder.Services.AddScoped<UserDto>();
+builder.Services.AddSingleton<UserDto>();
 
 var app = builder.Build();
 
