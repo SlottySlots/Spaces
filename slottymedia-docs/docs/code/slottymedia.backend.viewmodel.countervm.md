@@ -23,7 +23,7 @@ public UserDto User { get; set; }
 
 #### Property Value
 
-[UserDto](./slottymedia.backend.models.userdto.md)<br>
+UserDto<br>
 
 ## Constructors
 

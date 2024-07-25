@@ -1,7 +1,7 @@
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
-namespace SlottyMedia.Backend.Models;
+namespace SlottyMedia.Database.Models;
 
 /// <summary>
 /// This class represents the Posts table in the database.

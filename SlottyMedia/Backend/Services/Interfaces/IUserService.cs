@@ -1,4 +1,4 @@
-using SlottyMedia.Backend.Models;
+using SlottyMedia.Database.Models;
 
 namespace SlottyMedia.Backend.Services.Interfaces;
 

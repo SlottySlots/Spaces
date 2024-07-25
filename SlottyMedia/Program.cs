@@ -1,9 +1,9 @@
-using SlottyMedia.Backend.Models;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Components;
+using SlottyMedia.Database.Models;
 using Supabase;
 
 var builder = WebApplication.CreateBuilder(args);

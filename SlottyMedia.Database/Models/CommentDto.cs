@@ -1,12 +1,13 @@
 using Supabase.Postgrest.Attributes;
+using Supabase.Postgrest.Models;
 
-namespace SlottyMedia.Backend.Models;
+namespace SlottyMedia.Database.Models;
 
 /// <summary>
 /// This class represents the Comment table in the database.
 /// </summary>
 [Table("Comment")]
-public class CommentDto
+public class CommentDto : BaseModel
 {
     /// <summary> 
     /// The ID of the Comment. This is the Primary Key. It is auto-generated. 
