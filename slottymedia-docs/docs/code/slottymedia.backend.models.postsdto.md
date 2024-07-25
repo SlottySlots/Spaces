@@ -14,6 +14,8 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ### **PostId**
 
+The ID of the Post. This is the Primary Key. It is auto-generated.
+
 ```csharp
 public int PostId { get; set; }
 ```
@@ -23,6 +25,8 @@ public int PostId { get; set; }
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ### **UserId**
+
+The ID of the User who created the Post. This is a Foreign Key to the User Table.
 
 ```csharp
 public string UserId { get; set; }
@@ -34,6 +38,8 @@ public string UserId { get; set; }
 
 ### **ForumId**
 
+The ID of the Forum the Post is associated with. This is a Foreign Key to the Forum Table.
+
 ```csharp
 public int ForumId { get; set; }
 ```
@@ -43,6 +49,8 @@ public int ForumId { get; set; }
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ### **Headline**
+
+The Headline of the Post.
 
 ```csharp
 public string Headline { get; set; }
@@ -54,6 +62,8 @@ public string Headline { get; set; }
 
 ### **Content**
 
+The Content of the Post.
+
 ```csharp
 public string Content { get; set; }
 ```
@@ -63,6 +73,8 @@ public string Content { get; set; }
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **CreatedAt**
+
+The Date and Time the Post was created.
 
 ```csharp
 public DateTime CreatedAt { get; set; }

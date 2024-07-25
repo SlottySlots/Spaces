@@ -14,6 +14,8 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ### **ForumId**
 
+The ID of the Forum. This is the Primary Key. It is auto-generated.
+
 ```csharp
 public int ForumId { get; set; }
 ```
@@ -23,6 +25,8 @@ public int ForumId { get; set; }
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ### **CreatorUserId**
+
+The ID of the User who created the Forum. This is a Foreign Key to the User Table.
 
 ```csharp
 public string CreatorUserId { get; set; }
@@ -34,6 +38,8 @@ public string CreatorUserId { get; set; }
 
 ### **ForumTopic**
 
+The Title of the Forum.
+
 ```csharp
 public string ForumTopic { get; set; }
 ```
@@ -43,6 +49,8 @@ public string ForumTopic { get; set; }
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **CreatedAt**
+
+Created Date and Time of the Forum.
 
 ```csharp
 public DateTime CreatedAt { get; set; }

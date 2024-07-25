@@ -14,6 +14,8 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ### **UserLikePostRelationId**
 
+The ID of the User_Like_Post_Relation. This is the Primary Key. It is auto-generated.
+
 ```csharp
 public int UserLikePostRelationId { get; set; }
 ```
@@ -23,6 +25,8 @@ public int UserLikePostRelationId { get; set; }
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ### **UserId**
+
+The ID of the User who liked the Post. This is a Foreign Key to the User Table.
 
 ```csharp
 public string UserId { get; set; }
@@ -34,6 +38,8 @@ public string UserId { get; set; }
 
 ### **PostId**
 
+The ID of the Post that was liked. This is a Foreign Key to the Post Table.
+
 ```csharp
 public int PostId { get; set; }
 ```
@@ -43,6 +49,8 @@ public int PostId { get; set; }
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ### **CreatedAt**
+
+The Date and Time the User_Like_Post_Relation was created.
 
 ```csharp
 public DateTime CreatedAt { get; set; }

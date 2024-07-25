@@ -14,6 +14,8 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ### **CommentId**
 
+The ID of the Comment. This is the Primary Key. It is auto-generated.
+
 ```csharp
 public int CommentId { get; set; }
 ```
@@ -23,6 +25,8 @@ public int CommentId { get; set; }
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ### **ParentCommentId**
+
+The ID of the Parent Comment. This is only set when there is a Parent Comment
 
 ```csharp
 public string ParentCommentId { get; set; }
@@ -34,6 +38,8 @@ public string ParentCommentId { get; set; }
 
 ### **CreatorUserId**
 
+The ID of the User who created the Comment. This is a Foreign Key to the User Table
+
 ```csharp
 public string CreatorUserId { get; set; }
 ```
@@ -43,6 +49,8 @@ public string CreatorUserId { get; set; }
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **PostId**
+
+The ID of the Post the Comment is related to. This is a Foreign Key to the Post Table
 
 ```csharp
 public string PostId { get; set; }
@@ -54,6 +62,8 @@ public string PostId { get; set; }
 
 ### **Content**
 
+The Content of the Comment
+
 ```csharp
 public string Content { get; set; }
 ```
@@ -63,6 +73,8 @@ public string Content { get; set; }
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **CreatedAt**
+
+The Date and Time the Comment was created
 
 ```csharp
 public DateTime CreatedAt { get; set; }

@@ -14,6 +14,8 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ### **RoleId**
 
+The ID of the Role. This is the Primary Key. It is auto-generated.
+
 ```csharp
 public string RoleId { get; set; }
 ```
@@ -23,6 +25,8 @@ public string RoleId { get; set; }
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **RoleName**
+
+The Name of the Role.
 
 ```csharp
 public string RoleName { get; set; }
@@ -34,6 +38,8 @@ public string RoleName { get; set; }
 
 ### **Description**
 
+The Description of the Role.
+
 ```csharp
 public string Description { get; set; }
 ```
@@ -43,6 +49,8 @@ public string Description { get; set; }
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **CreatedAt**
+
+The Date and Time the Role was created.
 
 ```csharp
 public DateTime CreatedAt { get; set; }

@@ -14,6 +14,8 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ### **FollowerUserRelationId**
 
+The ID of the Follower_User_Relation. This is the Primary Key. It is auto-generated.
+
 ```csharp
 public int FollowerUserRelationId { get; set; }
 ```
@@ -23,6 +25,8 @@ public int FollowerUserRelationId { get; set; }
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ### **FollowerUserId**
+
+The ID of the User who is following another User. This is a Foreign Key to the User Table.
 
 ```csharp
 public string FollowerUserId { get; set; }
@@ -34,6 +38,8 @@ public string FollowerUserId { get; set; }
 
 ### **FollowedUserId**
 
+The ID of the User who is being followed. This is a Foreign Key to the User Table.
+
 ```csharp
 public string FollowedUserId { get; set; }
 ```
@@ -43,6 +49,8 @@ public string FollowedUserId { get; set; }
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **CreatedAt**
+
+The Date and Time the Follower_User_Relation was created.
 
 ```csharp
 public DateTime CreatedAt { get; set; }
