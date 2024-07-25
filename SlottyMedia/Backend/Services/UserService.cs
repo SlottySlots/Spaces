@@ -39,8 +39,15 @@ public class UserService : IUserService
             Description = description ?? string.Empty,
             ProfilePic = profilePicture ?? 0
         };
-        
-        return await _databaseActions.Insert(user);
+        try
+        {
+             return await _databaseActions.Insert(user);
+        }
+        catch (Exception e)
+        {
+            //TODO Implement how we should handle errors in the View
+            return null;
+        }
     }
 
     /// <summary>
@@ -50,7 +57,16 @@ public class UserService : IUserService
     /// <returns>Returns wheter it was possible to Delete the User or not. IF it was Possible it will return true.</returns>
     public async Task<bool> DeleteUser(UserDto user)
     {
-        return await _databaseActions.Delete(user);
+        try
+        {
+            return await _databaseActions.Delete(user);
+        }
+        catch (Exception e)
+        {
+            //TODO Implement how we should handle errors in the View
+            return false;
+        }
+        
     }
 
     /// <summary>
@@ -60,7 +76,15 @@ public class UserService : IUserService
     /// <returns>Returns the User Object from the Database. If no User was found, null will be returned</returns>
     public async Task<UserDto?> GetUserById(string userId)
     {
-        return await _databaseActions.GetEntityByField<UserDto>("userID", userId);
+        try
+        {
+return await _databaseActions.GetEntityByField<UserDto>("userID", userId);
+        }
+        catch (Exception e)
+        {
+            //TODO Implement how we should handle errors in the View
+            return null;
+        }
     }
 
     /// <summary>
@@ -70,6 +94,14 @@ public class UserService : IUserService
     /// <returns>Returns the Updated User Interface. If it was unable to Update the User, it will return null.</returns>
     public async Task<UserDto?> UpdateUser(UserDto user)
     {
-        return await _databaseActions.Update(user);
+        try
+        {
+return await _databaseActions.Update(user);
+        }
+        catch (Exception e)
+        {
+            //TODO Implement how we should handle errors in the View
+            return null;
+        }
     }
 }

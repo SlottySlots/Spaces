@@ -5,7 +5,10 @@ using Supabase.Postgrest.Models;
 
 namespace SlottyMedia.Database;
 
-// TODO Implement Exception Handling and Logging and comments
+// TODO Implement and Logging
+/// <summary>
+/// This class represents the Database Actions. It is used to interact with the database.
+/// </summary>
 public class DatabaseActions : IDatabaseActions
 {
     private readonly Supabase.Client _supabaseClient;
@@ -21,11 +24,19 @@ public class DatabaseActions : IDatabaseActions
     /// <param name="item">The Item to Insert into the database</param>
     /// <typeparam name="T">The Model Class of the Item</typeparam>
     /// <returns>Returns the Inserted Item</returns>
-    public virtual async Task<T> Insert<T>(T item) where T : BaseModel, new ()
+    public virtual async Task<T> Insert<T>(T item) where T : BaseModel, new()
     {
-        var insertedItem = await _supabaseClient.From<T>().Insert(item);
-        if (insertedItem.Model is null) return null;
-        return insertedItem.Model;
+        try
+        {
+            var insertedItem = await _supabaseClient.From<T>().Insert(item);
+            if (insertedItem.Model is null)
+                throw new DatabaseExceptions("The Item could not be inserted into the database.");
+            return insertedItem.Model;
+        }
+        catch (Exception e)
+        {
+            throw new DatabaseExceptions(e.Message);
+        }
     }
 
     /// <summary>
@@ -34,25 +45,41 @@ public class DatabaseActions : IDatabaseActions
     /// <param name="item">The Item to Update in the Database</param>
     /// <typeparam name="T">The Model Class of the item</typeparam>
     /// <returns>Returns the Updated Item</returns>
-    public virtual async Task<T> Update<T>(T item) where T : BaseModel, new ()
+    public virtual async Task<T> Update<T>(T item) where T : BaseModel, new()
     {
-        var updatedItem = await _supabaseClient.From<T>().Update(item);
-        if (updatedItem.Model is null) return null;
-        return updatedItem.Model;
+        try
+        {
+            var updatedItem = await _supabaseClient.From<T>().Update(item);
+            if (updatedItem.Model is null)
+                throw new DatabaseExceptions("The Item could not be updated in the database.");
+            return updatedItem.Model;
+        }
+        catch (Exception e)
+        {
+            throw new DatabaseExceptions(e.Message);
+        }
     }
-    
+
     /// <summary>
     /// This method deletes an item from the database.
     /// </summary>
     /// <param name="item">The Item to delete</param>
     /// <typeparam name="T">The Type of the Item object</typeparam>
-    /// <returns>Returns true if the Operation was succesfull, false when it wasn't</returns>
+    /// <returns>Returns true if the Operation was succesfull</returns>
     public virtual async Task<bool> Delete<T>(T item) where T : BaseModel, new()
     {
-        await _supabaseClient.From<T>().Delete(item);
-        return true; 
+        try
+        {
+            var result = await _supabaseClient.From<T>().Delete(item);
+            if (result != null) throw new DatabaseExceptions("The Item could not be deleted from the database.");
+            return true;
+        }
+        catch (Exception e)
+        {
+            throw new DatabaseExceptions(e.Message);
+        }
     }
-    
+
     /// <summary>
     /// This method returns an Entity from the database based on the given field and value.
     /// </summary>
@@ -62,8 +89,16 @@ public class DatabaseActions : IDatabaseActions
     /// <returns>Returns the Entity from the Database</returns>
     public virtual async Task<T?> GetEntityByField<T>(string field, string value) where T : BaseModel, new()
     {
-        var result = await _supabaseClient.From<T>().Filter(field, Constants.Operator.Equals, value).Single();
-        if (result is null) return null;
-        return result;
+        try
+        {
+            var result = await _supabaseClient.From<T>().Filter(field, Constants.Operator.Equals, value).Single();
+            if (result is null) throw new DatabaseExceptions($"The Entity with the Value {value} in the Field {field} in the " +
+                                                             $"Table {typeof(T)} could not be found in the database.");
+            return result;
+        }
+        catch (Exception e)
+        {
+            throw new DatabaseExceptions(e.Message);
+        }
     }
 }
