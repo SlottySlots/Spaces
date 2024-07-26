@@ -1,0 +1,59 @@
+@using SlottyMedia.Components.Partial.Enum
+<span class="rounded-[24px] w-fit h-fit px-2 py-1 @bgColorClass @bgTextClass" >
+    @TextContent
+</span>
+
+@code
+{
+    /// <summary>
+    /// A TagComponent mostly used to represent recent forums in the profile component
+    /// </summary>
+    /// <param name="ColorWay">
+    /// Specifies used color for the tag component background
+    /// </param>
+    /// <param name="TypeOfColor">
+    /// Specifies a different color type i.e. ColorWay=Fandango & TypeOfColor = 300 would be a lighter fandango color.
+    /// Allowed intervall [0;500]
+    /// </param>
+    /// <param name="TagText">
+    /// Specifies Text inside of a tag
+    /// </param>
+
+    
+    
+    [Parameter]
+    public ColorWay ColorWay { get; set; }
+
+    private int typeOfColor;
+    
+    [Parameter]
+    public int TypeOfColor
+    {
+        get => typeOfColor;
+        set
+        {
+            if (value >= 50 && value <= 500)
+            {
+                typeOfColor = value;
+            }
+            else
+            {
+                typeOfColor = -1;
+            }
+        }
+
+
+    }
+    [Parameter]
+    public string TextContent { get; set; }
+
+    private string bgColorClass;
+    private string bgTextClass;
+
+    protected override void OnInitialized()
+    {
+        ;
+        bgColorClass = $"bg-{EnumUtility.GetColorClass(ColorWay, typeOfColor)}";
+        bgTextClass = $"text-{EnumUtility.GetColorClass(ColorWay, typeOfColor+400)}";
+    }
+}
