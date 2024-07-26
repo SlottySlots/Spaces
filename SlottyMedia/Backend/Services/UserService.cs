@@ -1,5 +1,6 @@
-using SlottyMedia.Backend.Models;
 using SlottyMedia.Backend.Services.Interfaces;
+using SlottyMedia.Database;
+using SlottyMedia.Database.Models;
 using Supabase.Gotrue;
 using Client = Supabase.Client;
 
@@ -8,6 +9,7 @@ namespace SlottyMedia.Backend.Services;
 public class UserService : IUserService
 {
     private readonly Client _supabaseClient;
+    private readonly DatabaseActions _databaseActions;
 
     /// <summary>
     /// This constructor creates a new UserService object.
@@ -16,6 +18,7 @@ public class UserService : IUserService
     public UserService(Client supabaseClient)
     {
         _supabaseClient = supabaseClient;
+        _databaseActions = new DatabaseActions(supabaseClient);
     }
 
     /// <summary>
@@ -36,10 +39,15 @@ public class UserService : IUserService
             Description = description ?? string.Empty,
             ProfilePic = profilePicture ?? 0
         };
-
-        var insertedUser = await _supabaseClient.From<UserDto>().Insert(user);
-        if (insertedUser.Model is null) return null;
-        return insertedUser.Model;
+        try
+        {
+             return await _databaseActions.Insert(user);
+        }
+        catch (Exception e)
+        {
+            //TODO Implement how we should handle errors in the View
+            return null;
+        }
     }
 
     /// <summary>
@@ -49,8 +57,16 @@ public class UserService : IUserService
     /// <returns>Returns wheter it was possible to Delete the User or not. IF it was Possible it will return true.</returns>
     public async Task<bool> DeleteUser(UserDto user)
     {
-        await _supabaseClient.From<UserDto>().Delete(user);
-        return true;
+        try
+        {
+            return await _databaseActions.Delete(user);
+        }
+        catch (Exception e)
+        {
+            //TODO Implement how we should handle errors in the View
+            return false;
+        }
+        
     }
 
     /// <summary>
@@ -60,11 +76,15 @@ public class UserService : IUserService
     /// <returns>Returns the User Object from the Database. If no User was found, null will be returned</returns>
     public async Task<UserDto?> GetUserById(string userId)
     {
-        var user = await _supabaseClient.From<UserDto>().Where(x => x.UserId == userId).Single();
-
-        if (user is null) return null;
-
-        return user;
+        try
+        {
+return await _databaseActions.GetEntityByField<UserDto>("userID", userId);
+        }
+        catch (Exception e)
+        {
+            //TODO Implement how we should handle errors in the View
+            return null;
+        }
     }
 
     /// <summary>
@@ -74,8 +94,14 @@ public class UserService : IUserService
     /// <returns>Returns the Updated User Interface. If it was unable to Update the User, it will return null.</returns>
     public async Task<UserDto?> UpdateUser(UserDto user)
     {
-        var updatedUser = await _supabaseClient.From<UserDto>().Update(user);
-        if (updatedUser.Model is null) return null;
-        return updatedUser.Model;
+        try
+        {
+return await _databaseActions.Update(user);
+        }
+        catch (Exception e)
+        {
+            //TODO Implement how we should handle errors in the View
+            return null;
+        }
     }
 }

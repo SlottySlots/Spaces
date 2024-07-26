@@ -1,21 +1,5 @@
 # SlottyMedia
 
-## SlottyMedia.Backend.Models
-
-[CommentDto](./slottymedia.backend.models.commentdto.md)
-
-[FollowerUserRelationDto](./slottymedia.backend.models.followeruserrelationdto.md)
-
-[ForumDto](./slottymedia.backend.models.forumdto.md)
-
-[PostsDto](./slottymedia.backend.models.postsdto.md)
-
-[RoleDto](./slottymedia.backend.models.roledto.md)
-
-[UserDto](./slottymedia.backend.models.userdto.md)
-
-[UserLikePostRelationDto](./slottymedia.backend.models.userlikepostrelationdto.md)
-
 ## SlottyMedia.Backend.Services
 
 [UserService](./slottymedia.backend.services.userservice.md)
