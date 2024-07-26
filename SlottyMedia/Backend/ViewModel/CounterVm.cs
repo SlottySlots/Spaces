@@ -1,7 +1,7 @@
 using System.ComponentModel;
-using SlottyMedia.Backend.Models;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
+using SlottyMedia.Database.Models;
 
 namespace SlottyMedia.Backend.ViewModel;
 

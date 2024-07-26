@@ -7,6 +7,12 @@ node_modules
 # build files
 SlottyMedia/bin
 SlottyMedia/obj
+/SlottyMedia.Database/obj
+/SlottyMedia.Database/bin
 
 # minified CSS
 **/*.min.css
+
+slottymedia-docs/
+
+/SlottyMedia.Database/obj

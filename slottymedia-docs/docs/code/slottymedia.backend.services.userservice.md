@@ -63,7 +63,7 @@ public Task<bool> DeleteUser(UserDto user)
 
 #### Parameters
 
-`user` [UserDto](./slottymedia.backend.models.userdto.md)<br>
+`user` UserDto<br>
 The User Object to delete
 
 #### Returns
@@ -99,7 +99,7 @@ public Task<UserDto> UpdateUser(UserDto user)
 
 #### Parameters
 
-`user` [UserDto](./slottymedia.backend.models.userdto.md)<br>
+`user` UserDto<br>
 The updated User Dto
 
 #### Returns

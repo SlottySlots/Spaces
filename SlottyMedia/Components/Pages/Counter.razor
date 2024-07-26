@@ -1,4 +1,5 @@
 ﻿@page "/counter"
+@using Supabase.Postgrest
 @rendermode InteractiveServer
 
 @inject Backend.ViewModel.Interfaces.ICounterVm CounterVm
@@ -30,6 +31,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        await base.OnInitializedAsync();
         await CounterVm.GetUserById("c2f581fe-d2a1-433e-b9d1-6ea6ed7151c6");
     }
 

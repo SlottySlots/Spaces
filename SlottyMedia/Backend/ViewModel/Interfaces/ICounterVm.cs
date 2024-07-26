@@ -1,5 +1,5 @@
 using System.ComponentModel;
-using SlottyMedia.Backend.Models;
+using SlottyMedia.Database.Models;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 
