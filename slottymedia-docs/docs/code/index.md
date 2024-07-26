@@ -67,3 +67,11 @@
 [PinkAnchor](./slottymedia.components.partial.pinkanchor.md)
 
 [RoundedBorderBox](./slottymedia.components.partial.roundedborderbox.md)
+
+[TagComponent](./slottymedia.components.partial.tagcomponent.md)
+
+## SlottyMedia.Components.Partial.Enum
+
+[ColorWay](./slottymedia.components.partial.enum.colorway.md)
+
+[EnumUtility](./slottymedia.components.partial.enum.enumutility.md)
