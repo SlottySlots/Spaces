@@ -36,5 +36,5 @@ Please make sure you have the installed:
 
 - <a href="https://docs.npmjs.com/downloading-and-installing-node-js-and-npm">Node Package Manager</a> : Needed for initialization scripts (for documentation and development)
 - <a href="https://www.python.org/downloads/">Python 3</a> : Needed for Mkdocs (only for documentation)
-- <a href="https://dotnet.microsoft.com/en-us/download/dotnet/8.0">.NET 8</a> : Need to build the project (only development)
+- <a href="https://dotnet.microsoft.com/en-us/download/dotnet/8.0">.NET 8</a> : Needed to build the project (only development)
 - <a href="https://github.com/gitleaks/gitleaks">Gitleaks</a> : Used as a precommit hook to prevent exposure of secrets (only development)
