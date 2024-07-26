@@ -7,6 +7,8 @@ node_modules
 # build files
 SlottyMedia/bin
 SlottyMedia/obj
+SlottyMedia.Tests/bin
+SlottyMedia.Tests/obj
 
 # minified CSS
 **/*.min.css
