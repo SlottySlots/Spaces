@@ -1527,9 +1527,6 @@
       "packagesPath": "C:\\Users\\Ruben\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Ruben\\RiderProjects\\SlottyMedia\\SlottyMedia.Tests\\obj\\",
       "projectStyle": "PackageReference",
-      "configFilePaths": [
-        "C:\\Users\\Ruben\\AppData\\Roaming\\NuGet\\NuGet.Config"
-      ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
