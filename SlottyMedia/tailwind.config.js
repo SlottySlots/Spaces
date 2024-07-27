@@ -1,38 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: ["./**/*.{html,razor,cshtml}"],
-    safelist: [
-        {
-            pattern: /^bg-/,
-            variants: [
-                'athens-gray',
-                'savoy-blue',
-                'grape',
-                'fandango',
-                'crayola-orange',
-                'jasmine',
-                'black',
-                'raisin-black',
-                'cadet-gray',
-                'white',
-            ],
-        },
-        {
-            pattern: /^text-/,
-            variants: [
-                'athens-gray',
-                'savoy-blue',
-                'grape',
-                'fandango',
-                'crayola-orange',
-                'jasmine',
-                'black',
-                'raisin-black',
-                'cadet-gray',
-                'white',
-            ],
-        },
-    ],
     theme: {
         extend: {
             boxShadow: {
