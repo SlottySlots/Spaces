@@ -6,6 +6,7 @@ nav:
   - MVVM: mvvm.md
   - Coding Guidelines: guidelines.md
   - Code Documentation: code/index.md
+  - Exception Guidelines: exceptions.md
 theme: material
 plugins:
   - search
