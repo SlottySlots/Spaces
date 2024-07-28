@@ -2,4 +2,12 @@ site_name: SlottyMedia Docs
 nav:
   - Home: index.md
   - Build: build.md
+  - Database: database.md
+  - MVVM: mvvm.md
+  - Coding Guidelines: guidelines.md
+  - Code Documentation: code/index.md
+  - Exception Guidelines: exceptions.md
 theme: material
+plugins:
+  - search
+  - include_dir_to_nav

@@ -1,0 +1,29 @@
+/* Google Fonts: "Quicksand" */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+    box-sizing: border-box;
+    font-family: Quicksand, sans-serif;
+}
+
+.card {
+    @apply p-2 rounded-[24px] border border-athens-gray shadow-shade bg-white;
+}
+
+.hot-btn {
+    padding: 10px;
+    background-position-x: 0;
+    background-size: 200%;
+    cursor: pointer;
+    border: none;
+    border-radius: 24px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+    transition: 0.5s;
+}
+.hot-btn:hover {
+    background-position-x: 100%;
+}

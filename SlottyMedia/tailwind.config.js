@@ -1,9 +1,31 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ["./**/*.{html,razor}"],
+    content: ["./**/*.{html,razor,cshtml}"],
     theme: {
-        extend: {},
+        extend: {
+            boxShadow: {
+                'shade': '0 0 24px rgba(0, 0, 0, 0.05)'
+            }
+        },
+        fontFamily: {
+            'quicksand': ['Quicksand', 'sans-serif']
+        },
         colors: {
+            'transparent': 'rgba(255,255,255,0)',
+            'athens-gray': {
+                '50': '#f4f8fa',
+                '100': '#e7edf2',
+                '200': '#d5dfe8',
+                '300': '#b7cbd9',
+                '400': '#95b0c5',
+                '500': '#7b98b6',
+                '600': '#6983a7',
+                '700': '#5d7498',
+                '800': '#505f7d',
+                '900': '#435065',
+                '950': '#2c323f',
+                DEFAULT: '#e7edf2' // = 100
+            },
             'savoy-blue': {
                 '50': '#f1f3fd',
                 '100': '#e0e5f9',
@@ -130,9 +152,7 @@ module.exports = {
                 '950': '#292929',
                 DEFAULT: '#ffffff' // = 50
             },
-
         }
     },
     plugins: [],
 }
-
