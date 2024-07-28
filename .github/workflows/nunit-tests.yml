@@ -1,0 +1,25 @@
+name: Run NUnit Tests
+
+on: 
+  pull_request:
+  push:
+    branches: 
+      - '*feat*'
+      - '*test*' 
+      - '*perf*' 
+      - '*style*' 
+      - '*fix*' 
+
+jobs:
+  tests:
+    name: Unit Testing
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: dotnet test --logger "trx;LogFileName=test_results.trx"
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: '**/TestResults/*.trx'
