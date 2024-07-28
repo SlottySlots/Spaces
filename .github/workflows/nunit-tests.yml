@@ -2,6 +2,12 @@ name: Run NUnit Tests
 
 on: 
   pull_request:
+    branches: 
+      - '*feat*'
+      - '*test*' 
+      - '*perf*' 
+      - '*style*' 
+      - '*fix*
   push:
     branches: 
       - '*feat*'
