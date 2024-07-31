@@ -46,6 +46,8 @@
 
 [Checkbox](./slottymedia.components.partial.checkbox.md)
 
+[HotButton](./slottymedia.components.partial.hotbutton.md)
+
 [InputField](./slottymedia.components.partial.inputfield.md)
 
 [InputFieldIcon](./slottymedia.components.partial.inputfieldicon.md)
