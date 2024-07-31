@@ -12,6 +12,9 @@ on:
 jobs:
   tests:
     name: Unit Testing
+    env: 
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3

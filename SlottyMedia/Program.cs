@@ -13,10 +13,17 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 // Add Supabase
+
+
+var url = Environment.GetEnvironmentVariable("SUPABASE_URL");
+var key = Environment.GetEnvironmentVariable("SUPABASE_KEY");
+if (url is null && key is null)
+{
+    throw new Exception("Supabase settings not found");
+}
 builder.Services.AddSingleton(_ =>
     new Client(
-        builder.Configuration["SupabaseSettings:Url"],
-        builder.Configuration["SupabaseSettings:Key"],
+        url, key,
         new SupabaseOptions
         {
             AutoRefreshToken = true,
