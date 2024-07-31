@@ -12,8 +12,8 @@ public class UserLikePostRelationDto : BaseModel
     /// <summary>
     /// The ID of the User_Like_Post_Relation. This is the Primary Key. It is auto-generated.
     /// </summary>
-    [PrimaryKey("userLikePostRelationID", true)]
-    public int UserLikePostRelationId { get; set; }
+    [PrimaryKey("userLikePostRelationID", false)]
+    public string UserLikePostRelationId { get; set; }
 
     /// <summary>
     /// The ID of the User who liked the Post. This is a Foreign Key to the User Table.
@@ -24,8 +24,8 @@ public class UserLikePostRelationDto : BaseModel
     /// <summary>
     /// The ID of the Post that was liked. This is a Foreign Key to the Post Table.
     /// </summary>
-    [Reference(typeof(PostsDto))]
-    public int PostId { get; set; }
+    [Column("postID")]
+    public string PostId { get; set; }
 
     /// <summary>
     /// The Date and Time the User_Like_Post_Relation was created.

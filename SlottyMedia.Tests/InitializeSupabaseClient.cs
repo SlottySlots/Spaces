@@ -13,7 +13,7 @@ public class InitializeSupabaseClient
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception">When the Supabase EnvironemtVaraibles are not set, an Exception will be thrown</exception>
-    public static Client GetSupabaseClient()
+    public static async Task<Client> GetSupabaseClient()
     {
         var url = Environment.GetEnvironmentVariable("SUPABASE_URL");
         var key = Environment.GetEnvironmentVariable("SUPABASE_KEY");
@@ -22,10 +22,13 @@ public class InitializeSupabaseClient
             throw new Exception("Supabase settings not found");
         }
         
-        return new Client(url, key, new SupabaseOptions
+        var client = new Client(url, key, new SupabaseOptions
         {
             AutoRefreshToken = true,
             AutoConnectRealtime = true
         });
+        
+        
+        return client;
     }
 }

@@ -4,9 +4,9 @@ public class InitializeSupabaseClientTest
 {
     private Supabase.Client _supabaseClient;
     [SetUp]
-    public void SetUp()
+    public async Task Setup()
     {
-        _supabaseClient = InitializeSupabaseClient.GetSupabaseClient();
+        _supabaseClient = await InitializeSupabaseClient.GetSupabaseClient();
     }
     
     [Test]

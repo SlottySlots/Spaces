@@ -1,0 +1,185 @@
+﻿using SlottyMedia.Backend.Models;
+using SlottyMedia.Database;
+using SlottyMedia.Database.Models;
+using Supabase;
+
+namespace SlottyMedia.Tests.DatabaseModelsTests;
+
+[TestFixture]
+public class CommentDtoTest
+{
+    private Client _supabaseClient;
+    private IDatabaseActions _databaseActions;
+    private CommentDto _commentToWorkWith;
+    private UserDto _userToWorkWith;
+    private PostsDto _postToWorkWith;
+    private ForumDto _forumToWorkWith;
+
+    [OneTimeSetUp]
+    public async Task OneTimeSetup()
+    {
+        _supabaseClient = await InitializeSupabaseClient.GetSupabaseClient();
+        _databaseActions = new DatabaseActions(_supabaseClient);
+        
+        _userToWorkWith = await _databaseActions.Insert(new UserDto()
+        {
+            UserId = Guid.NewGuid().ToString(),
+            UserName = "I'm a Test User",
+            Description = "Please don't delete me",
+            RoleId = "c0589855-a81c-451d-8587-3061926a1f3a"
+        });
+        
+        _forumToWorkWith = await _databaseActions.Insert(new ForumDto()
+        {
+            CreatorUserId = _userToWorkWith.UserId,
+            ForumTopic = "I'm a Test Forum"
+        });
+        
+        _postToWorkWith = await _databaseActions.Insert(new PostsDto()
+        {
+            ForumId = _forumToWorkWith.ForumId,
+            UserId = _userToWorkWith.UserId,
+            Headline = "I'm a Test Posts Headline",
+            Content = "I'm a Test Post"
+        });
+    }
+
+    [SetUp]
+    public void Setup()
+    {
+        _commentToWorkWith = new CommentDto()
+        {
+            CreatorUserId = _userToWorkWith.UserId,
+            PostId = _postToWorkWith.PostId,
+            Content = "I'm a Test Comment"
+        };
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        try
+        {
+            var comment = await _databaseActions.GetEntityByField<CommentDto>("commentID", _commentToWorkWith.CommentId);
+            if (comment != null)
+            {
+                await _databaseActions.Delete(comment);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"TearDown failed with exception: {ex.Message}");
+        }
+    }
+
+    [OneTimeTearDown]
+    public async Task OneTimeTearDown()
+    {
+        try
+        {
+
+            
+            var post = await _databaseActions.GetEntityByField<PostsDto>("postID", _postToWorkWith.PostId);
+            if (post != null)
+            {
+                await _databaseActions.Delete(post);
+            }
+
+            
+            var forum = await _databaseActions.GetEntityByField<ForumDto>("forumID", _forumToWorkWith.ForumId);
+            if (forum != null)
+            {
+                await _databaseActions.Delete(forum);
+            }
+            
+            var user = await _databaseActions.GetEntityByField<UserDto>("userID", _userToWorkWith.UserId);
+            if (user != null)
+            {
+                await _databaseActions.Delete(user);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"OneTimeTearDown failed with exception: {ex.Message}");
+        }
+    }
+
+    [Test]
+    public async Task Insert()
+    {
+        try
+        {
+            var insertedComment = await _databaseActions.Insert(_commentToWorkWith);
+            Assert.IsNotNull(insertedComment, "Inserted comment should not be null");
+            Assert.That(insertedComment.CreatorUserId, Is.EqualTo(_commentToWorkWith.CreatorUserId), "CreatorUserId should match");
+            Assert.That(insertedComment.Content, Is.EqualTo(_commentToWorkWith.Content), "Content should match");
+            
+            _commentToWorkWith = insertedComment;
+        }
+        catch (DatabaseExceptions ex)
+        {
+            Assert.Fail($"Insert test failed with database exception: {ex.Message}");
+        }
+    }
+
+    [Test]
+    public async Task Update()
+    {
+        try
+        {
+            var insertedComment = await _databaseActions.Insert(_commentToWorkWith);
+            Assert.IsNotNull(insertedComment, "Inserted comment should not be null");
+
+            insertedComment.Content = "I'm an updated Test Comment";
+            var updatedComment = await _databaseActions.Update(insertedComment);
+
+            Assert.IsNotNull(updatedComment, "Updated comment should not be null");
+            Assert.That(updatedComment.CreatorUserId, Is.EqualTo(insertedComment.CreatorUserId), "CreatorUserId should match");
+            Assert.That(updatedComment.Content, Is.EqualTo(insertedComment.Content), "Content should match");
+            
+            _commentToWorkWith = updatedComment;
+        }
+        catch (DatabaseExceptions ex)
+        {
+            Assert.Fail($"Update test failed with database exception: {ex.Message}");
+        }
+    }
+
+    [Test]
+    public async Task Delete()
+    {
+        try
+        {
+            var insertedComment = await _databaseActions.Insert(_commentToWorkWith);
+            Assert.IsNotNull(insertedComment, "Inserted comment should not be null");
+
+            var deletedComment = await _databaseActions.Delete(insertedComment);
+            Assert.IsNotNull(deletedComment, "Deleted comment should not be null");
+        }
+        catch (DatabaseExceptions ex)
+        {
+            Assert.Fail($"Delete test failed with database exception: {ex.Message}");
+        }
+    }
+
+    [Test]
+    public async Task GetEntityByField()
+    {
+        try
+        {
+            var insertedComment = await _databaseActions.Insert(_commentToWorkWith);
+            Assert.IsNotNull(insertedComment, "Inserted comment should not be null");
+
+            var comment = await _databaseActions.GetEntityByField<CommentDto>("commentID", insertedComment.CommentId);
+            Assert.IsNotNull(comment, "Retrieved comment should not be null");
+            Assert.That(comment.CreatorUserId, Is.EqualTo(insertedComment.CreatorUserId), "CreatorUserId should match");
+            Assert.That(comment.Content, Is.EqualTo(insertedComment.Content), "Content should match");
+            
+            _commentToWorkWith = comment;
+        }
+        catch (DatabaseExceptions ex)
+        {
+            Assert.Fail($"GetEntityByField test failed with database exception: {ex.Message}");
+        }
+    }
+}

@@ -12,8 +12,8 @@ public class ForumDto : BaseModel
     /// <summary>
     /// The ID of the Forum. This is the Primary Key. It is auto-generated.
     /// </summary>
-    [PrimaryKey("forumID", true)]
-    public int ForumId { get; set; }
+    [PrimaryKey("forumID", false)]
+    public string ForumId { get; set; }
 
     /// <summary>
     /// The ID of the User who created the Forum. This is a Foreign Key to the User Table.

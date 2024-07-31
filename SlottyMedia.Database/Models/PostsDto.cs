@@ -12,8 +12,8 @@ public class PostsDto : BaseModel
     /// <summary>
     /// The ID of the Post. This is the Primary Key. It is auto-generated.
     /// </summary>
-    [PrimaryKey("postID", true)]
-    public int PostId { get; set; }
+    [PrimaryKey("postID", false)]
+    public string PostId { get; set; }
 
     /// <summary>
     /// The ID of the User who created the Post. This is a Foreign Key to the User Table.
@@ -25,7 +25,7 @@ public class PostsDto : BaseModel
     /// The ID of the Forum the Post is associated with. This is a Foreign Key to the Forum Table.
     /// </summary>
     [Column("associated_forumID")]
-    public int ForumId { get; set; }
+    public string ForumId { get; set; }
 
     /// <summary>
     /// The Headline of the Post.

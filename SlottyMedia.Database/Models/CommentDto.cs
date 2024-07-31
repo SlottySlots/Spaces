@@ -12,8 +12,8 @@ public class CommentDto : BaseModel
     /// <summary> 
     /// The ID of the Comment. This is the Primary Key. It is auto-generated. 
     /// </summary>
-    [PrimaryKey("commentID", true)]
-    public int CommentId { get; set; }
+    [PrimaryKey("commentID", false)]
+    public string CommentId { get; set; }
 
     /// <summary> 
     /// The ID of the Parent Comment. This is only set when there is a Parent Comment 
@@ -24,7 +24,7 @@ public class CommentDto : BaseModel
     /// <summary> 
     /// The ID of the User who created the Comment. This is a Foreign Key to the User Table 
     /// </summary>
-    [Column("creator_userID")]
+    [Column("creator_UserID")]
     public string CreatorUserId { get; set; }
 
     /// <summary> 
