@@ -48,7 +48,7 @@
 
 [InputFieldIcon](./slottymedia.components.partial.inputfieldicon.md)
 
-[PinkAnchor](./slottymedia.components.partial.pinkanchor.md)
+[Link](./slottymedia.components.partial.link.md)
 
 [RoundedBorderBox](./slottymedia.components.partial.roundedborderbox.md)
 
