@@ -51,3 +51,5 @@
 [PinkAnchor](./slottymedia.components.partial.pinkanchor.md)
 
 [RoundedBorderBox](./slottymedia.components.partial.roundedborderbox.md)
+
+[Tag](./slottymedia.components.partial.tag.md)
