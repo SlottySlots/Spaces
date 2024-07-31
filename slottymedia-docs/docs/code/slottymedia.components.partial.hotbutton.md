@@ -13,7 +13,7 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **Class**
 
-
+Additional CSS classes to add to this button.
 
 ```csharp
 public string Class { get; set; }
@@ -23,7 +23,21 @@ public string Class { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+### **Type**
+
+This button's type (see HTML5 specifications).
+
+```csharp
+public string Type { get; set; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
 ### **ChildContent**
+
+This button's child content, ideally just a string.
 
 ```csharp
 public RenderFragment ChildContent { get; set; }

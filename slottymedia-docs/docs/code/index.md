@@ -32,8 +32,6 @@
 
 ## SlottyMedia.Components.Pages
 
-[Counter](./slottymedia.components.pages.counter.md)
-
 [Home](./slottymedia.components.pages.home.md)
 
 [Login](./slottymedia.components.pages.login.md)
@@ -53,7 +51,5 @@
 [InputFieldIcon](./slottymedia.components.partial.inputfieldicon.md)
 
 [Link](./slottymedia.components.partial.link.md)
-
-[RoundedBorderBox](./slottymedia.components.partial.roundedborderbox.md)
 
 [Tag](./slottymedia.components.partial.tag.md)
