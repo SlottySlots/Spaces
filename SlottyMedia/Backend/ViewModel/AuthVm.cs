@@ -9,6 +9,12 @@ public class AuthVm : IAuthVm
     private readonly IAuthService _authService;
     private readonly IJSRuntime _jsRuntime;
     
+    public AuthVm(IAuthService authService, IJSRuntime jsRuntime)
+    {
+        _authService = authService ?? throw new ArgumentNullException(nameof(authService));
+        _jsRuntime = jsRuntime ?? throw new ArgumentNullException(nameof(jsRuntime));
+    }
+    
     public async Task<Session?> RegisterAsync(string email, string password)
     {
         var session = await _authService.SignUp(email, password);

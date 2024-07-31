@@ -25,11 +25,14 @@ builder.Services.AddSingleton(_ =>
 
 // Viewmodel
 builder.Services.AddSingleton<ICounterVm, CounterVm>();
-builder.Services.AddSingleton<IAuthVm, AuthVm>();
+
 
 // Services
 builder.Services.AddSingleton<IUserService, UserService>();
-builder.Services.AddSingleton<IAuthService, AuthService>();
+
+
+builder.Services.AddScoped<IAuthService, AuthService>();  // Scoped
+builder.Services.AddScoped<IAuthVm, AuthVm>(); 
 
 // Model
 builder.Services.AddSingleton<UserDto>();
