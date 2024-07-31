@@ -25,9 +25,11 @@ builder.Services.AddSingleton(_ =>
 
 // Viewmodel
 builder.Services.AddSingleton<ICounterVm, CounterVm>();
+builder.Services.AddSingleton<IAuthVm, AuthVm>();
 
 // Services
 builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<IAuthService, AuthService>();
 
 // Model
 builder.Services.AddSingleton<UserDto>();
