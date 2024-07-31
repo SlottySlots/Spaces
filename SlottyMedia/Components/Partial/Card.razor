@@ -1,0 +1,16 @@
+<div class=@($"p-2 rounded-[24px] border border-athens-gray shadow-shade bg-white {Class}")>
+    @ChildContent
+</div>
+
+
+@code {
+    /// <summary>This component represents a card.</summary>
+    
+    /// <summary>Additional CSS classes to customize the card.</summary>
+    [Parameter]
+    public string? Class { get; set; }
+    
+    /// <summary>The card's content.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

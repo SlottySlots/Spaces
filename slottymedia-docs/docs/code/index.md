@@ -42,6 +42,8 @@
 
 ## SlottyMedia.Components.Partial
 
+[Card](./slottymedia.components.partial.card.md)
+
 [Checkbox](./slottymedia.components.partial.checkbox.md)
 
 [InputField](./slottymedia.components.partial.inputfield.md)
