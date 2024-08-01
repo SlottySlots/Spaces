@@ -1,11 +1,8 @@
 using SlottyMedia.Database;
 using SlottyMedia.Database.Models;
 using Supabase;
-using NUnit.Framework;
-using System;
-using System.Threading.Tasks;
 
-namespace SlottyMedia.Tests;
+namespace SlottyMedia.Tests.DatabaseTests;
 
 /// <summary>
 /// Tests for DatabaseActions class.

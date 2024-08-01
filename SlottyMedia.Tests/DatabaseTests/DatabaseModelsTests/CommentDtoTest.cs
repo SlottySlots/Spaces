@@ -3,8 +3,11 @@ using SlottyMedia.Database;
 using SlottyMedia.Database.Models;
 using Supabase;
 
-namespace SlottyMedia.Tests.DatabaseModelsTests;
+namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
 
+/// <summary>
+/// Test class for the CommentDto model.
+/// </summary>
 [TestFixture]
 public class CommentDtoTest
 {
@@ -15,12 +18,15 @@ public class CommentDtoTest
     private PostsDto _postToWorkWith;
     private ForumDto _forumToWorkWith;
 
+    /// <summary>
+    /// One-time setup method to initialize Supabase client and insert test data.
+    /// </summary>
     [OneTimeSetUp]
     public async Task OneTimeSetup()
     {
         _supabaseClient = await InitializeSupabaseClient.GetSupabaseClient();
         _databaseActions = new DatabaseActions(_supabaseClient);
-        
+
         _userToWorkWith = await _databaseActions.Insert(new UserDto()
         {
             UserId = Guid.NewGuid().ToString(),
@@ -28,13 +34,13 @@ public class CommentDtoTest
             Description = "Please don't delete me",
             RoleId = "c0589855-a81c-451d-8587-3061926a1f3a"
         });
-        
+
         _forumToWorkWith = await _databaseActions.Insert(new ForumDto()
         {
             CreatorUserId = _userToWorkWith.UserId,
             ForumTopic = "I'm a Test Forum"
         });
-        
+
         _postToWorkWith = await _databaseActions.Insert(new PostsDto()
         {
             ForumId = _forumToWorkWith.ForumId,
@@ -44,6 +50,9 @@ public class CommentDtoTest
         });
     }
 
+    /// <summary>
+    /// Setup method to initialize a new CommentDto instance before each test.
+    /// </summary>
     [SetUp]
     public void Setup()
     {
@@ -55,16 +64,17 @@ public class CommentDtoTest
         };
     }
 
+    /// <summary>
+    /// Tear down method to delete the test comment after each test.
+    /// </summary>
     [TearDown]
     public async Task TearDown()
     {
         try
         {
-            var comment = await _databaseActions.GetEntityByField<CommentDto>("commentID", _commentToWorkWith.CommentId);
-            if (comment != null)
-            {
-                await _databaseActions.Delete(comment);
-            }
+            var comment =
+                await _databaseActions.GetEntityByField<CommentDto>("commentID", _commentToWorkWith.CommentId);
+            if (comment != null) await _databaseActions.Delete(comment);
         }
         catch (Exception ex)
         {
@@ -72,31 +82,22 @@ public class CommentDtoTest
         }
     }
 
+    /// <summary>
+    /// One-time tear down method to delete the test data after all tests are run.
+    /// </summary>
     [OneTimeTearDown]
     public async Task OneTimeTearDown()
     {
         try
         {
-
-            
             var post = await _databaseActions.GetEntityByField<PostsDto>("postID", _postToWorkWith.PostId);
-            if (post != null)
-            {
-                await _databaseActions.Delete(post);
-            }
+            if (post != null) await _databaseActions.Delete(post);
 
-            
             var forum = await _databaseActions.GetEntityByField<ForumDto>("forumID", _forumToWorkWith.ForumId);
-            if (forum != null)
-            {
-                await _databaseActions.Delete(forum);
-            }
-            
+            if (forum != null) await _databaseActions.Delete(forum);
+
             var user = await _databaseActions.GetEntityByField<UserDto>("userID", _userToWorkWith.UserId);
-            if (user != null)
-            {
-                await _databaseActions.Delete(user);
-            }
+            if (user != null) await _databaseActions.Delete(user);
         }
         catch (Exception ex)
         {
@@ -104,6 +105,9 @@ public class CommentDtoTest
         }
     }
 
+    /// <summary>
+    /// Test method to insert a new comment into the database.
+    /// </summary>
     [Test]
     public async Task Insert()
     {
@@ -111,9 +115,10 @@ public class CommentDtoTest
         {
             var insertedComment = await _databaseActions.Insert(_commentToWorkWith);
             Assert.IsNotNull(insertedComment, "Inserted comment should not be null");
-            Assert.That(insertedComment.CreatorUserId, Is.EqualTo(_commentToWorkWith.CreatorUserId), "CreatorUserId should match");
+            Assert.That(insertedComment.CreatorUserId, Is.EqualTo(_commentToWorkWith.CreatorUserId),
+                "CreatorUserId should match");
             Assert.That(insertedComment.Content, Is.EqualTo(_commentToWorkWith.Content), "Content should match");
-            
+
             _commentToWorkWith = insertedComment;
         }
         catch (DatabaseExceptions ex)
@@ -122,6 +127,9 @@ public class CommentDtoTest
         }
     }
 
+    /// <summary>
+    /// Test method to update an existing comment in the database.
+    /// </summary>
     [Test]
     public async Task Update()
     {
@@ -134,9 +142,10 @@ public class CommentDtoTest
             var updatedComment = await _databaseActions.Update(insertedComment);
 
             Assert.IsNotNull(updatedComment, "Updated comment should not be null");
-            Assert.That(updatedComment.CreatorUserId, Is.EqualTo(insertedComment.CreatorUserId), "CreatorUserId should match");
+            Assert.That(updatedComment.CreatorUserId, Is.EqualTo(insertedComment.CreatorUserId),
+                "CreatorUserId should match");
             Assert.That(updatedComment.Content, Is.EqualTo(insertedComment.Content), "Content should match");
-            
+
             _commentToWorkWith = updatedComment;
         }
         catch (DatabaseExceptions ex)
@@ -145,6 +154,9 @@ public class CommentDtoTest
         }
     }
 
+    /// <summary>
+    /// Test method to delete an existing comment from the database.
+    /// </summary>
     [Test]
     public async Task Delete()
     {
@@ -162,6 +174,9 @@ public class CommentDtoTest
         }
     }
 
+    /// <summary>
+    /// Test method to retrieve a comment by a specific field from the database.
+    /// </summary>
     [Test]
     public async Task GetEntityByField()
     {
@@ -174,7 +189,7 @@ public class CommentDtoTest
             Assert.IsNotNull(comment, "Retrieved comment should not be null");
             Assert.That(comment.CreatorUserId, Is.EqualTo(insertedComment.CreatorUserId), "CreatorUserId should match");
             Assert.That(comment.Content, Is.EqualTo(insertedComment.Content), "Content should match");
-            
+
             _commentToWorkWith = comment;
         }
         catch (DatabaseExceptions ex)
