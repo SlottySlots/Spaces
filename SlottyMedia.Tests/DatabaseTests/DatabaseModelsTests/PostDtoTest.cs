@@ -26,19 +26,9 @@ public class PostDtoTest
         _supabaseClient = await InitializeSupabaseClient.GetSupabaseClient();
         _databaseActions = new DatabaseActions(_supabaseClient);
 
-        _userToWorkWith = await _databaseActions.Insert(new UserDto()
-        {
-            UserId = Guid.NewGuid().ToString(),
-            UserName = "I'm a Test User",
-            Description = "Please don't delete me",
-            RoleId = "c0589855-a81c-451d-8587-3061926a1f3a"
-        });
+        _userToWorkWith = await _databaseActions.Insert(InitializeModels.GetUserDto());
 
-        _forumToWorkWith = await _databaseActions.Insert(new ForumDto()
-        {
-            CreatorUserId = _userToWorkWith.UserId,
-            ForumTopic = "I'm a Test Forum"
-        });
+        _forumToWorkWith = await _databaseActions.Insert(InitializeModels.GetForumDto(_userToWorkWith));
     }
 
     /// <summary>

@@ -13,8 +13,6 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 // Add Supabase
-
-
 var url = Environment.GetEnvironmentVariable("SUPABASE_URL");
 var key = Environment.GetEnvironmentVariable("SUPABASE_KEY");
 if (url is null && key is null)

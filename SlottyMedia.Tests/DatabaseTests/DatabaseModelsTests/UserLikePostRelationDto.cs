@@ -14,9 +14,9 @@ public class UserLikePostRelationDtoTest
     private Client _supabaseClient;
     private IDatabaseActions _databaseActions;
     private UserLikePostRelationDto _relationToWorkWith;
-    private UserDto _user;
-    private PostsDto _post;
-    private ForumDto _forum;
+    private UserDto _userToWorkWith;
+    private PostsDto _postToWorkWith;
+    private ForumDto _forumToWorkWirh;
 
     /// <summary>
     /// One-time setup method to initialize Supabase client and insert test data.
@@ -27,28 +27,11 @@ public class UserLikePostRelationDtoTest
         _supabaseClient = await InitializeSupabaseClient.GetSupabaseClient();
         _databaseActions = new DatabaseActions(_supabaseClient);
 
-        _user = await _databaseActions.Insert(new UserDto()
-        {
-            UserId = Guid.NewGuid().ToString(),
-            UserName = "Test User",
-            Description = "Please don't delete me",
-            RoleId = "c0589855-a81c-451d-8587-3061926a1f3a"
-        });
+        _userToWorkWith = await _databaseActions.Insert(InitializeModels.GetUserDto());
 
-        _forum = await _databaseActions.Insert(new ForumDto()
-        {
-            CreatorUserId = _user.UserId,
-            ForumTopic = "Test Forum"
-        });
+        _forumToWorkWirh = await _databaseActions.Insert(InitializeModels.GetForumDto(_userToWorkWith));
 
-        _post = await _databaseActions.Insert(new PostsDto()
-        {
-            PostId = Guid.NewGuid().ToString(),
-            ForumId = _forum.ForumId,
-            Content = "Test Post",
-            UserId = _user.UserId,
-            Headline = "Test Post Headline"
-        });
+        _postToWorkWith = await _databaseActions.Insert(InitializeModels.GetPostsDto(_forumToWorkWirh, _userToWorkWith));
     }
 
     /// <summary>
@@ -59,8 +42,8 @@ public class UserLikePostRelationDtoTest
     {
         _relationToWorkWith = new UserLikePostRelationDto()
         {
-            UserId = _user.UserId,
-            PostId = _post.PostId
+            UserId = _userToWorkWith.UserId,
+            PostId = _postToWorkWith.PostId
         };
     }
 
@@ -90,13 +73,13 @@ public class UserLikePostRelationDtoTest
     {
         try
         {
-            var post = await _databaseActions.GetEntityByField<PostsDto>("postID", _post.PostId);
+            var post = await _databaseActions.GetEntityByField<PostsDto>("postID", _postToWorkWith.PostId);
             if (post != null) await _databaseActions.Delete(post);
 
-            var forum = await _databaseActions.GetEntityByField<ForumDto>("forumID", _forum.ForumId);
+            var forum = await _databaseActions.GetEntityByField<ForumDto>("forumID", _forumToWorkWirh.ForumId);
             if (forum != null) await _databaseActions.Delete(forum);
 
-            var user = await _databaseActions.GetEntityByField<UserDto>("userID", _user.UserId);
+            var user = await _databaseActions.GetEntityByField<UserDto>("userID", _userToWorkWith.UserId);
             if (user != null) await _databaseActions.Delete(user);
         }
         catch (Exception ex)

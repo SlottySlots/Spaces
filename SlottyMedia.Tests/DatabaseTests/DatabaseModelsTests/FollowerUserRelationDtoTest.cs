@@ -25,21 +25,9 @@ public class FollowerUserRelationDtoTest
         _supabaseClient = await InitializeSupabaseClient.GetSupabaseClient();
         _databaseActions = new DatabaseActions(_supabaseClient);
 
-        _followerUser = await _databaseActions.Insert(new UserDto()
-        {
-            UserId = Guid.NewGuid().ToString(),
-            UserName = "Follower User",
-            Description = "Please don't delete me",
-            RoleId = "c0589855-a81c-451d-8587-3061926a1f3a"
-        });
+        _followerUser = await _databaseActions.Insert(InitializeModels.GetUserDto());
 
-        _followedUser = await _databaseActions.Insert(new UserDto()
-        {
-            UserId = Guid.NewGuid().ToString(),
-            UserName = "Followed User",
-            Description = "Please don't delete me",
-            RoleId = "c0589855-a81c-451d-8587-3061926a1f3a"
-        });
+        _followedUser = await _databaseActions.Insert(InitializeModels.GetUserDto());
     }
 
     /// <summary>

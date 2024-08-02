@@ -24,13 +24,7 @@ public class DatabaseActionTests
     [SetUp]
     public void Setup()
     {
-        _userToWorkWith = new UserDto()
-        {
-            UserId = Guid.NewGuid().ToString(),
-            UserName = "I'm a Test User",
-            Description = "Please don't delete me",
-            RoleId = "c0589855-a81c-451d-8587-3061926a1f3a"
-        };
+        _userToWorkWith = InitializeModels.GetUserDto();
     }
 
     [TearDown]
