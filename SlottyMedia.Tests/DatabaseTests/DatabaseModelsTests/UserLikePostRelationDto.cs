@@ -31,7 +31,8 @@ public class UserLikePostRelationDtoTest
 
         _forumToWorkWirh = await _databaseActions.Insert(InitializeModels.GetForumDto(_userToWorkWith));
 
-        _postToWorkWith = await _databaseActions.Insert(InitializeModels.GetPostsDto(_forumToWorkWirh, _userToWorkWith));
+        _postToWorkWith =
+            await _databaseActions.Insert(InitializeModels.GetPostsDto(_forumToWorkWirh, _userToWorkWith));
     }
 
     /// <summary>

@@ -26,7 +26,7 @@ public class CommentDto : BaseModel
     /// </summary>
     [PrimaryKey("commentID", false)]
     public string CommentId { get; set; }
-    
+
     /// <summary> 
     /// The ID of the Parent Comment. This is only set when there is a Parent Comment 
     /// </summary>
@@ -39,7 +39,7 @@ public class CommentDto : BaseModel
     /// </summary>
     [Reference(typeof(UserDto), ReferenceAttribute.JoinType.Inner, true, "userID")]
     public UserDto CreatorUser { get; set; }
-    
+
     /// <summary> 
     /// The ID of the User who created the Comment. This is a Foreign Key to the User Table 
     /// </summary>
@@ -52,7 +52,7 @@ public class CommentDto : BaseModel
     /// </summary>
     [Reference(typeof(PostsDto), ReferenceAttribute.JoinType.Inner, true, "postID")]
     public PostsDto Post { get; set; }
-    
+
     /// <summary> 
     /// The ID of the Post the Comment is related to. This is a Foreign Key to the Post Table 
     /// </summary>

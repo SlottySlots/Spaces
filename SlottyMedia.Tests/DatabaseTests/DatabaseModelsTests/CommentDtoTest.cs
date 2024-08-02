@@ -31,7 +31,8 @@ public class CommentDtoTest
 
         _forumToWorkWith = await _databaseActions.Insert(InitializeModels.GetForumDto(_userToWorkWith));
 
-        _postToWorkWith = await _databaseActions.Insert(InitializeModels.GetPostsDto(_forumToWorkWith, _userToWorkWith));
+        _postToWorkWith =
+            await _databaseActions.Insert(InitializeModels.GetPostsDto(_forumToWorkWith, _userToWorkWith));
     }
 
     /// <summary>

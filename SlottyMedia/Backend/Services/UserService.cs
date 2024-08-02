@@ -39,7 +39,7 @@ public class UserService : IUserService
         };
         try
         {
-             return await _databaseActions.Insert(user);
+            return await _databaseActions.Insert(user);
         }
         catch (Exception e)
         {
@@ -64,7 +64,6 @@ public class UserService : IUserService
             //TODO Implement how we should handle errors in the View
             return false;
         }
-        
     }
 
     /// <summary>
@@ -76,7 +75,7 @@ public class UserService : IUserService
     {
         try
         {
-return await _databaseActions.GetEntityByField<UserDto>("userID", userId);
+            return await _databaseActions.GetEntityByField<UserDto>("userID", userId);
         }
         catch (Exception e)
         {
@@ -94,7 +93,7 @@ return await _databaseActions.GetEntityByField<UserDto>("userID", userId);
     {
         try
         {
-return await _databaseActions.Update(user);
+            return await _databaseActions.Update(user);
         }
         catch (Exception e)
         {

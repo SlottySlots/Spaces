@@ -11,10 +11,9 @@ public class UserDto : BaseModel
 {
     public UserDto()
     {
-        
     }
 
-    public UserDto(string userId, string roleId, string userName, string? description = null, long? profilePic= null)
+    public UserDto(string userId, string roleId, string userName, string? description = null, long? profilePic = null)
     {
         UserId = userId;
         RoleId = roleId;
@@ -33,14 +32,14 @@ public class UserDto : BaseModel
     /// The Role of the User. This is a Reference to the Role Table. It is a Foreign Key. Be aware, that this
     /// Field will not be filled when you insert the User into the Database.
     /// </summary>
-    [Reference(typeof(RoleDto),true, true, "roleID")]
+    [Reference(typeof(RoleDto), true, true, "roleID")]
     public RoleDto Role { get; set; }
-    
+
     /// <summary>
     /// The ID of the Role the User has. This is a Foreign Key to the Role Table.
     /// </summary>
     [Column("roleID")]
-    public string RoleId { get; set  ; }
+    public string RoleId { get; set; }
 
     /// <summary>
     /// The Username of the User.

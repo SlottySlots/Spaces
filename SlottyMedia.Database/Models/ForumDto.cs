@@ -25,7 +25,7 @@ public class ForumDto : BaseModel
     /// </summary>
     [PrimaryKey("forumID", false)]
     public string ForumId { get; set; }
-    
+
     [Reference(typeof(UserDto), ReferenceAttribute.JoinType.Inner, true, "userID")]
     public UserDto CreatorUser { get; set; }
 

@@ -27,7 +27,7 @@ public class PostsDto : BaseModel
     /// </summary>
     [PrimaryKey("postID", false)]
     public string PostId { get; set; }
-    
+
     /// <summary>
     /// The User who created the Post. This is a Reference to the User Table. It is a Foreign Key. Be aware, that this
     /// Field will not be filled when you insert the Post into the Database.
@@ -47,7 +47,7 @@ public class PostsDto : BaseModel
     /// </summary>
     [Reference(typeof(ForumDto), ReferenceAttribute.JoinType.Inner, true, "forumID")]
     public ForumDto Forum { get; set; }
-    
+
     /// <summary>
     /// The ID of the Forum the Post is associated with. This is a Foreign Key to the Forum Table.
     /// </summary>

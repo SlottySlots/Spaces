@@ -17,7 +17,7 @@ public class InitializeModels
             Description = "User"
         };
     }
-    
+
     public static UserDto GetUserDto()
     {
         return new UserDto()
@@ -28,7 +28,7 @@ public class InitializeModels
             RoleId = GetRoleDto().RoleId
         };
     }
-    
+
     public static ForumDto GetForumDto(UserDto userDto)
     {
         return new ForumDto()
@@ -37,7 +37,7 @@ public class InitializeModels
             ForumTopic = "I'm a Test Forum"
         };
     }
-    
+
     public static PostsDto GetPostsDto(ForumDto forumDto, UserDto userDto)
     {
         return new PostsDto()

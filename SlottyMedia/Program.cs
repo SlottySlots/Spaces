@@ -16,10 +16,7 @@ builder.Services.AddRazorComponents()
 // Add Supabase
 var url = Environment.GetEnvironmentVariable("SUPABASE_URL");
 var key = Environment.GetEnvironmentVariable("SUPABASE_KEY");
-if (url is null || key is null)
-{
-    throw new Exception("Supabase settings not found");
-}
+if (url is null || key is null) throw new Exception("Supabase settings not found");
 builder.Services.AddSingleton(_ =>
     new Client(
         url, key,
@@ -28,8 +25,6 @@ builder.Services.AddSingleton(_ =>
             AutoRefreshToken = true,
             AutoConnectRealtime = true
         }));
-
-
 
 
 // Database
@@ -62,4 +57,4 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
-app.Run(); 
+app.Run();

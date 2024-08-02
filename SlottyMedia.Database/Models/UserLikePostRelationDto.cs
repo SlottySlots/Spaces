@@ -24,13 +24,13 @@ public class UserLikePostRelationDto : BaseModel
     /// </summary>
     [PrimaryKey("userLikePostRelationID", false)]
     public string UserLikePostRelationId { get; set; }
-    
+
     /// <summary>
     /// The ID of the User who liked the Post. This is a Foreign Key to the User Table.
     /// </summary>
     [Column("userID")]
     public string UserId { get; set; }
-    
+
     /// <summary>
     /// The ID of the Post that was liked. This is a Foreign Key to the Post Table.
     /// </summary>

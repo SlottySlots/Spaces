@@ -24,13 +24,13 @@ public class FollowerUserRelationDto : BaseModel
     /// </summary>
     [PrimaryKey("followerUserRelationID", false)]
     public string FollowerUserRelationId { get; set; }
-    
+
     /// <summary>
     /// The ID of the User who is following another User. This is a Foreign Key to the User Table.
     /// </summary>
     [Column("userIsFollowing")]
     public string FollowerUserId { get; set; }
-    
+
     /// <summary>
     /// The ID of the User who is being followed. This is a Foreign Key to the User Table.
     /// </summary>

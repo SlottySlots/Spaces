@@ -57,18 +57,17 @@ public class CounterVm : ICounterVm, INotifyPropertyChanged
     /// <returns></returns>
     public async Task GetUserById(string userId)
     {
-        await _userService.CreateUser(Guid.NewGuid().ToString(), "test");
-        //var user = await _userService.GetUserById(userId);
-        //if (user is not null)
+        var user = await _userService.GetUserById(userId);
+        if (user is not null)
         {
-          //  User = user;
+            User = user;
         }
-       // else
+        else
         {
             //TODO: Handle the case where the user is not found.    
         }
     }
-    
+
     public async Task InsertUser(UserDto user)
     {
         await _userService.CreateUser(Guid.NewGuid().ToString(), "test");
