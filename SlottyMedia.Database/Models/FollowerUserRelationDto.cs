@@ -13,13 +13,10 @@ public class FollowerUserRelationDto : BaseModel
     {
     }
 
-    public FollowerUserRelationDto(string followerUserRelationId, string followerUserId, string followedUserId,
-        DateTime createdAt)
+    public FollowerUserRelationDto(string followerUserId, string followedUserId)
     {
-        FollowerUserRelationId = followerUserRelationId;
         FollowerUserId = followerUserId;
         FollowedUserId = followedUserId;
-        CreatedAt = createdAt;
     }
 
     /// <summary>
@@ -27,13 +24,13 @@ public class FollowerUserRelationDto : BaseModel
     /// </summary>
     [PrimaryKey("followerUserRelationID", false)]
     public string FollowerUserRelationId { get; set; }
-
+    
     /// <summary>
     /// The ID of the User who is following another User. This is a Foreign Key to the User Table.
     /// </summary>
     [Column("userIsFollowing")]
     public string FollowerUserId { get; set; }
-
+    
     /// <summary>
     /// The ID of the User who is being followed. This is a Foreign Key to the User Table.
     /// </summary>

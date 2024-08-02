@@ -14,12 +14,10 @@ public class ForumDto : BaseModel
     {
     }
 
-    public ForumDto(string forumId, string creatorUserId, string forumTopic, DateTime createdAt)
+    public ForumDto(string creatorUserId, string forumTopic)
     {
-        ForumId = forumId;
         CreatorUserId = creatorUserId;
         ForumTopic = forumTopic;
-        CreatedAt = createdAt;
     }
 
     /// <summary>
@@ -27,6 +25,9 @@ public class ForumDto : BaseModel
     /// </summary>
     [PrimaryKey("forumID", false)]
     public string ForumId { get; set; }
+    
+    [Reference(typeof(UserDto), ReferenceAttribute.JoinType.Inner, true, "userID")]
+    public UserDto CreatorUser { get; set; }
 
     /// <summary>
     /// The ID of the User who created the Forum. This is a Foreign Key to the User Table.

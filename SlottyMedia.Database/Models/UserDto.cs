@@ -7,26 +7,20 @@ namespace SlottyMedia.Database.Models;
 /// This class represents the User table in the database.
 /// </summary>
 [Table("User")]
-public class UserDto : BaseDto
+public class UserDto : BaseModel
 {
     public UserDto()
     {
-    }
-    
-    // Constructor for dependency injection
-    public UserDto(IDatabaseActions databaseActions) : base(databaseActions)
-    {
+        
     }
 
-    // Constructor for user initialization
-    public UserDto(string userId, string roleId, string userName, string? description, long? profilePic, DateTime createdAt)
+    public UserDto(string userId, string roleId, string userName, string? description = null, long? profilePic= null)
     {
         UserId = userId;
         RoleId = roleId;
         UserName = userName;
         Description = description;
         ProfilePic = profilePic;
-        CreatedAt = createdAt;
     }
 
     /// <summary>
@@ -36,9 +30,10 @@ public class UserDto : BaseDto
     public string UserId { get; set; }
 
     /// <summary>
-    /// The Role of the User. This is a Reference to the Role Table.
+    /// The Role of the User. This is a Reference to the Role Table. It is a Foreign Key. Be aware, that this
+    /// Field will not be filled when you insert the User into the Database.
     /// </summary>
-    [Reference(typeof(RoleDto),true, true, "roleID", "Role_roleID")]
+    [Reference(typeof(RoleDto),true, true, "roleID")]
     public RoleDto Role { get; set; }
     
     /// <summary>
