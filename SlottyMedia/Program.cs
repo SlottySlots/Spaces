@@ -35,7 +35,9 @@ builder.Services.AddSingleton<ICounterVm, CounterVm>();
 builder.Services.AddSingleton<IUserService, UserService>();
 
 // Model
+builder.Services.AddSingleton<BaseDto>();
 builder.Services.AddSingleton<UserDto>();
+
 
 var app = builder.Build();
 

@@ -1,3 +1,4 @@
+using SlottyMedia.Database.Models;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -9,6 +10,18 @@ namespace SlottyMedia.Backend.Models;
 [Table("Forum")]
 public class ForumDto : BaseModel
 {
+    public ForumDto()
+    {
+    }
+
+    public ForumDto(string forumId, string creatorUserId, string forumTopic, DateTime createdAt)
+    {
+        ForumId = forumId;
+        CreatorUserId = creatorUserId;
+        ForumTopic = forumTopic;
+        CreatedAt = createdAt;
+    }
+
     /// <summary>
     /// The ID of the Forum. This is the Primary Key. It is auto-generated.
     /// </summary>

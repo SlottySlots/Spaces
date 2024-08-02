@@ -41,6 +41,7 @@ public class UserService : IUserService
         };
         try
         {
+            await user.Insert(user);
              return await _databaseActions.Insert(user);
         }
         catch (Exception e)

@@ -9,6 +9,18 @@ namespace SlottyMedia.Database.Models;
 [Table("User_Like_Post_Relation")]
 public class UserLikePostRelationDto : BaseModel
 {
+    public UserLikePostRelationDto()
+    {
+    }
+
+    public UserLikePostRelationDto(string userLikePostRelationId, string userId, string postId, DateTime createdAt)
+    {
+        UserLikePostRelationId = userLikePostRelationId;
+        UserId = userId;
+        PostId = postId;
+        CreatedAt = createdAt;
+    }
+
     /// <summary>
     /// The ID of the User_Like_Post_Relation. This is the Primary Key. It is auto-generated.
     /// </summary>

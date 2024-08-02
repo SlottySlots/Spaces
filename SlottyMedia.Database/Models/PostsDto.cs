@@ -9,6 +9,20 @@ namespace SlottyMedia.Database.Models;
 [Table("Posts")]
 public class PostsDto : BaseModel
 {
+    public PostsDto()
+    {
+    }
+
+    public PostsDto(string postId, string userId, string forumId, string headline, string content, DateTime createdAt)
+    {
+        PostId = postId;
+        UserId = userId;
+        ForumId = forumId;
+        Headline = headline;
+        Content = content;
+        CreatedAt = createdAt;
+    }
+
     /// <summary>
     /// The ID of the Post. This is the Primary Key. It is auto-generated.
     /// </summary>

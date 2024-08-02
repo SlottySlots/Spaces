@@ -9,6 +9,21 @@ namespace SlottyMedia.Database.Models;
 [Table("Comment")]
 public class CommentDto : BaseModel
 {
+    public CommentDto()
+    {
+    }
+
+    public CommentDto(string commentId, string? parentCommentId, string creatorUserId, string postId, string content,
+        DateTime createdAt)
+    {
+        CommentId = commentId;
+        ParentCommentId = parentCommentId;
+        CreatorUserId = creatorUserId;
+        PostId = postId;
+        Content = content;
+        CreatedAt = createdAt;
+    }
+
     /// <summary> 
     /// The ID of the Comment. This is the Primary Key. It is auto-generated. 
     /// </summary>

@@ -9,6 +9,19 @@ namespace SlottyMedia.Database.Models;
 [Table("Follower_User_Relation")]
 public class FollowerUserRelationDto : BaseModel
 {
+    public FollowerUserRelationDto()
+    {
+    }
+
+    public FollowerUserRelationDto(string followerUserRelationId, string followerUserId, string followedUserId,
+        DateTime createdAt)
+    {
+        FollowerUserRelationId = followerUserRelationId;
+        FollowerUserId = followerUserId;
+        FollowedUserId = followedUserId;
+        CreatedAt = createdAt;
+    }
+
     /// <summary>
     /// The ID of the Follower_User_Relation. This is the Primary Key. It is auto-generated.
     /// </summary>
