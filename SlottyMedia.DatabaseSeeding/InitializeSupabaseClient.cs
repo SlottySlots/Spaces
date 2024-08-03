@@ -4,7 +4,7 @@ namespace SlottyMedia.DatabaseSeeding;
 
 public class InitializeSupabaseClient
 {
-    public static async Task<Client> GetSupabaseClient()
+    public static Client GetSupabaseClient()
     {
         var url = Environment.GetEnvironmentVariable("SUPABASE_URL");
         var key = Environment.GetEnvironmentVariable("SUPABASE_KEY");

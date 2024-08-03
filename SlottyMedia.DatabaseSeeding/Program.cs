@@ -7,7 +7,7 @@ class Program
     static async Task Main(string[] args)
     {
         Console.WriteLine("Seeding database with random data...");
-        var client = await InitializeSupabaseClient.GetSupabaseClient();
+        var client = InitializeSupabaseClient.GetSupabaseClient();
         var databaseActions = new DatabaseActions(client);
         var rules = new Rules();
 

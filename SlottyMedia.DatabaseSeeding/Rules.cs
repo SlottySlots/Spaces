@@ -6,6 +6,10 @@ namespace SlottyMedia.DatabaseSeeding;
 
 public class Rules
 {
+    /// <summary>
+    /// This method creates the rules for the UserDto.
+    /// </summary>
+    /// <returns></returns>
     public Faker<UserDto> UserRules()
     {
         var userFaker = new Faker<UserDto>()
@@ -18,6 +22,11 @@ public class Rules
         return userFaker;
     }
 
+    /// <summary>
+    /// This method creates the rules for the ForumDto.
+    /// </summary>
+    /// <param name="userFaker"></param>
+    /// <returns></returns>
     public Faker<ForumDto> ForumRules(Faker<UserDto> userFaker)
     {
         var forumFaker = new Faker<ForumDto>()
@@ -28,6 +37,12 @@ public class Rules
         return forumFaker;
     }
 
+    /// <summary>
+    /// This method creates the rules for the PostsDto.
+    /// </summary>
+    /// <param name="userFaker"></param>
+    /// <param name="forumFaker"></param>
+    /// <returns></returns>
     public Faker<PostsDto> PostRules(Faker<UserDto> userFaker, Faker<ForumDto> forumFaker)
     {
         var postFaker = new Faker<PostsDto>()
@@ -40,6 +55,12 @@ public class Rules
         return postFaker;
     }
     
+    /// <summary>
+    /// This method creates the rules for the CommentDto.
+    /// </summary>
+    /// <param name="userFaker"></param>
+    /// <param name="postFaker"></param>
+    /// <returns></returns>
     public Faker<CommentDto> CommentRules(Faker<UserDto> userFaker, Faker<PostsDto> postFaker)
     {
         var commentFaker = new Faker<CommentDto>()
@@ -51,6 +72,11 @@ public class Rules
         return commentFaker;
     }
     
+    /// <summary>
+    /// This method creates the rules for the FollowerUserRelationDto.
+    /// </summary>
+    /// <param name="userFaker"></param>
+    /// <returns></returns>
     public Faker<FollowerUserRelationDto> FollowerUserRelationRules(Faker<UserDto> userFaker)
     {
         var followerUserRelationFaker = new Faker<FollowerUserRelationDto>()
@@ -61,6 +87,12 @@ public class Rules
         return followerUserRelationFaker;
     }
     
+    /// <summary>
+    /// This method creates the rules for the UserLikePostRelationDto.
+    /// </summary>
+    /// <param name="userFaker"></param>
+    /// <param name="postFaker"></param>
+    /// <returns></returns>
     public Faker<UserLikePostRelationDto> UserLikePostRelationRules(Faker<UserDto> userFaker, Faker<PostsDto> postFaker)
     {
         var userLikePostRelationFaker = new Faker<UserLikePostRelationDto>()
