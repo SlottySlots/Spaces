@@ -11,18 +11,17 @@ Implements [IUserService](./slottymedia.backend.services.interfaces.iuserservice
 
 ## Constructors
 
-### **UserService(Client)**
+### **UserService(IDatabaseActions)**
 
 This constructor creates a new UserService object.
 
 ```csharp
-public UserService(Client supabaseClient)
+public UserService(IDatabaseActions databaseActions)
 ```
 
 #### Parameters
 
-`supabaseClient` Client<br>
-Supabase Client to interact with the database
+`databaseActions` IDatabaseActions<br>
 
 ## Methods
 
