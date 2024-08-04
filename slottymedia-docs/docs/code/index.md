@@ -50,6 +50,10 @@
 
 [InputFieldIcon](./slottymedia.components.partial.inputfieldicon.md)
 
+[LikeButton](./slottymedia.components.partial.likebutton.md)
+
 [Link](./slottymedia.components.partial.link.md)
+
+[Post](./slottymedia.components.partial.post.md)
 
 [Tag](./slottymedia.components.partial.tag.md)
