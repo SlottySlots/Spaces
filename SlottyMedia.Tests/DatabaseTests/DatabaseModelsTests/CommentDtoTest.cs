@@ -1,5 +1,4 @@
-﻿using SlottyMedia.Backend.Models;
-using SlottyMedia.Database;
+﻿using SlottyMedia.Database;
 using SlottyMedia.Database.Models;
 using Supabase;
 
@@ -24,7 +23,7 @@ public class CommentDtoTest
     [OneTimeSetUp]
     public async Task OneTimeSetup()
     {
-        _supabaseClient = await InitializeSupabaseClient.GetSupabaseClient();
+        _supabaseClient = InitializeSupabaseClient.GetSupabaseClient();
         _databaseActions = new DatabaseActions(_supabaseClient);
 
         _userToWorkWith = await _databaseActions.Insert(InitializeModels.GetUserDto());
@@ -41,7 +40,7 @@ public class CommentDtoTest
     [SetUp]
     public void Setup()
     {
-        _commentToWorkWith = new CommentDto()
+        _commentToWorkWith = new CommentDto
         {
             CreatorUserId = _userToWorkWith.UserId,
             PostId = _postToWorkWith.PostId,
@@ -57,6 +56,8 @@ public class CommentDtoTest
     {
         try
         {
+            if (_commentToWorkWith.CommentId is null) return;
+
             var comment =
                 await _databaseActions.GetEntityByField<CommentDto>("commentID", _commentToWorkWith.CommentId);
             if (comment != null) await _databaseActions.Delete(comment);
@@ -75,6 +76,9 @@ public class CommentDtoTest
     {
         try
         {
+            if (_postToWorkWith.PostId is null || _forumToWorkWith.ForumId is null ||
+                _userToWorkWith.UserId is null) return;
+
             var post = await _databaseActions.GetEntityByField<PostsDto>("postID", _postToWorkWith.PostId);
             if (post != null) await _databaseActions.Delete(post);
 
@@ -99,7 +103,7 @@ public class CommentDtoTest
         try
         {
             var insertedComment = await _databaseActions.Insert(_commentToWorkWith);
-            Assert.IsNotNull(insertedComment, "Inserted comment should not be null");
+            Assert.That(insertedComment, Is.Not.Null, "Inserted comment should not be null");
             Assert.That(insertedComment.CreatorUserId, Is.EqualTo(_commentToWorkWith.CreatorUserId),
                 "CreatorUserId should match");
             Assert.That(insertedComment.Content, Is.EqualTo(_commentToWorkWith.Content), "Content should match");
@@ -121,16 +125,18 @@ public class CommentDtoTest
         try
         {
             var insertedComment = await _databaseActions.Insert(_commentToWorkWith);
-            Assert.IsNotNull(insertedComment, "Inserted comment should not be null");
+            Assert.That(insertedComment, Is.Not.Null, "Inserted comment should not be null");
 
             insertedComment.Content = "I'm an updated Test Comment";
             var updatedComment = await _databaseActions.Update(insertedComment);
 
-            Assert.IsNotNull(updatedComment, "Updated comment should not be null");
-            Assert.That(updatedComment.CreatorUserId, Is.EqualTo(insertedComment.CreatorUserId),
-                "CreatorUserId should match");
-            Assert.That(updatedComment.Content, Is.EqualTo(insertedComment.Content), "Content should match");
-
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedComment, Is.Not.Null, "Updated comment should not be null");
+                Assert.That(updatedComment.CreatorUserId, Is.EqualTo(insertedComment.CreatorUserId),
+                    "CreatorUserId should match");
+                Assert.That(updatedComment.Content, Is.EqualTo(insertedComment.Content), "Content should match");
+            });
             _commentToWorkWith = updatedComment;
         }
         catch (DatabaseExceptions ex)
@@ -148,10 +154,10 @@ public class CommentDtoTest
         try
         {
             var insertedComment = await _databaseActions.Insert(_commentToWorkWith);
-            Assert.IsNotNull(insertedComment, "Inserted comment should not be null");
+            Assert.That(insertedComment, Is.Not.Null, "Inserted comment should not be null");
 
             var deletedComment = await _databaseActions.Delete(insertedComment);
-            Assert.IsNotNull(deletedComment, "Deleted comment should not be null");
+            Assert.That(deletedComment, Is.True, "Deleted comment should not be false");
         }
         catch (DatabaseExceptions ex)
         {
@@ -168,13 +174,49 @@ public class CommentDtoTest
         try
         {
             var insertedComment = await _databaseActions.Insert(_commentToWorkWith);
-            Assert.IsNotNull(insertedComment, "Inserted comment should not be null");
+            Assert.Multiple(() =>
+            {
+                Assert.That(insertedComment, Is.Not.Null, "Inserted comment should not be null");
+                Assert.That(insertedComment.CommentId, Is.Not.Null, "Inserted comment ID should not be null");
+            });
+
 
             var comment = await _databaseActions.GetEntityByField<CommentDto>("commentID", insertedComment.CommentId);
-            Assert.IsNotNull(comment, "Retrieved comment should not be null");
-            Assert.That(comment.CreatorUserId, Is.EqualTo(insertedComment.CreatorUserId), "CreatorUserId should match");
-            Assert.That(comment.Content, Is.EqualTo(insertedComment.Content), "Content should match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(comment, Is.Not.Null, "Retrieved comment should not be null");
+                if (comment != null)
+                {
+                    Assert.That(comment.CreatorUserId, Is.Not.Null, "Retrieved comment should have a CreatorUserId");
+                    Assert.That(comment.CreatorUserId, Is.EqualTo(insertedComment.CreatorUserId),
+                        "CreatorUserId should match");
+                    Assert.That(comment.Content, Is.EqualTo(insertedComment.Content), "Content should match");
 
+                    Assert.That(comment.CreatorUser, Is.Not.Null, "Retrieved comment should have a CreatorUser");
+                    if (comment.CreatorUser != null)
+                    {
+                        Assert.That(comment.CreatorUser.UserId, Is.Not.Null, "CreatorUser should have a UserId");
+                        Assert.That(comment.CreatorUser.UserId, Is.EqualTo(insertedComment.CreatorUserId),
+                            "CreatorUserId should match");
+                    }
+
+                    Assert.That(comment.Post, Is.Not.Null, "Retrieved comment should have a Post");
+                    if (comment.Post != null)
+                    {
+                        Assert.That(comment.Post.PostId, Is.Not.Null, "Post should have a PostId");
+                        Assert.That(comment.Post.PostId, Is.EqualTo(insertedComment.PostId), "PostId should match");
+
+                        Assert.That(comment.Post.Forum, Is.Not.Null, "Post should have a Forum");
+                        if (comment.Post.Forum != null)
+                        {
+                            Assert.That(comment.Post.Forum.ForumId, Is.Not.Null, "Forum should have a ForumId");
+                            Assert.That(comment.Post.Forum.ForumId, Is.EqualTo(_forumToWorkWith.ForumId),
+                                "ForumId should match");
+                        }
+                    }
+                }
+            });
+            
             _commentToWorkWith = comment;
         }
         catch (DatabaseExceptions ex)

@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Supabase" Version="1.0.5"/>
+        <PackageReference Include="Supabase" Version="1.1.1" />
         <Folder Include="wwwroot\static\login\"/>
         <Folder Include="Backend\Services\"/>
         <Folder Include="Backend\ViewModel\"/>
