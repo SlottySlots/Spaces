@@ -4,6 +4,7 @@ using SlottyMedia.Backend.ViewModel;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Components;
 using SlottyMedia.Database.Models;
+using SlottyMedia.Database;
 using Supabase;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,14 +14,9 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 // Add Supabase
-
-
 var url = Environment.GetEnvironmentVariable("SUPABASE_URL");
 var key = Environment.GetEnvironmentVariable("SUPABASE_KEY");
-if (url is null && key is null)
-{
-    // throw new Exception("Supabase settings not found");
-}
+if (url is null || key is null) throw new Exception("Supabase settings not found");
 builder.Services.AddSingleton(_ =>
     new Client(
         url, key,
@@ -30,14 +26,18 @@ builder.Services.AddSingleton(_ =>
             AutoConnectRealtime = true
         }));
 
+
+// Database
+builder.Services.AddSingleton<IDatabaseActions, DatabaseActions>();
+
+// Model
+builder.Services.AddSingleton<UserDto>();
+
 // Viewmodel
 builder.Services.AddSingleton<ICounterVm, CounterVm>();
 
 // Services
 builder.Services.AddSingleton<IUserService, UserService>();
-
-// Model
-builder.Services.AddSingleton<UserDto>();
 
 var app = builder.Build();
 

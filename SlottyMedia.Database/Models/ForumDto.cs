@@ -1,3 +1,4 @@
+using SlottyMedia.Database.Models;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -9,11 +10,24 @@ namespace SlottyMedia.Backend.Models;
 [Table("Forum")]
 public class ForumDto : BaseModel
 {
+    public ForumDto()
+    {
+    }
+
+    public ForumDto(string creatorUserId, string forumTopic)
+    {
+        CreatorUserId = creatorUserId;
+        ForumTopic = forumTopic;
+    }
+
     /// <summary>
     /// The ID of the Forum. This is the Primary Key. It is auto-generated.
     /// </summary>
-    [PrimaryKey("forumID", true)]
-    public int ForumId { get; set; }
+    [PrimaryKey("forumID", false)]
+    public string ForumId { get; set; }
+
+    [Reference(typeof(UserDto), ReferenceAttribute.JoinType.Inner, true, "userID")]
+    public UserDto CreatorUser { get; set; }
 
     /// <summary>
     /// The ID of the User who created the Forum. This is a Foreign Key to the User Table.
