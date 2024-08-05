@@ -1,4 +1,6 @@
-﻿@inherits LayoutComponentBase
+﻿@using SlottyMedia.Backend.Services.Interfaces
+@inherits LayoutComponentBase
+@inject IAuthService authService;
 
 
 <div class="w-screen h-screen flex">
@@ -141,3 +143,33 @@
     </div>
     
 </div>
+
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        if (authService.GetCurrentSession() == null)
+        {
+            try
+            {
+                var session = await authService.RestoreSessionAsync();
+                if (session != null)
+                {
+                    Console.WriteLine("User session restored.");
+                    Console.WriteLine("Current Session set for: " + session.User.Email);
+                    
+                    //Perform actions on authentication
+                }
+                else
+                {
+                    Console.WriteLine("No active session found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+    }
+    
+
+}

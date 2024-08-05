@@ -63,27 +63,6 @@
 </div>
 
 @code {
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            var session = await viewmodel.RestoreSessionAsync();
-            if (session != null)
-            {
-                Console.WriteLine("User session restored.");
-                Console.WriteLine("Current Session set: " + viewmodel.GetCurrentSession().User.Email);
-            }
-            else
-            {
-                Console.WriteLine("No active session found.");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
-        }
-    }
-
     private string emailInput;
     private string passwordInput;
     
@@ -100,23 +79,28 @@
 
     private async void OnClickSubmit()
     {
-        try
+        if (viewmodel.GetCurrentSession() == null)
         {
-            var session = await viewmodel.RegisterAsync(emailInput, passwordInput);
-            if (session != null)
+            try
             {
-                Console.WriteLine("Registration successful, user logged in.");
+                var session = await viewmodel.RegisterAsync(emailInput, passwordInput);
+                if (session != null)
+                {
+                    Console.WriteLine("Registration successful, user logged in.");
+                }
+                else
+                {
+                    Console.WriteLine("Registration failed.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("Registration failed.");
+                Console.WriteLine($"Error: {ex.Message}");
             }
         }
-        catch (Exception ex)
+        else
         {
-            Console.WriteLine($"Error: {ex.Message}");
+            Console.WriteLine("Already logged in!");
         }
-        Console.WriteLine(service.IsAuthenticated());
-        
     }
 }

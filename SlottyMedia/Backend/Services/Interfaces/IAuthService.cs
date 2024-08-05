@@ -32,7 +32,7 @@ public interface IAuthService
     bool IsAuthenticated();
     
 
-    Task<Session?> SetSession(string sessionToken, string refreshToken);
+    Task<Session?> SetSession(string accessToken, string refreshToken);
 
     Task<Session?> RefreshSession(string accessToken, string refreshToken);
 
