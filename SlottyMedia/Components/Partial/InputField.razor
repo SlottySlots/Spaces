@@ -5,19 +5,35 @@
         name="@Name"
         placeholder="@Placeholder"
         type="@Type"
-        class="grow h-full outline-none bg-transparent text-cadet-gray-800"/>
+        @oninput="OnInput"
+        class="grow h-full outline-none bg-transparent text-cadet-gray-800" />
 </div>
 
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+    
+    [Parameter]
+    public string? Id { get; set; }
+    
+    [Parameter]
+    public string? Name { get; set; }
+    
+    [Parameter]
+    public string? Placeholder { get; set; }
+    
+    [Parameter]
+    public string? Type { get; set; } = "text";
+    
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
 
-@code
-{
-    [Parameter] public RenderFragment? ChildContent { get; set; }
-
-    [Parameter] public string? Id { get; set; }
-
-    [Parameter] public string? Name { get; set; }
-
-    [Parameter] public string? Placeholder { get; set; }
-
-    [Parameter] public string? Type { get; set; }
+    private async Task OnInput(ChangeEventArgs e)
+    {
+        if (e.Value is not null)
+        {
+            await ValueChanged.InvokeAsync(e.Value.ToString());
+        }
+            
+    }
 }
