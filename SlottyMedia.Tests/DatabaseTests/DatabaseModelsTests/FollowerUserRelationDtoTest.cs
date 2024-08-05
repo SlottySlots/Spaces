@@ -22,7 +22,7 @@ public class FollowerUserRelationDtoTest
     [OneTimeSetUp]
     public async Task OneTimeSetup()
     {
-        _supabaseClient = await InitializeSupabaseClient.GetSupabaseClient();
+        _supabaseClient = InitializeSupabaseClient.GetSupabaseClient();
         _databaseActions = new DatabaseActions(_supabaseClient);
 
         _followerUser = await _databaseActions.Insert(InitializeModels.GetUserDto());
@@ -36,7 +36,7 @@ public class FollowerUserRelationDtoTest
     [SetUp]
     public void Setup()
     {
-        _relationToWorkWith = new FollowerUserRelationDto()
+        _relationToWorkWith = new FollowerUserRelationDto
         {
             FollowerUserId = _followerUser.UserId,
             FollowedUserId = _followedUser.UserId
@@ -51,6 +51,8 @@ public class FollowerUserRelationDtoTest
     {
         try
         {
+            if (_relationToWorkWith.FollowerUserRelationId is null) return;
+
             var relation = await _databaseActions.GetEntityByField<FollowerUserRelationDto>("followerUserRelationID",
                 _relationToWorkWith.FollowerUserRelationId);
             if (relation != null) await _databaseActions.Delete(relation);
@@ -69,6 +71,8 @@ public class FollowerUserRelationDtoTest
     {
         try
         {
+            if (_followerUser.UserId is null || _followedUser.UserId is null) return;
+
             var follower = await _databaseActions.GetEntityByField<UserDto>("userID", _followerUser.UserId);
             if (follower != null) await _databaseActions.Delete(follower);
 
@@ -90,11 +94,12 @@ public class FollowerUserRelationDtoTest
         try
         {
             var insertedRelation = await _databaseActions.Insert(_relationToWorkWith);
-            Assert.IsNotNull(insertedRelation, "Inserted relation should not be null");
-            Assert.That(insertedRelation.FollowerUserId, Is.EqualTo(_relationToWorkWith.FollowerUserId),
-                "FollowerUserId should match");
-            Assert.That(insertedRelation.FollowedUserId, Is.EqualTo(_relationToWorkWith.FollowedUserId),
-                "FollowedUserId should match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(insertedRelation, Is.Not.Null, "Inserted relation should not be null");
+                Assert.That(insertedRelation.FollowerUserId, Is.EqualTo(_relationToWorkWith.FollowerUserId), "FollowerUserId should match");
+                Assert.That(insertedRelation.FollowedUserId, Is.EqualTo(_relationToWorkWith.FollowedUserId), "FollowedUserId should match");
+            });
 
             _relationToWorkWith = insertedRelation;
         }
@@ -113,10 +118,10 @@ public class FollowerUserRelationDtoTest
         try
         {
             var insertedRelation = await _databaseActions.Insert(_relationToWorkWith);
-            Assert.IsNotNull(insertedRelation, "Inserted relation should not be null");
+            Assert.That(insertedRelation, Is.Not.Null, "Inserted relation should not be null");
 
             var deletedRelation = await _databaseActions.Delete(insertedRelation);
-            Assert.IsNotNull(deletedRelation, "Deleted relation should not be null");
+            Assert.That(deletedRelation, Is.True, "Deleted relation should not be false");
         }
         catch (DatabaseExceptions ex)
         {
@@ -133,16 +138,26 @@ public class FollowerUserRelationDtoTest
         try
         {
             var insertedRelation = await _databaseActions.Insert(_relationToWorkWith);
-            Assert.IsNotNull(insertedRelation, "Inserted relation should not be null");
+            Assert.Multiple(() =>
+            {
+                Assert.That(insertedRelation, Is.Not.Null, "Inserted relation should not be null");
+                Assert.That(insertedRelation.FollowerUserRelationId, Is.Not.Null, "Inserted relation should have a FollowerUserRelationId");
+            });
 
             var relation = await _databaseActions.GetEntityByField<FollowerUserRelationDto>("followerUserRelationID",
                 insertedRelation.FollowerUserRelationId);
-            Assert.IsNotNull(relation, "Retrieved relation should not be null");
-            Assert.That(relation.FollowerUserId, Is.EqualTo(insertedRelation.FollowerUserId),
-                "FollowerUserId should match");
-            Assert.That(relation.FollowedUserId, Is.EqualTo(insertedRelation.FollowedUserId),
-                "FollowedUserId should match");
-            Assert.That(relation.CreatedAt, Is.EqualTo(insertedRelation.CreatedAt), "CreatedAt should match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(relation, Is.Not.Null, "Retrieved relation should not be null");
+                if (relation != null)
+                {
+                    Assert.That(relation.FollowerUserId, Is.EqualTo(insertedRelation.FollowerUserId),
+                        "FollowerUserId should match");
+                    Assert.That(relation.FollowedUserId, Is.EqualTo(insertedRelation.FollowedUserId),
+                        "FollowedUserId should match");
+                    Assert.That(relation.CreatedAt, Is.EqualTo(insertedRelation.CreatedAt), "CreatedAt should match");
+                }
+            });
 
             _relationToWorkWith = relation;
         }

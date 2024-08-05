@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Backend.Services
 
+This class is the User Service. It is responsible for handling all User related operations.
+
 ```csharp
 public class UserService : SlottyMedia.Backend.Services.Interfaces.IUserService
 ```
@@ -22,6 +24,7 @@ public UserService(IDatabaseActions databaseActions)
 #### Parameters
 
 `databaseActions` IDatabaseActions<br>
+This parameter is used to interact with the database
 
 ## Methods
 

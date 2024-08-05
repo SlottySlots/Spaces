@@ -15,9 +15,9 @@ public class DatabaseActionTests
     private UserDto _userToWorkWith;
 
     [OneTimeSetUp]
-    public async Task OneTimeSetup()
+    public void OneTimeSetup()
     {
-        _supabaseClient = await InitializeSupabaseClient.GetSupabaseClient();
+        _supabaseClient = InitializeSupabaseClient.GetSupabaseClient();
         _databaseActions = new DatabaseActions(_supabaseClient);
     }
 
@@ -32,6 +32,8 @@ public class DatabaseActionTests
     {
         try
         {
+            if(_userToWorkWith.UserId is null) return;
+
             var user = await _databaseActions.GetEntityByField<UserDto>("userID", _userToWorkWith.UserId);
             if (user != null) await _databaseActions.Delete(user);
         }
@@ -50,10 +52,13 @@ public class DatabaseActionTests
         try
         {
             var insertedUser = await _databaseActions.Insert(_userToWorkWith);
-            Assert.IsNotNull(insertedUser, "Inserted user should not be null");
-            Assert.That(insertedUser.UserId, Is.EqualTo(_userToWorkWith.UserId), "UserId should match");
-            Assert.That(insertedUser.UserName, Is.EqualTo(_userToWorkWith.UserName), "UserName should match");
-            Assert.That(insertedUser.Description, Is.EqualTo(_userToWorkWith.Description), "Description should match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(insertedUser, Is.Not.Null, "Inserted user should not be null");
+                Assert.That(insertedUser.UserId, Is.EqualTo(_userToWorkWith.UserId), "UserId should match");
+                Assert.That(insertedUser.UserName, Is.EqualTo(_userToWorkWith.UserName), "UserName should match");
+                Assert.That(insertedUser.Description, Is.EqualTo(_userToWorkWith.Description), "Description should match");
+            });
         }
         catch (DatabaseExceptions ex)
         {
@@ -70,15 +75,18 @@ public class DatabaseActionTests
         try
         {
             var insertedUser = await _databaseActions.Insert(_userToWorkWith);
-            Assert.IsNotNull(insertedUser, "Inserted user should not be null");
+            Assert.That(insertedUser, Is.Not.Null, "Inserted user should not be null");
 
             insertedUser.Description = "Please don't delete me, I'm updated";
             var updatedUser = await _databaseActions.Update(insertedUser);
 
-            Assert.IsNotNull(updatedUser, "Updated user should not be null");
-            Assert.That(updatedUser.UserId, Is.EqualTo(insertedUser.UserId), "UserId should match");
-            Assert.That(updatedUser.UserName, Is.EqualTo(insertedUser.UserName), "UserName should match");
-            Assert.That(updatedUser.Description, Is.EqualTo(insertedUser.Description), "Description should match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedUser, Is.Not.Null, "Updated user should not be null");
+                Assert.That(updatedUser.UserId, Is.EqualTo(insertedUser.UserId), "UserId should match");
+                Assert.That(updatedUser.UserName, Is.EqualTo(insertedUser.UserName), "UserName should match");
+                Assert.That(updatedUser.Description, Is.EqualTo(insertedUser.Description), "Description should match");
+            });
         }
         catch (DatabaseExceptions ex)
         {
@@ -95,10 +103,10 @@ public class DatabaseActionTests
         try
         {
             var insertedUser = await _databaseActions.Insert(_userToWorkWith);
-            Assert.IsNotNull(insertedUser, "Inserted user should not be null");
+            Assert.That(insertedUser, Is.Not.Null, "Inserted user should not be null");
 
             var deletedUser = await _databaseActions.Delete(insertedUser);
-            Assert.IsNotNull(deletedUser, "Deleted user should not be null");
+            Assert.That(deletedUser, Is.True, "Deleted user should not be false");
         }
         catch (DatabaseExceptions ex)
         {
@@ -115,13 +123,30 @@ public class DatabaseActionTests
         try
         {
             var insertedUser = await _databaseActions.Insert(_userToWorkWith);
-            Assert.IsNotNull(insertedUser, "Inserted user should not be null");
+            Assert.Multiple(() =>
+            {
+                Assert.That(insertedUser, Is.Not.Null, "Inserted user should not be null");
+                Assert.That(insertedUser.UserId, Is.Not.Null, "Inserted user's UserId should not be null");
+            });
 
             var user = await _databaseActions.GetEntityByField<UserDto>("userID", insertedUser.UserId);
-            Assert.IsNotNull(user, "Retrieved user should not be null");
-            Assert.That(user.UserId, Is.EqualTo(insertedUser.UserId), "UserId should match");
-            Assert.That(user.UserName, Is.EqualTo(insertedUser.UserName), "UserName should match");
-            Assert.That(user.Description, Is.EqualTo(insertedUser.Description), "Description should match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(user, Is.Not.Null, "Retrieved user should not be null");
+                if (user != null)
+                {
+                    Assert.That(user.UserId, Is.EqualTo(insertedUser.UserId), "UserId should match");
+                    Assert.That(user.UserName, Is.EqualTo(insertedUser.UserName), "UserName should match");
+                    Assert.That(user.Description, Is.EqualTo(insertedUser.Description), "Description should match");
+
+                    Assert.That(user.Role, Is.Not.Null, "Retrieved user should have a Role");
+                    if (user.Role != null)
+                    {
+                        Assert.That(user.Role.RoleId, Is.Not.Null, "Retrieved user's Role should have a RoleId");
+                        Assert.That(user.Role.RoleId, Is.EqualTo(_userToWorkWith.RoleId), "Role should match");
+                    }
+                }
+            });
         }
         catch (DatabaseExceptions ex)
         {

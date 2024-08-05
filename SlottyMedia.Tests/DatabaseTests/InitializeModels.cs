@@ -1,4 +1,3 @@
-using SlottyMedia.Backend.Models;
 using SlottyMedia.Database.Models;
 
 namespace SlottyMedia.Tests.DatabaseTests;
@@ -6,11 +5,11 @@ namespace SlottyMedia.Tests.DatabaseTests;
 /// <summary>
 /// This class initializes the models for the database tests.
 /// </summary>
-public class InitializeModels
+public static class InitializeModels
 {
-    public static RoleDto GetRoleDto()
+    private static RoleDto GetRoleDto()
     {
-        return new RoleDto()
+        return new RoleDto
         {
             RoleId = "c0589855-a81c-451d-8587-3061926a1f3a",
             RoleName = "User",
@@ -20,7 +19,7 @@ public class InitializeModels
 
     public static UserDto GetUserDto()
     {
-        return new UserDto()
+        return new UserDto
         {
             UserId = Guid.NewGuid().ToString(),
             UserName = "I'm a Test User",
@@ -31,7 +30,7 @@ public class InitializeModels
 
     public static ForumDto GetForumDto(UserDto userDto)
     {
-        return new ForumDto()
+        return new ForumDto
         {
             CreatorUserId = userDto.UserId,
             ForumTopic = "I'm a Test Forum"
@@ -40,7 +39,7 @@ public class InitializeModels
 
     public static PostsDto GetPostsDto(ForumDto forumDto, UserDto userDto)
     {
-        return new PostsDto()
+        return new PostsDto
         {
             ForumId = forumDto.ForumId,
             UserId = userDto.UserId,

@@ -22,6 +22,7 @@ public class CounterVm : ICounterVm, INotifyPropertyChanged
     /// Initializes a new instance of the <see cref="CounterVm"/> class. It creates a new UserDto object and sets the UserService.
     /// </summary>
     /// <param name="userService">The user service to interact with the database.</param>
+    /// <param name="user">A new UserDto object</param>
     public CounterVm(IUserService userService, UserDto user)
     {
         _user = user;
@@ -66,10 +67,5 @@ public class CounterVm : ICounterVm, INotifyPropertyChanged
         {
             //TODO: Handle the case where the user is not found.    
         }
-    }
-
-    public async Task InsertUser(UserDto user)
-    {
-        await _userService.CreateUser(Guid.NewGuid().ToString(), "test");
     }
 }

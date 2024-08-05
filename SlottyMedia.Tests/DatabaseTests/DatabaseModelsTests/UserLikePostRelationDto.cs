@@ -1,5 +1,4 @@
-﻿using SlottyMedia.Backend.Models;
-using SlottyMedia.Database;
+﻿using SlottyMedia.Database;
 using SlottyMedia.Database.Models;
 using Supabase;
 
@@ -24,7 +23,7 @@ public class UserLikePostRelationDtoTest
     [OneTimeSetUp]
     public async Task OneTimeSetup()
     {
-        _supabaseClient = await InitializeSupabaseClient.GetSupabaseClient();
+        _supabaseClient = InitializeSupabaseClient.GetSupabaseClient();
         _databaseActions = new DatabaseActions(_supabaseClient);
 
         _userToWorkWith = await _databaseActions.Insert(InitializeModels.GetUserDto());
@@ -41,7 +40,7 @@ public class UserLikePostRelationDtoTest
     [SetUp]
     public void Setup()
     {
-        _relationToWorkWith = new UserLikePostRelationDto()
+        _relationToWorkWith = new UserLikePostRelationDto
         {
             UserId = _userToWorkWith.UserId,
             PostId = _postToWorkWith.PostId
@@ -56,6 +55,8 @@ public class UserLikePostRelationDtoTest
     {
         try
         {
+            if (_relationToWorkWith.UserLikePostRelationId is null) return;
+
             var relation = await _databaseActions.GetEntityByField<UserLikePostRelationDto>("userLikePostRelationID",
                 _relationToWorkWith.UserLikePostRelationId);
             if (relation != null) await _databaseActions.Delete(relation);
@@ -74,6 +75,9 @@ public class UserLikePostRelationDtoTest
     {
         try
         {
+            if (_postToWorkWith.PostId is null || _forumToWorkWirh.ForumId is null ||
+                _userToWorkWith.UserId is null) return;
+
             var post = await _databaseActions.GetEntityByField<PostsDto>("postID", _postToWorkWith.PostId);
             if (post != null) await _databaseActions.Delete(post);
 
@@ -98,9 +102,12 @@ public class UserLikePostRelationDtoTest
         try
         {
             var insertedRelation = await _databaseActions.Insert(_relationToWorkWith);
-            Assert.IsNotNull(insertedRelation, "Inserted relation should not be null");
-            Assert.That(insertedRelation.UserId, Is.EqualTo(_relationToWorkWith.UserId), "UserId should match");
-            Assert.That(insertedRelation.PostId, Is.EqualTo(_relationToWorkWith.PostId), "PostId should match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(insertedRelation, Is.Not.Null, "Inserted relation should not be null");
+                Assert.That(insertedRelation.UserId, Is.EqualTo(_relationToWorkWith.UserId), "UserId should match");
+                Assert.That(insertedRelation.PostId, Is.EqualTo(_relationToWorkWith.PostId), "PostId should match");
+            });
 
             _relationToWorkWith = insertedRelation;
         }
@@ -119,10 +126,10 @@ public class UserLikePostRelationDtoTest
         try
         {
             var insertedRelation = await _databaseActions.Insert(_relationToWorkWith);
-            Assert.IsNotNull(insertedRelation, "Inserted relation should not be null");
+            Assert.That(insertedRelation, Is.Not.Null, "Inserted relation should not be null");
 
             var deletedRelation = await _databaseActions.Delete(insertedRelation);
-            Assert.IsNotNull(deletedRelation, "Deleted relation should not be null");
+            Assert.That(deletedRelation, Is.True, "Deleted relation should not be false");
         }
         catch (DatabaseExceptions ex)
         {
@@ -139,14 +146,24 @@ public class UserLikePostRelationDtoTest
         try
         {
             var insertedRelation = await _databaseActions.Insert(_relationToWorkWith);
-            Assert.IsNotNull(insertedRelation, "Inserted relation should not be null");
+            Assert.Multiple(() =>
+            {
+                Assert.That(insertedRelation, Is.Not.Null, "Inserted relation should not be null");
+                Assert.That(insertedRelation.UserLikePostRelationId, Is.Not.Null, "Inserted relation ID should not be null");
+            });
 
             var relation = await _databaseActions.GetEntityByField<UserLikePostRelationDto>("userLikePostRelationID",
                 insertedRelation.UserLikePostRelationId);
-            Assert.IsNotNull(relation, "Retrieved relation should not be null");
-            Assert.That(relation.UserId, Is.EqualTo(insertedRelation.UserId), "UserId should match");
-            Assert.That(relation.PostId, Is.EqualTo(insertedRelation.PostId), "PostId should match");
-            Assert.That(relation.CreatedAt, Is.EqualTo(insertedRelation.CreatedAt), "CreatedAt should match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(relation, Is.Not.Null, "Retrieved relation should not be null");
+                if (relation != null)
+                {
+                    Assert.That(relation.UserId, Is.EqualTo(insertedRelation.UserId), "UserId should match");
+                    Assert.That(relation.PostId, Is.EqualTo(insertedRelation.PostId), "PostId should match");
+                    Assert.That(relation.CreatedAt, Is.EqualTo(insertedRelation.CreatedAt), "CreatedAt should match");
+                }
+            });
 
             _relationToWorkWith = relation;
         }
