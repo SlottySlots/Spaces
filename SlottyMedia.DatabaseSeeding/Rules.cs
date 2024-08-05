@@ -1,5 +1,4 @@
 using Bogus;
-using SlottyMedia.Backend.Models;
 using SlottyMedia.Database.Models;
 
 namespace SlottyMedia.DatabaseSeeding;
