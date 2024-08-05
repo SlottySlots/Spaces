@@ -8,17 +8,15 @@ namespace SlottyMedia.Backend.Services;
 
 public class UserService : IUserService
 {
-    private readonly Client _supabaseClient;
-    private readonly DatabaseActions _databaseActions;
+    private readonly IDatabaseActions _databaseActions;
 
     /// <summary>
     /// This constructor creates a new UserService object.
     /// </summary>
     /// <param name="supabaseClient">Supabase Client to interact with the database</param>
-    public UserService(Client supabaseClient)
+    public UserService(IDatabaseActions databaseActions)
     {
-        _supabaseClient = supabaseClient;
-        _databaseActions = new DatabaseActions(supabaseClient);
+        _databaseActions = databaseActions;
     }
 
     /// <summary>
@@ -41,7 +39,7 @@ public class UserService : IUserService
         };
         try
         {
-             return await _databaseActions.Insert(user);
+            return await _databaseActions.Insert(user);
         }
         catch (Exception e)
         {
@@ -66,7 +64,6 @@ public class UserService : IUserService
             //TODO Implement how we should handle errors in the View
             return false;
         }
-        
     }
 
     /// <summary>
@@ -78,7 +75,7 @@ public class UserService : IUserService
     {
         try
         {
-return await _databaseActions.GetEntityByField<UserDto>("userID", userId);
+            return await _databaseActions.GetEntityByField<UserDto>("userID", userId);
         }
         catch (Exception e)
         {
@@ -96,7 +93,7 @@ return await _databaseActions.GetEntityByField<UserDto>("userID", userId);
     {
         try
         {
-return await _databaseActions.Update(user);
+            return await _databaseActions.Update(user);
         }
         catch (Exception e)
         {
