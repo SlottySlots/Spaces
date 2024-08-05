@@ -69,4 +69,10 @@ public class AuthService(Client supabaseClient) : IAuthService
     {
         return supabaseClient.Auth.CurrentSession != null;
     }
+
+    public Session? GetCurrentSession()
+    {
+        var session = supabaseClient.Auth.CurrentSession;
+        return session;
+    }
 }

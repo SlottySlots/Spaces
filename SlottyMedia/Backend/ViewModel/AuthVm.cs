@@ -15,6 +15,22 @@ public class AuthVm : IAuthVm
         _jsRuntime = jsRuntime ?? throw new ArgumentNullException(nameof(jsRuntime));
     }
     
+    public ValueTask SetCookie(string name, string value, int days)
+    {
+        return _jsRuntime.InvokeVoidAsync("setCookie", name, value, days);
+    }
+
+    public  ValueTask<string> GetCookie(string name)
+    {
+        return _jsRuntime.InvokeAsync<string>("getCookie", name);
+    }
+
+    public ValueTask<string> RemoveCookie(string name)
+    {
+        return _jsRuntime.InvokeAsync<string>("RemoveCookie", name);
+    }
+    
+    
     public async Task<Session?> RegisterAsync(string email, string password)
     {
         var session = await _authService.SignUp(email, password);
@@ -37,8 +53,8 @@ public class AuthVm : IAuthVm
 
     public async Task<Session?> RestoreSessionAsync()
     {
-        var accessToken = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "supabase.auth.token");
-        var refreshToken = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "supabase.auth.refreshToken");
+        var accessToken = await GetCookie("supabase.auth.token");
+        var refreshToken = await GetCookie("supabase.auth.refreshToken");
         if (!string.IsNullOrEmpty(accessToken) && !string.IsNullOrEmpty(refreshToken))
         {
             try
@@ -61,14 +77,19 @@ public class AuthVm : IAuthVm
 
     public async Task SaveSessionAsync(Session session)
     {
-        await _jsRuntime.InvokeVoidAsync("localStorage.setItem", "supabase.auth.token", session.AccessToken);
-        await _jsRuntime.InvokeVoidAsync("localStorage.setItem", "supabase.auth.refreshToken", session.RefreshToken);
+        await SetCookie("supabase.auth.token", session.AccessToken, 7);
+        await SetCookie("supabase.auth.refreshToken", session.RefreshToken, 7);
     }
 
     public async Task LogoutAsync()
     {
         await _authService.SignOut();
-        await _jsRuntime.InvokeVoidAsync("localStorage.removeItem", "supabase.auth.token");
-        await _jsRuntime.InvokeVoidAsync("localStorage.removeItem", "supabase.auth.refreshToken");
+        await RemoveCookie( "supabase.auth.token");
+        await RemoveCookie( "supabase.auth.refreshToken");
+    }
+
+    public Session? GetCurrentSession()
+    {
+        return _authService.GetCurrentSession();
     }
 }

@@ -33,4 +33,6 @@ public interface IAuthService
     Task<string?> GetAccessToken();
 
     Task<Session?> RefreshSession(string accessToken, string refreshToken);
+
+    Session? GetCurrentSession();
 }

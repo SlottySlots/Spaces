@@ -9,4 +9,5 @@ public interface IAuthVm
     public Task<Session?> RestoreSessionAsync();
     public Task SaveSessionAsync(Session session);
     public Task LogoutAsync();
+    Session? GetCurrentSession();
 }

@@ -17,7 +17,7 @@
 </p>
 
 
-<form class="w-full max-w-[400px] px-2 flex flex-col items-center gap-5">
+<div class="w-full max-w-[400px] px-2 flex flex-col items-center gap-5">
     
     <!-- Username -->
     <InputField Id="username" Name="username" Placeholder="Username" ValueChanged="OnInputEmail">
@@ -60,7 +60,7 @@
     </button>
     
     <span>Trying to login? <PinkAnchor NavigationLink="/login" TextContent="Sign in!" /></span>
-</form>
+</div>
 
 @code {
     protected override async Task OnInitializedAsync()
@@ -71,6 +71,7 @@
             if (session != null)
             {
                 Console.WriteLine("User session restored.");
+                Console.WriteLine("Current Session set: " + viewmodel.GetCurrentSession().User.Email);
             }
             else
             {
