@@ -61,6 +61,16 @@ public string Type { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+### **ValueChanged**
+
+```csharp
+public EventCallback<string> ValueChanged { get; set; }
+```
+
+#### Property Value
+
+EventCallback&lt;String&gt;<br>
+
 ## Constructors
 
 ### **InputField()**
