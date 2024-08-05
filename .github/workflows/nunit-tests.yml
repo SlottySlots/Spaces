@@ -1,24 +1,11 @@
 name: Run NUnit Tests
 
-on:
-  push:
-    branches:
-      - 'feat/*'
-      - 'test/*'
-      - 'perf/*'
-      - 'style/*'
-      - 'fix/*'
-  pull_request:
-    branches:
-      - 'feat/*'
-      - 'test/*'
-      - 'perf/*'
-      - 'style/*'
-      - 'fix/*'
+on: [pull_request, push, workflow_dispatch]
+
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
