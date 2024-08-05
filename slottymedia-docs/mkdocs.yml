@@ -5,7 +5,7 @@ nav:
   - Database: database.md
   - MVVM: mvvm.md
   - Coding Guidelines: guidelines.md
-  - Code Documentation: code/index.md
+  - Code Documentation: code
   - Exception Guidelines: exceptions.md
 theme: material
 plugins:
