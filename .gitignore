@@ -12,6 +12,9 @@ SlottyMedia.Tests/obj
 SlottyMedia.Database/obj
 SlottyMedia.Database/bin
 /SlottyMedia.Database/obj
+/SlottyMedia.DatabaseSeeding/bin
+/SlottyMedia.DatabaseSeeding/obj
 
 # minified CSS
 **/*.min.css
+SlottyMedia.sln.DotSettings.user

@@ -5,12 +5,11 @@
         name="@Name"
         placeholder="@Placeholder"
         type="@Type"
-        class="grow h-full outline-none bg-transparent text-cadet-gray-800"/>
+        @oninput="OnInput"
+        class="grow h-full outline-none bg-transparent text-cadet-gray-800" />
 </div>
 
-
-@code
-{
+@code {
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
     
@@ -24,5 +23,17 @@
     public string? Placeholder { get; set; }
     
     [Parameter]
-    public string? Type { get; set; }
+    public string? Type { get; set; } = "text";
+    
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    private async Task OnInput(ChangeEventArgs e)
+    {
+        if (e.Value is not null)
+        {
+            await ValueChanged.InvokeAsync(e.Value.ToString());
+        }
+            
+    }
 }

@@ -1,24 +1,23 @@
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Models;
-using Supabase.Gotrue;
-using Client = Supabase.Client;
 
 namespace SlottyMedia.Backend.Services;
 
+/// <summary>
+/// This class is the User Service. It is responsible for handling all User related operations.
+/// </summary>
 public class UserService : IUserService
 {
-    private readonly Client _supabaseClient;
-    private readonly DatabaseActions _databaseActions;
+    private readonly IDatabaseActions _databaseActions;
 
     /// <summary>
     /// This constructor creates a new UserService object.
     /// </summary>
-    /// <param name="supabaseClient">Supabase Client to interact with the database</param>
-    public UserService(Client supabaseClient)
+    /// <param name="databaseActions">This parameter is used to interact with the database</param>
+    public UserService(IDatabaseActions databaseActions)
     {
-        _supabaseClient = supabaseClient;
-        _databaseActions = new DatabaseActions(supabaseClient);
+        _databaseActions = databaseActions;
     }
 
     /// <summary>
@@ -41,9 +40,9 @@ public class UserService : IUserService
         };
         try
         {
-             return await _databaseActions.Insert(user);
+            return await _databaseActions.Insert(user);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
             //TODO Implement how we should handle errors in the View
             return null;
@@ -61,12 +60,11 @@ public class UserService : IUserService
         {
             return await _databaseActions.Delete(user);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
             //TODO Implement how we should handle errors in the View
             return false;
         }
-        
     }
 
     /// <summary>
@@ -78,9 +76,9 @@ public class UserService : IUserService
     {
         try
         {
-return await _databaseActions.GetEntityByField<UserDto>("userID", userId);
+            return await _databaseActions.GetEntityByField<UserDto>("userID", userId);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
             //TODO Implement how we should handle errors in the View
             return null;
@@ -96,9 +94,9 @@ return await _databaseActions.GetEntityByField<UserDto>("userID", userId);
     {
         try
         {
-return await _databaseActions.Update(user);
+            return await _databaseActions.Update(user);
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
             //TODO Implement how we should handle errors in the View
             return null;

@@ -1,5 +1,4 @@
 ﻿@page "/counter"
-@using Supabase.Postgrest
 @rendermode InteractiveServer
 
 @inject Backend.ViewModel.Interfaces.ICounterVm CounterVm
@@ -8,11 +7,11 @@
 
 <h1>Counter</h1>
 
-<p role="status">Current count: @currentCount</p>
+<p role="status">Current count: @_currentCount</p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
-@if (CounterVm.User != null)
+@if (CounterVm.User.UserName is not null)
 {
     <p>@CounterVm.User.UserName</p>
 }
@@ -22,11 +21,11 @@ else
 }
 
 @code {
-    private int currentCount = 0;
-    
+    private int _currentCount;
+
     private void IncrementCount()
     {
-        currentCount++;
+        _currentCount++;
     }
 
     protected override async Task OnInitializedAsync()

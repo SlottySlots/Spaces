@@ -1,6 +1,4 @@
-﻿using SlottyMedia.Database.Models;
-using Supabase.Postgrest;
-using Supabase.Postgrest.Attributes;
+﻿using Supabase.Postgrest;
 using Supabase.Postgrest.Models;
 
 namespace SlottyMedia.Database;
@@ -15,7 +13,6 @@ public class DatabaseActions : IDatabaseActions
 
     public DatabaseActions(Supabase.Client supabaseClient)
     {
-        
         _supabaseClient = supabaseClient;
     }
 
@@ -72,7 +69,11 @@ public class DatabaseActions : IDatabaseActions
         try
         {
             var result = await _supabaseClient.From<T>().Delete(item);
-            if (result != null) throw new Exception("The Item could not be deleted from the database.");
+            if (result.ResponseMessage is not null)
+                result.ResponseMessage.EnsureSuccessStatusCode();
+            else
+                throw new Exception("The Item could not be deleted from the database.");
+
             return true;
         }
         catch (Exception e)
