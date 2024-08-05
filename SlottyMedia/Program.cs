@@ -29,10 +29,11 @@ builder.Services.AddSingleton<ICounterVm, CounterVm>();
 
 // Services
 builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddScoped<ICookieService, CookieService>();
 
 
 builder.Services.AddScoped<IAuthService, AuthService>();  // Scoped
-builder.Services.AddScoped<IAuthVm, AuthVm>(); 
+builder.Services.AddScoped<IRegisterVm, RegisterVm>(); 
 
 // Model
 builder.Services.AddSingleton<UserDto>();

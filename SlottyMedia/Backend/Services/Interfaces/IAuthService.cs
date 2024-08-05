@@ -22,15 +22,17 @@ public interface IAuthService
     /// </summary>
     /// <returns></returns>
     Task SignOut();
+
+    public Task<Session?> RestoreSessionAsync();
+    public Task SaveSessionAsync(Session session);
     /// <summary>
     /// This method is used to check if the user is authenticated.
     /// </summary>
     /// <returns></returns>
     bool IsAuthenticated();
+    
 
     Task<Session?> SetSession(string sessionToken, string refreshToken);
-
-    Task<string?> GetAccessToken();
 
     Task<Session?> RefreshSession(string accessToken, string refreshToken);
 

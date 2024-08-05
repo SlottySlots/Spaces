@@ -1,3 +1,5 @@
+using Microsoft.JSInterop;
+using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using Supabase.Gotrue;
 using Client = Supabase.Client;
@@ -5,16 +7,17 @@ using Client = Supabase.Client;
 /// This class is used to implement the IAuthService.
 /// </summary>
 /// <param name="supabaseClient"></param>
-public class AuthService(Client supabaseClient) : IAuthService
+public class AuthService : IAuthService
 {
-    /// <summary>
-    /// This property is used to store the Supabase client.
-    /// </summary>
-    /// <returns></returns>
-    public async Task<string?> GetAccessToken()
+    private readonly Client _supabaseClient;
+    private readonly IJSRuntime _jsRuntime;
+    private readonly ICookieService _cookieService;
+
+    public AuthService(Client supabaseClient, IJSRuntime jsRuntime, ICookieService cookieService)
     {
-        var accessToken = supabaseClient.Auth.CurrentSession?.AccessToken;
-        return accessToken;
+        _supabaseClient = supabaseClient;
+        _jsRuntime = jsRuntime;
+        _cookieService = cookieService;
     }
     
     /// <summary>
@@ -25,8 +28,12 @@ public class AuthService(Client supabaseClient) : IAuthService
     /// <returns></returns>
     public async Task<Session?> SignUp(string email, string password)
     {
-        var authResponse = await supabaseClient.Auth.SignUp(email, password);
-        return authResponse;
+        var session = await _supabaseClient.Auth.SignUp(email, password);
+        if (session != null)
+        {
+            await SaveSessionAsync(session);
+        }
+        return session;
     }
     
     /// <summary>
@@ -37,13 +44,47 @@ public class AuthService(Client supabaseClient) : IAuthService
     /// <returns></returns>
     public async Task<Session?> SignIn(string? email, string? password)
     {
-        var authResponse = await supabaseClient.Auth.SignIn(email, password);
-        return authResponse;
+        var session = await _supabaseClient.Auth.SignIn(email, password);
+        if (session != null)
+        {
+            await SaveSessionAsync(session);
+        }
+        return session;
     }
 
+    public async Task SaveSessionAsync(Session session)
+    {
+        await _cookieService.SetCookie("supabase.auth.token", session.AccessToken, 7);
+        await _cookieService.SetCookie("supabase.auth.refreshToken", session.RefreshToken, 7);
+    }
+
+    public async Task<Session?> RestoreSessionAsync()
+    {
+        var accessToken = await _cookieService.GetCookie("supabase.auth.token");
+        var refreshToken = await _cookieService.GetCookie("supabase.auth.refreshToken");
+        if (!string.IsNullOrEmpty(accessToken) && !string.IsNullOrEmpty(refreshToken))
+        {
+            try
+            {
+                var session = await RefreshSession(accessToken ,refreshToken);
+                if (session != null)
+                {
+                    await SaveSessionAsync(session);
+                    return session;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error refreshing session: {ex.Message}");
+                await SignOut();
+            }
+        }
+        return null;
+    }
+    
     public async Task<Session?> SetSession(string sessionToken, string refreshToken)
     {
-        var session = await supabaseClient.Auth.SetSession(sessionToken, refreshToken);
+        var session = await _supabaseClient.Auth.SetSession(sessionToken, refreshToken);
         return session; 
     }
     
@@ -52,12 +93,14 @@ public class AuthService(Client supabaseClient) : IAuthService
     /// </summary>
     public async Task SignOut()
     {
-        await supabaseClient.Auth.SignOut();
+        await _supabaseClient.Auth.SignOut();
+        await _cookieService.RemoveCookie( "supabase.auth.token");
+        await _cookieService.RemoveCookie( "supabase.auth.refreshToken");
     }
 
     public async Task<Session?> RefreshSession(string accessToken, string refreshToken)
     {
-        var session = await supabaseClient.Auth.SetSession(accessToken, refreshToken, true);
+        var session = await _supabaseClient.Auth.SetSession(accessToken, refreshToken, false);
         return session;
     }
 
@@ -67,12 +110,12 @@ public class AuthService(Client supabaseClient) : IAuthService
     /// <returns></returns>
     public bool IsAuthenticated()
     {
-        return supabaseClient.Auth.CurrentSession != null;
+        return _supabaseClient.Auth.CurrentSession != null;
     }
 
     public Session? GetCurrentSession()
     {
-        var session = supabaseClient.Auth.CurrentSession;
+        var session = _supabaseClient.Auth.CurrentSession;
         return session;
     }
 }
