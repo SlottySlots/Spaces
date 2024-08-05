@@ -27,20 +27,18 @@ UserDto<br>
 
 ## Constructors
 
-### **CounterVm(IUserService, UserDto)**
+### **CounterVm(IUserService)**
 
 Initializes a new instance of the [CounterVm](./slottymedia.backend.viewmodel.countervm.md) class. It creates a new UserDto object and sets the UserService.
 
 ```csharp
-public CounterVm(IUserService userService, UserDto user)
+public CounterVm(IUserService userService)
 ```
 
 #### Parameters
 
 `userService` [IUserService](./slottymedia.backend.services.interfaces.iuserservice.md)<br>
 The user service to interact with the database.
-
-`user` UserDto<br>
 
 ## Methods
 
@@ -69,20 +67,6 @@ public Task GetUserById(string userId)
 
 `userId` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The ID of the user to retrieve.
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
-### **InsertUser(UserDto)**
-
-```csharp
-public Task InsertUser(UserDto user)
-```
-
-#### Parameters
-
-`user` UserDto<br>
 
 #### Returns
 
