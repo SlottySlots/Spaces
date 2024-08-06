@@ -1,19 +1,19 @@
 ﻿using SlottyMedia.Database;
-using SlottyMedia.Database.Models;
+using SlottyMedia.Database.Daos;
 using Supabase;
 
 namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
 
 /// <summary>
-/// Test class for the ForumDto model.
+/// Test class for the ForumDao model.
 /// </summary>
 [TestFixture]
-public class ForumDtoTest
+public class ForumDaoTest
 {
     private Client _supabaseClient;
     private IDatabaseActions _databaseActions;
-    private ForumDto _forumToWorkWith;
-    private UserDto _userToWorkWith;
+    private ForumDao _forumToWorkWith;
+    private UserDao _userToWorkWith;
 
     /// <summary>
     /// One-time setup method to initialize Supabase client and insert test data.
@@ -28,12 +28,12 @@ public class ForumDtoTest
     }
 
     /// <summary>
-    /// Setup method to initialize a new ForumDto instance before each test.
+    /// Setup method to initialize a new ForumDao instance before each test.
     /// </summary>
     [SetUp]
     public void Setup()
     {
-        _forumToWorkWith = new ForumDto
+        _forumToWorkWith = new ForumDao
         {
             CreatorUserId = _userToWorkWith.UserId,
             ForumTopic = "I'm a Test Forum"
@@ -50,7 +50,7 @@ public class ForumDtoTest
         {
             if (_forumToWorkWith.ForumId is null) return;
 
-            var forum = await _databaseActions.GetEntityByField<ForumDto>("forumID", _forumToWorkWith.ForumId);
+            var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID", _forumToWorkWith.ForumId);
             if (forum != null) await _databaseActions.Delete(forum);
         }
         catch (Exception ex)
@@ -69,7 +69,7 @@ public class ForumDtoTest
         {
             if (_userToWorkWith.UserId is null) return;
 
-            var user = await _databaseActions.GetEntityByField<UserDto>("userID", _userToWorkWith.UserId);
+            var user = await _databaseActions.GetEntityByField<UserDao>("userID", _userToWorkWith.UserId);
             if (user != null) await _databaseActions.Delete(user);
         }
         catch (Exception ex)
@@ -90,8 +90,10 @@ public class ForumDtoTest
             Assert.Multiple(() =>
             {
                 Assert.That(insertedForum, Is.Not.Null, "Inserted forum should not be null");
-                Assert.That(insertedForum.CreatorUserId, Is.EqualTo(_forumToWorkWith.CreatorUserId), "CreatorUserId should match");
-                Assert.That(insertedForum.ForumTopic, Is.EqualTo(_forumToWorkWith.ForumTopic), "ForumTopic should match");
+                Assert.That(insertedForum.CreatorUserId, Is.EqualTo(_forumToWorkWith.CreatorUserId),
+                    "CreatorUserId should match");
+                Assert.That(insertedForum.ForumTopic, Is.EqualTo(_forumToWorkWith.ForumTopic),
+                    "ForumTopic should match");
             });
 
             _forumToWorkWith = insertedForum;
@@ -120,7 +122,8 @@ public class ForumDtoTest
             {
                 Assert.That(updatedForum, Is.Not.Null, "Updated forum should not be null");
                 Assert.That(updatedForum.ForumId, Is.EqualTo(insertedForum.ForumId), "ForumId should match");
-                Assert.That(updatedForum.CreatorUserId, Is.EqualTo(insertedForum.CreatorUserId), "CreatorUserId should match");
+                Assert.That(updatedForum.CreatorUserId, Is.EqualTo(insertedForum.CreatorUserId),
+                    "CreatorUserId should match");
                 Assert.That(updatedForum.ForumTopic, Is.EqualTo(insertedForum.ForumTopic), "ForumTopic should match");
             });
 
@@ -167,7 +170,7 @@ public class ForumDtoTest
                 Assert.That(insertedForum.ForumId, Is.Not.Null, "Inserted forum should have a ForumId");
             });
 
-            var forum = await _databaseActions.GetEntityByField<ForumDto>("forumID", insertedForum.ForumId);
+            var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID", insertedForum.ForumId);
             Assert.Multiple(() =>
             {
                 Assert.That(forum, Is.Not.Null, "Retrieved forum should not be null");

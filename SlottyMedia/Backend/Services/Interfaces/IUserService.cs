@@ -1,4 +1,4 @@
-using SlottyMedia.Database.Models;
+using SlottyMedia.Database.Daos;
 
 namespace SlottyMedia.Backend.Services.Interfaces;
 
@@ -11,8 +11,8 @@ public interface IUserService
     ///  This method returns a User object from the database based on the given userId.
     /// </summary>
     /// <param name="userId">The UserID inside the Database</param>
-    /// <returns>UserDto</returns>
-    Task<UserDto?> GetUserById(string userId);
+    /// <returns>UserDao</returns>
+    Task<UserDao> GetUserById(Guid userId);
 
     /// <summary>
     /// This method creates a new User object in the database and returns the created object.
@@ -21,20 +21,20 @@ public interface IUserService
     /// <param name="username">The Username, which the User set himself</param>
     /// <param name="description">The Description about the User</param>
     /// <param name="profilePicture">The ProfilePicture</param>
-    /// <returns>UserDto</returns>
-    Task<UserDto?> CreateUser(string userId, string username, string? description = null, long? profilePicture = null);
+    /// <returns>UserDao</returns>
+    Task<UserDao?> CreateUser(string userId, string username, string? description = null, long? profilePicture = null);
 
     /// <summary>
     /// This method updates the given User object in the database and returns the updated object.
     /// </summary>
     /// <param name="user">The User object</param>
-    /// <returns>UserDto</returns>
-    Task<UserDto?> UpdateUser(UserDto user);
+    /// <returns>UserDao</returns>
+    Task<UserDao?> UpdateUser(UserDao user);
 
     /// <summary>
     /// This method deletes the given User object from the database.
     /// </summary>
     /// <param name="user">The User Object</param>
     /// <returns name="bool">Return if the User got deleted or not</returns>
-    Task<bool> DeleteUser(UserDto user);
+    Task<bool> DeleteUser(UserDao user);
 }

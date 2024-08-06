@@ -1,5 +1,5 @@
 ﻿using SlottyMedia.Database;
-using SlottyMedia.Database.Models;
+using SlottyMedia.Database.Daos;
 using Supabase;
 
 namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
@@ -13,8 +13,8 @@ public class PostDtoTest
     private Client _supabaseClient;
     private IDatabaseActions _databaseActions;
     private PostsDto _postToWorkWith;
-    private UserDto _userToWorkWith;
-    private ForumDto _forumToWorkWith;
+    private UserDao _userToWorkWith;
+    private ForumDao _forumToWorkWith;
 
     /// <summary>
     /// One-time setup method to initialize Supabase client and insert test data.
@@ -74,10 +74,10 @@ public class PostDtoTest
         {
             if (_forumToWorkWith.ForumId is null || _userToWorkWith.UserId is null) return;
 
-            var forum = await _databaseActions.GetEntityByField<ForumDto>("forumID", _forumToWorkWith.ForumId);
+            var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID", _forumToWorkWith.ForumId);
             if (forum != null) await _databaseActions.Delete(forum);
 
-            var user = await _databaseActions.GetEntityByField<UserDto>("userID", _userToWorkWith.UserId);
+            var user = await _databaseActions.GetEntityByField<UserDao>("userID", _userToWorkWith.UserId);
             if (user != null) await _databaseActions.Delete(user);
         }
         catch (Exception ex)

@@ -1,19 +1,19 @@
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
-namespace SlottyMedia.Database.Models;
+namespace SlottyMedia.Database.Daos;
 
 /// <summary>
 /// This class represents the Forum table in the database.
 /// </summary>
 [Table("Forum")]
-public class ForumDto : BaseModel
+public class ForumDao : BaseModel
 {
-    public ForumDto()
+    public ForumDao()
     {
     }
 
-    public ForumDto(string creatorUserId, string forumTopic)
+    public ForumDao(string creatorUserId, string forumTopic)
     {
         CreatorUserId = creatorUserId;
         ForumTopic = forumTopic;
@@ -25,8 +25,8 @@ public class ForumDto : BaseModel
     [PrimaryKey("forumID")]
     public string? ForumId { get; set; }
 
-    [Reference(typeof(UserDto), ReferenceAttribute.JoinType.Inner, true, "userID")]
-    public UserDto? CreatorUser { get; set; }
+    [Reference(typeof(UserDao), ReferenceAttribute.JoinType.Inner, true, "userID")]
+    public UserDao? CreatorUser { get; set; }
 
     /// <summary>
     /// The ID of the User who created the Forum. This is a Foreign Key to the User Table.

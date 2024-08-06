@@ -3,8 +3,8 @@ using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Components;
-using SlottyMedia.Database.Models;
 using SlottyMedia.Database;
+using SlottyMedia.Database.Daos;
 using Supabase;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,7 +31,7 @@ builder.Services.AddSingleton(_ =>
 builder.Services.AddSingleton<IDatabaseActions, DatabaseActions>();
 
 // Model
-builder.Services.AddSingleton<UserDto>();
+builder.Services.AddSingleton<UserDao>();
 
 // Viewmodel
 builder.Services.AddSingleton<ICounterVm, CounterVm>();
@@ -42,8 +42,8 @@ builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddScoped<ICookieService, CookieService>();
 
 
-builder.Services.AddScoped<IAuthService, AuthService>();  // Scoped
-builder.Services.AddScoped<IRegisterVm, RegisterVm>(); 
+builder.Services.AddScoped<IAuthService, AuthService>(); // Scoped
+builder.Services.AddScoped<IRegisterVm, RegisterVm>();
 
 var app = builder.Build();
 

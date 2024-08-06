@@ -1,5 +1,5 @@
 using SlottyMedia.Database;
-using SlottyMedia.Database.Models;
+using SlottyMedia.Database.Daos;
 using Supabase;
 
 namespace SlottyMedia.Tests.DatabaseTests;
@@ -12,7 +12,7 @@ public class DatabaseActionTests
 {
     private Client _supabaseClient;
     private IDatabaseActions _databaseActions;
-    private UserDto _userToWorkWith;
+    private UserDao _userToWorkWith;
 
     [OneTimeSetUp]
     public void OneTimeSetup()
@@ -32,9 +32,9 @@ public class DatabaseActionTests
     {
         try
         {
-            if(_userToWorkWith.UserId is null) return;
+            if (_userToWorkWith.UserId is null) return;
 
-            var user = await _databaseActions.GetEntityByField<UserDto>("userID", _userToWorkWith.UserId);
+            var user = await _databaseActions.GetEntityByField<UserDao>("userID", _userToWorkWith.UserId);
             if (user != null) await _databaseActions.Delete(user);
         }
         catch (Exception ex)
@@ -57,7 +57,8 @@ public class DatabaseActionTests
                 Assert.That(insertedUser, Is.Not.Null, "Inserted user should not be null");
                 Assert.That(insertedUser.UserId, Is.EqualTo(_userToWorkWith.UserId), "UserId should match");
                 Assert.That(insertedUser.UserName, Is.EqualTo(_userToWorkWith.UserName), "UserName should match");
-                Assert.That(insertedUser.Description, Is.EqualTo(_userToWorkWith.Description), "Description should match");
+                Assert.That(insertedUser.Description, Is.EqualTo(_userToWorkWith.Description),
+                    "Description should match");
             });
         }
         catch (DatabaseExceptions ex)
@@ -129,7 +130,7 @@ public class DatabaseActionTests
                 Assert.That(insertedUser.UserId, Is.Not.Null, "Inserted user's UserId should not be null");
             });
 
-            var user = await _databaseActions.GetEntityByField<UserDto>("userID", insertedUser.UserId);
+            var user = await _databaseActions.GetEntityByField<UserDao>("userID", insertedUser.UserId);
             Assert.Multiple(() =>
             {
                 Assert.That(user, Is.Not.Null, "Retrieved user should not be null");

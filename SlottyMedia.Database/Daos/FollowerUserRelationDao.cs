@@ -1,19 +1,19 @@
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
-namespace SlottyMedia.Database.Models;
+namespace SlottyMedia.Database.Daos;
 
 /// <summary>
 /// This class represents the Follower_User_Relation table in the database.
 /// </summary>
 [Table("Follower_User_Relation")]
-public class FollowerUserRelationDto : BaseModel
+public class FollowerUserRelationDao : BaseModel
 {
-    public FollowerUserRelationDto()
+    public FollowerUserRelationDao()
     {
     }
 
-    public FollowerUserRelationDto(string followerUserId, string followedUserId)
+    public FollowerUserRelationDao(string followerUserId, string followedUserId)
     {
         FollowerUserId = followerUserId;
         FollowedUserId = followedUserId;

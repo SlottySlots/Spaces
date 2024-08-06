@@ -1,20 +1,20 @@
 ﻿using SlottyMedia.Database;
-using SlottyMedia.Database.Models;
+using SlottyMedia.Database.Daos;
 using Supabase;
 
 namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
 
 /// <summary>
-/// Test class for the FollowerUserRelationDto model.
+/// Test class for the FollowerUserRelationDao model.
 /// </summary>
 [TestFixture]
-public class FollowerUserRelationDtoTest
+public class FollowerUserRelationDaoTest
 {
     private Client _supabaseClient;
     private IDatabaseActions _databaseActions;
-    private FollowerUserRelationDto _relationToWorkWith;
-    private UserDto _followerUser;
-    private UserDto _followedUser;
+    private FollowerUserRelationDao _relationToWorkWith;
+    private UserDao _followerUser;
+    private UserDao _followedUser;
 
     /// <summary>
     /// One-time setup method to initialize Supabase client and insert test data.
@@ -31,12 +31,12 @@ public class FollowerUserRelationDtoTest
     }
 
     /// <summary>
-    /// Setup method to initialize a new FollowerUserRelationDto instance before each test.
+    /// Setup method to initialize a new FollowerUserRelationDao instance before each test.
     /// </summary>
     [SetUp]
     public void Setup()
     {
-        _relationToWorkWith = new FollowerUserRelationDto
+        _relationToWorkWith = new FollowerUserRelationDao
         {
             FollowerUserId = _followerUser.UserId,
             FollowedUserId = _followedUser.UserId
@@ -53,7 +53,7 @@ public class FollowerUserRelationDtoTest
         {
             if (_relationToWorkWith.FollowerUserRelationId is null) return;
 
-            var relation = await _databaseActions.GetEntityByField<FollowerUserRelationDto>("followerUserRelationID",
+            var relation = await _databaseActions.GetEntityByField<FollowerUserRelationDao>("followerUserRelationID",
                 _relationToWorkWith.FollowerUserRelationId);
             if (relation != null) await _databaseActions.Delete(relation);
         }
@@ -73,10 +73,10 @@ public class FollowerUserRelationDtoTest
         {
             if (_followerUser.UserId is null || _followedUser.UserId is null) return;
 
-            var follower = await _databaseActions.GetEntityByField<UserDto>("userID", _followerUser.UserId);
+            var follower = await _databaseActions.GetEntityByField<UserDao>("userID", _followerUser.UserId);
             if (follower != null) await _databaseActions.Delete(follower);
 
-            var followed = await _databaseActions.GetEntityByField<UserDto>("userID", _followedUser.UserId);
+            var followed = await _databaseActions.GetEntityByField<UserDao>("userID", _followedUser.UserId);
             if (followed != null) await _databaseActions.Delete(followed);
         }
         catch (Exception ex)
@@ -97,8 +97,10 @@ public class FollowerUserRelationDtoTest
             Assert.Multiple(() =>
             {
                 Assert.That(insertedRelation, Is.Not.Null, "Inserted relation should not be null");
-                Assert.That(insertedRelation.FollowerUserId, Is.EqualTo(_relationToWorkWith.FollowerUserId), "FollowerUserId should match");
-                Assert.That(insertedRelation.FollowedUserId, Is.EqualTo(_relationToWorkWith.FollowedUserId), "FollowedUserId should match");
+                Assert.That(insertedRelation.FollowerUserId, Is.EqualTo(_relationToWorkWith.FollowerUserId),
+                    "FollowerUserId should match");
+                Assert.That(insertedRelation.FollowedUserId, Is.EqualTo(_relationToWorkWith.FollowedUserId),
+                    "FollowedUserId should match");
             });
 
             _relationToWorkWith = insertedRelation;
@@ -141,10 +143,11 @@ public class FollowerUserRelationDtoTest
             Assert.Multiple(() =>
             {
                 Assert.That(insertedRelation, Is.Not.Null, "Inserted relation should not be null");
-                Assert.That(insertedRelation.FollowerUserRelationId, Is.Not.Null, "Inserted relation should have a FollowerUserRelationId");
+                Assert.That(insertedRelation.FollowerUserRelationId, Is.Not.Null,
+                    "Inserted relation should have a FollowerUserRelationId");
             });
 
-            var relation = await _databaseActions.GetEntityByField<FollowerUserRelationDto>("followerUserRelationID",
+            var relation = await _databaseActions.GetEntityByField<FollowerUserRelationDao>("followerUserRelationID",
                 insertedRelation.FollowerUserRelationId);
             Assert.Multiple(() =>
             {

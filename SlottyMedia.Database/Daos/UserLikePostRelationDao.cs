@@ -1,19 +1,19 @@
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
-namespace SlottyMedia.Database.Models;
+namespace SlottyMedia.Database.Daos;
 
 /// <summary>
 /// This class represents the User_Like_Post_Relation table in the database.
 /// </summary>
 [Table("User_Like_Post_Relation")]
-public class UserLikePostRelationDto : BaseModel
+public class UserLikePostRelationDao : BaseModel
 {
-    public UserLikePostRelationDto()
+    public UserLikePostRelationDao()
     {
     }
 
-    public UserLikePostRelationDto(string userId, string postId)
+    public UserLikePostRelationDao(string userId, string postId)
     {
         UserId = userId;
         PostId = postId;

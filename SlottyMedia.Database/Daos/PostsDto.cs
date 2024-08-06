@@ -1,7 +1,7 @@
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
-namespace SlottyMedia.Database.Models;
+namespace SlottyMedia.Database.Daos;
 
 /// <summary>
 /// This class represents the Posts table in the database.
@@ -31,8 +31,8 @@ public class PostsDto : BaseModel
     /// The User who created the Post. This is a Reference to the User Table. It is a Foreign Key. Be aware, that this
     /// Field will not be filled when you insert the Post into the Database.
     /// </summary>
-    [Reference(typeof(UserDto), true, true, "userID")]
-    public UserDto? User { get; set; }
+    [Reference(typeof(UserDao), true, true, "userID")]
+    public UserDao? User { get; set; }
 
     /// <summary>
     /// The ID of the User who created the Post. This is a Foreign Key to the User Table.
@@ -44,8 +44,8 @@ public class PostsDto : BaseModel
     /// The Forum the Post is associated with. This is a Reference to the Forum Table. It is a Foreign Key. Be aware, that this
     /// Field will not be filled when you insert the Post into the Database.
     /// </summary>
-    [Reference(typeof(ForumDto), ReferenceAttribute.JoinType.Inner, true, "forumID")]
-    public ForumDto? Forum { get; set; }
+    [Reference(typeof(ForumDao), ReferenceAttribute.JoinType.Inner, true, "forumID")]
+    public ForumDao? Forum { get; set; }
 
     /// <summary>
     /// The ID of the Forum the Post is associated with. This is a Foreign Key to the Forum Table.

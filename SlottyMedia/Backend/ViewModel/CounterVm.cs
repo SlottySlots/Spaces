@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
-using SlottyMedia.Database.Models;
+using SlottyMedia.Database.Daos;
 
 namespace SlottyMedia.Backend.ViewModel;
 
@@ -10,7 +10,7 @@ namespace SlottyMedia.Backend.ViewModel;
 /// </summary>
 public class CounterVm : ICounterVm, INotifyPropertyChanged
 {
-    private UserDto _user;
+    private UserDao _user;
     private readonly IUserService _userService;
 
     /// <summary>
@@ -19,11 +19,11 @@ public class CounterVm : ICounterVm, INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CounterVm"/> class. It creates a new UserDto object and sets the UserService.
+    /// Initializes a new instance of the <see cref="CounterVm"/> class. It creates a new UserDao object and sets the UserService.
     /// </summary>
     /// <param name="userService">The user service to interact with the database.</param>
-    /// <param name="user">A new UserDto object</param>
-    public CounterVm(IUserService userService, UserDto user)
+    /// <param name="user">A new UserDao object</param>
+    public CounterVm(IUserService userService, UserDao user)
     {
         _user = user;
         _userService = userService;
@@ -41,7 +41,7 @@ public class CounterVm : ICounterVm, INotifyPropertyChanged
     /// <summary>
     /// Gets or sets the User object. This object can be accessed by the View. When the User object changes, the View will be notified.
     /// </summary>
-    public UserDto User
+    public UserDao User
     {
         get => _user;
         set
@@ -58,7 +58,7 @@ public class CounterVm : ICounterVm, INotifyPropertyChanged
     /// <returns></returns>
     public async Task GetUserById(string userId)
     {
-        var user = await _userService.GetUserById(userId);
+        var user = await _userService.GetUserById(Guid.Parse(userId));
         if (user is not null)
         {
             User = user;

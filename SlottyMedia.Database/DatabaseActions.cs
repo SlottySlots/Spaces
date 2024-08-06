@@ -1,4 +1,5 @@
-﻿using Supabase.Postgrest;
+﻿using System.Linq.Expressions;
+using Supabase.Postgrest;
 using Supabase.Postgrest.Models;
 
 namespace SlottyMedia.Database;
@@ -98,6 +99,41 @@ public class DatabaseActions : IDatabaseActions
                 throw new Exception($"The Entity with the Value {value} in the Field {field} in the " +
                                     $"Table {typeof(T)} could not be found in the database.");
             return result;
+        }
+        catch (Exception e)
+        {
+            throw new DatabaseExceptions(e.Message);
+        }
+    }
+
+    public async Task<T> GetEntitieWithSelectorById<T>(Expression<Func<T, object[]>> selector, string field,
+        string value) where T : BaseModel, new()
+    {
+        try
+        {
+            var result = await _supabaseClient.From<T>().Filter(field, Constants.Operator.Equals, value)
+                .Select(selector).Single();
+            if (result is null)
+                throw new Exception("The Items could not be retrieved from the database.");
+            return result;
+        }
+        catch (Exception e)
+        {
+            throw new DatabaseExceptions(e.Message);
+        }
+    }
+
+
+    public async Task<List<T>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector, string field,
+        string value) where T : BaseModel, new()
+    {
+        try
+        {
+            var result = await _supabaseClient.From<T>().Filter(field, Constants.Operator.Equals, value)
+                .Select(selector).Get();
+            if (result is null)
+                throw new Exception("The Items could not be retrieved from the database.");
+            return result.Models;
         }
         catch (Exception e)
         {

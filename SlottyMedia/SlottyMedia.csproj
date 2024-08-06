@@ -9,10 +9,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Supabase" Version="1.1.1" />
-      <Folder Include="wwwroot\static\login\" />
-      <Folder Include="Backend\ViewModel\" />
-        <Folder Include="Backend\Services\"/>
+        <PackageReference Include="Supabase" Version="1.1.1"/>
+        <Folder Include="wwwroot\static\login\"/>
+        <Folder Include="Backend\ViewModel\"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -23,8 +22,8 @@
         <ProjectReference Include="..\SlottyMedia.Database\SlottyMedia.Database.csproj"/>
     </ItemGroup>
 
-<!--    <Target Name="GenerateDocumentation" AfterTargets="Build">
-        <Exec Command="dotnet tool run xmldoc2md ./bin/Debug/net8.0/SlottyMedia.dll ../slottymedia-docs/docs/code"/>
-    </Target>-->
+    <!--    <Target Name="GenerateDocumentation" AfterTargets="Build">
+            <Exec Command="dotnet tool run xmldoc2md ./bin/Debug/net8.0/SlottyMedia.dll ../slottymedia-docs/docs/code"/>
+        </Target>-->
 
 </Project>

@@ -8,7 +8,7 @@ public class InitializeSupabaseClient
     {
         var url = Environment.GetEnvironmentVariable("SUPABASE_URL");
         var key = Environment.GetEnvironmentVariable("SUPABASE_KEY");
-        if (url is null && key is null) throw new Exception("Supabase settings not found");
+        if (url is null || key is null) throw new Exception("Supabase settings not found");
 
         var client = new Client(url, key, new SupabaseOptions
         {

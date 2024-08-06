@@ -1,5 +1,5 @@
 ﻿using SlottyMedia.Database;
-using SlottyMedia.Database.Models;
+using SlottyMedia.Database.Daos;
 using Supabase;
 
 namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
@@ -8,14 +8,14 @@ namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
 /// Test class for the CommentDto model.
 /// </summary>
 [TestFixture]
-public class CommentDtoTest
+public class CommentDaoTest
 {
     private Client _supabaseClient;
     private IDatabaseActions _databaseActions;
-    private CommentDto _commentToWorkWith;
-    private UserDto _userToWorkWith;
+    private CommentDao _commentToWorkWith;
+    private UserDao _userToWorkWith;
     private PostsDto _postToWorkWith;
-    private ForumDto _forumToWorkWith;
+    private ForumDao _forumToWorkWith;
 
     /// <summary>
     /// One-time setup method to initialize Supabase client and insert test data.
@@ -40,7 +40,7 @@ public class CommentDtoTest
     [SetUp]
     public void Setup()
     {
-        _commentToWorkWith = new CommentDto
+        _commentToWorkWith = new CommentDao
         {
             CreatorUserId = _userToWorkWith.UserId,
             PostId = _postToWorkWith.PostId,
@@ -59,7 +59,7 @@ public class CommentDtoTest
             if (_commentToWorkWith.CommentId is null) return;
 
             var comment =
-                await _databaseActions.GetEntityByField<CommentDto>("commentID", _commentToWorkWith.CommentId);
+                await _databaseActions.GetEntityByField<CommentDao>("commentID", _commentToWorkWith.CommentId);
             if (comment != null) await _databaseActions.Delete(comment);
         }
         catch (Exception ex)
@@ -82,10 +82,10 @@ public class CommentDtoTest
             var post = await _databaseActions.GetEntityByField<PostsDto>("postID", _postToWorkWith.PostId);
             if (post != null) await _databaseActions.Delete(post);
 
-            var forum = await _databaseActions.GetEntityByField<ForumDto>("forumID", _forumToWorkWith.ForumId);
+            var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID", _forumToWorkWith.ForumId);
             if (forum != null) await _databaseActions.Delete(forum);
 
-            var user = await _databaseActions.GetEntityByField<UserDto>("userID", _userToWorkWith.UserId);
+            var user = await _databaseActions.GetEntityByField<UserDao>("userID", _userToWorkWith.UserId);
             if (user != null) await _databaseActions.Delete(user);
         }
         catch (Exception ex)
@@ -181,7 +181,7 @@ public class CommentDtoTest
             });
 
 
-            var comment = await _databaseActions.GetEntityByField<CommentDto>("commentID", insertedComment.CommentId);
+            var comment = await _databaseActions.GetEntityByField<CommentDao>("commentID", insertedComment.CommentId);
             Assert.Multiple(() =>
             {
                 Assert.That(comment, Is.Not.Null, "Retrieved comment should not be null");
@@ -216,7 +216,7 @@ public class CommentDtoTest
                     }
                 }
             });
-            
+
             _commentToWorkWith = comment;
         }
         catch (DatabaseExceptions ex)

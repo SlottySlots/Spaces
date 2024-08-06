@@ -1,19 +1,19 @@
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
-namespace SlottyMedia.Database.Models;
+namespace SlottyMedia.Database.Daos;
 
 /// <summary>
 /// This class represents the Comment table in the database.
 /// </summary>
 [Table("Comment")]
-public class CommentDto : BaseModel
+public class CommentDao : BaseModel
 {
-    public CommentDto()
+    public CommentDao()
     {
     }
 
-    public CommentDto(string creatorUserId, string postId, string content, string? parentCommentId = null)
+    public CommentDao(string creatorUserId, string postId, string content, string? parentCommentId = null)
     {
         ParentCommentId = parentCommentId;
         CreatorUserId = creatorUserId;
@@ -37,8 +37,8 @@ public class CommentDto : BaseModel
     /// The User who created the Comment. This is a Reference to the User Table. It is a Foreign Key. Be aware, that this
     /// will not be filled when you insert the Comment into the Database.
     /// </summary>
-    [Reference(typeof(UserDto), ReferenceAttribute.JoinType.Inner, true, "userID")]
-    public UserDto? CreatorUser { get; set; }
+    [Reference(typeof(UserDao), ReferenceAttribute.JoinType.Inner, true, "userID")]
+    public UserDao? CreatorUser { get; set; }
 
     /// <summary> 
     /// The ID of the User who created the Comment. This is a Foreign Key to the User Table 
