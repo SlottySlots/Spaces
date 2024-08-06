@@ -8,7 +8,9 @@ on:
       - 'perf/*'
       - 'style/*'
       - 'fix/*'
-      - 'ci/*'
+      - 'test/*'
+      - 'revert/*'
+      - 'perf/*'
   pull_request:
     branches:
       - 'feat/*'
@@ -16,7 +18,9 @@ on:
       - 'perf/*'
       - 'style/*'
       - 'fix/*'
-      - 'ci/*'
+      - 'test/*'
+      - 'revert/*'
+      - 'perf/*'
 
 jobs:
   build:
