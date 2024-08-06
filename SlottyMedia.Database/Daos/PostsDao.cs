@@ -7,13 +7,13 @@ namespace SlottyMedia.Database.Daos;
 /// This class represents the Posts table in the database.
 /// </summary>
 [Table("Posts")]
-public class PostsDto : BaseModel
+public class PostsDao : BaseModel
 {
-    public PostsDto()
+    public PostsDao()
     {
     }
 
-    public PostsDto(string userId, string forumId, string headline, string content)
+    public PostsDao(string userId, string forumId, string headline, string content)
     {
         UserId = userId;
         ForumId = forumId;

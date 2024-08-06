@@ -6,12 +6,21 @@ namespace SlottyMedia.Backend.Dtos;
 public class SearchDto
 {
     /// <summary>
-    /// The Users who mach the search
+    /// Initializes a new instance of the <see cref="SearchDto"/> class.
+    /// </summary>
+    public SearchDto()
+    {
+        Users = new UserDto();
+        Forum = new ForumDto();
+    }
+
+    /// <summary>
+    /// Gets or sets the users who match the search.
     /// </summary>
     public UserDto Users { get; set; }
 
     /// <summary>
-    /// The Forum that match the search
+    /// Gets or sets the forum that matches the search.
     /// </summary>
     public ForumDto Forum { get; set; }
 }

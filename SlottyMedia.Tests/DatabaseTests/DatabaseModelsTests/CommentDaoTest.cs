@@ -14,7 +14,7 @@ public class CommentDaoTest
     private IDatabaseActions _databaseActions;
     private CommentDao _commentToWorkWith;
     private UserDao _userToWorkWith;
-    private PostsDto _postToWorkWith;
+    private PostsDao _postToWorkWith;
     private ForumDao _forumToWorkWith;
 
     /// <summary>
@@ -79,7 +79,7 @@ public class CommentDaoTest
             if (_postToWorkWith.PostId is null || _forumToWorkWith.ForumId is null ||
                 _userToWorkWith.UserId is null) return;
 
-            var post = await _databaseActions.GetEntityByField<PostsDto>("postID", _postToWorkWith.PostId);
+            var post = await _databaseActions.GetEntityByField<PostsDao>("postID", _postToWorkWith.PostId);
             if (post != null) await _databaseActions.Delete(post);
 
             var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID", _forumToWorkWith.ForumId);

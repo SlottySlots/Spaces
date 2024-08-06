@@ -1,24 +1,36 @@
 using System.Linq.Expressions;
 using Moq;
 using SlottyMedia.Backend.Services;
+using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 
 namespace SlottyMedia.Tests.ServiceTests;
 
+/// <summary>
+/// Test class for UserService.
+/// </summary>
 [TestFixture]
 public class UserServiceTests
 {
     private Mock<IDatabaseActions> _mockDatabaseActions;
-    private UserService _userService;
+    private IUserService _userService;
+    private Mock<PostService> _mockPostService;
 
+    /// <summary>
+    /// Sets up the test environment before each test.
+    /// </summary>
     [SetUp]
     public void Setup()
     {
         _mockDatabaseActions = new Mock<IDatabaseActions>();
-        _userService = new UserService(_mockDatabaseActions.Object);
+        _mockPostService = new Mock<PostService>(_mockDatabaseActions.Object);
+        _userService = new UserService(_mockDatabaseActions.Object, _mockPostService.Object);
     }
 
+    /// <summary>
+    /// Tests if CreateUser method returns a user when the user is created successfully.
+    /// </summary>
     [Test]
     public async Task CreateUser_ShouldReturnUser_WhenUserIsCreated()
     {
@@ -40,6 +52,9 @@ public class UserServiceTests
         });
     }
 
+    /// <summary>
+    /// Tests if DeleteUser method returns true when the user is deleted successfully.
+    /// </summary>
     [Test]
     public async Task DeleteUser_ShouldReturnTrue_WhenUserIsDeleted()
     {
@@ -54,6 +69,9 @@ public class UserServiceTests
         Assert.That(result, Is.True);
     }
 
+    /// <summary>
+    /// Tests if GetUserById method returns a user when the user exists.
+    /// </summary>
     [Test]
     public async Task GetUserById_ShouldReturnUser_WhenUserExists()
     {
@@ -70,6 +88,9 @@ public class UserServiceTests
         Assert.That(result.UserId, Is.EqualTo(userId.ToString()));
     }
 
+    /// <summary>
+    /// Tests if UpdateUser method returns the updated user when the user is updated successfully.
+    /// </summary>
     [Test]
     public async Task UpdateUser_ShouldReturnUpdatedUser_WhenUserIsUpdated()
     {
@@ -85,6 +106,9 @@ public class UserServiceTests
         Assert.That(result.UserName, Is.EqualTo("updatedUsername"));
     }
 
+    /// <summary>
+    /// Tests if GetProfilePic method returns the profile picture when the user exists.
+    /// </summary>
     [Test]
     public async Task GetProfilePic_ShouldReturnProfilePic_WhenUserExists()
     {
@@ -101,6 +125,9 @@ public class UserServiceTests
         Assert.That(result.ProfilePic, Is.EqualTo(123));
     }
 
+    /// <summary>
+    /// Tests if GetUser method returns a UserDto when the user exists.
+    /// </summary>
     [Test]
     public async Task GetUser_ShouldReturnUserDto_WhenUserExists()
     {
@@ -111,9 +138,22 @@ public class UserServiceTests
             UserId = userId.ToString(), UserName = "testUsername", Description = "testDescription",
             CreatedAt = DateTime.Now
         };
+
+        var forum = new ForumDao { ForumId = Guid.NewGuid().ToString(), ForumTopic = "Test Forum" };
+
+        var posts = new List<PostsDao>
+        {
+            new PostsDao { PostId = Guid.NewGuid().ToString(), Content = "Test Post 1", ForumId = forum.ForumId},
+            new PostsDao { PostId = Guid.NewGuid().ToString(), Content = "Test Post 2", ForumId = forum.ForumId}
+        };
+
+        var forumName = new List<string>() { forum.ForumTopic };
+
         _mockDatabaseActions
             .Setup(x => x.GetEntitieWithSelectorById(It.IsAny<Expression<Func<UserDao, object[]>>>(), "userID",
                 userId.ToString())).ReturnsAsync(user);
+        _mockPostService
+            .Setup(x => x.GetPostsFromForum(userId, 5)).ReturnsAsync(forumName);
 
         // Act
         var result = await _userService.GetUser(userId);
@@ -124,9 +164,15 @@ public class UserServiceTests
         {
             Assert.That(result.UserId, Is.EqualTo(userId));
             Assert.That(result.Username, Is.EqualTo("testUsername"));
+            Assert.That(result.Description, Is.EqualTo("testDescription"));
+            Assert.That(result.CreatedAt, Is.EqualTo(user.CreatedAt));
+            Assert.That(result.RecentForums, Is.EqualTo(forumName));
         });
     }
 
+    /// <summary>
+    /// Tests if GetFriends method returns a list of friends when the user has friends.
+    /// </summary>
     [Test]
     public async Task GetFriends_ShouldReturnFriendsList_WhenUserHasFriends()
     {
@@ -137,7 +183,7 @@ public class UserServiceTests
         var friendUser = new UserDao { UserId = friendId.ToString(), UserName = "friendUsername" };
         _mockDatabaseActions
             .Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<FollowerUserRelationDao, object[]>>>(),
-                "followerUserID", userId.ToString())).ReturnsAsync(friends);
+                "followerUserID", userId.ToString(), 5)).ReturnsAsync(friends);
         _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", friendId.ToString())).ReturnsAsync(friendUser);
 
         // Act

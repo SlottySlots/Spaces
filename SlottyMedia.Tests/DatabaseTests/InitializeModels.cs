@@ -37,9 +37,9 @@ public static class InitializeModels
         };
     }
 
-    public static PostsDto GetPostsDto(ForumDao forumDao, UserDao userDao)
+    public static PostsDao GetPostsDto(ForumDao forumDao, UserDao userDao)
     {
-        return new PostsDto
+        return new PostsDao
         {
             ForumId = forumDao.ForumId,
             UserId = userDao.UserId,

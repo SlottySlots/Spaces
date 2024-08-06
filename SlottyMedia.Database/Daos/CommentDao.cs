@@ -50,8 +50,8 @@ public class CommentDao : BaseModel
     /// The Post the Comment is related to. This is a Reference to the Post Table. It is a Foreign Key. Be aware, that this
     /// will not be filled when you insert the Comment into the Database.
     /// </summary>
-    [Reference(typeof(PostsDto), ReferenceAttribute.JoinType.Inner, true, "postID")]
-    public PostsDto? Post { get; set; }
+    [Reference(typeof(PostsDao), ReferenceAttribute.JoinType.Inner, true, "postID")]
+    public PostsDao? Post { get; set; }
 
     /// <summary> 
     /// The ID of the Post the Comment is related to. This is a Foreign Key to the Post Table 

@@ -6,27 +6,39 @@ namespace SlottyMedia.Backend.Dtos;
 public class UserDto
 {
     /// <summary>
-    /// The User Id
+    /// Initializes a new instance of the <see cref="UserDto"/> class.
+    /// </summary>
+    public UserDto()
+    {
+        UserId = Guid.Empty;
+        Username = string.Empty;
+        Description = string.Empty;
+        CreatedAt = DateTime.MinValue;
+        RecentForums = new List<string>();
+    }
+
+    /// <summary>
+    /// Gets or sets the User Id.
     /// </summary>
     public Guid UserId { get; set; }
 
     /// <summary>
-    /// The Username
+    /// Gets or sets the Username.
     /// </summary>
     public string Username { get; set; }
 
     /// <summary>
-    /// The Description of the User
+    /// Gets or sets the Description of the User.
     /// </summary>
     public string Description { get; set; }
 
     /// <summary>
-    /// When the User was created
+    /// Gets or sets the date and time when the User was created.
     /// </summary>
     public DateTime CreatedAt { get; set; }
 
     /// <summary>
-    /// A list of the recent forums the User has visited
+    /// Gets or sets a list of the recent forums the User has visited.
     /// </summary>
     public List<string> RecentForums { get; set; }
 }

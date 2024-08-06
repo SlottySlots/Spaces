@@ -11,14 +11,17 @@ namespace SlottyMedia.Backend.Services;
 public class UserService : IUserService
 {
     private readonly IDatabaseActions _databaseActions;
+    private readonly IPostService _postService;
 
     /// <summary>
     /// This constructor creates a new UserService object.
     /// </summary>
     /// <param name="databaseActions">This parameter is used to interact with the database</param>
-    public UserService(IDatabaseActions databaseActions)
+    /// <param name="postService">This parameter is used to interact with the post service</param>
+    public UserService(IDatabaseActions databaseActions, IPostService postService)
     {
         _databaseActions = databaseActions;
+        _postService = postService;
     }
 
     /// <summary>
@@ -135,8 +138,9 @@ public class UserService : IUserService
     /// This method returns a UserDto object from the database based on the given userId.
     /// </summary>
     /// <param name="userId">The Id of the user</param>
+    /// <param name="limit">The maximum number of recent forums to retrieve</param>
     /// <returns>Returns the UserDto object</returns>
-    public async Task<UserDto> GetUser(Guid userId)
+    public async Task<UserDto> GetUser(Guid userId, int limit = 5)
     {
         try
         {
@@ -150,7 +154,7 @@ public class UserService : IUserService
                 CreatedAt = result.CreatedAt
             };
 
-            //TODO implement recent Forums
+            user.RecentForums = await _postService.GetPostsFromForum(userId, limit);
 
             return user;
         }
@@ -180,7 +184,7 @@ public class UserService : IUserService
             };
 
             var t = friends.Count;
-            
+
             //TODO verbessern
             foreach (var friend in friends)
             {

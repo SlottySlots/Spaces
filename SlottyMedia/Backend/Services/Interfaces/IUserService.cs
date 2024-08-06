@@ -1,3 +1,4 @@
+using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Database.Daos;
 
 namespace SlottyMedia.Backend.Services.Interfaces;
@@ -8,7 +9,7 @@ namespace SlottyMedia.Backend.Services.Interfaces;
 public interface IUserService
 {
     /// <summary>
-    ///  This method returns a User object from the database based on the given userId.
+    /// This method returns a User object from the database based on the given userId.
     /// </summary>
     /// <param name="userId">The UserID inside the Database</param>
     /// <returns>UserDao</returns>
@@ -37,4 +38,26 @@ public interface IUserService
     /// <param name="user">The User Object</param>
     /// <returns name="bool">Return if the User got deleted or not</returns>
     Task<bool> DeleteUser(UserDao user);
+
+    /// <summary>
+    /// This method returns the Profile Picture of the given User.
+    /// </summary>
+    /// <param name="userId">The ID of the User</param>
+    /// <returns>Returns the Profile Picture of the User</returns>
+    Task<ProfilePicDto> GetProfilePic(Guid userId);
+
+    /// <summary>
+    /// This method returns a UserDto object from the database based on the given userId.
+    /// </summary>
+    /// <param name="userId">The Id of the user</param>
+    /// <param name="limit">The maximum number of recent forums to retrieve</param>
+    /// <returns>Returns the UserDto object</returns>
+    Task<UserDto> GetUser(Guid userId, int limit = 5);
+
+    /// <summary>
+    /// This method returns a list of friends for the given user.
+    /// </summary>
+    /// <param name="userId">The ID of the user</param>
+    /// <returns>Returns a FriendsOfUserDto object containing the list of friends</returns>
+    Task<FriendsOfUserDto> GetFriends(Guid userId);
 }

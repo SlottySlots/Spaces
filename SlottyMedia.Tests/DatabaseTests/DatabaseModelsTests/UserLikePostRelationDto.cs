@@ -14,7 +14,7 @@ public class UserLikePostRelationDaoTest
     private IDatabaseActions _databaseActions;
     private UserLikePostRelationDao _relationToWorkWith;
     private UserDao _userToWorkWith;
-    private PostsDto _postToWorkWith;
+    private PostsDao _postToWorkWith;
     private ForumDao _forumToWorkWirh;
 
     /// <summary>
@@ -78,7 +78,7 @@ public class UserLikePostRelationDaoTest
             if (_postToWorkWith.PostId is null || _forumToWorkWirh.ForumId is null ||
                 _userToWorkWith.UserId is null) return;
 
-            var post = await _databaseActions.GetEntityByField<PostsDto>("postID", _postToWorkWith.PostId);
+            var post = await _databaseActions.GetEntityByField<PostsDao>("postID", _postToWorkWith.PostId);
             if (post != null) await _databaseActions.Delete(post);
 
             var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID", _forumToWorkWirh.ForumId);

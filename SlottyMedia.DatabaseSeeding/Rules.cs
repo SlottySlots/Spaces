@@ -37,14 +37,14 @@ public class Rules
     }
 
     /// <summary>
-    /// This method creates the rules for the PostsDto.
+    /// This method creates the rules for the PostsDao.
     /// </summary>
     /// <param name="userFaker"></param>
     /// <param name="forumFaker"></param>
     /// <returns></returns>
-    public Faker<PostsDto> PostRules(Faker<UserDao> userFaker, Faker<ForumDao> forumFaker)
+    public Faker<PostsDao> PostRules(Faker<UserDao> userFaker, Faker<ForumDao> forumFaker)
     {
-        var postFaker = new Faker<PostsDto>()
+        var postFaker = new Faker<PostsDao>()
             .RuleFor(p => p.PostId, f => f.Random.Guid().ToString())
             .RuleFor(p => p.UserId, f => userFaker.Generate().UserId)
             .RuleFor(p => p.ForumId, f => forumFaker.Generate().ForumId)
@@ -60,7 +60,7 @@ public class Rules
     /// <param name="userFaker"></param>
     /// <param name="postFaker"></param>
     /// <returns></returns>
-    public Faker<CommentDao> CommentRules(Faker<UserDao> userFaker, Faker<PostsDto> postFaker)
+    public Faker<CommentDao> CommentRules(Faker<UserDao> userFaker, Faker<PostsDao> postFaker)
     {
         var commentFaker = new Faker<CommentDao>()
             .RuleFor(c => c.CommentId, f => f.Random.Guid().ToString())
@@ -92,7 +92,7 @@ public class Rules
     /// <param name="userFaker"></param>
     /// <param name="postFaker"></param>
     /// <returns></returns>
-    public Faker<UserLikePostRelationDao> UserLikePostRelationRules(Faker<UserDao> userFaker, Faker<PostsDto> postFaker)
+    public Faker<UserLikePostRelationDao> UserLikePostRelationRules(Faker<UserDao> userFaker, Faker<PostsDao> postFaker)
     {
         var userLikePostRelationFaker = new Faker<UserLikePostRelationDao>()
             .RuleFor(ul => ul.UserLikePostRelationId, f => f.Random.Guid().ToString())

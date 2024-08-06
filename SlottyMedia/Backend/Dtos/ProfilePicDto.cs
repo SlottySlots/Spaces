@@ -6,12 +6,21 @@ namespace SlottyMedia.Backend.Dtos;
 public class ProfilePicDto
 {
     /// <summary>
-    /// The User Id
+    /// Initializes a new instance of the <see cref="ProfilePicDto"/> class.
+    /// </summary>
+    public ProfilePicDto()
+    {
+        UserId = Guid.Empty;
+        ProfilePic = 0;
+    }
+
+    /// <summary>
+    /// Gets or sets the User Id.
     /// </summary>
     public Guid UserId { get; set; }
-    
+
     /// <summary>
-    /// The Profile Picture in binary
+    /// Gets or sets the Profile Picture in binary.
     /// </summary>
     public long ProfilePic { get; set; }
 }

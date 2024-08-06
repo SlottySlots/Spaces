@@ -5,14 +5,14 @@ using Supabase;
 namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
 
 /// <summary>
-/// Test class for the PostsDto model.
+/// Test class for the PostsDao model.
 /// </summary>
 [TestFixture]
 public class PostDtoTest
 {
     private Client _supabaseClient;
     private IDatabaseActions _databaseActions;
-    private PostsDto _postToWorkWith;
+    private PostsDao _postToWorkWith;
     private UserDao _userToWorkWith;
     private ForumDao _forumToWorkWith;
 
@@ -31,12 +31,12 @@ public class PostDtoTest
     }
 
     /// <summary>
-    /// Setup method to initialize a new PostsDto instance before each test.
+    /// Setup method to initialize a new PostsDao instance before each test.
     /// </summary>
     [SetUp]
     public void Setup()
     {
-        _postToWorkWith = new PostsDto
+        _postToWorkWith = new PostsDao
         {
             ForumId = _forumToWorkWith.ForumId,
             UserId = _userToWorkWith.UserId,
@@ -55,7 +55,7 @@ public class PostDtoTest
         {
             if (_postToWorkWith.PostId is null) return;
 
-            var post = await _databaseActions.GetEntityByField<PostsDto>("postID", _postToWorkWith.PostId);
+            var post = await _databaseActions.GetEntityByField<PostsDao>("postID", _postToWorkWith.PostId);
             if (post != null) await _databaseActions.Delete(post);
         }
         catch (Exception ex)
@@ -175,7 +175,7 @@ public class PostDtoTest
                 Assert.That(insertedPost.PostId, Is.Not.Null, "Inserted post's PostId should not be null");
             });
 
-            var post = await _databaseActions.GetEntityByField<PostsDto>("postID", insertedPost.PostId);
+            var post = await _databaseActions.GetEntityByField<PostsDao>("postID", insertedPost.PostId);
             Assert.Multiple(() =>
             {
                 Assert.That(post, Is.Not.Null, "Retrieved post should not be null");
