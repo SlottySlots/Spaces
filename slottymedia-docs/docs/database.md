@@ -2,7 +2,7 @@
 
 ## Entity-Relationship-Diagram
 
-<img src="../resources/SlottyMedia_ERM.png">
+![ERM](SlottyMedia_ERM.png)
 
 ## Table Description
 

@@ -13,19 +13,19 @@ public class RoleDto : BaseModel
     /// The ID of the Role. This is the Primary Key. It is auto-generated.
     /// </summary>
     [PrimaryKey("roleID", true)]
-    public string RoleId { get; set; }
+    public string? RoleId { get; set; }
 
     /// <summary>
     /// The Name of the Role.
     /// </summary>
     [Column("role")]
-    public string RoleName { get; set; }
+    public string? RoleName { get; set; }
 
     /// <summary>
     /// The Description of the Role.
     /// </summary>
     [Column("description")]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     /// <summary>
     /// The Date and Time the Role was created.

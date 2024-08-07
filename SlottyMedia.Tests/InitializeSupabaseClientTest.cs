@@ -11,9 +11,9 @@ public class InitializeSupabaseClientTest
     /// Setup method to initialize the Supabase client before each test.
     /// </summary>
     [SetUp]
-    public async Task Setup()
+    public void Setup()
     {
-        _supabaseClient = await InitializeSupabaseClient.GetSupabaseClient();
+        _supabaseClient = InitializeSupabaseClient.GetSupabaseClient();
     }
 
     /// <summary>
@@ -22,6 +22,6 @@ public class InitializeSupabaseClientTest
     [Test]
     public void TestGetSupabaseClient()
     {
-        Assert.IsNotNull(_supabaseClient);
+        Assert.That(_supabaseClient, Is.Not.Null, "Supabase client should not be null");
     }
 }

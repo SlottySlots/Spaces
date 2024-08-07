@@ -1,5 +1,4 @@
-﻿using SlottyMedia.Backend.Models;
-using SlottyMedia.Database;
+﻿using SlottyMedia.Database;
 using SlottyMedia.Database.Models;
 using Supabase;
 
@@ -23,7 +22,7 @@ public class PostDtoTest
     [OneTimeSetUp]
     public async Task OneTimeSetup()
     {
-        _supabaseClient = await InitializeSupabaseClient.GetSupabaseClient();
+        _supabaseClient = InitializeSupabaseClient.GetSupabaseClient();
         _databaseActions = new DatabaseActions(_supabaseClient);
 
         _userToWorkWith = await _databaseActions.Insert(InitializeModels.GetUserDto());
@@ -37,7 +36,7 @@ public class PostDtoTest
     [SetUp]
     public void Setup()
     {
-        _postToWorkWith = new PostsDto()
+        _postToWorkWith = new PostsDto
         {
             ForumId = _forumToWorkWith.ForumId,
             UserId = _userToWorkWith.UserId,
@@ -54,6 +53,8 @@ public class PostDtoTest
     {
         try
         {
+            if (_postToWorkWith.PostId is null) return;
+
             var post = await _databaseActions.GetEntityByField<PostsDto>("postID", _postToWorkWith.PostId);
             if (post != null) await _databaseActions.Delete(post);
         }
@@ -71,6 +72,8 @@ public class PostDtoTest
     {
         try
         {
+            if (_forumToWorkWith.ForumId is null || _userToWorkWith.UserId is null) return;
+
             var forum = await _databaseActions.GetEntityByField<ForumDto>("forumID", _forumToWorkWith.ForumId);
             if (forum != null) await _databaseActions.Delete(forum);
 
@@ -92,9 +95,12 @@ public class PostDtoTest
         try
         {
             var insertedPost = await _databaseActions.Insert(_postToWorkWith);
-            Assert.IsNotNull(insertedPost, "Inserted post should not be null");
-            Assert.That(insertedPost.UserId, Is.EqualTo(_postToWorkWith.UserId), "CreatorUserId should match");
-            Assert.That(insertedPost.Content, Is.EqualTo(_postToWorkWith.Content), "Content should match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(insertedPost, Is.Not.Null, "Inserted post should not be null");
+                Assert.That(insertedPost.UserId, Is.EqualTo(_postToWorkWith.UserId), "CreatorUserId should match");
+                Assert.That(insertedPost.Content, Is.EqualTo(_postToWorkWith.Content), "Content should match");
+            });
 
             _postToWorkWith = insertedPost;
         }
@@ -113,15 +119,18 @@ public class PostDtoTest
         try
         {
             var insertedPost = await _databaseActions.Insert(_postToWorkWith);
-            Assert.IsNotNull(insertedPost, "Inserted post should not be null");
+            Assert.That(insertedPost, Is.Not.Null, "Inserted post should not be null");
 
             insertedPost.Content = "I'm an updated Test Post";
             var updatedPost = await _databaseActions.Update(insertedPost);
 
-            Assert.IsNotNull(updatedPost, "Updated post should not be null");
-            Assert.That(updatedPost.PostId, Is.EqualTo(insertedPost.PostId), "PostId should match");
-            Assert.That(updatedPost.UserId, Is.EqualTo(insertedPost.UserId), "CreatorUserId should match");
-            Assert.That(updatedPost.Content, Is.EqualTo(insertedPost.Content), "Content should match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedPost, Is.Not.Null, "Updated post should not be null");
+                Assert.That(updatedPost.PostId, Is.EqualTo(insertedPost.PostId), "PostId should match");
+                Assert.That(updatedPost.UserId, Is.EqualTo(insertedPost.UserId), "CreatorUserId should match");
+                Assert.That(updatedPost.Content, Is.EqualTo(insertedPost.Content), "Content should match");
+            });
 
             _postToWorkWith = updatedPost;
         }
@@ -140,10 +149,10 @@ public class PostDtoTest
         try
         {
             var insertedPost = await _databaseActions.Insert(_postToWorkWith);
-            Assert.IsNotNull(insertedPost, "Inserted post should not be null");
+            Assert.That(insertedPost, Is.Not.Null, "Inserted post should not be null");
 
             var deletedPost = await _databaseActions.Delete(insertedPost);
-            Assert.IsNotNull(deletedPost, "Deleted post should not be null");
+            Assert.That(deletedPost, Is.True, "Deleted post should not be false");
         }
         catch (DatabaseExceptions ex)
         {
@@ -160,13 +169,32 @@ public class PostDtoTest
         try
         {
             var insertedPost = await _databaseActions.Insert(_postToWorkWith);
-            Assert.IsNotNull(insertedPost, "Inserted post should not be null");
+            Assert.Multiple(() =>
+            {
+                Assert.That(insertedPost, Is.Not.Null, "Inserted post should not be null");
+                Assert.That(insertedPost.PostId, Is.Not.Null, "Inserted post's PostId should not be null");
+            });
 
             var post = await _databaseActions.GetEntityByField<PostsDto>("postID", insertedPost.PostId);
-            Assert.IsNotNull(post, "Retrieved post should not be null");
-            Assert.That(post.PostId, Is.EqualTo(insertedPost.PostId), "PostId should match");
-            Assert.That(post.UserId, Is.EqualTo(insertedPost.UserId), "CreatorUserId should match");
-            Assert.That(post.Content, Is.EqualTo(insertedPost.Content), "Content should match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(post, Is.Not.Null, "Retrieved post should not be null");
+                if (post != null)
+                {
+                    Assert.That(post.PostId, Is.EqualTo(insertedPost.PostId), "PostId should match");
+                    Assert.That(post.UserId, Is.EqualTo(insertedPost.UserId), "CreatorUserId should match");
+                    Assert.That(post.Content, Is.EqualTo(insertedPost.Content), "Content should match");
+
+                    Assert.That(post.User is not null, "User should not be null");
+                    if (post.User != null)
+                        Assert.That(post.User.UserId, Is.EqualTo(insertedPost.UserId), "User's UserId should match");
+
+                    Assert.That(post.Forum is not null, "Forum should not be null");
+                    if (post.Forum != null)
+                        Assert.That(post.Forum.ForumId, Is.EqualTo(insertedPost.ForumId),
+                            "Forum's ForumId should match");
+                }
+            });
 
             _postToWorkWith = post;
         }

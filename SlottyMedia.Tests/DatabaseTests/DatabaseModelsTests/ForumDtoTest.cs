@@ -1,5 +1,4 @@
-﻿using SlottyMedia.Backend.Models;
-using SlottyMedia.Database;
+﻿using SlottyMedia.Database;
 using SlottyMedia.Database.Models;
 using Supabase;
 
@@ -22,7 +21,7 @@ public class ForumDtoTest
     [OneTimeSetUp]
     public async Task OneTimeSetup()
     {
-        _supabaseClient = await InitializeSupabaseClient.GetSupabaseClient();
+        _supabaseClient = InitializeSupabaseClient.GetSupabaseClient();
         _databaseActions = new DatabaseActions(_supabaseClient);
 
         _userToWorkWith = await _databaseActions.Insert(InitializeModels.GetUserDto());
@@ -34,7 +33,7 @@ public class ForumDtoTest
     [SetUp]
     public void Setup()
     {
-        _forumToWorkWith = new ForumDto()
+        _forumToWorkWith = new ForumDto
         {
             CreatorUserId = _userToWorkWith.UserId,
             ForumTopic = "I'm a Test Forum"
@@ -49,6 +48,8 @@ public class ForumDtoTest
     {
         try
         {
+            if (_forumToWorkWith.ForumId is null) return;
+
             var forum = await _databaseActions.GetEntityByField<ForumDto>("forumID", _forumToWorkWith.ForumId);
             if (forum != null) await _databaseActions.Delete(forum);
         }
@@ -66,6 +67,8 @@ public class ForumDtoTest
     {
         try
         {
+            if (_userToWorkWith.UserId is null) return;
+
             var user = await _databaseActions.GetEntityByField<UserDto>("userID", _userToWorkWith.UserId);
             if (user != null) await _databaseActions.Delete(user);
         }
@@ -84,10 +87,12 @@ public class ForumDtoTest
         try
         {
             var insertedForum = await _databaseActions.Insert(_forumToWorkWith);
-            Assert.IsNotNull(insertedForum, "Inserted forum should not be null");
-            Assert.That(insertedForum.CreatorUserId, Is.EqualTo(_forumToWorkWith.CreatorUserId),
-                "CreatorUserId should match");
-            Assert.That(insertedForum.ForumTopic, Is.EqualTo(_forumToWorkWith.ForumTopic), "ForumTopic should match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(insertedForum, Is.Not.Null, "Inserted forum should not be null");
+                Assert.That(insertedForum.CreatorUserId, Is.EqualTo(_forumToWorkWith.CreatorUserId), "CreatorUserId should match");
+                Assert.That(insertedForum.ForumTopic, Is.EqualTo(_forumToWorkWith.ForumTopic), "ForumTopic should match");
+            });
 
             _forumToWorkWith = insertedForum;
         }
@@ -106,16 +111,18 @@ public class ForumDtoTest
         try
         {
             var insertedForum = await _databaseActions.Insert(_forumToWorkWith);
-            Assert.IsNotNull(insertedForum, "Inserted forum should not be null");
+            Assert.That(insertedForum, Is.Not.Null, "Inserted forum should not be null");
 
             insertedForum.ForumTopic = "I'm an updated Test Forum";
             var updatedForum = await _databaseActions.Update(insertedForum);
 
-            Assert.IsNotNull(updatedForum, "Updated forum should not be null");
-            Assert.That(updatedForum.ForumId, Is.EqualTo(insertedForum.ForumId), "ForumId should match");
-            Assert.That(updatedForum.CreatorUserId, Is.EqualTo(insertedForum.CreatorUserId),
-                "CreatorUserId should match");
-            Assert.That(updatedForum.ForumTopic, Is.EqualTo(insertedForum.ForumTopic), "ForumTopic should match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(updatedForum, Is.Not.Null, "Updated forum should not be null");
+                Assert.That(updatedForum.ForumId, Is.EqualTo(insertedForum.ForumId), "ForumId should match");
+                Assert.That(updatedForum.CreatorUserId, Is.EqualTo(insertedForum.CreatorUserId), "CreatorUserId should match");
+                Assert.That(updatedForum.ForumTopic, Is.EqualTo(insertedForum.ForumTopic), "ForumTopic should match");
+            });
 
             _forumToWorkWith = updatedForum;
         }
@@ -134,10 +141,10 @@ public class ForumDtoTest
         try
         {
             var insertedForum = await _databaseActions.Insert(_forumToWorkWith);
-            Assert.IsNotNull(insertedForum, "Inserted forum should not be null");
+            Assert.That(insertedForum, Is.Not.Null, "Inserted forum should not be null");
 
             var deletedForum = await _databaseActions.Delete(insertedForum);
-            Assert.IsNotNull(deletedForum, "Deleted forum should not be null");
+            Assert.That(deletedForum, Is.True, "Deleted forum should not be false");
         }
         catch (DatabaseExceptions ex)
         {
@@ -154,13 +161,33 @@ public class ForumDtoTest
         try
         {
             var insertedForum = await _databaseActions.Insert(_forumToWorkWith);
-            Assert.IsNotNull(insertedForum, "Inserted forum should not be null");
+            Assert.Multiple(() =>
+            {
+                Assert.That(insertedForum, Is.Not.Null, "Inserted forum should not be null");
+                Assert.That(insertedForum.ForumId, Is.Not.Null, "Inserted forum should have a ForumId");
+            });
 
             var forum = await _databaseActions.GetEntityByField<ForumDto>("forumID", insertedForum.ForumId);
-            Assert.IsNotNull(forum, "Retrieved forum should not be null");
-            Assert.That(forum.ForumId, Is.EqualTo(insertedForum.ForumId), "ForumId should match");
-            Assert.That(forum.CreatorUserId, Is.EqualTo(insertedForum.CreatorUserId), "CreatorUserId should match");
-            Assert.That(forum.ForumTopic, Is.EqualTo(insertedForum.ForumTopic), "ForumTopic should match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(forum, Is.Not.Null, "Retrieved forum should not be null");
+                if (forum != null)
+                {
+                    Assert.That(forum.ForumId, Is.EqualTo(insertedForum.ForumId), "ForumId should match");
+                    Assert.That(forum.CreatorUserId, Is.EqualTo(insertedForum.CreatorUserId),
+                        "CreatorUserId should match");
+                    Assert.That(forum.ForumTopic, Is.EqualTo(insertedForum.ForumTopic), "ForumTopic should match");
+
+                    Assert.That(forum.CreatorUser, Is.Not.Null, "Retrieved forum should have a CreatorUser");
+                    if (forum.CreatorUser != null)
+                    {
+                        Assert.That(forum.CreatorUser.UserId, Is.Not.Null,
+                            "Retrieved forum's CreatorUser should have a UserId");
+                        Assert.That(forum.CreatorUser.UserId, Is.EqualTo(insertedForum.CreatorUserId),
+                            "CreatorUserId should match");
+                    }
+                }
+            });
 
             _forumToWorkWith = forum;
         }

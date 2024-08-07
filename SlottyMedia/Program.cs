@@ -36,8 +36,14 @@ builder.Services.AddSingleton<UserDto>();
 // Viewmodel
 builder.Services.AddSingleton<ICounterVm, CounterVm>();
 
+
 // Services
 builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddScoped<ICookieService, CookieService>();
+
+
+builder.Services.AddScoped<IAuthService, AuthService>();  // Scoped
+builder.Services.AddScoped<IRegisterVm, RegisterVm>(); 
 
 var app = builder.Build();
 

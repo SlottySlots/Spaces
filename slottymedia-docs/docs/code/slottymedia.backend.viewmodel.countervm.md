@@ -41,6 +41,7 @@ public CounterVm(IUserService userService, UserDto user)
 The user service to interact with the database.
 
 `user` UserDto<br>
+A new UserDto object
 
 ## Methods
 
@@ -69,20 +70,6 @@ public Task GetUserById(string userId)
 
 `userId` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The ID of the user to retrieve.
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
-### **InsertUser(UserDto)**
-
-```csharp
-public Task InsertUser(UserDto user)
-```
-
-#### Parameters
-
-`user` UserDto<br>
 
 #### Returns
 
