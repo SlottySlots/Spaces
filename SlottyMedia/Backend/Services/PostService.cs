@@ -106,7 +106,7 @@ public class PostService : IPostService
             );
 
             // Return the list of forum names associated with the posts
-            return posts.Select(post => post.Forum.TableName).ToList();
+            return posts.Select(post => post.Forum.ForumTopic).ToList();
         }
         catch (Exception e)
         {
