@@ -26,11 +26,11 @@ class Program
         // Generate and insert users
         Console.WriteLine("Generating and seeding random user data.");
         var users = userFaker.Generate(countUser);
-        var userIds = new List<string>();
+        var userIds = new List<Guid>();
         for (int i = 0; i < users.Count; i++)
         {
             var user = await databaseActions.Insert(users[i]);
-            userIds.Add(user.UserId);
+            userIds.Add(user.UserId ?? Guid.Empty);
             Console.WriteLine("User seeded: " + user.UserName);
         }
         Console.WriteLine("Database seeded with random user data.");
@@ -38,12 +38,12 @@ class Program
         // Generate and insert forums
         Console.WriteLine("Generating and seeding random forum data.");
         var forums = forumFaker.Generate(countUser*2);
-        var forumIds = new List<string>();
+        var forumIds = new List<Guid>();
         for (int i = 0; i < forums.Count; i++)
         {
             forums[i].CreatorUserId = userIds[i % userIds.Count];
             var forum = await databaseActions.Insert(forums[i]);
-            forumIds.Add(forum.ForumId);
+            forumIds.Add(forum.ForumId ?? Guid.Empty);
             Console.WriteLine("Forum seeded: " + forum.ForumTopic);
         }
         Console.WriteLine("Database seeded with random forum data.");
@@ -51,13 +51,13 @@ class Program
         // Generate and insert posts
         Console.WriteLine("Generating and seeding random post data.");
         var posts = postFaker.Generate(countUser*5);
-        var postIds = new List<string>();
+        var postIds = new List<Guid>();
         for (int i = 0; i < posts.Count; i++)
         {
             posts[i].UserId = userIds[i % userIds.Count];
             posts[i].ForumId = forumIds[i % forumIds.Count];
             var post = await databaseActions.Insert(posts[i]);
-            postIds.Add(post.PostId);
+            postIds.Add(post.PostId ?? Guid.Empty);
             Console.WriteLine("Post seeded: " + post.Headline);
         }
         Console.WriteLine("Database seeded with random post data.");

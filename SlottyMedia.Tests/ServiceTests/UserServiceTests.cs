@@ -35,19 +35,19 @@ public class UserServiceTests
     public async Task CreateUser_ShouldReturnUser_WhenUserIsCreated()
     {
         // Arrange
-        var userId = "testUserId";
+        var userId = Guid.NewGuid();
         var username = "testUsername";
         var user = new UserDao { UserId = userId, UserName = username };
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<UserDao>())).ReturnsAsync(user);
 
         // Act
-        var result = await _userService.CreateUser(userId, username);
+        var result = await _userService.CreateUser(userId.ToString(), username);
 
         // Assert
         Assert.That(result, Is.Not.Null);
         Assert.Multiple(() =>
         {
-            Assert.That(result.UserId, Is.EqualTo(userId));
+            Assert.That(result.UserId ?? Guid.Empty, Is.EqualTo(userId));
             Assert.That(result.UserName, Is.EqualTo(username));
         });
     }
@@ -59,7 +59,7 @@ public class UserServiceTests
     public async Task DeleteUser_ShouldReturnTrue_WhenUserIsDeleted()
     {
         // Arrange
-        var user = new UserDao { UserId = Guid.NewGuid().ToString() };
+        var user = new UserDao { UserId = Guid.NewGuid() };
         _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<UserDao>())).ReturnsAsync(true);
 
         // Act
@@ -77,7 +77,7 @@ public class UserServiceTests
     {
         // Arrange
         var userId = Guid.NewGuid();
-        var user = new UserDao { UserId = userId.ToString() };
+        var user = new UserDao { UserId = userId };
         _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString())).ReturnsAsync(user);
 
         // Act
@@ -85,7 +85,7 @@ public class UserServiceTests
 
         // Assert
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.UserId, Is.EqualTo(userId.ToString()));
+        Assert.That(result.UserId ?? Guid.Empty, Is.EqualTo(userId));
     }
 
     /// <summary>
@@ -95,7 +95,7 @@ public class UserServiceTests
     public async Task UpdateUser_ShouldReturnUpdatedUser_WhenUserIsUpdated()
     {
         // Arrange
-        var user = new UserDao { UserId = Guid.NewGuid().ToString(), UserName = "updatedUsername" };
+        var user = new UserDao { UserId = Guid.NewGuid(), UserName = "updatedUsername" };
         _mockDatabaseActions.Setup(x => x.Update(It.IsAny<UserDao>())).ReturnsAsync(user);
 
         // Act
@@ -114,7 +114,7 @@ public class UserServiceTests
     {
         // Arrange
         var userId = Guid.NewGuid();
-        var user = new UserDao { UserId = userId.ToString(), ProfilePic = 123 };
+        var user = new UserDao { UserId = userId, ProfilePic = 123 };
         _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString())).ReturnsAsync(user);
 
         // Act
@@ -135,16 +135,16 @@ public class UserServiceTests
         var userId = Guid.NewGuid();
         var user = new UserDao
         {
-            UserId = userId.ToString(), UserName = "testUsername", Description = "testDescription",
+            UserId = userId, UserName = "testUsername", Description = "testDescription",
             CreatedAt = DateTime.Now
         };
 
-        var forum = new ForumDao { ForumId = Guid.NewGuid().ToString(), ForumTopic = "Test Forum" };
+        var forum = new ForumDao { ForumId = Guid.NewGuid(), ForumTopic = "Test Forum" };
 
         var posts = new List<PostsDao>
         {
-            new PostsDao { PostId = Guid.NewGuid().ToString(), Content = "Test Post 1", ForumId = forum.ForumId},
-            new PostsDao { PostId = Guid.NewGuid().ToString(), Content = "Test Post 2", ForumId = forum.ForumId}
+            new PostsDao { PostId = Guid.NewGuid(), Content = "Test Post 1", ForumId = forum.ForumId},
+            new PostsDao { PostId = Guid.NewGuid(), Content = "Test Post 2", ForumId = forum.ForumId}
         };
 
         var forumName = new List<string>() { forum.ForumTopic };
@@ -179,8 +179,8 @@ public class UserServiceTests
         // Arrange
         var userId = Guid.NewGuid();
         var friendId = Guid.NewGuid();
-        var friends = new List<FollowerUserRelationDao> { new() { FollowerUserId = userId.ToString(), FollowedUserId = friendId.ToString() } };
-        var friendUser = new UserDao { UserId = friendId.ToString(), UserName = "friendUsername" };
+        var friends = new List<FollowerUserRelationDao> { new() { FollowerUserId = userId, FollowedUserId = friendId } };
+        var friendUser = new UserDao { UserId = friendId, UserName = "friendUsername" };
         _mockDatabaseActions
             .Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<FollowerUserRelationDao, object[]>>>(),
                 "followerUserID", userId.ToString(), 5)).ReturnsAsync(friends);

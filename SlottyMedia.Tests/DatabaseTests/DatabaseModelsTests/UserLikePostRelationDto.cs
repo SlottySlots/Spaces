@@ -58,7 +58,7 @@ public class UserLikePostRelationDaoTest
             if (_relationToWorkWith.UserLikePostRelationId is null) return;
 
             var relation = await _databaseActions.GetEntityByField<UserLikePostRelationDao>("userLikePostRelationID",
-                _relationToWorkWith.UserLikePostRelationId);
+                _relationToWorkWith.UserLikePostRelationId.ToString() ?? "");
             if (relation != null) await _databaseActions.Delete(relation);
         }
         catch (Exception ex)
@@ -78,13 +78,13 @@ public class UserLikePostRelationDaoTest
             if (_postToWorkWith.PostId is null || _forumToWorkWirh.ForumId is null ||
                 _userToWorkWith.UserId is null) return;
 
-            var post = await _databaseActions.GetEntityByField<PostsDao>("postID", _postToWorkWith.PostId);
+            var post = await _databaseActions.GetEntityByField<PostsDao>("postID", _postToWorkWith.PostId.ToString() ?? "");
             if (post != null) await _databaseActions.Delete(post);
 
-            var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID", _forumToWorkWirh.ForumId);
+            var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID", _forumToWorkWirh.ForumId.ToString() ?? "");
             if (forum != null) await _databaseActions.Delete(forum);
 
-            var user = await _databaseActions.GetEntityByField<UserDao>("userID", _userToWorkWith.UserId);
+            var user = await _databaseActions.GetEntityByField<UserDao>("userID", _userToWorkWith.UserId.ToString() ?? "");
             if (user != null) await _databaseActions.Delete(user);
         }
         catch (Exception ex)
@@ -154,7 +154,7 @@ public class UserLikePostRelationDaoTest
             });
 
             var relation = await _databaseActions.GetEntityByField<UserLikePostRelationDao>("userLikePostRelationID",
-                insertedRelation.UserLikePostRelationId);
+                insertedRelation.UserLikePostRelationId.ToString() ?? "");
             Assert.Multiple(() =>
             {
                 Assert.That(relation, Is.Not.Null, "Retrieved relation should not be null");

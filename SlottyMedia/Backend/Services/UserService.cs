@@ -37,7 +37,7 @@ public class UserService : IUserService
     {
         var user = new UserDao
         {
-            UserId = userId,
+            UserId = Guid.Parse(userId),
             UserName = username,
             Description = description ?? string.Empty,
             ProfilePic = profilePicture ?? 0
@@ -148,7 +148,7 @@ public class UserService : IUserService
                 x => new object[] { x.UserId, x.UserName, x.Description, x.CreatedAt }, "userID", userId.ToString());
             var user = new UserDto()
             {
-                UserId = Guid.Parse(result.UserId ?? string.Empty),
+                UserId = result.UserId ?? Guid.Empty,
                 Username = result.UserName ?? string.Empty,
                 Description = result.Description ?? string.Empty,
                 CreatedAt = result.CreatedAt
@@ -188,10 +188,10 @@ public class UserService : IUserService
             //TODO verbessern
             foreach (var friend in friends)
             {
-                var user = await GetUserById(Guid.Parse(friend.FollowedUserId ?? string.Empty));
+                var user = await GetUserById(friend.FollowedUserId ?? Guid.Empty);
                 friendList.Friends.Add(new UserDto
                 {
-                    UserId = Guid.Parse(user.UserId ?? string.Empty),
+                    UserId = user.UserId ?? Guid.Empty,
                     Username = user.UserName ?? string.Empty,
                     Description = user.Description ?? string.Empty,
                     CreatedAt = user.CreatedAt

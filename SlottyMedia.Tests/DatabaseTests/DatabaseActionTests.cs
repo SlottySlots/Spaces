@@ -34,7 +34,7 @@ public class DatabaseActionTests
         {
             if (_userToWorkWith.UserId is null) return;
 
-            var user = await _databaseActions.GetEntityByField<UserDao>("userID", _userToWorkWith.UserId);
+            var user = await _databaseActions.GetEntityByField<UserDao>("userID", _userToWorkWith.UserId.ToString() ?? "");
             if (user != null) await _databaseActions.Delete(user);
         }
         catch (Exception ex)
@@ -130,7 +130,7 @@ public class DatabaseActionTests
                 Assert.That(insertedUser.UserId, Is.Not.Null, "Inserted user's UserId should not be null");
             });
 
-            var user = await _databaseActions.GetEntityByField<UserDao>("userID", insertedUser.UserId);
+            var user = await _databaseActions.GetEntityByField<UserDao>("userID", insertedUser.UserId.ToString() ?? "");
             Assert.Multiple(() =>
             {
                 Assert.That(user, Is.Not.Null, "Retrieved user should not be null");

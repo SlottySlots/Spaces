@@ -13,7 +13,7 @@ public class RoleDao : BaseModel
     /// The ID of the Role. This is the Primary Key. It is auto-generated.
     /// </summary>
     [PrimaryKey("roleID", true)]
-    public string? RoleId { get; set; }
+    public Guid? RoleId { get; set; }
 
     /// <summary>
     /// The Name of the Role.

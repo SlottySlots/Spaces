@@ -13,7 +13,7 @@ public class FollowerUserRelationDao : BaseModel
     {
     }
 
-    public FollowerUserRelationDao(string followerUserId, string followedUserId)
+    public FollowerUserRelationDao(Guid followerUserId, Guid followedUserId)
     {
         FollowerUserId = followerUserId;
         FollowedUserId = followedUserId;
@@ -23,19 +23,19 @@ public class FollowerUserRelationDao : BaseModel
     /// The ID of the Follower_User_Relation. This is the Primary Key. It is auto-generated.
     /// </summary>
     [PrimaryKey("followerUserRelationID")]
-    public string? FollowerUserRelationId { get; set; }
+    public Guid? FollowerUserRelationId { get; set; }
 
     /// <summary>
     /// The ID of the User who is following another User. This is a Foreign Key to the User Table.
     /// </summary>
     [Column("userIsFollowing")]
-    public string? FollowerUserId { get; set; }
+    public Guid? FollowerUserId { get; set; }
 
     /// <summary>
     /// The ID of the User who is being followed. This is a Foreign Key to the User Table.
     /// </summary>
     [Column("userIsFollowed")]
-    public string? FollowedUserId { get; set; }
+    public Guid? FollowedUserId { get; set; }
 
     /// <summary>
     /// The Date and Time the Follower_User_Relation was created.

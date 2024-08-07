@@ -13,7 +13,7 @@ public class PostsDao : BaseModel
     {
     }
 
-    public PostsDao(string userId, string forumId, string headline, string content)
+    public PostsDao(Guid userId, Guid forumId, string headline, string content)
     {
         UserId = userId;
         ForumId = forumId;
@@ -25,7 +25,7 @@ public class PostsDao : BaseModel
     /// The ID of the Post. This is the Primary Key. It is auto-generated.
     /// </summary>
     [PrimaryKey("postID")]
-    public string? PostId { get; set; }
+    public Guid? PostId { get; set; }
 
     /// <summary>
     /// The User who created the Post. This is a Reference to the User Table. It is a Foreign Key. Be aware, that this
@@ -38,7 +38,7 @@ public class PostsDao : BaseModel
     /// The ID of the User who created the Post. This is a Foreign Key to the User Table.
     /// </summary>
     [Column("creator_userID")]
-    public string? UserId { get; set; }
+    public Guid? UserId { get; set; }
 
     /// <summary>
     /// The Forum the Post is associated with. This is a Reference to the Forum Table. It is a Foreign Key. Be aware, that this
@@ -51,7 +51,7 @@ public class PostsDao : BaseModel
     /// The ID of the Forum the Post is associated with. This is a Foreign Key to the Forum Table.
     /// </summary>
     [Column("associated_forumID")]
-    public string? ForumId { get; set; }
+    public Guid? ForumId { get; set; }
 
     /// <summary>
     /// The Headline of the Post.

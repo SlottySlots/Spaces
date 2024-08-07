@@ -13,7 +13,7 @@ public class ForumDao : BaseModel
     {
     }
 
-    public ForumDao(string creatorUserId, string forumTopic)
+    public ForumDao(Guid creatorUserId, string forumTopic)
     {
         CreatorUserId = creatorUserId;
         ForumTopic = forumTopic;
@@ -23,7 +23,7 @@ public class ForumDao : BaseModel
     /// The ID of the Forum. This is the Primary Key. It is auto-generated.
     /// </summary>
     [PrimaryKey("forumID")]
-    public string? ForumId { get; set; }
+    public Guid? ForumId { get; set; }
 
     [Reference(typeof(UserDao), ReferenceAttribute.JoinType.Inner, true, "userID")]
     public UserDao? CreatorUser { get; set; }
@@ -32,7 +32,7 @@ public class ForumDao : BaseModel
     /// The ID of the User who created the Forum. This is a Foreign Key to the User Table.
     /// </summary>
     [Column("creator_userID")]
-    public string? CreatorUserId { get; set; }
+    public Guid? CreatorUserId { get; set; }
 
     /// <summary>
     /// The Title of the Forum.

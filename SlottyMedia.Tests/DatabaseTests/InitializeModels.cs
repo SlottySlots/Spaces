@@ -11,7 +11,7 @@ public static class InitializeModels
     {
         return new RoleDao
         {
-            RoleId = "c0589855-a81c-451d-8587-3061926a1f3a",
+            RoleId = Guid.Parse("c0589855-a81c-451d-8587-3061926a1f3a"),
             RoleName = "User",
             Description = "User"
         };
@@ -21,7 +21,7 @@ public static class InitializeModels
     {
         return new UserDao
         {
-            UserId = Guid.NewGuid().ToString(),
+            UserId = Guid.NewGuid(),
             UserName = "I'm a Test User",
             Description = "Please don't delete me",
             RoleId = GetRoleDto().RoleId

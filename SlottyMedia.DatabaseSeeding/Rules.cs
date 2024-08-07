@@ -12,8 +12,8 @@ public class Rules
     public Faker<UserDao> UserRules()
     {
         var userFaker = new Faker<UserDao>()
-            .RuleFor(u => u.UserId, f => f.Random.Guid().ToString())
-            .RuleFor(u => u.RoleId, "c0589855-a81c-451d-8587-3061926a1f3a")
+            .RuleFor(u => u.UserId, f => f.Random.Guid())
+            .RuleFor(u => u.RoleId, Guid.Parse("c0589855-a81c-451d-8587-3061926a1f3a"))
             .RuleFor(u => u.UserName, f => f.Internet.UserName())
             .RuleFor(u => u.Description, f => f.Lorem.Sentence())
             .RuleFor(u => u.ProfilePic, f => f.Random.Long(1, 1000))
@@ -29,7 +29,7 @@ public class Rules
     public Faker<ForumDao> ForumRules(Faker<UserDao> userFaker)
     {
         var forumFaker = new Faker<ForumDao>()
-            .RuleFor(f => f.ForumId, f => f.Random.Guid().ToString())
+            .RuleFor(f => f.ForumId, f => f.Random.Guid())
             .RuleFor(f => f.CreatorUserId, f => userFaker.Generate().UserId)
             .RuleFor(f => f.ForumTopic, f => f.Lorem.Sentence())
             .RuleFor(f => f.CreatedAt, f => f.Date.Past());
@@ -45,7 +45,7 @@ public class Rules
     public Faker<PostsDao> PostRules(Faker<UserDao> userFaker, Faker<ForumDao> forumFaker)
     {
         var postFaker = new Faker<PostsDao>()
-            .RuleFor(p => p.PostId, f => f.Random.Guid().ToString())
+            .RuleFor(p => p.PostId, f => f.Random.Guid())
             .RuleFor(p => p.UserId, f => userFaker.Generate().UserId)
             .RuleFor(p => p.ForumId, f => forumFaker.Generate().ForumId)
             .RuleFor(p => p.Headline, f => f.Lorem.Sentence())
@@ -63,7 +63,7 @@ public class Rules
     public Faker<CommentDao> CommentRules(Faker<UserDao> userFaker, Faker<PostsDao> postFaker)
     {
         var commentFaker = new Faker<CommentDao>()
-            .RuleFor(c => c.CommentId, f => f.Random.Guid().ToString())
+            .RuleFor(c => c.CommentId, f => f.Random.Guid())
             .RuleFor(c => c.CreatorUserId, f => userFaker.Generate().UserId)
             .RuleFor(c => c.PostId, f => postFaker.Generate().PostId)
             .RuleFor(c => c.Content, f => f.Lorem.Paragraph())
@@ -79,7 +79,7 @@ public class Rules
     public Faker<FollowerUserRelationDao> FollowerUserRelationRules(Faker<UserDao> userFaker)
     {
         var followerUserRelationFaker = new Faker<FollowerUserRelationDao>()
-            .RuleFor(f => f.FollowerUserRelationId, f => f.Random.Guid().ToString())
+            .RuleFor(f => f.FollowerUserRelationId, f => f.Random.Guid())
             .RuleFor(f => f.FollowerUserId, f => userFaker.Generate().UserId)
             .RuleFor(f => f.FollowedUserId, f => userFaker.Generate().UserId)
             .RuleFor(f => f.CreatedAt, f => f.Date.Past());
@@ -95,7 +95,7 @@ public class Rules
     public Faker<UserLikePostRelationDao> UserLikePostRelationRules(Faker<UserDao> userFaker, Faker<PostsDao> postFaker)
     {
         var userLikePostRelationFaker = new Faker<UserLikePostRelationDao>()
-            .RuleFor(ul => ul.UserLikePostRelationId, f => f.Random.Guid().ToString())
+            .RuleFor(ul => ul.UserLikePostRelationId, f => f.Random.Guid())
             .RuleFor(ul => ul.UserId, f => userFaker.Generate().UserId)
             .RuleFor(ul => ul.PostId, f => postFaker.Generate().PostId)
             .RuleFor(ul => ul.CreatedAt, f => f.Date.Past());

@@ -54,7 +54,7 @@ public class FollowerUserRelationDaoTest
             if (_relationToWorkWith.FollowerUserRelationId is null) return;
 
             var relation = await _databaseActions.GetEntityByField<FollowerUserRelationDao>("followerUserRelationID",
-                _relationToWorkWith.FollowerUserRelationId);
+                _relationToWorkWith.FollowerUserRelationId.ToString() ?? "");
             if (relation != null) await _databaseActions.Delete(relation);
         }
         catch (Exception ex)
@@ -73,10 +73,10 @@ public class FollowerUserRelationDaoTest
         {
             if (_followerUser.UserId is null || _followedUser.UserId is null) return;
 
-            var follower = await _databaseActions.GetEntityByField<UserDao>("userID", _followerUser.UserId);
+            var follower = await _databaseActions.GetEntityByField<UserDao>("userID", _followerUser.UserId.ToString() ?? "");
             if (follower != null) await _databaseActions.Delete(follower);
 
-            var followed = await _databaseActions.GetEntityByField<UserDao>("userID", _followedUser.UserId);
+            var followed = await _databaseActions.GetEntityByField<UserDao>("userID", _followedUser.UserId.ToString() ?? "");
             if (followed != null) await _databaseActions.Delete(followed);
         }
         catch (Exception ex)
@@ -148,7 +148,7 @@ public class FollowerUserRelationDaoTest
             });
 
             var relation = await _databaseActions.GetEntityByField<FollowerUserRelationDao>("followerUserRelationID",
-                insertedRelation.FollowerUserRelationId);
+                insertedRelation.FollowerUserRelationId.ToString() ?? "");
             Assert.Multiple(() =>
             {
                 Assert.That(relation, Is.Not.Null, "Retrieved relation should not be null");

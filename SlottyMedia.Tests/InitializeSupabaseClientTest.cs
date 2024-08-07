@@ -1,4 +1,6 @@
-﻿namespace SlottyMedia.Tests;
+﻿using SlottyMedia.Database;
+
+namespace SlottyMedia.Tests;
 
 /// <summary>
 /// Test class for the InitializeSupabaseClient class.

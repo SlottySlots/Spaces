@@ -13,7 +13,7 @@ public class UserLikePostRelationDao : BaseModel
     {
     }
 
-    public UserLikePostRelationDao(string userId, string postId)
+    public UserLikePostRelationDao(Guid userId, Guid postId)
     {
         UserId = userId;
         PostId = postId;
@@ -23,19 +23,19 @@ public class UserLikePostRelationDao : BaseModel
     /// The ID of the User_Like_Post_Relation. This is the Primary Key. It is auto-generated.
     /// </summary>
     [PrimaryKey("userLikePostRelationID")]
-    public string? UserLikePostRelationId { get; set; }
+    public Guid? UserLikePostRelationId { get; set; }
 
     /// <summary>
     /// The ID of the User who liked the Post. This is a Foreign Key to the User Table.
     /// </summary>
     [Column("userID")]
-    public string? UserId { get; set; }
+    public Guid? UserId { get; set; }
 
     /// <summary>
     /// The ID of the Post that was liked. This is a Foreign Key to the Post Table.
     /// </summary>
     [Column("postID")]
-    public string? PostId { get; set; }
+    public Guid? PostId { get; set; }
 
     /// <summary>
     /// The Date and Time the User_Like_Post_Relation was created.
