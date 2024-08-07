@@ -85,6 +85,16 @@ public class UserService : IUserService
         }
     }
 
+    public async Task<UserDto?> GetUserByUsername(string username)
+    {
+        return await _databaseActions.GetEntityByField<UserDto>("username", username);
+    }
+    
+    public async Task<UserDto?> GetUserByEmail(string email)
+    {
+        return await _databaseActions.GetEntityByField<UserDto>("email", email);
+    }
+
     /// <summary>
     /// This method updates the given User object in the database and returns the updated object.
     /// </summary>

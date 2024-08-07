@@ -15,6 +15,20 @@ public interface IUserService
     Task<UserDto?> GetUserById(string userId);
 
     /// <summary>
+    /// Fetches a user by their username. Returns null if no user was found.
+    /// </summary>
+    /// <param name="username">The user's username</param>
+    /// <returns>The queried user or null if no such user was found</returns>
+    Task<UserDto?> GetUserByUsername(string username);
+    
+    /// <summary>
+    /// Fetches a user by their email address. Returns null if no user was found.
+    /// </summary>
+    /// <param name="email">The user's email</param>
+    /// <returns>The queried user or null if no such user was found</returns>
+    Task<UserDto?> GetUserByEmail(string email);
+
+    /// <summary>
     /// This method creates a new User object in the database and returns the created object.
     /// </summary>
     /// <param name="userId">The UserID from the Authentication Service</param>
