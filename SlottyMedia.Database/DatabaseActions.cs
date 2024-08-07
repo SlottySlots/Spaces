@@ -174,4 +174,46 @@ public class DatabaseActions : IDatabaseActions
             throw new DatabaseExceptions(e.Message);
         }
     }
+
+    /// <summary>
+    /// Returns a list of entities with a selector from the database based on the given field and value.
+    /// </summary>
+    /// <typeparam name="T">The type of the item object.</typeparam>
+    /// <param name="selector">The selector expression to use.</param>
+    /// <param name="field">The field to search.</param>
+    /// <param name="value">The value to search for.</param>
+    /// <param name="max">The maximum number of items to retrieve.</param>
+    /// <param name="min">The minimum of a number</param>
+    /// <param name="orderByFields">The fields to order by.</param>
+    /// <returns>Returns a list of entities from the database.</returns>
+    /// <exception cref="DatabaseExceptions">Thrown when the items could not be retrieved from the database.</exception>
+    public async Task<List<T>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector,
+        List<(string, Constants.Operator, string)> search,
+        int max = -1,
+        int min = -1,
+        params (string field, Constants.Ordering ordering, Constants.NullPosition nullPosition)[] orderByFields)
+        where T : BaseModel, new()
+    {
+        try
+        {
+            var query = _supabaseClient.From<T>().Select(selector);
+            if (max is not -1) query = query.Range(min, max);
+
+            if (orderByFields.Length > 0)
+                foreach (var (orderByField, ordering, nullPosition) in orderByFields)
+                    query = query.Order(orderByField, ordering, nullPosition);
+            if (search.Count > 0)
+                foreach (var searchVariable in search)
+                    query.Filter(searchVariable.Item1, searchVariable.Item2, searchVariable.Item3);
+
+            var result = await query.Get();
+            if (result is null)
+                throw new Exception("The Items could not be retrieved from the database.");
+            return result.Models;
+        }
+        catch (Exception e)
+        {
+            throw new DatabaseExceptions(e.Message);
+        }
+    }
 }

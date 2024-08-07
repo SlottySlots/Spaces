@@ -35,7 +35,8 @@ public class PostServiceTest
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<PostsDao>())).ReturnsAsync(post);
 
         // Act
-        var result = await _postService.InsertPost(post.Headline, post.Content, post.UserId ?? Guid.Empty, post.ForumId ?? Guid.Empty);
+        var result = await _postService.InsertPost(post.Headline, post.Content, post.UserId ?? Guid.Empty,
+            post.ForumId ?? Guid.Empty);
 
         // Assert
         Assert.That(result, Is.EqualTo(post));

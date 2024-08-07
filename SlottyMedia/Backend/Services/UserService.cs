@@ -183,8 +183,6 @@ public class UserService : IUserService
                 Friends = new List<UserDto>()
             };
 
-            var t = friends.Count;
-
             //TODO verbessern
             foreach (var friend in friends)
             {

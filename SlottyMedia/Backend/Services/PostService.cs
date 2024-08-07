@@ -1,3 +1,4 @@
+using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
@@ -29,10 +30,10 @@ public class PostService : IPostService
     /// </summary>
     /// <param name="title">The title of the post.</param>
     /// <param name="content">The content of the post.</param>
-    /// <param name="creatorUserID">The ID of the user who created the post.</param>
-    /// <param name="forumID">The ID of the forum where the post is created.</param>
+    /// <param name="creatorUserId">The ID of the user who created the post.</param>
+    /// <param name="forumId">The ID of the forum where the post is created.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the inserted post.</returns>
-    public async Task<PostsDao> InsertPost(string title, string content, Guid creatorUserID, Guid forumID)
+    public async Task<PostsDao> InsertPost(string title, string content, Guid creatorUserId, Guid forumId)
     {
         try
         {
@@ -41,15 +42,15 @@ public class PostService : IPostService
             {
                 Headline = title,
                 Content = content,
-                UserId = creatorUserID,
-                ForumId = forumID
+                UserId = creatorUserId,
+                ForumId = forumId
             };
 
             // Insert the post into the database
             var insertedPost = await DatabaseActions.Insert(post);
             return insertedPost;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
             // TODO: Implement how we should handle errors in the View
             throw;
@@ -69,7 +70,7 @@ public class PostService : IPostService
             var updatedPost = await DatabaseActions.Update(post);
             return updatedPost;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
             // TODO: Implement how we should handle errors in the View
             throw;
@@ -86,10 +87,10 @@ public class PostService : IPostService
         try
         {
             // Delete the post from the database
-            var result = await DatabaseActions.Delete<PostsDao>(post);
+            var result = await DatabaseActions.Delete(post);
             return result;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
             // TODO: Implement how we should handle errors in the View
             throw;
@@ -122,5 +123,112 @@ public class PostService : IPostService
             // TODO: Implement how we should handle errors in the View
             throw;
         }
+    }
+
+    /// <summary>
+    /// This method returns a list of posts from the database based on the given userId.
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="startOfSet"></param>
+    /// <returns></returns>
+    public async Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet)
+    {
+        try
+        {
+            var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
+                x => new object[] { x.PostId, x.Content, x.Forum, x.CreatedAt },
+                new List<(string, Constants.Operator, string)>
+                {
+                    ("creator_userID", Constants.Operator.Equals, userId.ToString())
+                },
+                startOfSet,
+                endOfSet,
+                ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
+            );
+
+            return ConvertPostsToPostDtos(posts);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// This method returns a list of posts from the database based on the given userId and forumId.
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="startOfSet"></param>
+    /// <param name="endOfSet"></param>
+    /// <param name="forumId"></param>
+    /// <returns></returns>
+    public async Task<List<PostDto>> GetPostsByUserIdByForumId(Guid userId, int startOfSet, int endOfSet ,Guid forumId)
+    {
+        try
+        {
+            var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
+                x => new object[] { x.PostId, x.Content, x.Forum, x.CreatedAt },
+                new List<(string, Constants.Operator, string)>
+                {
+                    ("creator_userID", Constants.Operator.Equals, userId.ToString()),
+                    ("associated_forumID", Constants.Operator.Equals, forumId.ToString())
+                },
+                startOfSet,
+                endOfSet,
+                ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
+            );
+
+            return ConvertPostsToPostDtos(posts);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// This method returns a list of posts from the database based on the given forumId.
+    /// </summary>
+    /// <param name="forumId"></param>
+    /// <param name="startOfSet"></param>
+    /// <param name="endOfSet"></param>
+    /// <returns></returns>
+    public async Task<List<PostDto>> GetPostsByForumId(Guid forumId, int startOfSet, int endOfSet)
+    {
+        try
+        {
+            var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
+                x => new object[] { x.PostId, x.Content, x.Forum, x.CreatedAt },
+                new List<(string, Constants.Operator, string)>
+                {
+                    ("associated_forumID", Constants.Operator.Equals, forumId.ToString())
+                },
+                startOfSet,
+                endOfSet,
+                ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
+            );
+
+            return ConvertPostsToPostDtos(posts);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+    
+    /// <summary>
+    /// This method converts a list of PostsDao objects to a list of PostDto objects.
+    /// </summary>
+    /// <param name="posts"></param>
+    /// <returns></returns>
+    private List<PostDto> ConvertPostsToPostDtos(List<PostsDao> posts)
+    {
+        return posts.Select(post => new PostDto
+        {
+            PostId = post.PostId ?? Guid.Empty,
+            Content = post.Content ?? string.Empty,
+            Forum = post.Forum == null ? new ForumDto() : new ForumDto(),
+            CreatedAt = post.CreatedAt
+        }).ToList();
     }
 }

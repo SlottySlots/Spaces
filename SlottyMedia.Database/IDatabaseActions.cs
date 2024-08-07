@@ -67,4 +67,11 @@ public interface IDatabaseActions
         string value, int limit = -1,
         params (string field, Constants.Ordering ordering, Constants.NullPosition nullPosition)[] orderByFields)
         where T : BaseModel, new();
+
+    public Task<List<T>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector,
+        List<(string, Constants.Operator, string)> search,
+        int max = -1,
+        int min = -1,
+        params (string field, Constants.Ordering ordering, Constants.NullPosition nullPosition)[] orderByFields)
+        where T : BaseModel, new();
 }
