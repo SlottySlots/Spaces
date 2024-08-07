@@ -36,12 +36,10 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-    - name: Check manifest
-      run: ls -a .config
     - name: Restore dependencies
       run: dotnet restore
     - name: Restore tools
-      run: dotnet tool restore --tool-manifest ./.config/dotnet-tools.json
+      run: dotnet tool restore --tool-manifest ./SlottyMedia/.config/dotnet-tools.json
     - name: Build
       run: dotnet build --no-restore
     - name: Test
