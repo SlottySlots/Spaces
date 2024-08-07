@@ -47,7 +47,7 @@ builder.Services.AddScoped<IRegisterVm, RegisterVm>();
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IPostService, PostService>();
 builder.Services.AddScoped<ICookieService, CookieService>();
-builder.Services.AddScoped<IAuthService, AuthService>(); 
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 
 var app = builder.Build();

@@ -78,13 +78,16 @@ public class UserLikePostRelationDaoTest
             if (_postToWorkWith.PostId is null || _forumToWorkWirh.ForumId is null ||
                 _userToWorkWith.UserId is null) return;
 
-            var post = await _databaseActions.GetEntityByField<PostsDao>("postID", _postToWorkWith.PostId.ToString() ?? "");
+            var post = await _databaseActions.GetEntityByField<PostsDao>("postID",
+                _postToWorkWith.PostId.ToString() ?? "");
             if (post != null) await _databaseActions.Delete(post);
 
-            var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID", _forumToWorkWirh.ForumId.ToString() ?? "");
+            var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID",
+                _forumToWorkWirh.ForumId.ToString() ?? "");
             if (forum != null) await _databaseActions.Delete(forum);
 
-            var user = await _databaseActions.GetEntityByField<UserDao>("userID", _userToWorkWith.UserId.ToString() ?? "");
+            var user = await _databaseActions.GetEntityByField<UserDao>("userID",
+                _userToWorkWith.UserId.ToString() ?? "");
             if (user != null) await _databaseActions.Delete(user);
         }
         catch (Exception ex)

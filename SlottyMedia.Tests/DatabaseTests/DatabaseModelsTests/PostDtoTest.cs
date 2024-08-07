@@ -55,7 +55,8 @@ public class PostDtoTest
         {
             if (_postToWorkWith.PostId is null) return;
 
-            var post = await _databaseActions.GetEntityByField<PostsDao>("postID", _postToWorkWith.PostId.ToString() ?? "");
+            var post = await _databaseActions.GetEntityByField<PostsDao>("postID",
+                _postToWorkWith.PostId.ToString() ?? "");
             if (post != null) await _databaseActions.Delete(post);
         }
         catch (Exception ex)
@@ -74,10 +75,12 @@ public class PostDtoTest
         {
             if (_forumToWorkWith.ForumId is null || _userToWorkWith.UserId is null) return;
 
-            var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID", _forumToWorkWith.ForumId.ToString() ?? "");
+            var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID",
+                _forumToWorkWith.ForumId.ToString() ?? "");
             if (forum != null) await _databaseActions.Delete(forum);
 
-            var user = await _databaseActions.GetEntityByField<UserDao>("userID", _userToWorkWith.UserId.ToString() ?? "");
+            var user = await _databaseActions.GetEntityByField<UserDao>("userID",
+                _userToWorkWith.UserId.ToString() ?? "");
             if (user != null) await _databaseActions.Delete(user);
         }
         catch (Exception ex)
@@ -175,7 +178,8 @@ public class PostDtoTest
                 Assert.That(insertedPost.PostId, Is.Not.Null, "Inserted post's PostId should not be null");
             });
 
-            var post = await _databaseActions.GetEntityByField<PostsDao>("postID", insertedPost.PostId.ToString() ?? string.Empty);
+            var post = await _databaseActions.GetEntityByField<PostsDao>("postID",
+                insertedPost.PostId.ToString() ?? string.Empty);
             Assert.Multiple(() =>
             {
                 Assert.That(post, Is.Not.Null, "Retrieved post should not be null");

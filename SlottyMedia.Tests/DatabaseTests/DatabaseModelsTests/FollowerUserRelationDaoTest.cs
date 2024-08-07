@@ -73,10 +73,12 @@ public class FollowerUserRelationDaoTest
         {
             if (_followerUser.UserId is null || _followedUser.UserId is null) return;
 
-            var follower = await _databaseActions.GetEntityByField<UserDao>("userID", _followerUser.UserId.ToString() ?? "");
+            var follower =
+                await _databaseActions.GetEntityByField<UserDao>("userID", _followerUser.UserId.ToString() ?? "");
             if (follower != null) await _databaseActions.Delete(follower);
 
-            var followed = await _databaseActions.GetEntityByField<UserDao>("userID", _followedUser.UserId.ToString() ?? "");
+            var followed =
+                await _databaseActions.GetEntityByField<UserDao>("userID", _followedUser.UserId.ToString() ?? "");
             if (followed != null) await _databaseActions.Delete(followed);
         }
         catch (Exception ex)

@@ -1,4 +1,5 @@
 using Microsoft.JSInterop;
+using SlottyMedia.Backend.Services.Interfaces;
 
 namespace SlottyMedia.Backend.Services;
 
@@ -8,7 +9,7 @@ namespace SlottyMedia.Backend.Services;
 /// <param name="_jsRuntime">
 /// Runtime to perform js operations on client side
 /// </param>
-public class CookieService: ICookieService
+public class CookieService : ICookieService
 {
     /// <summary>
     /// Runtime to perform js operations on client side
@@ -23,7 +24,7 @@ public class CookieService: ICookieService
     {
         _jsRuntime = jsRuntime;
     }
-    
+
     /// <summary>
     /// Sets a cookie by taking a name, value and a expiration offset
     /// </summary>
@@ -38,7 +39,7 @@ public class CookieService: ICookieService
     /// Standard value: 7 Days
     /// </param>
     /// <returns></returns>
-    public ValueTask SetCookie(string name, string value, int days=7)
+    public ValueTask SetCookie(string name, string value, int days = 7)
     {
         return _jsRuntime.InvokeVoidAsync("setCookie", name, value, days);
     }
@@ -50,7 +51,7 @@ public class CookieService: ICookieService
     /// Name of the cookie f.e. "supabase.auth.token"
     /// </param>
     /// <returns></returns>
-    public  ValueTask<string> GetCookie(string name)
+    public ValueTask<string> GetCookie(string name)
     {
         return _jsRuntime.InvokeAsync<string>("getCookie", name);
     }

@@ -151,23 +151,18 @@ public class DatabaseActions : IDatabaseActions
     /// <returns>Returns a list of entities from the database.</returns>
     /// <exception cref="DatabaseExceptions">Thrown when the items could not be retrieved from the database.</exception>
     public async Task<List<T>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector, string field,
-        string value, int limit = -1, params (string field, Constants.Ordering ordering, Constants.NullPosition nullPosition)[] orderByFields) where T : BaseModel, new()
+        string value, int limit = -1,
+        params (string field, Constants.Ordering ordering, Constants.NullPosition nullPosition)[] orderByFields)
+        where T : BaseModel, new()
     {
         try
         {
             var query = _supabaseClient.From<T>().Filter(field, Constants.Operator.Equals, value).Select(selector);
-            if (limit is not -1)
-            {
-                query = query.Limit(limit);
-            }
+            if (limit is not -1) query = query.Limit(limit);
 
             if (orderByFields.Length > 0)
-            {
                 foreach (var (orderByField, ordering, nullPosition) in orderByFields)
-                {
                     query = query.Order(orderByField, ordering, nullPosition);
-                }
-            }
 
             var result = await query.Get();
             if (result is null)

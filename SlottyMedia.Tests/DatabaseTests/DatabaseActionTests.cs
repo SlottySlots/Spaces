@@ -34,7 +34,8 @@ public class DatabaseActionTests
         {
             if (_userToWorkWith.UserId is null) return;
 
-            var user = await _databaseActions.GetEntityByField<UserDao>("userID", _userToWorkWith.UserId.ToString() ?? "");
+            var user = await _databaseActions.GetEntityByField<UserDao>("userID",
+                _userToWorkWith.UserId.ToString() ?? "");
             if (user != null) await _databaseActions.Delete(user);
         }
         catch (Exception ex)

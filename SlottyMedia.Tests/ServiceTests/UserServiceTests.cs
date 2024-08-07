@@ -143,8 +143,8 @@ public class UserServiceTests
 
         var posts = new List<PostsDao>
         {
-            new PostsDao { PostId = Guid.NewGuid(), Content = "Test Post 1", ForumId = forum.ForumId},
-            new PostsDao { PostId = Guid.NewGuid(), Content = "Test Post 2", ForumId = forum.ForumId}
+            new() { PostId = Guid.NewGuid(), Content = "Test Post 1", ForumId = forum.ForumId },
+            new() { PostId = Guid.NewGuid(), Content = "Test Post 2", ForumId = forum.ForumId }
         };
 
         var forumName = new List<string>() { forum.ForumTopic };
@@ -179,12 +179,14 @@ public class UserServiceTests
         // Arrange
         var userId = Guid.NewGuid();
         var friendId = Guid.NewGuid();
-        var friends = new List<FollowerUserRelationDao> { new() { FollowerUserId = userId, FollowedUserId = friendId } };
+        var friends = new List<FollowerUserRelationDao>
+            { new() { FollowerUserId = userId, FollowedUserId = friendId } };
         var friendUser = new UserDao { UserId = friendId, UserName = "friendUsername" };
         _mockDatabaseActions
             .Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<FollowerUserRelationDao, object[]>>>(),
                 "followerUserID", userId.ToString(), 5)).ReturnsAsync(friends);
-        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", friendId.ToString())).ReturnsAsync(friendUser);
+        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", friendId.ToString()))
+            .ReturnsAsync(friendUser);
 
         // Act
         var result = await _userService.GetFriends(userId);

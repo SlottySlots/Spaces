@@ -1,8 +1,10 @@
 using Microsoft.JSInterop;
-using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using Supabase.Gotrue;
 using Client = Supabase.Client;
+
+namespace SlottyMedia.Backend.Services;
+
 /// <summary>
 /// This service is used to authenticate users
 /// </summary>
@@ -39,7 +41,7 @@ public class AuthService : IAuthService
         _jsRuntime = jsRuntime;
         _cookieService = cookieService;
     }
-    
+
     /// <summary>
     /// This method is used to sign up the user. And save the session by using SeveSessionAsync. This will set cookies.
     /// </summary>
@@ -53,13 +55,10 @@ public class AuthService : IAuthService
     public async Task<Session?> SignUp(string email, string password)
     {
         var session = await _supabaseClient.Auth.SignUp(email, password);
-        if (session != null)
-        {
-            await SaveSessionAsync(session);
-        }
+        if (session != null) await SaveSessionAsync(session);
         return session;
     }
-    
+
     /// <summary>
     /// This method is used to sign in the user. And save the session by using SeveSessionAsync. This will set cookies.
     /// </summary>
@@ -73,10 +72,7 @@ public class AuthService : IAuthService
     public async Task<Session?> SignIn(string? email, string? password)
     {
         var session = await _supabaseClient.Auth.SignIn(email, password);
-        if (session != null)
-        {
-            await SaveSessionAsync(session);
-        }
+        if (session != null) await SaveSessionAsync(session);
         return session;
     }
 
@@ -103,10 +99,9 @@ public class AuthService : IAuthService
         var accessToken = await _cookieService.GetCookie("supabase.auth.token");
         var refreshToken = await _cookieService.GetCookie("supabase.auth.refreshToken");
         if (!string.IsNullOrEmpty(accessToken) && !string.IsNullOrEmpty(refreshToken))
-        {
             try
             {
-                var session = await RefreshSession(accessToken ,refreshToken);
+                var session = await RefreshSession(accessToken, refreshToken);
                 if (session != null)
                 {
                     await SaveSessionAsync(session);
@@ -118,10 +113,10 @@ public class AuthService : IAuthService
                 Console.WriteLine($"Error refreshing session: {ex.Message}");
                 await SignOut();
             }
-        }
+
         return null;
     }
-    
+
     /// <summary>
     /// Sets a session on the server-side via supabase client
     /// </summary>
@@ -137,17 +132,17 @@ public class AuthService : IAuthService
     public async Task<Session?> SetSession(string accessToken, string refreshToken)
     {
         var session = await _supabaseClient.Auth.SetSession(accessToken, refreshToken);
-        return session; 
+        return session;
     }
-    
+
     /// <summary>
     /// This method is used to sign out the user. It also removes cookies
     /// </summary>
     public async Task SignOut()
     {
         await _supabaseClient.Auth.SignOut();
-        await _cookieService.RemoveCookie( "supabase.auth.token");
-        await _cookieService.RemoveCookie( "supabase.auth.refreshToken");
+        await _cookieService.RemoveCookie("supabase.auth.token");
+        await _cookieService.RemoveCookie("supabase.auth.refreshToken");
     }
 
     /// <summary>

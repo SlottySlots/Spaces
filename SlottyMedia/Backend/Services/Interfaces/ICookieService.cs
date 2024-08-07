@@ -1,4 +1,4 @@
-namespace SlottyMedia.Backend.Services;
+namespace SlottyMedia.Backend.Services.Interfaces;
 
 public interface ICookieService
 {

@@ -11,7 +11,6 @@ public class CommentDao : BaseModel
 {
     public CommentDao()
     {
-        
     }
 
     public CommentDao(Guid creatorUserId, Guid postId, string content, Guid? parentCommentId = null)

@@ -59,7 +59,8 @@ public class CommentDaoTest
             if (_commentToWorkWith.CommentId is null) return;
 
             var comment =
-                await _databaseActions.GetEntityByField<CommentDao>("commentID", _commentToWorkWith.CommentId.ToString() ?? ""); 
+                await _databaseActions.GetEntityByField<CommentDao>("commentID",
+                    _commentToWorkWith.CommentId.ToString() ?? "");
             if (comment != null) await _databaseActions.Delete(comment);
         }
         catch (Exception ex)
@@ -79,13 +80,16 @@ public class CommentDaoTest
             if (_postToWorkWith.PostId is null || _forumToWorkWith.ForumId is null ||
                 _userToWorkWith.UserId is null) return;
 
-            var post = await _databaseActions.GetEntityByField<PostsDao>("postID", _postToWorkWith.PostId.ToString() ?? "");
+            var post = await _databaseActions.GetEntityByField<PostsDao>("postID",
+                _postToWorkWith.PostId.ToString() ?? "");
             if (post != null) await _databaseActions.Delete(post);
 
-            var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID", _forumToWorkWith.ForumId.ToString() ?? "");
+            var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID",
+                _forumToWorkWith.ForumId.ToString() ?? "");
             if (forum != null) await _databaseActions.Delete(forum);
 
-            var user = await _databaseActions.GetEntityByField<UserDao>("userID", _userToWorkWith.UserId.ToString() ?? "");
+            var user = await _databaseActions.GetEntityByField<UserDao>("userID",
+                _userToWorkWith.UserId.ToString() ?? "");
             if (user != null) await _databaseActions.Delete(user);
         }
         catch (Exception ex)
@@ -181,7 +185,9 @@ public class CommentDaoTest
             });
 
 
-            var comment = await _databaseActions.GetEntityByField<CommentDao>("commentID", insertedComment.CommentId.ToString() ?? "");
+            var comment =
+                await _databaseActions.GetEntityByField<CommentDao>("commentID",
+                    insertedComment.CommentId.ToString() ?? "");
             Assert.Multiple(() =>
             {
                 Assert.That(comment, Is.Not.Null, "Retrieved comment should not be null");

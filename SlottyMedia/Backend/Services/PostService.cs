@@ -47,7 +47,7 @@ public class PostService : IPostService
             throw;
         }
     }
-    
+
 
     /// <summary>
     /// Updates an existing post in the database.
@@ -99,7 +99,7 @@ public class PostService : IPostService
         {
             // Fetch posts from the database based on the user ID and limit
             var posts = await _databaseActions.GetEntitiesWithSelectorById<PostsDao>(
-                x => new [] { x.Forum },
+                x => new[] { x.Forum },
                 "creator_userID",
                 userId.ToString(), limit,
                 ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
