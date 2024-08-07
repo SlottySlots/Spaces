@@ -1,24 +1,14 @@
-using Microsoft.JSInterop;
-using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using Supabase.Gotrue;
 using Client = Supabase.Client;
+namespace SlottyMedia.Backend.Services;
+
 /// <summary>
 /// This service is used to authenticate users
 /// </summary>
-/// <param name="_supabaseClient">
-/// Used to perform supabase actions
-/// </param>
-/// <param name="_jsRuntime">
-/// Used to perform JS Interop operations
-/// </param>
-/// <param name="_cookieService">
-/// Used to get, set and remove cookies on the clients browser
-/// </param>
 public class AuthService : IAuthService
 {
     private readonly Client _supabaseClient;
-    private readonly IJSRuntime _jsRuntime;
     private readonly ICookieService _cookieService;
 
     /// <summary>
@@ -27,21 +17,17 @@ public class AuthService : IAuthService
     /// <param name="supabaseClient">
     /// Injected supabaseClient
     /// </param>
-    /// <param name="jsRuntime">
-    /// Injected jsRuntime
-    /// </param>
     /// <param name="cookieService">
     /// Injected cookieService
     /// </param>
-    public AuthService(Client supabaseClient, IJSRuntime jsRuntime, ICookieService cookieService)
+    public AuthService(Client supabaseClient, ICookieService cookieService)
     {
         _supabaseClient = supabaseClient;
-        _jsRuntime = jsRuntime;
         _cookieService = cookieService;
     }
     
     /// <summary>
-    /// This method is used to sign up the user. And save the session by using SeveSessionAsync. This will set cookies.
+    /// This method is used to sign up the user. And save the session by using SaveSessionAsync. This will set cookies.
     /// </summary>
     /// <param name="email">
     /// Email of the user
@@ -61,7 +47,7 @@ public class AuthService : IAuthService
     }
     
     /// <summary>
-    /// This method is used to sign in the user. And save the session by using SeveSessionAsync. This will set cookies.
+    /// This method is used to sign in the user. And save the session by using SaveSessionAsync. This will set cookies.
     /// </summary>
     /// <param name="email">
     /// Email of the user
@@ -70,7 +56,7 @@ public class AuthService : IAuthService
     /// Password of the user
     /// </param>
     /// <returns></returns>
-    public async Task<Session?> SignIn(string? email, string? password)
+    public async Task<Session?> SignIn(string email, string password)
     {
         var session = await _supabaseClient.Auth.SignIn(email, password);
         if (session != null)
@@ -84,12 +70,15 @@ public class AuthService : IAuthService
     /// Used to save cookies of a specific session
     /// </summary>
     /// <param name="session">
-    /// Provides the session informations, f.e. accessToken / refreshToken
+    /// Provides the session information, f.e. accessToken / refreshToken
     /// </param>
     public async Task SaveSessionAsync(Session session)
     {
-        await _cookieService.SetCookie("supabase.auth.token", session.AccessToken, 7);
-        await _cookieService.SetCookie("supabase.auth.refreshToken", session.RefreshToken, 7);
+        if (session is { AccessToken: not null, RefreshToken: not null })
+        {
+            await _cookieService.SetCookie("supabase.auth.token", session.AccessToken, 7);
+            await _cookieService.SetCookie("supabase.auth.refreshToken", session.RefreshToken, 7);
+        }
     }
 
     /// <summary>
