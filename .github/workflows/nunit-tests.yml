@@ -38,6 +38,8 @@ jobs:
         dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore
+    - name: Restore tools
+      run: dotnet tools restore
     - name: Build
       run: dotnet build --no-restore
     - name: Test
