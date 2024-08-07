@@ -62,27 +62,27 @@
 </div>
 
 @code {
-    private string emailInput;
-    private string passwordInput;
+    private string? _emailInput;
+    private string? _passwordInput;
     
     
     private void OnInputEmail(string arg)
     {
-        emailInput = arg;
+        _emailInput = arg;
     }
     
     private void OnInputPassword(string arg)
     {
-        passwordInput = arg;
+        _passwordInput = arg;
     }
 
     private async void OnClickSubmit()
     {
-        if (viewmodel.GetCurrentSession() == null)
+        if (viewmodel.GetCurrentSession() == null && _emailInput != null && _passwordInput != null)
         {
             try
             {
-                var session = await viewmodel.RegisterAsync(emailInput, passwordInput);
+                var session = await viewmodel.RegisterAsync(_emailInput, _passwordInput);
                 if (session != null)
                 {
                     Console.WriteLine("Registration successful, user logged in.");
