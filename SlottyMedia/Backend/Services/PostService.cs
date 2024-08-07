@@ -10,7 +10,10 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class PostService : IPostService
 {
-    private readonly IDatabaseActions _databaseActions;
+    /// <summary>
+    /// DatabaseActions property.
+    /// </summary>
+    public IDatabaseActions DatabaseActions { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PostService"/> class.
@@ -18,18 +21,22 @@ public class PostService : IPostService
     /// <param name="databaseActions">The database actions interface.</param>
     public PostService(IDatabaseActions databaseActions)
     {
-        _databaseActions = databaseActions;
+        DatabaseActions = databaseActions;
     }
 
     /// <summary>
     /// Inserts a new post into the database.
     /// </summary>
-    /// <param name="post">The post to insert.</param>
+    /// <param name="title">The title of the post.</param>
+    /// <param name="content">The content of the post.</param>
+    /// <param name="creatorUserID">The ID of the user who created the post.</param>
+    /// <param name="forumID">The ID of the forum where the post is created.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the inserted post.</returns>
     public async Task<PostsDao> InsertPost(string title, string content, Guid creatorUserID, Guid forumID)
     {
         try
         {
+            // Create a new post object
             var post = new PostsDao()
             {
                 Headline = title,
@@ -38,16 +45,16 @@ public class PostService : IPostService
                 ForumId = forumID
             };
 
-            var insertedPost = await _databaseActions.Insert(post);
+            // Insert the post into the database
+            var insertedPost = await DatabaseActions.Insert(post);
             return insertedPost;
         }
         catch (Exception e)
         {
-            //TODO Implement how we should handle errors in the View
+            // TODO: Implement how we should handle errors in the View
             throw;
         }
     }
-
 
     /// <summary>
     /// Updates an existing post in the database.
@@ -58,12 +65,13 @@ public class PostService : IPostService
     {
         try
         {
-            var updatedPost = await _databaseActions.Update(post);
+            // Update the post in the database
+            var updatedPost = await DatabaseActions.Update(post);
             return updatedPost;
         }
         catch (Exception e)
         {
-            //TODO Implement how we should handle errors in the View
+            // TODO: Implement how we should handle errors in the View
             throw;
         }
     }
@@ -77,12 +85,13 @@ public class PostService : IPostService
     {
         try
         {
-            var result = await _databaseActions.Delete<PostsDao>(post);
+            // Delete the post from the database
+            var result = await DatabaseActions.Delete<PostsDao>(post);
             return result;
         }
         catch (Exception e)
         {
-            //TODO Implement how we should handle errors in the View
+            // TODO: Implement how we should handle errors in the View
             throw;
         }
     }
@@ -90,7 +99,7 @@ public class PostService : IPostService
     /// <summary>
     /// Retrieves a list of post titles from a forum for a given user, limited by the specified number.
     /// </summary>
-    /// <param name="userID">The ID of the user.</param>
+    /// <param name="userId">The ID of the user.</param>
     /// <param name="limit">The maximum number of posts to retrieve.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of post titles.</returns>
     public async Task<List<string>> GetPostsFromForum(Guid userId, int limit)
@@ -98,8 +107,8 @@ public class PostService : IPostService
         try
         {
             // Fetch posts from the database based on the user ID and limit
-            var posts = await _databaseActions.GetEntitiesWithSelectorById<PostsDao>(
-                x => new[] { x.Forum },
+            var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
+                x => new object[] { x.Forum },
                 "creator_userID",
                 userId.ToString(), limit,
                 ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
@@ -110,7 +119,7 @@ public class PostService : IPostService
         }
         catch (Exception e)
         {
-            //TODO Implement how we should handle errors in the View
+            // TODO: Implement how we should handle errors in the View
             throw;
         }
     }

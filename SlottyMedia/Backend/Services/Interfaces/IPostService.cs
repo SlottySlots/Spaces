@@ -1,3 +1,4 @@
+using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 
 namespace SlottyMedia.Backend.Services.Interfaces;
@@ -13,7 +14,7 @@ public interface IPostService
     /// <param name="userID">The ID of the user.</param>
     /// <param name="limit">The maximum number of posts to retrieve.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of post titles.</returns>
-    internal Task<List<string>> GetPostsFromForum(Guid userId, int limit);
+    public Task<List<string>> GetPostsFromForum(Guid userId, int limit);
 
     /// <summary>
     /// Inserts a new post into the database.
@@ -35,4 +36,9 @@ public interface IPostService
     /// <param name="postId">The ID of the post to delete.</param>
     /// <returns>A task that represents the asynchronous operation. The task result indicates whether the deletion was successful.</returns>
     Task<bool> DeletePost(PostsDao post);
+    
+    /// <summary>
+    /// DatabaseActions property.
+    /// </summary>
+    public IDatabaseActions DatabaseActions { get; set; }
 }

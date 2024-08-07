@@ -15,7 +15,7 @@ public class UserServiceTests
 {
     private Mock<IDatabaseActions> _mockDatabaseActions;
     private IUserService _userService;
-    private Mock<PostService> _mockPostService;
+    private Mock<IPostService> _mockPostService;
 
     /// <summary>
     /// Sets up the test environment before each test.
@@ -24,7 +24,8 @@ public class UserServiceTests
     public void Setup()
     {
         _mockDatabaseActions = new Mock<IDatabaseActions>();
-        _mockPostService = new Mock<PostService>(_mockDatabaseActions.Object);
+        _mockPostService = new Mock<IPostService>();
+        _mockPostService.Object.DatabaseActions = _mockDatabaseActions.Object;
         _userService = new UserService(_mockDatabaseActions.Object, _mockPostService.Object);
     }
 
@@ -184,7 +185,7 @@ public class UserServiceTests
         var friendUser = new UserDao { UserId = friendId, UserName = "friendUsername" };
         _mockDatabaseActions
             .Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<FollowerUserRelationDao, object[]>>>(),
-                "followerUserID", userId.ToString(), 5)).ReturnsAsync(friends);
+                "followerUserID", userId.ToString(), -1)).ReturnsAsync(friends);
         _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", friendId.ToString()))
             .ReturnsAsync(friendUser);
 
@@ -193,7 +194,7 @@ public class UserServiceTests
 
         // Assert
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Friends.Count, Is.EqualTo(1));
+        Assert.That(result.Friends, Has.Count.EqualTo(1));
         Assert.That(result.Friends[0].Username, Is.EqualTo("friendUsername"));
     }
 }
