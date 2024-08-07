@@ -38,10 +38,8 @@ jobs:
         dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore
-    - name: Show working dir
-      run: pwd
     - name: Restore tools
-      run: dotnet tool restore --tool-manifest ./config/dotnet-tools.json
+      run: dotnet tool restore --tool-manifest ./.config/dotnet-tools.json
     - name: Build
       run: dotnet build --no-restore
     - name: Test
