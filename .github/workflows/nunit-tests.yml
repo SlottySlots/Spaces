@@ -39,7 +39,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Restore tools
-      run: dotnet tools restore
+      run: dotnet tool restore
     - name: Build
       run: dotnet build --no-restore
     - name: Test
