@@ -3,12 +3,12 @@
 namespace SlottyMedia.Database;
 
 /// <summary>
-/// This Class is used to Initialize the Supabase Client
+///     This Class is used to Initialize the Supabase Client
 /// </summary>
 public static class InitializeSupabaseClient
 {
     /// <summary>
-    /// This class uses the Environment Variables to Initialize the Supabase Client
+    ///     This class uses the Environment Variables to Initialize the Supabase Client
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception">When the Supabase EnvironemtVaraibles are not set, an Exception will be thrown</exception>

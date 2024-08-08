@@ -3,7 +3,7 @@ using SlottyMedia.Database.Daos;
 namespace SlottyMedia.Tests.DatabaseTests;
 
 /// <summary>
-/// This class initializes the models for the database tests.
+///     This class initializes the models for the database tests.
 /// </summary>
 public static class InitializeModels
 {

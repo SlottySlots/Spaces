@@ -6,7 +6,6 @@ using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Components;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
-using Supabase;
 
 var builder = WebApplication.CreateBuilder(args);
 

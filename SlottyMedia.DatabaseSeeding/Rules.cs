@@ -6,7 +6,7 @@ namespace SlottyMedia.DatabaseSeeding;
 public class Rules
 {
     /// <summary>
-    /// This method creates the rules for the UserDao.
+    ///     This method creates the rules for the UserDao.
     /// </summary>
     /// <returns></returns>
     public Faker<UserDao> UserRules()
@@ -22,7 +22,7 @@ public class Rules
     }
 
     /// <summary>
-    /// This method creates the rules for the ForumDao.
+    ///     This method creates the rules for the ForumDao.
     /// </summary>
     /// <param name="userFaker"></param>
     /// <returns></returns>
@@ -37,7 +37,7 @@ public class Rules
     }
 
     /// <summary>
-    /// This method creates the rules for the PostsDao.
+    ///     This method creates the rules for the PostsDao.
     /// </summary>
     /// <param name="userFaker"></param>
     /// <param name="forumFaker"></param>
@@ -55,7 +55,7 @@ public class Rules
     }
 
     /// <summary>
-    /// This method creates the rules for the CommentDto.
+    ///     This method creates the rules for the CommentDto.
     /// </summary>
     /// <param name="userFaker"></param>
     /// <param name="postFaker"></param>
@@ -72,7 +72,7 @@ public class Rules
     }
 
     /// <summary>
-    /// This method creates the rules for the FollowerUserRelationDao.
+    ///     This method creates the rules for the FollowerUserRelationDao.
     /// </summary>
     /// <param name="userFaker"></param>
     /// <returns></returns>
@@ -87,7 +87,7 @@ public class Rules
     }
 
     /// <summary>
-    /// This method creates the rules for the UserLikePostRelationDao.
+    ///     This method creates the rules for the UserLikePostRelationDao.
     /// </summary>
     /// <param name="userFaker"></param>
     /// <param name="postFaker"></param>

@@ -6,20 +6,16 @@ using SlottyMedia.Database.Daos;
 namespace SlottyMedia.Backend.ViewModel;
 
 /// <summary>
-/// This class represents the Counter ViewModel.
+///     This class represents the Counter ViewModel.
 /// </summary>
 public class CounterVm : ICounterVm, INotifyPropertyChanged
 {
-    private UserDao _user;
     private readonly IUserService _userService;
+    private UserDao _user;
 
     /// <summary>
-    /// Event that is triggered when a property value changes.
-    /// </summary>
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="CounterVm"/> class. It creates a new UserDao object and sets the UserService.
+    ///     Initializes a new instance of the <see cref="CounterVm" /> class. It creates a new UserDao object and sets the
+    ///     UserService.
     /// </summary>
     /// <param name="userService">The user service to interact with the database.</param>
     /// <param name="user">A new UserDao object</param>
@@ -30,16 +26,8 @@ public class CounterVm : ICounterVm, INotifyPropertyChanged
     }
 
     /// <summary>
-    /// This method is called when a property value changes, to notify the View.
-    /// </summary>
-    /// <param name="propertyName">The name of the property</param>
-    protected void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    /// <summary>
-    /// Gets or sets the User object. This object can be accessed by the View. When the User object changes, the View will be notified.
+    ///     Gets or sets the User object. This object can be accessed by the View. When the User object changes, the View will
+    ///     be notified.
     /// </summary>
     public UserDao User
     {
@@ -52,7 +40,7 @@ public class CounterVm : ICounterVm, INotifyPropertyChanged
     }
 
     /// <summary>
-    /// Gets a user by their ID.
+    ///     Gets a user by their ID.
     /// </summary>
     /// <param name="userId">The ID of the user to retrieve.</param>
     /// <returns></returns>
@@ -63,9 +51,20 @@ public class CounterVm : ICounterVm, INotifyPropertyChanged
         {
             User = user;
         }
-        else
-        {
-            //TODO: Handle the case where the user is not found.    
-        }
+        //TODO: Handle the case where the user is not found.    
+    }
+
+    /// <summary>
+    ///     Event that is triggered when a property value changes.
+    /// </summary>
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    /// <summary>
+    ///     This method is called when a property value changes, to notify the View.
+    /// </summary>
+    /// <param name="propertyName">The name of the property</param>
+    protected void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

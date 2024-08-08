@@ -5,18 +5,13 @@ using Supabase;
 namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
 
 /// <summary>
-/// Test class for the ForumDao model.
+///     Test class for the ForumDao model.
 /// </summary>
 [TestFixture]
 public class ForumDaoTest
 {
-    private Client _supabaseClient;
-    private IDatabaseActions _databaseActions;
-    private ForumDao _forumToWorkWith;
-    private UserDao _userToWorkWith;
-
     /// <summary>
-    /// One-time setup method to initialize Supabase client and insert test data.
+    ///     One-time setup method to initialize Supabase client and insert test data.
     /// </summary>
     [OneTimeSetUp]
     public async Task OneTimeSetup()
@@ -28,7 +23,7 @@ public class ForumDaoTest
     }
 
     /// <summary>
-    /// Setup method to initialize a new ForumDao instance before each test.
+    ///     Setup method to initialize a new ForumDao instance before each test.
     /// </summary>
     [SetUp]
     public void Setup()
@@ -41,7 +36,7 @@ public class ForumDaoTest
     }
 
     /// <summary>
-    /// Tear down method to delete the test forum after each test.
+    ///     Tear down method to delete the test forum after each test.
     /// </summary>
     [TearDown]
     public async Task TearDown()
@@ -61,7 +56,7 @@ public class ForumDaoTest
     }
 
     /// <summary>
-    /// One-time tear down method to delete the test data after all tests are run.
+    ///     One-time tear down method to delete the test data after all tests are run.
     /// </summary>
     [OneTimeTearDown]
     public async Task OneTimeTearDown()
@@ -80,8 +75,13 @@ public class ForumDaoTest
         }
     }
 
+    private Client _supabaseClient;
+    private IDatabaseActions _databaseActions;
+    private ForumDao _forumToWorkWith;
+    private UserDao _userToWorkWith;
+
     /// <summary>
-    /// Test method to insert a new forum into the database.
+    ///     Test method to insert a new forum into the database.
     /// </summary>
     [Test]
     public async Task Insert()
@@ -107,7 +107,7 @@ public class ForumDaoTest
     }
 
     /// <summary>
-    /// Test method to update an existing forum in the database.
+    ///     Test method to update an existing forum in the database.
     /// </summary>
     [Test]
     public async Task Update()
@@ -138,7 +138,7 @@ public class ForumDaoTest
     }
 
     /// <summary>
-    /// Test method to delete an existing forum from the database.
+    ///     Test method to delete an existing forum from the database.
     /// </summary>
     [Test]
     public async Task Delete()
@@ -158,7 +158,7 @@ public class ForumDaoTest
     }
 
     /// <summary>
-    /// Test method to retrieve a forum by a specific field from the database.
+    ///     Test method to retrieve a forum by a specific field from the database.
     /// </summary>
     [Test]
     public async Task GetEntityByField()

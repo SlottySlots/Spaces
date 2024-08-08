@@ -149,6 +149,7 @@ public Task<UserDto> GetUser(Guid userId, int recentForums)
 The Id of the user
 
 `recentForums` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The maximum number of recent forums to retrieve
 
 #### Returns
 

@@ -4,22 +4,17 @@ using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
-using Supabase.Postgrest;
 
 namespace SlottyMedia.Tests.ServiceTests;
 
 /// <summary>
-/// Test class for UserService.
+///     Test class for UserService.
 /// </summary>
 [TestFixture]
 public class UserServiceTests
 {
-    private Mock<IDatabaseActions> _mockDatabaseActions;
-    private IUserService _userService;
-    private Mock<IPostService> _mockPostService;
-
     /// <summary>
-    /// Sets up the test environment before each test.
+    ///     Sets up the test environment before each test.
     /// </summary>
     [SetUp]
     public void Setup()
@@ -30,8 +25,12 @@ public class UserServiceTests
         _userService = new UserService(_mockDatabaseActions.Object, _mockPostService.Object);
     }
 
+    private Mock<IDatabaseActions> _mockDatabaseActions;
+    private IUserService _userService;
+    private Mock<IPostService> _mockPostService;
+
     /// <summary>
-    /// Tests that CreateUser returns a User when the user is successfully created.
+    ///     Tests that CreateUser returns a User when the user is successfully created.
     /// </summary>
     [Test]
     public async Task CreateUser_ShouldReturnUser_WhenUserIsCreated()
@@ -52,7 +51,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests that CreateUser returns null when an exception is thrown.
+    ///     Tests that CreateUser returns null when an exception is thrown.
     /// </summary>
     [Test]
     public async Task CreateUser_ShouldReturnNull_WhenExceptionIsThrown()
@@ -67,7 +66,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests that DeleteUser returns true when the user is successfully deleted.
+    ///     Tests that DeleteUser returns true when the user is successfully deleted.
     /// </summary>
     [Test]
     public async Task DeleteUser_ShouldReturnTrue_WhenUserIsDeleted()
@@ -81,7 +80,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests that DeleteUser returns false when an exception is thrown.
+    ///     Tests that DeleteUser returns false when an exception is thrown.
     /// </summary>
     [Test]
     public async Task DeleteUser_ShouldReturnFalse_WhenExceptionIsThrown()
@@ -95,7 +94,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests that GetUserById returns a User when the user exists.
+    ///     Tests that GetUserById returns a User when the user exists.
     /// </summary>
     [Test]
     public async Task GetUserById_ShouldReturnUser_WhenUserExists()
@@ -111,13 +110,14 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests that GetUserById returns null when an exception is thrown.
+    ///     Tests that GetUserById returns null when an exception is thrown.
     /// </summary>
     [Test]
     public async Task GetUserById_ShouldReturnNull_WhenExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
-        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString())).ThrowsAsync(new Exception());
+        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString()))
+            .ThrowsAsync(new Exception());
 
         var result = await _userService.GetUserById(userId);
 
@@ -126,7 +126,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests that UpdateUser returns the updated User when the user is successfully updated.
+    ///     Tests that UpdateUser returns the updated User when the user is successfully updated.
     /// </summary>
     [Test]
     public async Task UpdateUser_ShouldReturnUpdatedUser_WhenUserIsUpdated()
@@ -141,7 +141,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests that UpdateUser returns null when an exception is thrown.
+    ///     Tests that UpdateUser returns null when an exception is thrown.
     /// </summary>
     [Test]
     public async Task UpdateUser_ShouldReturnNull_WhenExceptionIsThrown()
@@ -155,7 +155,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests that GetProfilePic returns the profile picture when the user exists.
+    ///     Tests that GetProfilePic returns the profile picture when the user exists.
     /// </summary>
     [Test]
     public async Task GetProfilePic_ShouldReturnProfilePic_WhenUserExists()
@@ -171,13 +171,14 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests that GetProfilePic returns the default profile picture when an exception is thrown.
+    ///     Tests that GetProfilePic returns the default profile picture when an exception is thrown.
     /// </summary>
     [Test]
     public async Task GetProfilePic_ShouldReturnDefaultProfilePic_WhenExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
-        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString())).ThrowsAsync(new Exception());
+        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString()))
+            .ThrowsAsync(new Exception());
 
         var result = await _userService.GetProfilePic(userId);
 
@@ -186,7 +187,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests that GetUser returns a UserDto when the user exists.
+    ///     Tests that GetUser returns a UserDto when the user exists.
     /// </summary>
     [Test]
     public async Task GetUser_ShouldReturnUserDto_WhenUserExists()
@@ -206,13 +207,13 @@ public class UserServiceTests
             new() { PostId = Guid.NewGuid(), Content = "Test Post 2", ForumId = forum.ForumId }
         };
 
-        var forumName = new List<string>() { forum.ForumTopic };
+        var forumName = new List<string> { forum.ForumTopic };
 
         _mockDatabaseActions
             .Setup(x => x.GetEntitieWithSelectorById(It.IsAny<Expression<Func<UserDao, object[]>>>(), "userID",
                 userId.ToString())).ReturnsAsync(user);
         _mockPostService
-            .Setup(x => x.GetPostsFromForum(userId, 0,5)).ReturnsAsync(forumName);
+            .Setup(x => x.GetPostsFromForum(userId, 0, 5)).ReturnsAsync(forumName);
 
         var result = await _userService.GetUser(userId);
 
@@ -228,13 +229,15 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests that GetUser returns a default UserDto when an exception is thrown.
+    ///     Tests that GetUser returns a default UserDto when an exception is thrown.
     /// </summary>
     [Test]
     public async Task GetUser_ShouldReturnDefaultUserDto_WhenExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
-        _mockDatabaseActions.Setup(x => x.GetEntitieWithSelectorById(It.IsAny<Expression<Func<UserDao, object[]>>>(), "userID", userId.ToString())).ThrowsAsync(new Exception());
+        _mockDatabaseActions
+            .Setup(x => x.GetEntitieWithSelectorById(It.IsAny<Expression<Func<UserDao, object[]>>>(), "userID",
+                userId.ToString())).ThrowsAsync(new Exception());
 
         var result = await _userService.GetUser(userId);
 
@@ -243,7 +246,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests that GetFriends returns a list of friends when the user has friends.
+    ///     Tests that GetFriends returns a list of friends when the user has friends.
     /// </summary>
     [Test]
     public async Task GetFriends_ShouldReturnFriendsList_WhenUserHasFriends()
@@ -252,12 +255,12 @@ public class UserServiceTests
         var friendId = Guid.NewGuid();
         var friendUser = new UserDao { UserId = friendId, UserName = "friendUsername" };
         var friends = new List<FollowerUserRelationDao>
-            { new() { FollowerUserId = userId, FollowedUserId = friendId , FollowerUser = friendUser} };
+            { new() { FollowerUserId = userId, FollowedUserId = friendId, FollowerUser = friendUser } };
         _mockDatabaseActions
             .Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<FollowerUserRelationDao, object[]>>>(),
-                "followerUserID", userId.ToString(), -1, -1, new (string, Constants.Ordering, Constants.NullPosition)[0]))
+                "followerUserID", userId.ToString(), -1, -1))
             .ReturnsAsync(friends);
-        
+
         var result = await _userService.GetFriends(userId);
 
         Assert.That(result, Is.Not.Null);
@@ -266,7 +269,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests that GetFriends returns a default FriendsOfUserDto when an exception is thrown.
+    ///     Tests that GetFriends returns a default FriendsOfUserDto when an exception is thrown.
     /// </summary>
     [Test]
     public async Task GetFriends_ShouldReturnDefaultFriendsList_WhenExceptionIsThrown()
@@ -274,7 +277,7 @@ public class UserServiceTests
         var userId = Guid.NewGuid();
         _mockDatabaseActions
             .Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<FollowerUserRelationDao, object[]>>>(),
-                "followerUserID", userId.ToString(), -1, -1, new (string, Constants.Ordering, Constants.NullPosition)[0]))
+                "followerUserID", userId.ToString(), -1, -1))
             .ThrowsAsync(new Exception());
 
         var result = await _userService.GetFriends(userId);

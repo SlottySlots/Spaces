@@ -15,7 +15,7 @@ Implements [IPostService](./slottymedia.backend.services.interfaces.ipostservice
 
 ### **DatabaseActions**
 
-DatabaseActions property.
+Gets or sets the database actions interface.
 
 ```csharp
 public IDatabaseActions DatabaseActions { get; set; }
@@ -119,8 +119,10 @@ public Task<List<string>> GetPostsFromForum(Guid userId, int startOfSet, int end
 The ID of the user.
 
 `startOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The starting index of the set.
 
 `endOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The ending index of the set.
 
 #### Returns
 
@@ -129,7 +131,7 @@ A task that represents the asynchronous operation. The task result contains a li
 
 ### **GetPostsByUserId(Guid, Int32, Int32)**
 
-This method returns a list of posts from the database based on the given userId.
+Retrieves a list of posts from the database based on the given userId.
 
 ```csharp
 public Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet)
@@ -138,18 +140,22 @@ public Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int end
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the user.
 
 `startOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The starting index of the set.
 
 `endOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The ending index of the set.
 
 #### Returns
 
 [Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains a list of PostDto objects.
 
 ### **GetPostsByUserIdByForumId(Guid, Int32, Int32, Guid)**
 
-This method returns a list of posts from the database based on the given userId and forumId.
+Retrieves a list of posts from the database based on the given userId and forumId.
 
 ```csharp
 public Task<List<PostDto>> GetPostsByUserIdByForumId(Guid userId, int startOfSet, int endOfSet, Guid forumId)
@@ -158,20 +164,25 @@ public Task<List<PostDto>> GetPostsByUserIdByForumId(Guid userId, int startOfSet
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the user.
 
 `startOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The starting index of the set.
 
 `endOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The ending index of the set.
 
 `forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the forum.
 
 #### Returns
 
 [Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains a list of PostDto objects.
 
 ### **GetPostsByForumId(Guid, Int32, Int32)**
 
-This method returns a list of posts from the database based on the given forumId.
+Retrieves a list of posts from the database based on the given forumId.
 
 ```csharp
 public Task<List<PostDto>> GetPostsByForumId(Guid forumId, int startOfSet, int endOfSet)
@@ -180,11 +191,15 @@ public Task<List<PostDto>> GetPostsByForumId(Guid forumId, int startOfSet, int e
 #### Parameters
 
 `forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the forum.
 
 `startOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The starting index of the set.
 
 `endOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The ending index of the set.
 
 #### Returns
 
 [Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains a list of PostDto objects.

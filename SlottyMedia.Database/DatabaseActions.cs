@@ -1,27 +1,28 @@
 ﻿using System.Linq.Expressions;
 using Supabase.Postgrest;
 using Supabase.Postgrest.Models;
+using Client = Supabase.Client;
 
 namespace SlottyMedia.Database;
 
 /// <summary>
-/// This class represents the Database Actions. It is used to interact with the database.
+///     This class represents the Database Actions. It is used to interact with the database.
 /// </summary>
 public class DatabaseActions : IDatabaseActions
 {
-    private readonly Supabase.Client _supabaseClient;
+    private readonly Client _supabaseClient;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="DatabaseActions"/> class.
+    ///     Initializes a new instance of the <see cref="DatabaseActions" /> class.
     /// </summary>
     /// <param name="supabaseClient">The Supabase client used to interact with the database.</param>
-    public DatabaseActions(Supabase.Client supabaseClient)
+    public DatabaseActions(Client supabaseClient)
     {
         _supabaseClient = supabaseClient;
     }
 
     /// <summary>
-    /// Inserts an item into the database.
+    ///     Inserts an item into the database.
     /// </summary>
     /// <typeparam name="T">The model class of the item.</typeparam>
     /// <param name="item">The item to insert into the database.</param>
@@ -43,7 +44,7 @@ public class DatabaseActions : IDatabaseActions
     }
 
     /// <summary>
-    /// Updates an item in the database.
+    ///     Updates an item in the database.
     /// </summary>
     /// <typeparam name="T">The model class of the item.</typeparam>
     /// <param name="item">The item to update in the database.</param>
@@ -65,7 +66,7 @@ public class DatabaseActions : IDatabaseActions
     }
 
     /// <summary>
-    /// Deletes an item from the database.
+    ///     Deletes an item from the database.
     /// </summary>
     /// <typeparam name="T">The type of the item object.</typeparam>
     /// <param name="item">The item to delete.</param>
@@ -90,7 +91,7 @@ public class DatabaseActions : IDatabaseActions
     }
 
     /// <summary>
-    /// Returns an entity from the database based on the given field and value.
+    ///     Returns an entity from the database based on the given field and value.
     /// </summary>
     /// <typeparam name="T">The type of the item object.</typeparam>
     /// <param name="field">The field to search.</param>
@@ -114,7 +115,7 @@ public class DatabaseActions : IDatabaseActions
     }
 
     /// <summary>
-    /// Returns an entity with a selector from the database based on the given field and value.
+    ///     Returns an entity with a selector from the database based on the given field and value.
     /// </summary>
     /// <typeparam name="T">The type of the item object.</typeparam>
     /// <param name="selector">The selector expression to use.</param>
@@ -140,7 +141,7 @@ public class DatabaseActions : IDatabaseActions
     }
 
     /// <summary>
-    /// Returns a list of entities with a selector from the database based on the given field and value.
+    ///     Returns a list of entities with a selector from the database based on the given field and value.
     /// </summary>
     /// <typeparam name="T">The type of the item object.</typeparam>
     /// <param name="selector">The selector expression to use.</param>
@@ -151,7 +152,7 @@ public class DatabaseActions : IDatabaseActions
     /// <returns>Returns a list of entities from the database.</returns>
     /// <exception cref="DatabaseExceptions">Thrown when the items could not be retrieved from the database.</exception>
     public async Task<List<T>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector, string field,
-        string value,         
+        string value,
         int max = -1,
         int min = -1,
         params (string field, Constants.Ordering ordering, Constants.NullPosition nullPosition)[] orderByFields)
@@ -178,7 +179,7 @@ public class DatabaseActions : IDatabaseActions
     }
 
     /// <summary>
-    /// Returns a list of entities with a selector from the database based on the given field and value.
+    ///     Returns a list of entities with a selector from the database based on the given field and value.
     /// </summary>
     /// <typeparam name="T">The type of the item object.</typeparam>
     /// <param name="selector">The selector expression to use.</param>

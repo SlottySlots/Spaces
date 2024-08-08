@@ -4,7 +4,7 @@ using Supabase.Postgrest.Models;
 namespace SlottyMedia.Database.Daos;
 
 /// <summary>
-/// This class represents the Forum table in the database.
+///     This class represents the Forum table in the database.
 /// </summary>
 [Table("Forum")]
 public class ForumDao : BaseModel
@@ -20,7 +20,7 @@ public class ForumDao : BaseModel
     }
 
     /// <summary>
-    /// The ID of the Forum. This is the Primary Key. It is auto-generated.
+    ///     The ID of the Forum. This is the Primary Key. It is auto-generated.
     /// </summary>
     [PrimaryKey("forumID")]
     public Guid? ForumId { get; set; }
@@ -29,19 +29,19 @@ public class ForumDao : BaseModel
     public UserDao? CreatorUser { get; set; }
 
     /// <summary>
-    /// The ID of the User who created the Forum. This is a Foreign Key to the User Table.
+    ///     The ID of the User who created the Forum. This is a Foreign Key to the User Table.
     /// </summary>
     [Column("creator_userID")]
     public Guid? CreatorUserId { get; set; }
 
     /// <summary>
-    /// The Title of the Forum.
+    ///     The Title of the Forum.
     /// </summary>
     [Column("forumTopic")]
     public string? ForumTopic { get; set; }
 
     /// <summary>
-    /// Created Date and Time of the Forum.
+    ///     Created Date and Time of the Forum.
     /// </summary>
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }

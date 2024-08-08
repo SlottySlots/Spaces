@@ -1,0 +1,46 @@
+# SearchService
+
+Namespace: SlottyMedia.Backend.Services
+
+Service for searching users and topics.
+
+```csharp
+public class SearchService
+```
+
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [SearchService](./slottymedia.backend.services.searchservice.md)
+
+## Constructors
+
+### **SearchService(IDatabaseActions)**
+
+Constructor to initialize the database actions dependency.
+
+```csharp
+public SearchService(IDatabaseActions databaseActions)
+```
+
+#### Parameters
+
+`databaseActions` IDatabaseActions<br>
+The database actions dependency.
+
+## Methods
+
+### **SearchByUsernameOrTopic(String)**
+
+Method to search for users or topics by a given search term.
+
+```csharp
+public Task<List<Nullable<Guid>>> SearchByUsernameOrTopic(string searchTerm)
+```
+
+#### Parameters
+
+`searchTerm` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The search term to look for.
+
+#### Returns
+
+[Task&lt;List&lt;Nullable&lt;Guid&gt;&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns a list of user or topic IDs that match the search term.

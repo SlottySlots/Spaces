@@ -1,12 +1,12 @@
 namespace SlottyMedia.Backend.Dtos;
 
 /// <summary>
-/// The Profile Picture Data Transfer Object
+///     The Profile Picture Data Transfer Object
 /// </summary>
 public class ProfilePicDto
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ProfilePicDto"/> class.
+    ///     Initializes a new instance of the <see cref="ProfilePicDto" /> class.
     /// </summary>
     public ProfilePicDto()
     {
@@ -15,12 +15,12 @@ public class ProfilePicDto
     }
 
     /// <summary>
-    /// Gets or sets the User Id.
+    ///     Gets or sets the User Id.
     /// </summary>
     public Guid UserId { get; set; }
 
     /// <summary>
-    /// Gets or sets the Profile Picture in binary.
+    ///     Gets or sets the Profile Picture in binary.
     /// </summary>
     public long ProfilePic { get; set; }
 }

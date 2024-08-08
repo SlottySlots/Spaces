@@ -7,17 +7,12 @@ using Supabase.Postgrest;
 namespace SlottyMedia.Backend.Services;
 
 /// <summary>
-/// This class represents the Post Service. It is used to interact with the Post table in the database.
+///     This class represents the Post Service. It is used to interact with the Post table in the database.
 /// </summary>
 public class PostService : IPostService
 {
     /// <summary>
-    /// DatabaseActions property.
-    /// </summary>
-    public IDatabaseActions DatabaseActions { get; set; }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="PostService"/> class.
+    ///     Initializes a new instance of the <see cref="PostService" /> class.
     /// </summary>
     /// <param name="databaseActions">The database actions interface.</param>
     public PostService(IDatabaseActions databaseActions)
@@ -26,7 +21,12 @@ public class PostService : IPostService
     }
 
     /// <summary>
-    /// Inserts a new post into the database.
+    ///     Gets or sets the database actions interface.
+    /// </summary>
+    public IDatabaseActions DatabaseActions { get; set; }
+
+    /// <summary>
+    ///     Inserts a new post into the database.
     /// </summary>
     /// <param name="title">The title of the post.</param>
     /// <param name="content">The content of the post.</param>
@@ -38,7 +38,7 @@ public class PostService : IPostService
         try
         {
             // Create a new post object
-            var post = new PostsDao()
+            var post = new PostsDao
             {
                 Headline = title,
                 Content = content,
@@ -52,13 +52,13 @@ public class PostService : IPostService
         }
         catch (Exception ex)
         {
-            // TODO: Implement how we should handle errors in the View
+            // TODO: Implement error handling
             return null;
         }
     }
 
     /// <summary>
-    /// Updates an existing post in the database.
+    ///     Updates an existing post in the database.
     /// </summary>
     /// <param name="post">The post to update.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the updated post.</returns>
@@ -72,16 +72,19 @@ public class PostService : IPostService
         }
         catch (Exception ex)
         {
-            // TODO: Implement how we should handle errors in the View
+            // TODO: Implement error handling
             return null;
         }
     }
 
     /// <summary>
-    /// Deletes a post from the database.
+    ///     Deletes a post from the database.
     /// </summary>
     /// <param name="post">The post to delete.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result indicates whether the deletion was successful.</returns>
+    /// <returns>
+    ///     A task that represents the asynchronous operation. The task result indicates whether the deletion was
+    ///     successful.
+    /// </returns>
     public async Task<bool> DeletePost(PostsDao post)
     {
         try
@@ -92,16 +95,17 @@ public class PostService : IPostService
         }
         catch (Exception ex)
         {
-            // TODO: Implement how we should handle errors in the View
+            // TODO: Implement error handling
             return false;
         }
     }
 
     /// <summary>
-    /// Retrieves a list of post titles from a forum for a given user, limited by the specified number.
+    ///     Retrieves a list of post titles from a forum for a given user, limited by the specified number.
     /// </summary>
     /// <param name="userId">The ID of the user.</param>
-    /// <param name="limit">The maximum number of posts to retrieve.</param>
+    /// <param name="startOfSet">The starting index of the set.</param>
+    /// <param name="endOfSet">The ending index of the set.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of post titles.</returns>
     public async Task<List<string>> GetPostsFromForum(Guid userId, int startOfSet, int endOfSet)
     {
@@ -109,9 +113,9 @@ public class PostService : IPostService
         {
             // Fetch posts from the database based on the user ID and limit
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
-                x => new object[] { x.Forum },
+                x => new object[] { x.Forum! },
                 "creator_userID",
-                userId.ToString(), startOfSet,endOfSet,
+                userId.ToString(), startOfSet, endOfSet,
                 ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
             );
 
@@ -120,24 +124,25 @@ public class PostService : IPostService
         }
         catch (Exception e)
         {
-            // TODO: Implement how we should handle errors in the View
+            // TODO: Implement error handling
             return new List<string>();
         }
     }
 
     /// <summary>
-    /// This method returns a list of posts from the database based on the given userId.
+    ///     Retrieves a list of posts from the database based on the given userId.
     /// </summary>
-    /// <param name="userId"></param>
-    /// <param name="startOfSet"></param>
-    /// <param name="endOfSet"></param>
-    /// <returns></returns>
+    /// <param name="userId">The ID of the user.</param>
+    /// <param name="startOfSet">The starting index of the set.</param>
+    /// <param name="endOfSet">The ending index of the set.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a list of PostDto objects.</returns>
     public async Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet)
     {
         try
         {
+            // Fetch posts from the database based on the user ID and limit
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
-                x => new object[] { x.PostId, x.Content, x.Forum, x.CreatedAt },
+                x => new object[] { x.PostId!, x.Content!, x.Forum!, x.CreatedAt },
                 new List<(string, Constants.Operator, string)>
                 {
                     ("creator_userID", Constants.Operator.Equals, userId.ToString())
@@ -147,29 +152,31 @@ public class PostService : IPostService
                 ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
             );
 
+            // Convert the posts to PostDto objects
             return ConvertPostsToPostDtos(posts);
         }
         catch (Exception)
         {
-            //TODO Implement how we should handle errors in the View
+            // TODO: Implement error handling
             return new List<PostDto>();
         }
     }
 
     /// <summary>
-    /// This method returns a list of posts from the database based on the given userId and forumId.
+    ///     Retrieves a list of posts from the database based on the given userId and forumId.
     /// </summary>
-    /// <param name="userId"></param>
-    /// <param name="startOfSet"></param>
-    /// <param name="endOfSet"></param>
-    /// <param name="forumId"></param>
-    /// <returns></returns>
-    public async Task<List<PostDto>> GetPostsByUserIdByForumId(Guid userId, int startOfSet, int endOfSet ,Guid forumId)
+    /// <param name="userId">The ID of the user.</param>
+    /// <param name="startOfSet">The starting index of the set.</param>
+    /// <param name="endOfSet">The ending index of the set.</param>
+    /// <param name="forumId">The ID of the forum.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a list of PostDto objects.</returns>
+    public async Task<List<PostDto>> GetPostsByUserIdByForumId(Guid userId, int startOfSet, int endOfSet, Guid forumId)
     {
         try
         {
+            // Fetch posts from the database based on the user ID, forum ID, and limit
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
-                x => new object[] { x.PostId, x.Content, x.Forum, x.CreatedAt },
+                x => new object[] { x.PostId!, x.Content!, x.Forum!, x.CreatedAt },
                 new List<(string, Constants.Operator, string)>
                 {
                     ("creator_userID", Constants.Operator.Equals, userId.ToString()),
@@ -180,28 +187,30 @@ public class PostService : IPostService
                 ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
             );
 
+            // Convert the posts to PostDto objects
             return ConvertPostsToPostDtos(posts);
         }
         catch (Exception)
         {
-            //TODO Implement how we should handle errors in the View
+            // TODO: Implement error handling
             return new List<PostDto>();
         }
     }
 
     /// <summary>
-    /// This method returns a list of posts from the database based on the given forumId.
+    ///     Retrieves a list of posts from the database based on the given forumId.
     /// </summary>
-    /// <param name="forumId"></param>
-    /// <param name="startOfSet"></param>
-    /// <param name="endOfSet"></param>
-    /// <returns></returns>
+    /// <param name="forumId">The ID of the forum.</param>
+    /// <param name="startOfSet">The starting index of the set.</param>
+    /// <param name="endOfSet">The ending index of the set.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a list of PostDto objects.</returns>
     public async Task<List<PostDto>> GetPostsByForumId(Guid forumId, int startOfSet, int endOfSet)
     {
         try
         {
+            // Fetch posts from the database based on the forum ID and limit
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
-                x => new object[] { x.PostId, x.Content, x.Forum, x.CreatedAt },
+                x => new object[] { x.PostId!, x.Content!, x.Forum!, x.CreatedAt },
                 new List<(string, Constants.Operator, string)>
                 {
                     ("associated_forumID", Constants.Operator.Equals, forumId.ToString())
@@ -211,20 +220,21 @@ public class PostService : IPostService
                 ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
             );
 
+            // Convert the posts to PostDto objects
             return ConvertPostsToPostDtos(posts);
         }
         catch (Exception)
         {
-            //Todo Implement how we should handle errors in the View
+            // TODO: Implement error handling
             return new List<PostDto>();
         }
     }
-    
+
     /// <summary>
-    /// This method converts a list of PostsDao objects to a list of PostDto objects.
+    ///     Converts a list of PostsDao objects to a list of PostDto objects.
     /// </summary>
-    /// <param name="posts"></param>
-    /// <returns></returns>
+    /// <param name="posts">The list of PostsDao objects.</param>
+    /// <returns>A list of PostDto objects.</returns>
     private List<PostDto> ConvertPostsToPostDtos(List<PostsDao> posts)
     {
         return posts.Select(post => new PostDto().Mapper(post)).ToList();

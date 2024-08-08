@@ -5,20 +5,13 @@ using Supabase;
 namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
 
 /// <summary>
-/// Test class for the UserLikePostRelationDao model.
+///     Test class for the UserLikePostRelationDao model.
 /// </summary>
 [TestFixture]
 public class UserLikePostRelationDaoTest
 {
-    private Client _supabaseClient;
-    private IDatabaseActions _databaseActions;
-    private UserLikePostRelationDao _relationToWorkWith;
-    private UserDao _userToWorkWith;
-    private PostsDao _postToWorkWith;
-    private ForumDao _forumToWorkWirh;
-
     /// <summary>
-    /// One-time setup method to initialize Supabase client and insert test data.
+    ///     One-time setup method to initialize Supabase client and insert test data.
     /// </summary>
     [OneTimeSetUp]
     public async Task OneTimeSetup()
@@ -35,7 +28,7 @@ public class UserLikePostRelationDaoTest
     }
 
     /// <summary>
-    /// Setup method to initialize a new UserLikePostRelationDao instance before each test.
+    ///     Setup method to initialize a new UserLikePostRelationDao instance before each test.
     /// </summary>
     [SetUp]
     public void Setup()
@@ -48,7 +41,7 @@ public class UserLikePostRelationDaoTest
     }
 
     /// <summary>
-    /// Tear down method to delete the test relation after each test.
+    ///     Tear down method to delete the test relation after each test.
     /// </summary>
     [TearDown]
     public async Task TearDown()
@@ -68,7 +61,7 @@ public class UserLikePostRelationDaoTest
     }
 
     /// <summary>
-    /// One-time tear down method to delete the test data after all tests are run.
+    ///     One-time tear down method to delete the test data after all tests are run.
     /// </summary>
     [OneTimeTearDown]
     public async Task OneTimeTearDown()
@@ -96,8 +89,15 @@ public class UserLikePostRelationDaoTest
         }
     }
 
+    private Client _supabaseClient;
+    private IDatabaseActions _databaseActions;
+    private UserLikePostRelationDao _relationToWorkWith;
+    private UserDao _userToWorkWith;
+    private PostsDao _postToWorkWith;
+    private ForumDao _forumToWorkWirh;
+
     /// <summary>
-    /// Test method to insert a new user-like-post relation into the database.
+    ///     Test method to insert a new user-like-post relation into the database.
     /// </summary>
     [Test]
     public async Task Insert()
@@ -121,7 +121,7 @@ public class UserLikePostRelationDaoTest
     }
 
     /// <summary>
-    /// Test method to delete an existing user-like-post relation from the database.
+    ///     Test method to delete an existing user-like-post relation from the database.
     /// </summary>
     [Test]
     public async Task Delete()
@@ -141,7 +141,7 @@ public class UserLikePostRelationDaoTest
     }
 
     /// <summary>
-    /// Test method to retrieve a user-like-post relation by a specific field from the database.
+    ///     Test method to retrieve a user-like-post relation by a specific field from the database.
     /// </summary>
     [Test]
     public async Task GetEntityByField()

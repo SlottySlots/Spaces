@@ -22,6 +22,8 @@
 
 [PostService](./slottymedia.backend.services.postservice.md)
 
+[SearchService](./slottymedia.backend.services.searchservice.md)
+
 [UserService](./slottymedia.backend.services.userservice.md)
 
 ## SlottyMedia.Backend.Services.Interfaces
@@ -31,6 +33,8 @@
 [ICookieService](./slottymedia.backend.services.interfaces.icookieservice.md)
 
 [IPostService](./slottymedia.backend.services.interfaces.ipostservice.md)
+
+[ISearchService](./slottymedia.backend.services.interfaces.isearchservice.md)
 
 [IUserService](./slottymedia.backend.services.interfaces.iuserservice.md)
 

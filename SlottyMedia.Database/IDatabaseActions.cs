@@ -5,12 +5,12 @@ using Supabase.Postgrest.Models;
 namespace SlottyMedia.Database;
 
 /// <summary>
-/// Interface for database actions. Provides methods to interact with the database.
+///     Interface for database actions. Provides methods to interact with the database.
 /// </summary>
 public interface IDatabaseActions
 {
     /// <summary>
-    /// Inserts an item into the database.
+    ///     Inserts an item into the database.
     /// </summary>
     /// <typeparam name="T">The model class of the item.</typeparam>
     /// <param name="item">The item to insert into the database.</param>
@@ -18,7 +18,7 @@ public interface IDatabaseActions
     Task<T> Insert<T>(T item) where T : BaseModel, new();
 
     /// <summary>
-    /// Updates an item in the database.
+    ///     Updates an item in the database.
     /// </summary>
     /// <typeparam name="T">The model class of the item.</typeparam>
     /// <param name="item">The item to update in the database.</param>
@@ -26,7 +26,7 @@ public interface IDatabaseActions
     Task<T> Update<T>(T item) where T : BaseModel, new();
 
     /// <summary>
-    /// Deletes an item from the database.
+    ///     Deletes an item from the database.
     /// </summary>
     /// <typeparam name="T">The type of the item object.</typeparam>
     /// <param name="item">The item to delete.</param>
@@ -34,7 +34,7 @@ public interface IDatabaseActions
     Task<bool> Delete<T>(T item) where T : BaseModel, new();
 
     /// <summary>
-    /// Returns an entity from the database based on the given field and value.
+    ///     Returns an entity from the database based on the given field and value.
     /// </summary>
     /// <typeparam name="T">The type of the item object.</typeparam>
     /// <param name="field">The field to search.</param>
@@ -43,7 +43,7 @@ public interface IDatabaseActions
     Task<T?> GetEntityByField<T>(string field, string value) where T : BaseModel, new();
 
     /// <summary>
-    /// Returns an entity with a selector from the database based on the given field and value.
+    ///     Returns an entity with a selector from the database based on the given field and value.
     /// </summary>
     /// <typeparam name="T">The type of the item object.</typeparam>
     /// <param name="selector">The selector expression to use.</param>
@@ -54,7 +54,7 @@ public interface IDatabaseActions
         where T : BaseModel, new();
 
     /// <summary>
-    /// Returns a list of entities with a selector from the database based on the given field and value.
+    ///     Returns a list of entities with a selector from the database based on the given field and value.
     /// </summary>
     /// <typeparam name="T">The type of the item object.</typeparam>
     /// <param name="selector">The selector expression to use.</param>
@@ -64,7 +64,7 @@ public interface IDatabaseActions
     /// <param name="orderByFields">The fields to order by.</param>
     /// <returns>Returns a list of entities from the database.</returns>
     Task<List<T>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector, string field,
-        string value,         
+        string value,
         int max = -1,
         int min = -1,
         params (string field, Constants.Ordering ordering, Constants.NullPosition nullPosition)[] orderByFields)

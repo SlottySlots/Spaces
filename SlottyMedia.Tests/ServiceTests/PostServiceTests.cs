@@ -1,13 +1,8 @@
 using System.Linq.Expressions;
 using Moq;
 using SlottyMedia.Backend.Services;
-using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Supabase.Postgrest;
 
 namespace SlottyMedia.Tests.ServiceTests;
@@ -15,9 +10,6 @@ namespace SlottyMedia.Tests.ServiceTests;
 [TestFixture]
 public class PostServiceTests
 {
-    private Mock<IDatabaseActions> _mockDatabaseActions;
-    private PostService _postService;
-
     [SetUp]
     public void Setup()
     {
@@ -25,8 +17,11 @@ public class PostServiceTests
         _postService = new PostService(_mockDatabaseActions.Object);
     }
 
+    private Mock<IDatabaseActions> _mockDatabaseActions;
+    private PostService _postService;
+
     /// <summary>
-    /// Tests that InsertPost returns the inserted post when the post is successfully inserted.
+    ///     Tests that InsertPost returns the inserted post when the post is successfully inserted.
     /// </summary>
     [Test]
     public async Task InsertPost_ShouldReturnInsertedPost()
@@ -48,7 +43,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests that InsertPost returns null when an exception is thrown.
+    ///     Tests that InsertPost returns null when an exception is thrown.
     /// </summary>
     [Test]
     public async Task InsertPost_ShouldReturnNull_WhenExceptionIsThrown()
@@ -70,7 +65,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests that UpdatePost returns the updated post when the post is successfully updated.
+    ///     Tests that UpdatePost returns the updated post when the post is successfully updated.
     /// </summary>
     [Test]
     public async Task UpdatePost_ShouldReturnUpdatedPost()
@@ -91,7 +86,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests that UpdatePost returns null when an exception is thrown.
+    ///     Tests that UpdatePost returns null when an exception is thrown.
     /// </summary>
     [Test]
     public async Task UpdatePost_ShouldReturnNull_WhenExceptionIsThrown()
@@ -112,7 +107,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests that DeletePost returns true when the post is successfully deleted.
+    ///     Tests that DeletePost returns true when the post is successfully deleted.
     /// </summary>
     [Test]
     public async Task DeletePost_ShouldReturnTrue()
@@ -133,7 +128,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests that DeletePost returns false when an exception is thrown.
+    ///     Tests that DeletePost returns false when an exception is thrown.
     /// </summary>
     [Test]
     public async Task DeletePost_ShouldReturnFalse_WhenExceptionIsThrown()
@@ -154,7 +149,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests that GetPostsFromForum returns a list of post titles when the posts are successfully retrieved.
+    ///     Tests that GetPostsFromForum returns a list of post titles when the posts are successfully retrieved.
     /// </summary>
     [Test]
     public async Task GetPostsFromForum_ShouldReturnListOfPostTitles()
@@ -165,7 +160,7 @@ public class PostServiceTests
             new() { Forum = new ForumDao { ForumTopic = "Forum1" } },
             new() { Forum = new ForumDao { ForumTopic = "Forum2" } }
         };
-        
+
         var tuple = ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last);
 
         _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<PostsDao, object[]>>>(),
@@ -182,7 +177,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests that GetPostsFromForum returns an empty list when an exception is thrown.
+    ///     Tests that GetPostsFromForum returns an empty list when an exception is thrown.
     /// </summary>
     [Test]
     public async Task GetPostsFromForum_ShouldReturnEmptyList_WhenExceptionIsThrown()
@@ -190,8 +185,7 @@ public class PostServiceTests
         var userId = Guid.NewGuid();
 
         _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<PostsDao, object[]>>>(),
-                "creator_userID", userId.ToString(), 0, 10,
-                new (string, Constants.Ordering, Constants.NullPosition)[0]))
+                "creator_userID", userId.ToString(), 0, 10))
             .ThrowsAsync(new Exception());
 
         var result = await _postService.GetPostsFromForum(userId, 0, 10);
@@ -201,7 +195,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests that GetPostsByUserId returns a list of PostDto when the posts are successfully retrieved.
+    ///     Tests that GetPostsByUserId returns a list of PostDto when the posts are successfully retrieved.
     /// </summary>
     [Test]
     public async Task GetPostsByUserId_ShouldReturnListOfPostDtos()
@@ -217,8 +211,8 @@ public class PostServiceTests
         {
             ("creator_userID", Constants.Operator.Equals, userId.ToString())
         };
-        
-        var tuple =  ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last);
+
+        var tuple = ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last);
 
         _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<PostsDao, object[]>>>(),
                 search, 0, 10,
@@ -234,7 +228,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests that GetPostsByUserId returns an empty list when an exception is thrown.
+    ///     Tests that GetPostsByUserId returns an empty list when an exception is thrown.
     /// </summary>
     [Test]
     public async Task GetPostsByUserId_ShouldReturnEmptyList_WhenExceptionIsThrown()
@@ -247,8 +241,7 @@ public class PostServiceTests
         };
 
         _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<PostsDao, object[]>>>(),
-                search, 0, 10,
-                new (string, Constants.Ordering, Constants.NullPosition)[0]))
+                search, 0, 10))
             .ThrowsAsync(new Exception());
 
         var result = await _postService.GetPostsByUserId(userId, 0, 10);
@@ -258,7 +251,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests that GetPostsByUserIdByForumId returns a list of PostDto when the posts are successfully retrieved.
+    ///     Tests that GetPostsByUserIdByForumId returns a list of PostDto when the posts are successfully retrieved.
     /// </summary>
     [Test]
     public async Task GetPostsByUserIdByForumId_ShouldReturnListOfPostDtos()
@@ -276,8 +269,8 @@ public class PostServiceTests
             ("creator_userID", Constants.Operator.Equals, userId.ToString()),
             ("associated_forumID", Constants.Operator.Equals, forumId.ToString())
         };
-        
-        var tuple =  ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last);
+
+        var tuple = ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last);
 
         _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<PostsDao, object[]>>>(),
                 search, 0, 10, tuple))
@@ -292,7 +285,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests that GetPostsByUserIdByForumId returns an empty list when an exception is thrown.
+    ///     Tests that GetPostsByUserIdByForumId returns an empty list when an exception is thrown.
     /// </summary>
     [Test]
     public async Task GetPostsByUserIdByForumId_ShouldReturnEmptyList_WhenExceptionIsThrown()
@@ -307,7 +300,7 @@ public class PostServiceTests
         };
 
         _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<PostsDao, object[]>>>(),
-                search, 0, 10, new (string, Constants.Ordering, Constants.NullPosition)[0]))
+                search, 0, 10))
             .ThrowsAsync(new Exception());
 
         var result = await _postService.GetPostsByUserIdByForumId(userId, 0, 10, forumId);
@@ -317,7 +310,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests that GetPostsByForumId returns a list of PostDto when the posts are successfully retrieved.
+    ///     Tests that GetPostsByForumId returns a list of PostDto when the posts are successfully retrieved.
     /// </summary>
     [Test]
     public async Task GetPostsByForumId_ShouldReturnListOfPostDtos()
@@ -331,8 +324,8 @@ public class PostServiceTests
 
         var search = new List<(string, Constants.Operator, string)>
             { ("associated_forumID", Constants.Operator.Equals, forumId.ToString()) };
-        
-        var tuple =  ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last);
+
+        var tuple = ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last);
 
         _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<PostsDao, object[]>>>(),
                 search, 0, 10,
@@ -348,7 +341,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests that GetPostsByForumId returns an empty list when an exception is thrown.
+    ///     Tests that GetPostsByForumId returns an empty list when an exception is thrown.
     /// </summary>
     [Test]
     public async Task GetPostsByForumId_ShouldReturnEmptyList_WhenExceptionIsThrown()
@@ -359,8 +352,7 @@ public class PostServiceTests
             { ("associated_forumID", Constants.Operator.Equals, forumId.ToString()) };
 
         _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<PostsDao, object[]>>>(),
-                search, 0, 10,
-                new (string, Constants.Ordering, Constants.NullPosition)[0]))
+                search, 0, 10))
             .ThrowsAsync(new Exception());
 
         var result = await _postService.GetPostsByForumId(forumId, 0, 10);

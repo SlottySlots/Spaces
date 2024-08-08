@@ -5,19 +5,13 @@ using Supabase;
 namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
 
 /// <summary>
-/// Test class for the PostsDao model.
+///     Test class for the PostsDao model.
 /// </summary>
 [TestFixture]
 public class PostDtoTest
 {
-    private Client _supabaseClient;
-    private IDatabaseActions _databaseActions;
-    private PostsDao _postToWorkWith;
-    private UserDao _userToWorkWith;
-    private ForumDao _forumToWorkWith;
-
     /// <summary>
-    /// One-time setup method to initialize Supabase client and insert test data.
+    ///     One-time setup method to initialize Supabase client and insert test data.
     /// </summary>
     [OneTimeSetUp]
     public async Task OneTimeSetup()
@@ -31,7 +25,7 @@ public class PostDtoTest
     }
 
     /// <summary>
-    /// Setup method to initialize a new PostsDao instance before each test.
+    ///     Setup method to initialize a new PostsDao instance before each test.
     /// </summary>
     [SetUp]
     public void Setup()
@@ -46,7 +40,7 @@ public class PostDtoTest
     }
 
     /// <summary>
-    /// Tear down method to delete the test post after each test.
+    ///     Tear down method to delete the test post after each test.
     /// </summary>
     [TearDown]
     public async Task TearDown()
@@ -66,7 +60,7 @@ public class PostDtoTest
     }
 
     /// <summary>
-    /// One-time tear down method to delete the test data after all tests are run.
+    ///     One-time tear down method to delete the test data after all tests are run.
     /// </summary>
     [OneTimeTearDown]
     public async Task OneTimeTearDown()
@@ -89,8 +83,14 @@ public class PostDtoTest
         }
     }
 
+    private Client _supabaseClient;
+    private IDatabaseActions _databaseActions;
+    private PostsDao _postToWorkWith;
+    private UserDao _userToWorkWith;
+    private ForumDao _forumToWorkWith;
+
     /// <summary>
-    /// Test method to insert a new post into the database.
+    ///     Test method to insert a new post into the database.
     /// </summary>
     [Test]
     public async Task Insert()
@@ -114,7 +114,7 @@ public class PostDtoTest
     }
 
     /// <summary>
-    /// Test method to update an existing post in the database.
+    ///     Test method to update an existing post in the database.
     /// </summary>
     [Test]
     public async Task Update()
@@ -144,7 +144,7 @@ public class PostDtoTest
     }
 
     /// <summary>
-    /// Test method to delete an existing post from the database.
+    ///     Test method to delete an existing post from the database.
     /// </summary>
     [Test]
     public async Task Delete()
@@ -164,7 +164,7 @@ public class PostDtoTest
     }
 
     /// <summary>
-    /// Test method to retrieve a post by a specific field from the database.
+    ///     Test method to retrieve a post by a specific field from the database.
     /// </summary>
     [Test]
     public async Task GetEntityByField()
