@@ -70,6 +70,16 @@ public class DatabaseActionTests
     }
 
     /// <summary>
+    /// Tests the Insert method of DatabaseActions for failure.
+    /// </summary>
+    [Test]
+    public void Insert_Failure()
+    {
+        var invalidUser = new UserDao(); // Create an invalid user to simulate failure
+        Assert.ThrowsAsync<DatabaseExceptions>(async () => await _databaseActions.Insert(invalidUser));
+    }
+
+    /// <summary>
     /// Tests the Update method of DatabaseActions.
     /// </summary>
     [Test]
@@ -98,6 +108,16 @@ public class DatabaseActionTests
     }
 
     /// <summary>
+    /// Tests the Update method of DatabaseActions for failure.
+    /// </summary>
+    [Test]
+    public void Update_Failure()
+    {
+        var invalidUser = new UserDao(); // Create an invalid user to simulate failure
+        Assert.ThrowsAsync<DatabaseExceptions>(async () => await _databaseActions.Update(invalidUser));
+    }
+
+    /// <summary>
     /// Tests the Delete method of DatabaseActions.
     /// </summary>
     [Test]
@@ -115,6 +135,16 @@ public class DatabaseActionTests
         {
             Assert.Fail($"Delete test failed with database exception: {ex.Message}");
         }
+    }
+
+    /// <summary>
+    /// Tests the Delete method of DatabaseActions for failure.
+    /// </summary>
+    [Test]
+    public void Delete_Failure()
+    {
+        var invalidUser = new UserDao(); // Create an invalid user to simulate failure
+        Assert.ThrowsAsync<DatabaseExceptions>(async () => await _databaseActions.Delete(invalidUser));
     }
 
     /// <summary>
@@ -158,6 +188,15 @@ public class DatabaseActionTests
     }
 
     /// <summary>
+    /// Tests the GetEntityByField method of DatabaseActions for failure.
+    /// </summary>
+    [Test]
+    public void GetEntityByField_Failure()
+    {
+        Assert.ThrowsAsync<DatabaseExceptions>(async () => await _databaseActions.GetEntityByField<UserDao>("userID", "invalid-id"));
+    }
+
+    /// <summary>
     /// Tests the GetEntitieWithSelectorById method of DatabaseActions.
     /// </summary>
     [Test]
@@ -182,7 +221,7 @@ public class DatabaseActionTests
                 Assert.That(user.UserId, Is.EqualTo(insertedUser.UserId), "UserId should match");
                 Assert.That(user.UserName, Is.EqualTo(insertedUser.UserName), "UserName should match");
                 Assert.That(user.Description, Is.EqualTo(insertedUser.Description), "Description should match");
-                
+
                 // Check that fields not included in the selector are not returned
                 Assert.That(user.RoleId, Is.Null, "Retrieved user should not have a RoleId");
                 Assert.That(user.CreatedAt, Is.Default, "Retrieved user should not have a CreatedAt");
@@ -193,6 +232,16 @@ public class DatabaseActionTests
         {
             Assert.Fail($"GetEntitieWithSelectorById test failed with database exception: {ex.Message}");
         }
+    }
+
+    /// <summary>
+    /// Tests the GetEntitieWithSelectorById method of DatabaseActions for failure.
+    /// </summary>
+    [Test]
+    public void GetEntitieWithSelectorById_Failure()
+    {
+        Expression<Func<UserDao, object[]>> selector = u => new object[] { u.UserId, u.UserName, u.Description };
+        Assert.ThrowsAsync<DatabaseExceptions>(async () => await _databaseActions.GetEntitieWithSelectorById(selector, "userID", "invalid-id"));
     }
 
     /// <summary>
@@ -221,18 +270,16 @@ public class DatabaseActionTests
                 foreach (var user in users)
                 {
                     Assert.That(user, Is.Not.Null, "Retrieved user should not be null");
-      
-                        Assert.That(user.UserId, Is.EqualTo(insertedUser.UserId), "UserId should match");
-                        Assert.That(user.UserName, Is.EqualTo(insertedUser.UserName), "UserName should match");
-                        Assert.That(user.Description, Is.EqualTo(insertedUser.Description), "Description should match");
 
-                        // Check that fields not included in the selector are not returned
-                        Assert.That(user.RoleId, Is.Null, "Retrieved user should not have a RoleId");
-                        Assert.That(user.CreatedAt, Is.Default, "Retrieved user should not have a CreatedAt");
-                        Assert.That(user.ProfilePic, Is.Null, "Retrieved user should not have a ProfilePicture");
-                    
+                    Assert.That(user.UserId, Is.EqualTo(insertedUser.UserId), "UserId should match");
+                    Assert.That(user.UserName, Is.EqualTo(insertedUser.UserName), "UserName should match");
+                    Assert.That(user.Description, Is.EqualTo(insertedUser.Description), "Description should match");
+
+                    // Check that fields not included in the selector are not returned
+                    Assert.That(user.RoleId, Is.Null, "Retrieved user should not have a RoleId");
+                    Assert.That(user.CreatedAt, Is.Default, "Retrieved user should not have a CreatedAt");
+                    Assert.That(user.ProfilePic, Is.Null, "Retrieved user should not have a ProfilePicture");
                 }
-                
             });
         }
         catch (DatabaseExceptions ex)
@@ -240,6 +287,14 @@ public class DatabaseActionTests
             Assert.Fail($"GetEntitiesWithSelectorById test failed with database exception: {ex.Message}");
         }
     }
-    
-    
+
+    /// <summary>
+    /// Tests the GetEntitiesWithSelectorById method of DatabaseActions for failure.
+    /// </summary>
+    [Test]
+    public void GetEntitiesWithSelectorById_Failure()
+    {
+        Expression<Func<UserDao, object[]>> selector = u => new object[] { u.UserId, u.UserName, u.Description };
+        Assert.ThrowsAsync<DatabaseExceptions>(async () => await _databaseActions.GetEntitiesWithSelectorById(selector, "userID", "invalid-id"));
+    }
 }

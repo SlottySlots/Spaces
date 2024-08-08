@@ -53,7 +53,7 @@ public class PostService : IPostService
         catch (Exception ex)
         {
             // TODO: Implement how we should handle errors in the View
-            throw;
+            return null;
         }
     }
 
@@ -73,7 +73,7 @@ public class PostService : IPostService
         catch (Exception ex)
         {
             // TODO: Implement how we should handle errors in the View
-            throw;
+            return null;
         }
     }
 
@@ -93,7 +93,7 @@ public class PostService : IPostService
         catch (Exception ex)
         {
             // TODO: Implement how we should handle errors in the View
-            throw;
+            return false;
         }
     }
 
@@ -121,7 +121,7 @@ public class PostService : IPostService
         catch (Exception e)
         {
             // TODO: Implement how we should handle errors in the View
-            throw;
+            return new List<string>();
         }
     }
 
@@ -151,7 +151,8 @@ public class PostService : IPostService
         }
         catch (Exception)
         {
-            throw;
+            //TODO Implement how we should handle errors in the View
+            return new List<PostDto>();
         }
     }
 
@@ -183,7 +184,8 @@ public class PostService : IPostService
         }
         catch (Exception)
         {
-            throw;
+            //TODO Implement how we should handle errors in the View
+            return new List<PostDto>();
         }
     }
 
@@ -213,7 +215,8 @@ public class PostService : IPostService
         }
         catch (Exception)
         {
-            throw;
+            //Todo Implement how we should handle errors in the View
+            return new List<PostDto>();
         }
     }
     
