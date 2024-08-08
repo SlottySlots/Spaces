@@ -18,7 +18,7 @@ public class PostDto
         Likes = new List<Guid>();
         CreatedAt = DateTime.MinValue;
         Content = string.Empty;
-        Comments = new CommentDao();
+        Comments = new List<CommentDao>();
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public class PostDto
     /// <summary>
     /// Gets or sets the comments on the post.
     /// </summary>
-    public CommentDao Comments { get; set; }
+    public List<CommentDao> Comments { get; set; }
     
     /// <summary>
     /// Maps the Post Dao to the Post Dto.
@@ -68,6 +68,7 @@ public class PostDto
         Content = post.Content ?? string.Empty;
         Forum = post.Forum == null ? new ForumDto() : new ForumDto();
         CreatedAt = post.CreatedAt;
+        Comments = post.Comments ?? new List<CommentDao>();
         return this;
     }
     

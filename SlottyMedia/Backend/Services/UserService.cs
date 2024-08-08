@@ -186,8 +186,7 @@ public class UserService : IUserService
             //TODO verbessern
             foreach (var friend in friends)
             {
-                var user = await GetUserById(friend.FollowedUserId ?? Guid.Empty);
-                friendList.Friends.Add(new UserDto().Mapper(user));
+                friendList.Friends.Add(new UserDto().Mapper(friend.FollowerUser));
             }
 
             return friendList;
