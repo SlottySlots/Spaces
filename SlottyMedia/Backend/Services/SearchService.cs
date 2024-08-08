@@ -1,3 +1,4 @@
+using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using Supabase.Postgrest;
@@ -7,7 +8,7 @@ namespace SlottyMedia.Backend.Services;
 /// <summary>
 ///     Service for searching users and topics.
 /// </summary>
-public class SearchService
+public class SearchService : ISearchService
 {
     private readonly IDatabaseActions _databaseActions;
 

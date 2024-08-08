@@ -17,7 +17,8 @@ public interface IPostService
     ///     Retrieves a list of post titles from a forum for a given user, limited by the specified number.
     /// </summary>
     /// <param name="userId">The ID of the user.</param>
-    /// <param name="limit">The maximum number of posts to retrieve.</param>
+    /// <param name="startOfSet"></param>
+    /// <param name="endOfSet"></param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of post titles.</returns>
     public Task<List<string>> GetPostsFromForum(Guid userId, int startOfSet, int endOfSet);
 

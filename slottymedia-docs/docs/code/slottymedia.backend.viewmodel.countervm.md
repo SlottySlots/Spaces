@@ -15,7 +15,8 @@ Implements [ICounterVm](./slottymedia.backend.viewmodel.interfaces.icountervm.md
 
 ### **User**
 
-Gets or sets the User object. This object can be accessed by the View. When the User object changes, the View will be notified.
+Gets or sets the User object. This object can be accessed by the View. When the User object changes, the View will
+ be notified.
 
 ```csharp
 public UserDao User { get; set; }
@@ -29,7 +30,8 @@ UserDao<br>
 
 ### **CounterVm(IUserService, UserDao)**
 
-Initializes a new instance of the [CounterVm](./slottymedia.backend.viewmodel.countervm.md) class. It creates a new UserDao object and sets the UserService.
+Initializes a new instance of the [CounterVm](./slottymedia.backend.viewmodel.countervm.md) class. It creates a new UserDao object and sets the
+ UserService.
 
 ```csharp
 public CounterVm(IUserService userService, UserDao user)
@@ -44,19 +46,6 @@ The user service to interact with the database.
 A new UserDao object
 
 ## Methods
-
-### **OnPropertyChanged(String)**
-
-This method is called when a property value changes, to notify the View.
-
-```csharp
-protected void OnPropertyChanged(string propertyName)
-```
-
-#### Parameters
-
-`propertyName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The name of the property
 
 ### **GetUserById(String)**
 
@@ -74,6 +63,19 @@ The ID of the user to retrieve.
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **OnPropertyChanged(String)**
+
+This method is called when a property value changes, to notify the View.
+
+```csharp
+protected void OnPropertyChanged(string propertyName)
+```
+
+#### Parameters
+
+`propertyName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The name of the property
 
 ## Events
 

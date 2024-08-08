@@ -67,7 +67,7 @@ public class PostsDao : BaseModel
     public string? Content { get; set; }
 
     [Reference(typeof(CommentDao), ReferenceAttribute.JoinType.Left, true, "corresponding_PostID")]
-    public List<CommentDao?> Comments { get; set; }
+    public List<CommentDao?>? Comments { get; set; }
 
     /// <summary>
     ///     The Date and Time the Post was created.

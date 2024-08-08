@@ -5,10 +5,11 @@ Namespace: SlottyMedia.Backend.Services
 Service for searching users and topics.
 
 ```csharp
-public class SearchService
+public class SearchService : SlottyMedia.Backend.Services.Interfaces.ISearchService
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [SearchService](./slottymedia.backend.services.searchservice.md)
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [SearchService](./slottymedia.backend.services.searchservice.md)<br>
+Implements [ISearchService](./slottymedia.backend.services.interfaces.isearchservice.md)
 
 ## Constructors
 

@@ -68,7 +68,7 @@ public class PostDto
         Content = post.Content ?? string.Empty;
         Forum = post.Forum == null ? new ForumDto() : new ForumDto();
         CreatedAt = post.CreatedAt;
-        Comments = post.Comments ?? new List<CommentDao>();
+        Comments = post.Comments ?? new List<CommentDao?>();
         return this;
     }
 }

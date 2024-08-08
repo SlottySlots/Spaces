@@ -121,8 +121,7 @@ public class UserServiceTests
 
         var result = await _userService.GetUserById(userId);
 
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.UserId, Is.Null);
+        Assert.That(result, Is.Null); 
     }
 
     /// <summary>

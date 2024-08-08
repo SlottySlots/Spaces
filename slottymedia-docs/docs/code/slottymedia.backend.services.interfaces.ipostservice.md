@@ -107,4 +107,5 @@ The the post to delete.
 #### Returns
 
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result indicates whether the deletion was successful.
+A task that represents the asynchronous operation. The task result indicates whether the deletion was
+ successful.

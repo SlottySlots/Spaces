@@ -40,7 +40,7 @@ public interface IDatabaseActions
     /// <param name="field">The field to search.</param>
     /// <param name="value">The value to search for.</param>
     /// <returns>Returns the entity from the database.</returns>
-    Task<T?> GetEntityByField<T>(string field, string value) where T : BaseModel, new();
+    Task<T> GetEntityByField<T>(string field, string value) where T : BaseModel, new();
 
     /// <summary>
     ///     Returns an entity with a selector from the database based on the given field and value.
