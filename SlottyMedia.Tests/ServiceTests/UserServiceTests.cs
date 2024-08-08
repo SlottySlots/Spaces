@@ -6,6 +6,8 @@ using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using Supabase.Postgrest;
 
+namespace SlottyMedia.Tests.ServiceTests;
+
 /// <summary>
 /// Test class for UserService.
 /// </summary>
@@ -248,16 +250,14 @@ public class UserServiceTests
     {
         var userId = Guid.NewGuid();
         var friendId = Guid.NewGuid();
-        var friends = new List<FollowerUserRelationDao>
-            { new() { FollowerUserId = userId, FollowedUserId = friendId } };
         var friendUser = new UserDao { UserId = friendId, UserName = "friendUsername" };
+        var friends = new List<FollowerUserRelationDao>
+            { new() { FollowerUserId = userId, FollowedUserId = friendId , FollowerUser = friendUser} };
         _mockDatabaseActions
             .Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<FollowerUserRelationDao, object[]>>>(),
                 "followerUserID", userId.ToString(), -1, -1, new (string, Constants.Ordering, Constants.NullPosition)[0]))
             .ReturnsAsync(friends);
-        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", friendId.ToString()))
-            .ReturnsAsync(friendUser);
-
+        
         var result = await _userService.GetFriends(userId);
 
         Assert.That(result, Is.Not.Null);

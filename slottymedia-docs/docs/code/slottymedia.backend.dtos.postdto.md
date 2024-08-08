@@ -89,12 +89,12 @@ public string Content { get; set; }
 Gets or sets the comments on the post.
 
 ```csharp
-public CommentDao Comments { get; set; }
+public List<CommentDao> Comments { get; set; }
 ```
 
 #### Property Value
 
-CommentDao<br>
+[List&lt;CommentDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
 
 ## Constructors
 
