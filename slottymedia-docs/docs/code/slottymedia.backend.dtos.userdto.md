@@ -81,3 +81,21 @@ Initializes a new instance of the [UserDto](./slottymedia.backend.dtos.userdto.m
 ```csharp
 public UserDto()
 ```
+
+## Methods
+
+### **Mapper(UserDao)**
+
+Maps the User Dao to the User Dto.
+
+```csharp
+public UserDto Mapper(UserDao user)
+```
+
+#### Parameters
+
+`user` UserDao<br>
+
+#### Returns
+
+[UserDto](./slottymedia.backend.dtos.userdto.md)<br>

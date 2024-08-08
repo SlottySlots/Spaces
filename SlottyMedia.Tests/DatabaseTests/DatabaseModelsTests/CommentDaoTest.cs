@@ -178,6 +178,7 @@ public class CommentDaoTest
         try
         {
             var insertedComment = await _databaseActions.Insert(_commentToWorkWith);
+            //var insertedSubcomment = await _databaseActions.Insert(_subcommentToWorkWith);
             Assert.Multiple(() =>
             {
                 Assert.That(insertedComment, Is.Not.Null, "Inserted comment should not be null");

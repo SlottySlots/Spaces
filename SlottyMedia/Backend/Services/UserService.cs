@@ -146,13 +146,7 @@ public class UserService : IUserService
         {
             var result = await _databaseActions.GetEntitieWithSelectorById<UserDao>(
                 x => new object[] { x.UserId, x.UserName, x.Description, x.CreatedAt }, "userID", userId.ToString());
-            var user = new UserDto()
-            {
-                UserId = result.UserId ?? Guid.Empty,
-                Username = result.UserName ?? string.Empty,
-                Description = result.Description ?? string.Empty,
-                CreatedAt = result.CreatedAt
-            };
+            var user = new UserDto().Mapper(result);
             if (recentForums != -1)
             {
                 user.RecentForums = await _postService.GetPostsFromForum(userId, 0, recentForums);
@@ -193,13 +187,7 @@ public class UserService : IUserService
             foreach (var friend in friends)
             {
                 var user = await GetUserById(friend.FollowedUserId ?? Guid.Empty);
-                friendList.Friends.Add(new UserDto
-                {
-                    UserId = user.UserId ?? Guid.Empty,
-                    Username = user.UserName ?? string.Empty,
-                    Description = user.Description ?? string.Empty,
-                    CreatedAt = user.CreatedAt
-                });
+                friendList.Friends.Add(new UserDto().Mapper(user));
             }
 
             return friendList;

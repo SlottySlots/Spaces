@@ -105,3 +105,21 @@ Initializes a new instance of the [PostDto](./slottymedia.backend.dtos.postdto.m
 ```csharp
 public PostDto()
 ```
+
+## Methods
+
+### **Mapper(PostsDao)**
+
+Maps the Post Dao to the Post Dto.
+
+```csharp
+public PostDto Mapper(PostsDao post)
+```
+
+#### Parameters
+
+`post` PostsDao<br>
+
+#### Returns
+
+[PostDto](./slottymedia.backend.dtos.postdto.md)<br>

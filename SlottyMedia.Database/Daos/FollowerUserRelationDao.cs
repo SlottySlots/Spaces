@@ -24,6 +24,9 @@ public class FollowerUserRelationDao : BaseModel
     /// </summary>
     [PrimaryKey("followerUserRelationID")]
     public Guid? FollowerUserRelationId { get; set; }
+    
+    [Reference(typeof(UserDao), ReferenceAttribute.JoinType.Left, true, foreignKey: "User!Follower_User_Relation_userIsFollowing_fkey")]
+    public UserDao? FollowerUser { get; set; }
 
     /// <summary>
     /// The ID of the User who is following another User. This is a Foreign Key to the User Table.
@@ -31,6 +34,9 @@ public class FollowerUserRelationDao : BaseModel
     [Column("userIsFollowing")]
     public Guid? FollowerUserId { get; set; }
 
+    [Reference(typeof(UserDao), ReferenceAttribute.JoinType.Left, true, foreignKey:"User!Follower_User_Relation_userIsFollowed_fkey")]
+    public UserDao FollowedUser { get; set; }
+    
     /// <summary>
     /// The ID of the User who is being followed. This is a Foreign Key to the User Table.
     /// </summary>

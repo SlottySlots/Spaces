@@ -64,7 +64,7 @@ public class PostsDao : BaseModel
     /// </summary>
     [Column("content")]
     public string? Content { get; set; }
-
+    
     /// <summary>
     /// The Date and Time the Post was created.
     /// </summary>

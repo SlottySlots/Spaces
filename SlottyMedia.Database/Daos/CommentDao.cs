@@ -32,6 +32,9 @@ public class CommentDao : BaseModel
     /// </summary>
     [Column("parent_commentID")]
     public Guid? ParentCommentId { get; set; }
+    
+    [Reference(typeof(CommentDao), ReferenceAttribute.JoinType.Left, true, "parent_commentID")]
+    public List<CommentDao?> ParentComment { get; set; }
 
     /// <summary>
     /// The User who created the Comment. This is a Reference to the User Table. It is a Foreign Key. Be aware, that this

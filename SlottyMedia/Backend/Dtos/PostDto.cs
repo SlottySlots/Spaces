@@ -55,4 +55,20 @@ public class PostDto
     /// Gets or sets the comments on the post.
     /// </summary>
     public CommentDao Comments { get; set; }
+    
+    /// <summary>
+    /// Maps the Post Dao to the Post Dto.
+    /// </summary>
+    /// <param name="post"></param>
+    /// <returns></returns>
+    public PostDto Mapper(PostsDao post)
+    {
+        //TODO Anpassen
+        PostId = post.PostId ?? Guid.Empty;
+        Content = post.Content ?? string.Empty;
+        Forum = post.Forum == null ? new ForumDto() : new ForumDto();
+        CreatedAt = post.CreatedAt;
+        return this;
+    }
+    
 }

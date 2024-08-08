@@ -18,6 +18,8 @@
 
 [AuthService](./slottymedia.backend.services.authservice.md)
 
+[CommentService](./slottymedia.backend.services.commentservice.md)
+
 [CookieService](./slottymedia.backend.services.cookieservice.md)
 
 [PostService](./slottymedia.backend.services.postservice.md)

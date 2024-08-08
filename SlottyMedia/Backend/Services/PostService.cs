@@ -227,12 +227,6 @@ public class PostService : IPostService
     /// <returns></returns>
     private List<PostDto> ConvertPostsToPostDtos(List<PostsDao> posts)
     {
-        return posts.Select(post => new PostDto
-        {
-            PostId = post.PostId ?? Guid.Empty,
-            Content = post.Content ?? string.Empty,
-            Forum = post.Forum == null ? new ForumDto() : new ForumDto(),
-            CreatedAt = post.CreatedAt
-        }).ToList();
+        return posts.Select(post => new PostDto().Mapper(post)).ToList();
     }
 }

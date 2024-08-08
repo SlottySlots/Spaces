@@ -97,7 +97,7 @@ public class DatabaseActions : IDatabaseActions
     /// <param name="value">The value to search for.</param>
     /// <returns>Returns the entity from the database.</returns>
     /// <exception cref="DatabaseExceptions">Thrown when the entity could not be found in the database.</exception>
-    public virtual async Task<T?> GetEntityByField<T>(string field, string value) where T : BaseModel, new()
+    public virtual async Task<T> GetEntityByField<T>(string field, string value) where T : BaseModel, new()
     {
         try
         {

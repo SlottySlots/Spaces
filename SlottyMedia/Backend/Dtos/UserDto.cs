@@ -1,3 +1,5 @@
+using SlottyMedia.Database.Daos;
+
 namespace SlottyMedia.Backend.Dtos;
 
 /// <summary>
@@ -41,4 +43,18 @@ public class UserDto
     /// Gets or sets a list of the recent forums the User has visited.
     /// </summary>
     public List<string> RecentForums { get; set; }
+    
+    /// <summary>
+    /// Maps the User Dao to the User Dto.
+    /// </summary>
+    /// <param name="user"></param>
+    public UserDto Mapper(UserDao user)
+    {
+        UserId = user.UserId ?? Guid.Empty;
+        Username = user.UserName ?? string.Empty; 
+        Description = user.Description ?? string.Empty;
+        CreatedAt = user.CreatedAt;
+
+        return this;
+    }
 }
