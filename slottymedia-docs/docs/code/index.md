@@ -2,9 +2,17 @@
 
 ## SlottyMedia.Backend.Services
 
+[AuthService](./slottymedia.backend.services.authservice.md)
+
+[CookieService](./slottymedia.backend.services.cookieservice.md)
+
+[ICookieService](./slottymedia.backend.services.icookieservice.md)
+
 [UserService](./slottymedia.backend.services.userservice.md)
 
 ## SlottyMedia.Backend.Services.Interfaces
+
+[IAuthService](./slottymedia.backend.services.interfaces.iauthservice.md)
 
 [IUserService](./slottymedia.backend.services.interfaces.iuserservice.md)
 
@@ -12,9 +20,13 @@
 
 [CounterVm](./slottymedia.backend.viewmodel.countervm.md)
 
+[RegisterVm](./slottymedia.backend.viewmodel.registervm.md)
+
 ## SlottyMedia.Backend.ViewModel.Interfaces
 
 [ICounterVm](./slottymedia.backend.viewmodel.interfaces.icountervm.md)
+
+[IRegisterVm](./slottymedia.backend.viewmodel.interfaces.iregistervm.md)
 
 ## SlottyMedia.Components
 
