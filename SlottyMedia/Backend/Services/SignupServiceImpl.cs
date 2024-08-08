@@ -25,23 +25,20 @@ public class SignupServiceImpl : ISignupService
     {
         // throw exception if username already exists
         var user = await _userService.GetUserByUsername(username);
-        if (user == null)
+        if (user != null)
             throw new UsernameAlreadyExistsException(username);
-        
-        // throw exception if email already exists
-        user = await _userService.GetUserByEmail(email);
-        if (user == null)
-            throw new EmailAlreadyExistsException(email);
         
         // else: sign up user
         var options = new SignUpOptions
         {
             Data = new Dictionary<string, object>
             {
-                { "username", username }
+                { "userName", username }
             }
         };
         var session = await _supabaseClient.Auth.SignUp(email, password, options);
+        
+        // TODO Check if email already exists, it is unclear how supabase responds in that case!
         
         // throw exception if, for whichever reason, the session is null
         if (session == null)

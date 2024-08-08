@@ -87,12 +87,14 @@ public class UserService : IUserService
 
     public async Task<UserDto?> GetUserByUsername(string username)
     {
-        return await _databaseActions.GetEntityByField<UserDto>("username", username);
-    }
-    
-    public async Task<UserDto?> GetUserByEmail(string email)
-    {
-        return await _databaseActions.GetEntityByField<UserDto>("email", email);
+        try
+        {
+            return await _databaseActions.GetEntityByField<UserDto>("userName", username);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
     /// <summary>
