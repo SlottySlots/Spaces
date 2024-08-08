@@ -60,11 +60,13 @@ public interface IDatabaseActions
     /// <param name="selector">The selector expression to use.</param>
     /// <param name="field">The field to search.</param>
     /// <param name="value">The value to search for.</param>
-    /// <param name="limit">The maximum number of items to retrieve.</param>
+    /// <param name="max">The maximum number of items to retrieve.</param>
     /// <param name="orderByFields">The fields to order by.</param>
     /// <returns>Returns a list of entities from the database.</returns>
     Task<List<T>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector, string field,
-        string value, int limit = -1,
+        string value,         
+        int max = -1,
+        int min = -1,
         params (string field, Constants.Ordering ordering, Constants.NullPosition nullPosition)[] orderByFields)
         where T : BaseModel, new();
 

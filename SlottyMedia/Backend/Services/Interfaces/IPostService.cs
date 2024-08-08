@@ -14,7 +14,7 @@ public interface IPostService
     /// <param name="userId">The ID of the user.</param>
     /// <param name="limit">The maximum number of posts to retrieve.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of post titles.</returns>
-    public Task<List<string>> GetPostsFromForum(Guid userId, int limit);
+    public Task<List<string>> GetPostsFromForum(Guid userId, int startOfSet, int endOfSet);
 
     /// <summary>
     /// Inserts a new post into the database.

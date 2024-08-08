@@ -1,4 +1,5 @@
 using Microsoft.JSInterop;
+using SlottyMedia.Backend.Services.Interfaces;
 
 namespace SlottyMedia.Backend.Services;
 

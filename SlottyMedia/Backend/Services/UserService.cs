@@ -140,7 +140,7 @@ public class UserService : IUserService
     /// <param name="userId">The Id of the user</param>
     /// <param name="limit">The maximum number of recent forums to retrieve</param>
     /// <returns>Returns the UserDto object</returns>
-    public async Task<UserDto> GetUser(Guid userId, int limit = 5)
+    public async Task<UserDto> GetUser(Guid userId, int recentForums = 5)
     {
         try
         {
@@ -153,8 +153,14 @@ public class UserService : IUserService
                 Description = result.Description ?? string.Empty,
                 CreatedAt = result.CreatedAt
             };
-
-            user.RecentForums = await _postService.GetPostsFromForum(userId, limit);
+            if (recentForums != -1)
+            {
+                user.RecentForums = await _postService.GetPostsFromForum(userId, 0, recentForums);
+            }
+            else
+            {
+                user.RecentForums = await _postService.GetPostsFromForum(userId, -1, -1);
+            }
 
             return user;
         }

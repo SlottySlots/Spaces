@@ -15,12 +15,12 @@ public interface ICounterVm
 This is the User Object which can be accessed by the View.
 
 ```csharp
-public abstract UserDto User { get; set; }
+public abstract UserDao User { get; set; }
 ```
 
 #### Property Value
 
-UserDto<br>
+UserDao<br>
 
 ## Methods
 

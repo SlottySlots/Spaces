@@ -13,18 +13,21 @@ Implements [IUserService](./slottymedia.backend.services.interfaces.iuserservice
 
 ## Constructors
 
-### **UserService(IDatabaseActions)**
+### **UserService(IDatabaseActions, IPostService)**
 
 This constructor creates a new UserService object.
 
 ```csharp
-public UserService(IDatabaseActions databaseActions)
+public UserService(IDatabaseActions databaseActions, IPostService postService)
 ```
 
 #### Parameters
 
 `databaseActions` IDatabaseActions<br>
 This parameter is used to interact with the database
+
+`postService` [IPostService](./slottymedia.backend.services.interfaces.ipostservice.md)<br>
+This parameter is used to interact with the post service
 
 ## Methods
 
@@ -33,7 +36,7 @@ This parameter is used to interact with the database
 This method creates a new User object in the database and returns the created object.
 
 ```csharp
-public Task<UserDto> CreateUser(string userId, string username, string description, Nullable<long> profilePicture)
+public Task<UserDao> CreateUser(string userId, string username, string description, Nullable<long> profilePicture)
 ```
 
 #### Parameters
@@ -52,59 +55,120 @@ The Profile Picture of the User
 
 #### Returns
 
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns the Created UserDto. If it was unable to create a User, it will return null
+[Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns the Created UserDao. If it was unable to create a User, it will return null
 
-### **DeleteUser(UserDto)**
+### **DeleteUser(UserDao)**
 
 This method deletes the given User object from the database.
 
 ```csharp
-public Task<bool> DeleteUser(UserDto user)
+public Task<bool> DeleteUser(UserDao user)
 ```
 
 #### Parameters
 
-`user` UserDto<br>
+`user` UserDao<br>
 The User Object to delete
 
 #### Returns
 
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns wheter it was possible to Delete the User or not. IF it was Possible it will return true.
+Returns whether it was possible to Delete the User or not. If it was possible it will return true.
 
-### **GetUserById(String)**
+### **GetUserById(Guid)**
 
 This method returns a User object from the database based on the given userId.
 
 ```csharp
-public Task<UserDto> GetUserById(string userId)
+public Task<UserDao> GetUserById(Guid userId)
 ```
 
 #### Parameters
 
-`userId` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 The ID of the User to get from the Database
 
 #### Returns
 
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns the User Object from the Database. If no User was found, null will be returned
 
-### **UpdateUser(UserDto)**
+### **UpdateUser(UserDao)**
 
 This method updates the given User object in the database and returns the updated object.
 
 ```csharp
-public Task<UserDto> UpdateUser(UserDto user)
+public Task<UserDao> UpdateUser(UserDao user)
 ```
 
 #### Parameters
 
-`user` UserDto<br>
+`user` UserDao<br>
 The updated User Dto
 
 #### Returns
 
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns the Updated User Interface. If it was unable to Update the User, it will return null.
+
+### **GetProfilePic(Guid)**
+
+This method returns the Profile Picture of the given User.
+
+```csharp
+public Task<ProfilePicDto> GetProfilePic(Guid userId)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the User
+
+#### Returns
+
+[Task&lt;ProfilePicDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns the Profile Picture of the User
+
+#### Exceptions
+
+[Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
+Throws an exception if the user is not found
+
+### **GetUser(Guid, Int32)**
+
+This method returns a UserDto object from the database based on the given userId.
+
+```csharp
+public Task<UserDto> GetUser(Guid userId, int recentForums)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The Id of the user
+
+`recentForums` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+#### Returns
+
+[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns the UserDto object
+
+### **GetFriends(Guid)**
+
+This method returns a list of friends for the given user.
+
+```csharp
+public Task<FriendsOfUserDto> GetFriends(Guid userId)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the user
+
+#### Returns
+
+[Task&lt;FriendsOfUserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns a FriendsOfUserDto object containing the list of friends

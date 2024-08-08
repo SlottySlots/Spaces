@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using Supabase;
@@ -155,4 +156,90 @@ public class DatabaseActionTests
             Assert.Fail($"GetEntityByField test failed with database exception: {ex.Message}");
         }
     }
+
+    /// <summary>
+    /// Tests the GetEntitieWithSelectorById method of DatabaseActions.
+    /// </summary>
+    [Test]
+    public async Task GetEntitieWithSelectorById()
+    {
+        try
+        {
+            var insertedUser = await _databaseActions.Insert(_userToWorkWith);
+            Assert.Multiple(() =>
+            {
+                Assert.That(insertedUser, Is.Not.Null, "Inserted user should not be null");
+                Assert.That(insertedUser.UserId, Is.Not.Null, "Inserted user's UserId should not be null");
+            });
+
+            Expression<Func<UserDao, object[]>> selector = u => new object[] { u.UserId, u.UserName, u.Description };
+            var user = await _databaseActions.GetEntitieWithSelectorById(selector, "userID",
+                insertedUser.UserId.ToString() ?? "");
+            Assert.Multiple(() =>
+            {
+                Assert.That(user, Is.Not.Null, "Retrieved user should not be null");
+
+                Assert.That(user.UserId, Is.EqualTo(insertedUser.UserId), "UserId should match");
+                Assert.That(user.UserName, Is.EqualTo(insertedUser.UserName), "UserName should match");
+                Assert.That(user.Description, Is.EqualTo(insertedUser.Description), "Description should match");
+                
+                // Check that fields not included in the selector are not returned
+                Assert.That(user.RoleId, Is.Null, "Retrieved user should not have a RoleId");
+                Assert.That(user.CreatedAt, Is.Default, "Retrieved user should not have a CreatedAt");
+                Assert.That(user.ProfilePic, Is.Null, "Retrieved user should not have a ProfilePicture");
+            });
+        }
+        catch (DatabaseExceptions ex)
+        {
+            Assert.Fail($"GetEntitieWithSelectorById test failed with database exception: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Tests the GetEntitiesWithSelectorById method of DatabaseActions.
+    /// </summary>
+    [Test]
+    public async Task GetEntitiesWithSelectorById()
+    {
+        try
+        {
+            var insertedUser = await _databaseActions.Insert(_userToWorkWith);
+            Assert.Multiple(() =>
+            {
+                Assert.That(insertedUser, Is.Not.Null, "Inserted user should not be null");
+                Assert.That(insertedUser.UserId, Is.Not.Null, "Inserted user's UserId should not be null");
+            });
+
+            Expression<Func<UserDao, object[]>> selector = u => new object[] { u.UserId, u.UserName, u.Description };
+            var users = await _databaseActions.GetEntitiesWithSelectorById(selector, "userID",
+                insertedUser.UserId.ToString() ?? "");
+            Assert.Multiple(() =>
+            {
+                Assert.That(users, Is.Not.Null, "Retrieved users list should not be null");
+                Assert.That(users.Count, Is.GreaterThan(0), "Retrieved users list should contain at least one user");
+
+                foreach (var user in users)
+                {
+                    Assert.That(user, Is.Not.Null, "Retrieved user should not be null");
+      
+                        Assert.That(user.UserId, Is.EqualTo(insertedUser.UserId), "UserId should match");
+                        Assert.That(user.UserName, Is.EqualTo(insertedUser.UserName), "UserName should match");
+                        Assert.That(user.Description, Is.EqualTo(insertedUser.Description), "Description should match");
+
+                        // Check that fields not included in the selector are not returned
+                        Assert.That(user.RoleId, Is.Null, "Retrieved user should not have a RoleId");
+                        Assert.That(user.CreatedAt, Is.Default, "Retrieved user should not have a CreatedAt");
+                        Assert.That(user.ProfilePic, Is.Null, "Retrieved user should not have a ProfilePicture");
+                    
+                }
+                
+            });
+        }
+        catch (DatabaseExceptions ex)
+        {
+            Assert.Fail($"GetEntitiesWithSelectorById test failed with database exception: {ex.Message}");
+        }
+    }
+    
+    
 }

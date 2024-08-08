@@ -103,7 +103,7 @@ public class PostService : IPostService
     /// <param name="userId">The ID of the user.</param>
     /// <param name="limit">The maximum number of posts to retrieve.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of post titles.</returns>
-    public async Task<List<string>> GetPostsFromForum(Guid userId, int limit)
+    public async Task<List<string>> GetPostsFromForum(Guid userId, int startOfSet, int endOfSet)
     {
         try
         {
@@ -111,7 +111,7 @@ public class PostService : IPostService
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
                 x => new object[] { x.Forum },
                 "creator_userID",
-                userId.ToString(), limit,
+                userId.ToString(), startOfSet,endOfSet,
                 ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
             );
 
@@ -130,6 +130,7 @@ public class PostService : IPostService
     /// </summary>
     /// <param name="userId"></param>
     /// <param name="startOfSet"></param>
+    /// <param name="endOfSet"></param>
     /// <returns></returns>
     public async Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet)
     {

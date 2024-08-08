@@ -1,18 +1,36 @@
 # SlottyMedia
 
+## SlottyMedia.Backend.Dtos
+
+[ForumDto](./slottymedia.backend.dtos.forumdto.md)
+
+[FriendsOfUserDto](./slottymedia.backend.dtos.friendsofuserdto.md)
+
+[PostDto](./slottymedia.backend.dtos.postdto.md)
+
+[ProfilePicDto](./slottymedia.backend.dtos.profilepicdto.md)
+
+[SearchDto](./slottymedia.backend.dtos.searchdto.md)
+
+[UserDto](./slottymedia.backend.dtos.userdto.md)
+
 ## SlottyMedia.Backend.Services
 
 [AuthService](./slottymedia.backend.services.authservice.md)
 
 [CookieService](./slottymedia.backend.services.cookieservice.md)
 
-[ICookieService](./slottymedia.backend.services.icookieservice.md)
+[PostService](./slottymedia.backend.services.postservice.md)
 
 [UserService](./slottymedia.backend.services.userservice.md)
 
 ## SlottyMedia.Backend.Services.Interfaces
 
 [IAuthService](./slottymedia.backend.services.interfaces.iauthservice.md)
+
+[ICookieService](./slottymedia.backend.services.interfaces.icookieservice.md)
+
+[IPostService](./slottymedia.backend.services.interfaces.ipostservice.md)
 
 [IUserService](./slottymedia.backend.services.interfaces.iuserservice.md)
 
