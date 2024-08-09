@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Database.Daos;
@@ -11,7 +12,7 @@ namespace SlottyMedia.Backend.ViewModel;
 public class CounterVm : ICounterVm, INotifyPropertyChanged
 {
     private readonly IUserService _userService;
-    private UserDao _user;
+    private UserDto _user;
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="CounterVm" /> class. It creates a new UserDao object and sets the
@@ -19,7 +20,7 @@ public class CounterVm : ICounterVm, INotifyPropertyChanged
     /// </summary>
     /// <param name="userService">The user service to interact with the database.</param>
     /// <param name="user">A new UserDao object</param>
-    public CounterVm(IUserService userService, UserDao user)
+    public CounterVm(IUserService userService, UserDto user)
     {
         _user = user;
         _userService = userService;
@@ -29,7 +30,7 @@ public class CounterVm : ICounterVm, INotifyPropertyChanged
     ///     Gets or sets the User object. This object can be accessed by the View. When the User object changes, the View will
     ///     be notified.
     /// </summary>
-    public UserDao User
+    public UserDto User
     {
         get => _user;
         set

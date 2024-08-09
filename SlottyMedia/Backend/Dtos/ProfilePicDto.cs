@@ -1,3 +1,5 @@
+using SlottyMedia.Database.Daos;
+
 namespace SlottyMedia.Backend.Dtos;
 
 /// <summary>
@@ -23,4 +25,31 @@ public class ProfilePicDto
     ///     Gets or sets the Profile Picture in binary.
     /// </summary>
     public long ProfilePic { get; set; }
+    
+    /// <summary>
+    /// This method maps the ProfilePicDto to a UserDao.
+    /// </summary>
+    /// <returns></returns>
+    public UserDao Mapper()
+    {
+        return new UserDao
+        {
+            UserId = UserId,
+            ProfilePic = ProfilePic
+        };
+    }
+    
+    /// <summary>
+    /// This method maps the UserDao to a ProfilePicDto.
+    /// </summary>
+    /// <param name="userDao"></param>
+    /// <returns></returns>
+    public ProfilePicDto Mapper(UserDao userDao)
+    {
+        return new ProfilePicDto
+        {
+            UserId = userDao.UserId ?? Guid.Empty,
+            ProfilePic = userDao.ProfilePic ?? 0
+        };
+    }
 }

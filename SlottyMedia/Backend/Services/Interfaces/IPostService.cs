@@ -1,3 +1,4 @@
+using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 
@@ -30,14 +31,14 @@ public interface IPostService
     /// <param name="creatorUserId">The UserId who created the post</param>
     /// <param name="forumId">The forum in which the post was posted</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the inserted post.</returns>
-    public Task<PostsDao> InsertPost(string title, string content, Guid creatorUserId, Guid forumId);
+    public Task<PostDto> InsertPost(string title, string content, Guid creatorUserId, Guid forumId);
 
     /// <summary>
     ///     Updates an existing post in the database.
     /// </summary>
     /// <param name="post">The post to update.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the updated post.</returns>
-    Task<PostsDao> UpdatePost(PostsDao post);
+    Task<PostDto> UpdatePost(PostDto post);
 
     /// <summary>
     ///     Deletes a post from the database.
@@ -47,5 +48,5 @@ public interface IPostService
     ///     A task that represents the asynchronous operation. The task result indicates whether the deletion was
     ///     successful.
     /// </returns>
-    Task<bool> DeletePost(PostsDao post);
+    Task<bool> DeletePost(PostDto post);
 }

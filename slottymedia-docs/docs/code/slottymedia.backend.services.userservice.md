@@ -36,7 +36,7 @@ This parameter is used to interact with the post service
 This method creates a new User object in the database and returns the created object.
 
 ```csharp
-public Task<UserDao> CreateUser(string userId, string username, string description, Nullable<long> profilePicture)
+public Task<UserDto> CreateUser(string userId, string username, string description, Nullable<long> profilePicture)
 ```
 
 #### Parameters
@@ -55,20 +55,20 @@ The Profile Picture of the User
 
 #### Returns
 
-[Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns the Created UserDao. If it was unable to create a User, it will return null
 
-### **DeleteUser(UserDao)**
+### **DeleteUser(UserDto)**
 
 This method deletes the given User object from the database.
 
 ```csharp
-public Task<bool> DeleteUser(UserDao user)
+public Task<bool> DeleteUser(UserDto user)
 ```
 
 #### Parameters
 
-`user` UserDao<br>
+`user` [UserDto](./slottymedia.backend.dtos.userdto.md)<br>
 The User Object to delete
 
 #### Returns
@@ -81,7 +81,7 @@ Returns whether it was possible to Delete the User or not. If it was possible it
 This method returns a User object from the database based on the given userId.
 
 ```csharp
-public Task<UserDao> GetUserById(Guid userId)
+public Task<UserDto> GetUserById(Guid userId)
 ```
 
 #### Parameters
@@ -91,25 +91,25 @@ The ID of the User to get from the Database
 
 #### Returns
 
-[Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns the User Object from the Database. If no User was found, null will be returned
 
-### **UpdateUser(UserDao)**
+### **UpdateUser(UserDto)**
 
 This method updates the given User object in the database and returns the updated object.
 
 ```csharp
-public Task<UserDao> UpdateUser(UserDao user)
+public Task<UserDto> UpdateUser(UserDto user)
 ```
 
 #### Parameters
 
-`user` UserDao<br>
+`user` [UserDto](./slottymedia.backend.dtos.userdto.md)<br>
 The updated User Dto
 
 #### Returns
 
-[Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns the Updated User Interface. If it was unable to Update the User, it will return null.
 
 ### **GetProfilePic(Guid)**

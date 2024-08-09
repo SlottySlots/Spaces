@@ -151,7 +151,7 @@ public class DatabaseActions : IDatabaseActions
     /// <param name="orderByFields">The fields to order by.</param>
     /// <returns>Returns a list of entities from the database.</returns>
     /// <exception cref="DatabaseExceptions">Thrown when the items could not be retrieved from the database.</exception>
-    public async Task<List<T>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector, string field,
+    public async Task<List<T?>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector, string field,
         string value,
         int max = -1,
         int min = -1,
@@ -190,7 +190,7 @@ public class DatabaseActions : IDatabaseActions
     /// <param name="orderByFields">The fields to order by.</param>
     /// <returns>Returns a list of entities from the database.</returns>
     /// <exception cref="DatabaseExceptions">Thrown when the items could not be retrieved from the database.</exception>
-    public async Task<List<T>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector,
+    public async Task<List<T?>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector,
         List<(string, Constants.Operator, string)> search,
         int max = -1,
         int min = -1,

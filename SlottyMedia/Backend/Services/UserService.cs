@@ -32,7 +32,7 @@ public class UserService : IUserService
     /// <param name="description">The Description of the User</param>
     /// <param name="profilePicture">The Profile Picture of the User</param>
     /// <returns>Returns the Created UserDao. If it was unable to create a User, it will return null</returns>
-    public async Task<UserDao?> CreateUser(string userId, string username, string? description = null,
+    public async Task<UserDto> CreateUser(string userId, string username, string? description = null,
         long? profilePicture = null)
     {
         var user = new UserDao
@@ -42,9 +42,11 @@ public class UserService : IUserService
             Description = description ?? string.Empty,
             ProfilePic = profilePicture ?? 0
         };
+        
         try
         {
-            return await _databaseActions.Insert(user);
+            var result = await _databaseActions.Insert(user);
+            return new UserDto().Mapper(result);
         }
         catch (Exception ex)
         {
@@ -59,11 +61,11 @@ public class UserService : IUserService
     /// </summary>
     /// <param name="user">The User Object to delete</param>
     /// <returns>Returns whether it was possible to Delete the User or not. If it was possible it will return true.</returns>
-    public async Task<bool> DeleteUser(UserDao user)
+    public async Task<bool> DeleteUser(UserDto user)
     {
         try
         {
-            return await _databaseActions.Delete(user);
+            return await _databaseActions.Delete(user.Mapper());
         }
         catch (Exception ex)
         {
@@ -78,13 +80,35 @@ public class UserService : IUserService
     /// </summary>
     /// <param name="userId">The ID of the User to get from the Database</param>
     /// <returns>Returns the User Object from the Database. If no User was found, null will be returned</returns>
-    public async Task<UserDao> GetUserById(Guid userId)
+    public async Task<UserDto> GetUserById(Guid userId)
     {
         try
         {
             var user = await _databaseActions.GetEntityByField<UserDao>("userID", userId.ToString());
             if (user is null) throw new Exception("User not found");
 
+            return new UserDto().Mapper(user);
+        }
+        catch (Exception ex)
+        {
+            // Log the exception and return null
+            // TODO: Implement proper error handling
+            return null;
+        }
+    }
+    
+    /// <summary>
+    ///     This method returns a User object from the database based on the given userId.
+    /// </summary>
+    /// <param name="userId">The ID of the User to get from the Database</param>
+    /// <returns>Returns the User Object from the Database. If no User was found, null will be returned</returns>
+    private async Task<UserDao> GetUserDaoById(Guid userId)
+    {
+        try
+        {
+            var user = await _databaseActions.GetEntityByField<UserDao>("userID", userId.ToString());
+            if (user is null) throw new Exception("User not found");
+            
             return user;
         }
         catch (Exception ex)
@@ -100,11 +124,12 @@ public class UserService : IUserService
     /// </summary>
     /// <param name="user">The updated User Dto</param>
     /// <returns>Returns the Updated User Interface. If it was unable to Update the User, it will return null.</returns>
-    public async Task<UserDao?> UpdateUser(UserDao user)
+    public async Task<UserDto> UpdateUser(UserDto user)
     {
         try
         {
-            return await _databaseActions.Update(user);
+            var result = await _databaseActions.Update(user.Mapper());
+            return new UserDto().Mapper(result);
         }
         catch (Exception ex)
         {
@@ -124,7 +149,7 @@ public class UserService : IUserService
     {
         try
         {
-            var user = await GetUserById(userId);
+            var user = await GetUserDaoById(userId);
             if (user == null) throw new Exception("User not found");
             return new ProfilePicDto
             {

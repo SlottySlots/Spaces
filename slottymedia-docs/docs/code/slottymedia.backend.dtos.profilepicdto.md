@@ -45,3 +45,33 @@ Initializes a new instance of the [ProfilePicDto](./slottymedia.backend.dtos.pro
 ```csharp
 public ProfilePicDto()
 ```
+
+## Methods
+
+### **Mapper()**
+
+This method maps the ProfilePicDto to a UserDao.
+
+```csharp
+public UserDao Mapper()
+```
+
+#### Returns
+
+UserDao<br>
+
+### **Mapper(UserDao)**
+
+This method maps the UserDao to a ProfilePicDto.
+
+```csharp
+public ProfilePicDto Mapper(UserDao userDao)
+```
+
+#### Parameters
+
+`userDao` UserDao<br>
+
+#### Returns
+
+[ProfilePicDto](./slottymedia.backend.dtos.profilepicdto.md)<br>

@@ -15,12 +15,12 @@ public interface ICounterVm
 This is the User Object which can be accessed by the View.
 
 ```csharp
-public abstract UserDao User { get; set; }
+public abstract UserDto User { get; set; }
 ```
 
 #### Property Value
 
-UserDao<br>
+[UserDto](./slottymedia.backend.dtos.userdto.md)<br>
 
 ## Methods
 

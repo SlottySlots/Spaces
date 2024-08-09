@@ -13,7 +13,7 @@ public interface IUserService
     /// </summary>
     /// <param name="userId">The UserID inside the Database</param>
     /// <returns>UserDao</returns>
-    Task<UserDao> GetUserById(Guid userId);
+    Task<UserDto> GetUserById(Guid userId);
 
     /// <summary>
     ///     This method creates a new User object in the database and returns the created object.
@@ -23,21 +23,21 @@ public interface IUserService
     /// <param name="description">The Description about the User</param>
     /// <param name="profilePicture">The ProfilePicture</param>
     /// <returns>UserDao</returns>
-    Task<UserDao?> CreateUser(string userId, string username, string? description = null, long? profilePicture = null);
+    Task<UserDto> CreateUser(string userId, string username, string? description = null, long? profilePicture = null);
 
     /// <summary>
     ///     This method updates the given User object in the database and returns the updated object.
     /// </summary>
     /// <param name="user">The User object</param>
     /// <returns>UserDao</returns>
-    Task<UserDao?> UpdateUser(UserDao user);
+    Task<UserDto> UpdateUser(UserDto user);
 
     /// <summary>
     ///     This method deletes the given User object from the database.
     /// </summary>
     /// <param name="user">The User Object</param>
     /// <returns name="bool">Return if the User got deleted or not</returns>
-    Task<bool> DeleteUser(UserDao user);
+    Task<bool> DeleteUser(UserDto user);
 
     /// <summary>
     ///     This method returns the Profile Picture of the given User.

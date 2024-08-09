@@ -51,7 +51,7 @@ A task that represents the asynchronous operation. The task result contains a li
 Inserts a new post into the database.
 
 ```csharp
-Task<PostsDao> InsertPost(string title, string content, Guid creatorUserId, Guid forumId)
+Task<PostDto> InsertPost(string title, string content, Guid creatorUserId, Guid forumId)
 ```
 
 #### Parameters
@@ -70,38 +70,38 @@ The forum in which the post was posted
 
 #### Returns
 
-[Task&lt;PostsDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains the inserted post.
 
-### **UpdatePost(PostsDao)**
+### **UpdatePost(PostDto)**
 
 Updates an existing post in the database.
 
 ```csharp
-Task<PostsDao> UpdatePost(PostsDao post)
+Task<PostDto> UpdatePost(PostDto post)
 ```
 
 #### Parameters
 
-`post` PostsDao<br>
+`post` [PostDto](./slottymedia.backend.dtos.postdto.md)<br>
 The post to update.
 
 #### Returns
 
-[Task&lt;PostsDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains the updated post.
 
-### **DeletePost(PostsDao)**
+### **DeletePost(PostDto)**
 
 Deletes a post from the database.
 
 ```csharp
-Task<bool> DeletePost(PostsDao post)
+Task<bool> DeletePost(PostDto post)
 ```
 
 #### Parameters
 
-`post` PostsDao<br>
+`post` [PostDto](./slottymedia.backend.dtos.postdto.md)<br>
 The the post to delete.
 
 #### Returns

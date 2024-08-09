@@ -84,6 +84,18 @@ public UserDto()
 
 ## Methods
 
+### **Mapper()**
+
+This method maps the User Dto to the User Dao.
+
+```csharp
+public UserDao Mapper()
+```
+
+#### Returns
+
+UserDao<br>
+
 ### **Mapper(UserDao)**
 
 Maps the User Dao to the User Dto.

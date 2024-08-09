@@ -33,7 +33,7 @@ public class PostService : IPostService
     /// <param name="creatorUserId">The ID of the user who created the post.</param>
     /// <param name="forumId">The ID of the forum where the post is created.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the inserted post.</returns>
-    public async Task<PostsDao> InsertPost(string title, string content, Guid creatorUserId, Guid forumId)
+    public async Task<PostDto> InsertPost(string title, string content, Guid creatorUserId, Guid forumId)
     {
         try
         {
@@ -48,7 +48,7 @@ public class PostService : IPostService
 
             // Insert the post into the database
             var insertedPost = await DatabaseActions.Insert(post);
-            return insertedPost;
+            return new PostDto().Mapper(insertedPost);
         }
         catch (Exception ex)
         {
@@ -62,13 +62,13 @@ public class PostService : IPostService
     /// </summary>
     /// <param name="post">The post to update.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the updated post.</returns>
-    public async Task<PostsDao> UpdatePost(PostsDao post)
+    public async Task<PostDto> UpdatePost(PostDto post)
     {
         try
         {
             // Update the post in the database
-            var updatedPost = await DatabaseActions.Update(post);
-            return updatedPost;
+            var updatedPost = await DatabaseActions.Update(post.Mapper());
+            return new PostDto().Mapper(updatedPost);
         }
         catch (Exception ex)
         {
@@ -85,12 +85,12 @@ public class PostService : IPostService
     ///     A task that represents the asynchronous operation. The task result indicates whether the deletion was
     ///     successful.
     /// </returns>
-    public async Task<bool> DeletePost(PostsDao post)
+    public async Task<bool> DeletePost(PostDto post)
     {
         try
         {
             // Delete the post from the database
-            var result = await DatabaseActions.Delete(post);
+            var result = await DatabaseActions.Delete(post.Mapper());
             return result;
         }
         catch (Exception ex)
@@ -122,7 +122,7 @@ public class PostService : IPostService
             // Return the list of forum names associated with the posts
             return posts.Select(post => post.Forum.ForumTopic).ToList();
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
             // TODO: Implement error handling
             return new List<string>();

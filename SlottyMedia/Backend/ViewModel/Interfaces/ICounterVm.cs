@@ -1,3 +1,4 @@
+using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Database.Daos;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
@@ -10,7 +11,7 @@ public interface ICounterVm
     /// <summary>
     ///     This is the User Object which can be accessed by the View.
     /// </summary>
-    public UserDao User { get; set; }
+    public UserDto User { get; set; }
 
     /// <summary>
     ///     This Method gets a user by their ID.

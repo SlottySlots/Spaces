@@ -15,7 +15,7 @@ public interface IUserService
 This method returns a User object from the database based on the given userId.
 
 ```csharp
-Task<UserDao> GetUserById(Guid userId)
+Task<UserDto> GetUserById(Guid userId)
 ```
 
 #### Parameters
@@ -25,7 +25,7 @@ The UserID inside the Database
 
 #### Returns
 
-[Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 UserDao
 
 ### **CreateUser(String, String, String, Nullable&lt;Int64&gt;)**
@@ -33,7 +33,7 @@ UserDao
 This method creates a new User object in the database and returns the created object.
 
 ```csharp
-Task<UserDao> CreateUser(string userId, string username, string description, Nullable<long> profilePicture)
+Task<UserDto> CreateUser(string userId, string username, string description, Nullable<long> profilePicture)
 ```
 
 #### Parameters
@@ -52,38 +52,38 @@ The ProfilePicture
 
 #### Returns
 
-[Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 UserDao
 
-### **UpdateUser(UserDao)**
+### **UpdateUser(UserDto)**
 
 This method updates the given User object in the database and returns the updated object.
 
 ```csharp
-Task<UserDao> UpdateUser(UserDao user)
+Task<UserDto> UpdateUser(UserDto user)
 ```
 
 #### Parameters
 
-`user` UserDao<br>
+`user` [UserDto](./slottymedia.backend.dtos.userdto.md)<br>
 The User object
 
 #### Returns
 
-[Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 UserDao
 
-### **DeleteUser(UserDao)**
+### **DeleteUser(UserDto)**
 
 This method deletes the given User object from the database.
 
 ```csharp
-Task<bool> DeleteUser(UserDao user)
+Task<bool> DeleteUser(UserDto user)
 ```
 
 #### Parameters
 
-`user` UserDao<br>
+`user` [UserDto](./slottymedia.backend.dtos.userdto.md)<br>
 The User Object
 
 #### Returns

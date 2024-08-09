@@ -37,15 +37,34 @@ public class SearchService : ISearchService
         {
             ("forumTopic", Constants.Operator.Equals, searchTerm)
         };
+        try
+        {
+            var userResults = await _databaseActions.GetEntitiesWithSelectorById<UserDao>(
+                u => new object[] { u.UserId! }, userSearch);
+            var topicResults = await _databaseActions.GetEntitiesWithSelectorById<ForumDao>(
+                f => new object[] { f.ForumId! }, topicSearch);
+            if (userResults is null)
+            {
+                userResults = new List<UserDao>()!;
+            }
 
-        var userResults = await _databaseActions.GetEntitiesWithSelectorById<UserDao>(
-            u => new object[] { u.UserId! }, userSearch);
-        var topicResults = await _databaseActions.GetEntitiesWithSelectorById<ForumDao>(
-            f => new object[] { f.ForumId! }, topicSearch);
+            if (topicResults is null)
+            {
+                topicResults = new List<ForumDao>()!;
+            }
 
-        var userIds = userResults.Select(u => u.UserId).ToList();
-        var topicIds = topicResults.Select(t => t.ForumId).ToList();
 
-        return userIds.Concat(topicIds).ToList();
+            var userIds = userResults.Select(u => u.UserId).ToList();
+            var topicIds = topicResults.Select(t => t.ForumId).ToList();
+
+            return userIds.Concat(topicIds).ToList();
+        }
+        catch (Exception ex)
+        {
+            //TODO: Implement logging and error handling
+            throw;
+        }
+
+
     }
 }

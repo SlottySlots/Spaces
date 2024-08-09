@@ -19,22 +19,22 @@ Gets or sets the User object. This object can be accessed by the View. When the 
  be notified.
 
 ```csharp
-public UserDao User { get; set; }
+public UserDto User { get; set; }
 ```
 
 #### Property Value
 
-UserDao<br>
+[UserDto](./slottymedia.backend.dtos.userdto.md)<br>
 
 ## Constructors
 
-### **CounterVm(IUserService, UserDao)**
+### **CounterVm(IUserService, UserDto)**
 
 Initializes a new instance of the [CounterVm](./slottymedia.backend.viewmodel.countervm.md) class. It creates a new UserDao object and sets the
  UserService.
 
 ```csharp
-public CounterVm(IUserService userService, UserDao user)
+public CounterVm(IUserService userService, UserDto user)
 ```
 
 #### Parameters
@@ -42,7 +42,7 @@ public CounterVm(IUserService userService, UserDao user)
 `userService` [IUserService](./slottymedia.backend.services.interfaces.iuserservice.md)<br>
 The user service to interact with the database.
 
-`user` UserDao<br>
+`user` [UserDto](./slottymedia.backend.dtos.userdto.md)<br>
 A new UserDao object
 
 ## Methods

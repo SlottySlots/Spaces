@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Moq;
+using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
@@ -39,7 +40,9 @@ public class PostServiceTests
         var result = await _postService.InsertPost(post.Headline, post.Content, post.UserId ?? Guid.Empty,
             post.ForumId ?? Guid.Empty);
 
-        Assert.That(result, Is.EqualTo(post));
+        Assert.That(result.Headline, Is.EqualTo(post.Headline));
+        Assert.That(result.Content, Is.EqualTo(post.Content));
+        Assert.That(result.UserId, Is.EqualTo(post.UserId));
     }
 
     /// <summary>
@@ -80,9 +83,11 @@ public class PostServiceTests
 
         _mockDatabaseActions.Setup(x => x.Update(It.IsAny<PostsDao>())).ReturnsAsync(post);
 
-        var result = await _postService.UpdatePost(post);
+        var result = await _postService.UpdatePost(new PostDto().Mapper(post));
 
-        Assert.That(result, Is.EqualTo(post));
+        Assert.That(result.Headline, Is.EqualTo(post.Headline));
+        Assert.That(result.Content, Is.EqualTo(post.Content));
+        Assert.That(result.UserId, Is.EqualTo(post.UserId));
     }
 
     /// <summary>
@@ -101,7 +106,7 @@ public class PostServiceTests
 
         _mockDatabaseActions.Setup(x => x.Update(It.IsAny<PostsDao>())).ThrowsAsync(new Exception());
 
-        var result = await _postService.UpdatePost(post);
+        var result = await _postService.UpdatePost(new PostDto().Mapper(post));
 
         Assert.That(result, Is.Null);
     }
@@ -122,7 +127,7 @@ public class PostServiceTests
 
         _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<PostsDao>())).ReturnsAsync(true);
 
-        var result = await _postService.DeletePost(post);
+        var result = await _postService.DeletePost(new PostDto().Mapper(post));
 
         Assert.That(result, Is.True);
     }
@@ -143,7 +148,7 @@ public class PostServiceTests
 
         _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<PostsDao>())).ThrowsAsync(new Exception());
 
-        var result = await _postService.DeletePost(post);
+        var result = await _postService.DeletePost(new PostDto().Mapper(post));
 
         Assert.That(result, Is.False);
     }
@@ -165,7 +170,7 @@ public class PostServiceTests
 
         _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<PostsDao, object[]>>>(),
                 "creator_userID", userId.ToString(), 0, 10,
-                tuple))
+                tuple))!
             .ReturnsAsync(posts);
 
         var result = await _postService.GetPostsFromForum(userId, 0, 10);

@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Moq;
+using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
@@ -42,11 +43,13 @@ public class UserServiceTests
 
         var result = await _userService.CreateUser(userId.ToString(), username);
 
+        var resultDao = result.Mapper();
+
         Assert.That(result, Is.Not.Null);
         Assert.Multiple(() =>
         {
-            Assert.That(result.UserId ?? Guid.Empty, Is.EqualTo(userId));
-            Assert.That(result.UserName, Is.EqualTo(username));
+            Assert.That(resultDao.UserId ?? Guid.Empty, Is.EqualTo(userId));
+            Assert.That(resultDao.UserName, Is.EqualTo(username));
         });
     }
 
@@ -74,7 +77,7 @@ public class UserServiceTests
         var user = new UserDao { UserId = Guid.NewGuid() };
         _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<UserDao>())).ReturnsAsync(true);
 
-        var result = await _userService.DeleteUser(user);
+        var result = await _userService.DeleteUser(new UserDto().Mapper(user));
 
         Assert.That(result, Is.True);
     }
@@ -88,7 +91,7 @@ public class UserServiceTests
         var user = new UserDao { UserId = Guid.NewGuid() };
         _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<UserDao>())).ThrowsAsync(new Exception());
 
-        var result = await _userService.DeleteUser(user);
+        var result = await _userService.DeleteUser(new UserDto().Mapper(user));
 
         Assert.That(result, Is.False);
     }
@@ -105,8 +108,10 @@ public class UserServiceTests
 
         var result = await _userService.GetUserById(userId);
 
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.UserId ?? Guid.Empty, Is.EqualTo(userId));
+        var resultDao = result.Mapper();
+
+        Assert.That(resultDao, Is.Not.Null);
+        Assert.That(resultDao.UserId ?? Guid.Empty, Is.EqualTo(userId));
     }
 
     /// <summary>
@@ -121,7 +126,7 @@ public class UserServiceTests
 
         var result = await _userService.GetUserById(userId);
 
-        Assert.That(result, Is.Null); 
+        Assert.That(result, Is.Null);
     }
 
     /// <summary>
@@ -133,10 +138,11 @@ public class UserServiceTests
         var user = new UserDao { UserId = Guid.NewGuid(), UserName = "updatedUsername" };
         _mockDatabaseActions.Setup(x => x.Update(It.IsAny<UserDao>())).ReturnsAsync(user);
 
-        var result = await _userService.UpdateUser(user);
+        var result = await _userService.UpdateUser(new UserDto().Mapper(user));
+        var resultDao = result.Mapper();
 
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.UserName, Is.EqualTo("updatedUsername"));
+        Assert.That(resultDao, Is.Not.Null);
+        Assert.That(resultDao.UserName, Is.EqualTo("updatedUsername"));
     }
 
     /// <summary>
@@ -148,7 +154,7 @@ public class UserServiceTests
         var user = new UserDao { UserId = Guid.NewGuid(), UserName = "updatedUsername" };
         _mockDatabaseActions.Setup(x => x.Update(It.IsAny<UserDao>())).ThrowsAsync(new Exception());
 
-        var result = await _userService.UpdateUser(user);
+        var result = await _userService.UpdateUser(new UserDto().Mapper(user));
 
         Assert.That(result, Is.Null);
     }

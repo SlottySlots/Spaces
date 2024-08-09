@@ -36,17 +36,17 @@ public Guid PostId { get; set; }
 
 [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
-### **UserDao**
+### **UserId**
 
 Gets or sets the user ID of the user who created the post.
 
 ```csharp
-public int UserDao { get; set; }
+public Guid UserId { get; set; }
 ```
 
 #### Property Value
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 ### **Likes**
 
@@ -71,6 +71,18 @@ public DateTime CreatedAt { get; set; }
 #### Property Value
 
 [DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)<br>
+
+### **Headline**
+
+Gets or sets the headline of the post.
+
+```csharp
+public string Headline { get; set; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **Content**
 
@@ -107,6 +119,18 @@ public PostDto()
 ```
 
 ## Methods
+
+### **Mapper()**
+
+The Mapper for the Post Dto to the Post Dao.
+
+```csharp
+public PostsDao Mapper()
+```
+
+#### Returns
+
+PostsDao<br>
 
 ### **Mapper(PostsDao)**
 
