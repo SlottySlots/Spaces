@@ -1,6 +1,8 @@
 using Moq;
 using SlottyMedia.Backend.Exceptions;
+using SlottyMedia.Backend.Exceptions.signup;
 using SlottyMedia.Backend.Services;
+using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
 using SlottyMedia.Database;
 using Supabase.Gotrue;

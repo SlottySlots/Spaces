@@ -96,24 +96,6 @@ Returns the UserDto object from the Database. If no User was found, it will thro
 
 ### **GetUserByUsername(String)**
 
-This method fetches a user by their username. Returns null if no user was found.
-
-```csharp
-public Task<UserDto> GetUserByUsername(string username)
-```
-
-#### Parameters
-
-`username` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The Username of the User to fetch
-
-#### Returns
-
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns the UserDto object if found, otherwise null.
-
-### **GetUserByUsername(String)**
-
 ```csharp
 public Task<UserDto> GetUserByUsername(string username)
 ```

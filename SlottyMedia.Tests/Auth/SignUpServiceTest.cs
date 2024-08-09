@@ -1,9 +1,10 @@
 using Moq;
+using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions;
+using SlottyMedia.Backend.Exceptions.signup;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
-using SlottyMedia.Database.Models;
 using Supabase.Gotrue;
 using Client = Supabase.Client;
 

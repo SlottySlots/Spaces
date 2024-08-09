@@ -46,24 +46,6 @@ The user's username
 [Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 The queried user or null if no such user was found
 
-### **GetUserByUsername(String)**
-
-Fetches a user by their username. Returns null if no user was found.
-
-```csharp
-Task<UserDto> GetUserByUsername(string username)
-```
-
-#### Parameters
-
-`username` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The user's username
-
-#### Returns
-
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-The queried user or null if no such user was found
-
 ### **CreateUser(String, String, String, Nullable&lt;Int64&gt;)**
 
 This method creates a new User object in the database and returns the created object.

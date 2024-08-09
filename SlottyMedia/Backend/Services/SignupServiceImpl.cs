@@ -1,4 +1,5 @@
 using SlottyMedia.Backend.Exceptions;
+using SlottyMedia.Backend.Exceptions.signup;
 using SlottyMedia.Backend.Services.Interfaces;
 using Supabase.Gotrue;
 
