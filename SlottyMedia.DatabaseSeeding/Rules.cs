@@ -64,8 +64,8 @@ internal class Rules
     {
         var commentFaker = new Faker<CommentDao>()
             .RuleFor(c => c.CommentId, f => f.Random.Guid())
-            .RuleFor(c => c.CreatorUserId, f =>  userIds[f.Random.Int(0, userIds.Count - 1)])
-            .RuleFor(c => c.PostId, f =>  postIds[f.Random.Int(0, userIds.Count - 1)])
+            .RuleFor(c => c.CreatorUserId, f => userIds[f.Random.Int(0, userIds.Count - 1)])
+            .RuleFor(c => c.PostId, f => postIds[f.Random.Int(0, userIds.Count - 1)])
             .RuleFor(c => c.Content, f => f.Lorem.Paragraph())
             .RuleFor(c => c.CreatedAt, f => f.Date.Past());
         return commentFaker;
@@ -79,9 +79,7 @@ internal class Rules
     internal Faker<FollowerUserRelationDao> FollowerUserRelationRules(List<Guid> userIds)
     {
         if (userIds.Count < 2)
-        {
             throw new ArgumentException("At least two userIds are required to generate follower relations.");
-        }
 
         var existingRelations = new HashSet<(Guid, Guid)>();
         var followerUserRelationFaker = new Faker<FollowerUserRelationDao>()
@@ -99,10 +97,11 @@ internal class Rules
                 existingRelations.Add((followerId, followedId));
                 return followerId;
             })
-            .RuleFor(f => f.FollowedUserId, (f, relation) =>
-            {
-                return existingRelations.FirstOrDefault(r => r.Item1 == relation.FollowerUserId).Item2;
-            })
+            .RuleFor(f => f.FollowedUserId,
+                (f, relation) =>
+                {
+                    return existingRelations.FirstOrDefault(r => r.Item1 == relation.FollowerUserId).Item2;
+                })
             .RuleFor(f => f.CreatedAt, f => f.Date.Past());
 
         return followerUserRelationFaker;
@@ -132,10 +131,8 @@ internal class Rules
                 existingRelations.Add((userId, postId));
                 return userId;
             })
-            .RuleFor(ul => ul.PostId, (f, relation) =>
-            {
-                return existingRelations.FirstOrDefault(r => r.Item1 == relation.UserId).Item2;
-            })
+            .RuleFor(ul => ul.PostId,
+                (f, relation) => { return existingRelations.FirstOrDefault(r => r.Item1 == relation.UserId).Item2; })
             .RuleFor(ul => ul.CreatedAt, f => f.Date.Past());
 
         return userLikePostRelationFaker;

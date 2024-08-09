@@ -13,6 +13,7 @@ public interface IAuthService
     /// <param name="email"></param>
     /// <param name="password"></param>
     /// <returns></returns>
+    [Obsolete("This method is deprecated, use ISignupService instead.")]
     Task<Session?> SignUp(string email, string password);
 
     /// <summary>

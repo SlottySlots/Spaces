@@ -15,13 +15,20 @@ public interface IUserService
     Task<UserDto> GetUserById(Guid userId);
 
     /// <summary>
+    ///     Fetches a user by their username. Returns null if no user was found.
+    /// </summary>
+    /// <param name="username">The user's username</param>
+    /// <returns>The queried user or null if no such user was found</returns>
+    Task<UserDto?> GetUserByUsername(string username);
+
+    /// <summary>
     ///     This method creates a new User object in the database and returns the created object.
     /// </summary>
     /// <param name="userId">The UserID from the Authentication Service</param>
     /// <param name="username">The Username, which the User set himself</param>
     /// <param name="description">The Description about the User</param>
     /// <param name="profilePicture">The ProfilePicture</param>
-    /// <returns>UserDao</returns>
+    /// <returns>UserDto</returns>
     Task<UserDto> CreateUser(string userId, string username, string? description = null, long? profilePicture = null);
 
     /// <summary>

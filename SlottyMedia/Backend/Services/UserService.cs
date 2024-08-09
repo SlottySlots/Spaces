@@ -98,6 +98,24 @@ public class UserService : IUserService
     }
 
     /// <summary>
+    ///     This method fetches a user by their username. Returns null if no user was found.
+    /// </summary>
+    /// <param name="username"></param>
+    /// <returns></returns>
+    public async Task<UserDto?> GetUserByUsername(string username)
+    {
+        try
+        {
+            var result = await _databaseActions.GetEntityByField<UserDao>("userName", username);
+            return new UserDto().Mapper(result);
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
     ///     This method updates the given User object in the database and returns the updated object.
     /// </summary>
     /// <param name="user">The updated User Dto</param>

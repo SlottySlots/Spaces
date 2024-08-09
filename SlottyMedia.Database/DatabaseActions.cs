@@ -225,10 +225,7 @@ public class DatabaseActions : IDatabaseActions
         try
         {
             var result = await _supabaseClient.From<T>().Get();
-            if (result is null)
-            {
-                throw new Exception("The Items could not be retrieved from the database.");
-            }
+            if (result is null) throw new Exception("The Items could not be retrieved from the database.");
 
             return result.Models;
         }

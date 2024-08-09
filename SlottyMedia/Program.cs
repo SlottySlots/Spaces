@@ -6,6 +6,7 @@ using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Components;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.DatabaseSeeding;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,15 +40,16 @@ builder.Services.AddSingleton<SearchDto>();
 
 
 // Viewmodel
-builder.Services.AddSingleton<ICounterVm, CounterVm>();
-builder.Services.AddScoped<IRegisterVm, RegisterVm>();
+builder.Services.AddScoped<ISignupFormVm, SignupFormVmImpl>();
+
 
 // Services
-builder.Services.AddSingleton<IUserService, UserService>();
-builder.Services.AddSingleton<IPostService, PostService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<ICookieService, CookieService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddSingleton<ISearchService, SearchService>();
+builder.Services.AddScoped<IAuthService, AuthService>(); // Scoped
+builder.Services.AddScoped<ISignupService, SignupServiceImpl>();
+builder.Services.AddScoped<ISearchService, SearchService>();
 
 var app = builder.Build();
 
@@ -55,7 +57,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var seeder = scope.ServiceProvider.GetRequiredService<IDatabaseActions>();
-    SlottyMedia.DatabaseSeeding.Seeding seeding = new(seeder);
+    Seeding seeding = new(seeder);
     await seeding.Seed(seeder);
 }
 

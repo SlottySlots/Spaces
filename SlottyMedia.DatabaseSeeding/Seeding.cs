@@ -1,19 +1,18 @@
 ﻿using Bogus;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
-using Supabase;
 
 namespace SlottyMedia.DatabaseSeeding;
 
 public class Seeding
 {
-    private IDatabaseActions _databaseActions;
-    
+    private readonly IDatabaseActions _databaseActions;
+
     public Seeding(IDatabaseActions databaseActions)
     {
         _databaseActions = databaseActions;
     }
-    
+
     public async Task Seed(IDatabaseActions databaseActions)
     {
         Console.WriteLine("Checking if seeding is needed...");
@@ -21,30 +20,29 @@ public class Seeding
         {
             await CheckIfRoleExisits();
             Console.WriteLine("Seeding is Needed.");
-            
+
             var countUser = 2;
             var rules = new Rules();
-            
+
             var userFaker = rules.UserRules();
             var userIds = await GenerateUsers(userFaker, countUser);
 
             var forumFaker = rules.ForumRules(userIds);
-            var forumIds = await GenerateForums(forumFaker, countUser*2);
-            
+            var forumIds = await GenerateForums(forumFaker, countUser * 2);
+
             var postFaker = rules.PostRules(userIds, forumIds);
-            var postIds = await GeneratePosts(postFaker, countUser*10);
-            
+            var postIds = await GeneratePosts(postFaker, countUser * 10);
+
             var commentFaker = rules.CommentRules(userIds, postIds);
             await GenereateComments(commentFaker, countUser * 20);
-            
+
             var followerUserRelationFaker = rules.FollowerUserRelationRules(userIds);
             await GenerateFollowerUserRelation(followerUserRelationFaker, userIds.Count * (userIds.Count - 1));
 
             var userLikePostRelationFaker = rules.UserLikePostRelationRules(userIds, postIds);
-            await GenerateUserLikePostRelation(userLikePostRelationFaker, (userIds.Count * postIds.Count)/2);
-            
-            Console.WriteLine("Database seeded with random data.");
+            await GenerateUserLikePostRelation(userLikePostRelationFaker, userIds.Count * postIds.Count / 2);
 
+            Console.WriteLine("Database seeded with random data.");
         }
         else
         {
@@ -56,13 +54,8 @@ public class Seeding
     {
         var result = await _databaseActions.GetEntities<UserDao>();
         if (result.Count < 10)
-        {
             return true;
-        }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     private async Task<List<Guid>> GenerateUsers(Faker<UserDao> userFaker, int amount)
@@ -95,9 +88,9 @@ public class Seeding
             forumIds.Add(forum.ForumId ?? Guid.Empty);
             Console.WriteLine("Forum seeded: " + forum.ForumTopic);
         }
-        
+
         Console.WriteLine("Database seeded with random forum data.");
-        
+
         return forumIds;
     }
 
@@ -113,9 +106,9 @@ public class Seeding
             postIds.Add(post.PostId ?? Guid.Empty);
             Console.WriteLine("Post seeded: " + post.Headline);
         }
-        
+
         Console.WriteLine("Database seeded with random post data.");
-        
+
         return postIds;
     }
 
@@ -129,11 +122,12 @@ public class Seeding
             var comment = await _databaseActions.Insert(comments[i]);
             Console.WriteLine("Comment seeded: " + comment.Content);
         }
-        
+
         Console.WriteLine("Database seeded with random comment data.");
     }
 
-    private async Task GenerateFollowerUserRelation(Faker<FollowerUserRelationDao> followerUserRelationFaker, int amount)
+    private async Task GenerateFollowerUserRelation(Faker<FollowerUserRelationDao> followerUserRelationFaker,
+        int amount)
     {
         // Generate and insert follower user relations
         Console.WriteLine("Generating and seeding random follower user relation data.");
@@ -144,11 +138,12 @@ public class Seeding
             Console.WriteLine("FollowerUserRelation seeded. Follower: " + followerUserRelation.FollowerUserId +
                               " Followed: " + followerUserRelation.FollowedUserId);
         }
-        
+
         Console.WriteLine("Database seeded with random follower user relation data.");
     }
 
-    private async Task GenerateUserLikePostRelation(Faker<UserLikePostRelationDao> userLikePostRelationFaker, int amount)
+    private async Task GenerateUserLikePostRelation(Faker<UserLikePostRelationDao> userLikePostRelationFaker,
+        int amount)
     {
         // Generate and insert user like post relations
         Console.WriteLine("Generating and seeding random user like post relation data.");
@@ -159,7 +154,7 @@ public class Seeding
             Console.WriteLine("UserLikePostRelation seeded. User: " + userLikePostRelation.UserId + " Post: " +
                               userLikePostRelation.PostId);
         }
-        
+
         Console.WriteLine("Database seeded with random user like post relation data.");
     }
 
@@ -169,7 +164,7 @@ public class Seeding
         var result = await _databaseActions.GetEntityByField<RoleDao>("roleID", roleId);
         if (result is null)
         {
-           var role = new RoleDao()
+            var role = new RoleDao
             {
                 RoleId = Guid.Parse(roleId),
                 RoleName = "User",
