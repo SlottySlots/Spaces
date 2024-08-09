@@ -2,7 +2,6 @@ using System.ComponentModel;
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
-using SlottyMedia.Database.Daos;
 
 namespace SlottyMedia.Backend.ViewModel;
 
@@ -48,10 +47,7 @@ public class CounterVm : ICounterVm, INotifyPropertyChanged
     public async Task GetUserById(string userId)
     {
         var user = await _userService.GetUserById(Guid.Parse(userId));
-        if (user is not null)
-        {
-            User = user;
-        }
+        if (user is not null) User = user;
         //TODO: Handle the case where the user is not found.    
     }
 

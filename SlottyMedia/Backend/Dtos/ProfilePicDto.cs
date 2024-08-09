@@ -25,9 +25,9 @@ public class ProfilePicDto
     ///     Gets or sets the Profile Picture in binary.
     /// </summary>
     public long ProfilePic { get; set; }
-    
+
     /// <summary>
-    /// This method maps the ProfilePicDto to a UserDao.
+    ///     This method maps the ProfilePicDto to a UserDao.
     /// </summary>
     /// <returns></returns>
     public UserDao Mapper()
@@ -38,9 +38,9 @@ public class ProfilePicDto
             ProfilePic = ProfilePic
         };
     }
-    
+
     /// <summary>
-    /// This method maps the UserDao to a ProfilePicDto.
+    ///     This method maps the UserDao to a ProfilePicDto.
     /// </summary>
     /// <param name="userDao"></param>
     /// <returns></returns>

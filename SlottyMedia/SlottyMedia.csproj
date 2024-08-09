@@ -19,6 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\SlottyMedia.DatabaseSeeding\SlottyMedia.DatabaseSeeding.csproj" />
         <ProjectReference Include="..\SlottyMedia.Database\SlottyMedia.Database.csproj"/>
     </ItemGroup>
 

@@ -38,35 +38,19 @@ public class SearchService : ISearchService
         {
             ("forumTopic", Constants.Operator.Equals, searchTerm)
         };
-        try
-        {
-            var userResults = await _databaseActions.GetEntitiesWithSelectorById<UserDao>(
-                u => new object[] { u.UserId! }, userSearch);
-            var topicResults = await _databaseActions.GetEntitiesWithSelectorById<ForumDao>(
-                f => new object[] { f.ForumId! }, topicSearch);
-            if (userResults is null)
-            {
-                userResults = new List<UserDao>()!;
-            }
+        var userResults = await _databaseActions.GetEntitiesWithSelectorById<UserDao>(
+            u => new object[] { u.UserId! }, userSearch);
+        var topicResults = await _databaseActions.GetEntitiesWithSelectorById<ForumDao>(
+            f => new object[] { f.ForumId! }, topicSearch);
+        if (userResults is null) userResults = new List<UserDao>()!;
 
-            if (topicResults is null)
-            {
-                topicResults = new List<ForumDao>()!;
-            }
+        if (topicResults is null) topicResults = new List<ForumDao>()!;
 
-            var searchResult = new SearchDto();
-            
-            searchResult.Users.AddRange(userResults.Select(x => new UserDto().Mapper(x)));
-            searchResult.Forums.AddRange(topicResults.Select(x => new ForumDto().Mapper(x)));
+        var searchResult = new SearchDto();
 
-            return searchResult;
-        }
-        catch (Exception ex)
-        {
-            //TODO: Implement logging and error handling
-            throw;
-        }
+        searchResult.Users.AddRange(userResults.Select(x => new UserDto().Mapper(x)));
+        searchResult.Forums.AddRange(topicResults.Select(x => new ForumDto().Mapper(x)));
 
-
+        return searchResult;
     }
 }

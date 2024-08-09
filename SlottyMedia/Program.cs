@@ -47,9 +47,17 @@ builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IPostService, PostService>();
 builder.Services.AddScoped<ICookieService, CookieService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-
+builder.Services.AddSingleton<ISearchService, SearchService>();
 
 var app = builder.Build();
+
+// Seed the database
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<IDatabaseActions>();
+    SlottyMedia.DatabaseSeeding.Seeding seeding = new(seeder);
+    await seeding.Seed(seeder);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

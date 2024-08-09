@@ -63,17 +63,20 @@ public interface IDatabaseActions
     /// <param name="max">The maximum number of items to retrieve.</param>
     /// <param name="orderByFields">The fields to order by.</param>
     /// <returns>Returns a list of entities from the database.</returns>
-    Task<List<T?>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector, string field,
+   Task<List<T?>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector, string field,
         string value,
         int max = -1,
         int min = -1,
         params (string field, Constants.Ordering ordering, Constants.NullPosition nullPosition)[] orderByFields)
         where T : BaseModel, new();
 
-    public Task<List<T?>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector,
+    Task<List<T?>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector,
         List<(string, Constants.Operator, string)> search,
         int max = -1,
         int min = -1,
         params (string field, Constants.Ordering ordering, Constants.NullPosition nullPosition)[] orderByFields)
         where T : BaseModel, new();
+
+    Task<List<T>> GetEntities<T>() where T : BaseModel, new();
+
 }

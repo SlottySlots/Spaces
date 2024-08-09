@@ -8,26 +8,26 @@ namespace SlottyMedia.Backend.Dtos;
 public class ForumDto
 {
     /// <summary>
-    /// The default constructor.
+    ///     The default constructor.
     /// </summary>
     public ForumDto()
     {
         ForumId = Guid.Empty;
         Topic = string.Empty;
     }
-    
+
     /// <summary>
-    /// The Forum Id.
+    ///     The Forum Id.
     /// </summary>
     public Guid ForumId { get; set; }
-    
+
     /// <summary>
-    /// The Topic of the Forum.v
+    ///     The Topic of the Forum.v
     /// </summary>
     public string Topic { get; set; }
-    
+
     /// <summary>
-    /// This method maps the ForumDto to a ForumDao.
+    ///     This method maps the ForumDto to a ForumDao.
     /// </summary>
     /// <returns></returns>
     public ForumDao Mapper()
@@ -38,9 +38,9 @@ public class ForumDto
             ForumTopic = Topic
         };
     }
-    
+
     /// <summary>
-    /// THis method maps the ForumDao to a ForumDto.
+    ///     THis method maps the ForumDao to a ForumDto.
     /// </summary>
     /// <param name="forumDao"></param>
     /// <returns></returns>
@@ -52,5 +52,4 @@ public class ForumDto
             Topic = forumDao.ForumTopic ?? string.Empty
         };
     }
-    
 }

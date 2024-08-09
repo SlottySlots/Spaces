@@ -42,7 +42,7 @@ public class UserService : IUserService
             Description = description ?? string.Empty,
             ProfilePic = profilePicture ?? 0
         };
-        
+
         try
         {
             var result = await _databaseActions.Insert(user);
@@ -88,28 +88,6 @@ public class UserService : IUserService
             if (user is null) throw new Exception("User not found");
 
             return new UserDto().Mapper(user);
-        }
-        catch (Exception ex)
-        {
-            // Log the exception and return null
-            // TODO: Implement proper error handling
-            return null;
-        }
-    }
-    
-    /// <summary>
-    ///     This method returns a User object from the database based on the given userId.
-    /// </summary>
-    /// <param name="userId">The ID of the User to get from the Database</param>
-    /// <returns>Returns the User Object from the Database. If no User was found, null will be returned</returns>
-    private async Task<UserDao> GetUserDaoById(Guid userId)
-    {
-        try
-        {
-            var user = await _databaseActions.GetEntityByField<UserDao>("userID", userId.ToString());
-            if (user is null) throw new Exception("User not found");
-            
-            return user;
         }
         catch (Exception ex)
         {
@@ -218,6 +196,28 @@ public class UserService : IUserService
             // Log the exception and return a default FriendsOfUserDto
             // TODO: Implement proper error handling
             return new FriendsOfUserDto();
+        }
+    }
+
+    /// <summary>
+    ///     This method returns a User object from the database based on the given userId.
+    /// </summary>
+    /// <param name="userId">The ID of the User to get from the Database</param>
+    /// <returns>Returns the User Object from the Database. If no User was found, null will be returned</returns>
+    private async Task<UserDao> GetUserDaoById(Guid userId)
+    {
+        try
+        {
+            var user = await _databaseActions.GetEntityByField<UserDao>("userID", userId.ToString());
+            if (user is null) throw new Exception("User not found");
+
+            return user;
+        }
+        catch (Exception ex)
+        {
+            // Log the exception and return null
+            // TODO: Implement proper error handling
+            return null;
         }
     }
 }

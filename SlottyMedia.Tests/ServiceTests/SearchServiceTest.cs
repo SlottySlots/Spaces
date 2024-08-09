@@ -1,27 +1,25 @@
 using System.Linq.Expressions;
 using Moq;
-using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using Supabase.Postgrest;
-using NUnit.Framework;
 
 namespace SlottyMedia.Tests.ServiceTests;
 
 [TestFixture]
 public class SearchServiceTests
 {
-    private Mock<IDatabaseActions> _mockDatabaseActions;
-    private ISearchService _searchService;
-
     [SetUp]
     public void Setup()
     {
         _mockDatabaseActions = new Mock<IDatabaseActions>();
         _searchService = new SearchService(_mockDatabaseActions.Object);
     }
+
+    private Mock<IDatabaseActions> _mockDatabaseActions;
+    private ISearchService _searchService;
 
     [Test]
     public async Task SearchByUsernameOrTopic_ShouldReturnUserIds_WhenUsersFound()

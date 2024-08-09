@@ -219,4 +219,22 @@ public class DatabaseActions : IDatabaseActions
             throw new DatabaseExceptions(e.Message);
         }
     }
+
+    public async Task<List<T>> GetEntities<T>() where T : BaseModel, new()
+    {
+        try
+        {
+            var result = await _supabaseClient.From<T>().Get();
+            if (result is null)
+            {
+                throw new Exception("The Items could not be retrieved from the database.");
+            }
+
+            return result.Models;
+        }
+        catch (Exception e)
+        {
+            throw new DatabaseExceptions(e.Message);
+        }
+    }
 }

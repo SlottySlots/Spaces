@@ -1,7 +1,8 @@
 ﻿@page "/counter"
+@using SlottyMedia.Backend.ViewModel.Interfaces
 @rendermode InteractiveServer
 
-@inject Backend.ViewModel.Interfaces.ICounterVm CounterVm
+@inject ICounterVm CounterVm
 
 <PageTitle>Counter</PageTitle>
 

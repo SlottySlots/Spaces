@@ -1,5 +1,4 @@
 using SlottyMedia.Backend.Dtos;
-using SlottyMedia.Database.Daos;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 

@@ -45,20 +45,20 @@ public class UserDto
     public List<string> RecentForums { get; set; }
 
     /// <summary>
-    /// This method maps the User Dto to the User Dao.
+    ///     This method maps the User Dto to the User Dao.
     /// </summary>
     /// <returns></returns>
     public UserDao Mapper()
     {
         return new UserDao
         {
-            UserId = this.UserId,
-            UserName = this.Username,
-            Description = this.Description,
-            CreatedAt = this.CreatedAt
+            UserId = UserId,
+            UserName = Username,
+            Description = Description,
+            CreatedAt = CreatedAt
         };
     }
-    
+
     /// <summary>
     ///     Maps the User Dao to the User Dto.
     /// </summary>

@@ -46,7 +46,7 @@ public class PostDto
     ///     Gets or sets the creation date of the post.
     /// </summary>
     public DateTime CreatedAt { get; set; }
-    
+
     /// <summary>
     ///     Gets or sets the headline of the post.
     /// </summary>
@@ -62,25 +62,25 @@ public class PostDto
     /// </summary>
     public List<CommentDao> Comments { get; set; }
 
-    
+
     /// <summary>
-    /// The Mapper for the Post Dto to the Post Dao.
+    ///     The Mapper for the Post Dto to the Post Dao.
     /// </summary>
     /// <returns></returns>
     public PostsDao Mapper()
-    { 
+    {
         var postDao = new PostsDao
-       {
-           PostId = PostId,
-           Content = Content,
-           CreatedAt = CreatedAt,
-           UserId = UserId,
-           ForumId = Forum.ForumId,
-           Headline = Headline
-       };
-       return postDao;
+        {
+            PostId = PostId,
+            Content = Content,
+            CreatedAt = CreatedAt,
+            UserId = UserId,
+            ForumId = Forum.ForumId,
+            Headline = Headline
+        };
+        return postDao;
     }
-    
+
     /// <summary>
     ///     Maps the Post Dao to the Post Dto.
     /// </summary>
