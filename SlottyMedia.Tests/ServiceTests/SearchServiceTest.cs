@@ -1,10 +1,12 @@
 using System.Linq.Expressions;
 using Moq;
+using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using Supabase.Postgrest;
+using NUnit.Framework;
 
 namespace SlottyMedia.Tests.ServiceTests;
 
@@ -13,14 +15,13 @@ public class SearchServiceTests
 {
     private Mock<IDatabaseActions> _mockDatabaseActions;
     private ISearchService _searchService;
-    
+
     [SetUp]
     public void Setup()
     {
         _mockDatabaseActions = new Mock<IDatabaseActions>();
         _searchService = new SearchService(_mockDatabaseActions.Object);
     }
-
 
     [Test]
     public async Task SearchByUsernameOrTopic_ShouldReturnUserIds_WhenUsersFound()
@@ -33,14 +34,14 @@ public class SearchServiceTests
                 It.IsAny<List<(string, Constants.Operator, string)>>(),
                 It.IsAny<int>(),
                 It.IsAny<int>(),
-                It.IsAny<(string, Constants.Ordering, Constants.NullPosition)[]>()))
+                It.IsAny<(string, Constants.Ordering, Constants.NullPosition)[]>()))!
             .ReturnsAsync(userResults);
 
         var result = await _searchService.SearchByUsernameOrTopic(searchTerm);
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Count, Is.EqualTo(1));
-        Assert.That(result[0], Is.EqualTo(userResults[0].UserId));
+        Assert.That(result.Users.Count, Is.EqualTo(1));
+        Assert.That(result.Users[0].UserId, Is.EqualTo(userResults[0].UserId));
     }
 
     [Test]
@@ -54,14 +55,14 @@ public class SearchServiceTests
                 It.IsAny<List<(string, Constants.Operator, string)>>(),
                 It.IsAny<int>(),
                 It.IsAny<int>(),
-                It.IsAny<(string, Constants.Ordering, Constants.NullPosition)[]>()))
+                It.IsAny<(string, Constants.Ordering, Constants.NullPosition)[]>()))!
             .ReturnsAsync(topicResults);
 
         var result = await _searchService.SearchByUsernameOrTopic(searchTerm);
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Count, Is.EqualTo(1));
-        Assert.That(result[0], Is.EqualTo(topicResults[0].ForumId));
+        Assert.That(result.Forums.Count, Is.EqualTo(1));
+        Assert.That(result.Forums[0].ForumId, Is.EqualTo(topicResults[0].ForumId));
     }
 
     [Test]
@@ -75,7 +76,7 @@ public class SearchServiceTests
                 It.IsAny<List<(string, Constants.Operator, string)>>(),
                 It.IsAny<int>(),
                 It.IsAny<int>(),
-                It.IsAny<(string, Constants.Ordering, Constants.NullPosition)[]>()))
+                It.IsAny<(string, Constants.Ordering, Constants.NullPosition)[]>()))!
             .ReturnsAsync(emptyResults);
 
         _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(
@@ -83,13 +84,14 @@ public class SearchServiceTests
                 It.IsAny<List<(string, Constants.Operator, string)>>(),
                 It.IsAny<int>(),
                 It.IsAny<int>(),
-                It.IsAny<(string, Constants.Ordering, Constants.NullPosition)[]>()))
+                It.IsAny<(string, Constants.Ordering, Constants.NullPosition)[]>()))!
             .ReturnsAsync(new List<ForumDao>());
 
         var result = await _searchService.SearchByUsernameOrTopic(searchTerm);
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result, Is.Empty);
+        Assert.That(result.Users, Is.Empty);
+        Assert.That(result.Forums, Is.Empty);
     }
 
     [Test]

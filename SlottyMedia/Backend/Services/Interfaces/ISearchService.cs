@@ -1,3 +1,5 @@
+using SlottyMedia.Backend.Dtos;
+
 namespace SlottyMedia.Backend.Services.Interfaces;
 
 /// <summary>
@@ -10,5 +12,5 @@ public interface ISearchService
     /// </summary>
     /// <param name="searchTerm"></param>
     /// <returns></returns>
-    public Task<List<Guid?>> SearchByUsernameOrTopic(string searchTerm);
+    public Task<SearchDto> SearchByUsernameOrTopic(string searchTerm);
 }

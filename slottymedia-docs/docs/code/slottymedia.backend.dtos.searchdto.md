@@ -17,24 +17,24 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 Gets or sets the users who match the search.
 
 ```csharp
-public UserDto Users { get; set; }
+public List<UserDto> Users { get; set; }
 ```
 
 #### Property Value
 
-[UserDto](./slottymedia.backend.dtos.userdto.md)<br>
+[List&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
 
-### **Forum**
+### **Forums**
 
 Gets or sets the forum that matches the search.
 
 ```csharp
-public ForumDto Forum { get; set; }
+public List<ForumDto> Forums { get; set; }
 ```
 
 #### Property Value
 
-[ForumDto](./slottymedia.backend.dtos.forumdto.md)<br>
+[List&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
 
 ## Constructors
 

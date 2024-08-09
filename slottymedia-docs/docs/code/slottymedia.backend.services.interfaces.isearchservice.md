@@ -15,7 +15,7 @@ public interface ISearchService
 This method searches for a user by username or topic.
 
 ```csharp
-Task<List<Nullable<Guid>>> SearchByUsernameOrTopic(string searchTerm)
+Task<SearchDto> SearchByUsernameOrTopic(string searchTerm)
 ```
 
 #### Parameters
@@ -24,4 +24,4 @@ Task<List<Nullable<Guid>>> SearchByUsernameOrTopic(string searchTerm)
 
 #### Returns
 
-[Task&lt;List&lt;Nullable&lt;Guid&gt;&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;SearchDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

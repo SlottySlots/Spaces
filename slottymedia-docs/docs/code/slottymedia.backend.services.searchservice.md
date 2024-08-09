@@ -33,7 +33,7 @@ The database actions dependency.
 Method to search for users or topics by a given search term.
 
 ```csharp
-public Task<List<Nullable<Guid>>> SearchByUsernameOrTopic(string searchTerm)
+public Task<SearchDto> SearchByUsernameOrTopic(string searchTerm)
 ```
 
 #### Parameters
@@ -43,5 +43,5 @@ The search term to look for.
 
 #### Returns
 
-[Task&lt;List&lt;Nullable&lt;Guid&gt;&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;SearchDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns a list of user or topic IDs that match the search term.

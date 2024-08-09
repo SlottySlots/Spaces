@@ -1,3 +1,5 @@
+using SlottyMedia.Database.Daos;
+
 namespace SlottyMedia.Backend.Dtos;
 
 /// <summary>
@@ -10,17 +12,17 @@ public class SearchDto
     /// </summary>
     public SearchDto()
     {
-        Users = new UserDto();
-        Forum = new ForumDto();
+        Users = new List<UserDto>();
+        Forums = new List<ForumDto>();
     }
 
     /// <summary>
     ///     Gets or sets the users who match the search.
     /// </summary>
-    public UserDto Users { get; set; }
+    public List<UserDto> Users { get; set; }
 
     /// <summary>
     ///     Gets or sets the forum that matches the search.
     /// </summary>
-    public ForumDto Forum { get; set; }
+    public List<ForumDto> Forums { get; set; }
 }

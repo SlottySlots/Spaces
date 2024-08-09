@@ -1,3 +1,4 @@
+using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
@@ -26,7 +27,7 @@ public class SearchService : ISearchService
     /// </summary>
     /// <param name="searchTerm">The search term to look for.</param>
     /// <returns>Returns a list of user or topic IDs that match the search term.</returns>
-    public async Task<List<Guid?>> SearchByUsernameOrTopic(string searchTerm)
+    public async Task<SearchDto> SearchByUsernameOrTopic(string searchTerm)
     {
         var userSearch = new List<(string, Constants.Operator, string)>
         {
@@ -53,11 +54,12 @@ public class SearchService : ISearchService
                 topicResults = new List<ForumDao>()!;
             }
 
+            var searchResult = new SearchDto();
+            
+            searchResult.Users.AddRange(userResults.Select(x => new UserDto().Mapper(x)));
+            searchResult.Forums.AddRange(topicResults.Select(x => new ForumDto().Mapper(x)));
 
-            var userIds = userResults.Select(u => u.UserId).ToList();
-            var topicIds = topicResults.Select(t => t.ForumId).ToList();
-
-            return userIds.Concat(topicIds).ToList();
+            return searchResult;
         }
         catch (Exception ex)
         {
