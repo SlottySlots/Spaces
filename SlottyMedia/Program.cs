@@ -26,7 +26,6 @@ builder.Services.AddSingleton(_ =>
             AutoConnectRealtime = true
         }));
 
-
 // Database
 builder.Services.AddSingleton<IDatabaseActions, DatabaseActions>();
 
