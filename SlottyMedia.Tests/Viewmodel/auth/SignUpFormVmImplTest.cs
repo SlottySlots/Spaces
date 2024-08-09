@@ -22,7 +22,7 @@ public class SignUpFormVmImplTest
     
 
     private Mock<UserService> _userServiceMock;
-    private Mock<DatabaseActions> _dbActionsMock;
+    private Mock<IDatabaseActions> _dbActionsMock;
     private Mock<ICookieService> _cookieServiceMock;
     private Mock<SignupServiceImpl> _signUpServiceMock;
     
@@ -31,8 +31,9 @@ public class SignUpFormVmImplTest
     {
         _client = InitializeSupabaseClient.GetSupabaseClient();
         _cookieServiceMock = new Mock<ICookieService>();
-        _dbActionsMock = new Mock<DatabaseActions>(_client);
-        _userServiceMock = new Mock<UserService>(_dbActionsMock.Object);
+        _dbActionsMock = new Mock<IDatabaseActions>();
+        var postService = new Mock<IPostService>();
+        _userServiceMock = new Mock<UserService>(_dbActionsMock.Object, postService.Object);
         _signUpServiceMock = new Mock<SignupServiceImpl>(_client, _userServiceMock.Object, _cookieServiceMock.Object);
         
         _service = new SignupFormVmImpl(_signUpServiceMock.Object);

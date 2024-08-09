@@ -21,7 +21,7 @@ public class SignUpServiceTest
     private Client _client;
 
     private Mock<UserService> _userServiceMock;
-    private Mock<DatabaseActions> _dbActionMock;
+    private Mock<IDatabaseActions> _dbActionMock;
     private Mock<ICookieService> _cookieServiceMock;
 
     private string _userName;
@@ -35,8 +35,9 @@ public class SignUpServiceTest
     {
         _client = InitializeSupabaseClient.GetSupabaseClient();
         _cookieServiceMock = new Mock<ICookieService>();
-        _dbActionMock = new Mock<DatabaseActions>(_client);
-        _userServiceMock = new Mock<UserService>(_dbActionMock.Object);
+        _dbActionMock = new Mock<IDatabaseActions>();
+        var postService = new Mock<IPostService>();
+        _userServiceMock = new Mock<UserService>(_dbActionMock.Object, postService.Object);
         _signupService = new SignupServiceImpl(_client, _userServiceMock.Object, _cookieServiceMock.Object);
     }
 
