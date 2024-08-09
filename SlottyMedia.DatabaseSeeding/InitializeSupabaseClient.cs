@@ -10,7 +10,7 @@ public class InitializeSupabaseClient
         var key = Environment.GetEnvironmentVariable("SUPABASE_KEY");
         if (url is null && key is null) throw new Exception("Supabase settings not found");
 
-        var client = new Client(url, key, new SupabaseOptions
+        var client = new Client(url!, key!, new SupabaseOptions
         {
             AutoRefreshToken = true,
             AutoConnectRealtime = true

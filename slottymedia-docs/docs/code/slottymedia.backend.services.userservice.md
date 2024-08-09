@@ -91,6 +91,20 @@ The ID of the User to get from the Database
 [Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns the User Object from the Database. If no User was found, null will be returned
 
+### **GetUserByUsername(String)**
+
+```csharp
+public Task<UserDto> GetUserByUsername(string username)
+```
+
+#### Parameters
+
+`username` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+#### Returns
+
+[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
 ### **UpdateUser(UserDto)**
 
 This method updates the given User object in the database and returns the updated object.

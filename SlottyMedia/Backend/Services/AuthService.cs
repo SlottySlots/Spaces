@@ -1,3 +1,4 @@
+using SlottyMedia.Backend.Exceptions.auth;
 using SlottyMedia.Backend.Services.Interfaces;
 using Supabase.Gotrue;
 using Client = Supabase.Client;
@@ -79,6 +80,10 @@ public class AuthService : IAuthService
             await _cookieService.SetCookie("supabase.auth.token", session.AccessToken, 7);
             await _cookieService.SetCookie("supabase.auth.refreshToken", session.RefreshToken, 7);
         }
+        else
+        {
+            throw new TokenNotProvidedException(session.AccessToken is null, session.RefreshToken is null);
+        }
     }
 
     /// <summary>
@@ -107,6 +112,10 @@ public class AuthService : IAuthService
                 Console.WriteLine($"Error refreshing session: {ex.Message}");
                 await SignOut();
             }
+        }
+        else
+        {
+            throw new TokenNotProvidedException(string.IsNullOrEmpty(accessToken), string.IsNullOrEmpty(refreshToken));
         }
         return null;
     }

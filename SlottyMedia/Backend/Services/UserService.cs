@@ -85,7 +85,7 @@ public class UserService : IUserService
         }
     }
 
-    public async Task<UserDto?> GetUserByUsername(string username)
+    public virtual async Task<UserDto?> GetUserByUsername(string username)
     {
         try
         {

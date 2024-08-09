@@ -1,5 +1,15 @@
 # SlottyMedia
 
+## SlottyMedia.Backend.Exceptions
+
+[EmailAlreadyExistsException](./slottymedia.backend.exceptions.emailalreadyexistsexception.md)
+
+[UsernameAlreadyExistsException](./slottymedia.backend.exceptions.usernamealreadyexistsexception.md)
+
+## SlottyMedia.Backend.Exceptions.auth
+
+[TokenNotProvidedException](./slottymedia.backend.exceptions.auth.tokennotprovidedexception.md)
+
 ## SlottyMedia.Backend.Services
 
 [AuthService](./slottymedia.backend.services.authservice.md)
@@ -8,11 +18,15 @@
 
 [ICookieService](./slottymedia.backend.services.icookieservice.md)
 
+[SignupServiceImpl](./slottymedia.backend.services.signupserviceimpl.md)
+
 [UserService](./slottymedia.backend.services.userservice.md)
 
 ## SlottyMedia.Backend.Services.Interfaces
 
 [IAuthService](./slottymedia.backend.services.interfaces.iauthservice.md)
+
+[ISignupService](./slottymedia.backend.services.interfaces.isignupservice.md)
 
 [IUserService](./slottymedia.backend.services.interfaces.iuserservice.md)
 
@@ -20,13 +34,13 @@
 
 [CounterVm](./slottymedia.backend.viewmodel.countervm.md)
 
-[RegisterVm](./slottymedia.backend.viewmodel.registervm.md)
+[SignupFormVmImpl](./slottymedia.backend.viewmodel.signupformvmimpl.md)
 
 ## SlottyMedia.Backend.ViewModel.Interfaces
 
 [ICounterVm](./slottymedia.backend.viewmodel.interfaces.icountervm.md)
 
-[IRegisterVm](./slottymedia.backend.viewmodel.interfaces.iregistervm.md)
+[ISignupFormVm](./slottymedia.backend.viewmodel.interfaces.isignupformvm.md)
 
 ## SlottyMedia.Components
 
