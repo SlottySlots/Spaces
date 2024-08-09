@@ -1,7 +1,9 @@
 using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Backend.Exceptions.Services.SearchExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Exceptions;
 using Supabase.Postgrest;
 
 namespace SlottyMedia.Backend.Services;
@@ -29,28 +31,47 @@ public class SearchService : ISearchService
     /// <returns>Returns a list of user or topic IDs that match the search term.</returns>
     public async Task<SearchDto> SearchByUsernameOrTopic(string searchTerm)
     {
-        var userSearch = new List<(string, Constants.Operator, string)>
+        try
         {
-            ("userName", Constants.Operator.Equals, searchTerm)
-        };
+            var userSearch = new List<(string, Constants.Operator, string)>
+            {
+                ("userName", Constants.Operator.Equals, searchTerm)
+            };
 
-        var topicSearch = new List<(string, Constants.Operator, string)>
+            var topicSearch = new List<(string, Constants.Operator, string)>
+            {
+                ("forumTopic", Constants.Operator.Equals, searchTerm)
+            };
+
+            var userResults = await _databaseActions.GetEntitiesWithSelectorById<UserDao>(
+                u => new object[] { u.UserId! }, userSearch);
+            var topicResults = await _databaseActions.GetEntitiesWithSelectorById<ForumDao>(
+                f => new object[] { f.ForumId! }, topicSearch);
+
+            if (userResults is null || !userResults.Any())
+                userResults = new List<UserDao>();
+
+            if (topicResults is null || !topicResults.Any())
+                userResults = new List<UserDao>();
+
+            var searchResult = new SearchDto();
+
+            searchResult.Users.AddRange(userResults.Select(x => new UserDto().Mapper(x)));
+            searchResult.Forums.AddRange(topicResults.Select(x => new ForumDto().Mapper(x)));
+
+            return searchResult;
+        }
+        catch (DatabaseMissingItemException ex)
         {
-            ("forumTopic", Constants.Operator.Equals, searchTerm)
-        };
-        var userResults = await _databaseActions.GetEntitiesWithSelectorById<UserDao>(
-            u => new object[] { u.UserId! }, userSearch);
-        var topicResults = await _databaseActions.GetEntitiesWithSelectorById<ForumDao>(
-            f => new object[] { f.ForumId! }, topicSearch);
-        if (userResults is null) userResults = new List<UserDao>()!;
-
-        if (topicResults is null) topicResults = new List<ForumDao>()!;
-
-        var searchResult = new SearchDto();
-
-        searchResult.Users.AddRange(userResults.Select(x => new UserDto().Mapper(x)));
-        searchResult.Forums.AddRange(topicResults.Select(x => new ForumDto().Mapper(x)));
-
-        return searchResult;
+            throw new SearchGeneralExceptions("A database error occurred while searching for users or topics", ex);
+        }
+        catch (DatabaseException ex)
+        {
+            throw new SearchGeneralExceptions("A database error occurred while searching for users or topics", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new SearchGeneralExceptions("An error occurred while searching for users or topics", ex);
+        }
     }
 }

@@ -1,7 +1,9 @@
 using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Backend.Exceptions.Services.PostExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Exceptions;
 using Supabase.Postgrest;
 
 namespace SlottyMedia.Backend.Services;
@@ -37,7 +39,6 @@ public class PostService : IPostService
     {
         try
         {
-            // Create a new post object
             var post = new PostsDao
             {
                 Headline = title,
@@ -46,14 +47,20 @@ public class PostService : IPostService
                 ForumId = forumId
             };
 
-            // Insert the post into the database
             var insertedPost = await DatabaseActions.Insert(post);
             return new PostDto().Mapper(insertedPost);
         }
+        catch (DatabaseIudActionException ex)
+        {
+            throw new PostIudException("An error occurred while inserting the post", ex);
+        }
+        catch (DatabaseException ex)
+        {
+            throw new PostGeneralException("A database error occurred while inserting the post", ex);
+        }
         catch (Exception ex)
         {
-            // TODO: Implement error handling
-            return null;
+            throw new PostGeneralException("An error occurred while inserting the post", ex);
         }
     }
 
@@ -66,14 +73,16 @@ public class PostService : IPostService
     {
         try
         {
-            // Update the post in the database
             var updatedPost = await DatabaseActions.Update(post.Mapper());
             return new PostDto().Mapper(updatedPost);
         }
-        catch (Exception ex)
+        catch (DatabaseIudActionException ex)
         {
-            // TODO: Implement error handling
-            return null;
+            throw new PostIudException("An error occurred while updating the post", ex);
+        }
+        catch (DatabaseException ex)
+        {
+            throw new PostGeneralException("A database error occurred while updating the post", ex);
         }
     }
 
@@ -89,14 +98,16 @@ public class PostService : IPostService
     {
         try
         {
-            // Delete the post from the database
             var result = await DatabaseActions.Delete(post.Mapper());
             return result;
         }
-        catch (Exception ex)
+        catch (DatabaseIudActionException ex)
         {
-            // TODO: Implement error handling
-            return false;
+            throw new PostIudException("An error occurred while deleting the post", ex);
+        }
+        catch (DatabaseException ex)
+        {
+            throw new PostGeneralException("A database error occurred while deleting the post", ex);
         }
     }
 
@@ -111,7 +122,6 @@ public class PostService : IPostService
     {
         try
         {
-            // Fetch posts from the database based on the user ID and limit
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
                 x => new object[] { x.Forum! },
                 "creator_userID",
@@ -119,13 +129,19 @@ public class PostService : IPostService
                 ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
             );
 
-            // Return the list of forum names associated with the posts
             return posts.Select(post => post.Forum.ForumTopic).ToList();
+        }
+        catch (DatabaseMissingItemException ex)
+        {
+            throw new PostNotFoundException($"Posts for the given user ID were not found. User ID: {userId}", ex);
+        }
+        catch (DatabaseException ex)
+        {
+            throw new PostGeneralException("A database error occurred while fetching the posts", ex);
         }
         catch (Exception ex)
         {
-            // TODO: Implement error handling
-            return new List<string>();
+            throw new PostGeneralException("An error occurred while fetching the posts", ex);
         }
     }
 
@@ -140,7 +156,6 @@ public class PostService : IPostService
     {
         try
         {
-            // Fetch posts from the database based on the user ID and limit
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
                 x => new object[] { x.PostId!, x.Content!, x.Forum!, x.CreatedAt },
                 new List<(string, Constants.Operator, string)>
@@ -152,13 +167,19 @@ public class PostService : IPostService
                 ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
             );
 
-            // Convert the posts to PostDto objects
             return ConvertPostsToPostDtos(posts);
         }
-        catch (Exception)
+        catch (DatabaseMissingItemException ex)
         {
-            // TODO: Implement error handling
-            return new List<PostDto>();
+            throw new PostNotFoundException($"Posts for the given user ID were not found. User ID: {userId}", ex);
+        }
+        catch (DatabaseException ex)
+        {
+            throw new PostGeneralException("A database error occurred while fetching the posts", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new PostGeneralException("An error occurred while fetching the posts", ex);
         }
     }
 
@@ -174,7 +195,6 @@ public class PostService : IPostService
     {
         try
         {
-            // Fetch posts from the database based on the user ID, forum ID, and limit
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
                 x => new object[] { x.PostId!, x.Content!, x.Forum!, x.CreatedAt },
                 new List<(string, Constants.Operator, string)>
@@ -187,13 +207,20 @@ public class PostService : IPostService
                 ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
             );
 
-            // Convert the posts to PostDto objects
             return ConvertPostsToPostDtos(posts);
         }
-        catch (Exception)
+        catch (DatabaseMissingItemException ex)
         {
-            // TODO: Implement error handling
-            return new List<PostDto>();
+            throw new PostNotFoundException(
+                $"Posts for the given user ID and forum ID were not found. User ID: {userId}, Forum ID: {forumId}", ex);
+        }
+        catch (DatabaseException ex)
+        {
+            throw new PostGeneralException("A database error occurred while fetching the posts", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new PostGeneralException("An error occurred while fetching the posts", ex);
         }
     }
 
@@ -208,7 +235,6 @@ public class PostService : IPostService
     {
         try
         {
-            // Fetch posts from the database based on the forum ID and limit
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
                 x => new object[] { x.PostId!, x.Content!, x.Forum!, x.CreatedAt },
                 new List<(string, Constants.Operator, string)>
@@ -220,13 +246,19 @@ public class PostService : IPostService
                 ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
             );
 
-            // Convert the posts to PostDto objects
             return ConvertPostsToPostDtos(posts);
         }
-        catch (Exception)
+        catch (DatabaseMissingItemException ex)
         {
-            // TODO: Implement error handling
-            return new List<PostDto>();
+            throw new PostNotFoundException($"Posts for the given forum ID were not found. Forum ID: {forumId}", ex);
+        }
+        catch (DatabaseException ex)
+        {
+            throw new PostGeneralException("A database error occurred while fetching the posts", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new PostGeneralException("An error occurred while fetching the posts", ex);
         }
     }
 

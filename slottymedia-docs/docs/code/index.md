@@ -14,6 +14,30 @@
 
 [UserDto](./slottymedia.backend.dtos.userdto.md)
 
+## SlottyMedia.Backend.Exceptions
+
+[BaseException](./slottymedia.backend.exceptions.baseexception.md)
+
+## SlottyMedia.Backend.Exceptions.Services.PostExceptions
+
+[PostGeneralException](./slottymedia.backend.exceptions.services.postexceptions.postgeneralexception.md)
+
+[PostIudException](./slottymedia.backend.exceptions.services.postexceptions.postiudexception.md)
+
+[PostNotFoundException](./slottymedia.backend.exceptions.services.postexceptions.postnotfoundexception.md)
+
+## SlottyMedia.Backend.Exceptions.Services.SearchExceptions
+
+[SearchGeneralExceptions](./slottymedia.backend.exceptions.services.searchexceptions.searchgeneralexceptions.md)
+
+## SlottyMedia.Backend.Exceptions.Services.UserExceptions
+
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)
+
+[UserIudException](./slottymedia.backend.exceptions.services.userexceptions.useriudexception.md)
+
+[UserNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.usernotfoundexception.md)
+
 ## SlottyMedia.Backend.Exceptions.signup
 
 [EmailAlreadyExistsException](./slottymedia.backend.exceptions.signup.emailalreadyexistsexception.md)

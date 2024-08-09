@@ -1,5 +1,6 @@
 ﻿using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Exceptions;
 using Supabase;
 
 namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
@@ -114,7 +115,7 @@ public class UserLikePostRelationDaoTest
 
             _relationToWorkWith = insertedRelation;
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"Insert test failed with database exception: {ex.Message}");
         }
@@ -134,7 +135,7 @@ public class UserLikePostRelationDaoTest
             var deletedRelation = await _databaseActions.Delete(insertedRelation);
             Assert.That(deletedRelation, Is.True, "Deleted relation should not be false");
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"Delete test failed with database exception: {ex.Message}");
         }
@@ -171,7 +172,7 @@ public class UserLikePostRelationDaoTest
 
             _relationToWorkWith = relation;
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"GetEntityByField test failed with database exception: {ex.Message}");
         }

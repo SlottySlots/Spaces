@@ -17,7 +17,7 @@ public class PostServiceTests
         _mockDatabaseActions = new Mock<IDatabaseActions>();
         _postService = new PostService(_mockDatabaseActions.Object);
     }
-    
+
     [TearDown]
     public void TearDown()
     {

@@ -25,7 +25,7 @@ public class UserServiceTests
         _mockPostService.Object.DatabaseActions = _mockDatabaseActions.Object;
         _userService = new UserService(_mockDatabaseActions.Object, _mockPostService.Object);
     }
-    
+
     [TearDown]
     public void TearDown()
     {
@@ -49,7 +49,7 @@ public class UserServiceTests
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<UserDao>())).ReturnsAsync(user);
 
         var result = await _userService.CreateUser(userId.ToString(), username);
-    
+
         var resultDao = result.Mapper();
 
         Assert.That(result, Is.Not.Null);
@@ -212,7 +212,7 @@ public class UserServiceTests
         };
 
         var forum = new ForumDao { ForumId = Guid.NewGuid(), ForumTopic = "Test Forum" };
-        
+
         var forumName = new List<string> { forum.ForumTopic };
 
         _mockDatabaseActions

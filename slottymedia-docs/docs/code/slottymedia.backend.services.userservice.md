@@ -48,15 +48,15 @@ The ID we get from the Supabase Authentication Service
 The Username of the User
 
 `description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The Description of the User
+The Description of the User (optional)
 
 `profilePicture` [Nullable&lt;Int64&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The Profile Picture of the User
+The Profile Picture of the User (optional)
 
 #### Returns
 
 [Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns the Created UserDao. If it was unable to create a User, it will return null
+Returns the created UserDto. If it was unable to create a User, it will throw an exception.
 
 ### **DeleteUser(UserDto)**
 
@@ -69,12 +69,12 @@ public Task<bool> DeleteUser(UserDto user)
 #### Parameters
 
 `user` [UserDto](./slottymedia.backend.dtos.userdto.md)<br>
-The User Object to delete
+The UserDto object to delete
 
 #### Returns
 
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns whether it was possible to Delete the User or not. If it was possible it will return true.
+Returns true if the User was successfully deleted, otherwise false.
 
 ### **GetUserById(Guid)**
 
@@ -92,7 +92,7 @@ The ID of the User to get from the Database
 #### Returns
 
 [Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns the User Object from the Database. If no User was found, null will be returned
+Returns the UserDto object from the Database. If no User was found, it will throw an exception.
 
 ### **GetUserByUsername(String)**
 
@@ -105,10 +105,12 @@ public Task<UserDto> GetUserByUsername(string username)
 #### Parameters
 
 `username` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The Username of the User to fetch
 
 #### Returns
 
 [Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns the UserDto object if found, otherwise null.
 
 ### **UpdateUser(UserDto)**
 
@@ -121,12 +123,12 @@ public Task<UserDto> UpdateUser(UserDto user)
 #### Parameters
 
 `user` [UserDto](./slottymedia.backend.dtos.userdto.md)<br>
-The updated User Dto
+The updated UserDto
 
 #### Returns
 
 [Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns the Updated User Interface. If it was unable to Update the User, it will return null.
+Returns the updated UserDto. If it was unable to update the User, it will throw an exception.
 
 ### **GetProfilePic(Guid)**
 
@@ -144,11 +146,11 @@ The ID of the User
 #### Returns
 
 [Task&lt;ProfilePicDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns the Profile Picture of the User
+Returns the ProfilePicDto containing the Profile Picture of the User.
 
 #### Exceptions
 
-[Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
+[UserNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.usernotfoundexception.md)<br>
 Throws an exception if the user is not found
 
 ### **GetUser(Guid, Int32)**
@@ -162,7 +164,7 @@ public Task<UserDto> GetUser(Guid userId, int recentForums)
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The Id of the user
+The ID of the user
 
 `recentForums` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 The maximum number of recent forums to retrieve
@@ -170,7 +172,7 @@ The maximum number of recent forums to retrieve
 #### Returns
 
 [Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns the UserDto object
+Returns the UserDto object with recent forums.
 
 ### **GetFriends(Guid)**
 
@@ -188,4 +190,4 @@ The ID of the user
 #### Returns
 
 [Task&lt;FriendsOfUserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns a FriendsOfUserDto object containing the list of friends
+Returns a FriendsOfUserDto object containing the list of friends.

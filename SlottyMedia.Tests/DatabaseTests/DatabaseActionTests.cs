@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Exceptions;
 using Supabase;
 
 namespace SlottyMedia.Tests.DatabaseTests;
@@ -63,7 +64,7 @@ public class DatabaseActionTests
                     "Description should match");
             });
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"Insert test failed with database exception: {ex.Message}");
         }
@@ -76,7 +77,7 @@ public class DatabaseActionTests
     public void Insert_Failure()
     {
         var invalidUser = new UserDao(); // Create an invalid user to simulate failure
-        Assert.ThrowsAsync<DatabaseExceptions>(async () => await _databaseActions.Insert(invalidUser));
+        Assert.ThrowsAsync<DatabaseException>(async () => await _databaseActions.Insert(invalidUser));
     }
 
     /// <summary>
@@ -101,7 +102,7 @@ public class DatabaseActionTests
                 Assert.That(updatedUser.Description, Is.EqualTo(insertedUser.Description), "Description should match");
             });
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"Update test failed with database exception: {ex.Message}");
         }
@@ -114,7 +115,7 @@ public class DatabaseActionTests
     public void Update_Failure()
     {
         var invalidUser = new UserDao(); // Create an invalid user to simulate failure
-        Assert.ThrowsAsync<DatabaseExceptions>(async () => await _databaseActions.Update(invalidUser));
+        Assert.ThrowsAsync<DatabaseException>(async () => await _databaseActions.Update(invalidUser));
     }
 
     /// <summary>
@@ -131,7 +132,7 @@ public class DatabaseActionTests
             var deletedUser = await _databaseActions.Delete(insertedUser);
             Assert.That(deletedUser, Is.True, "Deleted user should not be false");
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"Delete test failed with database exception: {ex.Message}");
         }
@@ -144,7 +145,7 @@ public class DatabaseActionTests
     public void Delete_Failure()
     {
         var invalidUser = new UserDao(); // Create an invalid user to simulate failure
-        Assert.ThrowsAsync<DatabaseExceptions>(async () => await _databaseActions.Delete(invalidUser));
+        Assert.ThrowsAsync<DatabaseException>(async () => await _databaseActions.Delete(invalidUser));
     }
 
     /// <summary>
@@ -181,7 +182,7 @@ public class DatabaseActionTests
                 }
             });
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"GetEntityByField test failed with database exception: {ex.Message}");
         }
@@ -193,7 +194,7 @@ public class DatabaseActionTests
     [Test]
     public void GetEntityByField_Failure()
     {
-        Assert.ThrowsAsync<DatabaseExceptions>(async () =>
+        Assert.ThrowsAsync<DatabaseException>(async () =>
             await _databaseActions.GetEntityByField<UserDao>("userID", "invalid-id"));
     }
 
@@ -229,7 +230,7 @@ public class DatabaseActionTests
                 Assert.That(user.ProfilePic, Is.Null, "Retrieved user should not have a ProfilePicture");
             });
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"GetEntitieWithSelectorById test failed with database exception: {ex.Message}");
         }
@@ -242,7 +243,7 @@ public class DatabaseActionTests
     public void GetEntitieWithSelectorById_Failure()
     {
         Expression<Func<UserDao, object[]>> selector = u => new object[] { u.UserId!, u.UserName!, u.Description! };
-        Assert.ThrowsAsync<DatabaseExceptions>(async () =>
+        Assert.ThrowsAsync<DatabaseException>(async () =>
             await _databaseActions.GetEntitieWithSelectorById(selector, "userID", "invalid-id"));
     }
 
@@ -284,7 +285,7 @@ public class DatabaseActionTests
                 }
             });
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"GetEntitiesWithSelectorById test failed with database exception: {ex.Message}");
         }
@@ -297,7 +298,7 @@ public class DatabaseActionTests
     public void GetEntitiesWithSelectorById_Failure()
     {
         Expression<Func<UserDao, object[]>> selector = u => new object[] { u.UserId!, u.UserName!, u.Description! };
-        Assert.ThrowsAsync<DatabaseExceptions>(async () =>
+        Assert.ThrowsAsync<DatabaseException>(async () =>
             await _databaseActions.GetEntitiesWithSelectorById(selector, "userID", "invalid-id"));
     }
 }

@@ -17,7 +17,7 @@ public class SearchServiceTests
         _mockDatabaseActions = new Mock<IDatabaseActions>();
         _searchService = new SearchService(_mockDatabaseActions.Object);
     }
-    
+
     [TearDown]
     public void TearDown()
     {

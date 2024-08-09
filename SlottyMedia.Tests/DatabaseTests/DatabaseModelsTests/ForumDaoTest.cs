@@ -1,5 +1,6 @@
 ﻿using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Exceptions;
 using Supabase;
 
 namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
@@ -100,7 +101,7 @@ public class ForumDaoTest
 
             _forumToWorkWith = insertedForum;
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"Insert test failed with database exception: {ex.Message}");
         }
@@ -131,7 +132,7 @@ public class ForumDaoTest
 
             _forumToWorkWith = updatedForum;
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"Update test failed with database exception: {ex.Message}");
         }
@@ -151,7 +152,7 @@ public class ForumDaoTest
             var deletedForum = await _databaseActions.Delete(insertedForum);
             Assert.That(deletedForum, Is.True, "Deleted forum should not be false");
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"Delete test failed with database exception: {ex.Message}");
         }
@@ -197,7 +198,7 @@ public class ForumDaoTest
 
             _forumToWorkWith = forum;
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"GetEntityByField test failed with database exception: {ex.Message}");
         }

@@ -1,14 +1,14 @@
-# EmailAlreadyExistsException
+# BaseException
 
-Namespace: SlottyMedia.Backend.Exceptions.signup
+Namespace: SlottyMedia.Backend.Exceptions
 
-This exception is thrown after an illegal attempt to sign up a user with an already existing email.
+This class represents the Base Exception. It is used as a base class for all exceptions.
 
 ```csharp
-public class EmailAlreadyExistsException : SlottyMedia.Backend.Exceptions.BaseException, System.Runtime.Serialization.ISerializable
+public class BaseException : System.Exception, System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [BaseException](./slottymedia.backend.exceptions.baseexception.md) → [EmailAlreadyExistsException](./slottymedia.backend.exceptions.signup.emailalreadyexistsexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [BaseException](./slottymedia.backend.exceptions.baseexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties
@@ -95,15 +95,39 @@ public string StackTrace { get; }
 
 ## Constructors
 
-### **EmailAlreadyExistsException(String)**
+### **BaseException()**
 
-Build an exception with the given email.
+Standard constructor.
 
 ```csharp
-public EmailAlreadyExistsException(string email)
+public BaseException()
+```
+
+### **BaseException(String)**
+
+Constructor with a message.
+
+```csharp
+public BaseException(string message)
 ```
 
 #### Parameters
 
-`email` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The illegally used email
+`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The exception message
+
+### **BaseException(String, Exception)**
+
+Constructor with a message and inner exception.
+
+```csharp
+public BaseException(string message, Exception innerException)
+```
+
+#### Parameters
+
+`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The exception message
+
+`innerException` [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
+The inner exception

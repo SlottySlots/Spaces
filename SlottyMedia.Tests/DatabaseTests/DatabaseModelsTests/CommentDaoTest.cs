@@ -1,5 +1,6 @@
 ﻿using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Exceptions;
 using Supabase;
 
 namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
@@ -114,7 +115,7 @@ public class CommentDaoTest
 
             _commentToWorkWith = insertedComment;
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"Insert test failed with database exception: {ex.Message}");
         }
@@ -143,7 +144,7 @@ public class CommentDaoTest
             });
             _commentToWorkWith = updatedComment;
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"Update test failed with database exception: {ex.Message}");
         }
@@ -163,7 +164,7 @@ public class CommentDaoTest
             var deletedComment = await _databaseActions.Delete(insertedComment);
             Assert.That(deletedComment, Is.True, "Deleted comment should not be false");
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"Delete test failed with database exception: {ex.Message}");
         }
@@ -226,7 +227,7 @@ public class CommentDaoTest
 
             _commentToWorkWith = comment;
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"GetEntityByField test failed with database exception: {ex.Message}");
         }

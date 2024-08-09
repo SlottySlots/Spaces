@@ -1,14 +1,15 @@
-# EmailAlreadyExistsException
+# GeneralException
 
-Namespace: SlottyMedia.Backend.Exceptions.signup
+Namespace: SlottyMedia.Backend.Exceptions.Services
 
-This exception is thrown after an illegal attempt to sign up a user with an already existing email.
+This exception is thrown when a general exception occurs. For example when interacting with the database there
+ is the option, that Exceptions which aren't predictable can occur. In this case, this exception is thrown.
 
 ```csharp
-public class EmailAlreadyExistsException : SlottyMedia.Backend.Exceptions.BaseException, System.Runtime.Serialization.ISerializable
+public class GeneralException : SlottyMedia.Backend.Exceptions.BaseException, System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [BaseException](./slottymedia.backend.exceptions.baseexception.md) → [EmailAlreadyExistsException](./slottymedia.backend.exceptions.signup.emailalreadyexistsexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [BaseException](./slottymedia.backend.exceptions.baseexception.md) → [GeneralException](./slottymedia.backend.exceptions.services.generalexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties
@@ -95,15 +96,28 @@ public string StackTrace { get; }
 
 ## Constructors
 
-### **EmailAlreadyExistsException(String)**
+### **GeneralException(String)**
 
-Build an exception with the given email.
+This constructor creates a new GeneralException object.
 
 ```csharp
-public EmailAlreadyExistsException(string email)
+public GeneralException(string message)
 ```
 
 #### Parameters
 
-`email` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The illegally used email
+`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+### **GeneralException(String, Exception)**
+
+This constructor creates a new GeneralException object.
+
+```csharp
+public GeneralException(string message, Exception innerException)
+```
+
+#### Parameters
+
+`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+`innerException` [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>

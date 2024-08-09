@@ -1,14 +1,12 @@
-# EmailAlreadyExistsException
+# PostIudException
 
-Namespace: SlottyMedia.Backend.Exceptions.signup
-
-This exception is thrown after an illegal attempt to sign up a user with an already existing email.
+Namespace: SlottyMedia.Backend.Exceptions.Services
 
 ```csharp
-public class EmailAlreadyExistsException : SlottyMedia.Backend.Exceptions.BaseException, System.Runtime.Serialization.ISerializable
+public class PostIudException : SlottyMedia.Backend.Exceptions.BaseException, System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [BaseException](./slottymedia.backend.exceptions.baseexception.md) → [EmailAlreadyExistsException](./slottymedia.backend.exceptions.signup.emailalreadyexistsexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [BaseException](./slottymedia.backend.exceptions.baseexception.md) → [PostIudException](./slottymedia.backend.exceptions.services.postiudexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties
@@ -95,15 +93,24 @@ public string StackTrace { get; }
 
 ## Constructors
 
-### **EmailAlreadyExistsException(String)**
-
-Build an exception with the given email.
+### **PostIudException(String)**
 
 ```csharp
-public EmailAlreadyExistsException(string email)
+public PostIudException(string message)
 ```
 
 #### Parameters
 
-`email` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The illegally used email
+`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+### **PostIudException(String, Exception)**
+
+```csharp
+public PostIudException(string message, Exception innerException)
+```
+
+#### Parameters
+
+`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+`innerException` [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>

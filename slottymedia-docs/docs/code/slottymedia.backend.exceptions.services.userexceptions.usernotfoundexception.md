@@ -1,14 +1,14 @@
-# EmailAlreadyExistsException
+# UserNotFoundException
 
-Namespace: SlottyMedia.Backend.Exceptions.signup
+Namespace: SlottyMedia.Backend.Exceptions.Services.UserExceptions
 
-This exception is thrown after an illegal attempt to sign up a user with an already existing email.
+This exception is thrown when a user is not found.
 
 ```csharp
-public class EmailAlreadyExistsException : SlottyMedia.Backend.Exceptions.BaseException, System.Runtime.Serialization.ISerializable
+public class UserNotFoundException : SlottyMedia.Backend.Exceptions.BaseException, System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [BaseException](./slottymedia.backend.exceptions.baseexception.md) → [EmailAlreadyExistsException](./slottymedia.backend.exceptions.signup.emailalreadyexistsexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [BaseException](./slottymedia.backend.exceptions.baseexception.md) → [UserNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.usernotfoundexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties
@@ -95,15 +95,28 @@ public string StackTrace { get; }
 
 ## Constructors
 
-### **EmailAlreadyExistsException(String)**
+### **UserNotFoundException(String)**
 
-Build an exception with the given email.
+This constructor creates a new UserNotFoundException object.
 
 ```csharp
-public EmailAlreadyExistsException(string email)
+public UserNotFoundException(string message)
 ```
 
 #### Parameters
 
-`email` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The illegally used email
+`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+### **UserNotFoundException(String, Exception)**
+
+This constructor creates a new UserNotFoundException object.
+
+```csharp
+public UserNotFoundException(string message, Exception innerException)
+```
+
+#### Parameters
+
+`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+`innerException` [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>

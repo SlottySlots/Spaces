@@ -1,5 +1,6 @@
 ﻿using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Exceptions;
 using Supabase;
 
 namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
@@ -107,7 +108,7 @@ public class PostDtoTest
 
             _postToWorkWith = insertedPost;
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"Insert test failed with database exception: {ex.Message}");
         }
@@ -137,7 +138,7 @@ public class PostDtoTest
 
             _postToWorkWith = updatedPost;
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"Update test failed with database exception: {ex.Message}");
         }
@@ -157,7 +158,7 @@ public class PostDtoTest
             var deletedPost = await _databaseActions.Delete(insertedPost);
             Assert.That(deletedPost, Is.True, "Deleted post should not be false");
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"Delete test failed with database exception: {ex.Message}");
         }
@@ -202,7 +203,7 @@ public class PostDtoTest
 
             _postToWorkWith = post;
         }
-        catch (DatabaseExceptions ex)
+        catch (DatabaseException ex)
         {
             Assert.Fail($"GetEntityByField test failed with database exception: {ex.Message}");
         }

@@ -62,7 +62,6 @@ public class PostDto
     /// </summary>
     public List<CommentDao> Comments { get; set; }
 
-
     /// <summary>
     ///     The Mapper for the Post Dto to the Post Dao.
     /// </summary>
@@ -88,12 +87,11 @@ public class PostDto
     /// <returns></returns>
     public PostDto Mapper(PostsDao post)
     {
-        //TODO Anpassen
         PostId = post.PostId ?? Guid.Empty;
         Content = post.Content ?? string.Empty;
-        Forum = post.Forum == null ? new ForumDto() : new ForumDto();
+        Forum = post.Forum != null ? new ForumDto().Mapper(post.Forum) : new ForumDto();
         CreatedAt = post.CreatedAt;
-        Comments = post.Comments ?? new List<CommentDao?>();
+        Comments = post.Comments ?? new List<CommentDao>();
         UserId = post.UserId ?? Guid.Empty;
         Headline = post.Headline ?? string.Empty;
         return this;
