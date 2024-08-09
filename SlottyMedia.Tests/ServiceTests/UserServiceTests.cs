@@ -1,22 +1,18 @@
 using System.Linq.Expressions;
 using Moq;
 using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Exceptions;
 
 namespace SlottyMedia.Tests.ServiceTests;
 
-/// <summary>
-///     Test class for UserService.
-/// </summary>
 [TestFixture]
 public class UserServiceTests
 {
-    /// <summary>
-    ///     Sets up the test environment before each test.
-    /// </summary>
     [SetUp]
     public void Setup()
     {
@@ -37,9 +33,6 @@ public class UserServiceTests
     private IUserService _userService;
     private Mock<IPostService> _mockPostService;
 
-    /// <summary>
-    ///     Tests that CreateUser returns a User when the user is successfully created.
-    /// </summary>
     [Test]
     public async Task CreateUser_ShouldReturnUser_WhenUserIsCreated()
     {
@@ -60,24 +53,27 @@ public class UserServiceTests
         });
     }
 
-    /// <summary>
-    ///     Tests that CreateUser returns null when an exception is thrown.
-    /// </summary>
     [Test]
-    public async Task CreateUser_ShouldReturnNull_WhenExceptionIsThrown()
+    public void CreateUser_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
         var username = "testUsername";
-        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<UserDao>())).ThrowsAsync(new Exception());
+        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<UserDao>())).ThrowsAsync(new DatabaseIudActionException());
 
-        var result = await _userService.CreateUser(userId.ToString(), username);
-
-        Assert.That(result, Is.Null);
+        Assert.ThrowsAsync<UserIudException>(async () => await _userService.CreateUser(userId.ToString(), username));
     }
 
-    /// <summary>
-    ///     Tests that DeleteUser returns true when the user is successfully deleted.
-    /// </summary>
+    [Test]
+    public void CreateUser_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
+    {
+        var userId = Guid.NewGuid();
+        var username = "testUsername";
+        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<UserDao>())).ThrowsAsync(new DatabaseException());
+
+        Assert.ThrowsAsync<UserGeneralException>(async () =>
+            await _userService.CreateUser(userId.ToString(), username));
+    }
+
     [Test]
     public async Task DeleteUser_ShouldReturnTrue_WhenUserIsDeleted()
     {
@@ -89,23 +85,24 @@ public class UserServiceTests
         Assert.That(result, Is.True);
     }
 
-    /// <summary>
-    ///     Tests that DeleteUser returns false when an exception is thrown.
-    /// </summary>
     [Test]
-    public async Task DeleteUser_ShouldReturnFalse_WhenExceptionIsThrown()
+    public void DeleteUser_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()
     {
         var user = new UserDao { UserId = Guid.NewGuid() };
-        _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<UserDao>())).ThrowsAsync(new Exception());
+        _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<UserDao>())).ThrowsAsync(new DatabaseIudActionException());
 
-        var result = await _userService.DeleteUser(new UserDto().Mapper(user));
-
-        Assert.That(result, Is.False);
+        Assert.ThrowsAsync<UserIudException>(async () => await _userService.DeleteUser(new UserDto().Mapper(user)));
     }
 
-    /// <summary>
-    ///     Tests that GetUserById returns a User when the user exists.
-    /// </summary>
+    [Test]
+    public void DeleteUser_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
+    {
+        var user = new UserDao { UserId = Guid.NewGuid() };
+        _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<UserDao>())).ThrowsAsync(new DatabaseException());
+
+        Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.DeleteUser(new UserDto().Mapper(user)));
+    }
+
     [Test]
     public async Task GetUserById_ShouldReturnUser_WhenUserExists()
     {
@@ -121,24 +118,41 @@ public class UserServiceTests
         Assert.That(resultDao.UserId ?? Guid.Empty, Is.EqualTo(userId));
     }
 
-    /// <summary>
-    ///     Tests that GetUserById returns null when an exception is thrown.
-    /// </summary>
     [Test]
-    public async Task GetUserById_ShouldReturnNull_WhenExceptionIsThrown()
+    public void GetUserById_ShouldThrowUserNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
         _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString()))
-            .ThrowsAsync(new Exception());
+            .ThrowsAsync(new DatabaseMissingItemException());
 
-        var result = await _userService.GetUserById(userId);
-
-        Assert.That(result, Is.Null);
+        Assert.ThrowsAsync<UserNotFoundException>(async () => await _userService.GetUserById(userId));
     }
 
-    /// <summary>
-    ///     Tests that UpdateUser returns the updated User when the user is successfully updated.
-    /// </summary>
+    [Test]
+    public void GetUserById_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
+    {
+        var userId = Guid.NewGuid();
+        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString()))
+            .ThrowsAsync(new DatabaseException());
+
+        Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.GetUserById(userId));
+    }
+
+    [Test]
+    public async Task GetUserByUsername_ShouldReturnUser_WhenUserExists()
+    {
+        var username = "testUsername";
+        var user = new UserDao { UserName = username };
+        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userName", username)).ReturnsAsync(user);
+
+        var result = await _userService.GetUserByUsername(username);
+
+        var resultDao = result.Mapper();
+
+        Assert.That(resultDao, Is.Not.Null);
+        Assert.That(resultDao.UserName, Is.EqualTo(username));
+    }
+
     [Test]
     public async Task UpdateUser_ShouldReturnUpdatedUser_WhenUserIsUpdated()
     {
@@ -152,23 +166,24 @@ public class UserServiceTests
         Assert.That(resultDao.UserName, Is.EqualTo("updatedUsername"));
     }
 
-    /// <summary>
-    ///     Tests that UpdateUser returns null when an exception is thrown.
-    /// </summary>
     [Test]
-    public async Task UpdateUser_ShouldReturnNull_WhenExceptionIsThrown()
+    public void UpdateUser_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()
     {
         var user = new UserDao { UserId = Guid.NewGuid(), UserName = "updatedUsername" };
-        _mockDatabaseActions.Setup(x => x.Update(It.IsAny<UserDao>())).ThrowsAsync(new Exception());
+        _mockDatabaseActions.Setup(x => x.Update(It.IsAny<UserDao>())).ThrowsAsync(new DatabaseIudActionException());
 
-        var result = await _userService.UpdateUser(new UserDto().Mapper(user));
-
-        Assert.That(result, Is.Null);
+        Assert.ThrowsAsync<UserIudException>(async () => await _userService.UpdateUser(new UserDto().Mapper(user)));
     }
 
-    /// <summary>
-    ///     Tests that GetProfilePic returns the profile picture when the user exists.
-    /// </summary>
+    [Test]
+    public void UpdateUser_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
+    {
+        var user = new UserDao { UserId = Guid.NewGuid(), UserName = "updatedUsername" };
+        _mockDatabaseActions.Setup(x => x.Update(It.IsAny<UserDao>())).ThrowsAsync(new DatabaseException());
+
+        Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.UpdateUser(new UserDto().Mapper(user)));
+    }
+
     [Test]
     public async Task GetProfilePic_ShouldReturnProfilePic_WhenUserExists()
     {
@@ -182,25 +197,26 @@ public class UserServiceTests
         Assert.That(result.ProfilePic, Is.EqualTo(123));
     }
 
-    /// <summary>
-    ///     Tests that GetProfilePic returns the default profile picture when an exception is thrown.
-    /// </summary>
     [Test]
-    public async Task GetProfilePic_ShouldReturnDefaultProfilePic_WhenExceptionIsThrown()
+    public void GetProfilePic_ShouldThrowUserNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
         _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString()))
-            .ThrowsAsync(new Exception());
+            .ThrowsAsync(new DatabaseMissingItemException());
 
-        var result = await _userService.GetProfilePic(userId);
-
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.ProfilePic, Is.EqualTo(0));
+        Assert.ThrowsAsync<UserNotFoundException>(async () => await _userService.GetProfilePic(userId));
     }
 
-    /// <summary>
-    ///     Tests that GetUser returns a UserDto when the user exists.
-    /// </summary>
+    [Test]
+    public void GetProfilePic_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
+    {
+        var userId = Guid.NewGuid();
+        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString()))
+            .ThrowsAsync(new DatabaseException());
+
+        Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.GetProfilePic(userId));
+    }
+
     [Test]
     public async Task GetUser_ShouldReturnUserDto_WhenUserExists()
     {
@@ -234,26 +250,28 @@ public class UserServiceTests
         });
     }
 
-    /// <summary>
-    ///     Tests that GetUser returns a default UserDto when an exception is thrown.
-    /// </summary>
     [Test]
-    public async Task GetUser_ShouldReturnDefaultUserDto_WhenExceptionIsThrown()
+    public void GetUser_ShouldThrowUserNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
         _mockDatabaseActions
             .Setup(x => x.GetEntitieWithSelectorById(It.IsAny<Expression<Func<UserDao, object[]>>>(), "userID",
-                userId.ToString())).ThrowsAsync(new Exception());
+                userId.ToString())).ThrowsAsync(new DatabaseMissingItemException());
 
-        var result = await _userService.GetUser(userId);
-
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.UserId, Is.EqualTo(Guid.Empty));
+        Assert.ThrowsAsync<UserNotFoundException>(async () => await _userService.GetUser(userId));
     }
 
-    /// <summary>
-    ///     Tests that GetFriends returns a list of friends when the user has friends.
-    /// </summary>
+    [Test]
+    public void GetUser_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
+    {
+        var userId = Guid.NewGuid();
+        _mockDatabaseActions
+            .Setup(x => x.GetEntitieWithSelectorById(It.IsAny<Expression<Func<UserDao, object[]>>>(), "userID",
+                userId.ToString())).ThrowsAsync(new DatabaseException());
+
+        Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.GetUser(userId));
+    }
+
     [Test]
     public async Task GetFriends_ShouldReturnFriendsList_WhenUserHasFriends()
     {
@@ -274,21 +292,27 @@ public class UserServiceTests
         Assert.That(result.Friends[0].Username, Is.EqualTo("friendUsername"));
     }
 
-    /// <summary>
-    ///     Tests that GetFriends returns a default FriendsOfUserDto when an exception is thrown.
-    /// </summary>
     [Test]
-    public async Task GetFriends_ShouldReturnDefaultFriendsList_WhenExceptionIsThrown()
+    public void GetFriends_ShouldThrowUserNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
         _mockDatabaseActions
             .Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<FollowerUserRelationDao, object[]>>>(),
                 "followerUserID", userId.ToString(), -1, -1))
-            .ThrowsAsync(new Exception());
+            .ThrowsAsync(new DatabaseMissingItemException());
 
-        var result = await _userService.GetFriends(userId);
+        Assert.ThrowsAsync<UserNotFoundException>(async () => await _userService.GetFriends(userId));
+    }
 
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.Friends, Is.Empty);
+    [Test]
+    public void GetFriends_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
+    {
+        var userId = Guid.NewGuid();
+        _mockDatabaseActions
+            .Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<FollowerUserRelationDao, object[]>>>(),
+                "followerUserID", userId.ToString(), -1, -1))
+            .ThrowsAsync(new DatabaseException());
+
+        Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.GetFriends(userId));
     }
 }

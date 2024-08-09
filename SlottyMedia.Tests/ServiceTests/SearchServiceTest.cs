@@ -1,9 +1,11 @@
 using System.Linq.Expressions;
 using Moq;
+using SlottyMedia.Backend.Exceptions.Services.SearchExceptions;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Exceptions;
 using Supabase.Postgrest;
 
 namespace SlottyMedia.Tests.ServiceTests;
@@ -111,6 +113,41 @@ public class SearchServiceTests
                 It.IsAny<(string, Constants.Ordering, Constants.NullPosition)[]>()))
             .ThrowsAsync(new Exception("Database error"));
 
-        Assert.ThrowsAsync<Exception>(async () => await _searchService.SearchByUsernameOrTopic(searchTerm));
+        Assert.ThrowsAsync<SearchGeneralExceptions>(
+            async () => await _searchService.SearchByUsernameOrTopic(searchTerm));
+    }
+
+    [Test]
+    public void SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatabaseMissingItemExceptionIsThrown()
+    {
+        var searchTerm = "testUser";
+
+        _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(
+                It.IsAny<Expression<Func<UserDao, object[]>>>(),
+                It.IsAny<List<(string, Constants.Operator, string)>>(),
+                It.IsAny<int>(),
+                It.IsAny<int>(),
+                It.IsAny<(string, Constants.Ordering, Constants.NullPosition)[]>()))
+            .ThrowsAsync(new DatabaseMissingItemException());
+
+        Assert.ThrowsAsync<SearchGeneralExceptions>(
+            async () => await _searchService.SearchByUsernameOrTopic(searchTerm));
+    }
+
+    [Test]
+    public void SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatabaseExceptionIsThrown()
+    {
+        var searchTerm = "testUser";
+
+        _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(
+                It.IsAny<Expression<Func<UserDao, object[]>>>(),
+                It.IsAny<List<(string, Constants.Operator, string)>>(),
+                It.IsAny<int>(),
+                It.IsAny<int>(),
+                It.IsAny<(string, Constants.Ordering, Constants.NullPosition)[]>()))
+            .ThrowsAsync(new DatabaseException());
+
+        Assert.ThrowsAsync<SearchGeneralExceptions>(
+            async () => await _searchService.SearchByUsernameOrTopic(searchTerm));
     }
 }

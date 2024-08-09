@@ -52,7 +52,7 @@ public class SearchService : ISearchService
                 userResults = new List<UserDao>();
 
             if (topicResults is null || !topicResults.Any())
-                userResults = new List<UserDao>();
+                topicResults = new List<ForumDao>();
 
             var searchResult = new SearchDto();
 
