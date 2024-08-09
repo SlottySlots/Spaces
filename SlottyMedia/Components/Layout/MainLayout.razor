@@ -1,17 +1,17 @@
 ﻿@inherits LayoutComponentBase
 
 
-<div class="w-screen h-screen flex">
+<div class="w-screen h-screen grid grid-cols-5">
     
     <!-- sidebar on the left -->
-    <div class="w-[350px] h-full border-r border-athens-gray">
+    <div class="h-full border-r border-athens-gray">
 
         <!-- top box -->
-        <div class="relative w-full h-2/5 h- bg-gradient-to-br from-grape to-fandango">
+        <div class="relative w-full h-2/5 bg-gradient-to-br from-grape to-fandango">
             
             <!-- login box -->
-            <div class="
-                    card absolute w-full max-w-[280px]
+            <Card Class="
+                    absolute w-full max-w-[280px]
                     flex flex-col items-center gap-5
                     left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2">
                 
@@ -47,11 +47,10 @@
                         </InputFieldIcon>
                     </InputField>
 
-                    <button type="submit" class="
-                        hot-btn text-white w-full max-w-[150px]
-                        bg-gradient-to-r from-fandango via-crayola-orange to-fandango">
-                        Login
-                    </button>
+                    <!-- submission button -->
+                    <HotButton Type="submit" Class="w-full max-w-[150px]">
+                        Submit
+                    </HotButton>
                     
                 </form>
 
@@ -59,7 +58,7 @@
                     sign up instead
                 </a>
                 
-            </div>
+            </Card>
 
         </div>
         
@@ -75,13 +74,14 @@
         
     </div>
     
-    <div class="grow h-full flex flex-col">
+    <!-- container for top bar, main content, friends section -->
+    <div class="h-full col-span-4 flex flex-col">
         
         <!-- top bar -->
         <div class="h-[80px] px-7 flex justify-between items-center border-b border-athens-gray">
             
             <!-- search bar -->
-            <div class="w-full max-w-[500px] h-full flex items-center gap-3">
+            <div class="max-w-[500px] h-full flex items-center gap-3">
                 
                 <!-- lens icon -->
                 <svg width="23" height="23" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -108,18 +108,19 @@
 
         </div>
         
-        <div class="grow flex">
+        <!-- container for main content & friends section -->
+        <div class="h-full grid grid-cols-4">
             
             <!-- main content (center) -->
-            <div class="grow h-full">
+            <div class="h-full col-span-3">
                 @Body
             </div>
             
             <!-- friends bar on the right -->
-            <div class="w-[400px] h-full bg-[#FEFDFE] border-l border-athens-gray">
+            <div class="h-full bg-[#FEFDFE] border-l border-athens-gray">
                 
                 <!-- friends card -->
-                <div class="card min-h-[250px] mt-20 mx-7 flex flex-col items-center">
+                <Card Class="min-h-[250px] mt-20 mx-7 flex flex-col items-center">
                     
                     <!-- title -->
                     <h3 class="font-semibold text-lg">
@@ -132,7 +133,7 @@
                         <span>Sign in to see your friends!</span>
                     </div>
 
-                </div>
+                </Card>
                 
             </div>
 

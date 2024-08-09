@@ -22,9 +22,10 @@ public class CounterVm : ICounterVm, INotifyPropertyChanged
     /// Initializes a new instance of the <see cref="CounterVm"/> class. It creates a new UserDto object and sets the UserService.
     /// </summary>
     /// <param name="userService">The user service to interact with the database.</param>
-    public CounterVm(IUserService userService)
+    /// <param name="user">A new UserDto object</param>
+    public CounterVm(IUserService userService, UserDto user)
     {
-        _user = new UserDto();
+        _user = user;
         _userService = userService;
     }
 

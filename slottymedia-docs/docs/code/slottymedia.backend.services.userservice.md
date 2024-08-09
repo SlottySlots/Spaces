@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Backend.Services
 
+This class is the User Service. It is responsible for handling all User related operations.
+
 ```csharp
 public class UserService : SlottyMedia.Backend.Services.Interfaces.IUserService
 ```
@@ -11,18 +13,18 @@ Implements [IUserService](./slottymedia.backend.services.interfaces.iuserservice
 
 ## Constructors
 
-### **UserService(Client)**
+### **UserService(IDatabaseActions)**
 
 This constructor creates a new UserService object.
 
 ```csharp
-public UserService(Client supabaseClient)
+public UserService(IDatabaseActions databaseActions)
 ```
 
 #### Parameters
 
-`supabaseClient` Client<br>
-Supabase Client to interact with the database
+`databaseActions` IDatabaseActions<br>
+This parameter is used to interact with the database
 
 ## Methods
 
