@@ -14,11 +14,11 @@
 
 [UserDto](./slottymedia.backend.dtos.userdto.md)
 
-## SlottyMedia.Backend.Exceptions
+## SlottyMedia.Backend.Exceptions.signup
 
-[EmailAlreadyExistsException](./slottymedia.backend.exceptions.emailalreadyexistsexception.md)
+[EmailAlreadyExistsException](./slottymedia.backend.exceptions.signup.emailalreadyexistsexception.md)
 
-[UsernameAlreadyExistsException](./slottymedia.backend.exceptions.usernamealreadyexistsexception.md)
+[UsernameAlreadyExistsException](./slottymedia.backend.exceptions.signup.usernamealreadyexistsexception.md)
 
 ## SlottyMedia.Backend.Services
 

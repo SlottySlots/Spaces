@@ -25,6 +25,13 @@ public class UserServiceTests
         _mockPostService.Object.DatabaseActions = _mockDatabaseActions.Object;
         _userService = new UserService(_mockDatabaseActions.Object, _mockPostService.Object);
     }
+    
+    [TearDown]
+    public void TearDown()
+    {
+        _mockDatabaseActions.Reset();
+        _mockPostService.Reset();
+    }
 
     private Mock<IDatabaseActions> _mockDatabaseActions;
     private IUserService _userService;
@@ -42,7 +49,7 @@ public class UserServiceTests
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<UserDao>())).ReturnsAsync(user);
 
         var result = await _userService.CreateUser(userId.ToString(), username);
-
+    
         var resultDao = result.Mapper();
 
         Assert.That(result, Is.Not.Null);
@@ -205,13 +212,7 @@ public class UserServiceTests
         };
 
         var forum = new ForumDao { ForumId = Guid.NewGuid(), ForumTopic = "Test Forum" };
-
-        var posts = new List<PostsDao>
-        {
-            new() { PostId = Guid.NewGuid(), Content = "Test Post 1", ForumId = forum.ForumId },
-            new() { PostId = Guid.NewGuid(), Content = "Test Post 2", ForumId = forum.ForumId }
-        };
-
+        
         var forumName = new List<string> { forum.ForumTopic };
 
         _mockDatabaseActions
@@ -263,7 +264,7 @@ public class UserServiceTests
             { new() { FollowerUserId = userId, FollowedUserId = friendId, FollowerUser = friendUser } };
         _mockDatabaseActions
             .Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<FollowerUserRelationDao, object[]>>>(),
-                "followerUserID", userId.ToString(), -1, -1))
+                "followerUserID", userId.ToString(), -1, -1))!
             .ReturnsAsync(friends);
 
         var result = await _userService.GetFriends(userId);

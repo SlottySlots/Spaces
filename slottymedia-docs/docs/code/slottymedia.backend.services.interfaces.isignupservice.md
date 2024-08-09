@@ -35,8 +35,8 @@ The user's password
 
 #### Exceptions
 
-[UsernameAlreadyExistsException](./slottymedia.backend.exceptions.usernamealreadyexistsexception.md)<br>
+[UsernameAlreadyExistsException](./slottymedia.backend.exceptions.signup.usernamealreadyexistsexception.md)<br>
 If a user with the provided username already exists
 
-[EmailAlreadyExistsException](./slottymedia.backend.exceptions.emailalreadyexistsexception.md)<br>
+[EmailAlreadyExistsException](./slottymedia.backend.exceptions.signup.emailalreadyexistsexception.md)<br>
 If a user with the provided email already exists

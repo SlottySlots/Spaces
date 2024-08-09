@@ -21,7 +21,7 @@ public class Seeding
             await CheckIfRoleExisits();
             Console.WriteLine("Seeding is Needed.");
 
-            var countUser = 2;
+            var countUser = 10;
             var rules = new Rules();
 
             var userFaker = rules.UserRules();
@@ -31,10 +31,10 @@ public class Seeding
             var forumIds = await GenerateForums(forumFaker, countUser * 2);
 
             var postFaker = rules.PostRules(userIds, forumIds);
-            var postIds = await GeneratePosts(postFaker, countUser * 10);
+            var postIds = await GeneratePosts(postFaker, countUser * 4);
 
             var commentFaker = rules.CommentRules(userIds, postIds);
-            await GenereateComments(commentFaker, countUser * 20);
+            await GenereateComments(commentFaker, countUser * 6);
 
             var followerUserRelationFaker = rules.FollowerUserRelationRules(userIds);
             await GenerateFollowerUserRelation(followerUserRelationFaker, userIds.Count * (userIds.Count - 1));
