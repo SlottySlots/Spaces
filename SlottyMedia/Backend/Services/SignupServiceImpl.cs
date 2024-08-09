@@ -1,17 +1,18 @@
-using SlottyMedia.Backend.Exceptions.signup;
+using SlottyMedia.Backend.Exceptions;
 using SlottyMedia.Backend.Services.Interfaces;
 using Supabase.Gotrue;
+
 using Client = Supabase.Client;
 
 namespace SlottyMedia.Backend.Services;
 
 public class SignupServiceImpl : ISignupService
 {
-    private readonly ICookieService _cookieService;
     private readonly Client _supabaseClient;
     private readonly IUserService _userService;
+    private readonly ICookieService _cookieService;
 
-
+    
     public SignupServiceImpl(Client supabaseClient, IUserService userService, ICookieService cookieService)
     {
         _supabaseClient = supabaseClient;
@@ -19,14 +20,14 @@ public class SignupServiceImpl : ISignupService
         _cookieService = cookieService;
     }
 
-
-    public async Task<Session> SignUp(string username, string email, string password)
+    
+    public virtual async Task<Session> SignUp(string username, string email, string password)
     {
         // throw exception if username already exists
         var user = await _userService.GetUserByUsername(username);
         if (user != null)
             throw new UsernameAlreadyExistsException(username);
-
+        
         // else: sign up user
         var options = new SignUpOptions
         {

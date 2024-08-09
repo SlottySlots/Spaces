@@ -115,12 +115,7 @@ public class UserService : IUserService
         }
     }
 
-    /// <summary>
-    ///     This method fetches a user by their username. Returns null if no user was found.
-    /// </summary>
-    /// <param name="username">The Username of the User to fetch</param>
-    /// <returns>Returns the UserDto object if found, otherwise null.</returns>
-    public async Task<UserDto?> GetUserByUsername(string username)
+    public virtual async Task<UserDto?> GetUserByUsername(string username)
     {
         try
         {

@@ -116,8 +116,8 @@ Task SubmitSignupForm()
 [ArgumentException](https://docs.microsoft.com/en-us/dotnet/api/system.argumentexception)<br>
 If an input field was left empty but was required
 
-[UsernameAlreadyExistsException](./slottymedia.backend.exceptions.signup.usernamealreadyexistsexception.md)<br>
+[UsernameAlreadyExistsException](./slottymedia.backend.exceptions.usernamealreadyexistsexception.md)<br>
 If the username is already in use
 
-[EmailAlreadyExistsException](./slottymedia.backend.exceptions.signup.emailalreadyexistsexception.md)<br>
+[EmailAlreadyExistsException](./slottymedia.backend.exceptions.emailalreadyexistsexception.md)<br>
 If the email address is already in use

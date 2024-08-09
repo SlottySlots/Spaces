@@ -1,48 +1,14 @@
 # SlottyMedia
 
-## SlottyMedia.Backend.Dtos
-
-[ForumDto](./slottymedia.backend.dtos.forumdto.md)
-
-[FriendsOfUserDto](./slottymedia.backend.dtos.friendsofuserdto.md)
-
-[PostDto](./slottymedia.backend.dtos.postdto.md)
-
-[ProfilePicDto](./slottymedia.backend.dtos.profilepicdto.md)
-
-[SearchDto](./slottymedia.backend.dtos.searchdto.md)
-
-[UserDto](./slottymedia.backend.dtos.userdto.md)
-
 ## SlottyMedia.Backend.Exceptions
 
-[BaseException](./slottymedia.backend.exceptions.baseexception.md)
+[EmailAlreadyExistsException](./slottymedia.backend.exceptions.emailalreadyexistsexception.md)
 
-## SlottyMedia.Backend.Exceptions.Services.PostExceptions
+[UsernameAlreadyExistsException](./slottymedia.backend.exceptions.usernamealreadyexistsexception.md)
 
-[PostGeneralException](./slottymedia.backend.exceptions.services.postexceptions.postgeneralexception.md)
+## SlottyMedia.Backend.Exceptions.auth
 
-[PostIudException](./slottymedia.backend.exceptions.services.postexceptions.postiudexception.md)
-
-[PostNotFoundException](./slottymedia.backend.exceptions.services.postexceptions.postnotfoundexception.md)
-
-## SlottyMedia.Backend.Exceptions.Services.SearchExceptions
-
-[SearchGeneralExceptions](./slottymedia.backend.exceptions.services.searchexceptions.searchgeneralexceptions.md)
-
-## SlottyMedia.Backend.Exceptions.Services.UserExceptions
-
-[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)
-
-[UserIudException](./slottymedia.backend.exceptions.services.userexceptions.useriudexception.md)
-
-[UserNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.usernotfoundexception.md)
-
-## SlottyMedia.Backend.Exceptions.signup
-
-[EmailAlreadyExistsException](./slottymedia.backend.exceptions.signup.emailalreadyexistsexception.md)
-
-[UsernameAlreadyExistsException](./slottymedia.backend.exceptions.signup.usernamealreadyexistsexception.md)
+[TokenNotProvidedException](./slottymedia.backend.exceptions.auth.tokennotprovidedexception.md)
 
 ## SlottyMedia.Backend.Services
 
@@ -50,9 +16,7 @@
 
 [CookieService](./slottymedia.backend.services.cookieservice.md)
 
-[PostService](./slottymedia.backend.services.postservice.md)
-
-[SearchService](./slottymedia.backend.services.searchservice.md)
+[ICookieService](./slottymedia.backend.services.icookieservice.md)
 
 [SignupServiceImpl](./slottymedia.backend.services.signupserviceimpl.md)
 
@@ -62,21 +26,19 @@
 
 [IAuthService](./slottymedia.backend.services.interfaces.iauthservice.md)
 
-[ICookieService](./slottymedia.backend.services.interfaces.icookieservice.md)
-
-[IPostService](./slottymedia.backend.services.interfaces.ipostservice.md)
-
-[ISearchService](./slottymedia.backend.services.interfaces.isearchservice.md)
-
 [ISignupService](./slottymedia.backend.services.interfaces.isignupservice.md)
 
 [IUserService](./slottymedia.backend.services.interfaces.iuserservice.md)
 
 ## SlottyMedia.Backend.ViewModel
 
+[CounterVm](./slottymedia.backend.viewmodel.countervm.md)
+
 [SignupFormVmImpl](./slottymedia.backend.viewmodel.signupformvmimpl.md)
 
 ## SlottyMedia.Backend.ViewModel.Interfaces
+
+[ICounterVm](./slottymedia.backend.viewmodel.interfaces.icountervm.md)
 
 [ISignupFormVm](./slottymedia.backend.viewmodel.interfaces.isignupformvm.md)
 

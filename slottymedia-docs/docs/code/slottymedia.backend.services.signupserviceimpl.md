@@ -23,7 +23,7 @@ public SignupServiceImpl(Client supabaseClient, IUserService userService, ICooki
 
 `userService` [IUserService](./slottymedia.backend.services.interfaces.iuserservice.md)<br>
 
-`cookieService` [ICookieService](./slottymedia.backend.services.interfaces.icookieservice.md)<br>
+`cookieService` [ICookieService](./slottymedia.backend.services.icookieservice.md)<br>
 
 ## Methods
 
