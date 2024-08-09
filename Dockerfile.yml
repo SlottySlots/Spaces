@@ -1,0 +1,40 @@
+# Use the official ASP.NET Core runtime as a parent image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+EXPOSE 5000  
+
+# Install curl and ping
+RUN apt-get update && apt-get install -y curl bash 
+# Use the SDK image for building the app
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+# Copy the solution file and project files
+COPY ["SlottyMedia.sln", "./"]
+COPY ["SlottyMedia/SlottyMedia.csproj", "SlottyMedia/"]
+COPY ["SlottyMedia.Database/SlottyMedia.Database.csproj", "SlottyMedia.Database/"]
+COPY ["SlottyMedia.DatabaseSeeding/SlottyMedia.DatabaseSeeding.csproj", "SlottyMedia.DatabaseSeeding/"]
+COPY ["SlottyMedia.Tests/SlottyMedia.Tests.csproj", "SlottyMedia.Tests/"]
+
+# Restore dependencies
+RUN dotnet restore "SlottyMedia.sln"
+
+# Copy the rest of the application code
+COPY . .
+
+# Build the application
+RUN dotnet build "SlottyMedia.sln" -c Release -o /app/build
+
+# Publish the application
+FROM build AS publish
+RUN dotnet publish "SlottyMedia/SlottyMedia.csproj" -c Release -o /app/publish
+
+# Copy the published app to the base image
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+
+# Ensure the application listens on the correct port
+ENV ASPNETCORE_URLS=http://+:5000
+
+ENTRYPOINT ["dotnet", "SlottyMedia.dll"]
