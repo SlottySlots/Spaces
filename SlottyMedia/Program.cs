@@ -43,7 +43,8 @@ builder.Services.AddScoped<ICookieService, CookieService>();
 
 
 builder.Services.AddScoped<IAuthService, AuthService>();  // Scoped
-builder.Services.AddScoped<IRegisterVm, RegisterVm>(); 
+builder.Services.AddScoped<ISignupService, SignupServiceImpl>();
+builder.Services.AddScoped<ISignupFormVm, SignupFormVmImpl>(); 
 
 var app = builder.Build();
 

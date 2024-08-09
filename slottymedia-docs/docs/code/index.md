@@ -44,8 +44,6 @@
 
 ## SlottyMedia.Components.Pages
 
-[Counter](./slottymedia.components.pages.counter.md)
-
 [Home](./slottymedia.components.pages.home.md)
 
 [Login](./slottymedia.components.pages.login.md)
@@ -54,12 +52,20 @@
 
 ## SlottyMedia.Components.Partial
 
+[Card](./slottymedia.components.partial.card.md)
+
 [Checkbox](./slottymedia.components.partial.checkbox.md)
+
+[HotButton](./slottymedia.components.partial.hotbutton.md)
 
 [InputField](./slottymedia.components.partial.inputfield.md)
 
 [InputFieldIcon](./slottymedia.components.partial.inputfieldicon.md)
 
-[PinkAnchor](./slottymedia.components.partial.pinkanchor.md)
+[LikeButton](./slottymedia.components.partial.likebutton.md)
 
-[RoundedBorderBox](./slottymedia.components.partial.roundedborderbox.md)
+[Link](./slottymedia.components.partial.link.md)
+
+[Post](./slottymedia.components.partial.post.md)
+
+[Tag](./slottymedia.components.partial.tag.md)
