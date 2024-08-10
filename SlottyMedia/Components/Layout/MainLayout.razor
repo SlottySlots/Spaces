@@ -1,5 +1,7 @@
-﻿@inherits LayoutComponentBase
-
+﻿@using SlottyMedia.Backend.Services.Interfaces
+@inherits LayoutComponentBase
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
 
 <div class="w-screen h-screen grid grid-cols-5">
 
@@ -97,14 +99,26 @@
                     class="grow h-full outline-none text-cadet-gray-800 font-medium"/>
 
             </div>
-
+            
             <!-- links on right of bar -->
-            <div>
-                <!-- login -->
-                <a href="/login" class="">
-                    Login
-                </a>
-            </div>
+            @if (!AuthService.IsAuthenticated())
+            {
+                <div>
+                    <!-- login -->
+                    <a href="/login" class="">
+                        Login
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div>
+                    <!-- logout -->
+                    <a @onclick="SignOut" href="/" class="">
+                        Log out
+                    </a>
+                </div>
+            }
 
         </div>
 
@@ -142,3 +156,45 @@
     </div>
 
 </div>
+
+@code{
+    ///
+    ///<summary>
+    /// Refreshes a session
+    /// </summary>
+    /// TODO: Add Nlog her
+    /// 
+    protected override async Task OnInitializedAsync()
+    {
+        if (AuthService.GetCurrentSession() == null)
+        {
+            try
+            {
+                var session = await AuthService.RestoreSessionAsync();
+                if (session != null)
+                {
+                    Console.WriteLine("User session restored.");
+                    Console.WriteLine("Current Session set for: " + session.User.Email);
+
+                    //Perform actions on authentication
+                }
+                else
+                {
+                    Console.WriteLine("No active session found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+    }
+    
+    private async void SignOut()
+    {
+        await AuthService.SignOut();
+        NavigationManager.NavigateTo("/", true);
+    }
+
+
+}

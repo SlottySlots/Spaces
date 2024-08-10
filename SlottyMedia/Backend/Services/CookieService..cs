@@ -69,6 +69,6 @@ public class CookieService : ICookieService
     /// </returns>
     public ValueTask<string> RemoveCookie(string name)
     {
-        return _jsRuntime.InvokeAsync<string>("RemoveCookie", name);
+        return _jsRuntime.InvokeAsync<string>("removeCookie", name);
     }
 }
