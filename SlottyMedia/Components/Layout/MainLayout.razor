@@ -1,4 +1,5 @@
 ﻿@using SlottyMedia.Backend.Services.Interfaces
+@using SlottyMedia.Backend.ViewModel.Interfaces
 @inherits LayoutComponentBase
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
@@ -12,55 +13,77 @@
         <div class="relative w-full h-2/5 bg-gradient-to-br from-grape to-fandango">
 
             <!-- login box -->
-            <Card Class="
+            @if (!AuthService.IsAuthenticated())
+            {
+                <Card Class="
                     absolute w-full max-w-[280px]
                     flex flex-col items-center gap-5
                     left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2">
 
-                <!-- title -->
-                <h3 class="text-lg font-semibold my-3">
-                    Login Now
-                </h3>
+                    <!-- title -->
+                    <h3 class="text-lg font-semibold my-3">
+                        Login Now
+                    </h3>
 
-                <form class="w-full flex flex-col items-center gap-3">
+                    <form @onsubmit="SubmitForm" class="w-full flex flex-col items-center gap-3">
 
-                    <!-- username -->
-                    <InputField
-                        Id="login-input-username"
-                        Name="username"
-                        Placeholder="Username">
-                        <InputFieldIcon>
-                            <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1 21V19.75C1 14.9175 5.2533 11 10.5 11C15.7467 11 20 14.9175 20 19.75V21" stroke="#A0A0A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M10.5 11C13.4981 11 15.9286 8.76138 15.9286 6C15.9286 3.23857 13.4981 1 10.5 1C7.50188 1 5.07143 3.23857 5.07143 6C5.07143 8.76138 7.50188 11 10.5 11Z" stroke="#A0A0A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </InputFieldIcon>
-                    </InputField>
+                        <!-- username -->
+                        <InputField
+                            Id="login-input-email"
+                            Name="email"
+                            Placeholder="Email"
+                            @bind-Value="Model!.Email"
+                            >
+                            <InputFieldIcon>
+                                <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 21V19.75C1 14.9175 5.2533 11 10.5 11C15.7467 11 20 14.9175 20 19.75V21" stroke="#A0A0A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10.5 11C13.4981 11 15.9286 8.76138 15.9286 6C15.9286 3.23857 13.4981 1 10.5 1C7.50188 1 5.07143 3.23857 5.07143 6C5.07143 8.76138 7.50188 11 10.5 11Z" stroke="#A0A0A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </InputFieldIcon>
+                        </InputField>
 
-                    <!-- password -->
-                    <InputField
-                        Id="login-input-password"
-                        Name="password"
-                        Placeholder="Password">
-                        <InputFieldIcon>
-                            <svg width="17" height="22" viewBox="0 0 17 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M13.5 11H15.25C15.6642 11 16 11.3358 16 11.75V20.25C16 20.6642 15.6642 21 15.25 21H1.75C1.33579 21 1 20.6642 1 20.25V11.75C1 11.3358 1.33579 11 1.75 11H3.5M13.5 11V6C13.5 4.33334 12.5 1 8.5 1C4.5 1 3.5 4.33334 3.5 6V11M13.5 11H3.5" stroke="#A0A0A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </InputFieldIcon>
-                    </InputField>
+                        <!-- password -->
+                        <InputField
+                            Id="login-input-password"
+                            Name="password"
+                            Placeholder="Password"
+                            Type="Password"
+                            @bind-Value="Model!.Password"
+                            >
+                            <InputFieldIcon>
+                                <svg width="17" height="22" viewBox="0 0 17 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 11H15.25C15.6642 11 16 11.3358 16 11.75V20.25C16 20.6642 15.6642 21 15.25 21H1.75C1.33579 21 1 20.6642 1 20.25V11.75C1 11.3358 1.33579 11 1.75 11H3.5M13.5 11V6C13.5 4.33334 12.5 1 8.5 1C4.5 1 3.5 4.33334 3.5 6V11M13.5 11H3.5" stroke="#A0A0A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </InputFieldIcon>
+                        </InputField>
 
-                    <!-- submission button -->
-                    <HotButton Type="submit" Class="w-full max-w-[150px]">
-                        Submit
-                    </HotButton>
+                        <!-- submission button -->
+                        <HotButton Type="submit" Class="w-full max-w-[150px]">
+                            Submit
+                        </HotButton>
 
-                </form>
+                    </form>
 
-                <a href="/register" class="mb-3 text-sm text-fandango underline duration-500 hover:text-crayola-orange">
-                    sign up instead
-                </a>
+                    <a href="/register" class="mb-3 text-sm text-fandango underline duration-500 hover:text-crayola-orange">
+                        sign up instead
+                    </a>
 
-            </Card>
+                </Card>
+                
+            }
+            else
+            {
+                <Card Class="
+                    absolute w-full max-w-[280px]
+                    flex flex-col items-center gap-5
+                    left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2">
+
+                    <!-- title -->
+                    <h3 class="text-lg font-semibold my-3">
+                        Already logged in: TODO: Add Profile view!
+                    </h3>
+                </Card>
+            }
 
         </div>
 
@@ -101,16 +124,7 @@
             </div>
             
             <!-- links on right of bar -->
-            @if (!AuthService.IsAuthenticated())
-            {
-                <div>
-                    <!-- login -->
-                    <a href="/login" class="">
-                        Login
-                    </a>
-                </div>
-            }
-            else
+            @if (AuthService.IsAuthenticated())
             {
                 <div>
                     <!-- logout -->
@@ -119,6 +133,7 @@
                     </a>
                 </div>
             }
+            
 
         </div>
 
@@ -160,9 +175,15 @@
 @code{
     ///
     ///<summary>
+    /// Viewmodel to be used on auth
+    ///</summary>
+    /// 
+    [Inject] [SupplyParameterFromForm] public ISignInFormVm? Model { get; set; }
+    
+    ///
+    ///<summary>
     /// Refreshes a session
     /// </summary>
-    /// TODO: Add Nlog her
     /// 
     protected override async Task OnInitializedAsync()
     {
@@ -175,8 +196,6 @@
                 {
                     Console.WriteLine("User session restored.");
                     Console.WriteLine("Current Session set for: " + session.User.Email);
-
-                    //Perform actions on authentication
                 }
                 else
                 {
@@ -189,12 +208,27 @@
             }
         }
     }
+
+    private async Task SubmitForm()
+    {
+        try
+        {
+            await Model!.SubmitSignInForm();
+            Console.WriteLine("Sign in!");
+        }
+        catch (Exception)
+        {
+            // return if errors occured, because errors will be displayed automatically
+            return;
+        }
+
+        // if no errors occured during signup: redirect to main page
+        NavigationManager.NavigateTo("/");
+    }
     
     private async void SignOut()
     {
         await AuthService.SignOut();
         NavigationManager.NavigateTo("/", true);
     }
-
-
 }
