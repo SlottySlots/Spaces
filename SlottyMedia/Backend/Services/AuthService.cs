@@ -96,7 +96,7 @@ public class AuthService : IAuthService
     {
         var accessToken = await _cookieService.GetCookie("supabase.auth.token");
         var refreshToken = await _cookieService.GetCookie("supabase.auth.refreshToken");
-        if (!string.IsNullOrEmpty(accessToken) && !string.IsNullOrEmpty(refreshToken))
+        if (!string.IsNullOrEmpty(accessToken) && !string.IsNullOrEmpty(refreshToken) && !IsAuthenticated())
         {
             try
             {

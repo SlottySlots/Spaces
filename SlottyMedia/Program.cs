@@ -41,6 +41,7 @@ builder.Services.AddSingleton<SearchDto>();
 
 // Viewmodel
 builder.Services.AddScoped<ISignupFormVm, SignupFormVmImpl>();
+builder.Services.AddScoped<ISignInFormVm, SignInFormVmImpl>();
 
 
 // Services

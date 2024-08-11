@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Backend.ViewModel
 
+Viewmodel used to signing up a user.
+
 ```csharp
 public class SignupFormVmImpl : SlottyMedia.Backend.ViewModel.Interfaces.ISignupFormVm
 ```
@@ -13,6 +15,8 @@ Implements [ISignupFormVm](./slottymedia.backend.viewmodel.interfaces.isignupfor
 
 ### **Username**
 
+UserName a user can set. This is achieved via data-binding.
+
 ```csharp
 public string Username { get; set; }
 ```
@@ -22,6 +26,8 @@ public string Username { get; set; }
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **UsernameErrorMessage**
+
+Error message exposed when a user isn't providing a username
 
 ```csharp
 public string UsernameErrorMessage { get; set; }
@@ -33,6 +39,8 @@ public string UsernameErrorMessage { get; set; }
 
 ### **Email**
 
+Email a user can set. This is achieved via data-binding.
+
 ```csharp
 public string Email { get; set; }
 ```
@@ -42,6 +50,8 @@ public string Email { get; set; }
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **EmailErrorMessage**
+
+Error message exposed when a user isn't providing a email
 
 ```csharp
 public string EmailErrorMessage { get; set; }
@@ -53,6 +63,8 @@ public string EmailErrorMessage { get; set; }
 
 ### **Password**
 
+Password a user can set. This is achieved via data-binding.
+
 ```csharp
 public string Password { get; set; }
 ```
@@ -63,6 +75,8 @@ public string Password { get; set; }
 
 ### **PasswordErrorMessage**
 
+Error message exposed when a user isn't providing a password
+
 ```csharp
 public string PasswordErrorMessage { get; set; }
 ```
@@ -72,6 +86,8 @@ public string PasswordErrorMessage { get; set; }
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **ServerErrorMessage**
+
+Generic error message shown when server throws an unknown exception
 
 ```csharp
 public string ServerErrorMessage { get; set; }
@@ -85,6 +101,8 @@ public string ServerErrorMessage { get; set; }
 
 ### **SignupFormVmImpl(ISignupService)**
 
+Standard Constructor used for dependency injection
+
 ```csharp
 public SignupFormVmImpl(ISignupService signupService)
 ```
@@ -92,10 +110,13 @@ public SignupFormVmImpl(ISignupService signupService)
 #### Parameters
 
 `signupService` [ISignupService](./slottymedia.backend.services.interfaces.isignupservice.md)<br>
+Sign Up service for dependency injection
 
 ## Methods
 
 ### **SubmitSignupForm()**
+
+Function called when user submits a form
 
 ```csharp
 public Task SubmitSignupForm()
@@ -104,3 +125,8 @@ public Task SubmitSignupForm()
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+#### Exceptions
+
+[ArgumentException](https://docs.microsoft.com/en-us/dotnet/api/system.argumentexception)<br>
+Thrown when user isn't providing all information needed for a signup

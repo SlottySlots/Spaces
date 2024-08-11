@@ -22,6 +22,8 @@
 
 [TokenNotProvidedException](./slottymedia.backend.exceptions.auth.tokennotprovidedexception.md)
 
+[UserAlreadySignedInException](./slottymedia.backend.exceptions.auth.useralreadysignedinexception.md)
+
 ## SlottyMedia.Backend.Exceptions.Services.PostExceptions
 
 [PostGeneralException](./slottymedia.backend.exceptions.services.postexceptions.postgeneralexception.md)
@@ -78,9 +80,13 @@
 
 ## SlottyMedia.Backend.ViewModel
 
+[SignInFormVmImpl](./slottymedia.backend.viewmodel.signinformvmimpl.md)
+
 [SignupFormVmImpl](./slottymedia.backend.viewmodel.signupformvmimpl.md)
 
 ## SlottyMedia.Backend.ViewModel.Interfaces
+
+[ISignInFormVm](./slottymedia.backend.viewmodel.interfaces.isigninformvm.md)
 
 [ISignupFormVm](./slottymedia.backend.viewmodel.interfaces.isignupformvm.md)
 

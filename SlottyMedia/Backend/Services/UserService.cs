@@ -115,6 +115,15 @@ public class UserService : IUserService
         }
     }
 
+    /// <summary>
+    /// Gets a UserDTO by its username (usernames are duplicate free)
+    /// </summary>
+    /// <param name="username">
+    /// Username used for retrieving a user
+    /// </param>
+    /// <returns>
+    /// The corresponding UserDTO
+    /// </returns>
     public virtual async Task<UserDto?> GetUserByUsername(string username)
     {
         try
