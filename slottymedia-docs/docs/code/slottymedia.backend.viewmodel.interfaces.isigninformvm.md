@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Backend.ViewModel.Interfaces
 
+Interface used for dependency injection on the SignInFormVm
+
 ```csharp
 public interface ISignInFormVm
 ```

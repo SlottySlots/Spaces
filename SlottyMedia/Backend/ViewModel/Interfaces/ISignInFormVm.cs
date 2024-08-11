@@ -1,5 +1,7 @@
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
-
+/// <summary>
+/// Interface used for dependency injection on the SignInFormVm
+/// </summary>
 public interface ISignInFormVm
 {
     /// <summary>

@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Backend.Exceptions.auth
 
+Exception for the case that a user is already signed in
+
 ```csharp
 public class UserAlreadySignedInException : System.Exception, System.Runtime.Serialization.ISerializable
 ```
@@ -94,6 +96,8 @@ public string StackTrace { get; }
 ## Constructors
 
 ### **UserAlreadySignedInException()**
+
+Constructor to create generic exception message
 
 ```csharp
 public UserAlreadySignedInException()
