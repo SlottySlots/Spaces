@@ -47,27 +47,27 @@ You can find the required URL and the anonymous public key in the Supabase dashb
 The project leverages Docker containers to streamline the deployment and management of the Blazor web application and the Supabase backend.
 
 ### Setup
-<a href="https://www.docker.com/">Docker</a>:Ensure that Docker is installed on your system.
+<a href="https://www.docker.com/">Docker</a>: Ensure that Docker is installed on your system.
 Environment Variables: The project relies on environment variables for configuration. Make sure you have the necessary .env file - located in the root directory of the project.
 
 ### Build, start, stop containers
-Navigate to '''SlottyMedia/docker''', where the Docker-Compose-File is located, to manage all containers:
-- '''docker compose up --build -d''': Build the images and start all containers
-- '''docker compose up --d''': Start all containers
-- '''docker compose down''': Stop all containers and deletes the images.
-- '''docker compose stop''': Stop all containers
+Navigate to _SlottyMedia/docker_, where the Docker-Compose-File is located, to manage all containers:
+- ```docker compose up --build -d```: Build the images and start all containers
+- ```docker compose up --d```: Start all containers
+- ```docker compose down```: Stop all containers and deletes the images.
+- ```docker compose stop```: Stop all containers
 
 ### Advanced container management
-- '''docker ps''': List all running containers
-- '''docker ps -a''': List all available containers
-- '''docker logs [ContainerID]''': Show logs of specific container
-- '''docker exec -it [ContainerID] [Command]''': Execute given linux command in container 
+- ```docker ps```: List all running containers
+- ```docker ps -a```: List all available containers
+- ```docker logs [ContainerID]```: Show logs of specific container
+- ```docker exec -it [ContainerID] [Command]```: Execute given linux command in container 
 
 ### Accessing the services
-- **Blazor Application:** Once the containers are running, you can access the Blazor web application by navigating to '''http://localhost:5234''' in your web browser
-- **Supabase Dashboard:** If you need to access the Supabase dashboard, you can do so at '''http://localhost:8000''' from your host machine. 
-Use the credentials defined in the '''.env''' file
-- **Supabase API:** The Blazor application connects to the Supabase backend via the Kong API gateway. The API gateway is accessible from within the Blazor container using '''http://supabase-kong:8000'''
+- **Blazor Application:** Once the containers are running, you can access the Blazor web application by navigating to _http://localhost:5234_ in your web browser
+- **Supabase Dashboard:** If you need to access the Supabase dashboard, you can do so at _http://localhost:8000_ from your host machine. 
+Use the credentials defined in the .env file
+- **Supabase API:** The Blazor application connects to the Supabase backend via the Kong API gateway. The API gateway is accessible from within the Blazor container using _http://supabase-kong:8000_
   
 ---
 
