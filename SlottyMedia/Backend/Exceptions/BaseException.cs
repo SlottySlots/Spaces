@@ -1,3 +1,5 @@
+using NLog;
+
 namespace SlottyMedia.Backend.Exceptions;
 
 /// <summary>
@@ -5,12 +7,14 @@ namespace SlottyMedia.Backend.Exceptions;
 /// </summary>
 public class BaseException : Exception
 {
+    private static Logger Logger = LogManager.GetCurrentClassLogger();
+
     /// <summary>
     ///     Standard constructor.
     /// </summary>
     public BaseException()
     {
-        // TODO Implement Logging
+        Logger.Error("An exception occurred.");
     }
 
     /// <summary>
@@ -19,8 +23,7 @@ public class BaseException : Exception
     /// <param name="message">The exception message</param>
     public BaseException(string message) : base(message)
     {
-        Console.WriteLine(message);
-        // TODO Implement Logging
+        Logger.Error(message);
     }
 
     /// <summary>
@@ -30,7 +33,6 @@ public class BaseException : Exception
     /// <param name="innerException">The inner exception</param>
     public BaseException(string message, Exception innerException) : base(message, innerException)
     {
-        Console.WriteLine(message);
-        // TODO Implement Logging
+        Logger.Error(innerException, message);
     }
 }

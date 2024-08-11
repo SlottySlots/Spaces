@@ -1,0 +1,171 @@
+2024-08-10 17:16:39.2907 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-10 17:16:39.3091 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-10 17:16:39.3091 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-10 17:16:39.3156 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-10 17:16:39.3806 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-10 17:16:39.3861 Info Configuration initialized.
+2024-08-10 17:16:39.7398 Info Shutdown() called. Logger closing...
+2024-08-10 17:16:39.7398 Info Closing old configuration.
+2024-08-10 17:16:39.7456 Info Logger has been closed down.
+2024-08-10 17:16:55.7725 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-10 17:16:55.7911 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-10 17:16:55.7911 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-10 17:16:55.7980 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-10 17:16:55.8655 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-10 17:16:55.8718 Info Configuration initialized.
+2024-08-10 17:16:56.0607 Info Shutdown() called. Logger closing...
+2024-08-10 17:16:56.0608 Info Closing old configuration.
+2024-08-10 17:16:56.0661 Info Logger has been closed down.
+2024-08-10 17:20:20.1590 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-10 17:20:20.1782 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-10 17:20:20.1782 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-10 17:20:20.1852 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-10 17:20:20.2456 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-10 17:20:20.2521 Info Configuration initialized.
+2024-08-10 17:20:20.4339 Info Shutdown() called. Logger closing...
+2024-08-10 17:20:20.4341 Info Closing old configuration.
+2024-08-10 17:20:20.4392 Info Logger has been closed down.
+2024-08-10 20:16:42.9443 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-10 20:16:42.9638 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-10 20:16:42.9638 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-10 20:16:42.9711 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-10 20:16:43.0407 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-10 20:16:43.0466 Info Configuration initialized.
+2024-08-10 20:16:43.2387 Info Shutdown() called. Logger closing...
+2024-08-10 20:16:43.2387 Info Closing old configuration.
+2024-08-10 20:16:43.2443 Info Logger has been closed down.
+2024-08-10 20:22:00.8129 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-10 20:22:00.8316 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-10 20:22:00.8316 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-10 20:22:00.8385 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-10 20:22:00.8932 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-10 20:22:00.8996 Info Configuration initialized.
+2024-08-10 20:22:01.0993 Info Shutdown() called. Logger closing...
+2024-08-10 20:22:01.0993 Info Closing old configuration.
+2024-08-10 20:22:01.1048 Info Logger has been closed down.
+2024-08-10 20:24:21.0186 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-10 20:24:21.0375 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-10 20:24:21.0378 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-10 20:24:21.0446 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-10 20:24:21.1020 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-10 20:24:21.1087 Info Configuration initialized.
+2024-08-10 20:24:21.2949 Info Shutdown() called. Logger closing...
+2024-08-10 20:24:21.2958 Info Closing old configuration.
+2024-08-10 20:24:21.3012 Info Logger has been closed down.
+2024-08-10 20:26:27.4962 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-10 20:26:27.5154 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-10 20:26:27.5157 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-10 20:26:27.5229 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-10 20:26:27.5872 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-10 20:26:27.5939 Info Configuration initialized.
+2024-08-10 20:26:27.7588 Info Shutdown() called. Logger closing...
+2024-08-10 20:26:27.7588 Info Closing old configuration.
+2024-08-10 20:26:27.7640 Info Logger has been closed down.
+2024-08-10 20:32:01.5995 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-10 20:32:01.6191 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-10 20:32:01.6191 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-10 20:32:01.6267 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-10 20:32:01.6955 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-10 20:32:01.7025 Info Configuration initialized.
+2024-08-10 20:32:01.9091 Info Shutdown() called. Logger closing...
+2024-08-10 20:32:01.9091 Info Closing old configuration.
+2024-08-10 20:32:01.9150 Info Logger has been closed down.
+2024-08-11 07:55:35.8007 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-11 07:55:35.8220 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-11 07:55:35.8220 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-11 07:55:35.8288 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-11 07:55:35.8897 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-11 07:55:35.8960 Info Configuration initialized.
+2024-08-11 07:55:36.0991 Info Shutdown() called. Logger closing...
+2024-08-11 07:55:36.0991 Info Closing old configuration.
+2024-08-11 07:55:36.1050 Info Logger has been closed down.
+2024-08-11 07:56:33.3394 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-11 07:56:33.3584 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-11 07:56:33.3584 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-11 07:56:33.3656 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-11 07:56:33.4248 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-11 07:56:33.4311 Info Configuration initialized.
+2024-08-11 07:56:33.6106 Info Shutdown() called. Logger closing...
+2024-08-11 07:56:33.6109 Info Closing old configuration.
+2024-08-11 07:56:33.6159 Info Logger has been closed down.
+2024-08-11 08:02:32.0678 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-11 08:02:32.0890 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-11 08:02:32.0890 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-11 08:02:32.0963 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-11 08:02:32.1665 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-11 08:02:32.1726 Info Configuration initialized.
+2024-08-11 08:02:32.5374 Info Shutdown() called. Logger closing...
+2024-08-11 08:02:32.5377 Info Closing old configuration.
+2024-08-11 08:02:32.5432 Info Logger has been closed down.
+2024-08-11 08:04:33.5864 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-11 08:04:33.6103 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-11 08:04:33.6143 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-11 08:04:33.6234 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-11 08:04:33.7217 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-11 08:04:33.7282 Info Configuration initialized.
+2024-08-11 08:04:34.0396 Info Shutdown() called. Logger closing...
+2024-08-11 08:04:34.0396 Info Closing old configuration.
+2024-08-11 08:04:34.0496 Info Logger has been closed down.
+2024-08-11 08:06:39.4126 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-11 08:06:39.4350 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-11 08:06:39.4355 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-11 08:06:39.4462 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-11 08:06:39.5172 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-11 08:06:39.5242 Info Configuration initialized.
+2024-08-11 08:06:39.7268 Info Shutdown() called. Logger closing...
+2024-08-11 08:06:39.7268 Info Closing old configuration.
+2024-08-11 08:06:39.7336 Info Logger has been closed down.
+2024-08-11 08:14:06.7391 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-11 08:14:06.7616 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-11 08:14:06.7620 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-11 08:14:06.7690 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-11 08:14:06.8473 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-11 08:14:06.8541 Info Configuration initialized.
+2024-08-11 08:14:07.0667 Info Shutdown() called. Logger closing...
+2024-08-11 08:14:07.0670 Info Closing old configuration.
+2024-08-11 08:14:07.0730 Info Logger has been closed down.
+2024-08-11 09:17:10.8360 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-11 09:17:10.8555 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-11 09:17:10.8558 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-11 09:17:10.8626 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-11 09:17:10.9206 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-11 09:17:10.9271 Info Configuration initialized.
+2024-08-11 09:17:11.1260 Info Shutdown() called. Logger closing...
+2024-08-11 09:17:11.1260 Info Closing old configuration.
+2024-08-11 09:17:11.1317 Info Logger has been closed down.
+2024-08-11 09:17:53.9562 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-11 09:17:53.9751 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-11 09:17:53.9751 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-11 09:17:53.9821 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-11 09:17:54.0492 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-11 09:17:54.0569 Info Configuration initialized.
+2024-08-11 09:17:54.2476 Info Shutdown() called. Logger closing...
+2024-08-11 09:17:54.2480 Info Closing old configuration.
+2024-08-11 09:17:54.2535 Info Logger has been closed down.
+2024-08-11 09:21:43.1590 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-11 09:21:43.1800 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-11 09:21:43.1800 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-11 09:21:43.1874 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-11 09:21:43.2518 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-11 09:21:43.2590 Info Configuration initialized.
+2024-08-11 09:21:43.5074 Info Shutdown() called. Logger closing...
+2024-08-11 09:21:43.5077 Info Closing old configuration.
+2024-08-11 09:21:43.5135 Info Logger has been closed down.
+2024-08-11 09:23:28.2654 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-11 09:23:28.2847 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-11 09:23:28.2850 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-11 09:23:28.2918 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-11 09:23:28.3571 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-11 09:23:28.3639 Info Configuration initialized.
+2024-08-11 09:23:28.5572 Info Shutdown() called. Logger closing...
+2024-08-11 09:23:28.5572 Info Closing old configuration.
+2024-08-11 09:23:28.5629 Info Logger has been closed down.
+2024-08-11 09:45:05.3026 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-08-11 09:45:05.3219 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-08-11 09:45:05.3219 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-08-11 09:45:05.3291 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.2.2526. Product version: 5.3.2+8d52d4f3fcdbd84beae3442e1fdc8125598ed81f. GlobalAssemblyCache: False
+2024-08-11 09:45:05.3852 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=54, FilePath=/Users/aleynacikrik/Documents/Uni/2. Semester/Projekt/SlottyMedia/SlottyMedia/bin/Debug/net8.0/NLog.config
+2024-08-11 09:45:05.3918 Info Configuration initialized.
+2024-08-11 09:45:05.5730 Info Shutdown() called. Logger closing...
+2024-08-11 09:45:05.5730 Info Closing old configuration.
+2024-08-11 09:45:05.5787 Info Logger has been closed down.
