@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -9,21 +9,29 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Supabase" Version="1.1.1"/>
-        <Folder Include="wwwroot\static\login\"/>
+        <PackageReference Include="NLog" Version="5.3.2" />
+        <PackageReference Include="NLog.Config" Version="4.7.15" />
+        <PackageReference Include="NLog.Schema" Version="5.3.2" />
+        <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.11" />
+        <PackageReference Include="Supabase" Version="1.1.1" />
+        <Folder Include="wwwroot\static\login\" />
+        <Folder Include="Backend\ViewModel\" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0.7"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0.7" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\SlottyMedia.DatabaseSeeding\SlottyMedia.DatabaseSeeding.csproj"/>
-        <ProjectReference Include="..\SlottyMedia.Database\SlottyMedia.Database.csproj"/>
+        <ProjectReference Include="..\SlottyMedia.DatabaseSeeding\SlottyMedia.DatabaseSeeding.csproj" />
+        <ProjectReference Include="..\SlottyMedia.Database\SlottyMedia.Database.csproj" />
     </ItemGroup>
 
     <!--    <Target Name="GenerateDocumentation" AfterTargets="Build">
         <Exec Command="dotnet tool run xmldoc2md ./bin/Debug/net8.0/SlottyMedia.dll ../slottymedia-docs/docs/code"/>
     </Target>-->
+    <Target Name="GenerateDocumentation" AfterTargets="Build">
+        <Exec Command="dotnet tool run xmldoc2md ./bin/Debug/net8.0/SlottyMedia.dll ../slottymedia-docs/docs/code" />
+    </Target>
 
 </Project>
