@@ -6,55 +6,55 @@ using SlottyMedia.Backend.ViewModel.Interfaces;
 namespace SlottyMedia.Backend.ViewModel;
 
 /// <summary>
-/// Viewmodel used for the SignInForm of the Mainlayout
+///     Viewmodel used for the SignInForm of the Mainlayout
 /// </summary>
 public class SignInFormVmImpl : ISignInFormVm
 {
     /// <summary>
-    /// AuthService used for supabase authentication
+    ///     AuthService used for supabase authentication
     /// </summary>
-    private IAuthService _authService;
-    
-    /// <summary>
-    /// Corresponds to the email a user sets in the form. This is achieved via data-binding.
-    /// </summary>
-    public string? Email { get; set; }
-    
-    /// <summary>
-    /// Corresponds to the password a user sets in the form. This is achieved via data-binding.
-    /// </summary>
-    public string? Password { get; set; }
-    
-    /// <summary>
-    /// Field for setting a user exposing error message.
-    /// </summary>
-    public string? LoginErrorMessage { get; set; }
+    private readonly IAuthService _authService;
 
     /// <summary>
-    /// Standard Constructor used for dependency injection
+    ///     Standard Constructor used for dependency injection
     /// </summary>
     /// <param name="authService">
-    /// AuthService about to being injected
+    ///     AuthService about to being injected
     /// </param>
     public SignInFormVmImpl(IAuthService authService)
     {
         _authService = authService;
     }
-    
-    
+
     /// <summary>
-    /// Function called on submition of the SignInForm
+    ///     Corresponds to the email a user sets in the form. This is achieved via data-binding.
+    /// </summary>
+    public string? Email { get; set; }
+
+    /// <summary>
+    ///     Corresponds to the password a user sets in the form. This is achieved via data-binding.
+    /// </summary>
+    public string? Password { get; set; }
+
+    /// <summary>
+    ///     Field for setting a user exposing error message.
+    /// </summary>
+    public string? LoginErrorMessage { get; set; }
+
+
+    /// <summary>
+    ///     Function called on submition of the SignInForm
     /// </summary>
     /// <exception cref="ArgumentException">
-    /// Exception thrown on a missing email / password
+    ///     Exception thrown on a missing email / password
     /// </exception>
     /// <exception cref="UserAlreadySignedInException">
-    /// Exception thrown on a already authenticated user
+    ///     Exception thrown on a already authenticated user
     /// </exception>
     public async Task SubmitSignInForm()
     {
         LoginErrorMessage = "";
-        
+
         if (Email.IsNullOrEmpty())
         {
             LoginErrorMessage = "Email must be set!";
@@ -66,9 +66,8 @@ public class SignInFormVmImpl : ISignInFormVm
             LoginErrorMessage = "Password must be set!";
             throw new ArgumentException("Password must be set!");
         }
-        
+
         if (!_authService.IsAuthenticated())
-        {
             try
             {
                 await _authService.SignIn(Email!, Password!);
@@ -77,10 +76,7 @@ public class SignInFormVmImpl : ISignInFormVm
             {
                 LoginErrorMessage = "Invalid credentials!";
             }
-        }
         else
-        {
             throw new UserAlreadySignedInException();
-        }
     }
 }

@@ -94,9 +94,11 @@
 @code
 {
     /// <summary>
-    /// ViewModel to be used
+    ///     ViewModel to be used
     /// </summary>
-    [Inject] [SupplyParameterFromForm] public ISignupFormVm? ViewModel { get; set; }
+    [Inject]
+    [SupplyParameterFromForm]
+    public ISignupFormVm? ViewModel { get; set; }
 
     private async Task SubmitForm()
     {

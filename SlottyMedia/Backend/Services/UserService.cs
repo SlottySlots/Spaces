@@ -54,7 +54,7 @@ public class UserService : IUserService
         {
             throw new UserIudException("An error occurred while creating the user", ex);
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             throw new UserGeneralException("A database error occurred while creating the user", ex);
         }
@@ -79,7 +79,7 @@ public class UserService : IUserService
         {
             throw new UserIudException("An error occurred while deleting the user", ex);
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             throw new UserGeneralException("An error occurred while deleting the user", ex);
         }
@@ -105,7 +105,7 @@ public class UserService : IUserService
         {
             throw new UserNotFoundException($"User with the given ID was not found. ID: {userId}", ex);
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             throw new UserGeneralException("An error occurred while fetching the user", ex);
         }
@@ -116,13 +116,13 @@ public class UserService : IUserService
     }
 
     /// <summary>
-    /// Gets a UserDTO by its username (usernames are duplicate free)
+    ///     Gets a UserDTO by its username (usernames are duplicate free)
     /// </summary>
     /// <param name="username">
-    /// Username used for retrieving a user
+    ///     Username used for retrieving a user
     /// </param>
     /// <returns>
-    /// The corresponding UserDTO
+    ///     The corresponding UserDTO
     /// </returns>
     public virtual async Task<UserDto?> GetUserByUsername(string username)
     {
@@ -153,7 +153,7 @@ public class UserService : IUserService
         {
             throw new UserIudException("An error occurred while updating the user", ex);
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             throw new UserGeneralException("An error occurred while updating the user", ex);
         }
@@ -184,7 +184,7 @@ public class UserService : IUserService
         {
             throw new UserNotFoundException($"User with the given ID was not found. ID: {userId}", ex);
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             throw new UserGeneralException("An error occurred while fetching the profile picture", ex);
         }
@@ -211,7 +211,7 @@ public class UserService : IUserService
         {
             throw new UserNotFoundException($"User with the given ID was not found. ID: {userId}", ex);
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             throw new UserGeneralException("An error occurred while fetching the user", ex);
         }
@@ -248,7 +248,7 @@ public class UserService : IUserService
         {
             throw new UserNotFoundException($"User with the given ID was not found. ID: {userId}", ex);
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             throw new UserGeneralException("An error occurred while fetching the friends", ex);
         }
@@ -274,7 +274,7 @@ public class UserService : IUserService
         {
             throw new UserNotFoundException($"User with the given ID was not found. ID: {userId}", ex);
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             throw new UserGeneralException("An error occurred while fetching the user", ex);
         }

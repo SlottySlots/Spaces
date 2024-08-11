@@ -8,23 +8,12 @@ using Client = Supabase.Client;
 
 namespace SlottyMedia.Tests.Auth;
 
-
 /// <summary>
-/// Tests the non-supabase reliant business logic of AuthService.
+///     Tests the non-supabase reliant business logic of AuthService.
 /// </summary>
 [TestFixture]
 public class AuthServiceTest
 {
-    private IAuthService _authService;
-    private Client _client;
-    private Mock<ICookieService> _cookieServiceMock;
-
-    private string _userName;
-    private string _email;
-    
-    private Session? _session;
-    
-    
     [OneTimeSetUp]
     public void OneTimeSetup()
     {
@@ -36,7 +25,7 @@ public class AuthServiceTest
     [SetUp]
     public void Setup()
     {
-        Guid testUuid = Guid.NewGuid();
+        var testUuid = Guid.NewGuid();
 
         _userName = testUuid.ToString();
         _email = testUuid + "@unittest.de";
@@ -48,15 +37,21 @@ public class AuthServiceTest
         _cookieServiceMock.Reset();
         _session = null;
     }
-    
+
+    private IAuthService _authService;
+    private Client _client;
+    private Mock<ICookieService> _cookieServiceMock;
+
+    private string _userName;
+    private string _email;
+
+    private Session? _session;
+
     [Test]
     public void SaveSessionAsync_TokenNotProvided()
     {
         _session = new Session();
-        Assert.ThrowsAsync<TokenNotProvidedException>(async () =>
-            {
-                await _authService.SaveSessionAsync(_session);
-            }
+        Assert.ThrowsAsync<TokenNotProvidedException>(async () => { await _authService.SaveSessionAsync(_session); }
         );
     }
 
@@ -80,13 +75,12 @@ public class AuthServiceTest
     [Test]
     public void RestoreSessionAsync_TokenNotProvided()
     {
-        _cookieServiceMock.Setup(service => service.GetCookie("supabase.auth.token")).Returns(new ValueTask<string>(""));
-        _cookieServiceMock.Setup(service => service.GetCookie("supabase.auth.refreshToken")).Returns(new ValueTask<string>(""));
+        _cookieServiceMock.Setup(service => service.GetCookie("supabase.auth.token"))
+            .Returns(new ValueTask<string>(""));
+        _cookieServiceMock.Setup(service => service.GetCookie("supabase.auth.refreshToken"))
+            .Returns(new ValueTask<string>(""));
 
-        Assert.ThrowsAsync<TokenNotProvidedException>(async () =>
-            {
-                await _authService.RestoreSessionAsync();
-            }
+        Assert.ThrowsAsync<TokenNotProvidedException>(async () => { await _authService.RestoreSessionAsync(); }
         );
         _cookieServiceMock.VerifyAll();
     }
@@ -99,5 +93,4 @@ public class AuthServiceTest
         _cookieServiceMock.Setup(service => service.RemoveCookie("supabase.auth.refreshToken"))
             .Returns(new ValueTask<string>());
     }
-    
 }

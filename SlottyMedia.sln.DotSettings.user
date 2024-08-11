@@ -2,26 +2,11 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;
   &lt;Assembly Path="/Users/stephr/.nuget/packages/supabase.gotrue/6.0.3/lib/netstandard2.1/Supabase.Gotrue.dll" /&gt;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=42dde461_002D4c5f_002D4948_002Db0dd_002D63a124391395/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Session #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;And&gt;&#xD;
-    &lt;ProjectFolder&gt;015A1132-F283-4EFD-ACDC-31446D699164/d:Auth&lt;/ProjectFolder&gt;&#xD;
-    &lt;Project Location="C:\Users\Manu\Documents\GitHub\SlottyMedia\SlottyMedia.Tests" Presentation="&amp;lt;SlottyMedia.Tests&amp;gt;" /&gt;&#xD;
-  &lt;/And&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=80532b8f_002Db555_002D4b02_002D9f83_002Df03791ad2106/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=6e7a9e8b_002D22db_002D4851_002D923d_002D6bd4f90144c7/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;Solution /&gt;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8981f8ea_002D3a61_002D47d5_002Da976_002Da742c17ac2ac/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;SlottyMedia.Tests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;NUnit3x::015A1132-F283-4EFD-ACDC-31446D699164::net8.0::SlottyMedia.Tests.ServiceTests.SignupServiceTest.SignUp_ShouldCreateUser_WhenParamsOk&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9a66c969_002D58c7_002D4e11_002D8796_002De8686350c6f5/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AuthServiceTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;Project Location="/Users/stephr/RiderProjects/SlottyMedia/SlottyMedia.Tests" Presentation="&amp;lt;SlottyMedia.Tests&amp;gt;" /&gt;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=eaa37dca_002D3fb6_002D469d_002Db238_002D9ac12ed123b8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;And&gt;&#xD;
-    &lt;ProjectFolder&gt;015A1132-F283-4EFD-ACDC-31446D699164/d:Viewmodel&lt;/ProjectFolder&gt;&#xD;
-    &lt;Project Location="C:\Users\Manu\Documents\GitHub\SlottyMedia\SlottyMedia.Tests" Presentation="&amp;lt;SlottyMedia.Tests&amp;gt;" /&gt;&#xD;
-  &lt;/And&gt;&#xD;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+	
+	
+	
+	
+	</wpf:ResourceDictionary>

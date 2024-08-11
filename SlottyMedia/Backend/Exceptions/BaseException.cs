@@ -7,7 +7,7 @@ namespace SlottyMedia.Backend.Exceptions;
 /// </summary>
 public class BaseException : Exception
 {
-    private static Logger Logger = LogManager.GetCurrentClassLogger();
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     /// <summary>
     ///     Standard constructor.

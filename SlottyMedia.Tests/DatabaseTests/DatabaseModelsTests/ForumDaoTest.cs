@@ -101,7 +101,7 @@ public class ForumDaoTest
 
             _forumToWorkWith = insertedForum;
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             Assert.Fail($"Insert test failed with database exception: {ex.Message}");
         }
@@ -132,7 +132,7 @@ public class ForumDaoTest
 
             _forumToWorkWith = updatedForum;
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             Assert.Fail($"Update test failed with database exception: {ex.Message}");
         }
@@ -152,7 +152,7 @@ public class ForumDaoTest
             var deletedForum = await _databaseActions.Delete(insertedForum);
             Assert.That(deletedForum, Is.True, "Deleted forum should not be false");
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             Assert.Fail($"Delete test failed with database exception: {ex.Message}");
         }
@@ -198,7 +198,7 @@ public class ForumDaoTest
 
             _forumToWorkWith = forum;
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             Assert.Fail($"GetEntityByField test failed with database exception: {ex.Message}");
         }

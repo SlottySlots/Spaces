@@ -1,32 +1,30 @@
-using SlottyMedia.Backend.Exceptions;
 using SlottyMedia.Backend.Exceptions.signup;
 using SlottyMedia.Backend.Services.Interfaces;
 using Supabase.Gotrue;
-
 using Client = Supabase.Client;
 
 namespace SlottyMedia.Backend.Services;
 
 /// <summary>
-/// Service 
+///     Service
 /// </summary>
 public class SignupServiceImpl : ISignupService
 {
+    private readonly ICookieService _cookieService;
     private readonly Client _supabaseClient;
     private readonly IUserService _userService;
-    private readonly ICookieService _cookieService;
 
     /// <summary>
-    /// Standard Constructor for dependency injection
+    ///     Standard Constructor for dependency injection
     /// </summary>
     /// <param name="supabaseClient">
-    /// Supabase Client used for supabase interactions
+    ///     Supabase Client used for supabase interactions
     /// </param>
     /// <param name="userService">
-    /// User Service used to retrieve dtos
+    ///     User Service used to retrieve dtos
     /// </param>
     /// <param name="cookieService">
-    /// Cookie Service used to set cookies on client side
+    ///     Cookie Service used to set cookies on client side
     /// </param>
     public SignupServiceImpl(Client supabaseClient, IUserService userService, ICookieService cookieService)
     {
@@ -36,16 +34,16 @@ public class SignupServiceImpl : ISignupService
     }
 
     /// <summary>
-    ///  Function used to sign up a user. This must function be virtual in order to being mocked in unit tests!
+    ///     Function used to sign up a user. This must function be virtual in order to being mocked in unit tests!
     /// </summary>
     /// <param name="username">
-    /// Username for the new user
+    ///     Username for the new user
     /// </param>
     /// <param name="email">
-    /// Email for the new user
+    ///     Email for the new user
     /// </param>
     /// <param name="password">
-    /// Password for the new user
+    ///     Password for the new user
     /// </param>
     /// <returns></returns>
     /// <exception cref="UsernameAlreadyExistsException"></exception>
@@ -56,7 +54,7 @@ public class SignupServiceImpl : ISignupService
         var user = await _userService.GetUserByUsername(username);
         if (user != null)
             throw new UsernameAlreadyExistsException(username);
-        
+
         // else: sign up user
         var options = new SignUpOptions
         {

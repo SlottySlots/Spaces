@@ -79,7 +79,7 @@ public class PostServiceTests
             ForumId = Guid.NewGuid()
         };
 
-        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<PostsDao>())).ThrowsAsync(new DatabaseException());
+        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<PostsDao>())).ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.InsertPost(post.Headline, post.Content,
             post.UserId ?? Guid.Empty,
@@ -133,7 +133,7 @@ public class PostServiceTests
             ForumId = Guid.NewGuid()
         };
 
-        _mockDatabaseActions.Setup(x => x.Update(It.IsAny<PostsDao>())).ThrowsAsync(new DatabaseException());
+        _mockDatabaseActions.Setup(x => x.Update(It.IsAny<PostsDao>())).ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.UpdatePost(new PostDto().Mapper(post)));
     }
@@ -183,7 +183,7 @@ public class PostServiceTests
             ForumId = Guid.NewGuid()
         };
 
-        _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<PostsDao>())).ThrowsAsync(new DatabaseException());
+        _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<PostsDao>())).ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.DeletePost(new PostDto().Mapper(post)));
     }
@@ -232,7 +232,7 @@ public class PostServiceTests
 
         _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<PostsDao, object[]>>>(),
                 "creator_userID", userId.ToString(), 0, 10))
-            .ThrowsAsync(new DatabaseException());
+            .ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetPostsFromForum(userId, 0, 10));
     }
@@ -279,7 +279,7 @@ public class PostServiceTests
 
         _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<PostsDao, object[]>>>(),
                 search, 0, 10))
-            .ThrowsAsync(new DatabaseException());
+            .ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetPostsByUserId(userId, 0, 10));
     }
@@ -373,7 +373,7 @@ public class PostServiceTests
 
         _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<PostsDao, object[]>>>(),
                 search, 0, 10))
-            .ThrowsAsync(new DatabaseException());
+            .ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetPostsByForumId(forumId, 0, 10));
     }

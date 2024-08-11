@@ -33,8 +33,7 @@
                             Id="login-input-email"
                             Name="email"
                             Placeholder="Email"
-                            @bind-Value="ViewModel!.Email"
-                            >
+                            @bind-Value="ViewModel!.Email">
                             <InputFieldIcon>
                                 <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 21V19.75C1 14.9175 5.2533 11 10.5 11C15.7467 11 20 14.9175 20 19.75V21" stroke="#A0A0A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -49,8 +48,7 @@
                             Name="password"
                             Placeholder="Password"
                             Type="Password"
-                            @bind-Value="ViewModel!.Password"
-                            >
+                            @bind-Value="ViewModel!.Password">
                             <InputFieldIcon>
                                 <svg width="17" height="22" viewBox="0 0 17 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M13.5 11H15.25C15.6642 11 16 11.3358 16 11.75V20.25C16 20.6642 15.6642 21 15.25 21H1.75C1.33579 21 1 20.6642 1 20.25V11.75C1 11.3358 1.33579 11 1.75 11H3.5M13.5 11V6C13.5 4.33334 12.5 1 8.5 1C4.5 1 3.5 4.33334 3.5 6V11M13.5 11H3.5" stroke="#A0A0A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -58,13 +56,13 @@
                             </InputFieldIcon>
                         </InputField>
 
-                        @if (!@ViewModel.LoginErrorMessage.IsNullOrEmpty())
+                        @if (!ViewModel.LoginErrorMessage.IsNullOrEmpty())
                         {
                             <span class="text-sm text-crayola-orange">
                                 @ViewModel.LoginErrorMessage
                             </span>
                         }
-                        
+
                         <!-- submission button -->
                         <HotButton Type="submit" Class="w-full max-w-[150px]">
                             Submit
@@ -77,7 +75,6 @@
                     </a>
 
                 </Card>
-                
             }
             else
             {
@@ -130,7 +127,7 @@
                     class="grow h-full outline-none text-cadet-gray-800 font-medium"/>
 
             </div>
-            
+
             <!-- links on right of bar -->
             @if (AuthService.IsAuthenticated())
             {
@@ -141,7 +138,7 @@
                     </a>
                 </div>
             }
-            
+
 
         </div>
 
@@ -181,18 +178,17 @@
 </div>
 
 @code{
-    ///
-    ///<summary>
-    /// Viewmodel to be used on auth
-    ///</summary>
-    /// 
-    [Inject] [SupplyParameterFromForm] public ISignInFormVm? ViewModel { get; set; }
-    
-    ///
-    ///<summary>
-    /// Refreshes a session
+
+    /// <summary>
+    ///     Viewmodel to be used on auth
     /// </summary>
-    /// 
+    [Inject]
+    [SupplyParameterFromForm]
+    public ISignInFormVm? ViewModel { get; set; }
+
+    /// <summary>
+    ///     Refreshes a session
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         if (AuthService.GetCurrentSession() == null)
@@ -220,13 +216,14 @@
     private async Task SubmitForm()
     {
         await ViewModel!.SubmitSignInForm();
-        
+
         NavigationManager.NavigateTo("/");
     }
-    
+
     private async void SignOut()
     {
         await AuthService.SignOut();
         NavigationManager.NavigateTo("/", true);
     }
+
 }

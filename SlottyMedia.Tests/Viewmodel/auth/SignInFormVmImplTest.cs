@@ -9,13 +9,12 @@ namespace SlottyMedia.Tests.Viewmodel.auth;
 
 public class SignInFormVmImplTest
 {
-    private SignInFormVmImpl _service;
-    
-    private Client _client;
-    
     private Mock<AuthService> _authService;
+
+    private Client _client;
     private Mock<ICookieService> _cookieServiceMock;
-    
+    private SignInFormVmImpl _service;
+
     [OneTimeSetUp]
     public void OneTimeSetup()
     {
@@ -37,7 +36,7 @@ public class SignInFormVmImplTest
     {
         Assert.ThrowsAsync<ArgumentException>(async () => await _service.SubmitSignInForm());
     }
-    
+
     [Test]
     public void SubmitSignInForm_PasswordNotProvided()
     {
