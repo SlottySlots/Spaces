@@ -31,6 +31,16 @@ public string Password { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+### **LoginErrorMessage**
+
+```csharp
+public string LoginErrorMessage { get; set; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
 ## Constructors
 
 ### **SignInFormVmImpl(IAuthService)**

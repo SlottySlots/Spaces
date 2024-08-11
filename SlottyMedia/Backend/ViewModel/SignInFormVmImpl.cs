@@ -11,6 +11,8 @@ public class SignInFormVmImpl : ISignInFormVm
     
     public string? Email { get; set; }
     public string? Password { get; set; }
+    
+    public string? LoginErrorMessage { get; set; }
 
     public SignInFormVmImpl(IAuthService authService)
     {
@@ -19,6 +21,8 @@ public class SignInFormVmImpl : ISignInFormVm
     
     public async Task SubmitSignInForm()
     {
+        LoginErrorMessage = "";
+        
         if (Email.IsNullOrEmpty())
         {
             throw new ArgumentException("Email must be set!");
@@ -31,7 +35,14 @@ public class SignInFormVmImpl : ISignInFormVm
         
         if (!_authService.IsAuthenticated())
         {
-            await _authService.SignIn(Email!, Password!);
+            try
+            {
+                await _authService.SignIn(Email!, Password!);
+            }
+            catch (Exception)
+            {
+                LoginErrorMessage = "Invalid credentials!";
+            }
         }
         else
         {
