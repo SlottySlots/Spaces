@@ -18,7 +18,6 @@ builder.Services.AddRazorComponents()
 builder.Services.AddSingleton(_ =>
     InitializeSupabaseClient.GetSupabaseClient());
 
-
 // Database
 builder.Services.AddSingleton<IDatabaseActions, DatabaseActions>();
 
