@@ -5,7 +5,7 @@ using SlottyMedia.Backend.ViewModel;
 using SlottyMedia.Database;
 using Supabase;
 
-namespace SlottyMedia.Tests.Viewmodel;
+namespace SlottyMedia.Tests.Viewmodel.auth;
 
 public class SignInFormVmImplTest
 {
