@@ -1,5 +1,4 @@
 using Moq;
-using SlottyMedia.Backend.Exceptions.auth;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
