@@ -25,11 +25,13 @@ public class SignInFormVmImpl : ISignInFormVm
         
         if (Email.IsNullOrEmpty())
         {
+            LoginErrorMessage = "Email must be set!";
             throw new ArgumentException("Email must be set!");
         }
 
         if (Password.IsNullOrEmpty())
         {
+            LoginErrorMessage = "Password must be set!";
             throw new ArgumentException("Password must be set!");
         }
         
