@@ -34,6 +34,8 @@ public abstract string Password { get; set; }
 
 ### **LoginErrorMessage**
 
+Error message displayed in login field
+
 ```csharp
 public abstract string LoginErrorMessage { get; set; }
 ```
