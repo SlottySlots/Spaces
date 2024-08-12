@@ -15,12 +15,15 @@ var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentCla
 logger.Debug("init main");
 try
 {
-    logger.Debug("init main");
     var builder = WebApplication.CreateBuilder(args);
 
     // Add services to the container.
     builder.Services.AddRazorComponents()
         .AddInteractiveServerComponents();
+    
+    // NLog: Setup NLog for Dependency injection
+    builder.Logging.ClearProviders();
+    builder.Host.UseNLog();
 
     // Add Supabase
     builder.Services.AddSingleton(_ =>
