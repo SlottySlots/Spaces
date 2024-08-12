@@ -63,9 +63,16 @@ try
     // Seed the database
     using (var scope = app.Services.CreateScope())
     {
-        var seeder = scope.ServiceProvider.GetRequiredService<IDatabaseActions>();
-        Seeding seeding = new(seeder);
-        await seeding.Seed(seeder);
+        try
+        {
+            var seeder = scope.ServiceProvider.GetRequiredService<IDatabaseActions>();
+            Seeding seeding = new(seeder);
+            await seeding.Seed();
+        }
+        catch (Exception e)
+        {
+            logger.Error(e, "Database seeding failed.");
+        }
     }
 
     // Configure the HTTP request pipeline.
