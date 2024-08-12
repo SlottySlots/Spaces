@@ -21,6 +21,9 @@ RUN dotnet restore "SlottyMedia.sln"
 
 # Copy the rest of the application code
 COPY . .
+  
+#Restore tools
+RUN dotnet tool restore --tool-manifest ./SlottyMedia/.config/dotnet-tools.json
 
 # Build the application
 RUN dotnet build "SlottyMedia.sln" -c Release -o /app/build
