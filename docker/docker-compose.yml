@@ -441,21 +441,6 @@ services:
       - application-network
     command: [ "--config", "etc/vector/vector.yml" ]
 
-  blazorapp:
-    build:
-      context: ..
-      dockerfile: Dockerfile.yml
-    image: blazorapp:latest
-    ports:
-      - "5234:5000"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-      - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_KEY=${ANON_KEY}
-    networks:
-      - application-network
-
-
 volumes:
   db-config:
 
