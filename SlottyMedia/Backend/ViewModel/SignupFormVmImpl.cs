@@ -5,27 +5,69 @@ using SlottyMedia.Backend.ViewModel.Interfaces;
 
 namespace SlottyMedia.Backend.ViewModel;
 
+/// <summary>
+///     Viewmodel used to signing up a user.
+/// </summary>
 public class SignupFormVmImpl : ISignupFormVm
 {
+    /// <summary>
+    ///     Service used for signing up a user
+    /// </summary>
     private readonly ISignupService _signupService;
 
+
+    /// <summary>
+    ///     Standard Constructor used for dependency injection
+    /// </summary>
+    /// <param name="signupService">
+    ///     Sign Up service for dependency injection
+    /// </param>
     public SignupFormVmImpl(ISignupService signupService)
     {
         _signupService = signupService;
     }
 
+    /// <summary>
+    ///     UserName a user can set. This is achieved via data-binding.
+    /// </summary>
     public string? Username { get; set; }
+
+    /// <summary>
+    ///     Error message exposed when a user isn't providing a username
+    /// </summary>
     public string? UsernameErrorMessage { get; set; }
 
+    /// <summary>
+    ///     Email a user can set. This is achieved via data-binding.
+    /// </summary>
     public string? Email { get; set; }
+
+    /// <summary>
+    ///     Error message exposed when a user isn't providing a email
+    /// </summary>
     public string? EmailErrorMessage { get; set; }
 
+    /// <summary>
+    ///     Password a user can set. This is achieved via data-binding.
+    /// </summary>
     public string? Password { get; set; }
+
+    /// <summary>
+    ///     Error message exposed when a user isn't providing a password
+    /// </summary>
     public string? PasswordErrorMessage { get; set; }
 
+    /// <summary>
+    ///     Generic error message shown when server throws an unknown exception
+    /// </summary>
     public string? ServerErrorMessage { get; set; }
 
-
+    /// <summary>
+    ///     Function called when user submits a form
+    /// </summary>
+    /// <exception cref="ArgumentException">
+    ///     Thrown when user isn't providing all information needed for a signup
+    /// </exception>
     public async Task SubmitSignupForm()
     {
         // reset all existing errors first
@@ -72,6 +114,9 @@ public class SignupFormVmImpl : ISignupFormVm
         }
     }
 
+    /// <summary>
+    ///     Resets all previous set errors.
+    /// </summary>
     private void _resetErrors()
     {
         UsernameErrorMessage = null;

@@ -1,3 +1,5 @@
+using NLog;
+using NLog.Web;
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
@@ -7,8 +9,6 @@ using SlottyMedia.Components;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.DatabaseSeeding;
-using NLog;
-using NLog.Web;
 
 // Early init of NLog to allow startup and exception logging, before host is built
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
@@ -47,6 +47,7 @@ try
 
     // Viewmodel
     builder.Services.AddScoped<ISignupFormVm, SignupFormVmImpl>();
+    builder.Services.AddScoped<ISignInFormVm, SignInFormVmImpl>();
 
     // Services
     builder.Services.AddScoped<IUserService, UserService>();
@@ -55,6 +56,7 @@ try
     builder.Services.AddScoped<IAuthService, AuthService>(); // Scoped
     builder.Services.AddScoped<ISignupService, SignupServiceImpl>();
     builder.Services.AddScoped<ISearchService, SearchService>();
+
 
     var app = builder.Build();
 
@@ -93,5 +95,5 @@ catch (Exception ex)
 finally
 {
     // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
-    NLog.LogManager.Shutdown();
+    LogManager.Shutdown();
 }

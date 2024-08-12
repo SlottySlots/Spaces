@@ -20,4 +20,4 @@ SlottyMedia.Database/bin
 SlottyMedia.sln.DotSettings.user
 
 # NLog log files
-temp/*.log
+SlottyMedia/temp

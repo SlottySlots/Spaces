@@ -1,6 +1,5 @@
 using Moq;
 using SlottyMedia.Backend.Dtos;
-using SlottyMedia.Backend.Exceptions;
 using SlottyMedia.Backend.Exceptions.signup;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
@@ -10,26 +9,12 @@ using Client = Supabase.Client;
 
 namespace SlottyMedia.Tests.Auth;
 
-
 /// <summary>
-/// Tests the Service used for registering a new user in the database.
+///     Tests the Service used for registering a new user in the database.
 /// </summary>
 [TestFixture]
 public class SignUpServiceTest
 {
-    private ISignupService _signupService;
-    private Client _client;
-
-    private Mock<UserService> _userServiceMock;
-    private Mock<IDatabaseActions> _dbActionMock;
-    private Mock<ICookieService> _cookieServiceMock;
-
-    private string _userName;
-    private string _email;
-    private string _password;
-    
-    private Session? _session;
-    
     [OneTimeSetUp]
     public void OneTimeSetup()
     {
@@ -44,7 +29,7 @@ public class SignUpServiceTest
     [SetUp]
     public void Setup()
     {
-        Guid testUuid = Guid.NewGuid();
+        var testUuid = Guid.NewGuid();
 
         _userName = testUuid.ToString();
         _email = testUuid + "@unittest.de";
@@ -59,36 +44,44 @@ public class SignUpServiceTest
         _userServiceMock.Reset();
         _session = null;
     }
-    
+
+    private ISignupService _signupService;
+    private Client _client;
+
+    private Mock<UserService> _userServiceMock;
+    private Mock<IDatabaseActions> _dbActionMock;
+    private Mock<ICookieService> _cookieServiceMock;
+
+    private string _userName;
+    private string _email;
+    private string _password;
+
+    private Session? _session;
+
     [Test]
     public void SignUp_UserAlreadyExists()
     {
         _userServiceMock.Setup(userService => userService.GetUserByUsername(_userName)).ReturnsAsync(new UserDto());
         Assert.ThrowsAsync<UsernameAlreadyExistsException>(async () =>
             {
-                await _signupService.SignUp(_userName,_email, _password);
+                await _signupService.SignUp(_userName, _email, _password);
             }
         );
     }
-    
+
     [Test]
     public async Task SignUp()
     {
         _userServiceMock.Setup(userService => userService.GetUserByUsername(_userName)).ReturnsAsync((UserDto?)null);
-        
+
         _cookieServiceMock.Setup(cookieService =>
             cookieService.SetCookie("supabase.auth.token", It.IsAny<string>(), 7)).Returns(new ValueTask());
         _cookieServiceMock.Setup(cookieService =>
             cookieService.SetCookie("supabase.auth.token", It.IsAny<string>(), 7)).Returns(new ValueTask());
 
-        _session = await _signupService.SignUp(_userName,_email, _password);
-        Assert.Multiple(() =>
-            {
-                Assert.That(_session.User?.Email, Is.EqualTo(_email));
-                
-            }
+        _session = await _signupService.SignUp(_userName, _email, _password);
+        Assert.Multiple(() => { Assert.That(_session.User?.Email, Is.EqualTo(_email)); }
         );
         _cookieServiceMock.VerifyAll();
     }
-    
 }

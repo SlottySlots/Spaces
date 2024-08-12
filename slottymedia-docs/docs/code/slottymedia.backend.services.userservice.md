@@ -96,6 +96,8 @@ Returns the UserDto object from the Database. If no User was found, it will thro
 
 ### **GetUserByUsername(String)**
 
+Gets a UserDTO by its username (usernames are duplicate free)
+
 ```csharp
 public Task<UserDto> GetUserByUsername(string username)
 ```
@@ -103,10 +105,12 @@ public Task<UserDto> GetUserByUsername(string username)
 #### Parameters
 
 `username` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Username used for retrieving a user
 
 #### Returns
 
 [Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+The corresponding UserDTO
 
 ### **UpdateUser(UserDto)**
 

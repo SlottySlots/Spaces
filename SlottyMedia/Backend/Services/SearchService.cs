@@ -65,7 +65,7 @@ public class SearchService : ISearchService
         {
             throw new SearchGeneralExceptions("A database error occurred while searching for users or topics", ex);
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             throw new SearchGeneralExceptions("A database error occurred while searching for users or topics", ex);
         }

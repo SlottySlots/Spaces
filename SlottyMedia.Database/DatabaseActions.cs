@@ -22,7 +22,7 @@ public class DatabaseActions : IDatabaseActions
     /// <param name="item">The item to insert.</param>
     /// <returns>The inserted item.</returns>
     /// <exception cref="DatabaseIudActionException">Thrown when the item could not be inserted into the database.</exception>
-    /// <exception cref="DatabaseException">
+    /// <exception cref="GeneralDatabaseException">
     ///     Thrown when a network error, argument null, invalid operation, timeout, task
     ///     cancellation, or unexpected error occurs.
     /// </exception>
@@ -41,27 +41,27 @@ public class DatabaseActions : IDatabaseActions
         }
         catch (HttpRequestException ex)
         {
-            throw new DatabaseException("A network error occurred while inserting the item.", ex);
+            throw new GeneralDatabaseException("A network error occurred while inserting the item.", ex);
         }
         catch (ArgumentNullException ex)
         {
-            throw new DatabaseException("A required argument was null while inserting the item.", ex);
+            throw new GeneralDatabaseException("A required argument was null while inserting the item.", ex);
         }
         catch (InvalidOperationException ex)
         {
-            throw new DatabaseException("An invalid operation occurred while inserting the item.", ex);
+            throw new GeneralDatabaseException("An invalid operation occurred while inserting the item.", ex);
         }
         catch (TimeoutException ex)
         {
-            throw new DatabaseException("A timeout occurred while inserting the item.", ex);
+            throw new GeneralDatabaseException("A timeout occurred while inserting the item.", ex);
         }
         catch (TaskCanceledException ex)
         {
-            throw new DatabaseException("The task was canceled while inserting the item.", ex);
+            throw new GeneralDatabaseException("The task was canceled while inserting the item.", ex);
         }
         catch (Exception ex)
         {
-            throw new DatabaseException("An unexpected error occurred while inserting the item.", ex);
+            throw new GeneralDatabaseException("An unexpected error occurred while inserting the item.", ex);
         }
     }
 
@@ -72,7 +72,7 @@ public class DatabaseActions : IDatabaseActions
     /// <param name="item">The item to update.</param>
     /// <returns>The updated item.</returns>
     /// <exception cref="DatabaseIudActionException">Thrown when the item could not be updated in the database.</exception>
-    /// <exception cref="DatabaseException">
+    /// <exception cref="GeneralDatabaseException">
     ///     Thrown when a network error, argument null, invalid operation, timeout, task
     ///     cancellation, or unexpected error occurs.
     /// </exception>
@@ -91,27 +91,27 @@ public class DatabaseActions : IDatabaseActions
         }
         catch (HttpRequestException ex)
         {
-            throw new DatabaseException("A network error occurred while updating the item.", ex);
+            throw new GeneralDatabaseException("A network error occurred while updating the item.", ex);
         }
         catch (ArgumentNullException ex)
         {
-            throw new DatabaseException("A required argument was null while updating the item.", ex);
+            throw new GeneralDatabaseException("A required argument was null while updating the item.", ex);
         }
         catch (InvalidOperationException ex)
         {
-            throw new DatabaseException("An invalid operation occurred while updating the item.", ex);
+            throw new GeneralDatabaseException("An invalid operation occurred while updating the item.", ex);
         }
         catch (TimeoutException ex)
         {
-            throw new DatabaseException("A timeout occurred while updating the item.", ex);
+            throw new GeneralDatabaseException("A timeout occurred while updating the item.", ex);
         }
         catch (TaskCanceledException ex)
         {
-            throw new DatabaseException("The task was canceled while updating the item.", ex);
+            throw new GeneralDatabaseException("The task was canceled while updating the item.", ex);
         }
         catch (Exception ex)
         {
-            throw new DatabaseException("An unexpected error occurred while updating the item.", ex);
+            throw new GeneralDatabaseException("An unexpected error occurred while updating the item.", ex);
         }
     }
 
@@ -122,7 +122,7 @@ public class DatabaseActions : IDatabaseActions
     /// <param name="item">The item to delete.</param>
     /// <returns>True if the item was deleted successfully, otherwise false.</returns>
     /// <exception cref="DatabaseIudActionException">Thrown when the item could not be deleted from the database.</exception>
-    /// <exception cref="DatabaseException">
+    /// <exception cref="GeneralDatabaseException">
     ///     Thrown when a network error, argument null, invalid operation, timeout, task
     ///     cancellation, or unexpected error occurs.
     /// </exception>
@@ -144,27 +144,27 @@ public class DatabaseActions : IDatabaseActions
         }
         catch (HttpRequestException ex)
         {
-            throw new DatabaseException("A network error occurred while deleting the item.", ex);
+            throw new GeneralDatabaseException("A network error occurred while deleting the item.", ex);
         }
         catch (ArgumentNullException ex)
         {
-            throw new DatabaseException("A required argument was null while deleting the item.", ex);
+            throw new GeneralDatabaseException("A required argument was null while deleting the item.", ex);
         }
         catch (InvalidOperationException ex)
         {
-            throw new DatabaseException("An invalid operation occurred while deleting the item.", ex);
+            throw new GeneralDatabaseException("An invalid operation occurred while deleting the item.", ex);
         }
         catch (TimeoutException ex)
         {
-            throw new DatabaseException("A timeout occurred while deleting the item.", ex);
+            throw new GeneralDatabaseException("A timeout occurred while deleting the item.", ex);
         }
         catch (TaskCanceledException ex)
         {
-            throw new DatabaseException("The task was canceled while deleting the item.", ex);
+            throw new GeneralDatabaseException("The task was canceled while deleting the item.", ex);
         }
         catch (Exception ex)
         {
-            throw new DatabaseException("An unexpected error occurred while deleting the item.", ex);
+            throw new GeneralDatabaseException("An unexpected error occurred while deleting the item.", ex);
         }
     }
 
@@ -176,7 +176,7 @@ public class DatabaseActions : IDatabaseActions
     /// <param name="value">The value to filter by.</param>
     /// <returns>The retrieved entity.</returns>
     /// <exception cref="DatabaseMissingItemException">Thrown when the entity could not be found in the database.</exception>
-    /// <exception cref="DatabaseException">
+    /// <exception cref="GeneralDatabaseException">
     ///     Thrown when a network error, argument null, invalid operation, timeout, task
     ///     cancellation, or unexpected error occurs.
     /// </exception>
@@ -197,27 +197,27 @@ public class DatabaseActions : IDatabaseActions
         }
         catch (HttpRequestException ex)
         {
-            throw new DatabaseException("A network error occurred while retrieving the entity.", ex);
+            throw new GeneralDatabaseException("A network error occurred while retrieving the entity.", ex);
         }
         catch (ArgumentNullException ex)
         {
-            throw new DatabaseException("A required argument was null while retrieving the entity.", ex);
+            throw new GeneralDatabaseException("A required argument was null while retrieving the entity.", ex);
         }
         catch (InvalidOperationException ex)
         {
-            throw new DatabaseException("An invalid operation occurred while retrieving the entity.", ex);
+            throw new GeneralDatabaseException("An invalid operation occurred while retrieving the entity.", ex);
         }
         catch (TimeoutException ex)
         {
-            throw new DatabaseException("A timeout occurred while retrieving the entity.", ex);
+            throw new GeneralDatabaseException("A timeout occurred while retrieving the entity.", ex);
         }
         catch (TaskCanceledException ex)
         {
-            throw new DatabaseException("The task was canceled while retrieving the entity.", ex);
+            throw new GeneralDatabaseException("The task was canceled while retrieving the entity.", ex);
         }
         catch (Exception ex)
         {
-            throw new DatabaseException("An unexpected error occurred while retrieving the entity.", ex);
+            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the entity.", ex);
         }
     }
 
@@ -230,7 +230,7 @@ public class DatabaseActions : IDatabaseActions
     /// <param name="value">The value to filter by.</param>
     /// <returns>The retrieved entity.</returns>
     /// <exception cref="DatabaseMissingItemException">Thrown when the entity could not be found in the database.</exception>
-    /// <exception cref="DatabaseException">
+    /// <exception cref="GeneralDatabaseException">
     ///     Thrown when a network error, argument null, invalid operation, timeout, task
     ///     cancellation, or unexpected error occurs.
     /// </exception>
@@ -251,27 +251,27 @@ public class DatabaseActions : IDatabaseActions
         }
         catch (HttpRequestException ex)
         {
-            throw new DatabaseException("A network error occurred while retrieving the entity.", ex);
+            throw new GeneralDatabaseException("A network error occurred while retrieving the entity.", ex);
         }
         catch (ArgumentNullException ex)
         {
-            throw new DatabaseException("A required argument was null while retrieving the entity.", ex);
+            throw new GeneralDatabaseException("A required argument was null while retrieving the entity.", ex);
         }
         catch (InvalidOperationException ex)
         {
-            throw new DatabaseException("An invalid operation occurred while retrieving the entity.", ex);
+            throw new GeneralDatabaseException("An invalid operation occurred while retrieving the entity.", ex);
         }
         catch (TimeoutException ex)
         {
-            throw new DatabaseException("A timeout occurred while retrieving the entity.", ex);
+            throw new GeneralDatabaseException("A timeout occurred while retrieving the entity.", ex);
         }
         catch (TaskCanceledException ex)
         {
-            throw new DatabaseException("The task was canceled while retrieving the entity.", ex);
+            throw new GeneralDatabaseException("The task was canceled while retrieving the entity.", ex);
         }
         catch (Exception ex)
         {
-            throw new DatabaseException("An unexpected error occurred while retrieving the entity.", ex);
+            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the entity.", ex);
         }
     }
 
@@ -287,7 +287,7 @@ public class DatabaseActions : IDatabaseActions
     /// <param name="orderByFields">The fields to order by.</param>
     /// <returns>The list of retrieved entities.</returns>
     /// <exception cref="DatabaseMissingItemException">Thrown when the entities could not be found in the database.</exception>
-    /// <exception cref="DatabaseException">
+    /// <exception cref="GeneralDatabaseException">
     ///     Thrown when a network error, argument null, invalid operation, timeout, task
     ///     cancellation, or unexpected error occurs.
     /// </exception>
@@ -318,27 +318,27 @@ public class DatabaseActions : IDatabaseActions
         }
         catch (HttpRequestException ex)
         {
-            throw new DatabaseException("A network error occurred while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("A network error occurred while retrieving the entities.", ex);
         }
         catch (ArgumentNullException ex)
         {
-            throw new DatabaseException("A required argument was null while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("A required argument was null while retrieving the entities.", ex);
         }
         catch (InvalidOperationException ex)
         {
-            throw new DatabaseException("An invalid operation occurred while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("An invalid operation occurred while retrieving the entities.", ex);
         }
         catch (TimeoutException ex)
         {
-            throw new DatabaseException("A timeout occurred while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("A timeout occurred while retrieving the entities.", ex);
         }
         catch (TaskCanceledException ex)
         {
-            throw new DatabaseException("The task was canceled while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("The task was canceled while retrieving the entities.", ex);
         }
         catch (Exception ex)
         {
-            throw new DatabaseException("An unexpected error occurred while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the entities.", ex);
         }
     }
 
@@ -353,7 +353,7 @@ public class DatabaseActions : IDatabaseActions
     /// <param name="orderByFields">The fields to order by.</param>
     /// <returns>The list of retrieved entities.</returns>
     /// <exception cref="DatabaseMissingItemException">Thrown when the entities could not be found in the database.</exception>
-    /// <exception cref="DatabaseException">
+    /// <exception cref="GeneralDatabaseException">
     ///     Thrown when a network error, argument null, invalid operation, timeout, task
     ///     cancellation, or unexpected error occurs.
     /// </exception>
@@ -387,27 +387,27 @@ public class DatabaseActions : IDatabaseActions
         }
         catch (HttpRequestException ex)
         {
-            throw new DatabaseException("A network error occurred while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("A network error occurred while retrieving the entities.", ex);
         }
         catch (ArgumentNullException ex)
         {
-            throw new DatabaseException("A required argument was null while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("A required argument was null while retrieving the entities.", ex);
         }
         catch (InvalidOperationException ex)
         {
-            throw new DatabaseException("An invalid operation occurred while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("An invalid operation occurred while retrieving the entities.", ex);
         }
         catch (TimeoutException ex)
         {
-            throw new DatabaseException("A timeout occurred while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("A timeout occurred while retrieving the entities.", ex);
         }
         catch (TaskCanceledException ex)
         {
-            throw new DatabaseException("The task was canceled while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("The task was canceled while retrieving the entities.", ex);
         }
         catch (Exception ex)
         {
-            throw new DatabaseException("An unexpected error occurred while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the entities.", ex);
         }
     }
 
@@ -417,7 +417,7 @@ public class DatabaseActions : IDatabaseActions
     /// <typeparam name="T">The type of the entities to retrieve.</typeparam>
     /// <returns>The list of retrieved entities.</returns>
     /// <exception cref="DatabaseMissingItemException">Thrown when the entities could not be found in the database.</exception>
-    /// <exception cref="DatabaseException">
+    /// <exception cref="GeneralDatabaseException">
     ///     Thrown when a network error, argument null, invalid operation, timeout, task
     ///     cancellation, or unexpected error occurs.
     /// </exception>
@@ -437,27 +437,27 @@ public class DatabaseActions : IDatabaseActions
         }
         catch (HttpRequestException ex)
         {
-            throw new DatabaseException("A network error occurred while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("A network error occurred while retrieving the entities.", ex);
         }
         catch (ArgumentNullException ex)
         {
-            throw new DatabaseException("A required argument was null while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("A required argument was null while retrieving the entities.", ex);
         }
         catch (InvalidOperationException ex)
         {
-            throw new DatabaseException("An invalid operation occurred while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("An invalid operation occurred while retrieving the entities.", ex);
         }
         catch (TimeoutException ex)
         {
-            throw new DatabaseException("A timeout occurred while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("A timeout occurred while retrieving the entities.", ex);
         }
         catch (TaskCanceledException ex)
         {
-            throw new DatabaseException("The task was canceled while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("The task was canceled while retrieving the entities.", ex);
         }
         catch (Exception ex)
         {
-            throw new DatabaseException("An unexpected error occurred while retrieving the entities.", ex);
+            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the entities.", ex);
         }
     }
 }

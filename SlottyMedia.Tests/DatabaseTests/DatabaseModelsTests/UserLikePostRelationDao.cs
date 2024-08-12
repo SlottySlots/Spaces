@@ -115,7 +115,7 @@ public class UserLikePostRelationDaoTest
 
             _relationToWorkWith = insertedRelation;
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             Assert.Fail($"Insert test failed with database exception: {ex.Message}");
         }
@@ -135,7 +135,7 @@ public class UserLikePostRelationDaoTest
             var deletedRelation = await _databaseActions.Delete(insertedRelation);
             Assert.That(deletedRelation, Is.True, "Deleted relation should not be false");
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             Assert.Fail($"Delete test failed with database exception: {ex.Message}");
         }
@@ -172,7 +172,7 @@ public class UserLikePostRelationDaoTest
 
             _relationToWorkWith = relation;
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             Assert.Fail($"GetEntityByField test failed with database exception: {ex.Message}");
         }

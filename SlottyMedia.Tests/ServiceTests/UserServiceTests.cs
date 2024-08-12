@@ -68,7 +68,7 @@ public class UserServiceTests
     {
         var userId = Guid.NewGuid();
         var username = "testUsername";
-        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<UserDao>())).ThrowsAsync(new DatabaseException());
+        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<UserDao>())).ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<UserGeneralException>(async () =>
             await _userService.CreateUser(userId.ToString(), username));
@@ -98,7 +98,7 @@ public class UserServiceTests
     public void DeleteUser_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
     {
         var user = new UserDao { UserId = Guid.NewGuid() };
-        _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<UserDao>())).ThrowsAsync(new DatabaseException());
+        _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<UserDao>())).ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.DeleteUser(new UserDto().Mapper(user)));
     }
@@ -133,7 +133,7 @@ public class UserServiceTests
     {
         var userId = Guid.NewGuid();
         _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString()))
-            .ThrowsAsync(new DatabaseException());
+            .ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.GetUserById(userId));
     }
@@ -179,7 +179,7 @@ public class UserServiceTests
     public void UpdateUser_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
     {
         var user = new UserDao { UserId = Guid.NewGuid(), UserName = "updatedUsername" };
-        _mockDatabaseActions.Setup(x => x.Update(It.IsAny<UserDao>())).ThrowsAsync(new DatabaseException());
+        _mockDatabaseActions.Setup(x => x.Update(It.IsAny<UserDao>())).ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.UpdateUser(new UserDto().Mapper(user)));
     }
@@ -212,7 +212,7 @@ public class UserServiceTests
     {
         var userId = Guid.NewGuid();
         _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString()))
-            .ThrowsAsync(new DatabaseException());
+            .ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.GetProfilePic(userId));
     }
@@ -267,7 +267,7 @@ public class UserServiceTests
         var userId = Guid.NewGuid();
         _mockDatabaseActions
             .Setup(x => x.GetEntitieWithSelectorById(It.IsAny<Expression<Func<UserDao, object[]>>>(), "userID",
-                userId.ToString())).ThrowsAsync(new DatabaseException());
+                userId.ToString())).ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.GetUser(userId));
     }
@@ -311,7 +311,7 @@ public class UserServiceTests
         _mockDatabaseActions
             .Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<FollowerUserRelationDao, object[]>>>(),
                 "followerUserID", userId.ToString(), -1, -1))
-            .ThrowsAsync(new DatabaseException());
+            .ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.GetFriends(userId));
     }

@@ -108,7 +108,7 @@ public class PostDtoTest
 
             _postToWorkWith = insertedPost;
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             Assert.Fail($"Insert test failed with database exception: {ex.Message}");
         }
@@ -138,7 +138,7 @@ public class PostDtoTest
 
             _postToWorkWith = updatedPost;
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             Assert.Fail($"Update test failed with database exception: {ex.Message}");
         }
@@ -158,7 +158,7 @@ public class PostDtoTest
             var deletedPost = await _databaseActions.Delete(insertedPost);
             Assert.That(deletedPost, Is.True, "Deleted post should not be false");
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             Assert.Fail($"Delete test failed with database exception: {ex.Message}");
         }
@@ -203,7 +203,7 @@ public class PostDtoTest
 
             _postToWorkWith = post;
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             Assert.Fail($"GetEntityByField test failed with database exception: {ex.Message}");
         }

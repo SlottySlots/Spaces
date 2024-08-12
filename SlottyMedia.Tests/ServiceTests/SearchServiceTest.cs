@@ -145,7 +145,7 @@ public class SearchServiceTests
                 It.IsAny<int>(),
                 It.IsAny<int>(),
                 It.IsAny<(string, Constants.Ordering, Constants.NullPosition)[]>()))
-            .ThrowsAsync(new DatabaseException());
+            .ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<SearchGeneralExceptions>(
             async () => await _searchService.SearchByUsernameOrTopic(searchTerm));

@@ -115,7 +115,7 @@ public class CommentDaoTest
 
             _commentToWorkWith = insertedComment;
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             Assert.Fail($"Insert test failed with database exception: {ex.Message}");
         }
@@ -144,7 +144,7 @@ public class CommentDaoTest
             });
             _commentToWorkWith = updatedComment;
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             Assert.Fail($"Update test failed with database exception: {ex.Message}");
         }
@@ -164,7 +164,7 @@ public class CommentDaoTest
             var deletedComment = await _databaseActions.Delete(insertedComment);
             Assert.That(deletedComment, Is.True, "Deleted comment should not be false");
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             Assert.Fail($"Delete test failed with database exception: {ex.Message}");
         }
@@ -227,7 +227,7 @@ public class CommentDaoTest
 
             _commentToWorkWith = comment;
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             Assert.Fail($"GetEntityByField test failed with database exception: {ex.Message}");
         }

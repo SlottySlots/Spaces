@@ -54,7 +54,7 @@ public class PostService : IPostService
         {
             throw new PostIudException("An error occurred while inserting the post", ex);
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             throw new PostGeneralException("A database error occurred while inserting the post", ex);
         }
@@ -80,7 +80,7 @@ public class PostService : IPostService
         {
             throw new PostIudException("An error occurred while updating the post", ex);
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             throw new PostGeneralException("A database error occurred while updating the post", ex);
         }
@@ -105,7 +105,7 @@ public class PostService : IPostService
         {
             throw new PostIudException("An error occurred while deleting the post", ex);
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             throw new PostGeneralException("A database error occurred while deleting the post", ex);
         }
@@ -135,7 +135,7 @@ public class PostService : IPostService
         {
             throw new PostNotFoundException($"Posts for the given user ID were not found. User ID: {userId}", ex);
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             throw new PostGeneralException("A database error occurred while fetching the posts", ex);
         }
@@ -173,7 +173,7 @@ public class PostService : IPostService
         {
             throw new PostNotFoundException($"Posts for the given user ID were not found. User ID: {userId}", ex);
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             throw new PostGeneralException("A database error occurred while fetching the posts", ex);
         }
@@ -214,7 +214,7 @@ public class PostService : IPostService
             throw new PostNotFoundException(
                 $"Posts for the given user ID and forum ID were not found. User ID: {userId}, Forum ID: {forumId}", ex);
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             throw new PostGeneralException("A database error occurred while fetching the posts", ex);
         }
@@ -252,7 +252,7 @@ public class PostService : IPostService
         {
             throw new PostNotFoundException($"Posts for the given forum ID were not found. Forum ID: {forumId}", ex);
         }
-        catch (DatabaseException ex)
+        catch (GeneralDatabaseException ex)
         {
             throw new PostGeneralException("A database error occurred while fetching the posts", ex);
         }
