@@ -18,3 +18,6 @@ SlottyMedia.Database/bin
 # minified CSS
 **/*.min.css
 SlottyMedia.sln.DotSettings.user
+
+# NLog log files
+SlottyMedia/temp

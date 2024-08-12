@@ -43,6 +43,8 @@ protected void BuildRenderTree(RenderTreeBuilder __builder)
 
 ### **OnInitializedAsync()**
 
+Refreshes a session
+
 ```csharp
 protected Task OnInitializedAsync()
 ```
