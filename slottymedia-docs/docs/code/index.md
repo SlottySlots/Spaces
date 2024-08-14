@@ -131,3 +131,7 @@
 [Post](./slottymedia.components.partial.post.md)
 
 [Tag](./slottymedia.components.partial.tag.md)
+
+## SlottyMedia.Components.Partial.MainLayout
+
+[PostSubmissionForm](./slottymedia.components.partial.mainlayout.postsubmissionform.md)
