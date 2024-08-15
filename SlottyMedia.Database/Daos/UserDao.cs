@@ -13,11 +13,12 @@ public class UserDao : BaseModel
     {
     }
 
-    public UserDao(Guid userId, Guid roleId, string userName, string? description = null, long? profilePic = null)
+    public UserDao(Guid userId, Guid roleId, string userName, string email, string? description = null, long? profilePic = null)
     {
         UserId = userId;
         RoleId = roleId;
         UserName = userName;
+        Email = email;
         Description = description;
         ProfilePic = profilePic;
     }
@@ -46,6 +47,9 @@ public class UserDao : BaseModel
     /// </summary>
     [Column("userName")]
     public string? UserName { get; set; }
+    
+    [Column("email")]
+    public string? Email { get; set; }
 
     /// <summary>
     ///     The Description of the User.

@@ -13,12 +13,12 @@ Implements [ISignupService](./slottymedia.backend.services.interfaces.isignupser
 
 ## Constructors
 
-### **SignupServiceImpl(Client, IUserService, ICookieService)**
+### **SignupServiceImpl(Client, IUserService, ICookieService, IDatabaseActions)**
 
 Standard Constructor for dependency injection
 
 ```csharp
-public SignupServiceImpl(Client supabaseClient, IUserService userService, ICookieService cookieService)
+public SignupServiceImpl(Client supabaseClient, IUserService userService, ICookieService cookieService, IDatabaseActions databaseActions)
 ```
 
 #### Parameters
@@ -31,6 +31,8 @@ User Service used to retrieve dtos
 
 `cookieService` [ICookieService](./slottymedia.backend.services.interfaces.icookieservice.md)<br>
 Cookie Service used to set cookies on client side
+
+`databaseActions` IDatabaseActions<br>
 
 ## Methods
 
