@@ -61,7 +61,7 @@ public class SignUpServiceTest
     [Test]
     public void SignUp_UserAlreadyExists()
     {
-        _userServiceMock.Setup(userService => userService.GetUserByUsername(_userName)).ReturnsAsync(new UserDto());
+        _userServiceMock.Setup(userService => userService.CheckIfUserExistsByUserName(_userName)).ReturnsAsync(false);
         Assert.ThrowsAsync<UsernameAlreadyExistsException>(async () =>
             {
                 await _signupService.SignUp(_userName, _email, _password);
@@ -72,7 +72,7 @@ public class SignUpServiceTest
     [Test]
     public async Task SignUp()
     {
-        _userServiceMock.Setup(userService => userService.GetUserByUsername(_userName)).ReturnsAsync((UserDto?)null);
+        _userServiceMock.Setup(userService => userService.CheckIfUserExistsByUserName(_userName)).ReturnsAsync(false);
 
         _cookieServiceMock.Setup(cookieService =>
             cookieService.SetCookie("supabase.auth.token", It.IsAny<string>(), 7)).Returns(new ValueTask());

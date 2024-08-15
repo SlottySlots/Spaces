@@ -4,11 +4,17 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.11"/>
         <PackageReference Include="Supabase" Version="1.1.1"/>
     </ItemGroup>
+
+    <Target Name="GenerateDocumentation" AfterTargets="Build;Run">
+        <Exec Command="dotnet tool run xmldoc2md ./bin/Debug/net8.0/SlottyMedia.Database.dll ../slottymedia-docs/docs/code/SlottyMedia.Database"/>
+    </Target>
 
 </Project>

@@ -27,7 +27,7 @@ public class UserService : IUserService
     }
 
     /// <summary>
-    ///     This method creates a new User object in the database and returns the created object.
+    ///     This method creates a new User object in the database and returns the created object. This method does not check if the User already exists.
     /// </summary>
     /// <param name="userId">The ID we get from the Supabase Authentication Service</param>
     /// <param name="username">The Username of the User</param>
@@ -124,16 +124,20 @@ public class UserService : IUserService
     /// <returns>
     ///     The corresponding UserDTO
     /// </returns>
-    public virtual async Task<UserDto?> GetUserByUsername(string username)
+    public virtual async Task<bool> CheckIfUserExistsByUserName(string username)
     {
         try
         {
-            var result = await _databaseActions.GetEntityByField<UserDao>("userName", username);
-            return new UserDto().Mapper(result);
+            var result = await _databaseActions.CheckIfEntityExists<UserDao>("userName", username);
+            return result;
         }
-        catch (Exception)
+        catch (GeneralDatabaseException ex)
         {
-            return null;
+            throw new UserGeneralException("An error occurred while checking if the the user exists", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new UserGeneralException("A general error occurred while checking if the the user exists", ex);
         }
     }
 

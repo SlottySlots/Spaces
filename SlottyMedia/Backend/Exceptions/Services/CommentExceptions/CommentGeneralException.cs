@@ -3,13 +3,13 @@ namespace SlottyMedia.Backend.Exceptions.Services.PostExceptions;
 /// <summary>
 ///     Represents a general exception that occurs in the Forum service.
 /// </summary>
-public class ForumGeneralException : BaseException
+public class CommentGeneralException : BaseException
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="ForumGeneralException" /> class with a specified error message.
     /// </summary>
     /// <param name="message">The message that describes the error.</param>
-    public ForumGeneralException(string message) : base(message)
+    public CommentGeneralException(string message) : base(message)
     {
     }
 
@@ -19,7 +19,7 @@ public class ForumGeneralException : BaseException
     /// </summary>
     /// <param name="message">The message that describes the error.</param>
     /// <param name="innerException">The exception that is the cause of the current exception.</param>
-    public ForumGeneralException(string message, Exception innerException) : base(message, innerException)
+    public CommentGeneralException(string message, Exception innerException) : base(message, innerException)
     {
     }
 }

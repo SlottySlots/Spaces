@@ -139,18 +139,14 @@ public class UserServiceTests
     }
 
     [Test]
-    public async Task GetUserByUsername_ShouldReturnUser_WhenUserExists()
+    public async Task GetUserByUsername_ShouldFalse_WhenUserExists()
     {
         var username = "testUsername";
         var user = new UserDao { UserName = username };
         _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userName", username)).ReturnsAsync(user);
 
-        var result = await _userService.GetUserByUsername(username);
-
-        var resultDao = result.Mapper();
-
-        Assert.That(resultDao, Is.Not.Null);
-        Assert.That(resultDao.UserName, Is.EqualTo(username));
+        var result = await _userService.CheckIfUserExistsByUserName(username);
+        Assert.That(result, Is.True);
     }
 
     [Test]

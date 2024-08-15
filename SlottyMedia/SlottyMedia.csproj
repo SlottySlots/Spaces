@@ -27,8 +27,8 @@
         <ProjectReference Include="..\SlottyMedia.Database\SlottyMedia.Database.csproj"/>
     </ItemGroup>
     
-    <Target Name="GenerateDocumentation" AfterTargets="Build">
-        <Exec Command="dotnet tool run xmldoc2md ./bin/Debug/net8.0/SlottyMedia.dll ../slottymedia-docs/docs/code"/>
+    <Target Name="GenerateDocumentation" AfterTargets="Build;Run">
+        <Exec Command="dotnet tool run xmldoc2md ./bin/Debug/net8.0/SlottyMedia.dll ../slottymedia-docs/docs/code/SlottyMedia"/>
     </Target>
 
 </Project>

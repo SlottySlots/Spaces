@@ -5,7 +5,11 @@ nav:
   - Database: database.md
   - MVVM: mvvm.md
   - Coding Guidelines: guidelines.md
-  - Code Documentation: code/index.md
+  - Code Documentation: 
+    - SlottyMedia: code/SlottyMedia/index.md
+    - Database : code/SlottyMedia.Database/index.md
+    - Seeding: code/SlottyMedia.DatabaseSeeding/index.md
+    - Tests: code/SlottyMedia.Tests/index.md
   - Exception Guidelines: exceptions.md
 theme: material
 plugins:

@@ -51,8 +51,8 @@ public class SignupServiceImpl : ISignupService
     public virtual async Task<Session> SignUp(string username, string email, string password)
     {
         // throw exception if username already exists
-        var user = await _userService.GetUserByUsername(username);
-        if (user != null)
+        var user = await _userService.CheckIfUserExistsByUserName(username);
+        if (user)
             throw new UsernameAlreadyExistsException(username);
 
         // else: sign up user

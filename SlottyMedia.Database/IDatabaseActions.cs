@@ -78,4 +78,7 @@ public interface IDatabaseActions
         where T : BaseModel, new();
 
     Task<List<T>> GetEntities<T>() where T : BaseModel, new();
+
+    public Task<bool> CheckIfEntityExists<T>(string field, string value) where T : BaseModel, new();
+
 }

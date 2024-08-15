@@ -460,4 +460,40 @@ public class DatabaseActions : IDatabaseActions
             throw new GeneralDatabaseException("An unexpected error occurred while retrieving the entities.", ex);
         }
     }
+
+    public async Task<bool> CheckIfEntityExists<T>(string field, string value) where T : BaseModel, new()
+    {
+        try
+        {
+            var result = await _supabaseClient.From<T>()
+                .Filter(field, Constants.Operator.Equals, value)
+                .Select(field)
+                .Get();
+            return result.Models.Any();
+        }
+        catch (HttpRequestException ex)
+        {
+            throw new GeneralDatabaseException("A network error occurred while checking if the item exists.", ex);
+        }
+        catch (ArgumentNullException ex)
+        {
+            throw new GeneralDatabaseException("A required argument was null while checking if the item exists.", ex);
+        }
+        catch (InvalidOperationException ex)
+        {
+            throw new GeneralDatabaseException("An invalid operation occurred while checking if the item exists.", ex);
+        }
+        catch (TimeoutException ex)
+        {
+            throw new GeneralDatabaseException("A timeout occurred while checking if the item exists.", ex);
+        }
+        catch (TaskCanceledException ex)
+        {
+            throw new GeneralDatabaseException("The task was canceled while checking if the item exists.", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new GeneralDatabaseException("An unexpected error occurred while checking if the item exists.", ex);
+        }
+    }
 }
