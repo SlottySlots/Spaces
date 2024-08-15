@@ -14,7 +14,7 @@ namespace SlottyMedia.Backend.Services
     {
         private readonly IDatabaseActions _databaseActions;
 
-        // Constructor to initialize the ForumService with the required database actions.
+        /// Constructor to initialize the ForumService with the required database actions.
         public ForumService(IDatabaseActions databaseActions)
         {
             _databaseActions = databaseActions;
@@ -57,7 +57,6 @@ namespace SlottyMedia.Backend.Services
         /// </summary>
         /// <param name="forum">The the forum to delete.</param>
         /// <returns>Returns a Task representing the asynchronous operation.</returns>
-        /// <exception cref="NotFoundException">Throws an exception if the forum is not found.</exception>
         /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while deleting the forum.</exception>
         public async Task DeleteForum(ForumDto forum)
         {

@@ -26,6 +26,8 @@ public Nullable<Guid> ForumId { get; set; }
 
 ### **CreatorUser**
 
+The User who created the Forum. This is a Reference to the User Table.
+
 ```csharp
 public UserDao CreatorUser { get; set; }
 ```
@@ -114,11 +116,15 @@ public Dictionary<PrimaryKeyAttribute, object> PrimaryKey { get; }
 
 ### **ForumDao()**
 
+The default constructor.
+
 ```csharp
 public ForumDao()
 ```
 
 ### **ForumDao(Guid, String)**
+
+The constructor with parameters.
 
 ```csharp
 public ForumDao(Guid creatorUserId, string forumTopic)
@@ -127,5 +133,7 @@ public ForumDao(Guid creatorUserId, string forumTopic)
 #### Parameters
 
 `creatorUserId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The Id of the User who created the Forum
 
 `forumTopic` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The Topic of the Forum

@@ -9,10 +9,21 @@ namespace SlottyMedia.Database.Daos;
 [Table("User_Like_Post_Relation")]
 public class UserLikePostRelationDao : BaseModel
 {
+    /// <summary>
+    /// The default constructor.
+    /// </summary>
     public UserLikePostRelationDao()
     {
+        UserLikePostRelationId = Guid.Empty;
+        UserId = Guid.Empty;
+        PostId = Guid.Empty;
     }
 
+    /// <summary>
+    /// The constructor with parameters.
+    /// </summary>
+    /// <param name="userId">The UserId</param>
+    /// <param name="postId">The PostId</param>
     public UserLikePostRelationDao(Guid userId, Guid postId)
     {
         UserId = userId;

@@ -3,6 +3,9 @@ using SlottyMedia.Database.Exceptions;
 
 namespace SlottyMedia.Backend.Services.Interfaces
 {
+    /// <summary>
+    /// The ICommentService interface is responsible for handling comment related operations.
+    /// </summary>
     public interface ICommentService
     {
         /// <summary>

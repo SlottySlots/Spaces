@@ -6,9 +6,9 @@ namespace SlottyMedia.DatabaseSeeding;
 internal class Rules
 {
     /// <summary>
-    ///     This method creates the rules for the UserDao.
+    /// Creates the rules for generating fake UserDao objects.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A Faker&lt;\<see cref="UserDao"/>&gt; object with predefined rules.</returns>
     internal Faker<UserDao> UserRules()
     {
         var userFaker = new Faker<UserDao>()
@@ -22,10 +22,10 @@ internal class Rules
     }
 
     /// <summary>
-    ///     This method creates the rules for the ForumDao.
+    /// Creates the rules for generating fake ForumDao objects.
     /// </summary>
-    /// <param name="userFaker"></param>
-    /// <returns></returns>
+    /// <param name="userIds">A list of user IDs to associate with the forums.</param>
+    /// <returns>A Faker&lt;\<see cref="ForumDao"/>&gt; object with predefined rules.</returns>
     internal Faker<ForumDao> ForumRules(List<Guid> userIds)
     {
         var forumFaker = new Faker<ForumDao>()
@@ -37,11 +37,11 @@ internal class Rules
     }
 
     /// <summary>
-    ///     This method creates the rules for the PostsDao.
+    /// Creates the rules for generating fake PostsDao objects.
     /// </summary>
-    /// <param name="userFaker"></param>
-    /// <param name="forumFaker"></param>
-    /// <returns></returns>
+    /// <param name="userIds">A list of user IDs to associate with the posts.</param>
+    /// <param name="forumIds">A list of forum IDs to associate with the posts.</param>
+    /// <returns>A Faker&lt;\<see cref="PostsDao"/>&gt; object with predefined rules.</returns>
     internal Faker<PostsDao> PostRules(List<Guid> userIds, List<Guid> forumIds)
     {
         var postFaker = new Faker<PostsDao>()
@@ -55,11 +55,11 @@ internal class Rules
     }
 
     /// <summary>
-    ///     This method creates the rules for the CommentDto.
+    /// Creates the rules for generating fake CommentDao objects.
     /// </summary>
-    /// <param name="userFaker"></param>
-    /// <param name="postFaker"></param>
-    /// <returns></returns>
+    /// <param name="userIds">A list of user IDs to associate with the comments.</param>
+    /// <param name="postIds">A list of post IDs to associate with the comments.</param>
+    /// <returns>A Faker&lt;\<see cref="CommentDao"/>&gt; object with predefined rules.</returns>
     internal Faker<CommentDao> CommentRules(List<Guid> userIds, List<Guid> postIds)
     {
         var commentFaker = new Faker<CommentDao>()
@@ -72,10 +72,11 @@ internal class Rules
     }
 
     /// <summary>
-    ///     This method creates the rules for the FollowerUserRelationDao.
+    /// Creates the rules for generating fake FollowerUserRelationDao objects.
     /// </summary>
-    /// <param name="userFaker"></param>
-    /// <returns></returns>
+    /// <param name="userIds">A list of user IDs to associate with the follower relations.</param>
+    /// <returns>A Faker&lt;\<see cref="FollowerUserRelationDao"/>&gt; object with predefined rules.</returns>
+    /// <exception cref="ArgumentException">Thrown when less than two user IDs are provided.</exception>
     internal Faker<FollowerUserRelationDao> FollowerUserRelationRules(List<Guid> userIds)
     {
         if (userIds.Count < 2)
@@ -108,11 +109,11 @@ internal class Rules
     }
 
     /// <summary>
-    ///     This method creates the rules for the UserLikePostRelationDao.
+    /// Creates the rules for generating fake UserLikePostRelationDao objects.
     /// </summary>
-    /// <param name="userFaker"></param>
-    /// <param name="postFaker"></param>
-    /// <returns></returns>
+    /// <param name="userIds">A list of user IDs to associate with the like relations.</param>
+    /// <param name="postIds">A list of post IDs to associate with the like relations.</param>
+    /// <returns>A Faker&lt;\<see cref="UserLikePostRelationDao"/>&gt; object with predefined rules.</returns>
     internal Faker<UserLikePostRelationDao> UserLikePostRelationRules(List<Guid> userIds, List<Guid> postIds)
     {
         var existingRelations = new HashSet<(Guid, Guid)>();

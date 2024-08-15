@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Database
 
+The DatabaseActions class is responsible for all database actions.
+
 ```csharp
 public class DatabaseActions : IDatabaseActions
 ```
@@ -12,6 +14,8 @@ Implements [IDatabaseActions](./slottymedia.database.idatabaseactions.md)
 ## Constructors
 
 ### **DatabaseActions(Client)**
+
+The default constructor.
 
 ```csharp
 public DatabaseActions(Client supabaseClient)
@@ -312,6 +316,8 @@ Thrown when a network error, argument null, invalid operation, timeout, task
 
 ### **CheckIfEntityExists&lt;T&gt;(String, String)**
 
+The method checks if an entity exists in the database. It returns true if the entity exists, otherwise false.
+
 ```csharp
 public Task<bool> CheckIfEntityExists<T>(string field, string value)
 ```
@@ -319,13 +325,20 @@ public Task<bool> CheckIfEntityExists<T>(string field, string value)
 #### Type Parameters
 
 `T`<br>
+A Dao
 
 #### Parameters
 
 `field` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The filed to check
 
 `value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The value to Check
 
 #### Returns
 
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+#### Exceptions
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>

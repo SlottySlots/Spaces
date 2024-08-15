@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Backend.Services.Interfaces
 
+The ICommentService interface is responsible for handling comment related operations.
+
 ```csharp
 public interface ICommentService
 ```

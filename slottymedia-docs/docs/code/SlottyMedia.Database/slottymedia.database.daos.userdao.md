@@ -141,11 +141,15 @@ public Dictionary<PrimaryKeyAttribute, object> PrimaryKey { get; }
 
 ### **UserDao()**
 
+The default constructor.
+
 ```csharp
 public UserDao()
 ```
 
 ### **UserDao(Guid, Guid, String, String, Nullable&lt;Int64&gt;)**
+
+The constructor with parameters.
 
 ```csharp
 public UserDao(Guid userId, Guid roleId, string userName, string description, Nullable<long> profilePic)
@@ -154,11 +158,16 @@ public UserDao(Guid userId, Guid roleId, string userName, string description, Nu
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The UserId of the User
 
 `roleId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The RoleID of the User
 
 `userName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The userName of the User
 
 `description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description of the User
 
 `profilePic` [Nullable&lt;Int64&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+The profilePic of the User

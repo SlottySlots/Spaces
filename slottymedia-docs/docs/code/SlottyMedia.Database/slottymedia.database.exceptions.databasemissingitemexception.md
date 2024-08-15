@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Database.Exceptions
 
+/// This exception is thrown when an item is missing from the database.
+
 ```csharp
 public class DatabaseMissingItemException : BaseDatabaseException, System.Runtime.Serialization.ISerializable
 ```
@@ -95,11 +97,15 @@ public string StackTrace { get; }
 
 ### **DatabaseMissingItemException()**
 
+The default constructor.
+
 ```csharp
 public DatabaseMissingItemException()
 ```
 
 ### **DatabaseMissingItemException(String)**
+
+The constructor with parameters.
 
 ```csharp
 public DatabaseMissingItemException(string message)
@@ -110,6 +116,8 @@ public DatabaseMissingItemException(string message)
 `message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **DatabaseMissingItemException(String, String)**
+
+The constructor with parameters.
 
 ```csharp
 public DatabaseMissingItemException(string propertyName, string message)
@@ -122,6 +130,8 @@ public DatabaseMissingItemException(string propertyName, string message)
 `message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **DatabaseMissingItemException(String, Exception)**
+
+THe constructor with parameters.
 
 ```csharp
 public DatabaseMissingItemException(string message, Exception innerException)

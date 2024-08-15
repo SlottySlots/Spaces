@@ -68,8 +68,5 @@ Returns a Task representing the asynchronous operation.
 
 #### Exceptions
 
-!:NotFoundException<br>
-Throws an exception if the forum is not found.
-
 T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
 Throws an exception if an error occurs while deleting the forum.

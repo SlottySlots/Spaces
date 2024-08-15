@@ -6,17 +6,26 @@ using SlottyMedia.Database.Exceptions;
 
 namespace SlottyMedia.DatabaseSeeding;
 
+/// <summary>
+/// This class represents the Seeding.
+/// </summary>
 public class Seeding
 {
     private readonly IDatabaseActions _databaseActions;
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-
+    /// <summary>
+    /// The constructor with parameters.
+    /// </summary>
+    /// <param name="databaseActions"></param>
     public Seeding(IDatabaseActions databaseActions)
     {
         _databaseActions = databaseActions;
     }
 
+    /// <summary>
+    /// This method seeds the database with random data.
+    /// </summary>
     public async Task Seed()
     {
         Logger.Debug("Checking if seeding is needed.");
@@ -223,7 +232,7 @@ public class Seeding
         {
             var result = await _databaseActions.GetEntityByField<RoleDao>("roleID", roleId);
         }
-        catch (DatabaseMissingItemException e)
+        catch (DatabaseMissingItemException)
         {
             var role = new RoleDao
             {

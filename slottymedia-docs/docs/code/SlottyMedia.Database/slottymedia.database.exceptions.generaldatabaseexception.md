@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Database.Exceptions
 
+This exception is thrown when a general database exception occurs.
+
 ```csharp
 public class GeneralDatabaseException : BaseDatabaseException, System.Runtime.Serialization.ISerializable
 ```
@@ -95,11 +97,15 @@ public string StackTrace { get; }
 
 ### **GeneralDatabaseException()**
 
+The default constructor.
+
 ```csharp
 public GeneralDatabaseException()
 ```
 
 ### **GeneralDatabaseException(String)**
+
+The constructor with parameters.
 
 ```csharp
 public GeneralDatabaseException(string message)
@@ -110,6 +116,8 @@ public GeneralDatabaseException(string message)
 `message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **GeneralDatabaseException(String, String)**
+
+The constructor with parameters.
 
 ```csharp
 public GeneralDatabaseException(string propertyName, string message)
@@ -122,6 +130,8 @@ public GeneralDatabaseException(string propertyName, string message)
 `message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **GeneralDatabaseException(String, Exception)**
+
+The constructor with parameters.
 
 ```csharp
 public GeneralDatabaseException(string message, Exception innerException)

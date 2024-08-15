@@ -104,11 +104,15 @@ public Dictionary<PrimaryKeyAttribute, object> PrimaryKey { get; }
 
 ### **UserLikePostRelationDao()**
 
+The default constructor.
+
 ```csharp
 public UserLikePostRelationDao()
 ```
 
 ### **UserLikePostRelationDao(Guid, Guid)**
+
+The constructor with parameters.
 
 ```csharp
 public UserLikePostRelationDao(Guid userId, Guid postId)
@@ -117,5 +121,7 @@ public UserLikePostRelationDao(Guid userId, Guid postId)
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The UserId
 
 `postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The PostId

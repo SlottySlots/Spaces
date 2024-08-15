@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.DatabaseSeeding
 
+This class represents the Seeding.
+
 ```csharp
 public class Seeding
 ```
@@ -11,6 +13,8 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 ## Constructors
 
 ### **Seeding(IDatabaseActions)**
+
+The constructor with parameters.
 
 ```csharp
 public Seeding(IDatabaseActions databaseActions)
@@ -23,6 +27,8 @@ public Seeding(IDatabaseActions databaseActions)
 ## Methods
 
 ### **Seed()**
+
+This method seeds the database with random data.
 
 ```csharp
 public Task Seed()

@@ -97,11 +97,15 @@ public string StackTrace { get; }
 
 ### **DatabaseIudActionException()**
 
+The default constructor.
+
 ```csharp
 public DatabaseIudActionException()
 ```
 
 ### **DatabaseIudActionException(String)**
+
+The constructor with parameters.
 
 ```csharp
 public DatabaseIudActionException(string message)
@@ -112,6 +116,8 @@ public DatabaseIudActionException(string message)
 `message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **DatabaseIudActionException(String, String)**
+
+The constructor with parameters.
 
 ```csharp
 public DatabaseIudActionException(string propertyName, string message)
@@ -124,6 +130,8 @@ public DatabaseIudActionException(string propertyName, string message)
 `message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **DatabaseIudActionException(String, Exception)**
+
+The constructor with parameters.
 
 ```csharp
 public DatabaseIudActionException(string message, Exception innerException)

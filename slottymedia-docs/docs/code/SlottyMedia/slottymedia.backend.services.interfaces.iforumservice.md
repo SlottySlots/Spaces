@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Backend.Services.Interfaces
 
+The IForumService interface is responsible for handling forum related operations.
+
 ```csharp
 public interface IForumService
 ```
@@ -50,9 +52,6 @@ The forum to delete.
 Returns a Task representing the asynchronous operation.
 
 #### Exceptions
-
-!:NotFoundException<br>
-Throws an exception if the forum is not found.
 
 T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
 Throws an exception if an error occurs while deleting the forum.

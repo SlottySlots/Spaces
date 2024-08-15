@@ -128,8 +128,17 @@ public class PostService : IPostService
                 userId.ToString(), startOfSet, endOfSet,
                 ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
             );
-
-            return posts.Select(post => post.Forum.ForumTopic).ToList();
+            
+            var forumTopics = new List<string>();
+            foreach (var post in posts)
+            {
+                if (post.Forum is not null && post.Forum.ForumTopic is not null)
+                {
+                    forumTopics.Add(post.Forum.ForumTopic);
+                }
+            }
+            
+            return forumTopics;
         }
         catch (DatabaseMissingItemException ex)
         {

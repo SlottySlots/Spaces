@@ -162,6 +162,7 @@ The value to search for.
 The maximum number of items to retrieve.
 
 `min` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The minimum number of items to retrieve
 
 `orderByFields` [ValueTuple`3[]](https://docs.microsoft.com/en-us/dotnet/api/system.valuetuple-3)<br>
 The fields to order by.
@@ -173,6 +174,8 @@ Returns a list of entities from the database.
 
 ### **GetEntitiesWithSelectorById&lt;T&gt;(Expression&lt;Func&lt;T, Object[]&gt;&gt;, List&lt;ValueTuple&lt;String, Operator, String&gt;&gt;, Int32, Int32, ValueTuple`3[])**
 
+Returns a list of entities with a selector from the database based on the given search criteria.
+
 ```csharp
 Task<List<T>> GetEntitiesWithSelectorById<T>(Expression<Func<T, Object[]>> selector, List<ValueTuple<string, Operator, string>> search, int max, int min, ValueTuple`3[] orderByFields)
 ```
@@ -180,24 +183,33 @@ Task<List<T>> GetEntitiesWithSelectorById<T>(Expression<Func<T, Object[]>> selec
 #### Type Parameters
 
 `T`<br>
+The type of the item object.
 
 #### Parameters
 
 `selector` Expression&lt;Func&lt;T, Object[]&gt;&gt;<br>
+The selector expression to use.
 
 `search` [List&lt;ValueTuple&lt;String, Operator, String&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
+The search criteria.
 
 `max` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The maximum number of items to retrieve.
 
 `min` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The minimum number of items to retrieve
 
 `orderByFields` [ValueTuple`3[]](https://docs.microsoft.com/en-us/dotnet/api/system.valuetuple-3)<br>
+The fields to order by.
 
 #### Returns
 
 Task&lt;List&lt;T&gt;&gt;<br>
+Returns a list of entities from the database.
 
 ### **GetEntities&lt;T&gt;()**
+
+Returns a list of all entities from the database.
 
 ```csharp
 Task<List<T>> GetEntities<T>()
@@ -206,12 +218,16 @@ Task<List<T>> GetEntities<T>()
 #### Type Parameters
 
 `T`<br>
+The type of the item object.
 
 #### Returns
 
 Task&lt;List&lt;T&gt;&gt;<br>
+Returns a list of entities from the database.
 
 ### **CheckIfEntityExists&lt;T&gt;(String, String)**
+
+Checks if an entity exists in the database based on the given field and value.
 
 ```csharp
 Task<bool> CheckIfEntityExists<T>(string field, string value)
@@ -220,13 +236,17 @@ Task<bool> CheckIfEntityExists<T>(string field, string value)
 #### Type Parameters
 
 `T`<br>
+The type of the item object.
 
 #### Parameters
 
 `field` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The field to search.
 
 `value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The value to search for.
 
 #### Returns
 
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns true if the entity exists.

@@ -13,7 +13,7 @@ namespace SlottyMedia.Backend.Services
     {
         private readonly IDatabaseActions _databaseActions;
 
-        // Constructor to initialize the CommentService with the required database actions.
+        /// Constructor to initialize the CommentService with the required database actions.
         public CommentService(IDatabaseActions databaseActions)
         {
             _databaseActions = databaseActions;

@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Database.Exceptions
 
+This class represents the BaseDatabaseException.
+
 ```csharp
 public class BaseDatabaseException : System.Exception, System.Runtime.Serialization.ISerializable
 ```
@@ -95,11 +97,15 @@ public string StackTrace { get; }
 
 ### **BaseDatabaseException()**
 
+The default constructor.
+
 ```csharp
 public BaseDatabaseException()
 ```
 
 ### **BaseDatabaseException(String)**
+
+The constructor with parameters.
 
 ```csharp
 public BaseDatabaseException(string message)
@@ -110,6 +116,8 @@ public BaseDatabaseException(string message)
 `message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **BaseDatabaseException(String, String)**
+
+The constructor with parameters.
 
 ```csharp
 public BaseDatabaseException(string propertyName, string message)
@@ -122,6 +130,8 @@ public BaseDatabaseException(string propertyName, string message)
 `message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **BaseDatabaseException(String, Exception)**
+
+The constructor with parameters.
 
 ```csharp
 public BaseDatabaseException(string message, Exception innerException)

@@ -101,6 +101,8 @@ public string Content { get; set; }
 
 ### **Comments**
 
+The Comments of the Post. This is a Reference to the Comment Table. It is a Foreign Key. Be aware, that this
+
 ```csharp
 public List<CommentDao> Comments { get; set; }
 ```
@@ -165,11 +167,15 @@ public Dictionary<PrimaryKeyAttribute, object> PrimaryKey { get; }
 
 ### **PostsDao()**
 
+The default constructor.
+
 ```csharp
 public PostsDao()
 ```
 
 ### **PostsDao(Guid, Guid, String, String)**
+
+The constructor with parameters.
 
 ```csharp
 public PostsDao(Guid userId, Guid forumId, string headline, string content)
@@ -178,9 +184,13 @@ public PostsDao(Guid userId, Guid forumId, string headline, string content)
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The UserId of the Post
 
 `forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ForumId of the Post
 
 `headline` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The Headline of the Post
 
 `content` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The Content of the Post
