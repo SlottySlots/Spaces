@@ -1,5 +1,6 @@
 using NLog;
 using NLog.Web;
+using SlottyMedia;
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
@@ -11,7 +12,8 @@ using SlottyMedia.Database.Daos;
 using SlottyMedia.DatabaseSeeding;
 
 // Early init of NLog to allow startup and exception logging, before host is built
-var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+var config = NlogConfiguration.CreateNlogConfig();
+var logger = LogManager.Setup().LoadConfiguration(config).GetCurrentClassLogger();
 logger.Debug("init main");
 try
 {
