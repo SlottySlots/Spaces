@@ -1,3 +1,5 @@
+using SlottyMedia.LoggingProvider;
+
 namespace SlottyMedia.Backend.Exceptions.signup;
 
 /// <summary>

@@ -14,6 +14,9 @@ SlottyMedia.Database/bin
 /SlottyMedia.Database/obj
 /SlottyMedia.DatabaseSeeding/bin
 /SlottyMedia.DatabaseSeeding/obj
+/SlottyMedia.LoggingProvider/bin
+/SlottyMedia.LoggingProvider/obj
+
 
 # minified CSS
 **/*.min.css

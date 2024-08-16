@@ -1,10 +1,14 @@
-﻿namespace SlottyMedia.Database.Exceptions;
+﻿using SlottyMedia.LoggingProvider;
 
+namespace SlottyMedia.Database.Exceptions;
+
+public class GeneralDatabaseException : BaseException
 /// <summary>
 ///     This exception is thrown when a general database exception occurs.
 /// </summary>
 public class GeneralDatabaseException : BaseDatabaseException
 {
+    public GeneralDatabaseException()
     /// <summary>
     ///     The default constructor.
     /// </summary>
@@ -16,6 +20,7 @@ public class GeneralDatabaseException : BaseDatabaseException
     ///     The constructor with parameters.
     /// </summary>
     /// <param name="message"></param>
+
     public GeneralDatabaseException(string message) : base(message)
     {
     }

@@ -1,9 +1,11 @@
+using SlottyMedia.LoggingProvider;
+
 namespace SlottyMedia.Database.Exceptions;
 
 /// <summary>
 ///     This exception is thrown when an IUD action fails. I stands for Insert, U for Update and D for Delete.
 /// </summary>
-public class DatabaseIudActionException : BaseDatabaseException
+public class DatabaseIudActionException : BaseException
 {
     /// <summary>
     ///     The default constructor.
@@ -11,6 +13,7 @@ public class DatabaseIudActionException : BaseDatabaseException
     public DatabaseIudActionException()
     {
     }
+
 
     /// <summary>
     ///     The constructor with parameters.

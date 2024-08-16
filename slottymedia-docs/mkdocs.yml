@@ -11,7 +11,16 @@ nav:
     - Seeding: code/SlottyMedia.DatabaseSeeding/index.md
     - Tests: code/SlottyMedia.Tests/index.md
   - Exception Guidelines: exceptions.md
-theme: material
+  - Logging Guidelines : logging.md
+theme:
+  name: material
+  features:
+    - instant_navigation
+    - content.code.copy
 plugins:
   - search
   - include_dir_to_nav
+markdown_extensions:
+  - pymdownx.extra
+  - pymdownx.highlight
+  - pymdownx.superfences
