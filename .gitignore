@@ -17,6 +17,8 @@ SlottyMedia.Database/bin
 /SlottyMedia.LoggingProvider/bin
 /SlottyMedia.LoggingProvider/obj
 
+/docker
+
 
 # minified CSS
 **/*.min.css
