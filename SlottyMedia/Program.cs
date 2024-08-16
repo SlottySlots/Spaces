@@ -1,6 +1,5 @@
 using NLog;
 using NLog.Web;
-using SlottyMedia;
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
@@ -10,11 +9,11 @@ using SlottyMedia.Components;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.DatabaseSeeding;
+using SlottyMedia.LoggingProvider;
 
 // Early init of NLog to allow startup and exception logging, before host is built
-var config = NlogConfiguration.CreateNlogConfig();
-var logger = LogManager.Setup().LoadConfiguration(config).GetCurrentClassLogger();
-logger.Debug("init main");
+var logger = Logging.Instance;
+logger.LogInfo("Starting application");
 try
 {
     var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +21,7 @@ try
     // Add services to the container.
     builder.Services.AddRazorComponents()
         .AddInteractiveServerComponents();
-    
+
     // NLog: Setup NLog for Dependency injection
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
@@ -76,7 +75,7 @@ try
         }
         catch (Exception e)
         {
-            logger.Error(e, "Database seeding failed.");
+            logger.LogError(e, "Database seeding failed.");
         }
     }
 
@@ -101,7 +100,7 @@ try
 catch (Exception ex)
 {
     // NLog: catch setup errors
-    logger.Error(ex, "Stopped program because of exception");
+    logger.LogError(ex, "Stopped program because of exception");
     throw;
 }
 finally

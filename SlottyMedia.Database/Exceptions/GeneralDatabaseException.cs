@@ -1,11 +1,13 @@
-﻿namespace SlottyMedia.Database.Exceptions;
+﻿using SlottyMedia.LoggingProvider;
 
-public class GeneralDatabaseException : BaseDatabaseException
+namespace SlottyMedia.Database.Exceptions;
+
+public class GeneralDatabaseException : BaseException
 {
-    public GeneralDatabaseException() : base()
+    public GeneralDatabaseException()
     {
     }
-    
+
     public GeneralDatabaseException(string message) : base(message)
     {
     }

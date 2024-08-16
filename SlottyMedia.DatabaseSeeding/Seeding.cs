@@ -8,8 +8,8 @@ namespace SlottyMedia.DatabaseSeeding;
 
 public class Seeding
 {
-    private readonly IDatabaseActions _databaseActions;
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    private readonly IDatabaseActions _databaseActions;
 
 
     public Seeding(IDatabaseActions databaseActions)
@@ -239,6 +239,5 @@ public class Seeding
             Logger.Error(e, "An exception occurred.");
             throw;
         }
-        
     }
 }

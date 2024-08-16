@@ -1,0 +1,13 @@
+C:\Users\manue\Documents\GitHub\SlottyMedia\SlottyMedia.LoggingProvider\bin\Debug\net8.0\SlottyMedia.LoggingProvider.deps.json
+C:\Users\manue\Documents\GitHub\SlottyMedia\SlottyMedia.LoggingProvider\bin\Debug\net8.0\SlottyMedia.LoggingProvider.dll
+C:\Users\manue\Documents\GitHub\SlottyMedia\SlottyMedia.LoggingProvider\bin\Debug\net8.0\SlottyMedia.LoggingProvider.pdb
+C:\Users\manue\Documents\GitHub\SlottyMedia\SlottyMedia.LoggingProvider\obj\Debug\net8.0\SlottyMedia.LoggingProvider.csproj.AssemblyReference.cache
+C:\Users\manue\Documents\GitHub\SlottyMedia\SlottyMedia.LoggingProvider\obj\Debug\net8.0\SlottyMedia.LoggingProvider.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\manue\Documents\GitHub\SlottyMedia\SlottyMedia.LoggingProvider\obj\Debug\net8.0\SlottyMedia.LoggingProvider.AssemblyInfoInputs.cache
+C:\Users\manue\Documents\GitHub\SlottyMedia\SlottyMedia.LoggingProvider\obj\Debug\net8.0\SlottyMedia.LoggingProvider.AssemblyInfo.cs
+C:\Users\manue\Documents\GitHub\SlottyMedia\SlottyMedia.LoggingProvider\obj\Debug\net8.0\SlottyMedia.LoggingProvider.csproj.CoreCompileInputs.cache
+C:\Users\manue\Documents\GitHub\SlottyMedia\SlottyMedia.LoggingProvider\obj\Debug\net8.0\SlottyMedia.LoggingProvider.sourcelink.json
+C:\Users\manue\Documents\GitHub\SlottyMedia\SlottyMedia.LoggingProvider\obj\Debug\net8.0\SlottyMedia.LoggingProvider.dll
+C:\Users\manue\Documents\GitHub\SlottyMedia\SlottyMedia.LoggingProvider\obj\Debug\net8.0\refint\SlottyMedia.LoggingProvider.dll
+C:\Users\manue\Documents\GitHub\SlottyMedia\SlottyMedia.LoggingProvider\obj\Debug\net8.0\SlottyMedia.LoggingProvider.pdb
+C:\Users\manue\Documents\GitHub\SlottyMedia\SlottyMedia.LoggingProvider\obj\Debug\net8.0\ref\SlottyMedia.LoggingProvider.dll
