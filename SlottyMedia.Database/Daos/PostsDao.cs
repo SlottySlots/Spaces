@@ -10,7 +10,7 @@ namespace SlottyMedia.Database.Daos;
 public class PostsDao : BaseModel
 {
     /// <summary>
-    /// The default constructor.
+    ///     The default constructor.
     /// </summary>
     public PostsDao()
     {
@@ -21,7 +21,7 @@ public class PostsDao : BaseModel
     }
 
     /// <summary>
-    /// The constructor with parameters.
+    ///     The constructor with parameters.
     /// </summary>
     /// <param name="userId">The UserId of the Post</param>
     /// <param name="forumId">The ForumId of the Post</param>
@@ -81,7 +81,7 @@ public class PostsDao : BaseModel
     public string? Content { get; set; }
 
     /// <summary>
-    /// The Comments of the Post. This is a Reference to the Comment Table. It is a Foreign Key. Be aware, that this
+    ///     The Comments of the Post. This is a Reference to the Comment Table. It is a Foreign Key. Be aware, that this
     /// </summary>
     [Reference(typeof(CommentDao), ReferenceAttribute.JoinType.Left, true, "corresponding_PostID")]
     public List<CommentDao?>? Comments { get; set; }

@@ -10,7 +10,7 @@ namespace SlottyMedia.Database.Daos;
 public class ForumDao : BaseModel
 {
     /// <summary>
-    /// The default constructor.
+    ///     The default constructor.
     /// </summary>
     public ForumDao()
     {
@@ -19,7 +19,7 @@ public class ForumDao : BaseModel
     }
 
     /// <summary>
-    /// The constructor with parameters.
+    ///     The constructor with parameters.
     /// </summary>
     /// <param name="creatorUserId">The Id of the User who created the Forum</param>
     /// <param name="forumTopic">The Topic of the Forum</param>
@@ -34,11 +34,11 @@ public class ForumDao : BaseModel
     /// </summary>
     [PrimaryKey("forumID")]
     public Guid? ForumId { get; set; }
-    
-    
-/// <summary>
-/// The User who created the Forum. This is a Reference to the User Table.
-/// </summary>
+
+
+    /// <summary>
+    ///     The User who created the Forum. This is a Reference to the User Table.
+    /// </summary>
     [Reference(typeof(UserDao), ReferenceAttribute.JoinType.Inner, true, "userID")]
     public UserDao? CreatorUser { get; set; }
 

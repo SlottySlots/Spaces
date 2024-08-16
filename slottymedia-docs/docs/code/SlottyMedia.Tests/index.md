@@ -30,6 +30,12 @@
 
 ## SlottyMedia.Tests.ServiceTests
 
+[CommentServiceTests](./slottymedia.tests.servicetests.commentservicetests.md)
+
+[ForumServiceTests](./slottymedia.tests.servicetests.forumservicetests.md)
+
+[LikeServiceTests](./slottymedia.tests.servicetests.likeservicetests.md)
+
 [PostServiceTests](./slottymedia.tests.servicetests.postservicetests.md)
 
 [SearchServiceTests](./slottymedia.tests.servicetests.searchservicetests.md)

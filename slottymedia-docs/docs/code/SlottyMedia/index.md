@@ -38,6 +38,10 @@
 
 [ForumIudException](./slottymedia.backend.exceptions.services.postexceptions.forumiudexception.md)
 
+[LikeGeneralException](./slottymedia.backend.exceptions.services.postexceptions.likegeneralexception.md)
+
+[LikeIudException](./slottymedia.backend.exceptions.services.postexceptions.likeiudexception.md)
+
 [PostGeneralException](./slottymedia.backend.exceptions.services.postexceptions.postgeneralexception.md)
 
 [PostIudException](./slottymedia.backend.exceptions.services.postexceptions.postiudexception.md)
@@ -49,6 +53,8 @@
 [SearchGeneralExceptions](./slottymedia.backend.exceptions.services.searchexceptions.searchgeneralexceptions.md)
 
 ## SlottyMedia.Backend.Exceptions.Services.UserExceptions
+
+[LikeNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.likenotfoundexception.md)
 
 [UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)
 
@@ -71,6 +77,8 @@
 [CookieService](./slottymedia.backend.services.cookieservice.md)
 
 [ForumService](./slottymedia.backend.services.forumservice.md)
+
+[LikeService](./slottymedia.backend.services.likeservice.md)
 
 [PostService](./slottymedia.backend.services.postservice.md)
 

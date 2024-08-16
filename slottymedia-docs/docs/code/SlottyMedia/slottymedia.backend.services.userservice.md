@@ -33,7 +33,8 @@ This parameter is used to interact with the post service
 
 ### **CreateUser(String, String, String, Nullable&lt;Int64&gt;)**
 
-This method creates a new User object in the database and returns the created object. This method does not check if the User already exists.
+This method creates a new User object in the database and returns the created object. This method does not check if
+ the User already exists.
 
 ```csharp
 public Task<UserDto> CreateUser(string userId, string username, string description, Nullable<long> profilePicture)

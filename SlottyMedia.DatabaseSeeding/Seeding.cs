@@ -7,15 +7,15 @@ using SlottyMedia.Database.Exceptions;
 namespace SlottyMedia.DatabaseSeeding;
 
 /// <summary>
-/// This class represents the Seeding.
+///     This class represents the Seeding.
 /// </summary>
 public class Seeding
 {
-    private readonly IDatabaseActions _databaseActions;
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    private readonly IDatabaseActions _databaseActions;
 
     /// <summary>
-    /// The constructor with parameters.
+    ///     The constructor with parameters.
     /// </summary>
     /// <param name="databaseActions"></param>
     public Seeding(IDatabaseActions databaseActions)
@@ -24,7 +24,7 @@ public class Seeding
     }
 
     /// <summary>
-    /// This method seeds the database with random data.
+    ///     This method seeds the database with random data.
     /// </summary>
     public async Task Seed()
     {
@@ -248,6 +248,5 @@ public class Seeding
             Logger.Error(e, "An exception occurred.");
             throw;
         }
-        
     }
 }

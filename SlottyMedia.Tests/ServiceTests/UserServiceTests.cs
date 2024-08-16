@@ -11,13 +11,13 @@ using SlottyMedia.Database.Exceptions;
 namespace SlottyMedia.Tests.ServiceTests;
 
 /// <summary>
-/// Tests the UserService used for user related actions in the database.
+///     Tests the UserService used for user related actions in the database.
 /// </summary>
 [TestFixture]
 public class UserServiceTests
 {
     /// <summary>
-    /// The setup method that is called before each test.
+    ///     The setup method that is called before each test.
     /// </summary>
     [SetUp]
     public void Setup()
@@ -29,7 +29,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// The teardown method that is called after each test.
+    ///     The teardown method that is called after each test.
     /// </summary>
     [TearDown]
     public void TearDown()
@@ -43,7 +43,7 @@ public class UserServiceTests
     private Mock<IPostService> _mockPostService;
 
     /// <summary>
-    /// Tests if CreateUser method returns the created user correctly.
+    ///     Tests if CreateUser method returns the created user correctly.
     /// </summary>
     [Test]
     public async Task CreateUser_ShouldReturnUser_WhenUserIsCreated()
@@ -67,7 +67,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if CreateUser method throws UserIudException when DatabaseIudActionException is thrown.
+    ///     Tests if CreateUser method throws UserIudException when DatabaseIudActionException is thrown.
     /// </summary>
     [Test]
     public void CreateUser_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()
@@ -80,7 +80,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if CreateUser method throws UserGeneralException when GeneralDatabaseException is thrown.
+    ///     Tests if CreateUser method throws UserGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void CreateUser_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
@@ -94,7 +94,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if DeleteUser method returns true when user is deleted successfully.
+    ///     Tests if DeleteUser method returns true when user is deleted successfully.
     /// </summary>
     [Test]
     public async Task DeleteUser_ShouldReturnTrue_WhenUserIsDeleted()
@@ -109,7 +109,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if DeleteUser method throws UserIudException when DatabaseIudActionException is thrown.
+    ///     Tests if DeleteUser method throws UserIudException when DatabaseIudActionException is thrown.
     /// </summary>
     [Test]
     public void DeleteUser_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()
@@ -121,7 +121,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if DeleteUser method throws UserGeneralException when GeneralDatabaseException is thrown.
+    ///     Tests if DeleteUser method throws UserGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void DeleteUser_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
@@ -133,7 +133,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if GetUserById method returns the user correctly when user exists.
+    ///     Tests if GetUserById method returns the user correctly when user exists.
     /// </summary>
     [Test]
     public async Task GetUserById_ShouldReturnUser_WhenUserExists()
@@ -152,7 +152,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if GetUserById method throws UserNotFoundException when DatabaseMissingItemException is thrown.
+    ///     Tests if GetUserById method throws UserNotFoundException when DatabaseMissingItemException is thrown.
     /// </summary>
     [Test]
     public void GetUserById_ShouldThrowUserNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
@@ -165,7 +165,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if GetUserById method throws UserGeneralException when GeneralDatabaseException is thrown.
+    ///     Tests if GetUserById method throws UserGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void GetUserById_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
@@ -178,7 +178,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if CheckIfUserExistsByUserName method returns true when user exists.
+    ///     Tests if CheckIfUserExistsByUserName method returns true when user exists.
     /// </summary>
     [Test]
     public async Task GetUserByUsername_ShouldBeTrue_WhenUserExists()
@@ -193,7 +193,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if UpdateUser method returns the updated user correctly.
+    ///     Tests if UpdateUser method returns the updated user correctly.
     /// </summary>
     [Test]
     public async Task UpdateUser_ShouldReturnUpdatedUser_WhenUserIsUpdated()
@@ -210,7 +210,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if UpdateUser method throws UserIudException when DatabaseIudActionException is thrown.
+    ///     Tests if UpdateUser method throws UserIudException when DatabaseIudActionException is thrown.
     /// </summary>
     [Test]
     public void UpdateUser_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()
@@ -222,7 +222,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if UpdateUser method throws UserGeneralException when GeneralDatabaseException is thrown.
+    ///     Tests if UpdateUser method throws UserGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void UpdateUser_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
@@ -234,7 +234,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if GetProfilePic method returns the profile picture correctly when user exists.
+    ///     Tests if GetProfilePic method returns the profile picture correctly when user exists.
     /// </summary>
     [Test]
     public async Task GetProfilePic_ShouldReturnProfilePic_WhenUserExists()
@@ -251,7 +251,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if GetProfilePic method throws UserNotFoundException when DatabaseMissingItemException is thrown.
+    ///     Tests if GetProfilePic method throws UserNotFoundException when DatabaseMissingItemException is thrown.
     /// </summary>
     [Test]
     public void GetProfilePic_ShouldThrowUserNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
@@ -264,7 +264,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if GetProfilePic method throws UserGeneralException when GeneralDatabaseException is thrown.
+    ///     Tests if GetProfilePic method throws UserGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void GetProfilePic_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
@@ -277,7 +277,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if GetUser method returns the user DTO correctly when user exists.
+    ///     Tests if GetUser method returns the user DTO correctly when user exists.
     /// </summary>
     [Test]
     public async Task GetUser_ShouldReturnUserDto_WhenUserExists()
@@ -314,7 +314,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if GetUser method throws UserNotFoundException when DatabaseMissingItemException is thrown.
+    ///     Tests if GetUser method throws UserNotFoundException when DatabaseMissingItemException is thrown.
     /// </summary>
     [Test]
     public void GetUser_ShouldThrowUserNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
@@ -328,7 +328,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if GetUser method throws UserGeneralException when GeneralDatabaseException is thrown.
+    ///     Tests if GetUser method throws UserGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void GetUser_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
@@ -342,7 +342,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if GetFriends method returns the friends list correctly when user has friends.
+    ///     Tests if GetFriends method returns the friends list correctly when user has friends.
     /// </summary>
     [Test]
     public async Task GetFriends_ShouldReturnFriendsList_WhenUserHasFriends()
@@ -366,7 +366,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if GetFriends method throws UserNotFoundException when DatabaseMissingItemException is thrown.
+    ///     Tests if GetFriends method throws UserNotFoundException when DatabaseMissingItemException is thrown.
     /// </summary>
     [Test]
     public void GetFriends_ShouldThrowUserNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
@@ -381,7 +381,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    /// Tests if GetFriends method throws UserGeneralException when GeneralDatabaseException is thrown.
+    ///     Tests if GetFriends method throws UserGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void GetFriends_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()

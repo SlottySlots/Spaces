@@ -7,14 +7,14 @@ using Client = Supabase.Client;
 namespace SlottyMedia.Database;
 
 /// <summary>
-/// The DatabaseActions class is responsible for all database actions.
+///     The DatabaseActions class is responsible for all database actions.
 /// </summary>
 public class DatabaseActions : IDatabaseActions
 {
     private readonly Client _supabaseClient;
 
     /// <summary>
-    /// The default constructor.
+    ///     The default constructor.
     /// </summary>
     /// <param name="supabaseClient"></param>
     public DatabaseActions(Client supabaseClient)
@@ -469,7 +469,7 @@ public class DatabaseActions : IDatabaseActions
     }
 
     /// <summary>
-    /// The method checks if an entity exists in the database. It returns true if the entity exists, otherwise false.
+    ///     The method checks if an entity exists in the database. It returns true if the entity exists, otherwise false.
     /// </summary>
     /// <param name="field">The filed to check</param>
     /// <param name="value">The value to Check</param>

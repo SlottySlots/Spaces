@@ -3,14 +3,14 @@ using NLog;
 namespace SlottyMedia.Database.Exceptions;
 
 /// <summary>
-/// This class represents the BaseDatabaseException.
+///     This class represents the BaseDatabaseException.
 /// </summary>
 public class BaseDatabaseException : Exception
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     /// <summary>
-    /// The default constructor.
+    ///     The default constructor.
     /// </summary>
     public BaseDatabaseException()
     {
@@ -18,7 +18,7 @@ public class BaseDatabaseException : Exception
     }
 
     /// <summary>
-    /// The constructor with parameters.
+    ///     The constructor with parameters.
     /// </summary>
     /// <param name="message"></param>
     public BaseDatabaseException(string message) : base(message)
@@ -27,7 +27,7 @@ public class BaseDatabaseException : Exception
     }
 
     /// <summary>
-    /// The constructor with parameters.
+    ///     The constructor with parameters.
     /// </summary>
     /// <param name="propertyName"></param>
     /// <param name="message"></param>
@@ -37,7 +37,7 @@ public class BaseDatabaseException : Exception
     }
 
     /// <summary>
-    /// The constructor with parameters.
+    ///     The constructor with parameters.
     /// </summary>
     /// <param name="message"></param>
     /// <param name="innerException"></param>

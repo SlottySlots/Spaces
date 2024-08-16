@@ -75,7 +75,7 @@ public class UserDto
 }
 
 /// <summary>
-/// The User Information Data Transfer Object. It differs to UserDto by not persisting recentForums.
+///     The User Information Data Transfer Object. It differs to UserDto by not persisting recentForums.
 /// </summary>
 public class UserInformationDto
 {
@@ -89,7 +89,7 @@ public class UserInformationDto
         Description = string.Empty;
         CreatedAt = DateTime.MinValue;
     }
-    
+
 
     /// <summary>
     ///     Gets or sets the User Id.
@@ -110,7 +110,7 @@ public class UserInformationDto
     ///     Gets or sets the date and time when the User was created.
     /// </summary>
     public DateTime CreatedAt { get; set; }
-    
+
 
     /// <summary>
     ///     This method maps the UserInformationDto to the User Dao.

@@ -1,19 +1,19 @@
 namespace SlottyMedia.Database.Exceptions;
 
 /// <summary>
-/// /// This exception is thrown when an item is missing from the database.
+///     /// This exception is thrown when an item is missing from the database.
 /// </summary>
 public class DatabaseMissingItemException : BaseDatabaseException
 {
     /// <summary>
-    /// The default constructor.
+    ///     The default constructor.
     /// </summary>
-    public DatabaseMissingItemException() : base()
+    public DatabaseMissingItemException()
     {
     }
-    
+
     /// <summary>
-    /// The constructor with parameters.
+    ///     The constructor with parameters.
     /// </summary>
     /// <param name="message"></param>
     public DatabaseMissingItemException(string message) : base(message)
@@ -21,7 +21,7 @@ public class DatabaseMissingItemException : BaseDatabaseException
     }
 
     /// <summary>
-    /// The constructor with parameters.
+    ///     The constructor with parameters.
     /// </summary>
     /// <param name="propertyName"></param>
     /// <param name="message"></param>
@@ -30,7 +30,7 @@ public class DatabaseMissingItemException : BaseDatabaseException
     }
 
     /// <summary>
-    /// THe constructor with parameters.
+    ///     THe constructor with parameters.
     /// </summary>
     /// <param name="message"></param>
     /// <param name="innerException"></param>

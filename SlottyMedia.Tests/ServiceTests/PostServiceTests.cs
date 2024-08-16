@@ -11,13 +11,13 @@ using Supabase.Postgrest;
 namespace SlottyMedia.Tests.ServiceTests;
 
 /// <summary>
-/// Tests the PostService used for CRUD operations on posts.
+///     Tests the PostService used for CRUD operations on posts.
 /// </summary>
 [TestFixture]
 public class PostServiceTests
 {
     /// <summary>
-    /// The setup method that is called before each test.
+    ///     The setup method that is called before each test.
     /// </summary>
     [SetUp]
     public void Setup()
@@ -27,7 +27,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// The teardown method that is called after each test.
+    ///     The teardown method that is called after each test.
     /// </summary>
     [TearDown]
     public void TearDown()
@@ -39,7 +39,7 @@ public class PostServiceTests
     private PostService _postService;
 
     /// <summary>
-    /// Tests if InsertPost method returns the inserted post correctly.
+    ///     Tests if InsertPost method returns the inserted post correctly.
     /// </summary>
     [Test]
     public async Task InsertPost_ShouldReturnInsertedPost()
@@ -65,7 +65,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests if InsertPost method throws PostIudException when DatabaseIudActionException is thrown.
+    ///     Tests if InsertPost method throws PostIudException when DatabaseIudActionException is thrown.
     /// </summary>
     [Test]
     public void InsertPost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()
@@ -88,7 +88,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests if InsertPost method throws PostGeneralException when GeneralDatabaseException is thrown.
+    ///     Tests if InsertPost method throws PostGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void InsertPost_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()
@@ -111,7 +111,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests if UpdatePost method returns the updated post correctly.
+    ///     Tests if UpdatePost method returns the updated post correctly.
     /// </summary>
     [Test]
     public async Task UpdatePost_ShouldReturnUpdatedPost()
@@ -136,7 +136,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests if UpdatePost method throws PostIudException when DatabaseIudActionException is thrown.
+    ///     Tests if UpdatePost method throws PostIudException when DatabaseIudActionException is thrown.
     /// </summary>
     [Test]
     public void UpdatePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()
@@ -157,7 +157,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests if UpdatePost method throws PostGeneralException when GeneralDatabaseException is thrown.
+    ///     Tests if UpdatePost method throws PostGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void UpdatePost_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()
@@ -177,7 +177,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests if DeletePost method returns true when post is deleted successfully.
+    ///     Tests if DeletePost method returns true when post is deleted successfully.
     /// </summary>
     [Test]
     public async Task DeletePost_ShouldReturnTrue()
@@ -199,7 +199,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests if DeletePost method throws PostIudException when DatabaseIudActionException is thrown.
+    ///     Tests if DeletePost method throws PostIudException when DatabaseIudActionException is thrown.
     /// </summary>
     [Test]
     public void DeletePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()
@@ -219,7 +219,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests if DeletePost method throws PostGeneralException when GeneralDatabaseException is thrown.
+    ///     Tests if DeletePost method throws PostGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void DeletePost_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()
@@ -239,7 +239,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests if GetPostsFromForum method returns a list of post titles from a forum.
+    ///     Tests if GetPostsFromForum method returns a list of post titles from a forum.
     /// </summary>
     [Test]
     public async Task GetPostsFromForum_ShouldReturnListOfPostTitles()
@@ -268,7 +268,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests if GetPostsFromForum method throws PostNotFoundException when DatabaseMissingItemException is thrown.
+    ///     Tests if GetPostsFromForum method throws PostNotFoundException when DatabaseMissingItemException is thrown.
     /// </summary>
     [Test]
     public void GetPostsFromForum_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
@@ -283,7 +283,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests if GetPostsFromForum method throws PostGeneralException when GeneralDatabaseException is thrown.
+    ///     Tests if GetPostsFromForum method throws PostGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void GetPostsFromForum_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()
@@ -298,7 +298,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests if GetPostsByUserId method returns a list of post DTOs by user ID.
+    ///     Tests if GetPostsByUserId method returns a list of post DTOs by user ID.
     /// </summary>
     [Test]
     public async Task GetPostsByUserId_ShouldReturnListOfPostDtos()
@@ -332,7 +332,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests if GetPostsByUserId method throws PostGeneralException when GeneralDatabaseException is thrown.
+    ///     Tests if GetPostsByUserId method throws PostGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void GetPostsByUserId_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()
@@ -352,7 +352,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests if GetPostsByUserIdByForumId method returns a list of post DTOs by user ID and forum ID.
+    ///     Tests if GetPostsByUserIdByForumId method returns a list of post DTOs by user ID and forum ID.
     /// </summary>
     [Test]
     public async Task GetPostsByUserIdByForumId_ShouldReturnListOfPostDtos()
@@ -387,7 +387,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests if GetPostsByUserIdByForumId method throws PostNotFoundException when DatabaseMissingItemException is thrown.
+    ///     Tests if GetPostsByUserIdByForumId method throws PostNotFoundException when DatabaseMissingItemException is thrown.
     /// </summary>
     [Test]
     public void GetPostsByUserIdByForumId_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
@@ -410,7 +410,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests if GetPostsByForumId method returns a list of post DTOs by forum ID.
+    ///     Tests if GetPostsByForumId method returns a list of post DTOs by forum ID.
     /// </summary>
     [Test]
     public async Task GetPostsByForumId_ShouldReturnListOfPostDtos()
@@ -442,7 +442,7 @@ public class PostServiceTests
     }
 
     /// <summary>
-    /// Tests if GetPostsByForumId method throws PostGeneralException when GeneralDatabaseException is thrown.
+    ///     Tests if GetPostsByForumId method throws PostGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void GetPostsByForumId_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()

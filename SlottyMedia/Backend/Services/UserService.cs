@@ -27,7 +27,8 @@ public class UserService : IUserService
     }
 
     /// <summary>
-    ///     This method creates a new User object in the database and returns the created object. This method does not check if the User already exists.
+    ///     This method creates a new User object in the database and returns the created object. This method does not check if
+    ///     the User already exists.
     /// </summary>
     /// <param name="userId">The ID we get from the Supabase Authentication Service</param>
     /// <param name="username">The Username of the User</param>
