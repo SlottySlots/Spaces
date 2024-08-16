@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
@@ -9,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Blazored.SessionStorage" Version="2.4.0" />
         <PackageReference Include="NLog" Version="5.3.2"/>
         <PackageReference Include="NLog.Config" Version="4.7.15"/>
         <PackageReference Include="NLog.Schema" Version="5.3.2"/>
@@ -30,5 +30,4 @@
     <Target Name="GenerateDocumentation" AfterTargets="Build;Run">
         <Exec Command="dotnet tool run xmldoc2md ./bin/Debug/net8.0/SlottyMedia.dll ../slottymedia-docs/docs/code/SlottyMedia"/>
     </Target>
-
 </Project>

@@ -9,29 +9,16 @@ namespace SlottyMedia.Database.Daos;
 [Table("User")]
 public class UserDao : BaseModel
 {
-    /// <summary>
-    /// The default constructor.
-    /// </summary>
     public UserDao()
     {
-        UserId = Guid.Empty;
-        RoleId = Guid.Empty;
-        UserName = string.Empty;
     }
 
-    /// <summary>
-    /// The constructor with parameters.
-    /// </summary>
-    /// <param name="userId">The UserId of the User</param>
-    /// <param name="roleId">The RoleID of the User</param>
-    /// <param name="userName">The userName of the User</param>
-    /// <param name="description">The description of the User</param>
-    /// <param name="profilePic">The profilePic of the User</param>
-    public UserDao(Guid userId, Guid roleId, string userName, string? description = null, long? profilePic = null)
+    public UserDao(Guid userId, Guid roleId, string userName, string email, string? description = null, long? profilePic = null)
     {
         UserId = userId;
         RoleId = roleId;
         UserName = userName;
+        Email = email;
         Description = description;
         ProfilePic = profilePic;
     }
@@ -60,6 +47,9 @@ public class UserDao : BaseModel
     /// </summary>
     [Column("userName")]
     public string? UserName { get; set; }
+    
+    [Column("email")]
+    public string? Email { get; set; }
 
     /// <summary>
     ///     The Description of the User.
