@@ -16,8 +16,6 @@
 
 [UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)
 
-## SlottyMedia.Backend.Exceptions
-
 [BaseException](./slottymedia.backend.exceptions.baseexception.md)
 
 ## SlottyMedia.Backend.Exceptions.auth

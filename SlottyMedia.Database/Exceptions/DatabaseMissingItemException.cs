@@ -1,10 +1,13 @@
+using SlottyMedia.LoggingProvider;
+
 namespace SlottyMedia.Database.Exceptions;
 
-public class DatabaseMissingItemException : BaseDatabaseException
+public class DatabaseMissingItemException : BaseException
 {
-    public DatabaseMissingItemException() : base()
+    public DatabaseMissingItemException()
     {
     }
+
     public DatabaseMissingItemException(string message) : base(message)
     {
     }
