@@ -11,6 +11,18 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ## Properties
 
+### **ViewModel**
+
+Viewmodel to be used on auth
+
+```csharp
+public ISignInFormVm ViewModel { get; set; }
+```
+
+#### Property Value
+
+[ISignInFormVm](./slottymedia.backend.viewmodel.interfaces.isigninformvm.md)<br>
+
 ### **Body**
 
 ```csharp

@@ -14,10 +14,6 @@
 
 [UserDto](./slottymedia.backend.dtos.userdto.md)
 
-## SlottyMedia.Backend.Exceptions
-
-[BaseException](./slottymedia.backend.exceptions.baseexception.md)
-
 ## SlottyMedia.Backend.Exceptions.auth
 
 [TokenNotProvidedException](./slottymedia.backend.exceptions.auth.tokennotprovidedexception.md)

@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Backend.Exceptions.Services.UserExceptions
 Represents an exception that occurs during Insert, Update, or Delete operations in the User service.
 
 ```csharp
-public class UserIudException : SlottyMedia.Backend.Exceptions.BaseException, System.Runtime.Serialization.ISerializable
+public class UserIudException : SlottyMedia.LoggingProvider.BaseException, System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [BaseException](./slottymedia.backend.exceptions.baseexception.md) → [UserIudException](./slottymedia.backend.exceptions.services.userexceptions.useriudexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException → [UserIudException](./slottymedia.backend.exceptions.services.userexceptions.useriudexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties

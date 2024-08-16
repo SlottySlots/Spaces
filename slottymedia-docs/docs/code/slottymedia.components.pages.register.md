@@ -9,6 +9,20 @@ public class Register : Microsoft.AspNetCore.Components.ComponentBase, Microsoft
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → ComponentBase → [Register](./slottymedia.components.pages.register.md)<br>
 Implements IComponent, IHandleEvent, IHandleAfterRender
 
+## Properties
+
+### **ViewModel**
+
+ViewModel to be used
+
+```csharp
+public ISignupFormVm ViewModel { get; set; }
+```
+
+#### Property Value
+
+[ISignupFormVm](./slottymedia.backend.viewmodel.interfaces.isignupformvm.md)<br>
+
 ## Constructors
 
 ### **Register()**
