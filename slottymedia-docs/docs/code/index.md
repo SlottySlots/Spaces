@@ -112,6 +112,8 @@
 
 ## SlottyMedia.Components.Partial
 
+[Avatar](./slottymedia.components.partial.avatar.md)
+
 [Card](./slottymedia.components.partial.card.md)
 
 [Checkbox](./slottymedia.components.partial.checkbox.md)
