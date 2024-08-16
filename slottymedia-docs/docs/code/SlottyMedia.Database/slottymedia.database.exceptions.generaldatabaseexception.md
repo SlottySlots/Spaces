@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Database.Exceptions
 This exception is thrown when a general database exception occurs.
 
 ```csharp
-public class GeneralDatabaseException : BaseDatabaseException, System.Runtime.Serialization.ISerializable
+public class GeneralDatabaseException : SlottyMedia.LoggingProvider.BaseException, System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [BaseDatabaseException](./slottymedia.database.exceptions.basedatabaseexception.md) → [GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException → [GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties
@@ -97,7 +97,7 @@ public string StackTrace { get; }
 
 ### **GeneralDatabaseException()**
 
-The default constructor.
+This exception is thrown when a general database exception occurs.
 
 ```csharp
 public GeneralDatabaseException()

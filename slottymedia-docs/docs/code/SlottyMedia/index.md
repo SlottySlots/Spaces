@@ -18,8 +18,6 @@
 
 [UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)
 
-[BaseException](./slottymedia.backend.exceptions.baseexception.md)
-
 ## SlottyMedia.Backend.Exceptions.auth
 
 [TokenNotProvidedException](./slottymedia.backend.exceptions.auth.tokennotprovidedexception.md)

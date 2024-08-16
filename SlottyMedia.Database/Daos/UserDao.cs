@@ -9,10 +9,22 @@ namespace SlottyMedia.Database.Daos;
 [Table("User")]
 public class UserDao : BaseModel
 {
+    /// <summary>
+    ///     The defaulkt constructor for the User Dao.
+    /// </summary>
     public UserDao()
     {
     }
 
+    /// <summary>
+    ///     The constructor for the User Dao.
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="roleId"></param>
+    /// <param name="userName"></param>
+    /// <param name="email"></param>
+    /// <param name="description"></param>
+    /// <param name="profilePic"></param>
     public UserDao(Guid userId, Guid roleId, string userName, string email, string? description = null,
         long? profilePic = null)
     {
@@ -49,7 +61,11 @@ public class UserDao : BaseModel
     [Column("userName")]
     public string? UserName { get; set; }
 
-    [Column("email")] public string? Email { get; set; }
+    /// <summary>
+    ///     The Email of the User.
+    /// </summary>
+    [Column("email")]
+    public string? Email { get; set; }
 
     /// <summary>
     ///     The Description of the User.

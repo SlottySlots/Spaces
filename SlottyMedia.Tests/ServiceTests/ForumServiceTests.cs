@@ -10,7 +10,7 @@ using SlottyMedia.Database.Exceptions;
 namespace SlottyMedia.Tests.ServiceTests;
 
 /// <summary>
-/// Tests for the ForumService class.
+///     Tests for the ForumService class.
 /// </summary>
 [TestFixture]
 public class ForumServiceTests

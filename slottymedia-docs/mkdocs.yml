@@ -9,6 +9,7 @@ nav:
     - SlottyMedia: code/SlottyMedia/index.md
     - Database : code/SlottyMedia.Database/index.md
     - Seeding: code/SlottyMedia.DatabaseSeeding/index.md
+    - Logging: code/SlottyMedia.LoggingProvider/index.md
     - Tests: code/SlottyMedia.Tests/index.md
   - Exception Guidelines: exceptions.md
   - Logging Guidelines : logging.md

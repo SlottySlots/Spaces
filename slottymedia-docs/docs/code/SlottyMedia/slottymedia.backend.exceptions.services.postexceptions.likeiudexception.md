@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Backend.Exceptions.Services.PostExceptions
 Represents an exception that occurs during Insert, Update, or Delete operations in the Forum service.
 
 ```csharp
-public class LikeIudException : SlottyMedia.Backend.Exceptions.BaseException, System.Runtime.Serialization.ISerializable
+public class LikeIudException : SlottyMedia.LoggingProvider.BaseException, System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [BaseException](./slottymedia.backend.exceptions.baseexception.md) → [LikeIudException](./slottymedia.backend.exceptions.services.postexceptions.likeiudexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException → [LikeIudException](./slottymedia.backend.exceptions.services.postexceptions.likeiudexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties

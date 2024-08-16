@@ -3,13 +3,22 @@ using SlottyMedia.Database.Daos;
 
 namespace SlottyMedia.DatabaseSeeding;
 
-internal class Rules
+/// <summary>
+///     The Rules class contains methods to create Faker objects with predefined rules for generating fake Dao objects.
+/// </summary>
+public class Rules
 {
     /// <summary>
     ///     Creates the rules for generating fake UserDao objects.
+    ///     - UserId: Randomly generated GUID.
+    ///     - RoleId: Fixed GUID value.
+    ///     - UserName: Randomly generated internet username.
+    ///     - Description: Randomly generated sentence.
+    ///     - ProfilePic: Randomly generated long value between 1 and 1000.
+    ///     - CreatedAt: Randomly generated past date.
     /// </summary>
     /// <returns>A Faker&lt;\<see cref="UserDao" />&gt; object with predefined rules.</returns>
-    internal Faker<UserDao> UserRules()
+    public Faker<UserDao> UserRules()
     {
         var userFaker = new Faker<UserDao>()
             .RuleFor(u => u.UserId, f => f.Random.Guid())
@@ -23,10 +32,14 @@ internal class Rules
 
     /// <summary>
     ///     Creates the rules for generating fake ForumDao objects.
+    ///     - ForumId: Randomly generated GUID.
+    ///     - CreatorUserId: Randomly selected from provided user IDs.
+    ///     - ForumTopic: Randomly generated sentence.
+    ///     - CreatedAt: Randomly generated past date.
     /// </summary>
     /// <param name="userIds">A list of user IDs to associate with the forums.</param>
     /// <returns>A Faker&lt;\<see cref="ForumDao" />&gt; object with predefined rules.</returns>
-    internal Faker<ForumDao> ForumRules(List<Guid> userIds)
+    public Faker<ForumDao> ForumRules(List<Guid> userIds)
     {
         var forumFaker = new Faker<ForumDao>()
             .RuleFor(f => f.ForumId, f => f.Random.Guid())
@@ -38,11 +51,17 @@ internal class Rules
 
     /// <summary>
     ///     Creates the rules for generating fake PostsDao objects.
+    ///     - PostId: Randomly generated GUID.
+    ///     - UserId: Randomly selected from provided user IDs.
+    ///     - ForumId: Randomly selected from provided forum IDs.
+    ///     - Headline: Randomly generated sentence.
+    ///     - Content: Randomly generated paragraphs.
+    ///     - CreatedAt: Randomly generated past date.
     /// </summary>
     /// <param name="userIds">A list of user IDs to associate with the posts.</param>
     /// <param name="forumIds">A list of forum IDs to associate with the posts.</param>
     /// <returns>A Faker&lt;\<see cref="PostsDao" />&gt; object with predefined rules.</returns>
-    internal Faker<PostsDao> PostRules(List<Guid> userIds, List<Guid> forumIds)
+    public Faker<PostsDao> PostRules(List<Guid> userIds, List<Guid> forumIds)
     {
         var postFaker = new Faker<PostsDao>()
             .RuleFor(p => p.PostId, f => f.Random.Guid())
@@ -56,11 +75,16 @@ internal class Rules
 
     /// <summary>
     ///     Creates the rules for generating fake CommentDao objects.
+    ///     - CommentId: Randomly generated GUID.
+    ///     - CreatorUserId: Randomly selected from provided user IDs.
+    ///     - PostId: Randomly selected from provided post IDs.
+    ///     - Content: Randomly generated paragraph.
+    ///     - CreatedAt: Randomly generated past date.
     /// </summary>
     /// <param name="userIds">A list of user IDs to associate with the comments.</param>
     /// <param name="postIds">A list of post IDs to associate with the comments.</param>
     /// <returns>A Faker&lt;\<see cref="CommentDao" />&gt; object with predefined rules.</returns>
-    internal Faker<CommentDao> CommentRules(List<Guid> userIds, List<Guid> postIds)
+    public Faker<CommentDao> CommentRules(List<Guid> userIds, List<Guid> postIds)
     {
         var commentFaker = new Faker<CommentDao>()
             .RuleFor(c => c.CommentId, f => f.Random.Guid())
@@ -73,11 +97,15 @@ internal class Rules
 
     /// <summary>
     ///     Creates the rules for generating fake FollowerUserRelationDao objects.
+    ///     - FollowerUserRelationId: Randomly generated GUID.
+    ///     - FollowerUserId: Randomly selected from provided user IDs, ensuring no duplicate relations.
+    ///     - FollowedUserId: Randomly selected from provided user IDs, ensuring no duplicate relations.
+    ///     - CreatedAt: Randomly generated past date.
     /// </summary>
     /// <param name="userIds">A list of user IDs to associate with the follower relations.</param>
     /// <returns>A Faker&lt;\<see cref="FollowerUserRelationDao" />&gt; object with predefined rules.</returns>
     /// <exception cref="ArgumentException">Thrown when less than two user IDs are provided.</exception>
-    internal Faker<FollowerUserRelationDao> FollowerUserRelationRules(List<Guid> userIds)
+    public Faker<FollowerUserRelationDao> FollowerUserRelationRules(List<Guid> userIds)
     {
         if (userIds.Count < 2)
             throw new ArgumentException("At least two userIds are required to generate follower relations.");
@@ -110,11 +138,15 @@ internal class Rules
 
     /// <summary>
     ///     Creates the rules for generating fake UserLikePostRelationDao objects.
+    ///     - UserLikePostRelationId: Randomly generated GUID.
+    ///     - UserId: Randomly selected from provided user IDs, ensuring no duplicate relations.
+    ///     - PostId: Randomly selected from provided post IDs, ensuring no duplicate relations.
+    ///     - CreatedAt: Randomly generated past date.
     /// </summary>
     /// <param name="userIds">A list of user IDs to associate with the like relations.</param>
     /// <param name="postIds">A list of post IDs to associate with the like relations.</param>
     /// <returns>A Faker&lt;\<see cref="UserLikePostRelationDao" />&gt; object with predefined rules.</returns>
-    internal Faker<UserLikePostRelationDao> UserLikePostRelationRules(List<Guid> userIds, List<Guid> postIds)
+    public Faker<UserLikePostRelationDao> UserLikePostRelationRules(List<Guid> userIds, List<Guid> postIds)
     {
         var existingRelations = new HashSet<(Guid, Guid)>();
         var userLikePostRelationFaker = new Faker<UserLikePostRelationDao>()

@@ -89,7 +89,7 @@ public class LikeService
         try
         {
             var likes = await _databaseActions.GetEntitiesWithSelectorById<UserLikePostRelationDao>(
-                x => new object[] { x.UserId },
+                x => new object[] { x.UserId! },
                 new List<(string, Constants.Operator, string)>
                 {
                     ("PostId", Constants.Operator.Equals, postId.ToString())

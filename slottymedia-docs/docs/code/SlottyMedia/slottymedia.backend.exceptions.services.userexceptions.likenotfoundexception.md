@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Backend.Exceptions.Services.UserExceptions
 This exception is thrown when a user is not found.
 
 ```csharp
-public class LikeNotFoundException : SlottyMedia.Backend.Exceptions.BaseException, System.Runtime.Serialization.ISerializable
+public class LikeNotFoundException : SlottyMedia.LoggingProvider.BaseException, System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [BaseException](./slottymedia.backend.exceptions.baseexception.md) → [LikeNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.likenotfoundexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException → [LikeNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.likenotfoundexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties

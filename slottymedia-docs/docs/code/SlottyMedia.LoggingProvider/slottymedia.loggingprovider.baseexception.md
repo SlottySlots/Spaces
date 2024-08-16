@@ -1,14 +1,14 @@
-# CommentIudException
+# BaseException
 
-Namespace: SlottyMedia.Backend.Exceptions.Services.PostExceptions
+Namespace: SlottyMedia.LoggingProvider
 
-Represents an exception that occurs during Insert, Update, or Delete operations in the Forum service.
+This exception is the base exception for all exceptions in the application.
 
 ```csharp
-public class CommentIudException : SlottyMedia.LoggingProvider.BaseException, System.Runtime.Serialization.ISerializable
+public class BaseException : System.Exception, System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException → [CommentIudException](./slottymedia.backend.exceptions.services.postexceptions.commentiudexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [BaseException](./slottymedia.loggingprovider.baseexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties
@@ -95,32 +95,50 @@ public string StackTrace { get; }
 
 ## Constructors
 
-### **CommentIudException(String)**
+### **BaseException()**
 
-Initializes a new instance of the [ForumIudException](./slottymedia.backend.exceptions.services.postexceptions.forumiudexception.md) class with a specified error message.
+The default constructor.
 
 ```csharp
-public CommentIudException(string message)
+public BaseException()
+```
+
+### **BaseException(String)**
+
+The constructor with parameters.
+
+```csharp
+public BaseException(string message)
 ```
 
 #### Parameters
 
 `message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The message that describes the error.
 
-### **CommentIudException(String, Exception)**
+### **BaseException(String, String)**
 
-Initializes a new instance of the [ForumIudException](./slottymedia.backend.exceptions.services.postexceptions.forumiudexception.md) class with a specified error message and a
- reference to the inner exception that is the cause of this exception.
+The constructor with parameters.
 
 ```csharp
-public CommentIudException(string message, Exception innerException)
+public BaseException(string propertyName, string message)
+```
+
+#### Parameters
+
+`propertyName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+### **BaseException(String, Exception)**
+
+The constructor with parameters.
+
+```csharp
+public BaseException(string message, Exception innerException)
 ```
 
 #### Parameters
 
 `message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The message that describes the error.
 
 `innerException` [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
-The exception that is the cause of the current exception.

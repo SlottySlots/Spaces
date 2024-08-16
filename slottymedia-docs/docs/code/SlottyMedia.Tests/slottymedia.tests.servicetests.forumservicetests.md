@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Tests.ServiceTests
 
+Tests for the ForumService class.
+
 ```csharp
 public class ForumServiceTests
 ```

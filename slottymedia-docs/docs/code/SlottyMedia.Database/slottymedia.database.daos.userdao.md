@@ -63,6 +63,8 @@ public string UserName { get; set; }
 
 ### **Email**
 
+The Email of the User.
+
 ```csharp
 public string Email { get; set; }
 ```
@@ -151,11 +153,15 @@ public Dictionary<PrimaryKeyAttribute, object> PrimaryKey { get; }
 
 ### **UserDao()**
 
+The defaulkt constructor for the User Dao.
+
 ```csharp
 public UserDao()
 ```
 
 ### **UserDao(Guid, Guid, String, String, String, Nullable&lt;Int64&gt;)**
+
+The constructor for the User Dao.
 
 ```csharp
 public UserDao(Guid userId, Guid roleId, string userName, string email, string description, Nullable<long> profilePic)

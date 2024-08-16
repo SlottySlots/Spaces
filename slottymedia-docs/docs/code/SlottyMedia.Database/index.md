@@ -26,8 +26,6 @@
 
 ## SlottyMedia.Database.Exceptions
 
-[BaseDatabaseException](./slottymedia.database.exceptions.basedatabaseexception.md)
-
 [DatabaseIudActionException](./slottymedia.database.exceptions.databaseiudactionexception.md)
 
 [DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)

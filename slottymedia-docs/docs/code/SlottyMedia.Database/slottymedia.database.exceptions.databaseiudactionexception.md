@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Database.Exceptions
 This exception is thrown when an IUD action fails. I stands for Insert, U for Update and D for Delete.
 
 ```csharp
-public class DatabaseIudActionException : BaseDatabaseException, System.Runtime.Serialization.ISerializable
+public class DatabaseIudActionException : SlottyMedia.LoggingProvider.BaseException, System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [BaseDatabaseException](./slottymedia.database.exceptions.basedatabaseexception.md) → [DatabaseIudActionException](./slottymedia.database.exceptions.databaseiudactionexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException → [DatabaseIudActionException](./slottymedia.database.exceptions.databaseiudactionexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties
