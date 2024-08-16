@@ -96,10 +96,10 @@ public void GetUserById_ShouldThrowUserNotFoundException_WhenDatabaseMissingItem
 public void GetUserById_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
 ```
 
-### **GetUserByUsername_ShouldFalse_WhenUserExists()**
+### **GetUserByUsername_ShouldBeTrue_WhenUserExists()**
 
 ```csharp
-public Task GetUserByUsername_ShouldFalse_WhenUserExists()
+public Task GetUserByUsername_ShouldBeTrue_WhenUserExists()
 ```
 
 #### Returns

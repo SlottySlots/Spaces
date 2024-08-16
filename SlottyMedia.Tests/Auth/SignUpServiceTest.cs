@@ -62,7 +62,7 @@ public class SignUpServiceTest
     [Test]
     public void SignUp_UserAlreadyExists()
     {
-        _userServiceMock.Setup(userService => userService.CheckIfUserExistsByUserName(_userName)).ReturnsAsync(false);
+        _userServiceMock.Setup(userService => userService.CheckIfUserExistsByUserName(_userName)).ReturnsAsync(true);
         Assert.ThrowsAsync<UsernameAlreadyExistsException>(async () =>
             {
                 await _signupService.SignUp(_userName, _email, _password);

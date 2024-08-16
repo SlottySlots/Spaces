@@ -61,6 +61,16 @@ public string UserName { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+### **Email**
+
+```csharp
+public string Email { get; set; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
 ### **Description**
 
 The Description of the User.
@@ -141,33 +151,26 @@ public Dictionary<PrimaryKeyAttribute, object> PrimaryKey { get; }
 
 ### **UserDao()**
 
-The default constructor.
-
 ```csharp
 public UserDao()
 ```
 
-### **UserDao(Guid, Guid, String, String, Nullable&lt;Int64&gt;)**
-
-The constructor with parameters.
+### **UserDao(Guid, Guid, String, String, String, Nullable&lt;Int64&gt;)**
 
 ```csharp
-public UserDao(Guid userId, Guid roleId, string userName, string description, Nullable<long> profilePic)
+public UserDao(Guid userId, Guid roleId, string userName, string email, string description, Nullable<long> profilePic)
 ```
 
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The UserId of the User
 
 `roleId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The RoleID of the User
 
 `userName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The userName of the User
+
+`email` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 `description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The description of the User
 
 `profilePic` [Nullable&lt;Int64&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The profilePic of the User
