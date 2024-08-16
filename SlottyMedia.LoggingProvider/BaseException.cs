@@ -1,4 +1,6 @@
-﻿namespace SlottyMedia.LoggingProvider;
+﻿using System;
+
+namespace SlottyMedia.LoggingProvider;
 
 public class BaseException : Exception
 {
