@@ -25,12 +25,13 @@ public static class NlogConfiguration
             ArchiveNumbering = ArchiveNumberingMode.Date,
             MaxArchiveFiles = 30,
             ArchiveFileName = "logs/archives/logfile-{#}.txt",
-            Layout = @"${date:format=HH\:mm\:ss} [${level}] ${logger} ${message}"
+            Layout = @"${date:format=HH\\:mm\\:ss} [${level}] ${logger} ${message}"
         };
         var logconsole = new ColoredConsoleTarget("console")
         {
             Layout = @"${date:format=HH\:mm\:ss} [${level}] ${logger} ${message}",
-            UseDefaultRowHighlightingRules = true
+            UseDefaultRowHighlightingRules = false,
+            EnableAnsiOutput = true
         };
 
         AddConsoleRowHighlightingRules(ref logconsole);
@@ -41,9 +42,9 @@ public static class NlogConfiguration
         config.AddTarget(asyncLogfile);
         config.AddTarget(asyncLogconsole);
 
-        config.AddRule(LogLevel.Info, LogLevel.Fatal, asyncLogfile);
+        config.AddRule(LogLevel.Trace, LogLevel.Fatal, asyncLogfile);
 
-        var consoleRule = new LoggingRule("*", LogLevel.Info, LogLevel.Fatal, asyncLogconsole);
+        var consoleRule = new LoggingRule("*", LogLevel.Debug, LogLevel.Fatal, asyncLogconsole);
         consoleRule.Filters.Add(new WhenMethodFilter(logEvent =>
             logEvent.LoggerName.StartsWith("Microsoft.") && logEvent.Level <= LogLevel.Warn
                 ? FilterResult.Ignore
@@ -58,8 +59,8 @@ public static class NlogConfiguration
         var debugHighlightRule = new ConsoleRowHighlightingRule
         {
             Condition = ConditionParser.ParseExpression("level == LogLevel.Debug"),
-            ForegroundColor = ConsoleOutputColor.Green,
-            BackgroundColor = ConsoleOutputColor.Red
+            ForegroundColor = ConsoleOutputColor.Cyan,
+            BackgroundColor = ConsoleOutputColor.NoChange
         };
         logconsole.RowHighlightingRules.Add(debugHighlightRule);
 
@@ -67,7 +68,7 @@ public static class NlogConfiguration
         {
             Condition = ConditionParser.ParseExpression("level == LogLevel.Info"),
             ForegroundColor = ConsoleOutputColor.White,
-            BackgroundColor = ConsoleOutputColor.Black
+            BackgroundColor = ConsoleOutputColor.NoChange
         };
         logconsole.RowHighlightingRules.Add(infoHighlightRule);
 
@@ -75,7 +76,7 @@ public static class NlogConfiguration
         {
             Condition = ConditionParser.ParseExpression("level == LogLevel.Warn"),
             ForegroundColor = ConsoleOutputColor.Yellow,
-            BackgroundColor = ConsoleOutputColor.Black
+            BackgroundColor = ConsoleOutputColor.NoChange
         };
         logconsole.RowHighlightingRules.Add(warnHighlightRule);
 
@@ -83,7 +84,7 @@ public static class NlogConfiguration
         {
             Condition = ConditionParser.ParseExpression("level == LogLevel.Error"),
             ForegroundColor = ConsoleOutputColor.Red,
-            BackgroundColor = ConsoleOutputColor.Black
+            BackgroundColor = ConsoleOutputColor.NoChange
         };
         logconsole.RowHighlightingRules.Add(errorHighlightRule);
 
@@ -91,7 +92,7 @@ public static class NlogConfiguration
         {
             Condition = ConditionParser.ParseExpression("level == LogLevel.Fatal"),
             ForegroundColor = ConsoleOutputColor.Magenta,
-            BackgroundColor = ConsoleOutputColor.Black
+            BackgroundColor = ConsoleOutputColor.NoChange
         };
         logconsole.RowHighlightingRules.Add(fatalHighlightRule);
     }
