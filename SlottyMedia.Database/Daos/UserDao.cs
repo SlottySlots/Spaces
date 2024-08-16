@@ -64,4 +64,9 @@ public class UserDao : BaseModel
     /// </summary>
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
+
+    public override string ToString()
+    {
+        return $"UserDao: {UserId}, {RoleId}, {UserName}, {Description}, {ProfilePic}, {CreatedAt}";
+    }
 }

@@ -4,6 +4,7 @@ using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.Services;
 
@@ -14,6 +15,7 @@ public class UserService : IUserService
 {
     private readonly IDatabaseActions _databaseActions;
     private readonly IPostService _postService;
+    private static readonly Logging Logger = Logging.Instance;
 
     /// <summary>
     ///     This constructor creates a new UserService object.
@@ -22,6 +24,7 @@ public class UserService : IUserService
     /// <param name="postService">This parameter is used to interact with the post service</param>
     public UserService(IDatabaseActions databaseActions, IPostService postService)
     {
+        Logger.LogInfo("Creating a new UserService object");
         _databaseActions = databaseActions;
         _postService = postService;
     }
@@ -47,6 +50,7 @@ public class UserService : IUserService
 
         try
         {
+            Logger.LogInfo($"Creating a new user {user}");
             var result = await _databaseActions.Insert(user);
             return new UserDto().Mapper(result);
         }
@@ -73,7 +77,9 @@ public class UserService : IUserService
     {
         try
         {
-            return await _databaseActions.Delete(user.Mapper());
+            var userDao = user.Mapper();
+            Logger.LogInfo($"Deleting a user {userDao}");
+            return await _databaseActions.Delete(userDao);
         }
         catch (DatabaseIudActionException ex)
         {
@@ -98,6 +104,7 @@ public class UserService : IUserService
     {
         try
         {
+            Logger.LogInfo($"Fetching user with ID {userId}");
             var user = await _databaseActions.GetEntityByField<UserDao>("userID", userId.ToString());
             return new UserDto().Mapper(user);
         }
@@ -128,11 +135,13 @@ public class UserService : IUserService
     {
         try
         {
+            Logger.LogInfo($"Fetching user with username {username}");
             var result = await _databaseActions.GetEntityByField<UserDao>("userName", username);
             return new UserDto().Mapper(result);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Logger.LogError(ex, $"An error occurred while fetching the user with username {username}");
             return null;
         }
     }
@@ -146,6 +155,7 @@ public class UserService : IUserService
     {
         try
         {
+            Logger.LogInfo($"Updating user {user}");
             var result = await _databaseActions.Update(user.Mapper());
             return new UserDto().Mapper(result);
         }
@@ -173,6 +183,7 @@ public class UserService : IUserService
     {
         try
         {
+            Logger.LogInfo($"Fetching profile picture for user with ID {userId}");
             var user = await GetUserDaoById(userId);
             return new ProfilePicDto
             {
@@ -200,6 +211,7 @@ public class UserService : IUserService
     {
         try
         {
+            Logger.LogInfo($"Fetching user with ID {userId} and recent forums {recentForums}");
             var result = await _databaseActions.GetEntitieWithSelectorById<UserDao>(
                 x => new object[] { x.UserId!, x.UserName!, x.Description!, x.CreatedAt }, "userID", userId.ToString());
             var user = new UserDto().Mapper(result);
@@ -230,6 +242,7 @@ public class UserService : IUserService
     {
         try
         {
+            Logger.LogInfo($"Fetching friends for user with ID {userId}");
             var friends = await _databaseActions.GetEntitiesWithSelectorById<FollowerUserRelationDao>(
                 x => new object[] { x.FollowedUserId! }, "followerUserID", userId.ToString());
             var friendList = new FriendsOfUserDto
@@ -267,6 +280,7 @@ public class UserService : IUserService
     {
         try
         {
+            Logger.LogInfo($"Fetching user with ID {userId}");
             var user = await _databaseActions.GetEntityByField<UserDao>("userID", userId.ToString());
             return user;
         }

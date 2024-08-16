@@ -147,3 +147,13 @@ public PostDto Mapper(PostsDao post)
 #### Returns
 
 [PostDto](./slottymedia.backend.dtos.postdto.md)<br>
+
+### **ToString()**
+
+```csharp
+public string ToString()
+```
+
+#### Returns
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
