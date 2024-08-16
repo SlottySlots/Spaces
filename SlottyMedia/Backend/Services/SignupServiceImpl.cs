@@ -1,5 +1,3 @@
-using Blazored.SessionStorage;
-using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.signup;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
