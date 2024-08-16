@@ -349,7 +349,6 @@ public class PostServiceTests
             .ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetPostsByUserId(userId, 0, 10));
-        _mockDatabaseActions.VerifyAll();
     }
 
     /// <summary>

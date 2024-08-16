@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Tests.ServiceTests
 
+Tests the PostService used for CRUD operations on posts.
+
 ```csharp
 public class PostServiceTests
 ```
@@ -20,11 +22,15 @@ public PostServiceTests()
 
 ### **Setup()**
 
+The setup method that is called before each test.
+
 ```csharp
 public void Setup()
 ```
 
 ### **TearDown()**
+
+The teardown method that is called after each test.
 
 ```csharp
 public void TearDown()
