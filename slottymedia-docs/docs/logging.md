@@ -39,7 +39,7 @@ To integrate the logger into your project, follow these steps:
 3. **Get the Logger Instance:** Retrieve the logger instance with the following code:
 
     ```csharp
-    var logger = Logging.Instance;
+    Logging<Program> logger = new ();
     ```
     
 4. **Use LogLevel Methods:** Utilize the logger instance to call the various log level methods as needed.

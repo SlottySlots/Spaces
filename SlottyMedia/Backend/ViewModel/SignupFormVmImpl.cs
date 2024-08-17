@@ -2,6 +2,7 @@ using Microsoft.IdentityModel.Tokens;
 using SlottyMedia.Backend.Exceptions.signup;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
+using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
 
@@ -15,7 +16,8 @@ public class SignupFormVmImpl : ISignupFormVm
     /// </summary>
     private readonly ISignupService _signupService;
 
-
+    private Logging<SignupFormVmImpl> logger = new ();
+    
     /// <summary>
     ///     Standard Constructor used for dependency injection
     /// </summary>
