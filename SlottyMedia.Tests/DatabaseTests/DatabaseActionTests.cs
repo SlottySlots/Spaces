@@ -27,6 +27,10 @@ public class DatabaseActionTests : BaseDatabaseTestClass
                 _userToWorkWith.UserId.ToString() ?? "");
             if (user != null) await DatabaseActions.Delete(user);
         }
+        catch (DatabaseMissingItemException)
+        {
+            
+        }
         catch (Exception ex)
         {
             Console.WriteLine($"TearDown failed with exception: {ex.Message}");

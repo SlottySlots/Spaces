@@ -47,6 +47,10 @@ public class FollowerUserRelationDaoTest : BaseDatabaseTestClass
                 _relationToWorkWith.FollowerUserRelationId.ToString() ?? "");
             if (relation != null) await DatabaseActions.Delete(relation);
         }
+        catch (DatabaseMissingItemException)
+        {
+            
+        }
         catch (Exception ex)
         {
             Console.WriteLine($"TearDown failed with exception: {ex.Message}");

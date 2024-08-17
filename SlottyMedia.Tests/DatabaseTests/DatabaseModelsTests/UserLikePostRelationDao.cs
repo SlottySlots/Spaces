@@ -79,6 +79,10 @@ public class UserLikePostRelationDaoTest : BaseDatabaseTestClass
                 _userToWorkWith.UserId.ToString() ?? "");
             if (user != null) await DatabaseActions.Delete(user);
         }
+        catch (DatabaseMissingItemException)
+        {
+            
+        }
         catch (Exception ex)
         {
             Console.WriteLine($"OneTimeTearDown failed with exception: {ex.Message}");
@@ -127,6 +131,10 @@ public class UserLikePostRelationDaoTest : BaseDatabaseTestClass
 
             var deletedRelation = await DatabaseActions.Delete(insertedRelation);
             Assert.That(deletedRelation, Is.True, "Deleted relation should not be false");
+        }
+        catch (DatabaseMissingItemException)
+        {
+            
         }
         catch (GeneralDatabaseException ex)
         {

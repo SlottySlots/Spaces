@@ -49,6 +49,10 @@ public class PostDtoTest : BaseDatabaseTestClass
                 _postToWorkWith.PostId.ToString() ?? "");
             if (post != null) await DatabaseActions.Delete(post);
         }
+        catch (DatabaseMissingItemException)
+        {
+            
+        }
         catch (Exception ex)
         {
             Console.WriteLine($"TearDown failed with exception: {ex.Message}");

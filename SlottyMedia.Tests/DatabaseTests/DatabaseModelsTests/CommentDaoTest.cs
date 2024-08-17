@@ -53,6 +53,10 @@ public class CommentDaoTest : BaseDatabaseTestClass
                     _commentToWorkWith.CommentId.ToString() ?? "");
             if (comment != null) await DatabaseActions.Delete(comment);
         }
+        catch (DatabaseMissingItemException)
+        {
+            
+        }
         catch (Exception ex)
         {
             Console.WriteLine($"TearDown failed with exception: {ex.Message}");
