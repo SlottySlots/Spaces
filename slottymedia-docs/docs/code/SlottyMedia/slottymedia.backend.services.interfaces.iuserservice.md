@@ -46,12 +46,12 @@ The user's username
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 The queried user or null if no such user was found
 
-### **CreateUser(String, String, String, Nullable&lt;Int64&gt;)**
+### **CreateUser(String, String, String, Guid, String, Nullable&lt;Int64&gt;)**
 
 This method creates a new User object in the database and returns the created object.
 
 ```csharp
-Task<UserDto> CreateUser(string userId, string username, string description, Nullable<long> profilePicture)
+Task<UserDto> CreateUser(string userId, string username, string email, Guid roleId, string description, Nullable<long> profilePicture)
 ```
 
 #### Parameters
@@ -61,6 +61,10 @@ The UserID from the Authentication Service
 
 `username` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The Username, which the User set himself
+
+`email` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+`roleId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 `description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The Description about the User

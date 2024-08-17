@@ -137,7 +137,6 @@ public class UserInformationDto
         Username = user.UserName ?? string.Empty;
         Description = user.Description ?? string.Empty;
         CreatedAt = user.CreatedAt;
-
         return this;
     }
 }

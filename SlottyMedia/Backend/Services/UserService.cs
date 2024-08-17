@@ -35,7 +35,8 @@ public class UserService : IUserService
     /// <param name="description">The Description of the User (optional)</param>
     /// <param name="profilePicture">The Profile Picture of the User (optional)</param>
     /// <returns>Returns the created UserDto. If it was unable to create a User, it will throw an exception.</returns>
-    public async Task<UserDto> CreateUser(string userId, string username, string? description = null,
+    public async Task<UserDto> CreateUser(string userId, string username, string email, Guid roleId,
+        string? description = null,
         long? profilePicture = null)
     {
         var user = new UserDao
@@ -43,7 +44,9 @@ public class UserService : IUserService
             UserId = Guid.Parse(userId),
             UserName = username,
             Description = description ?? string.Empty,
-            ProfilePic = profilePicture ?? 0
+            ProfilePic = profilePicture ?? 0,
+            Email = email,
+            RoleId = roleId
         };
 
         try

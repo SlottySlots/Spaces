@@ -1,7 +1,5 @@
-﻿using SlottyMedia.Database;
-using SlottyMedia.Database.Daos;
+﻿using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
-using Supabase;
 
 namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
 
@@ -9,7 +7,7 @@ namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
 ///     Test class for the PostsDao model.
 /// </summary>
 [TestFixture]
-public class PostDtoTest
+public class PostDtoTest : BaseDatabaseTestClass
 {
     /// <summary>
     ///     One-time setup method to initialize Supabase client and insert test data.
@@ -17,12 +15,9 @@ public class PostDtoTest
     [OneTimeSetUp]
     public async Task OneTimeSetup()
     {
-        _supabaseClient = InitializeSupabaseClient.GetSupabaseClient();
-        _databaseActions = new DatabaseActions(_supabaseClient);
+        _userToWorkWith = await DatabaseActions.Insert(InitializeModels.GetUserDto(UserId));
 
-        _userToWorkWith = await _databaseActions.Insert(InitializeModels.GetUserDto());
-
-        _forumToWorkWith = await _databaseActions.Insert(InitializeModels.GetForumDto(_userToWorkWith));
+        _forumToWorkWith = await DatabaseActions.Insert(InitializeModels.GetForumDto(_userToWorkWith));
     }
 
     /// <summary>
@@ -50,9 +45,9 @@ public class PostDtoTest
         {
             if (_postToWorkWith.PostId is null) return;
 
-            var post = await _databaseActions.GetEntityByField<PostsDao>("postID",
+            var post = await DatabaseActions.GetEntityByField<PostsDao>("postID",
                 _postToWorkWith.PostId.ToString() ?? "");
-            if (post != null) await _databaseActions.Delete(post);
+            if (post != null) await DatabaseActions.Delete(post);
         }
         catch (Exception ex)
         {
@@ -70,13 +65,13 @@ public class PostDtoTest
         {
             if (_forumToWorkWith.ForumId is null || _userToWorkWith.UserId is null) return;
 
-            var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID",
+            var forum = await DatabaseActions.GetEntityByField<ForumDao>("forumID",
                 _forumToWorkWith.ForumId.ToString() ?? "");
-            if (forum != null) await _databaseActions.Delete(forum);
+            if (forum != null) await DatabaseActions.Delete(forum);
 
-            var user = await _databaseActions.GetEntityByField<UserDao>("userID",
+            var user = await DatabaseActions.GetEntityByField<UserDao>("userID",
                 _userToWorkWith.UserId.ToString() ?? "");
-            if (user != null) await _databaseActions.Delete(user);
+            if (user != null) await DatabaseActions.Delete(user);
         }
         catch (Exception ex)
         {
@@ -84,8 +79,6 @@ public class PostDtoTest
         }
     }
 
-    private Client _supabaseClient;
-    private IDatabaseActions _databaseActions;
     private PostsDao _postToWorkWith;
     private UserDao _userToWorkWith;
     private ForumDao _forumToWorkWith;
@@ -98,7 +91,7 @@ public class PostDtoTest
     {
         try
         {
-            var insertedPost = await _databaseActions.Insert(_postToWorkWith);
+            var insertedPost = await DatabaseActions.Insert(_postToWorkWith);
             Assert.Multiple(() =>
             {
                 Assert.That(insertedPost, Is.Not.Null, "Inserted post should not be null");
@@ -122,11 +115,11 @@ public class PostDtoTest
     {
         try
         {
-            var insertedPost = await _databaseActions.Insert(_postToWorkWith);
+            var insertedPost = await DatabaseActions.Insert(_postToWorkWith);
             Assert.That(insertedPost, Is.Not.Null, "Inserted post should not be null");
 
             insertedPost.Content = "I'm an updated Test Post";
-            var updatedPost = await _databaseActions.Update(insertedPost);
+            var updatedPost = await DatabaseActions.Update(insertedPost);
 
             Assert.Multiple(() =>
             {
@@ -152,10 +145,10 @@ public class PostDtoTest
     {
         try
         {
-            var insertedPost = await _databaseActions.Insert(_postToWorkWith);
+            var insertedPost = await DatabaseActions.Insert(_postToWorkWith);
             Assert.That(insertedPost, Is.Not.Null, "Inserted post should not be null");
 
-            var deletedPost = await _databaseActions.Delete(insertedPost);
+            var deletedPost = await DatabaseActions.Delete(insertedPost);
             Assert.That(deletedPost, Is.True, "Deleted post should not be false");
         }
         catch (GeneralDatabaseException ex)
@@ -172,14 +165,14 @@ public class PostDtoTest
     {
         try
         {
-            var insertedPost = await _databaseActions.Insert(_postToWorkWith);
+            var insertedPost = await DatabaseActions.Insert(_postToWorkWith);
             Assert.Multiple(() =>
             {
                 Assert.That(insertedPost, Is.Not.Null, "Inserted post should not be null");
                 Assert.That(insertedPost.PostId, Is.Not.Null, "Inserted post's PostId should not be null");
             });
 
-            var post = await _databaseActions.GetEntityByField<PostsDao>("postID",
+            var post = await DatabaseActions.GetEntityByField<PostsDao>("postID",
                 insertedPost.PostId.ToString() ?? string.Empty);
             Assert.Multiple(() =>
             {

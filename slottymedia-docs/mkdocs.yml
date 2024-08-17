@@ -2,7 +2,9 @@ site_name: SlottyMedia Docs
 nav:
   - Home: index.md
   - Build: build.md
-  - Database: database.md
+  - Database: 
+    - Database Model: database.md
+    - Role Level Security: rls.md
   - MVVM: mvvm.md
   - Coding Guidelines: guidelines.md
   - Code Documentation: 

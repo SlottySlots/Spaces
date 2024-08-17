@@ -1,7 +1,5 @@
-﻿using SlottyMedia.Database;
-using SlottyMedia.Database.Daos;
+﻿using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
-using Supabase;
 
 namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
 
@@ -9,7 +7,7 @@ namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
 ///     Test class for the ForumDao model.
 /// </summary>
 [TestFixture]
-public class ForumDaoTest
+public class ForumDaoTest : BaseDatabaseTestClass
 {
     /// <summary>
     ///     One-time setup method to initialize Supabase client and insert test data.
@@ -17,10 +15,7 @@ public class ForumDaoTest
     [OneTimeSetUp]
     public async Task OneTimeSetup()
     {
-        _supabaseClient = InitializeSupabaseClient.GetSupabaseClient();
-        _databaseActions = new DatabaseActions(_supabaseClient);
-
-        _userToWorkWith = await _databaseActions.Insert(InitializeModels.GetUserDto());
+        _userToWorkWith = await DatabaseActions.Insert(InitializeModels.GetUserDto(UserId));
     }
 
     /// <summary>
@@ -46,9 +41,9 @@ public class ForumDaoTest
         {
             if (_forumToWorkWith.ForumId is null) return;
 
-            var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID",
+            var forum = await DatabaseActions.GetEntityByField<ForumDao>("forumID",
                 _forumToWorkWith.ForumId.ToString() ?? "");
-            if (forum != null) await _databaseActions.Delete(forum);
+            if (forum != null) await DatabaseActions.Delete(forum);
         }
         catch (Exception ex)
         {
@@ -66,9 +61,9 @@ public class ForumDaoTest
         {
             if (_userToWorkWith.UserId is null) return;
 
-            var user = await _databaseActions.GetEntityByField<UserDao>("userID",
+            var user = await DatabaseActions.GetEntityByField<UserDao>("userID",
                 _userToWorkWith.UserId.ToString() ?? "");
-            if (user != null) await _databaseActions.Delete(user);
+            if (user != null) await DatabaseActions.Delete(user);
         }
         catch (Exception ex)
         {
@@ -76,8 +71,6 @@ public class ForumDaoTest
         }
     }
 
-    private Client _supabaseClient;
-    private IDatabaseActions _databaseActions;
     private ForumDao _forumToWorkWith;
     private UserDao _userToWorkWith;
 
@@ -89,7 +82,7 @@ public class ForumDaoTest
     {
         try
         {
-            var insertedForum = await _databaseActions.Insert(_forumToWorkWith);
+            var insertedForum = await DatabaseActions.Insert(_forumToWorkWith);
             Assert.Multiple(() =>
             {
                 Assert.That(insertedForum, Is.Not.Null, "Inserted forum should not be null");
@@ -115,11 +108,11 @@ public class ForumDaoTest
     {
         try
         {
-            var insertedForum = await _databaseActions.Insert(_forumToWorkWith);
+            var insertedForum = await DatabaseActions.Insert(_forumToWorkWith);
             Assert.That(insertedForum, Is.Not.Null, "Inserted forum should not be null");
 
             insertedForum.ForumTopic = "I'm an updated Test Forum";
-            var updatedForum = await _databaseActions.Update(insertedForum);
+            var updatedForum = await DatabaseActions.Update(insertedForum);
 
             Assert.Multiple(() =>
             {
@@ -146,10 +139,10 @@ public class ForumDaoTest
     {
         try
         {
-            var insertedForum = await _databaseActions.Insert(_forumToWorkWith);
+            var insertedForum = await DatabaseActions.Insert(_forumToWorkWith);
             Assert.That(insertedForum, Is.Not.Null, "Inserted forum should not be null");
 
-            var deletedForum = await _databaseActions.Delete(insertedForum);
+            var deletedForum = await DatabaseActions.Delete(insertedForum);
             Assert.That(deletedForum, Is.True, "Deleted forum should not be false");
         }
         catch (GeneralDatabaseException ex)
@@ -166,14 +159,14 @@ public class ForumDaoTest
     {
         try
         {
-            var insertedForum = await _databaseActions.Insert(_forumToWorkWith);
+            var insertedForum = await DatabaseActions.Insert(_forumToWorkWith);
             Assert.Multiple(() =>
             {
                 Assert.That(insertedForum, Is.Not.Null, "Inserted forum should not be null");
                 Assert.That(insertedForum.ForumId, Is.Not.Null, "Inserted forum should have a ForumId");
             });
 
-            var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID",
+            var forum = await DatabaseActions.GetEntityByField<ForumDao>("forumID",
                 insertedForum.ForumId.ToString() ?? "");
             Assert.Multiple(() =>
             {

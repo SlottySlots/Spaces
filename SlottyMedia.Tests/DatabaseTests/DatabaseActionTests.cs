@@ -1,8 +1,6 @@
 using System.Linq.Expressions;
-using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
-using Supabase;
 
 namespace SlottyMedia.Tests.DatabaseTests;
 
@@ -10,19 +8,12 @@ namespace SlottyMedia.Tests.DatabaseTests;
 ///     Tests for DatabaseActions class.
 /// </summary>
 [TestFixture]
-public class DatabaseActionTests
+public class DatabaseActionTests : BaseDatabaseTestClass
 {
-    [OneTimeSetUp]
-    public void OneTimeSetup()
-    {
-        _supabaseClient = InitializeSupabaseClient.GetSupabaseClient();
-        _databaseActions = new DatabaseActions(_supabaseClient);
-    }
-
     [SetUp]
     public void Setup()
     {
-        _userToWorkWith = InitializeModels.GetUserDto();
+        _userToWorkWith = InitializeModels.GetUserDto(UserId);
     }
 
     [TearDown]
@@ -32,9 +23,9 @@ public class DatabaseActionTests
         {
             if (_userToWorkWith.UserId is null) return;
 
-            var user = await _databaseActions.GetEntityByField<UserDao>("userID",
+            var user = await DatabaseActions.GetEntityByField<UserDao>("userID",
                 _userToWorkWith.UserId.ToString() ?? "");
-            if (user != null) await _databaseActions.Delete(user);
+            if (user != null) await DatabaseActions.Delete(user);
         }
         catch (Exception ex)
         {
@@ -42,8 +33,6 @@ public class DatabaseActionTests
         }
     }
 
-    private Client _supabaseClient;
-    private IDatabaseActions _databaseActions;
     private UserDao _userToWorkWith;
 
     /// <summary>
@@ -54,7 +43,7 @@ public class DatabaseActionTests
     {
         try
         {
-            var insertedUser = await _databaseActions.Insert(_userToWorkWith);
+            var insertedUser = await DatabaseActions.Insert(_userToWorkWith);
             Assert.Multiple(() =>
             {
                 Assert.That(insertedUser, Is.Not.Null, "Inserted user should not be null");
@@ -77,7 +66,7 @@ public class DatabaseActionTests
     public void Insert_Failure()
     {
         var invalidUser = new UserDao(); // Create an invalid user to simulate failure
-        Assert.ThrowsAsync<GeneralDatabaseException>(async () => await _databaseActions.Insert(invalidUser));
+        Assert.ThrowsAsync<GeneralDatabaseException>(async () => await DatabaseActions.Insert(invalidUser));
     }
 
     /// <summary>
@@ -88,11 +77,11 @@ public class DatabaseActionTests
     {
         try
         {
-            var insertedUser = await _databaseActions.Insert(_userToWorkWith);
+            var insertedUser = await DatabaseActions.Insert(_userToWorkWith);
             Assert.That(insertedUser, Is.Not.Null, "Inserted user should not be null");
 
             insertedUser.Description = "Please don't delete me, I'm updated";
-            var updatedUser = await _databaseActions.Update(insertedUser);
+            var updatedUser = await DatabaseActions.Update(insertedUser);
 
             Assert.Multiple(() =>
             {
@@ -115,7 +104,7 @@ public class DatabaseActionTests
     public void Update_Failure()
     {
         var invalidUser = new UserDao(); // Create an invalid user to simulate failure
-        Assert.ThrowsAsync<GeneralDatabaseException>(async () => await _databaseActions.Update(invalidUser));
+        Assert.ThrowsAsync<GeneralDatabaseException>(async () => await DatabaseActions.Update(invalidUser));
     }
 
     /// <summary>
@@ -126,10 +115,10 @@ public class DatabaseActionTests
     {
         try
         {
-            var insertedUser = await _databaseActions.Insert(_userToWorkWith);
+            var insertedUser = await DatabaseActions.Insert(_userToWorkWith);
             Assert.That(insertedUser, Is.Not.Null, "Inserted user should not be null");
 
-            var deletedUser = await _databaseActions.Delete(insertedUser);
+            var deletedUser = await DatabaseActions.Delete(insertedUser);
             Assert.That(deletedUser, Is.True, "Deleted user should not be false");
         }
         catch (GeneralDatabaseException ex)
@@ -145,7 +134,7 @@ public class DatabaseActionTests
     public void Delete_Failure()
     {
         var invalidUser = new UserDao(); // Create an invalid user to simulate failure
-        Assert.ThrowsAsync<GeneralDatabaseException>(async () => await _databaseActions.Delete(invalidUser));
+        Assert.ThrowsAsync<GeneralDatabaseException>(async () => await DatabaseActions.Delete(invalidUser));
     }
 
     /// <summary>
@@ -156,14 +145,14 @@ public class DatabaseActionTests
     {
         try
         {
-            var insertedUser = await _databaseActions.Insert(_userToWorkWith);
+            var insertedUser = await DatabaseActions.Insert(_userToWorkWith);
             Assert.Multiple(() =>
             {
                 Assert.That(insertedUser, Is.Not.Null, "Inserted user should not be null");
                 Assert.That(insertedUser.UserId, Is.Not.Null, "Inserted user's UserId should not be null");
             });
 
-            var user = await _databaseActions.GetEntityByField<UserDao>("userID", insertedUser.UserId.ToString() ?? "");
+            var user = await DatabaseActions.GetEntityByField<UserDao>("userID", insertedUser.UserId.ToString() ?? "");
             Assert.Multiple(() =>
             {
                 Assert.That(user, Is.Not.Null, "Retrieved user should not be null");
@@ -195,7 +184,7 @@ public class DatabaseActionTests
     public void GetEntityByField_Failure()
     {
         Assert.ThrowsAsync<GeneralDatabaseException>(async () =>
-            await _databaseActions.GetEntityByField<UserDao>("userID", "invalid-id"));
+            await DatabaseActions.GetEntityByField<UserDao>("userID", "invalid-id"));
     }
 
     /// <summary>
@@ -206,7 +195,7 @@ public class DatabaseActionTests
     {
         try
         {
-            var insertedUser = await _databaseActions.Insert(_userToWorkWith);
+            var insertedUser = await DatabaseActions.Insert(_userToWorkWith);
             Assert.Multiple(() =>
             {
                 Assert.That(insertedUser, Is.Not.Null, "Inserted user should not be null");
@@ -214,7 +203,7 @@ public class DatabaseActionTests
             });
 
             Expression<Func<UserDao, object[]>> selector = u => new object[] { u.UserId!, u.UserName!, u.Description! };
-            var user = await _databaseActions.GetEntitieWithSelectorById(selector, "userID",
+            var user = await DatabaseActions.GetEntitieWithSelectorById(selector, "userID",
                 insertedUser.UserId.ToString() ?? "");
             Assert.Multiple(() =>
             {
@@ -244,7 +233,7 @@ public class DatabaseActionTests
     {
         Expression<Func<UserDao, object[]>> selector = u => new object[] { u.UserId!, u.UserName!, u.Description! };
         Assert.ThrowsAsync<GeneralDatabaseException>(async () =>
-            await _databaseActions.GetEntitieWithSelectorById(selector, "userID", "invalid-id"));
+            await DatabaseActions.GetEntitieWithSelectorById(selector, "userID", "invalid-id"));
     }
 
     /// <summary>
@@ -255,7 +244,7 @@ public class DatabaseActionTests
     {
         try
         {
-            var insertedUser = await _databaseActions.Insert(_userToWorkWith);
+            var insertedUser = await DatabaseActions.Insert(_userToWorkWith);
             Assert.Multiple(() =>
             {
                 Assert.That(insertedUser, Is.Not.Null, "Inserted user should not be null");
@@ -263,7 +252,7 @@ public class DatabaseActionTests
             });
 
             Expression<Func<UserDao, object[]>> selector = u => new object[] { u.UserId!, u.UserName!, u.Description! };
-            var users = await _databaseActions.GetEntitiesWithSelectorById(selector, "userID",
+            var users = await DatabaseActions.GetEntitiesWithSelectorById(selector, "userID",
                 insertedUser.UserId.ToString() ?? "");
             Assert.Multiple(() =>
             {
@@ -299,6 +288,6 @@ public class DatabaseActionTests
     {
         Expression<Func<UserDao, object[]>> selector = u => new object[] { u.UserId!, u.UserName!, u.Description! };
         Assert.ThrowsAsync<GeneralDatabaseException>(async () =>
-            await _databaseActions.GetEntitiesWithSelectorById(selector, "userID", "invalid-id"));
+            await DatabaseActions.GetEntitiesWithSelectorById(selector, "userID", "invalid-id"));
     }
 }

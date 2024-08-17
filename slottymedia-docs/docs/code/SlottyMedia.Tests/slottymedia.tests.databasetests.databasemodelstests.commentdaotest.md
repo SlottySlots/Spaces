@@ -5,10 +5,46 @@ Namespace: SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests
 Test class for the CommentDto model.
 
 ```csharp
-public class CommentDaoTest
+public class CommentDaoTest : SlottyMedia.Tests.DatabaseTests.BaseDatabaseTestClass
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [CommentDaoTest](./slottymedia.tests.databasetests.databasemodelstests.commentdaotest.md)
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [BaseDatabaseTestClass](./slottymedia.tests.databasetests.basedatabasetestclass.md) → [CommentDaoTest](./slottymedia.tests.databasetests.databasemodelstests.commentdaotest.md)
+
+## Properties
+
+### **UserId**
+
+The UserId of the User
+
+```csharp
+public Guid UserId { get; set; }
+```
+
+#### Property Value
+
+[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+### **DatabaseActions**
+
+The DatabaseActions Object
+
+```csharp
+public DatabaseActions DatabaseActions { get; set; }
+```
+
+#### Property Value
+
+DatabaseActions<br>
+
+### **UserToWorkWith**
+
+```csharp
+public UserDao UserToWorkWith { get; set; }
+```
+
+#### Property Value
+
+UserDao<br>
 
 ## Constructors
 

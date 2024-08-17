@@ -73,9 +73,8 @@ public class SignupServiceImpl : ISignupService
         var roleId = userRole.RoleId.HasValue
             ? userRole.RoleId.Value
             : throw new NullReferenceException("RoleId not found!");
-        var userDao = new UserDao(Guid.Parse(session.User!.Id!), roleId, username, session.User.Email!,
+        await _userService.CreateUser(session.User!.Id!, username, session.User.Email!, roleId,
             "Hey I'm a new user. Mhhm should I add a description?");
-        await _databaseActions.Insert(userDao);
 
 
         // save cookies
