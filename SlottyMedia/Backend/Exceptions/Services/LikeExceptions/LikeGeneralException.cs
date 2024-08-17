@@ -1,6 +1,7 @@
+using SlottyMedia.Backend.Exceptions.Services.ForumExceptions;
 using SlottyMedia.LoggingProvider;
 
-namespace SlottyMedia.Backend.Exceptions.Services.PostExceptions;
+namespace SlottyMedia.Backend.Exceptions.Services.LikeExceptions;
 
 /// <summary>
 ///     Represents a general exception that occurs in the Forum service.

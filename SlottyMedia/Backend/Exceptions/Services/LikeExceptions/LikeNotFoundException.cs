@@ -1,6 +1,6 @@
 using SlottyMedia.LoggingProvider;
 
-namespace SlottyMedia.Backend.Exceptions.Services.UserExceptions;
+namespace SlottyMedia.Backend.Exceptions.Services.LikeExceptions;
 
 /// <summary>
 ///     This exception is thrown when a user is not found.

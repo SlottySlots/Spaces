@@ -1,4 +1,5 @@
 ﻿using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Backend.Exceptions.Services.ForumExceptions;
 using SlottyMedia.Backend.Exceptions.Services.PostExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;

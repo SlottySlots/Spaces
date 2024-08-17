@@ -1,6 +1,6 @@
 using SlottyMedia.LoggingProvider;
 
-namespace SlottyMedia.Backend.Exceptions.Services.PostExceptions;
+namespace SlottyMedia.Backend.Exceptions.Services.ForumExceptions;
 
 /// <summary>
 ///     Represents a general exception that occurs in the Forum service.

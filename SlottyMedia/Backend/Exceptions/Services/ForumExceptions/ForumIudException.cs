@@ -1,6 +1,6 @@
 using SlottyMedia.LoggingProvider;
 
-namespace SlottyMedia.Backend.Exceptions.Services.PostExceptions;
+namespace SlottyMedia.Backend.Exceptions.Services.ForumExceptions;
 
 /// <summary>
 ///     Represents an exception that occurs during Insert, Update, or Delete operations in the Forum service.
