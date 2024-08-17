@@ -5,7 +5,7 @@ namespace SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 /// <summary>
 ///     This exception is thrown when a user is not found.
 /// </summary>
-public class LikeNotFoundException : BaseException
+public class LikeNotFoundException : BaseException<LikeNotFoundException>
 {
     /// <summary>
     ///     This constructor creates a new LikeNotFoundException object.

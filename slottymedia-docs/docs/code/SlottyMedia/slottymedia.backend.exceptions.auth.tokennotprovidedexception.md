@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Backend.Exceptions.auth
 Exception to handle missing Access- and RefreshToken f.e. when handling Sessions
 
 ```csharp
-public class TokenNotProvidedException : System.Exception, System.Runtime.Serialization.ISerializable
+public class TokenNotProvidedException : SlottyMedia.LoggingProvider.BaseException`1[[SlottyMedia.Backend.Exceptions.auth.TokenNotProvidedException, SlottyMedia, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [TokenNotProvidedException](./slottymedia.backend.exceptions.auth.tokennotprovidedexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException&lt;TokenNotProvidedException&gt; → [TokenNotProvidedException](./slottymedia.backend.exceptions.auth.tokennotprovidedexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties

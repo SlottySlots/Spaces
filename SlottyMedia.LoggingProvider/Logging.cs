@@ -1,105 +1,111 @@
-﻿using NLog;
+﻿using System.Diagnostics;
+using NLog;
 
 namespace SlottyMedia.LoggingProvider;
 
 /// <summary>
 ///     Logging class to handle application logging using NLog.
 /// </summary>
-public class Logging
+public class Logging<T>
 {
     /// <summary>
-    ///     The logger instance.
+    /// The logger instance.
     /// </summary>
-    private static Logger Logger;
+    private readonly ILogger logger;
 
     /// <summary>
-    ///     The instance of the Logging class.
+    ///    Constructor for the Logging class.
     /// </summary>
-    private static readonly Lazy<Logging> instance = new(() => new Logging());
-
-    private Logging()
+    /// <param name="type"></param>
+    public Logging()
     {
         var config = NlogConfiguration.CreateNlogConfig();
         LogManager.Setup().LoadConfiguration(config);
-        Logger = LogManager.GetCurrentClassLogger();
+        if (typeof(T).Namespace != null)
+        {
+            logger = LogManager.GetLogger(typeof(T).Namespace);
+        }
+        else
+        {
+            logger = LogManager.GetLogger(typeof(T).FullName);
+        }
     }
 
     /// <summary>
-    ///     The instance of the Logging class.
+    ///     Logs a trace message.
     /// </summary>
-    public static Logging Instance => instance.Value;
+    /// <param name="message">The message to log.</param>
+    public void LogTrace(string message) => logger.Trace(message);
 
     /// <summary>
-    ///     This method logs a trace message.
+    ///     Logs a debug message.
     /// </summary>
-    /// <param name="message"></param>
-    public void LogTrace(string message)
-    {
-        Logger.Trace(message);
-    }
+    /// <param name="message">The message to log.</param>
+    public void LogDebug(string message) => logger.Debug(message);
 
     /// <summary>
-    ///     This method logs a debug message.
+    ///     Logs an info message.
     /// </summary>
-    /// <param name="message"></param>
-    public void LogDebug(string message)
-    {
-        Logger.Debug(message);
-    }
+    /// <param name="message">The message to log.</param>
+    public void LogInfo(string message) => logger.Info(message);
 
     /// <summary>
-    ///     This method logs an info message.
+    ///     Logs a warning message.
     /// </summary>
-    /// <param name="message"></param>
-    public void LogInfo(string message)
-    {
-        Logger.Info(message);
-    }
+    /// <param name="message">The message to log.</param>
+    public void LogWarn(string message) => logger.Warn(message);
 
     /// <summary>
-    ///     This method logs a warning message.
+    ///     Logs an error message.
     /// </summary>
-    /// <param name="message"></param>
-    public void LogWarn(string message)
-    {
-        Logger.Warn(message);
-    }
+    /// <param name="message">The message to log.</param>
+    public void LogError(string message) => logger.Error(message);
 
     /// <summary>
-    ///     This method logs an error message.
+    ///     Logs a fatal message.
     /// </summary>
-    /// <param name="message"></param>
-    public void LogError(string message)
-    {
-        Logger.Error(message);
-    }
+    /// <param name="message">The message to log.</param>
+    public void LogFatal(string message) => logger.Fatal(message);
 
     /// <summary>
-    ///     This method logs an error message with an exception.
+    ///     Logs a trace message with an exception.
     /// </summary>
-    /// <param name="ex"></param>
-    /// <param name="message"></param>
-    public void LogError(Exception ex, string message)
-    {
-        Logger.Error(ex, message);
-    }
+    /// <param name="ex">The exception to log.</param>
+    /// <param name="message">The message to log.</param>
+    public void LogTrace(Exception ex, string message) => logger.Trace(ex, message);
 
     /// <summary>
-    ///     This method logs a fatal message.
+    ///     Logs a debug message with an exception.
     /// </summary>
-    /// <param name="message"></param>
-    public void LogFatal(string message)
-    {
-        Logger.Fatal(message);
-    }
+    /// <param name="ex">The exception to log.</param>
+    /// <param name="message">The message to log.</param>
+    public void LogDebug(Exception ex, string message) => logger.Debug(ex, message);
 
     /// <summary>
-    ///     This method logs a fatal message with an exception.
+    ///     Logs an info message with an exception.
     /// </summary>
-    /// <param name="ex"></param>
-    /// <param name="message"></param>
-    public void LogFatal(Exception ex, string message)
-    {
-        Logger.Fatal(ex, message);
-    }
+    /// <param name="ex">The exception to log.</param>
+    /// <param name="message">The message to log.</param>
+    public void LogInfo(Exception ex, string message) => logger.Info(ex, message);
+
+    /// <summary>
+    ///     Logs a warning message with an exception.
+    /// </summary>
+    /// <param name="ex">The exception to log.</param>
+    /// <param name="message">The message to log.</param>
+    public void LogWarn(Exception ex, string message) => logger.Warn(ex, message);
+
+    /// <summary>
+    ///     Logs an error message with an exception.
+    /// </summary>
+    /// <param name="ex">The exception to log.</param>
+    /// <param name="message">The message to log.</param>
+    public void LogError(Exception ex, string message) => logger.Error(ex, message);
+
+    /// <summary>
+    ///     Logs a fatal message with an exception.
+    /// </summary>
+    /// <param name="ex">The exception to log.</param>
+    /// <param name="message">The message to log.</param>
+    public void LogFatal(Exception ex, string message) => logger.Fatal(ex, message);
 }

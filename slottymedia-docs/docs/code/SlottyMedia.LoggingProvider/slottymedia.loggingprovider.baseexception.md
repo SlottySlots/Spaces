@@ -11,6 +11,14 @@ public class BaseException : System.Exception, System.Runtime.Serialization.ISer
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [BaseException](./slottymedia.loggingprovider.baseexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
+## Fields
+
+### **Logger**
+
+```csharp
+public Logging Logger;
+```
+
 ## Properties
 
 ### **TargetSite**

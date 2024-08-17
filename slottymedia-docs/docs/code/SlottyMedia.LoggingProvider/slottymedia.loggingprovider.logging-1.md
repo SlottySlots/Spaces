@@ -1,28 +1,28 @@
-# Logging
+# Logging&lt;T&gt;
 
 Namespace: SlottyMedia.LoggingProvider
 
 Logging class to handle application logging using NLog.
 
 ```csharp
-public class Logging
+public class Logging<T>
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Logging](./slottymedia.loggingprovider.logging.md)
+#### Type Parameters
+
+`T`<br>
+
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Logging&lt;T&gt;](./slottymedia.loggingprovider.logging-1.md)
 
 ## Constructors
 
-### **Logging(Type)**
+### **Logging()**
 
 Constructor for the Logging class.
 
 ```csharp
-public Logging(Type type)
+public Logging()
 ```
-
-#### Parameters
-
-`type` [Type](https://docs.microsoft.com/en-us/dotnet/api/system.type)<br>
 
 ## Methods
 

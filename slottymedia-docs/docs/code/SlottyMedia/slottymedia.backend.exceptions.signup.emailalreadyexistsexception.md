@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Backend.Exceptions.signup
 This exception is thrown after an illegal attempt to sign up a user with an already existing email.
 
 ```csharp
-public class EmailAlreadyExistsException : SlottyMedia.LoggingProvider.BaseException, System.Runtime.Serialization.ISerializable
+public class EmailAlreadyExistsException : SlottyMedia.LoggingProvider.BaseException`1[[SlottyMedia.Backend.Exceptions.signup.EmailAlreadyExistsException, SlottyMedia, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException → [EmailAlreadyExistsException](./slottymedia.backend.exceptions.signup.emailalreadyexistsexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException&lt;EmailAlreadyExistsException&gt; → [EmailAlreadyExistsException](./slottymedia.backend.exceptions.signup.emailalreadyexistsexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties

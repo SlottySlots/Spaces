@@ -13,7 +13,7 @@ using SlottyMedia.DatabaseSeeding;
 using SlottyMedia.LoggingProvider;
 
 // Early init of NLog to allow startup and exception logging, before host is built
-var logger = Logging.Instance;
+var logger = new Logging<Program>(); 
 logger.LogInfo("Starting application");
 try
 {

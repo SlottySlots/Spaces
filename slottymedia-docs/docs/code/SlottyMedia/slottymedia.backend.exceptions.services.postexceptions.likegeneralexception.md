@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Backend.Exceptions.Services.PostExceptions
 Represents a general exception that occurs in the Forum service.
 
 ```csharp
-public class LikeGeneralException : SlottyMedia.LoggingProvider.BaseException, System.Runtime.Serialization.ISerializable
+public class LikeGeneralException : SlottyMedia.LoggingProvider.BaseException`1[[SlottyMedia.Backend.Exceptions.Services.PostExceptions.LikeGeneralException, SlottyMedia, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException → [LikeGeneralException](./slottymedia.backend.exceptions.services.postexceptions.likegeneralexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException&lt;LikeGeneralException&gt; → [LikeGeneralException](./slottymedia.backend.exceptions.services.postexceptions.likegeneralexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties

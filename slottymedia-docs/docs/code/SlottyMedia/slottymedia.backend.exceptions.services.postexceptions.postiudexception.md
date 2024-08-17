@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Backend.Exceptions.Services.PostExceptions
 Represents an exception that occurs during Insert, Update, or Delete operations in the Post service.
 
 ```csharp
-public class PostIudException : SlottyMedia.LoggingProvider.BaseException, System.Runtime.Serialization.ISerializable
+public class PostIudException : SlottyMedia.LoggingProvider.BaseException`1[[SlottyMedia.Backend.Exceptions.Services.PostExceptions.PostIudException, SlottyMedia, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException → [PostIudException](./slottymedia.backend.exceptions.services.postexceptions.postiudexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException&lt;PostIudException&gt; → [PostIudException](./slottymedia.backend.exceptions.services.postexceptions.postiudexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties

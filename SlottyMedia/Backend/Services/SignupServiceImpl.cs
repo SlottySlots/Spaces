@@ -61,7 +61,7 @@ public class SignupServiceImpl : ISignupService
             throw new UsernameAlreadyExistsException(username);
 
         var session = await _supabaseClient.Auth.SignUp(email, password);
-
+        session = await _supabaseClient.Auth.SignIn(email, password);
 
         // TODO Check if email already exists, it is unclear how supabase responds in that case!
 
@@ -69,7 +69,7 @@ public class SignupServiceImpl : ISignupService
         if (session == null)
             throw new InvalidOperationException(
                 "An unknown error occured in the Supabase client while attempting to perform a signup.");
-        var userRole = await _databaseActions.GetEntityByField<RoleDao>("role", "user");
+        var userRole = await _databaseActions.GetEntityByField<RoleDao>("role", "User");
         var roleId = userRole.RoleId.HasValue
             ? userRole.RoleId.Value
             : throw new NullReferenceException("RoleId not found!");

@@ -1,14 +1,18 @@
-# LikeIudException
+# BaseException&lt;T&gt;
 
-Namespace: SlottyMedia.Backend.Exceptions.Services.PostExceptions
+Namespace: SlottyMedia.LoggingProvider
 
-Represents an exception that occurs during Insert, Update, or Delete operations in the Forum service.
+This exception is the base exception for all exceptions in the application.
 
 ```csharp
-public class LikeIudException : SlottyMedia.LoggingProvider.BaseException`1[[SlottyMedia.Backend.Exceptions.Services.PostExceptions.LikeIudException, SlottyMedia, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Runtime.Serialization.ISerializable
+public class BaseException<T> : System.Exception, System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException&lt;LikeIudException&gt; → [LikeIudException](./slottymedia.backend.exceptions.services.postexceptions.likeiudexception.md)<br>
+#### Type Parameters
+
+`T`<br>
+
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [BaseException&lt;T&gt;](./slottymedia.loggingprovider.baseexception-1.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties
@@ -95,32 +99,50 @@ public string StackTrace { get; }
 
 ## Constructors
 
-### **LikeIudException(String)**
+### **BaseException()**
 
-Initializes a new instance of the [ForumIudException](./slottymedia.backend.exceptions.services.postexceptions.forumiudexception.md) class with a specified error message.
+The default constructor.
 
 ```csharp
-public LikeIudException(string message)
+public BaseException()
+```
+
+### **BaseException(String)**
+
+The constructor with parameters.
+
+```csharp
+public BaseException(string message)
 ```
 
 #### Parameters
 
 `message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The message that describes the error.
 
-### **LikeIudException(String, Exception)**
+### **BaseException(String, String)**
 
-Initializes a new instance of the [ForumIudException](./slottymedia.backend.exceptions.services.postexceptions.forumiudexception.md) class with a specified error message and a
- reference to the inner exception that is the cause of this exception.
+The constructor with parameters.
 
 ```csharp
-public LikeIudException(string message, Exception innerException)
+public BaseException(string propertyName, string message)
+```
+
+#### Parameters
+
+`propertyName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+### **BaseException(String, Exception)**
+
+The constructor with parameters.
+
+```csharp
+public BaseException(string message, Exception innerException)
 ```
 
 #### Parameters
 
 `message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The message that describes the error.
 
 `innerException` [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
-The exception that is the cause of the current exception.

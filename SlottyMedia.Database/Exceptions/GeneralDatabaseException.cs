@@ -5,7 +5,7 @@ namespace SlottyMedia.Database.Exceptions;
 /// <summary>
 ///     This exception is thrown when a general database exception occurs.
 /// </summary>
-public class GeneralDatabaseException : BaseException
+public class GeneralDatabaseException : BaseException<GeneralDatabaseException>
 {
     /// <summary>
     ///     This exception is thrown when a general database exception occurs.

@@ -107,7 +107,7 @@ public class SignupFormVmImpl : ISignupFormVm
             EmailErrorMessage = "Email already in use";
             throw;
         }
-        catch
+        catch(Exception ex)
         {
             ServerErrorMessage = "An unknown error has occured. Please try again later.";
             throw;

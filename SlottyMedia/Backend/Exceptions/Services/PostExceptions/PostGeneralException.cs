@@ -5,7 +5,7 @@ namespace SlottyMedia.Backend.Exceptions.Services.PostExceptions;
 /// <summary>
 ///     Represents a general exception that occurs in the Post service.
 /// </summary>
-public class PostGeneralException : BaseException
+public class PostGeneralException : BaseException<PostGeneralException>
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="PostGeneralException" /> class with a specified error message.

@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Backend.Exceptions.Services.UserExceptions
 This exception is thrown when a user is not found.
 
 ```csharp
-public class UserNotFoundException : SlottyMedia.LoggingProvider.BaseException, System.Runtime.Serialization.ISerializable
+public class UserNotFoundException : SlottyMedia.LoggingProvider.BaseException`1[[SlottyMedia.Backend.Exceptions.Services.UserExceptions.UserNotFoundException, SlottyMedia, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException → [UserNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.usernotfoundexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException&lt;UserNotFoundException&gt; → [UserNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.usernotfoundexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties
