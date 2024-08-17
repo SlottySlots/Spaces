@@ -6,9 +6,13 @@
   &lt;Assembly Path="\Users\stephr\.nuget\packages\supabase.gotrue\6.0.3\lib\netstandard2.1\Supabase.Gotrue.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\manue\.nuget\packages\supabase\1.1.1\lib\netstandard2.1\Supabase.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=03527de7_002Df369_002D4c5c_002Dba98_002D948e2d408250/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;SlottyMedia.Tests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c307d3f7_002D90b7_002D408f_002D95c0_002D4aecf83ff1e8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;SlottyMedia.Tests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="C:\Users\manue\Documents\GitHub\SlottyMedia\SlottyMedia.Tests" Presentation="&amp;lt;SlottyMedia.Tests&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f71b1ad5_002D1f9f_002D458b_002D9c78_002Db4f49391b1e8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;SlottyMedia.Tests&amp;gt; #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="C:\Users\manue\Documents\GitHub\SlottyMedia\SlottyMedia.Tests" Presentation="&amp;lt;SlottyMedia.Tests&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	
 	
 	
 	

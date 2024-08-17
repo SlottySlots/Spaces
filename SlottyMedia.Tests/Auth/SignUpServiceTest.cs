@@ -86,7 +86,7 @@ public class SignUpServiceTest
 
         var user = new UserDao(Guid.NewGuid(), roleDao.RoleId ?? Guid.Empty, _userName, _email,  "TestPassword1!");
         
-        _dbActionMock.Setup(dbAction => dbAction.GetEntityByField<RoleDao>("role", "user")).ReturnsAsync(roleDao);
+        _dbActionMock.Setup(dbAction => dbAction.GetEntityByField<RoleDao>("role", "User")).ReturnsAsync(roleDao);
         _dbActionMock.Setup(dbAction =>
             dbAction.Insert(It.Is<UserDao>(u => u.UserName == _userName && u.Email == _email))).ReturnsAsync(user);
 
