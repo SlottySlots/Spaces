@@ -22,7 +22,6 @@ try
     logger.LogInfo("Adding services to the container");
     builder.Services.AddRazorComponents()
         .AddInteractiveServerComponents();
-
     // NLog: Setup NLog for Dependency injection
     logger.LogInfo("Setting up NLog for Dependency injection");
     builder.Logging.ClearProviders();

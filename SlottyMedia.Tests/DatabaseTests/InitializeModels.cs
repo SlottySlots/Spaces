@@ -24,7 +24,8 @@ public static class InitializeModels
             UserId = Guid.NewGuid(),
             UserName = "I'm a Test User",
             Description = "Please don't delete me",
-            RoleId = GetRoleDto().RoleId
+            RoleId = GetRoleDto().RoleId,
+            Email = Guid.NewGuid().ToString() + "@test.de"
         };
     }
 
