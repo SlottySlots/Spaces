@@ -149,3 +149,15 @@ The ID of the User who is following another User.
 
 `followedUserId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 The ID of the User who is being followed.
+
+## Methods
+
+### **ToString()**
+
+```csharp
+public string ToString()
+```
+
+#### Returns
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>

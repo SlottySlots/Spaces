@@ -2,6 +2,7 @@ using SlottyMedia.Backend.Exceptions.signup;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.LoggingProvider;
 using Supabase.Gotrue;
 using Client = Supabase.Client;
 
@@ -12,6 +13,7 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class SignupServiceImpl : ISignupService
 {
+    private static readonly Logging Logger = Logging.Instance;
     private readonly ICookieService _cookieService;
     private readonly IDatabaseActions _databaseActions;
     private readonly Client _supabaseClient;
@@ -60,6 +62,7 @@ public class SignupServiceImpl : ISignupService
         if (user)
             throw new UsernameAlreadyExistsException(username);
 
+        Logger.LogDebug($"Signing up user with username: {username}, email: {email}");
         var session = await _supabaseClient.Auth.SignUp(email, password);
 
 
@@ -79,6 +82,7 @@ public class SignupServiceImpl : ISignupService
 
 
         // save cookies
+        Logger.LogDebug("Setting cookies for user.");
         await _cookieService.SetCookie("supabase.auth.token", session.AccessToken, 7);
         await _cookieService.SetCookie("supabase.auth.refreshToken", session.RefreshToken, 7);
 

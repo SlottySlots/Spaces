@@ -48,18 +48,21 @@ public class CommentServiceTests
         // Arrange
         var commentDto = new CommentDto
         {
-            /* Initialize properties */
+            CommentId = Guid.NewGuid(),
+            Content = "Test Content",
+            CreatorUserId = Guid.NewGuid(),
+            PostId = Guid.NewGuid()
         };
         var commentDao = commentDto.Mapper();
         // Setup the mock to return the commentDao when Insert is called
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<CommentDao>())).ReturnsAsync(commentDao);
 
         // Act
-        var result = await _commentService.InsertComment(commentDto);
+        var result = await _commentService.InsertComment(commentDto.CreatorUserId ?? Guid.Empty, commentDto.PostId,
+            commentDto.Content);
 
         // Assert
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.CommentId, Is.EqualTo(commentDto.CommentId));
         Assert.That(result.Content, Is.EqualTo(commentDto.Content));
         Assert.That(result.CreatorUserId, Is.EqualTo(commentDto.CreatorUserId));
         Assert.That(result.PostId, Is.EqualTo(commentDto.PostId));
@@ -76,13 +79,17 @@ public class CommentServiceTests
         // Arrange
         var commentDto = new CommentDto
         {
-            /* Initialize properties */
+            CreatorUserId = Guid.NewGuid(),
+            PostId = Guid.NewGuid(),
+            Content = "Test Content"
         };
         // Setup the mock to throw DatabaseIudActionException when Insert is called
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<CommentDao>())).ThrowsAsync(new DatabaseIudActionException());
 
         // Act & Assert
-        Assert.ThrowsAsync<CommentIudException>(async () => await _commentService.InsertComment(commentDto));
+        Assert.ThrowsAsync<CommentIudException>(async () =>
+            await _commentService.InsertComment(commentDto.CreatorUserId ?? Guid.Empty, commentDto.PostId,
+                commentDto.Content));
     }
 
     /// <summary>
@@ -94,13 +101,17 @@ public class CommentServiceTests
         // Arrange
         var commentDto = new CommentDto
         {
-            /* Initialize properties */
+            CreatorUserId = Guid.NewGuid(),
+            PostId = Guid.NewGuid(),
+            Content = "Test Content"
         };
         // Setup the mock to throw GeneralDatabaseException when Insert is called
-        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<CommentDao>())).ThrowsAsync(new GeneralDatabaseException());
+        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<CommentDao>())).ThrowsAsync(new DatabaseIudActionException());
 
         // Act & Assert
-        Assert.ThrowsAsync<CommentGeneralException>(async () => await _commentService.InsertComment(commentDto));
+        Assert.ThrowsAsync<CommentIudException>(async () =>
+            await _commentService.InsertComment(commentDto.CreatorUserId ?? Guid.Empty, commentDto.PostId,
+                commentDto.Content));
     }
 
     /// <summary>

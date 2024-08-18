@@ -194,3 +194,15 @@ The Headline of the Post
 
 `content` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The Content of the Post
+
+## Methods
+
+### **ToString()**
+
+```csharp
+public string ToString()
+```
+
+#### Returns
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>

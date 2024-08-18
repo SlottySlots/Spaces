@@ -3,6 +3,7 @@ using SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.LoggingProvider;
 using Supabase.Postgrest;
 
 namespace SlottyMedia.Backend.Services;
@@ -12,7 +13,9 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class LikeService
 {
+    private static readonly Logging Logger = Logging.Instance;
     private readonly IDatabaseActions _databaseActions;
+
 
     /// <summary>
     ///     The constructor for the LikeService.
@@ -20,6 +23,7 @@ public class LikeService
     /// <param name="databaseActions"></param>
     public LikeService(IDatabaseActions databaseActions)
     {
+        Logger.LogInfo("LikeService initialized");
         _databaseActions = databaseActions;
     }
 
@@ -33,21 +37,25 @@ public class LikeService
     {
         try
         {
+            Logger.LogDebug($"Inserting like for user {userId} and post {postId}");
             var like = new UserLikePostRelationDao(userId, postId);
-            var result = await _databaseActions.Insert(like);
+            await _databaseActions.Insert(like);
             return true;
         }
         catch (DatabaseIudActionException ex)
         {
-            throw new LikeIudException("An error occurred while inserting the like", ex);
+            throw new LikeIudException(
+                $"An error occurred while inserting the like. Parameters: UserID {userId}, PostID {postId}", ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new LikeGeneralException("An error occurred while inserting the like", ex);
+            throw new LikeGeneralException(
+                $"An error occurred while inserting the like Parameters: UserID {userId}, PostID {postId}", ex);
         }
         catch (Exception ex)
         {
-            throw new LikeGeneralException("An error occurred while inserting the like", ex);
+            throw new LikeGeneralException(
+                $"An error occurred while inserting the like Parameters: UserID {userId}, PostID {postId}", ex);
         }
     }
 
@@ -63,19 +71,22 @@ public class LikeService
         {
             var like = new UserLikePostRelationDao(userId, postId);
             var result = await _databaseActions.Delete(like);
-            return true;
+            return result;
         }
         catch (DatabaseIudActionException ex)
         {
-            throw new LikeIudException("An error occurred while deleting the like", ex);
+            throw new LikeIudException(
+                $"An error occurred while deleting the like. Parameters: UserID {userId}, PostID {postId}", ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new LikeGeneralException("An error occurred while deleting the like", ex);
+            throw new LikeGeneralException(
+                $"An error occurred while deleting the like. Parameters: UserID {userId}, PostID {postId}", ex);
         }
         catch (Exception ex)
         {
-            throw new LikeGeneralException("An error occurred while deleting the like", ex);
+            throw new LikeGeneralException(
+                $"An error occurred while deleting the like. Parameters: UserID {userId}, PostID {postId}", ex);
         }
     }
 
@@ -104,15 +115,18 @@ public class LikeService
         }
         catch (DatabaseMissingItemException ex)
         {
-            throw new LikeNotFoundException("An error occurred while reading the likes", ex);
+            throw new LikeNotFoundException($"An error occurred while reading the likes. Parameters: PostID {postId}",
+                ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new LikeGeneralException("An error occurred while reading the likes", ex);
+            throw new LikeGeneralException($"An error occurred while reading the likes. Parameters: PostID {postId}",
+                ex);
         }
         catch (Exception ex)
         {
-            throw new LikeGeneralException("An error occurred while reading the likes", ex);
+            throw new LikeGeneralException($"An error occurred while reading the likes. Parameters: PostID {postId}",
+                ex);
         }
     }
 }

@@ -1,5 +1,6 @@
 using SlottyMedia.Backend.Exceptions.auth;
 using SlottyMedia.Backend.Services.Interfaces;
+using SlottyMedia.LoggingProvider;
 using Supabase.Gotrue;
 using Client = Supabase.Client;
 
@@ -10,8 +11,10 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class AuthService : IAuthService
 {
+    private static readonly Logging Logger = Logging.Instance;
     private readonly ICookieService _cookieService;
     private readonly Client _supabaseClient;
+
 
     /// <summary>
     ///     Initialize scoped service by ctor injection
@@ -24,6 +27,7 @@ public class AuthService : IAuthService
     /// </param>
     public AuthService(Client supabaseClient, ICookieService cookieService)
     {
+        Logger.LogInfo("AuthService initialized");
         _supabaseClient = supabaseClient;
         _cookieService = cookieService;
     }
@@ -40,6 +44,7 @@ public class AuthService : IAuthService
     /// <returns></returns>
     public async Task<Session?> SignUp(string email, string password)
     {
+        Logger.LogDebug($"Signing up user with email: {email}");
         var session = await _supabaseClient.Auth.SignUp(email, password);
         if (session != null) await SaveSessionAsync(session);
         return session;
@@ -57,6 +62,7 @@ public class AuthService : IAuthService
     /// <returns></returns>
     public async Task<Session?> SignIn(string email, string password)
     {
+        Logger.LogDebug($"Signing in user with email: {email}");
         var session = await _supabaseClient.Auth.SignIn(email, password);
         if (session != null) await SaveSessionAsync(session);
         return session;
@@ -70,6 +76,7 @@ public class AuthService : IAuthService
     /// </param>
     public async Task SaveSessionAsync(Session session)
     {
+        Logger.LogDebug("Saving session");
         if (session is { AccessToken: not null, RefreshToken: not null })
         {
             await _cookieService.SetCookie("supabase.auth.token", session.AccessToken, 7);
@@ -89,6 +96,7 @@ public class AuthService : IAuthService
     /// </returns>
     public async Task<Session?> RestoreSessionAsync()
     {
+        Logger.LogDebug("Restoring session");
         var accessToken = await _cookieService.GetCookie("supabase.auth.token");
         var refreshToken = await _cookieService.GetCookie("supabase.auth.refreshToken");
         if (!string.IsNullOrEmpty(accessToken) && !string.IsNullOrEmpty(refreshToken) && !IsAuthenticated())
@@ -126,6 +134,7 @@ public class AuthService : IAuthService
     /// </returns>
     public async Task<Session?> SetSession(string accessToken, string refreshToken)
     {
+        Logger.LogDebug("Setting session");
         var session = await _supabaseClient.Auth.SetSession(accessToken, refreshToken);
         return session;
     }
@@ -135,6 +144,7 @@ public class AuthService : IAuthService
     /// </summary>
     public async Task SignOut()
     {
+        Logger.LogDebug("Signing out");
         await _supabaseClient.Auth.SignOut();
         await _cookieService.RemoveCookie("supabase.auth.token");
         await _cookieService.RemoveCookie("supabase.auth.refreshToken");
@@ -154,6 +164,7 @@ public class AuthService : IAuthService
     /// </returns>
     public async Task<Session?> RefreshSession(string accessToken, string refreshToken)
     {
+        Logger.LogDebug("Refreshing session");
         var session = await _supabaseClient.Auth.SetSession(accessToken, refreshToken, true);
         return session;
     }
@@ -164,6 +175,7 @@ public class AuthService : IAuthService
     /// <returns></returns>
     public bool IsAuthenticated()
     {
+        Logger.LogDebug("Checking if user is authenticated");
         return _supabaseClient.Auth.CurrentSession != null;
     }
 
@@ -175,6 +187,7 @@ public class AuthService : IAuthService
     /// </returns>
     public Session? GetCurrentSession()
     {
+        Logger.LogDebug("Getting current session");
         var session = _supabaseClient.Auth.CurrentSession;
         return session;
     }

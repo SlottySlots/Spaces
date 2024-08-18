@@ -25,18 +25,21 @@ public ForumService(IDatabaseActions databaseActions)
 
 ## Methods
 
-### **InsertForum(ForumDto)**
+### **InsertForum(Guid, String)**
 
 Inserts a new forum into the database.
 
 ```csharp
-public Task<ForumDto> InsertForum(ForumDto forum)
+public Task<ForumDto> InsertForum(Guid creatorUserId, string forumTopic)
 ```
 
 #### Parameters
 
-`forum` [ForumDto](./slottymedia.backend.dtos.forumdto.md)<br>
-The ForumDto object containing the forum details.
+`creatorUserId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The Creator UserID
+
+`forumTopic` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The Topic from the Forum
 
 #### Returns
 
@@ -59,7 +62,7 @@ public Task DeleteForum(ForumDto forum)
 #### Parameters
 
 `forum` [ForumDto](./slottymedia.backend.dtos.forumdto.md)<br>
-The the forum to delete.
+The forum to delete.
 
 #### Returns
 

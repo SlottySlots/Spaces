@@ -10,18 +10,21 @@ public interface IForumService
 
 ## Methods
 
-### **InsertForum(ForumDto)**
+### **InsertForum(Guid, String)**
 
 Inserts a new forum into the database.
 
 ```csharp
-Task<ForumDto> InsertForum(ForumDto forum)
+Task<ForumDto> InsertForum(Guid creatorUserId, string forumTopic)
 ```
 
 #### Parameters
 
-`forum` [ForumDto](./slottymedia.backend.dtos.forumdto.md)<br>
-The ForumDto object containing the forum details.
+`creatorUserId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The Creator UserID
+
+`forumTopic` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The Topic from the Forum
 
 #### Returns
 

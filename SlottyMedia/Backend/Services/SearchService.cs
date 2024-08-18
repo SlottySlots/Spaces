@@ -70,15 +70,18 @@ public class SearchService : ISearchService
         }
         catch (DatabaseMissingItemException ex)
         {
-            throw new SearchGeneralExceptions("A database error occurred while searching for users or topics", ex);
+            throw new SearchGeneralExceptions(
+                $"A database error occurred while searching for users or topics. Term: {searchTerm}", ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new SearchGeneralExceptions("A database error occurred while searching for users or topics", ex);
+            throw new SearchGeneralExceptions(
+                $"A database error occurred while searching for users or topics. Term {searchTerm}", ex);
         }
         catch (Exception ex)
         {
-            throw new SearchGeneralExceptions("An error occurred while searching for users or topics", ex);
+            throw new SearchGeneralExceptions(
+                $"An error occurred while searching for users or topics. Term {searchTerm}", ex);
         }
     }
 }
