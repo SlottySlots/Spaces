@@ -1,6 +1,10 @@
 ﻿@using Microsoft.IdentityModel.Tokens
+@using SlottyMedia.Backend.Dtos
 @using SlottyMedia.Backend.Services.Interfaces
 @using SlottyMedia.Backend.ViewModel.Interfaces
+@using SlottyMedia.Database
+@using SlottyMedia.Database.Daos
+@using SlottyMedia.LoggingProvider;
 @inherits LayoutComponentBase
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
@@ -83,14 +87,13 @@
                     flex flex-col items-center gap-5
                     left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2">
                 <!-- Profile Card -->
-
                 <div class="h-full w-full p-5 flex flex-col justify-center items-center gap-1">
                     <Avatar/>
                     <h3 class="text-xl font-semibold text-center w-fit">
-                        Gloria Thompson
+                        @UserInformationDto.Username
                     </h3>
                     <h3 class="text-sm font-medium text-center text-cadet-gray w-fit">
-                        Professional Photographer
+                        @UserInformationDto.Description
                     </h3>
                     <!-- Horizontal Spacer -->
                     <div class="w-full border-b border-athens-gray my-3"></div>
@@ -230,6 +233,10 @@
     [Inject]
     [SupplyParameterFromForm]
     public ISignInFormVm? ViewModel { get; set; }
+    private Logging logger = Logging.Instance;
+    private UserInformationDto UserInformationDto { get; set; }
+    [Inject]
+    private IDatabaseActions DatabaseActions { get; set; }
 
     /// <summary>
     ///     Refreshes a session
@@ -244,7 +251,8 @@
                 if (session != null)
                 {
                     Console.WriteLine("User session restored.");
-                    Console.WriteLine("Current Session set for: " + session!.User!.Email);
+                    Console.WriteLine("Current Session set for: " + session.User!.Email);
+                    await SetUserInfo();
                 }
                 else
                 {
@@ -257,11 +265,41 @@
             }
         }
     }
+    
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if(!firstRender)
+        await SetUserInfo();
+    }
+
+    private async Task SetUserInfo()
+    {
+        var currentSession = AuthService.GetCurrentSession();
+        if (currentSession != null && DatabaseActions != null)
+        {
+            var userDao = await DatabaseActions.GetEntityByField<UserDao>("email", currentSession.User!.Email!);
+            if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
+            {
+                logger.LogError($"User with mail {currentSession.User.Email} retrieved corrupt User entry from database!");
+                UserInformationDto = new UserInformationDto();
+            }
+            else
+            {
+                UserInformationDto = new UserInformationDto
+                {
+                    UserId = userDao.UserId!,
+                    Username = userDao.UserName!,
+                    Description = userDao.Description!,
+                    CreatedAt = userDao.CreatedAt!
+                };
+            }
+        }
+    }
 
     private async Task SubmitForm()
     {
         await ViewModel!.SubmitSignInForm();
-
+        SetUserInfo();
         NavigationManager.NavigateTo("/");
     }
 
