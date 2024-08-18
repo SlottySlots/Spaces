@@ -75,3 +75,13 @@ public ProfilePicDto Mapper(UserDao userDao)
 #### Returns
 
 [ProfilePicDto](./slottymedia.backend.dtos.profilepicdto.md)<br>
+
+### **ToString()**
+
+```csharp
+public string ToString()
+```
+
+#### Returns
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>

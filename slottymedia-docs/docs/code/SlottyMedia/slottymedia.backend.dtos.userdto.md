@@ -111,3 +111,13 @@ public UserDto Mapper(UserDao user)
 #### Returns
 
 [UserDto](./slottymedia.backend.dtos.userdto.md)<br>
+
+### **ToString()**
+
+```csharp
+public string ToString()
+```
+
+#### Returns
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>

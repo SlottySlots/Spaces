@@ -1,17 +1,12 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
-  &lt;Assembly Path="\Users\stephr\.nuget\packages\supabase.gotrue\6.0.3\lib\netstandard2.1\Supabase.Gotrue.dll" /&gt;&#xD;
-  &lt;Assembly Path="C:\Users\manue\.nuget\packages\supabase\1.1.1\lib\netstandard2.1\Supabase.dll" /&gt;&#xD;
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AConsoleRowHighlightingRule_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E2_003Fresharper_002Dhost_003FSourcesCache_003F10b39f6ccde57afcc67dafd297a86dcdc8d3b157648ef0f16c5f445aeab_003FConsoleRowHighlightingRule_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ALogger_002Dgenerated_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E2_003Fresharper_002Dhost_003FSourcesCache_003F5a83f26a7bb1cfdddba86fba3e3a9df693c5327962694fdeeb76548f26299323_003FLogger_002Dgenerated_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;
+  &lt;Assembly Path="/Users/stephr/.nuget/packages/supabase.gotrue/6.0.3/lib/netstandard2.1/Supabase.Gotrue.dll" /&gt;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=120d8dad_002D32d6_002D409d_002Db93b_002D32a166029533/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="LikeServiceTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::015A1132-F283-4EFD-ACDC-31446D699164::net8.0::SlottyMedia.Tests.ServiceTests.LikeServiceTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=80532b8f_002Db555_002D4b02_002D9f83_002Df03791ad2106/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	
-	
-	
-	
 	
 	
 	
