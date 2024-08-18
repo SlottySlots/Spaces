@@ -43,7 +43,6 @@ public class PostService : IPostService
     {
         try
         {
-
             var post = new PostsDao
             {
                 Headline = title,

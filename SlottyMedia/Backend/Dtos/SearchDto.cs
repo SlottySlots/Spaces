@@ -23,7 +23,7 @@ public class SearchDto
     ///     Gets or sets the forum that matches the search.
     /// </summary>
     public List<ForumDto> Forums { get; set; }
-    
+
     public override string ToString()
     {
         return $"Users: {Users}, Forums: {Forums}";

@@ -1,5 +1,4 @@
 ﻿using Bogus;
-using NLog;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
@@ -180,7 +179,7 @@ public class Seeding
             {
                 var followerUserRelation = await _databaseActions.Insert(followerUserRelations[i]);
                 Logger.LogInfo("FollowerUserRelation seeded. Follower: " + followerUserRelation.FollowerUserId +
-                             " Followed: " + followerUserRelation.FollowedUserId);
+                               " Followed: " + followerUserRelation.FollowedUserId);
             }
 
             Logger.LogInfo("Database seeded with random follower user relation data.");
@@ -204,7 +203,7 @@ public class Seeding
             {
                 var userLikePostRelation = await _databaseActions.Insert(userLikePostRelations[i]);
                 Logger.LogDebug("UserLikePostRelation seeded. User: " + userLikePostRelation.UserId + " Post: " +
-                             userLikePostRelation.PostId);
+                                userLikePostRelation.PostId);
             }
 
             Logger.LogDebug("Database seeded with random user like post relation data.");
