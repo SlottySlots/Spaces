@@ -52,4 +52,9 @@ public class ProfilePicDto
             ProfilePic = userDao.ProfilePic ?? 0
         };
     }
+
+    public override string ToString()
+    {
+        return $"UserId: {UserId}, ProfilePic: {ProfilePic}";
+    }
 }

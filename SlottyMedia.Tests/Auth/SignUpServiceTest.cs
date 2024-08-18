@@ -24,7 +24,8 @@ public class SignUpServiceTest
         _dbActionMock = new Mock<IDatabaseActions>();
         var postService = new Mock<IPostService>();
         _userServiceMock = new Mock<UserService>(_dbActionMock.Object, postService.Object);
-        _signupService = new SignupServiceImpl(_client, _userServiceMock.Object, _cookieServiceMock.Object, _dbActionMock.Object);
+        _signupService = new SignupServiceImpl(_client, _userServiceMock.Object, _cookieServiceMock.Object,
+            _dbActionMock.Object);
     }
 
     [SetUp]
@@ -79,12 +80,13 @@ public class SignUpServiceTest
             cookieService.SetCookie("supabase.auth.token", It.IsAny<string>(), 7)).Returns(new ValueTask());
         _cookieServiceMock.Setup(cookieService =>
             cookieService.SetCookie("supabase.auth.token", It.IsAny<string>(), 7)).Returns(new ValueTask());
-        RoleDao roleDao = new RoleDao();
+        var roleDao = new RoleDao();
         roleDao.RoleId = Guid.NewGuid();
         roleDao.RoleName = "user";
         roleDao.Description = "user";
         _dbActionMock.Setup(dbAction => dbAction.GetEntityByField<RoleDao>("role", "user")).ReturnsAsync(roleDao);
-        _dbActionMock.Setup(dbAction => dbAction.Insert(It.Is<UserDao>(u => (u.UserName == _userName) && (u.Email == _email))));
+        _dbActionMock.Setup(dbAction =>
+            dbAction.Insert(It.Is<UserDao>(u => u.UserName == _userName && u.Email == _email)));
 
         _session = await _signupService.SignUp(_userName, _email, _password);
         Assert.Multiple(() => { Assert.That(_session.User?.Email, Is.EqualTo(_email)); }

@@ -45,4 +45,9 @@ public class ForumDao : BaseModel
     /// </summary>
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
+
+    public override string ToString()
+    {
+        return $"ForumId: {ForumId}, CreatorUserId: {CreatorUserId}, ForumTopic: {ForumTopic}, CreatedAt: {CreatedAt}";
+    }
 }
