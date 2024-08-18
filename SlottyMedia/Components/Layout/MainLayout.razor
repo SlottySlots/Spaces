@@ -1,5 +1,4 @@
-﻿@using Microsoft.IdentityModel.Tokens
-@using SlottyMedia.Backend.Services.Interfaces
+﻿@using SlottyMedia.Backend.Services.Interfaces
 @using SlottyMedia.Backend.ViewModel.Interfaces
 @inherits LayoutComponentBase
 @inject IAuthService AuthService
@@ -28,7 +27,7 @@
 
                     <form @onsubmit="SubmitForm" class="w-full flex flex-col items-center gap-3">
 
-                        <!-- username -->
+                        <!-- email -->
                         <InputField
                             Id="login-input-email"
                             Name="email"
@@ -41,6 +40,14 @@
                                 </svg>
                             </InputFieldIcon>
                         </InputField>
+                        
+                        <!-- email error message -->
+                        @if (ViewModel.EmailErrorMessage != null)
+                        {
+                            <span class="text-sm text-crayola-orange">
+                                @ViewModel.EmailErrorMessage
+                            </span>
+                        }
 
                         <!-- password -->
                         <InputField
@@ -56,10 +63,19 @@
                             </InputFieldIcon>
                         </InputField>
 
-                        @if (!ViewModel.LoginErrorMessage.IsNullOrEmpty())
+                        <!-- password error message -->
+                        @if (ViewModel.PasswordErrorMessage != null)
                         {
                             <span class="text-sm text-crayola-orange">
-                                @ViewModel.LoginErrorMessage
+                                @ViewModel.PasswordErrorMessage
+                            </span>
+                        }
+
+                        <!-- any other internal errors -->
+                        @if (ViewModel.ServerErrorMessage != null)
+                        {
+                            <span class="text-sm text-crayola-orange">
+                                @ViewModel.ServerErrorMessage
                             </span>
                         }
 
@@ -244,7 +260,7 @@
                 if (session != null)
                 {
                     Console.WriteLine("User session restored.");
-                    Console.WriteLine("Current Session set for: " + session!.User!.Email);
+                    Console.WriteLine("Current Session set for: " + session.User!.Email);
                 }
                 else
                 {
