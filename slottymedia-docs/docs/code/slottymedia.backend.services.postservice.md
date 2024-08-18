@@ -42,27 +42,21 @@ The database actions interface.
 
 ## Methods
 
-### **InsertPost(String, String, Guid, Guid)**
+### **InsertPost(String, Guid)**
 
 Inserts a new post into the database.
 
 ```csharp
-public Task<PostDto> InsertPost(string title, string content, Guid creatorUserId, Guid forumId)
+public Task<PostDto> InsertPost(string content, Guid creatorUserId)
 ```
 
 #### Parameters
-
-`title` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The title of the post.
 
 `content` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The content of the post.
 
 `creatorUserId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 The ID of the user who created the post.
-
-`forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The ID of the forum where the post is created.
 
 #### Returns
 

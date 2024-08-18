@@ -30,21 +30,17 @@ public class PostService : IPostService
     /// <summary>
     ///     Inserts a new post into the database.
     /// </summary>
-    /// <param name="title">The title of the post.</param>
     /// <param name="content">The content of the post.</param>
     /// <param name="creatorUserId">The ID of the user who created the post.</param>
-    /// <param name="forumId">The ID of the forum where the post is created.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the inserted post.</returns>
-    public async Task<PostDto> InsertPost(string title, string content, Guid creatorUserId, Guid forumId)
+    public async Task<PostDto> InsertPost(string content, Guid creatorUserId)
     {
         try
         {
             var post = new PostsDao
             {
-                Headline = title,
                 Content = content,
                 UserId = creatorUserId,
-                ForumId = forumId
             };
 
             var insertedPost = await DatabaseActions.Insert(post);

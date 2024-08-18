@@ -25,12 +25,10 @@ public interface IPostService
     /// <summary>
     ///     Inserts a new post into the database.
     /// </summary>
-    /// <param name="title">The title of the post.</param>
     /// <param name="content">The content of the post</param>
     /// <param name="creatorUserId">The UserId who created the post</param>
-    /// <param name="forumId">The forum in which the post was posted</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the inserted post.</returns>
-    public Task<PostDto> InsertPost(string title, string content, Guid creatorUserId, Guid forumId);
+    public Task<PostDto> InsertPost(string content, Guid creatorUserId);
 
     /// <summary>
     ///     Updates an existing post in the database.

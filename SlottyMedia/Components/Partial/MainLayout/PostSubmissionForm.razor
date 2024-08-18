@@ -1,3 +1,4 @@
+@using SlottyMedia.Backend.ViewModel.Interfaces
 <div class="w-full px-5 pt-5 grid grid-cols-10 gap-4 border-b border-athens-gray">
     
     <!-- profile picture -->
@@ -10,15 +11,34 @@
     </div>
     
     <!-- the form -->
-    <form class="col-span-9">
+    <form class="col-span-9" @onsubmit="ViewModel!.SubmitForm">
         
         <!-- the text -->
         <textarea
+            @bind="ViewModel!.Text"
             id="submit-post-textarea"
             name="submit-post-textarea"
             placeholder="What is happening?"
             class="w-full outline-none border-none"
         ></textarea>
+        
+        <div>@(ViewModel!.Text)</div>
+
+        <!-- text error message -->
+        @if (ViewModel.TextErrorMessage != null)
+        {
+            <span class="text-sm text-crayola-orange">
+                @ViewModel.TextErrorMessage
+            </span>
+        }
+
+        <!-- any other internal errors -->
+        @if (ViewModel.ServerErrorMessage != null)
+        {
+            <span class="text-sm text-crayola-orange">
+                @ViewModel.ServerErrorMessage
+            </span>
+        }
         
         <!-- container for buttons -->
         <div class="w-full h-[50px] flex justify-between items-center border-t border-athens-gray">
@@ -64,5 +84,7 @@
 
 
 @code {
-    
+    [Inject]
+    [SupplyParameterFromForm]
+    public IPostSubmissionFormVm? ViewModel { get; set; }
 }

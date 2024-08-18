@@ -46,27 +46,21 @@ The ID of the user.
 [Task&lt;List&lt;String&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of post titles.
 
-### **InsertPost(String, String, Guid, Guid)**
+### **InsertPost(String, Guid)**
 
 Inserts a new post into the database.
 
 ```csharp
-Task<PostDto> InsertPost(string title, string content, Guid creatorUserId, Guid forumId)
+Task<PostDto> InsertPost(string content, Guid creatorUserId)
 ```
 
 #### Parameters
-
-`title` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The title of the post.
 
 `content` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The content of the post
 
 `creatorUserId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 The UserId who created the post
-
-`forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The forum in which the post was posted
 
 #### Returns
 
