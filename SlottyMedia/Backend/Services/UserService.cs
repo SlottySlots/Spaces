@@ -136,7 +136,7 @@ public class UserService : IUserService
     /// <returns>
     ///     The corresponding UserDTO
     /// </returns>
-    public async Task<bool> CheckIfUserExistsByUserName(string username)
+    public virtual async Task<bool> CheckIfUserExistsByUserName(string username)
     {
         try
         {
