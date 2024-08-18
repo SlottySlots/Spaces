@@ -74,4 +74,10 @@ public class PostsDao : BaseModel
     /// </summary>
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
+
+    public override string ToString()
+    {
+        return
+            $"PostId: {PostId}, UserId: {UserId}, ForumId: {ForumId}, Headline: {Headline}, Content: {Content}, CreatedAt: {CreatedAt}";
+    }
 }

@@ -64,4 +64,10 @@ public class FollowerUserRelationDao : BaseModel
     /// </summary>
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
+
+    public override string ToString()
+    {
+        return
+            $"FollowerUserRelationId: {FollowerUserRelationId}, FollowerUserId: {FollowerUserId}, FollowedUserId: {FollowedUserId}, CreatedAt: {CreatedAt}";
+    }
 }

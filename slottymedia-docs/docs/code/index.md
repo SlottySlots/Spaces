@@ -14,9 +14,7 @@
 
 [UserDto](./slottymedia.backend.dtos.userdto.md)
 
-## SlottyMedia.Backend.Exceptions
-
-[BaseException](./slottymedia.backend.exceptions.baseexception.md)
+[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)
 
 ## SlottyMedia.Backend.Exceptions.auth
 
@@ -117,6 +115,8 @@
 [Register](./slottymedia.components.pages.register.md)
 
 ## SlottyMedia.Components.Partial
+
+[Avatar](./slottymedia.components.partial.avatar.md)
 
 [Card](./slottymedia.components.partial.card.md)
 

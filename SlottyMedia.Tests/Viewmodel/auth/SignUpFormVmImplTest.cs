@@ -22,7 +22,8 @@ public class SignUpFormVmImplTest
         _dbActionsMock = new Mock<IDatabaseActions>();
         var postService = new Mock<IPostService>();
         _userServiceMock = new Mock<UserService>(_dbActionsMock.Object, postService.Object);
-        _signUpServiceMock = new Mock<SignupServiceImpl>(_client, _userServiceMock.Object, _cookieServiceMock.Object);
+        _signUpServiceMock = new Mock<SignupServiceImpl>(_client, _userServiceMock.Object, _cookieServiceMock.Object,
+            _dbActionsMock.Object);
 
         _service = new SignupFormVmImpl(_signUpServiceMock.Object);
     }

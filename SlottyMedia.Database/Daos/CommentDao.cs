@@ -86,4 +86,10 @@ public class CommentDao : BaseModel
     /// </summary>
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
+
+    public override string ToString()
+    {
+        return
+            $"CommentId: {CommentId}, ParentCommentId: {ParentCommentId}, CreatorUserId: {CreatorUserId}, PostId: {PostId}, Content: {Content}, CreatedAt: {CreatedAt}";
+    }
 }

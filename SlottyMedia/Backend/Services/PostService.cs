@@ -4,6 +4,7 @@ using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.LoggingProvider;
 using Supabase.Postgrest;
 
 namespace SlottyMedia.Backend.Services;
@@ -13,12 +14,15 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class PostService : IPostService
 {
+    private static readonly Logging Logger = Logging.Instance;
+
     /// <summary>
     ///     Initializes a new instance of the <see cref="PostService" /> class.
     /// </summary>
     /// <param name="databaseActions">The database actions interface.</param>
     public PostService(IDatabaseActions databaseActions)
     {
+        Logger.LogInfo("PostService initialized");
         DatabaseActions = databaseActions;
     }
 
@@ -42,7 +46,7 @@ public class PostService : IPostService
                 Content = content,
                 UserId = creatorUserId,
             };
-
+            Logger.LogInfo($"Inserting a new post into the database {post}");
             var insertedPost = await DatabaseActions.Insert(post);
             return new PostDto().Mapper(insertedPost);
         }
@@ -69,6 +73,7 @@ public class PostService : IPostService
     {
         try
         {
+            Logger.LogInfo($"Updating the post in the database {post}");
             var updatedPost = await DatabaseActions.Update(post.Mapper());
             return new PostDto().Mapper(updatedPost);
         }
@@ -94,6 +99,7 @@ public class PostService : IPostService
     {
         try
         {
+            Logger.LogInfo($"Deleting the post from the database {post}");
             var result = await DatabaseActions.Delete(post.Mapper());
             return result;
         }
@@ -118,6 +124,7 @@ public class PostService : IPostService
     {
         try
         {
+            Logger.LogInfo($"Fetching posts for the user with ID: {userId} from index {startOfSet} to {endOfSet}");
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
                 x => new object[] { x.Forum! },
                 "creator_userID",
@@ -125,6 +132,7 @@ public class PostService : IPostService
                 ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
             );
 
+            Logger.LogInfo("Mapping posts to forum topics");
             return posts.Select(post => post.Forum.ForumTopic).ToList();
         }
         catch (DatabaseMissingItemException ex)
@@ -152,6 +160,7 @@ public class PostService : IPostService
     {
         try
         {
+            Logger.LogInfo($"Fetching posts for the user with ID: {userId} from index {startOfSet} to {endOfSet}");
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
                 x => new object[] { x.PostId!, x.Content!, x.Forum!, x.CreatedAt },
                 new List<(string, Constants.Operator, string)>
@@ -191,6 +200,8 @@ public class PostService : IPostService
     {
         try
         {
+            Logger.LogInfo(
+                $"Fetching posts for the user with ID: {userId} and forum with ID: {forumId} from index {startOfSet} to {endOfSet}");
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
                 x => new object[] { x.PostId!, x.Content!, x.Forum!, x.CreatedAt },
                 new List<(string, Constants.Operator, string)>
@@ -231,6 +242,7 @@ public class PostService : IPostService
     {
         try
         {
+            Logger.LogInfo($"Fetching posts for the forum with ID: {forumId} from index {startOfSet} to {endOfSet}");
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
                 x => new object[] { x.PostId!, x.Content!, x.Forum!, x.CreatedAt },
                 new List<(string, Constants.Operator, string)>
@@ -265,6 +277,7 @@ public class PostService : IPostService
     /// <returns>A list of PostDto objects.</returns>
     private List<PostDto> ConvertPostsToPostDtos(List<PostsDao> posts)
     {
+        Logger.LogInfo("Mapping posts to DTOs");
         return posts.Select(post => new PostDto().Mapper(post)).ToList();
     }
 }

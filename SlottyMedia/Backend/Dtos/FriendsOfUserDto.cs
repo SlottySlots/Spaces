@@ -23,4 +23,9 @@ public class FriendsOfUserDto
     ///     Gets or sets the list of friends of the user.
     /// </summary>
     public List<UserDto> Friends { get; set; }
+
+    public override string ToString()
+    {
+        return $"UserId: {UserId}, Friends: {Friends}";
+    }
 }

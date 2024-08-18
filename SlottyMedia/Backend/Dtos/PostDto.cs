@@ -96,4 +96,10 @@ public class PostDto
         Headline = post.Headline ?? string.Empty;
         return this;
     }
+
+    public override string ToString()
+    {
+        return
+            $"PostId: {PostId}, UserId: {UserId}, Likes: {Likes.Count}, CreatedAt: {CreatedAt}, Content: {Content}, Comments: {Comments.Count}, Headline: {Headline}";
+    }
 }

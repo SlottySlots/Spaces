@@ -75,3 +75,13 @@ public ForumDto Mapper(ForumDao forumDao)
 #### Returns
 
 [ForumDto](./slottymedia.backend.dtos.forumdto.md)<br>
+
+### **ToString()**
+
+```csharp
+public string ToString()
+```
+
+#### Returns
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
