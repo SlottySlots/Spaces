@@ -32,15 +32,29 @@ public class SignInFormVmImplTest
     }
 
     [Test]
-    public void SubmitSignInForm_EmailNotProvided()
+    [TestCase("", "password")]
+    [TestCase(null, "password")]
+    public async Task SubmitSignInForm_WhenEmailEmpty_ShouldDisplayErrorMessage(string? email, string? password)
     {
-        Assert.ThrowsAsync<ArgumentException>(async () => await _service.SubmitSignInForm());
+        _service.Email = email;
+        _service.Password = password;
+        
+        await _service.SubmitSignInForm();
+        Assert.That(_service.EmailErrorMessage, Is.Not.Null);
+        Assert.That(_service.EmailErrorMessage, Is.Not.Empty);
     }
 
     [Test]
-    public void SubmitSignInForm_PasswordNotProvided()
+    [TestCase("user@gmail.com", "")]
+    [TestCase("user@gmail.com", null)]
+    public async Task SubmitSignInForm_WhenPasswordEmpty_ShouldDisplayErrorMessage(string? email, string? password)
     {
-        _service.Email = "test@test.de";
-        Assert.ThrowsAsync<ArgumentException>(async () => await _service.SubmitSignInForm());
+        _service.Email = email;
+        _service.Password = password;
+        
+        await _service.SubmitSignInForm();
+        Assert.That(_service.PasswordErrorMessage, Is.Not.Null);
+        Assert.That(_service.PasswordErrorMessage, Is.Not.Empty);
     }
+    
 }

@@ -1,4 +1,4 @@
-﻿@using Microsoft.IdentityModel.Tokens
+@using Microsoft.IdentityModel.Tokens
 @using SlottyMedia.Backend.Dtos
 @using SlottyMedia.Backend.Services.Interfaces
 @using SlottyMedia.Backend.ViewModel.Interfaces
@@ -32,7 +32,7 @@
 
                     <form @onsubmit="SubmitForm" class="w-full flex flex-col items-center gap-3">
 
-                        <!-- username -->
+                        <!-- email -->
                         <InputField
                             Id="login-input-email"
                             Name="email"
@@ -45,6 +45,14 @@
                                 </svg>
                             </InputFieldIcon>
                         </InputField>
+                        
+                        <!-- email error message -->
+                        @if (ViewModelSignUp.EmailErrorMessage != null)
+                        {
+                            <span class="text-sm text-crayola-orange">
+                                @ViewModelSignUp.EmailErrorMessage
+                            </span>
+                        }
 
                         <!-- password -->
                         <InputField
@@ -60,10 +68,19 @@
                             </InputFieldIcon>
                         </InputField>
 
-                        @if (!ViewModelSignUp.LoginErrorMessage.IsNullOrEmpty())
+                        <!-- password error message -->
+                        @if (ViewModelSignUp?.PasswordErrorMessage != null)
                         {
                             <span class="text-sm text-crayola-orange">
-                                @ViewModelSignUp.LoginErrorMessage
+                                @ViewModelSignUp.PasswordErrorMessage
+                            </span>
+                        }
+
+                        <!-- any other internal errors -->
+                        @if (ViewModelSignUp?.ServerErrorMessage != null)
+                        {
+                            <span class="text-sm text-crayola-orange">
+                                @ViewModelSignUp.ServerErrorMessage
                             </span>
                         }
 
