@@ -11,7 +11,7 @@ namespace SlottyMedia.DatabaseSeeding;
 /// </summary>
 public class Seeding
 {
-    private static readonly Logging Logger = Logging.Instance;
+    private static readonly Logging<Seeding> Logger =new ();
     private readonly IDatabaseActions _databaseActions;
 
     /// <summary>

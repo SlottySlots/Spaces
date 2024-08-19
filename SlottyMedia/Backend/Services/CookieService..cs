@@ -10,7 +10,7 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class CookieService : ICookieService
 {
-    private static readonly Logging Logger = Logging.Instance;
+    private static readonly Logging<CookieService> Logger =new ();
 
     /// <summary>
     ///     Runtime to perform js operations on client side

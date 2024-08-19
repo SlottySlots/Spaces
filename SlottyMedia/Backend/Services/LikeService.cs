@@ -14,7 +14,7 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class LikeService
 {
-    private static readonly Logging Logger = Logging.Instance;
+    private static readonly Logging<LikeService> Logger =new ();
     private readonly IDatabaseActions _databaseActions;
 
 

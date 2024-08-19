@@ -11,7 +11,7 @@ namespace SlottyMedia.Backend.ViewModel;
 /// </summary>
 public class SignInFormVmImpl : ISignInFormVm
 {
-    private static readonly Logging Logger = Logging.Instance;
+    private static readonly Logging<SignInFormVmImpl> Logger =new ();
 
     /// <summary>
     ///     AuthService used for supabase authentication

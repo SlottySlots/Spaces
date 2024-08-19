@@ -14,7 +14,7 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class ForumService : IForumService
 {
-    private static readonly Logging Logger = Logging.Instance;
+    private static readonly Logging<ForumService> Logger =new ();
     private readonly IDatabaseActions _databaseActions;
 
     /// Constructor to initialize the ForumService with the required database actions.

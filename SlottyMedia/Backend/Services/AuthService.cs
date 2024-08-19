@@ -11,7 +11,7 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class AuthService : IAuthService
 {
-    private static readonly Logging Logger = Logging.Instance;
+    private static readonly Logging<AuthService> Logger =new ();
     private readonly ICookieService _cookieService;
     private readonly Client _supabaseClient;
 

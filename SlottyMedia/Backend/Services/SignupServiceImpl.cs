@@ -13,7 +13,7 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class SignupServiceImpl : ISignupService
 {
-    private static readonly Logging Logger = Logging.Instance;
+    private static readonly Logging<SignupServiceImpl> Logger =new ();
     private readonly ICookieService _cookieService;
     private readonly IDatabaseActions _databaseActions;
     private readonly Client _supabaseClient;

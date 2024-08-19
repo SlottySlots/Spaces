@@ -11,7 +11,7 @@ namespace SlottyMedia.Backend.ViewModel;
 /// </summary>
 public class SignupFormVmImpl : ISignupFormVm
 {
-    private static readonly Logging Logger = Logging.Instance;
+    private static readonly Logging<SignupFormVmImpl> Logger =new ();
 
     /// <summary>
     ///     Service used for signing up a user

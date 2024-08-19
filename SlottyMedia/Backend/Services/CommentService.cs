@@ -13,7 +13,7 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class CommentService
 {
-    private static readonly Logging Logger = Logging.Instance;
+    private static readonly Logging<CommentService> Logger =new ();
     private readonly IDatabaseActions _databaseActions;
 
 
