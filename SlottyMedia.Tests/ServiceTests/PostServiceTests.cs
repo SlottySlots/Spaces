@@ -42,8 +42,7 @@ public class PostServiceTests
 
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<PostsDao>())).ReturnsAsync(post);
 
-        var result = await _postService.InsertPost(post.Headline, post.Content, post.UserId ?? Guid.Empty,
-            post.ForumId ?? Guid.Empty);
+        var result = await _postService.InsertPost(post.Content, post.UserId ?? Guid.Empty);
 
         Assert.That(result.Headline, Is.EqualTo(post.Headline));
         Assert.That(result.Content, Is.EqualTo(post.Content));
@@ -63,9 +62,7 @@ public class PostServiceTests
 
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<PostsDao>())).ThrowsAsync(new DatabaseIudActionException());
 
-        Assert.ThrowsAsync<PostIudException>(async () => await _postService.InsertPost(post.Headline, post.Content,
-            post.UserId ?? Guid.Empty,
-            post.ForumId ?? Guid.Empty));
+        Assert.ThrowsAsync<PostIudException>(async () => await _postService.InsertPost(post.Content, post.UserId ?? Guid.Empty));
     }
 
     [Test]
@@ -81,9 +78,7 @@ public class PostServiceTests
 
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<PostsDao>())).ThrowsAsync(new GeneralDatabaseException());
 
-        Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.InsertPost(post.Headline, post.Content,
-            post.UserId ?? Guid.Empty,
-            post.ForumId ?? Guid.Empty));
+        Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.InsertPost(post.Content, post.UserId ?? Guid.Empty));
     }
 
     [Test]
@@ -202,7 +197,7 @@ public class PostServiceTests
 
         _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<PostsDao, object[]>>>(),
                 "creator_userID", userId.ToString(), 0, 10,
-                tuple))!
+                tuple))
             .ReturnsAsync(posts);
 
         var result = await _postService.GetPostsFromForum(userId, 0, 10);
