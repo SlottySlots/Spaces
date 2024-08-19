@@ -12,7 +12,6 @@ namespace SlottyMedia.Database;
 /// </summary>
 public class DatabaseActions : IDatabaseActions
 {
-    private static readonly Logging<DatabaseActions> Logger =new ();
     private readonly Client _supabaseClient;
 
     /// <summary>
