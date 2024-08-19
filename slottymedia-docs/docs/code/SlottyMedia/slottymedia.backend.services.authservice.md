@@ -179,3 +179,15 @@ public Session GetCurrentSession()
 
 Session<br>
 Returns the session set on server side
+
+### **RestoreSessionOnInit()**
+
+This restores the session on initialization of the page.
+
+```csharp
+public Task<Session> RestoreSessionOnInit()
+```
+
+#### Returns
+
+[Task&lt;Session&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

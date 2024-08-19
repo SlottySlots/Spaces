@@ -17,12 +17,12 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 Gets or sets the User Id.
 
 ```csharp
-public Guid UserId { get; set; }
+public Nullable<Guid> UserId { get; set; }
 ```
 
 #### Property Value
 
-[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+[Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
 ### **Username**
 

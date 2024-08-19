@@ -7,7 +7,8 @@
         type="@Type"
         @bind="Value"
         @oninput="_handleInput"
-        class="grow h-full outline-none bg-transparent text-cadet-gray-800"/>
+        @onkeydown="HandleKeyDown"
+        class="grow h-full outline-none bg-transparent w-full text-cadet-gray-800"/>
 </div>
 
 @code {
@@ -46,6 +47,17 @@
         {
             var newValue = e.Value.ToString();
             await ValueChanged.InvokeAsync(newValue);
+        }
+    }
+    //An Event invoked when Enter is pressed
+    [Parameter]
+    public EventCallback OnEnter { get; set; }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await OnEnter.InvokeAsync();
         }
     }
 

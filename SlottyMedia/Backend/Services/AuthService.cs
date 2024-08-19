@@ -185,10 +185,30 @@ public class AuthService : IAuthService
     /// <returns>
     ///     Returns the session set on server side
     /// </returns>
-    public Session? GetCurrentSession()
+    public virtual Session? GetCurrentSession()
     {
         Logger.LogDebug("Getting current session");
         var session = _supabaseClient.Auth.CurrentSession;
         return session;
+    }
+    /// <summary>
+    /// This restores the session on initialization of the page.
+    /// </summary>
+    public virtual async Task<Session?> RestoreSessionOnInit()
+    {
+        if (GetCurrentSession() == null)
+        {
+            try
+            {
+                var session = await RestoreSessionAsync();
+                return session;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+
+        return null;
     }
 }
