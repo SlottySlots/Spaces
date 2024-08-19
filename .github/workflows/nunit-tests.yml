@@ -8,7 +8,9 @@ on:
       - 'perf/*'
       - 'style/*'
       - 'fix/*'
+      - 'test/*'
       - 'revert/*'
+      - 'perf/*'
   pull_request:
     branches:
       - 'feat/*'
@@ -16,44 +18,30 @@ on:
       - 'perf/*'
       - 'style/*'
       - 'fix/*'
+      - 'test/*'
       - 'revert/*'
+      - 'perf/*'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     
     env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
       GITHUB_ACTIONS: true
 
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: supabase/setup-cli@v1
-        with:
-          version: latest
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.0.x
-
-      - name: Start Supabase
-        run: supabase start
-
-      - name: Get Supabase Configuration
-        run: |
-          export $(grep -v '^#' supabase/.env | xargs)
-          echo "SUPABASE_URL=$SUPABASE_URL" >> $GITHUB_ENV
-          echo "SUPABASE_KEY=$SUPABASE_ANON_KEY" >> $GITHUB_ENV
-
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Build
-        run: dotnet build --no-restore
-
-      - name: Test
-        run: dotnet test --no-build --verbosity normal
-
-      - name: Stop Supabase
-        run: supabase stop
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Restore tools
+      run: dotnet tool restore --tool-manifest ./SlottyMedia/.config/dotnet-tools.json
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
