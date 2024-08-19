@@ -52,7 +52,7 @@ public class ForumServiceTests
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<ForumDao>())).ReturnsAsync(forumDao);
 
         // Act
-        var result = await _forumService.InsertForum(forumDto);
+        var result = await _forumService.InsertForum(forumDto.ForumId, forumDao.ForumTopic);
 
         // Assert
         Assert.That(result, Is.Not.Null);
@@ -75,7 +75,8 @@ public class ForumServiceTests
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<ForumDao>())).ThrowsAsync(new DatabaseIudActionException());
 
         // Act & Assert
-        Assert.ThrowsAsync<ForumIudException>(async () => await _forumService.InsertForum(forumDto));
+        Assert.ThrowsAsync<ForumIudException>(async () =>
+            await _forumService.InsertForum(forumDto.ForumId, forumDto.Topic));
     }
 
     /// <summary>
@@ -91,7 +92,8 @@ public class ForumServiceTests
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<ForumDao>())).ThrowsAsync(new GeneralDatabaseException());
 
         // Act & Assert
-        Assert.ThrowsAsync<ForumGeneralException>(async () => await _forumService.InsertForum(forumDto));
+        Assert.ThrowsAsync<ForumGeneralException>(async () =>
+            await _forumService.InsertForum(forumDto.ForumId, forumDto.Topic));
     }
 
     /// <summary>

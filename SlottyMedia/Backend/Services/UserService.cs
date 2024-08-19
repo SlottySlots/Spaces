@@ -4,6 +4,7 @@ using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.Services;
 
@@ -12,6 +13,7 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class UserService : IUserService
 {
+    private static readonly Logging Logger = Logging.Instance;
     private readonly IDatabaseActions _databaseActions;
     private readonly IPostService _postService;
 
@@ -22,6 +24,7 @@ public class UserService : IUserService
     /// <param name="postService">This parameter is used to interact with the post service</param>
     public UserService(IDatabaseActions databaseActions, IPostService postService)
     {
+        Logger.LogInfo("Creating a new UserService object");
         _databaseActions = databaseActions;
         _postService = postService;
     }
@@ -51,20 +54,25 @@ public class UserService : IUserService
 
         try
         {
+            Logger.LogInfo($"Creating a new user {user}");
             var result = await _databaseActions.Insert(user);
             return new UserDto().Mapper(result);
         }
         catch (DatabaseIudActionException ex)
         {
-            throw new UserIudException("An error occurred while creating the user", ex);
+            throw new UserIudException(
+                $"An error occurred while creating the user. Parameters: {userId} {username}, {description}", ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new UserGeneralException("A database error occurred while creating the user", ex);
+            throw new UserGeneralException(
+                $"A database error occurred while creating the user Parameters: {userId} {username}, {description}",
+                ex);
         }
         catch (Exception ex)
         {
-            throw new UserGeneralException("An error occurred while creating the user", ex);
+            throw new UserGeneralException(
+                $"An error occurred while creating the user Parameters: {userId} {username}, {description}", ex);
         }
     }
 
@@ -77,19 +85,21 @@ public class UserService : IUserService
     {
         try
         {
-            return await _databaseActions.Delete(user.Mapper());
+            var userDao = user.Mapper();
+            Logger.LogInfo($"Deleting a user {userDao}");
+            return await _databaseActions.Delete(userDao);
         }
         catch (DatabaseIudActionException ex)
         {
-            throw new UserIudException("An error occurred while deleting the user", ex);
+            throw new UserIudException($"An error occurred while deleting the user. User: {user}", ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new UserGeneralException("An error occurred while deleting the user", ex);
+            throw new UserGeneralException($"An error occurred while deleting the user. User: {user}", ex);
         }
         catch (Exception ex)
         {
-            throw new UserGeneralException("An error occurred while deleting the user", ex);
+            throw new UserGeneralException($"An error occurred while deleting the user. User: {user}", ex);
         }
     }
 
@@ -102,6 +112,7 @@ public class UserService : IUserService
     {
         try
         {
+            Logger.LogInfo($"Fetching user with ID {userId}");
             var user = await _databaseActions.GetEntityByField<UserDao>("userID", userId.ToString());
             return new UserDto().Mapper(user);
         }
@@ -132,16 +143,19 @@ public class UserService : IUserService
     {
         try
         {
+            Logger.LogInfo($"Fetching user with username {username}");
             var result = await _databaseActions.CheckIfEntityExists<UserDao>("userName", username);
             return result;
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new UserGeneralException("An error occurred while checking if the the user exists", ex);
+            throw new UserGeneralException(
+                $"An error occurred while checking if the the user exists. Username: {username}", ex);
         }
         catch (Exception ex)
         {
-            throw new UserGeneralException("A general error occurred while checking if the the user exists", ex);
+            throw new UserGeneralException(
+                $"A general error occurred while checking if the the user exists. Username: {username}", ex);
         }
     }
 
@@ -154,20 +168,21 @@ public class UserService : IUserService
     {
         try
         {
+            Logger.LogInfo($"Updating user {user}");
             var result = await _databaseActions.Update(user.Mapper());
             return new UserDto().Mapper(result);
         }
         catch (DatabaseIudActionException ex)
         {
-            throw new UserIudException("An error occurred while updating the user", ex);
+            throw new UserIudException($"An error occurred while updating the user. User {user}", ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new UserGeneralException("An error occurred while updating the user", ex);
+            throw new UserGeneralException($"An error occurred while updating the user. User {user}", ex);
         }
         catch (Exception ex)
         {
-            throw new UserGeneralException("An error occurred while updating the user", ex);
+            throw new UserGeneralException($"An error occurred while updating the user. User {user}", ex);
         }
     }
 
@@ -181,6 +196,7 @@ public class UserService : IUserService
     {
         try
         {
+            Logger.LogInfo($"Fetching profile picture for user with ID {userId}");
             var user = await GetUserDaoById(userId);
             return new ProfilePicDto
             {
@@ -194,7 +210,7 @@ public class UserService : IUserService
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new UserGeneralException("An error occurred while fetching the profile picture", ex);
+            throw new UserGeneralException($"An error occurred while fetching the profile picture. ID {userId}", ex);
         }
     }
 
@@ -208,9 +224,12 @@ public class UserService : IUserService
     {
         try
         {
+            Logger.LogInfo($"Fetching user with ID {userId} and recent forums {recentForums}");
             var result = await _databaseActions.GetEntitieWithSelectorById<UserDao>(
                 x => new object[] { x.UserId!, x.UserName!, x.Description!, x.CreatedAt }, "userID", userId.ToString());
             var user = new UserDto().Mapper(result);
+
+            Logger.LogInfo($"Fetching recent forums for user with ID {userId}");
             user.RecentForums = await _postService.GetPostsFromForum(userId, 0, recentForums);
 
             return user;
@@ -221,11 +240,11 @@ public class UserService : IUserService
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new UserGeneralException("An error occurred while fetching the user", ex);
+            throw new UserGeneralException($"An error occurred while fetching the user. ID: {userId}", ex);
         }
         catch (Exception ex)
         {
-            throw new UserGeneralException("An error occurred while fetching the user", ex);
+            throw new UserGeneralException($"An error occurred while fetching the user. ID {userId}", ex);
         }
     }
 
@@ -238,6 +257,7 @@ public class UserService : IUserService
     {
         try
         {
+            Logger.LogInfo($"Fetching friends for user with ID {userId}");
             var friends = await _databaseActions.GetEntitiesWithSelectorById<FollowerUserRelationDao>(
                 x => new object[] { x.FollowedUserId! }, "followerUserID", userId.ToString());
             var friendList = new FriendsOfUserDto
@@ -246,6 +266,8 @@ public class UserService : IUserService
                 Friends = new List<UserDto>()
             };
 
+            Logger.LogInfo(
+                $"Found {friends.Count} friends for user with ID {userId}. Now mapping them to UserDto objects.");
             foreach (var friend in friends)
                 if (friend.FollowerUser != null)
                     friendList.Friends.Add(new UserDto().Mapper(friend.FollowerUser));
@@ -258,11 +280,11 @@ public class UserService : IUserService
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new UserGeneralException("An error occurred while fetching the friends", ex);
+            throw new UserGeneralException($"An error occurred while fetching the friends. ID {userId}", ex);
         }
         catch (Exception ex)
         {
-            throw new UserGeneralException("An error occurred while fetching the friends", ex);
+            throw new UserGeneralException($"An error occurred while fetching the friends. ID {userId}", ex);
         }
     }
 
@@ -275,6 +297,7 @@ public class UserService : IUserService
     {
         try
         {
+            Logger.LogInfo($"Fetching user with ID {userId}");
             var user = await _databaseActions.GetEntityByField<UserDao>("userID", userId.ToString());
             return user;
         }
@@ -284,7 +307,7 @@ public class UserService : IUserService
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new UserGeneralException("An error occurred while fetching the user", ex);
+            throw new UserGeneralException($"An error occurred while fetching the user. ID: {userId}", ex);
         }
     }
 }

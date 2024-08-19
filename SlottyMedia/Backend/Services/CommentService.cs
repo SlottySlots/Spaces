@@ -2,7 +2,9 @@
 using SlottyMedia.Backend.Exceptions.Services.CommentExceptions;
 using SlottyMedia.Backend.Exceptions.Services.PostExceptions;
 using SlottyMedia.Database;
+using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.Services;
 
@@ -11,11 +13,14 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class CommentService
 {
+    private static readonly Logging Logger = Logging.Instance;
     private readonly IDatabaseActions _databaseActions;
+
 
     /// Constructor to initialize the CommentService with the required database actions.
     public CommentService(IDatabaseActions databaseActions)
     {
+        Logger.LogInfo("CommentService initialized");
         _databaseActions = databaseActions;
     }
 
@@ -25,29 +30,38 @@ public class CommentService
     /// <param name="comment">The CommentDto object containing the comment details.</param>
     /// <returns>Returns the inserted CommentDto object.</returns>
     /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while inserting the comment.</exception>
-    public async Task<CommentDto> InsertComment(CommentDto comment)
+    public async Task<CommentDto> InsertComment(Guid creatorUserId, Guid postId, string content)
     {
         try
         {
+            var comment = new CommentDao(creatorUserId, postId, content);
+
+            Logger.LogDebug($"Inserting comment: {comment}");
             // Attempt to insert the comment into the database.
-            var insertedComment = await _databaseActions.Insert(comment.Mapper());
+            var insertedComment = await _databaseActions.Insert(comment);
             // Return the inserted comment as a CommentDto object.
             return new CommentDto().Mapper(insertedComment);
         }
         catch (DatabaseIudActionException ex)
         {
             // Handle specific database insert/update/delete action exceptions.
-            throw new CommentIudException("An error occurred while inserting the comment", ex);
+            throw new CommentIudException(
+                $"An error occurred while inserting the comment. Parameters: CreatorUserID {creatorUserId}. PostId {postId}, Content {content}",
+                ex);
         }
         catch (GeneralDatabaseException ex)
         {
             // Handle general database exceptions.
-            throw new CommentGeneralException("An error occurred while inserting the comment", ex);
+            throw new CommentGeneralException(
+                $"An error occurred while inserting the comment. Parameters: CreatorUserID {creatorUserId}. PostId {postId}, Content {content}",
+                ex);
         }
         catch (Exception ex)
         {
             // Handle any other exceptions.
-            throw new CommentGeneralException("An error occurred while inserting the comment", ex);
+            throw new CommentGeneralException(
+                $"An error occurred while inserting the comment. Parameters: CreatorUserID {creatorUserId}. PostId {postId}, Content {content}",
+                ex);
         }
     }
 
@@ -69,17 +83,17 @@ public class CommentService
         catch (DatabaseIudActionException ex)
         {
             // Handle specific database insert/update/delete action exceptions.
-            throw new CommentIudException("An error occurred while updating the comment", ex);
+            throw new CommentIudException($"An error occurred while updating the comment. Comment: {comment}", ex);
         }
         catch (GeneralDatabaseException ex)
         {
             // Handle general database exceptions.
-            throw new CommentGeneralException("An error occurred while updating the comment", ex);
+            throw new CommentGeneralException($"An error occurred while updating the comment. Comment: {comment}", ex);
         }
         catch (Exception ex)
         {
             // Handle any other exceptions.
-            throw new CommentGeneralException("An error occurred while updating the comment", ex);
+            throw new CommentGeneralException($"An error occurred while updating the comment. Comment: {comment}", ex);
         }
     }
 
@@ -99,17 +113,17 @@ public class CommentService
         catch (DatabaseIudActionException ex)
         {
             // Handle specific database insert/update/delete action exceptions.
-            throw new CommentIudException("An error occurred while deleting the comment", ex);
+            throw new CommentIudException($"An error occurred while deleting the comment. Comment: {comment}", ex);
         }
         catch (GeneralDatabaseException ex)
         {
             // Handle general database exceptions.
-            throw new CommentGeneralException("An error occurred while deleting the comment", ex);
+            throw new CommentGeneralException($"An error occurred while deleting the comment. Comment {comment}", ex);
         }
         catch (Exception ex)
         {
             // Handle any other exceptions.
-            throw new CommentGeneralException("An error occurred while deleting the comment", ex);
+            throw new CommentGeneralException($"An error occurred while deleting the comment. Comment {comment}", ex);
         }
     }
 }

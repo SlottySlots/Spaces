@@ -137,3 +137,15 @@ The Id of the User who created the Forum
 
 `forumTopic` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The Topic of the Forum
+
+## Methods
+
+### **ToString()**
+
+```csharp
+public string ToString()
+```
+
+#### Returns
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>

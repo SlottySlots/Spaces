@@ -4,6 +4,7 @@ using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.LoggingProvider;
 using Supabase.Postgrest;
 
 namespace SlottyMedia.Backend.Services;
@@ -13,12 +14,15 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class PostService : IPostService
 {
+    private static readonly Logging Logger = Logging.Instance;
+
     /// <summary>
     ///     Initializes a new instance of the <see cref="PostService" /> class.
     /// </summary>
     /// <param name="databaseActions">The database actions interface.</param>
     public PostService(IDatabaseActions databaseActions)
     {
+        Logger.LogInfo("PostService initialized");
         DatabaseActions = databaseActions;
     }
 
@@ -46,21 +50,27 @@ public class PostService : IPostService
                 UserId = creatorUserId,
                 ForumId = forumId
             };
-
+            Logger.LogInfo($"Inserting a new post into the database {post}");
             var insertedPost = await DatabaseActions.Insert(post);
             return new PostDto().Mapper(insertedPost);
         }
         catch (DatabaseIudActionException ex)
         {
-            throw new PostIudException("An error occurred while inserting the post", ex);
+            throw new PostIudException(
+                $"An error occurred while inserting the post. Parameters: {title} {content}, {creatorUserId}, {forumId}",
+                ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new PostGeneralException("A database error occurred while inserting the post", ex);
+            throw new PostGeneralException(
+                $"A database error occurred while inserting the post. Parameters: {title} {content}, {creatorUserId}, {forumId}",
+                ex);
         }
         catch (Exception ex)
         {
-            throw new PostGeneralException("An error occurred while inserting the post", ex);
+            throw new PostGeneralException(
+                $"An error occurred while inserting the post. Parameters: {title} {content}, {creatorUserId}, {forumId}",
+                ex);
         }
     }
 
@@ -73,16 +83,17 @@ public class PostService : IPostService
     {
         try
         {
+            Logger.LogInfo($"Updating the post in the database {post}");
             var updatedPost = await DatabaseActions.Update(post.Mapper());
             return new PostDto().Mapper(updatedPost);
         }
         catch (DatabaseIudActionException ex)
         {
-            throw new PostIudException("An error occurred while updating the post", ex);
+            throw new PostIudException($"An error occurred while updating the post. Post: {post}", ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new PostGeneralException("A database error occurred while updating the post", ex);
+            throw new PostGeneralException($"A database error occurred while updating the post. Post: {post}", ex);
         }
     }
 
@@ -98,16 +109,17 @@ public class PostService : IPostService
     {
         try
         {
+            Logger.LogInfo($"Deleting the post from the database {post}");
             var result = await DatabaseActions.Delete(post.Mapper());
             return result;
         }
         catch (DatabaseIudActionException ex)
         {
-            throw new PostIudException("An error occurred while deleting the post", ex);
+            throw new PostIudException($"An error occurred while deleting the post. Post: {post}", ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new PostGeneralException("A database error occurred while deleting the post", ex);
+            throw new PostGeneralException($"A database error occurred while deleting the post. Post: {post}", ex);
         }
     }
 
@@ -122,6 +134,7 @@ public class PostService : IPostService
     {
         try
         {
+            Logger.LogInfo($"Fetching posts for the user with ID: {userId} from index {startOfSet} to {endOfSet}");
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
                 x => new object[] { x.Forum! },
                 "creator_userID",
@@ -129,6 +142,7 @@ public class PostService : IPostService
                 ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
             );
 
+            Logger.LogInfo("Mapping posts to forum topics");
             var forumTopics = new List<string>();
             foreach (var post in posts)
                 if (post.Forum is not null && post.Forum.ForumTopic is not null)
@@ -138,15 +152,21 @@ public class PostService : IPostService
         }
         catch (DatabaseMissingItemException ex)
         {
-            throw new PostNotFoundException($"Posts for the given user ID were not found. User ID: {userId}", ex);
+            throw new PostNotFoundException(
+                $"Posts for the given user ID were not found. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new PostGeneralException("A database error occurred while fetching the posts", ex);
+            throw new PostGeneralException(
+                $"A database error occurred while fetching the posts. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
         catch (Exception ex)
         {
-            throw new PostGeneralException("An error occurred while fetching the posts", ex);
+            throw new PostGeneralException(
+                $"An error occurred while fetching the posts. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
     }
 
@@ -161,6 +181,7 @@ public class PostService : IPostService
     {
         try
         {
+            Logger.LogInfo($"Fetching posts for the user with ID: {userId} from index {startOfSet} to {endOfSet}");
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
                 x => new object[] { x.PostId!, x.Content!, x.Forum!, x.CreatedAt },
                 new List<(string, Constants.Operator, string)>
@@ -176,15 +197,21 @@ public class PostService : IPostService
         }
         catch (DatabaseMissingItemException ex)
         {
-            throw new PostNotFoundException($"Posts for the given user ID were not found. User ID: {userId}", ex);
+            throw new PostNotFoundException(
+                $"Posts for the given user ID were not found. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new PostGeneralException("A database error occurred while fetching the posts", ex);
+            throw new PostGeneralException(
+                $"A database error occurred while fetching the posts. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
         catch (Exception ex)
         {
-            throw new PostGeneralException("An error occurred while fetching the posts", ex);
+            throw new PostGeneralException(
+                $"An error occurred while fetching the posts. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
     }
 
@@ -200,6 +227,8 @@ public class PostService : IPostService
     {
         try
         {
+            Logger.LogInfo(
+                $"Fetching posts for the user with ID: {userId} and forum with ID: {forumId} from index {startOfSet} to {endOfSet}");
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
                 x => new object[] { x.PostId!, x.Content!, x.Forum!, x.CreatedAt },
                 new List<(string, Constants.Operator, string)>
@@ -221,11 +250,15 @@ public class PostService : IPostService
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new PostGeneralException("A database error occurred while fetching the posts", ex);
+            throw new PostGeneralException(
+                $"A database error occurred while fetching the posts. FormID: {forumId} UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
         catch (Exception ex)
         {
-            throw new PostGeneralException("An error occurred while fetching the posts", ex);
+            throw new PostGeneralException(
+                $"An error occurred while fetching the posts. FormID: {forumId} UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
     }
 
@@ -240,6 +273,7 @@ public class PostService : IPostService
     {
         try
         {
+            Logger.LogInfo($"Fetching posts for the forum with ID: {forumId} from index {startOfSet} to {endOfSet}");
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
                 x => new object[] { x.PostId!, x.Content!, x.Forum!, x.CreatedAt },
                 new List<(string, Constants.Operator, string)>
@@ -259,11 +293,15 @@ public class PostService : IPostService
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new PostGeneralException("A database error occurred while fetching the posts", ex);
+            throw new PostGeneralException(
+                $"A database error occurred while fetching the posts. FormID: {forumId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
         catch (Exception ex)
         {
-            throw new PostGeneralException("An error occurred while fetching the posts", ex);
+            throw new PostGeneralException(
+                $"An error occurred while fetching the posts. FormID: {forumId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
     }
 
@@ -274,6 +312,7 @@ public class PostService : IPostService
     /// <returns>A list of PostDto objects.</returns>
     private List<PostDto> ConvertPostsToPostDtos(List<PostsDao> posts)
     {
+        Logger.LogInfo("Mapping posts to DTOs");
         return posts.Select(post => new PostDto().Mapper(post)).ToList();
     }
 }

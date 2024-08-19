@@ -11,6 +11,8 @@ namespace SlottyMedia.Backend.ViewModel;
 /// </summary>
 public class SignupFormVmImpl : ISignupFormVm
 {
+    private static readonly Logging Logger = Logging.Instance;
+
     /// <summary>
     ///     Service used for signing up a user
     /// </summary>
@@ -26,6 +28,7 @@ public class SignupFormVmImpl : ISignupFormVm
     /// </param>
     public SignupFormVmImpl(ISignupService signupService)
     {
+        Logger.LogInfo("SignupFormVm initialized");
         _signupService = signupService;
     }
 
@@ -72,6 +75,7 @@ public class SignupFormVmImpl : ISignupFormVm
     /// </exception>
     public async Task SubmitSignupForm()
     {
+        Logger.LogDebug("SubmitSignupForm called");
         // reset all existing errors first
         _resetErrors();
 
@@ -97,6 +101,7 @@ public class SignupFormVmImpl : ISignupFormVm
         // if all fields were provided, try signing up
         try
         {
+            Logger.LogDebug("Calling signup service");
             await _signupService.SignUp(Username!, Email!, Password!);
         }
         catch (UsernameAlreadyExistsException)

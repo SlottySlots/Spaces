@@ -180,3 +180,15 @@ public UserDao(Guid userId, Guid roleId, string userName, string email, string d
 `description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 `profilePic` [Nullable&lt;Int64&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+
+## Methods
+
+### **ToString()**
+
+```csharp
+public string ToString()
+```
+
+#### Returns
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>

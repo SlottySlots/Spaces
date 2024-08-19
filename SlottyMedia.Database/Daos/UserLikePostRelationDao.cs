@@ -53,4 +53,10 @@ public class UserLikePostRelationDao : BaseModel
     /// </summary>
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
+
+    public override string ToString()
+    {
+        return
+            $"UserLikePostRelationId: {UserLikePostRelationId}, UserId: {UserId}, PostId: {PostId}, CreatedAt: {CreatedAt}";
+    }
 }

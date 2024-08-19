@@ -11,10 +11,12 @@ public interface IForumService
     /// <summary>
     ///     Inserts a new forum into the database.
     /// </summary>
-    /// <param name="forum">The ForumDto object containing the forum details.</param>
+    /// <param name="creatorUserId">The Creator UserID</param>
+    /// ///
+    /// <param name="forumTopic">The Topic from the Forum</param>
     /// <returns>Returns the inserted ForumDto object.</returns>
     /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while inserting the forum.</exception>
-    Task<ForumDto> InsertForum(ForumDto forum);
+    Task<ForumDto> InsertForum(Guid creatorUserId, string forumTopic);
 
     /// <summary>
     ///     Deletes a forum from the database based on the given forum ID.

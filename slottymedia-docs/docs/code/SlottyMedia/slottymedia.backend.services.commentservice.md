@@ -24,18 +24,21 @@ public CommentService(IDatabaseActions databaseActions)
 
 ## Methods
 
-### **InsertComment(CommentDto)**
+### **InsertComment(Guid, Guid, String)**
 
 Inserts a new comment into the database.
 
 ```csharp
-public Task<CommentDto> InsertComment(CommentDto comment)
+public Task<CommentDto> InsertComment(Guid creatorUserId, Guid postId, string content)
 ```
 
 #### Parameters
 
-`comment` [CommentDto](./slottymedia.backend.dtos.commentdto.md)<br>
-The CommentDto object containing the comment details.
+`creatorUserId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`content` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 #### Returns
 
