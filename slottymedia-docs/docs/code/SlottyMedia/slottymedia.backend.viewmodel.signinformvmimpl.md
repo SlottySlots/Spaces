@@ -65,15 +65,20 @@ public string ServerErrorMessage { get; set; }
 
 ## Constructors
 
-### **SignInFormVmImpl(IAuthService)**
+### **SignInFormVmImpl(IAuthService, NavigationManager)**
+
+Standard Constructor used for dependency injection
 
 ```csharp
-public SignInFormVmImpl(IAuthService authService)
+public SignInFormVmImpl(IAuthService authService, NavigationManager navigationManager)
 ```
 
 #### Parameters
 
 `authService` [IAuthService](./slottymedia.backend.services.interfaces.iauthservice.md)<br>
+AuthService about to being injected
+
+`navigationManager` NavigationManager<br>
 
 ## Methods
 
