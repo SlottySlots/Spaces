@@ -9,6 +9,18 @@ public class PostSubmissionForm : Microsoft.AspNetCore.Components.ComponentBase,
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → ComponentBase → [PostSubmissionForm](./slottymedia.components.partial.mainlayout.postsubmissionform.md)<br>
 Implements IComponent, IHandleEvent, IHandleAfterRender
 
+## Properties
+
+### **ViewModel**
+
+```csharp
+public IPostSubmissionFormVm ViewModel { get; set; }
+```
+
+#### Property Value
+
+[IPostSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.ipostsubmissionformvm.md)<br>
+
 ## Constructors
 
 ### **PostSubmissionForm()**

@@ -14,15 +14,13 @@
     <form class="col-span-9" @onsubmit="ViewModel!.SubmitForm">
         
         <!-- the text -->
-        <textarea
-            @bind="ViewModel!.Text"
-            id="submit-post-textarea"
-            name="submit-post-textarea"
-            placeholder="What is happening?"
-            class="w-full outline-none border-none"
-        ></textarea>
-        
-        <div>@(ViewModel!.Text)</div>
+        <InputArea
+            @bind-Value="ViewModel!.Text"
+            Id="submit-post-textarea"
+            Name="submit-post-textarea"
+            Placeholder="What is happening?"
+            Class="w-full bg-transparent text-black"
+        />
 
         <!-- text error message -->
         @if (ViewModel.TextErrorMessage != null)
