@@ -61,6 +61,7 @@ public interface IDatabaseActions
     /// <param name="field">The field to search.</param>
     /// <param name="value">The value to search for.</param>
     /// <param name="max">The maximum number of items to retrieve.</param>
+    /// <param name="min">The minimum number of items to retrieve</param>
     /// <param name="orderByFields">The fields to order by.</param>
     /// <returns>Returns a list of entities from the database.</returns>
     Task<List<T>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector, string field,
@@ -70,6 +71,16 @@ public interface IDatabaseActions
         params (string field, Constants.Ordering ordering, Constants.NullPosition nullPosition)[] orderByFields)
         where T : BaseModel, new();
 
+    /// <summary>
+    ///     Returns a list of entities with a selector from the database based on the given search criteria.
+    /// </summary>
+    /// <typeparam name="T">The type of the item object.</typeparam>
+    /// <param name="selector">The selector expression to use.</param>
+    /// <param name="search">The search criteria.</param>
+    /// <param name="max">The maximum number of items to retrieve.</param>
+    /// <param name="min">The minimum number of items to retrieve</param>
+    /// <param name="orderByFields">The fields to order by.</param>
+    /// <returns>Returns a list of entities from the database.</returns>
     Task<List<T>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector,
         List<(string, Constants.Operator, string)> search,
         int max = -1,
@@ -77,5 +88,19 @@ public interface IDatabaseActions
         params (string field, Constants.Ordering ordering, Constants.NullPosition nullPosition)[] orderByFields)
         where T : BaseModel, new();
 
+    /// <summary>
+    ///     Returns a list of all entities from the database.
+    /// </summary>
+    /// <typeparam name="T">The type of the item object.</typeparam>
+    /// <returns>Returns a list of entities from the database.</returns>
     Task<List<T>> GetEntities<T>() where T : BaseModel, new();
+
+    /// <summary>
+    ///     Checks if an entity exists in the database based on the given field and value.
+    /// </summary>
+    /// <typeparam name="T">The type of the item object.</typeparam>
+    /// <param name="field">The field to search.</param>
+    /// <param name="value">The value to search for.</param>
+    /// <returns>Returns true if the entity exists.</returns>
+    public Task<bool> CheckIfEntityExists<T>(string field, string value) where T : BaseModel, new();
 }
