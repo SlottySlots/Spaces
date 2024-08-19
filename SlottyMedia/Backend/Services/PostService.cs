@@ -56,15 +56,21 @@ public class PostService : IPostService
         }
         catch (DatabaseIudActionException ex)
         {
-            throw new PostIudException("An error occurred while inserting the post", ex);
+            throw new PostIudException(
+                $"An error occurred while inserting the post. Parameters: {title} {content}, {creatorUserId}, {forumId}",
+                ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new PostGeneralException("A database error occurred while inserting the post", ex);
+            throw new PostGeneralException(
+                $"A database error occurred while inserting the post. Parameters: {title} {content}, {creatorUserId}, {forumId}",
+                ex);
         }
         catch (Exception ex)
         {
-            throw new PostGeneralException("An error occurred while inserting the post", ex);
+            throw new PostGeneralException(
+                $"An error occurred while inserting the post. Parameters: {title} {content}, {creatorUserId}, {forumId}",
+                ex);
         }
     }
 
@@ -83,11 +89,11 @@ public class PostService : IPostService
         }
         catch (DatabaseIudActionException ex)
         {
-            throw new PostIudException("An error occurred while updating the post", ex);
+            throw new PostIudException($"An error occurred while updating the post. Post: {post}", ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new PostGeneralException("A database error occurred while updating the post", ex);
+            throw new PostGeneralException($"A database error occurred while updating the post. Post: {post}", ex);
         }
     }
 
@@ -109,11 +115,11 @@ public class PostService : IPostService
         }
         catch (DatabaseIudActionException ex)
         {
-            throw new PostIudException("An error occurred while deleting the post", ex);
+            throw new PostIudException($"An error occurred while deleting the post. Post: {post}", ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new PostGeneralException("A database error occurred while deleting the post", ex);
+            throw new PostGeneralException($"A database error occurred while deleting the post. Post: {post}", ex);
         }
     }
 
@@ -137,19 +143,30 @@ public class PostService : IPostService
             );
 
             Logger.LogInfo("Mapping posts to forum topics");
-            return posts.Select(post => post.Forum.ForumTopic).ToList();
+            var forumTopics = new List<string>();
+            foreach (var post in posts)
+                if (post.Forum is not null && post.Forum.ForumTopic is not null)
+                    forumTopics.Add(post.Forum.ForumTopic);
+
+            return forumTopics;
         }
         catch (DatabaseMissingItemException ex)
         {
-            throw new PostNotFoundException($"Posts for the given user ID were not found. User ID: {userId}", ex);
+            throw new PostNotFoundException(
+                $"Posts for the given user ID were not found. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new PostGeneralException("A database error occurred while fetching the posts", ex);
+            throw new PostGeneralException(
+                $"A database error occurred while fetching the posts. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
         catch (Exception ex)
         {
-            throw new PostGeneralException("An error occurred while fetching the posts", ex);
+            throw new PostGeneralException(
+                $"An error occurred while fetching the posts. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
     }
 
@@ -180,15 +197,21 @@ public class PostService : IPostService
         }
         catch (DatabaseMissingItemException ex)
         {
-            throw new PostNotFoundException($"Posts for the given user ID were not found. User ID: {userId}", ex);
+            throw new PostNotFoundException(
+                $"Posts for the given user ID were not found. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new PostGeneralException("A database error occurred while fetching the posts", ex);
+            throw new PostGeneralException(
+                $"A database error occurred while fetching the posts. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
         catch (Exception ex)
         {
-            throw new PostGeneralException("An error occurred while fetching the posts", ex);
+            throw new PostGeneralException(
+                $"An error occurred while fetching the posts. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
     }
 
@@ -227,11 +250,15 @@ public class PostService : IPostService
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new PostGeneralException("A database error occurred while fetching the posts", ex);
+            throw new PostGeneralException(
+                $"A database error occurred while fetching the posts. FormID: {forumId} UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
         catch (Exception ex)
         {
-            throw new PostGeneralException("An error occurred while fetching the posts", ex);
+            throw new PostGeneralException(
+                $"An error occurred while fetching the posts. FormID: {forumId} UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
     }
 
@@ -266,11 +293,15 @@ public class PostService : IPostService
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new PostGeneralException("A database error occurred while fetching the posts", ex);
+            throw new PostGeneralException(
+                $"A database error occurred while fetching the posts. FormID: {forumId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
         catch (Exception ex)
         {
-            throw new PostGeneralException("An error occurred while fetching the posts", ex);
+            throw new PostGeneralException(
+                $"An error occurred while fetching the posts. FormID: {forumId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                ex);
         }
     }
 

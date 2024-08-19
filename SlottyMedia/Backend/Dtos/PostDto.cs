@@ -18,7 +18,7 @@ public class PostDto
         Likes = new List<Guid>();
         CreatedAt = DateTime.MinValue;
         Content = string.Empty;
-        Comments = new List<CommentDao>();
+        Comments = new List<CommentDto>();
         Headline = string.Empty;
     }
 
@@ -60,7 +60,7 @@ public class PostDto
     /// <summary>
     ///     Gets or sets the comments on the post.
     /// </summary>
-    public List<CommentDao> Comments { get; set; }
+    public List<CommentDto> Comments { get; set; }
 
     /// <summary>
     ///     The Mapper for the Post Dto to the Post Dao.
@@ -91,7 +91,7 @@ public class PostDto
         Content = post.Content ?? string.Empty;
         Forum = post.Forum != null ? new ForumDto().Mapper(post.Forum) : new ForumDto();
         CreatedAt = post.CreatedAt;
-        Comments = post.Comments ?? new List<CommentDao>();
+        Comments = post.Comments?.Select(c => new CommentDto().Mapper(c)).ToList() ?? new List<CommentDto>();
         UserId = post.UserId ?? Guid.Empty;
         Headline = post.Headline ?? string.Empty;
         return this;

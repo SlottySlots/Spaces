@@ -2,6 +2,7 @@ using Microsoft.IdentityModel.Tokens;
 using SlottyMedia.Backend.Exceptions.auth;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
+using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
 
@@ -10,10 +11,23 @@ namespace SlottyMedia.Backend.ViewModel;
 /// </summary>
 public class SignInFormVmImpl : ISignInFormVm
 {
+    private static readonly Logging Logger = Logging.Instance;
+
+    /// <summary>
+    ///     AuthService used for supabase authentication
+    /// </summary>
     private readonly IAuthService _authService;
 
+
+    /// <summary>
+    ///     Standard Constructor used for dependency injection
+    /// </summary>
+    /// <param name="authService">
+    ///     AuthService about to being injected
+    /// </param>
     public SignInFormVmImpl(IAuthService authService)
     {
+        Logger.LogInfo("SignInFormVm initialized");
         _authService = authService;
     }
 
@@ -29,6 +43,8 @@ public class SignInFormVmImpl : ISignInFormVm
     
     public async Task SubmitSignInForm()
     {
+        Logger.LogDebug("SubmitSignInForm called");
+        
         // reset all error messages when (re-)submitting the form
         _resetErrorMessages();
         

@@ -8,6 +8,9 @@
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
         <UserSecretsId>ee0db076-5d2d-46f8-a199-018960b61740</UserSecretsId>
+
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     </PropertyGroup>
 
     <ItemGroup>
@@ -35,5 +38,10 @@
         <ProjectReference Include="..\SlottyMedia.Database\SlottyMedia.Database.csproj"/>
         <ProjectReference Include="..\SlottyMedia\SlottyMedia.csproj"/>
     </ItemGroup>
+
+    <Target Name="GenerateDocumentation" AfterTargets="Build;Run">
+        <Exec Command="dotnet tool run xmldoc2md ./bin/Debug/net8.0/SlottyMedia.Tests.dll ../slottymedia-docs/docs/code/SlottyMedia.Tests"/>
+    </Target>
+
 
 </Project>

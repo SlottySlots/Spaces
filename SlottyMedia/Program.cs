@@ -1,3 +1,4 @@
+using Blazored.SessionStorage;
 using NLog;
 using NLog.Web;
 using SlottyMedia.Backend.Dtos;
@@ -22,6 +23,9 @@ try
     logger.LogInfo("Adding services to the container");
     builder.Services.AddRazorComponents()
         .AddInteractiveServerComponents();
+
+    builder.Services.AddBlazoredSessionStorage();
+
     // NLog: Setup NLog for Dependency injection
     logger.LogInfo("Setting up NLog for Dependency injection");
     builder.Logging.ClearProviders();

@@ -19,7 +19,7 @@ public interface IUserService
     /// </summary>
     /// <param name="username">The user's username</param>
     /// <returns>The queried user or null if no such user was found</returns>
-    Task<UserDto?> GetUserByUsername(string username);
+    Task<bool> CheckIfUserExistsByUserName(string username);
 
     /// <summary>
     ///     This method creates a new User object in the database and returns the created object.

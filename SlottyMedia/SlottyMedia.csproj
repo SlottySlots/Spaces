@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Blazored.SessionStorage" Version="2.4.0"/>
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.8"/>
         <PackageReference Include="NLog" Version="5.3.3"/>
         <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.12"/>
@@ -27,6 +28,6 @@
     </ItemGroup>
 
     <Target Name="GenerateDocumentation" AfterTargets="Build">
-        <Exec Command="dotnet tool run xmldoc2md ./bin/Debug/net8.0/SlottyMedia.dll ../slottymedia-docs/docs/code"/>
+        <Exec Command="dotnet tool run xmldoc2md ./bin/Debug/net8.0/SlottyMedia.dll ../slottymedia-docs/docs/code/SlottyMedia"/>
     </Target>
 </Project>
