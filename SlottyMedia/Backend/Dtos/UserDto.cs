@@ -99,7 +99,7 @@ public class UserInformationDto
     /// <summary>
     ///     Gets or sets the User Id.
     /// </summary>
-    public Guid UserId { get; set; }
+    public Guid? UserId { get; set; }
 
     /// <summary>
     ///     Gets or sets the Username.
