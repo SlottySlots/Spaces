@@ -1,4 +1,5 @@
 using SlottyMedia.Database.Daos;
+using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.Dtos;
 
@@ -7,6 +8,8 @@ namespace SlottyMedia.Backend.Dtos;
 /// </summary>
 public class ForumDto
 {
+    private static readonly Logging<ForumDto> Logger =new ();
+    
     /// <summary>
     ///     The default constructor.
     /// </summary>
@@ -32,6 +35,8 @@ public class ForumDto
     /// <returns></returns>
     public ForumDao Mapper()
     {
+        Logger.LogInfo($"Mapping ForumDto to ForumDao. ForumDto: {this}");
+        
         return new ForumDao
         {
             ForumId = ForumId,
@@ -46,6 +51,8 @@ public class ForumDto
     /// <returns></returns>
     public ForumDto Mapper(ForumDao forumDao)
     {
+        Logger.LogInfo($"Mapping ForumDao to ForumDto. ForumDao: {forumDao}");
+        
         return new ForumDto
         {
             ForumId = forumDao.ForumId ?? Guid.Empty,

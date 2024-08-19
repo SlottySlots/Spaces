@@ -1,4 +1,5 @@
 ﻿using SlottyMedia.Database.Daos;
+using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.Dtos;
 
@@ -7,6 +8,8 @@ namespace SlottyMedia.Backend.Dtos;
 /// </summary>
 public class CommentDto
 {
+    private static readonly Logging<CommentDto> Logger =new ();
+    
     /// <summary>
     ///     Initializes a new instance of the <see cref="CommentDto" /> class.
     /// </summary>
@@ -56,6 +59,7 @@ public class CommentDto
     /// <returns></returns>
     public CommentDao Mapper()
     {
+        Logger.LogInfo($"Mapping CommentDto to CommentDao. Parameters: CommentID = {CommentId}, CreatorUserId = {CreatorUserId}, PostId = {PostId}, Content = {Content}, CreatedAt = {CreatedAt}");
         return new CommentDao
         {
             CommentId = CommentId,
@@ -73,6 +77,8 @@ public class CommentDto
     /// <param name="comment"></param>
     public CommentDto Mapper(CommentDao comment)
     {
+        Logger.LogInfo($"Mapping CommentDao to CommentDto. Parameters: CommentID = {CommentId}, CreatorUserId = {CreatorUserId}, PostId = {PostId}, Content = {Content}, CreatedAt = {CreatedAt}");
+        
         CommentId = comment.CommentId ?? Guid.Empty;
         ParentComment = comment.ParentComment.Select(pc => new CommentDto().Mapper(pc)).ToList();
         CreatorUserId = comment.CreatorUserId;

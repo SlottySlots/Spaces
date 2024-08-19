@@ -1,3 +1,5 @@
+using SlottyMedia.LoggingProvider;
+
 namespace SlottyMedia.Backend.Dtos;
 
 /// <summary>
@@ -5,6 +7,7 @@ namespace SlottyMedia.Backend.Dtos;
 /// </summary>
 public class FriendsOfUserDto
 {
+    
     /// <summary>
     ///     Initializes a new instance of the <see cref="FriendsOfUserDto" /> class.
     /// </summary>
