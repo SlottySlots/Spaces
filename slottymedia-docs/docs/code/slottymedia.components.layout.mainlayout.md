@@ -11,17 +11,39 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ## Properties
 
-### **ViewModel**
+### **ViewModelSignUp**
 
-Viewmodel to be used on auth
+ViewModelSignUp to be used on auth
 
 ```csharp
-public ISignInFormVm ViewModel { get; set; }
+public ISignInFormVm ViewModelSignUp { get; set; }
 ```
 
 #### Property Value
 
 [ISignInFormVm](./slottymedia.backend.viewmodel.interfaces.isigninformvm.md)<br>
+
+### **MainLayoutVm**
+
+ViewModel to be used in this view
+
+```csharp
+public IMainLayoutVm MainLayoutVm { get; set; }
+```
+
+#### Property Value
+
+[IMainLayoutVm](./slottymedia.backend.viewmodel.interfaces.imainlayoutvm.md)<br>
+
+### **UserInformationDto**
+
+```csharp
+public UserInformationDto UserInformationDto { get; set; }
+```
+
+#### Property Value
+
+[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
 
 ### **Body**
 
@@ -64,3 +86,13 @@ protected Task OnInitializedAsync()
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **OnAfterRender(Boolean)**
+
+```csharp
+protected void OnAfterRender(bool firstRender)
+```
+
+#### Parameters
+
+`firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
