@@ -51,6 +51,7 @@ try
     // Viewmodel
     builder.Services.AddScoped<ISignupFormVm, SignupFormVmImpl>();
     builder.Services.AddScoped<ISignInFormVm, SignInFormVmImpl>();
+    builder.Services.AddScoped<IMainLayoutVm, MainLayoutVmImpl>();
 
     // Services
     builder.Services.AddScoped<IUserService, UserService>();
