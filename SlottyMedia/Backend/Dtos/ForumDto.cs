@@ -52,4 +52,9 @@ public class ForumDto
             Topic = forumDao.ForumTopic ?? string.Empty
         };
     }
+
+    public override string ToString()
+    {
+        return $"ForumId: {ForumId}, Topic: {Topic}";
+    }
 }

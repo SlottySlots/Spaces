@@ -45,3 +45,15 @@ Initializes a new instance of the [FriendsOfUserDto](./slottymedia.backend.dtos.
 ```csharp
 public FriendsOfUserDto()
 ```
+
+## Methods
+
+### **ToString()**
+
+```csharp
+public string ToString()
+```
+
+#### Returns
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>

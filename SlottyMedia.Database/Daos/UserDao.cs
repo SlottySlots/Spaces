@@ -13,7 +13,8 @@ public class UserDao : BaseModel
     {
     }
 
-    public UserDao(Guid userId, Guid roleId, string userName, string email, string? description = null, long? profilePic = null)
+    public UserDao(Guid userId, Guid roleId, string userName, string email, string? description = null,
+        long? profilePic = null)
     {
         UserId = userId;
         RoleId = roleId;
@@ -47,9 +48,8 @@ public class UserDao : BaseModel
     /// </summary>
     [Column("userName")]
     public string? UserName { get; set; }
-    
-    [Column("email")]
-    public string? Email { get; set; }
+
+    [Column("email")] public string? Email { get; set; }
 
     /// <summary>
     ///     The Description of the User.
@@ -68,4 +68,9 @@ public class UserDao : BaseModel
     /// </summary>
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
+
+    public override string ToString()
+    {
+        return $"UserDao: {UserId}, {RoleId}, {UserName}, {Description}, {ProfilePic}, {CreatedAt}";
+    }
 }
