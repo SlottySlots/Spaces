@@ -10,11 +10,18 @@
 @inject NavigationManager NavigationManager
 
 <div class="w-screen h-screen grid grid-cols-5">
+
     <!-- sidebar on the left -->
     <div class="h-full border-r border-athens-gray">
 
         <!-- top box -->
-        <div class="relative w-full h-2/5 bg-gradient-to-br from-grape to-fandango">
+        <div class="relative w-full h-2/5 flex justify-center items-center bg-gradient-to-br from-grape to-fandango">
+            
+            <!-- logo -->
+            <div class="mb-20">
+                <img src="static/logo/logo-simple-x100.webp" alt="" />
+            </div>
+            
 
             <!-- login box -->
             @if (!AuthService.IsAuthenticated())
@@ -44,7 +51,7 @@
                                 </svg>
                             </InputFieldIcon>
                         </InputField>
-                        
+
                         <!-- email error message -->
                         @if (ViewModelSignUp.EmailErrorMessage != null)
                         {
