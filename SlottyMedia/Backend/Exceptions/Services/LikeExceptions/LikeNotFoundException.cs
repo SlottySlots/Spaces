@@ -1,11 +1,11 @@
 using SlottyMedia.LoggingProvider;
 
-namespace SlottyMedia.Backend.Exceptions.Services.UserExceptions;
+namespace SlottyMedia.Backend.Exceptions.Services.LikeExceptions;
 
 /// <summary>
 ///     This exception is thrown when a user is not found.
 /// </summary>
-public class LikeNotFoundException : BaseException
+public class LikeNotFoundException : BaseException<LikeNotFoundException>
 {
     /// <summary>
     ///     This constructor creates a new LikeNotFoundException object.

@@ -19,7 +19,7 @@ The current implementation of the logger supports two targets: the console and a
 - **Exclusions:** Microsoft logs below the `Warn` level are not logged to the console.
 - **Color Scheme:** The console output uses a defined color scheme for quicker log identification.
 
-(TODO: Add picture when Colours are final)
+![alt text](logging.colours.png)
 
 ## Base Exception ❗
 
@@ -39,9 +39,13 @@ To integrate the logger into your project, follow these steps:
 3. **Get the Logger Instance:** Retrieve the logger instance with the following code:
 
     ```csharp
-    var logger = Logging.Instance;
+    Logging<Program> logger = new ();
     ```
     
 4. **Use LogLevel Methods:** Utilize the logger instance to call the various log level methods as needed.
 
-(TODO: Add link to code documentation)
+
+[Implementation](code/SlottyMedia.LoggingProvider/slottymedia.loggingprovider.logging-1.md)
+
+
+[Configuration](code/SlottyMedia.LoggingProvider/slottymedia.loggingprovider.nlogconfiguration.md)

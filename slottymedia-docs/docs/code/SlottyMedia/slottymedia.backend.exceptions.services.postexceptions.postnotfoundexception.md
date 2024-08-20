@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Backend.Exceptions.Services.PostExceptions
 Represents an exception that is thrown when a requested post is not found.
 
 ```csharp
-public class PostNotFoundException : SlottyMedia.LoggingProvider.BaseException, System.Runtime.Serialization.ISerializable
+public class PostNotFoundException : SlottyMedia.LoggingProvider.BaseException`1[[SlottyMedia.Backend.Exceptions.Services.PostExceptions.PostNotFoundException, SlottyMedia, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException → [PostNotFoundException](./slottymedia.backend.exceptions.services.postexceptions.postnotfoundexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException&lt;PostNotFoundException&gt; → [PostNotFoundException](./slottymedia.backend.exceptions.services.postexceptions.postnotfoundexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties

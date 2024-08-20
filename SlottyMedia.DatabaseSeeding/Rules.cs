@@ -26,7 +26,8 @@ public class Rules
             .RuleFor(u => u.UserName, f => f.Internet.UserName())
             .RuleFor(u => u.Description, f => f.Lorem.Sentence())
             .RuleFor(u => u.ProfilePic, f => null)
-            .RuleFor(u => u.CreatedAt, f => f.Date.Past());
+            .RuleFor(u => u.CreatedAt, f => f.Date.Past())
+            .RuleFor(u => u.Email, f => f.Internet.Email());
         return userFaker;
     }
 

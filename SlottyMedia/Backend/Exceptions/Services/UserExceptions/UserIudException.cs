@@ -5,7 +5,7 @@ namespace SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 /// <summary>
 ///     Represents an exception that occurs during Insert, Update, or Delete operations in the User service.
 /// </summary>
-public class UserIudException : BaseException
+public class UserIudException : BaseException<UserIudException>
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="UserIudException" /> class with a specified error message.

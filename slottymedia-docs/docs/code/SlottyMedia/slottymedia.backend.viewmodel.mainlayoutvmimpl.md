@@ -44,7 +44,8 @@ Returns the restored session, or null if nothing was restored.
 
 ### **SetUserInfo()**
 
-This sets a dto holding information about the current user in order to show the current users infos in the profile card
+This sets a dto holding information about the current user in order to show the current users infos in the profile
+ card
 
 ```csharp
 public Task<UserInformationDto> SetUserInfo()

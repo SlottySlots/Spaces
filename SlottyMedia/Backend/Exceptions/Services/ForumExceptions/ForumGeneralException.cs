@@ -1,11 +1,11 @@
 using SlottyMedia.LoggingProvider;
 
-namespace SlottyMedia.Backend.Exceptions.Services.PostExceptions;
+namespace SlottyMedia.Backend.Exceptions.Services.ForumExceptions;
 
 /// <summary>
 ///     Represents a general exception that occurs in the Forum service.
 /// </summary>
-public class ForumGeneralException : BaseException
+public class ForumGeneralException : BaseException<ForumGeneralException>
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="ForumGeneralException" /> class with a specified error message.

@@ -1,9 +1,11 @@
+using SlottyMedia.LoggingProvider;
+
 namespace SlottyMedia.Backend.Exceptions.auth;
 
 /// <summary>
 ///     Exception to handle missing Access- and RefreshToken f.e. when handling Sessions
 /// </summary>
-public class TokenNotProvidedException : Exception
+public class TokenNotProvidedException : BaseException<TokenNotProvidedException>
 {
     /// <summary>
     ///     Initializes a TokenNotProvidedException. It als implements an inner exception showing which token is missin

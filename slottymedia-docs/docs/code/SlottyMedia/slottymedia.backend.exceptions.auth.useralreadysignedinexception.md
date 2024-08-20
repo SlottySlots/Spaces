@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Backend.Exceptions.auth
 Exception for the case that a user is already signed in
 
 ```csharp
-public class UserAlreadySignedInException : System.Exception, System.Runtime.Serialization.ISerializable
+public class UserAlreadySignedInException : SlottyMedia.LoggingProvider.BaseException`1[[SlottyMedia.Backend.Exceptions.auth.UserAlreadySignedInException, SlottyMedia, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [UserAlreadySignedInException](./slottymedia.backend.exceptions.auth.useralreadysignedinexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException&lt;UserAlreadySignedInException&gt; → [UserAlreadySignedInException](./slottymedia.backend.exceptions.auth.useralreadysignedinexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties

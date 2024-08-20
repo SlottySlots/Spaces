@@ -12,6 +12,8 @@
 
 ## SlottyMedia.Tests.DatabaseTests
 
+[BaseDatabaseTestClass](./slottymedia.tests.databasetests.basedatabasetestclass.md)
+
 [DatabaseActionTests](./slottymedia.tests.databasetests.databaseactiontests.md)
 
 [InitializeModels](./slottymedia.tests.databasetests.initializemodels.md)

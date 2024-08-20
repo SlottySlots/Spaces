@@ -5,7 +5,7 @@ namespace SlottyMedia.Database.Exceptions;
 /// <summary>
 ///     /// This exception is thrown when an item is missing from the database.
 /// </summary>
-public class DatabaseMissingItemException : BaseException
+public class DatabaseMissingItemException : BaseException<DatabaseMissingItemException>
 {
     /// <summary>
     ///     The default constructor.

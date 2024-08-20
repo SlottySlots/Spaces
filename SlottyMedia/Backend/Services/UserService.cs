@@ -13,7 +13,7 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class UserService : IUserService
 {
-    private static readonly Logging Logger = Logging.Instance;
+    private static readonly Logging<UserService> Logger = new();
     private readonly IDatabaseActions _databaseActions;
     private readonly IPostService _postService;
 
@@ -38,7 +38,8 @@ public class UserService : IUserService
     /// <param name="description">The Description of the User (optional)</param>
     /// <param name="profilePicture">The Profile Picture of the User (optional)</param>
     /// <returns>Returns the created UserDto. If it was unable to create a User, it will throw an exception.</returns>
-    public async Task<UserDto> CreateUser(string userId, string username, string? description = null,
+    public async Task<UserDto> CreateUser(string userId, string username, string email, Guid roleId,
+        string? description = null,
         string? profilePicture = null)
     {
         var user = new UserDao
@@ -46,7 +47,9 @@ public class UserService : IUserService
             UserId = Guid.Parse(userId),
             UserName = username,
             Description = description ?? string.Empty,
-            ProfilePic = profilePicture ?? string.Empty
+            ProfilePic = profilePicture ?? string.Empty,
+            Email = email,
+            RoleId = roleId
         };
 
         try
@@ -182,9 +185,9 @@ public class UserService : IUserService
             throw new UserGeneralException($"An error occurred while updating the user. User {user}", ex);
         }
     }
-    
+
     /// <summary>
-    /// Retrieves a user from the database based on the provided criteria (ID, username, or email).
+    ///     Retrieves a user from the database based on the provided criteria (ID, username, or email).
     /// </summary>
     /// <param name="userID">The ID of the user to retrieve (optional).</param>
     /// <param name="username">The username of the user to retrieve (optional).</param>
@@ -217,53 +220,32 @@ public class UserService : IUserService
             }
 
             if (user != null)
-            {
                 Logger.LogInfo($"Successfully retrieved user: {user}");
-            }
             else
-            {
                 Logger.LogWarn("No user found with the provided criteria.");
-            }
 
             return user;
         }
         catch (DatabaseMissingItemException ex)
         {
             if (userID is not null)
-            {
                 throw new UserNotFoundException($"User with the given ID was not found. ID: {userID}", ex);
-            }
-            else if (username is not null)
-            {
-                throw new UserNotFoundException($"User with the given username was not found. Username: {username}", ex);
-            }
-            else if (email is not null)
-            {
+            if (username is not null)
+                throw new UserNotFoundException($"User with the given username was not found. Username: {username}",
+                    ex);
+            if (email is not null)
                 throw new UserNotFoundException($"User with the given email was not found. Email: {email}", ex);
-            }
-            else
-            {
-                throw new UserNotFoundException("User not found.", ex);
-            }
+            throw new UserNotFoundException("User not found.", ex);
         }
         catch (GeneralDatabaseException ex)
         {
             if (userID is not null)
-            {
                 throw new UserGeneralException($"An error occurred while fetching the user. ID: {userID}", ex);
-            }
-            else if (username is not null)
-            {
+            if (username is not null)
                 throw new UserGeneralException($"An error occurred while fetching the user. Username: {username}", ex);
-            }
-            else if (email is not null)
-            {
+            if (email is not null)
                 throw new UserGeneralException($"An error occurred while fetching the user. Email: {email}", ex);
-            }
-            else
-            {
-                throw new UserGeneralException("An error occurred while fetching the user.", ex);
-            } 
+            throw new UserGeneralException("An error occurred while fetching the user.", ex);
         }
     }
 
@@ -282,7 +264,7 @@ public class UserService : IUserService
             return new ProfilePicDto
             {
                 UserId = userId,
-                ProfilePic = user.ProfilePic ?? String.Empty
+                ProfilePic = user.ProfilePic ?? string.Empty
             };
         }
         catch (DatabaseMissingItemException ex)

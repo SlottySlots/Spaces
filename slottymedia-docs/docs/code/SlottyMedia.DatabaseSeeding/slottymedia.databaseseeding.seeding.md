@@ -12,17 +12,17 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Constructors
 
-### **Seeding(IDatabaseActions)**
+### **Seeding(Client)**
 
 The constructor with parameters.
 
 ```csharp
-public Seeding(IDatabaseActions databaseActions)
+public Seeding(Client client)
 ```
 
 #### Parameters
 
-`databaseActions` IDatabaseActions<br>
+`client` Client<br>
 
 ## Methods
 

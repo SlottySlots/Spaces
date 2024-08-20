@@ -3,6 +3,7 @@ using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.LoggingProvider;
+using Supabase;
 
 namespace SlottyMedia.DatabaseSeeding;
 
@@ -11,16 +12,17 @@ namespace SlottyMedia.DatabaseSeeding;
 /// </summary>
 public class Seeding
 {
-    private static readonly Logging Logger = Logging.Instance;
-    private readonly IDatabaseActions _databaseActions;
+    private static readonly Logging<Seeding> Logger = new();
+    private readonly Client _client;
+    private IDatabaseActions _databaseActions;
 
     /// <summary>
     ///     The constructor with parameters.
     /// </summary>
-    /// <param name="databaseActions"></param>
-    public Seeding(IDatabaseActions databaseActions)
+    /// <param name="client"></param>
+    public Seeding(Client client)
     {
-        _databaseActions = databaseActions;
+        _client = client;
     }
 
     /// <summary>
@@ -28,6 +30,10 @@ public class Seeding
     /// </summary>
     public async Task Seed()
     {
+        Login login = new();
+        await login.LoginUser(_client);
+        _databaseActions = new DatabaseActions(_client);
+
         if (await CheckIfSeedingIsNeeded())
         {
             await CheckIfRoleExisits();
@@ -53,6 +59,8 @@ public class Seeding
 
             var userLikePostRelationFaker = rules.UserLikePostRelationRules(userIds, postIds);
             await GenerateUserLikePostRelation(userLikePostRelationFaker, userIds.Count * postIds.Count / 2);
+
+            await login.LogoutUser(_client);
 
             Logger.LogDebug("Database seeded with random data.");
         }

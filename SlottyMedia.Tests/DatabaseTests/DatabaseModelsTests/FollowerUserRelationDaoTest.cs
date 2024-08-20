@@ -1,7 +1,5 @@
-﻿using SlottyMedia.Database;
-using SlottyMedia.Database.Daos;
+﻿using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
-using Supabase;
 
 namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
 
@@ -9,7 +7,7 @@ namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
 ///     Test class for the FollowerUserRelationDao model.
 /// </summary>
 [TestFixture]
-public class FollowerUserRelationDaoTest
+public class FollowerUserRelationDaoTest : BaseDatabaseTestClass
 {
     /// <summary>
     ///     One-time setup method to initialize Supabase client and insert test data.
@@ -17,12 +15,9 @@ public class FollowerUserRelationDaoTest
     [OneTimeSetUp]
     public async Task OneTimeSetup()
     {
-        _supabaseClient = InitializeSupabaseClient.GetSupabaseClient();
-        _databaseActions = new DatabaseActions(_supabaseClient);
+        _followerUser = await DatabaseActions.Insert(InitializeModels.GetUserDto(UserId));
 
-        _followerUser = await _databaseActions.Insert(InitializeModels.GetUserDto());
-
-        _followedUser = await _databaseActions.Insert(InitializeModels.GetUserDto());
+        _followedUser = await DatabaseActions.Insert(InitializeModels.GetUserDto(Guid.NewGuid()));
     }
 
     /// <summary>
@@ -48,9 +43,12 @@ public class FollowerUserRelationDaoTest
         {
             if (_relationToWorkWith.FollowerUserRelationId is null) return;
 
-            var relation = await _databaseActions.GetEntityByField<FollowerUserRelationDao>("followerUserRelationID",
+            var relation = await DatabaseActions.GetEntityByField<FollowerUserRelationDao>("followerUserRelationID",
                 _relationToWorkWith.FollowerUserRelationId.ToString() ?? "");
-            if (relation != null) await _databaseActions.Delete(relation);
+            if (relation != null) await DatabaseActions.Delete(relation);
+        }
+        catch (DatabaseMissingItemException)
+        {
         }
         catch (Exception ex)
         {
@@ -69,12 +67,12 @@ public class FollowerUserRelationDaoTest
             if (_followerUser.UserId is null || _followedUser.UserId is null) return;
 
             var follower =
-                await _databaseActions.GetEntityByField<UserDao>("userID", _followerUser.UserId.ToString() ?? "");
-            if (follower != null) await _databaseActions.Delete(follower);
+                await DatabaseActions.GetEntityByField<UserDao>("userID", _followerUser.UserId.ToString() ?? "");
+            if (follower != null) await DatabaseActions.Delete(follower);
 
             var followed =
-                await _databaseActions.GetEntityByField<UserDao>("userID", _followedUser.UserId.ToString() ?? "");
-            if (followed != null) await _databaseActions.Delete(followed);
+                await DatabaseActions.GetEntityByField<UserDao>("userID", _followedUser.UserId.ToString() ?? "");
+            if (followed != null) await DatabaseActions.Delete(followed);
         }
         catch (Exception ex)
         {
@@ -82,8 +80,6 @@ public class FollowerUserRelationDaoTest
         }
     }
 
-    private Client _supabaseClient;
-    private IDatabaseActions _databaseActions;
     private FollowerUserRelationDao _relationToWorkWith;
     private UserDao _followerUser;
     private UserDao _followedUser;
@@ -96,7 +92,7 @@ public class FollowerUserRelationDaoTest
     {
         try
         {
-            var insertedRelation = await _databaseActions.Insert(_relationToWorkWith);
+            var insertedRelation = await DatabaseActions.Insert(_relationToWorkWith);
             Assert.Multiple(() =>
             {
                 Assert.That(insertedRelation, Is.Not.Null, "Inserted relation should not be null");
@@ -122,10 +118,10 @@ public class FollowerUserRelationDaoTest
     {
         try
         {
-            var insertedRelation = await _databaseActions.Insert(_relationToWorkWith);
+            var insertedRelation = await DatabaseActions.Insert(_relationToWorkWith);
             Assert.That(insertedRelation, Is.Not.Null, "Inserted relation should not be null");
 
-            var deletedRelation = await _databaseActions.Delete(insertedRelation);
+            var deletedRelation = await DatabaseActions.Delete(insertedRelation);
             Assert.That(deletedRelation, Is.True, "Deleted relation should not be false");
         }
         catch (GeneralDatabaseException ex)
@@ -142,7 +138,7 @@ public class FollowerUserRelationDaoTest
     {
         try
         {
-            var insertedRelation = await _databaseActions.Insert(_relationToWorkWith);
+            var insertedRelation = await DatabaseActions.Insert(_relationToWorkWith);
             Assert.Multiple(() =>
             {
                 Assert.That(insertedRelation, Is.Not.Null, "Inserted relation should not be null");
@@ -150,7 +146,7 @@ public class FollowerUserRelationDaoTest
                     "Inserted relation should have a FollowerUserRelationId");
             });
 
-            var relation = await _databaseActions.GetEntityByField<FollowerUserRelationDao>("followerUserRelationID",
+            var relation = await DatabaseActions.GetEntityByField<FollowerUserRelationDao>("followerUserRelationID",
                 insertedRelation.FollowerUserRelationId.ToString() ?? "");
             Assert.Multiple(() =>
             {

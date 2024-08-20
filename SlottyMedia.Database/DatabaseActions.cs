@@ -1,6 +1,5 @@
 ﻿using System.Linq.Expressions;
 using SlottyMedia.Database.Exceptions;
-using SlottyMedia.LoggingProvider;
 using Supabase.Postgrest;
 using Supabase.Postgrest.Models;
 using Client = Supabase.Client;
@@ -12,7 +11,6 @@ namespace SlottyMedia.Database;
 /// </summary>
 public class DatabaseActions : IDatabaseActions
 {
-    private static readonly Logging Logger = Logging.Instance;
     private readonly Client _supabaseClient;
 
     /// <summary>

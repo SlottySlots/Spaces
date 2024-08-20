@@ -13,7 +13,7 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class SignupServiceImpl : ISignupService
 {
-    private static readonly Logging Logger = Logging.Instance;
+    private static readonly Logging<SignupServiceImpl> Logger = new();
     private readonly ICookieService _cookieService;
     private readonly IDatabaseActions _databaseActions;
     private readonly Client _supabaseClient;
@@ -64,7 +64,7 @@ public class SignupServiceImpl : ISignupService
 
         Logger.LogDebug($"Signing up user with username: {username}, email: {email}");
         var session = await _supabaseClient.Auth.SignUp(email, password);
-
+        session = await _supabaseClient.Auth.SignIn(email, password);
 
         // TODO Check if email already exists, it is unclear how supabase responds in that case!
 
@@ -72,13 +72,12 @@ public class SignupServiceImpl : ISignupService
         if (session == null)
             throw new InvalidOperationException(
                 "An unknown error occured in the Supabase client while attempting to perform a signup.");
-        var userRole = await _databaseActions.GetEntityByField<RoleDao>("role", "user");
+        var userRole = await _databaseActions.GetEntityByField<RoleDao>("role", "User");
         var roleId = userRole.RoleId.HasValue
             ? userRole.RoleId.Value
             : throw new NullReferenceException("RoleId not found!");
-        var userDao = new UserDao(Guid.Parse(session.User!.Id!), roleId, username, session.User.Email!,
+        await _userService.CreateUser(session.User!.Id!, username, session.User.Email!, roleId,
             "Hey I'm a new user. Mhhm should I add a description?");
-        await _databaseActions.Insert(userDao);
 
 
         // save cookies

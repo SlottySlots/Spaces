@@ -49,9 +49,9 @@
             await ValueChanged.InvokeAsync(newValue);
         }
     }
+
     //An Event invoked when Enter is pressed
-    [Parameter]
-    public EventCallback OnEnter { get; set; }
+    [Parameter] public EventCallback OnEnter { get; set; }
 
     private async Task HandleKeyDown(KeyboardEventArgs e)
     {

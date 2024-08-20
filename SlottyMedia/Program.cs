@@ -11,9 +11,10 @@ using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.DatabaseSeeding;
 using SlottyMedia.LoggingProvider;
+using Supabase;
 
 // Early init of NLog to allow startup and exception logging, before host is built
-var logger = Logging.Instance;
+Logging<Program> logger = new();
 logger.LogInfo("Starting application");
 try
 {
@@ -66,7 +67,7 @@ try
     builder.Services.AddScoped<IAuthService, AuthService>(); // Scoped
     builder.Services.AddScoped<ISignupService, SignupServiceImpl>();
     builder.Services.AddScoped<ISearchService, SearchService>();
-    
+
     // Viewmodel
     logger.LogInfo("Adding Viewmodels to the container");
     builder.Services.AddScoped<ISignupFormVm, SignupFormVmImpl>();
@@ -82,7 +83,7 @@ try
         try
         {
             logger.LogInfo("Starting to seed the database");
-            var seeder = scope.ServiceProvider.GetRequiredService<IDatabaseActions>();
+            var seeder = scope.ServiceProvider.GetRequiredService<Client>();
             Seeding seeding = new(seeder);
             await seeding.Seed();
         }

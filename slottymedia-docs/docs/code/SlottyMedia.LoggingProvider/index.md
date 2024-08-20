@@ -2,8 +2,8 @@
 
 ## SlottyMedia.LoggingProvider
 
-[BaseException](./slottymedia.loggingprovider.baseexception.md)
+[BaseException&lt;T&gt;](./slottymedia.loggingprovider.baseexception-1.md)
 
-[Logging](./slottymedia.loggingprovider.logging.md)
+[Logging&lt;T&gt;](./slottymedia.loggingprovider.logging-1.md)
 
 [NlogConfiguration](./slottymedia.loggingprovider.nlogconfiguration.md)

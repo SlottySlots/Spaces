@@ -1,11 +1,12 @@
+using SlottyMedia.Backend.Exceptions.Services.ForumExceptions;
 using SlottyMedia.LoggingProvider;
 
-namespace SlottyMedia.Backend.Exceptions.Services.PostExceptions;
+namespace SlottyMedia.Backend.Exceptions.Services.LikeExceptions;
 
 /// <summary>
 ///     Represents a general exception that occurs in the Forum service.
 /// </summary>
-public class LikeGeneralException : BaseException
+public class LikeGeneralException : BaseException<LikeGeneralException>
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="ForumGeneralException" /> class with a specified error message.

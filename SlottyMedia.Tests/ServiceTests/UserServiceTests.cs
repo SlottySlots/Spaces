@@ -7,6 +7,7 @@ using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Tests.DatabaseTests;
 
 namespace SlottyMedia.Tests.ServiceTests;
 
@@ -50,10 +51,16 @@ public class UserServiceTests
     {
         var userId = Guid.NewGuid();
         var username = "testUsername";
-        var user = new UserDao { UserId = userId, UserName = username };
+        var email = "testEmail";
+        var user = new UserDao
+        {
+            UserId = userId, UserName = username, Email = email,
+            RoleId = InitializeModels.GetRoleDto().RoleId ?? Guid.Empty
+        };
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<UserDao>())).ReturnsAsync(user);
 
-        var result = await _userService.CreateUser(userId.ToString(), username);
+        var result = await _userService.CreateUser(userId.ToString(), username, email,
+            InitializeModels.GetRoleDto().RoleId ?? Guid.Empty);
 
         var resultDao = result.Mapper();
 
@@ -74,9 +81,11 @@ public class UserServiceTests
     {
         var userId = Guid.NewGuid();
         var username = "testUsername";
+        var email = "testEmail";
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<UserDao>())).ThrowsAsync(new DatabaseIudActionException());
 
-        Assert.ThrowsAsync<UserIudException>(async () => await _userService.CreateUser(userId.ToString(), username));
+        Assert.ThrowsAsync<UserIudException>(async () => await _userService.CreateUser(userId.ToString(), username,
+            email, InitializeModels.GetRoleDto().RoleId ?? Guid.Empty));
     }
 
     /// <summary>
@@ -87,10 +96,12 @@ public class UserServiceTests
     {
         var userId = Guid.NewGuid();
         var username = "testUsername";
+        var email = "testEmail";
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<UserDao>())).ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<UserGeneralException>(async () =>
-            await _userService.CreateUser(userId.ToString(), username));
+            await _userService.CreateUser(userId.ToString(), username, email,
+                InitializeModels.GetRoleDto().RoleId ?? Guid.Empty));
     }
 
     /// <summary>

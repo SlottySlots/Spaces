@@ -6,7 +6,7 @@ namespace SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 ///     This exception is thrown when a general exception occurs. For example when interacting with the database there
 ///     is the option, that Exceptions which aren't predictable can occur. In this case, this exception is thrown.
 /// </summary>
-public class UserGeneralException : BaseException
+public class UserGeneralException : BaseException<UserGeneralException>
 {
     /// <summary>
     ///     This constructor creates a new UserGeneralException object.
