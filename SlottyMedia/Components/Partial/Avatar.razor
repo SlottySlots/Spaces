@@ -24,7 +24,7 @@
     [Parameter]
     public string Base64PNG
     {
-        private get => _base64Png == null ? "static/profilePic.png" : $"data:image/png;base64, {_base64Png}";
+        private get => string.IsNullOrEmpty(_base64Png) ? "static/profilePic.png" : $"data:image/png;base64, {_base64Png}";
         set => _base64Png = value;
     }
 
