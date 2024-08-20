@@ -1,3 +1,4 @@
+using Blazored.SessionStorage;
 using NLog;
 using NLog.Web;
 using SlottyMedia.Backend.Dtos;
@@ -22,6 +23,9 @@ try
     logger.LogInfo("Adding services to the container");
     builder.Services.AddRazorComponents()
         .AddInteractiveServerComponents();
+
+    builder.Services.AddBlazoredSessionStorage();
+
     // NLog: Setup NLog for Dependency injection
     logger.LogInfo("Setting up NLog for Dependency injection");
     builder.Logging.ClearProviders();
@@ -68,6 +72,12 @@ try
     builder.Services.AddScoped<IAuthService, AuthService>(); // Scoped
     builder.Services.AddScoped<ISignupService, SignupServiceImpl>();
     builder.Services.AddScoped<ISearchService, SearchService>();
+    
+    // Viewmodel
+    logger.LogInfo("Adding Viewmodels to the container");
+    builder.Services.AddScoped<ISignupFormVm, SignupFormVmImpl>();
+    builder.Services.AddScoped<ISignInFormVm, SignInFormVmImpl>();
+    builder.Services.AddScoped<IMainLayoutVm, MainLayoutVmImpl>();
 
 
     var app = builder.Build();

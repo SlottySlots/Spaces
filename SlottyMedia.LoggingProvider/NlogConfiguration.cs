@@ -12,6 +12,24 @@ namespace SlottyMedia.LoggingProvider;
 /// </summary>
 public static class NlogConfiguration
 {
+    /// <summary>
+    ///     This method creates a new NLog configuration.
+    /// </summary>
+    /// <remarks>
+    ///     The `CreateNlogConfig` method generates an NLog configuration for logging:
+    ///     1. **Initialize Configuration**: Creates a `LoggingConfiguration` object.
+    ///     2. **Define Log File Target**: Creates a `FileTarget` named "logfile" with daily archiving and a specific layout.
+    ///     3. **Define Console Target**: Creates a `ColoredConsoleTarget` named "console" with ANSI output and custom
+    ///     highlighting rules.
+    ///     4. **Add Console Row Highlighting Rules**: Adds custom highlighting rules for different log levels to the console
+    ///     target.
+    ///     5. **Wrap Targets in Async Wrappers**: Wraps the file and console targets in `AsyncTargetWrapper` for asynchronous
+    ///     logging.
+    ///     6. **Add Targets to Configuration**: Adds the async file and console targets to the logging configuration.
+    ///     7. **Define Logging Rules**: Adds rules to log messages to the file and console targets, with a filter for
+    ///     Microsoft logs.
+    ///     8. **Return Configuration**: Returns the configured `LoggingConfiguration` object.
+    /// </remarks>
     public static LoggingConfiguration CreateNlogConfig()
     {
         var config = new LoggingConfiguration();
@@ -45,6 +63,8 @@ public static class NlogConfiguration
         config.AddRule(LogLevel.Trace, LogLevel.Fatal, asyncLogfile);
 
         var consoleRule = new LoggingRule("*", LogLevel.Debug, LogLevel.Fatal, asyncLogconsole);
+
+        // Filter out Microsoft logs with level less than or equal to Warn
         consoleRule.Filters.Add(new WhenMethodFilter(logEvent =>
             logEvent.LoggerName.StartsWith("Microsoft.") && logEvent.Level <= LogLevel.Warn
                 ? FilterResult.Ignore
@@ -54,6 +74,10 @@ public static class NlogConfiguration
         return config;
     }
 
+    /// <summary>
+    ///     This method adds console row highlighting rules.
+    /// </summary>
+    /// <param name="logconsole"></param>
     private static void AddConsoleRowHighlightingRules(ref ColoredConsoleTarget logconsole)
     {
         var debugHighlightRule = new ConsoleRowHighlightingRule

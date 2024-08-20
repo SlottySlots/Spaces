@@ -7,11 +7,18 @@ using Client = Supabase.Client;
 
 namespace SlottyMedia.Database;
 
+/// <summary>
+///     The DatabaseActions class is responsible for all database actions.
+/// </summary>
 public class DatabaseActions : IDatabaseActions
 {
     private static readonly Logging Logger = Logging.Instance;
     private readonly Client _supabaseClient;
 
+    /// <summary>
+    ///     The default constructor.
+    /// </summary>
+    /// <param name="supabaseClient"></param>
     public DatabaseActions(Client supabaseClient)
     {
         _supabaseClient = supabaseClient;
@@ -460,6 +467,50 @@ public class DatabaseActions : IDatabaseActions
         catch (Exception ex)
         {
             throw new GeneralDatabaseException("An unexpected error occurred while retrieving the entities.", ex);
+        }
+    }
+
+    /// <summary>
+    ///     The method checks if an entity exists in the database. It returns true if the entity exists, otherwise false.
+    /// </summary>
+    /// <param name="field">The filed to check</param>
+    /// <param name="value">The value to Check</param>
+    /// <typeparam name="T">A Dao</typeparam>
+    /// <returns></returns>
+    /// <exception cref="GeneralDatabaseException"></exception>
+    public async Task<bool> CheckIfEntityExists<T>(string field, string value) where T : BaseModel, new()
+    {
+        try
+        {
+            var result = await _supabaseClient.From<T>()
+                .Filter(field, Constants.Operator.Equals, value)
+                .Select(field)
+                .Get();
+            return result.Models.Any();
+        }
+        catch (HttpRequestException ex)
+        {
+            throw new GeneralDatabaseException("A network error occurred while checking if the item exists.", ex);
+        }
+        catch (ArgumentNullException ex)
+        {
+            throw new GeneralDatabaseException("A required argument was null while checking if the item exists.", ex);
+        }
+        catch (InvalidOperationException ex)
+        {
+            throw new GeneralDatabaseException("An invalid operation occurred while checking if the item exists.", ex);
+        }
+        catch (TimeoutException ex)
+        {
+            throw new GeneralDatabaseException("A timeout occurred while checking if the item exists.", ex);
+        }
+        catch (TaskCanceledException ex)
+        {
+            throw new GeneralDatabaseException("The task was canceled while checking if the item exists.", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new GeneralDatabaseException("An unexpected error occurred while checking if the item exists.", ex);
         }
     }
 }

@@ -7,18 +7,36 @@ namespace SlottyMedia.Database.Exceptions;
 /// </summary>
 public class DatabaseIudActionException : BaseException
 {
+    /// <summary>
+    ///     The default constructor.
+    /// </summary>
     public DatabaseIudActionException()
     {
     }
 
+
+    /// <summary>
+    ///     The constructor with parameters.
+    /// </summary>
+    /// <param name="message"></param>
     public DatabaseIudActionException(string message) : base(message)
     {
     }
 
+    /// <summary>
+    ///     The constructor with parameters.
+    /// </summary>
+    /// <param name="propertyName"></param>
+    /// <param name="message"></param>
     public DatabaseIudActionException(string propertyName, string message) : base($"{propertyName}: {message}")
     {
     }
 
+    /// <summary>
+    ///     The constructor with parameters.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="innerException"></param>
     public DatabaseIudActionException(string message, Exception innerException) : base(message, innerException)
     {
     }

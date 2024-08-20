@@ -10,9 +10,15 @@ using Supabase.Postgrest;
 
 namespace SlottyMedia.Tests.ServiceTests;
 
+/// <summary>
+///     Tests the PostService used for CRUD operations on posts.
+/// </summary>
 [TestFixture]
 public class PostServiceTests
 {
+    /// <summary>
+    ///     The setup method that is called before each test.
+    /// </summary>
     [SetUp]
     public void Setup()
     {
@@ -20,6 +26,9 @@ public class PostServiceTests
         _postService = new PostService(_mockDatabaseActions.Object);
     }
 
+    /// <summary>
+    ///     The teardown method that is called after each test.
+    /// </summary>
     [TearDown]
     public void TearDown()
     {
@@ -29,6 +38,9 @@ public class PostServiceTests
     private Mock<IDatabaseActions> _mockDatabaseActions;
     private PostService _postService;
 
+    /// <summary>
+    ///     Tests if InsertPost method returns the inserted post correctly.
+    /// </summary>
     [Test]
     public async Task InsertPost_ShouldReturnInsertedPost()
     {
@@ -42,13 +54,19 @@ public class PostServiceTests
 
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<PostsDao>())).ReturnsAsync(post);
 
-        var result = await _postService.InsertPost(post.Content, post.UserId ?? Guid.Empty);
+        var result = await _postService.InsertPost(post.Headline, post.Content, post.UserId ?? Guid.Empty,
+            post.ForumId ?? Guid.Empty);
 
         Assert.That(result.Headline, Is.EqualTo(post.Headline));
         Assert.That(result.Content, Is.EqualTo(post.Content));
         Assert.That(result.UserId, Is.EqualTo(post.UserId));
+
+        _mockDatabaseActions.VerifyAll();
     }
 
+    /// <summary>
+    ///     Tests if InsertPost method throws PostIudException when DatabaseIudActionException is thrown.
+    /// </summary>
     [Test]
     public void InsertPost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()
     {
@@ -62,9 +80,16 @@ public class PostServiceTests
 
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<PostsDao>())).ThrowsAsync(new DatabaseIudActionException());
 
-        Assert.ThrowsAsync<PostIudException>(async () => await _postService.InsertPost(post.Content, post.UserId ?? Guid.Empty));
+        Assert.ThrowsAsync<PostIudException>(async () => await _postService.InsertPost(post.Headline, post.Content,
+            post.UserId ?? Guid.Empty,
+            post.ForumId ?? Guid.Empty));
+
+        _mockDatabaseActions.VerifyAll();
     }
 
+    /// <summary>
+    ///     Tests if InsertPost method throws PostGeneralException when GeneralDatabaseException is thrown.
+    /// </summary>
     [Test]
     public void InsertPost_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()
     {
@@ -78,9 +103,16 @@ public class PostServiceTests
 
         _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<PostsDao>())).ThrowsAsync(new GeneralDatabaseException());
 
-        Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.InsertPost(post.Content, post.UserId ?? Guid.Empty));
+        Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.InsertPost(post.Headline, post.Content,
+            post.UserId ?? Guid.Empty,
+            post.ForumId ?? Guid.Empty));
+
+        _mockDatabaseActions.VerifyAll();
     }
 
+    /// <summary>
+    ///     Tests if UpdatePost method returns the updated post correctly.
+    /// </summary>
     [Test]
     public async Task UpdatePost_ShouldReturnUpdatedPost()
     {
@@ -99,8 +131,13 @@ public class PostServiceTests
         Assert.That(result.Headline, Is.EqualTo(post.Headline));
         Assert.That(result.Content, Is.EqualTo(post.Content));
         Assert.That(result.UserId, Is.EqualTo(post.UserId));
+
+        _mockDatabaseActions.VerifyAll();
     }
 
+    /// <summary>
+    ///     Tests if UpdatePost method throws PostIudException when DatabaseIudActionException is thrown.
+    /// </summary>
     [Test]
     public void UpdatePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()
     {
@@ -115,8 +152,13 @@ public class PostServiceTests
         _mockDatabaseActions.Setup(x => x.Update(It.IsAny<PostsDao>())).ThrowsAsync(new DatabaseIudActionException());
 
         Assert.ThrowsAsync<PostIudException>(async () => await _postService.UpdatePost(new PostDto().Mapper(post)));
+
+        _mockDatabaseActions.VerifyAll();
     }
 
+    /// <summary>
+    ///     Tests if UpdatePost method throws PostGeneralException when GeneralDatabaseException is thrown.
+    /// </summary>
     [Test]
     public void UpdatePost_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()
     {
@@ -131,8 +173,12 @@ public class PostServiceTests
         _mockDatabaseActions.Setup(x => x.Update(It.IsAny<PostsDao>())).ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.UpdatePost(new PostDto().Mapper(post)));
+        _mockDatabaseActions.VerifyAll();
     }
 
+    /// <summary>
+    ///     Tests if DeletePost method returns true when post is deleted successfully.
+    /// </summary>
     [Test]
     public async Task DeletePost_ShouldReturnTrue()
     {
@@ -149,8 +195,12 @@ public class PostServiceTests
         var result = await _postService.DeletePost(new PostDto().Mapper(post));
 
         Assert.That(result, Is.True);
+        _mockDatabaseActions.VerifyAll();
     }
 
+    /// <summary>
+    ///     Tests if DeletePost method throws PostIudException when DatabaseIudActionException is thrown.
+    /// </summary>
     [Test]
     public void DeletePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()
     {
@@ -165,8 +215,12 @@ public class PostServiceTests
         _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<PostsDao>())).ThrowsAsync(new DatabaseIudActionException());
 
         Assert.ThrowsAsync<PostIudException>(async () => await _postService.DeletePost(new PostDto().Mapper(post)));
+        _mockDatabaseActions.VerifyAll();
     }
 
+    /// <summary>
+    ///     Tests if DeletePost method throws PostGeneralException when GeneralDatabaseException is thrown.
+    /// </summary>
     [Test]
     public void DeletePost_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()
     {
@@ -181,8 +235,12 @@ public class PostServiceTests
         _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<PostsDao>())).ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.DeletePost(new PostDto().Mapper(post)));
+        _mockDatabaseActions.VerifyAll();
     }
 
+    /// <summary>
+    ///     Tests if GetPostsFromForum method returns a list of post titles from a forum.
+    /// </summary>
     [Test]
     public async Task GetPostsFromForum_ShouldReturnListOfPostTitles()
     {
@@ -197,7 +255,7 @@ public class PostServiceTests
 
         _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<PostsDao, object[]>>>(),
                 "creator_userID", userId.ToString(), 0, 10,
-                tuple))
+                tuple))!
             .ReturnsAsync(posts);
 
         var result = await _postService.GetPostsFromForum(userId, 0, 10);
@@ -206,8 +264,12 @@ public class PostServiceTests
         Assert.That(result.Count, Is.EqualTo(2));
         Assert.That(result[0], Is.EqualTo("Forum1"));
         Assert.That(result[1], Is.EqualTo("Forum2"));
+        _mockDatabaseActions.VerifyAll();
     }
 
+    /// <summary>
+    ///     Tests if GetPostsFromForum method throws PostNotFoundException when DatabaseMissingItemException is thrown.
+    /// </summary>
     [Test]
     public void GetPostsFromForum_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
     {
@@ -220,6 +282,9 @@ public class PostServiceTests
         Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetPostsFromForum(userId, 0, 10));
     }
 
+    /// <summary>
+    ///     Tests if GetPostsFromForum method throws PostGeneralException when GeneralDatabaseException is thrown.
+    /// </summary>
     [Test]
     public void GetPostsFromForum_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()
     {
@@ -232,6 +297,9 @@ public class PostServiceTests
         Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetPostsFromForum(userId, 0, 10));
     }
 
+    /// <summary>
+    ///     Tests if GetPostsByUserId method returns a list of post DTOs by user ID.
+    /// </summary>
     [Test]
     public async Task GetPostsByUserId_ShouldReturnListOfPostDtos()
     {
@@ -260,8 +328,12 @@ public class PostServiceTests
         Assert.That(result.Count, Is.EqualTo(2));
         Assert.That(result[0].Content, Is.EqualTo("Content1"));
         Assert.That(result[1].Content, Is.EqualTo("Content2"));
+        _mockDatabaseActions.VerifyAll();
     }
 
+    /// <summary>
+    ///     Tests if GetPostsByUserId method throws PostGeneralException when GeneralDatabaseException is thrown.
+    /// </summary>
     [Test]
     public void GetPostsByUserId_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()
     {
@@ -279,6 +351,9 @@ public class PostServiceTests
         Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetPostsByUserId(userId, 0, 10));
     }
 
+    /// <summary>
+    ///     Tests if GetPostsByUserIdByForumId method returns a list of post DTOs by user ID and forum ID.
+    /// </summary>
     [Test]
     public async Task GetPostsByUserIdByForumId_ShouldReturnListOfPostDtos()
     {
@@ -308,8 +383,12 @@ public class PostServiceTests
         Assert.That(result.Count, Is.EqualTo(2));
         Assert.That(result[0].Content, Is.EqualTo("Content1"));
         Assert.That(result[1].Content, Is.EqualTo("Content2"));
+        _mockDatabaseActions.VerifyAll();
     }
 
+    /// <summary>
+    ///     Tests if GetPostsByUserIdByForumId method throws PostNotFoundException when DatabaseMissingItemException is thrown.
+    /// </summary>
     [Test]
     public void GetPostsByUserIdByForumId_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
     {
@@ -330,6 +409,9 @@ public class PostServiceTests
             await _postService.GetPostsByUserIdByForumId(userId, 0, 10, forumId));
     }
 
+    /// <summary>
+    ///     Tests if GetPostsByForumId method returns a list of post DTOs by forum ID.
+    /// </summary>
     [Test]
     public async Task GetPostsByForumId_ShouldReturnListOfPostDtos()
     {
@@ -356,8 +438,12 @@ public class PostServiceTests
         Assert.That(result.Count, Is.EqualTo(2));
         Assert.That(result[0].Content, Is.EqualTo("Content1"));
         Assert.That(result[1].Content, Is.EqualTo("Content2"));
+        _mockDatabaseActions.VerifyAll();
     }
 
+    /// <summary>
+    ///     Tests if GetPostsByForumId method throws PostGeneralException when GeneralDatabaseException is thrown.
+    /// </summary>
     [Test]
     public void GetPostsByForumId_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()
     {

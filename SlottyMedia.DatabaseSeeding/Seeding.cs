@@ -6,17 +6,26 @@ using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.DatabaseSeeding;
 
+/// <summary>
+///     This class represents the Seeding.
+/// </summary>
 public class Seeding
 {
     private static readonly Logging Logger = Logging.Instance;
     private readonly IDatabaseActions _databaseActions;
 
-
+    /// <summary>
+    ///     The constructor with parameters.
+    /// </summary>
+    /// <param name="databaseActions"></param>
     public Seeding(IDatabaseActions databaseActions)
     {
         _databaseActions = databaseActions;
     }
 
+    /// <summary>
+    ///     This method seeds the database with random data.
+    /// </summary>
     public async Task Seed()
     {
         if (await CheckIfSeedingIsNeeded())
