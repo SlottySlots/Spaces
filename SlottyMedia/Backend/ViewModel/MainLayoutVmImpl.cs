@@ -96,15 +96,25 @@ public class MainLayoutVmImpl : IMainLayoutVm
     /// </returns>
     public async Task<string?> PersistUserAvatarInDb(string base64Encoding)
     {
+        _logger.LogDebug("User ProfilePic tried to retrieve");
         var currentUserEmail = _authService.GetCurrentSession()?.User?.Email;
         if (currentUserEmail != null)
         {
-            var currentUser = await _databaseActions.GetEntityByField<UserDao>("email", currentUserEmail);
-            currentUser.ProfilePic = base64Encoding;
-            await _databaseActions.Update(currentUser);
-            return base64Encoding;
+            try
+            {
+                _logger.LogInfo($"Current User with email: {currentUserEmail} retrieved from database");
+                var currentUser = await _databaseActions.GetEntityByField<UserDao>("email", currentUserEmail);
+                currentUser.ProfilePic = base64Encoding;
+                _logger.LogInfo($"Updating database record of User with email: {currentUserEmail}");
+                await _databaseActions.Update(currentUser);
+                return base64Encoding;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
         }
-
+        _logger.LogDebug("User ProfilePic could not be restored. Caused by NullPointReference on current session");
         return null;
     }
 }
