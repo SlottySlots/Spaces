@@ -5,8 +5,8 @@
 /// </summary>
 public class BaseException<T> : Exception
 {
-    private static readonly Logging<T> Logger = new ();
-    
+    private static readonly Logging<T> Logger = new();
+
     /// <summary>
     ///     The default constructor.
     /// </summary>

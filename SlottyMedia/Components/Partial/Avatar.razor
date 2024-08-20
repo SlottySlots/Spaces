@@ -16,10 +16,8 @@
 <InputFile id="fileInput" OnChange="OnFileSelected" accept=".png,.jpg" hidden></InputFile>
 
 
-
 @code {
-    [Parameter]
-    public RenderFragment? ChildContent { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
 
     private string? _base64Png;
 
@@ -30,18 +28,16 @@
         set => _base64Png = value;
     }
 
-    [Parameter]
-    public bool OpensFileDialog { get; set; }
+    [Parameter] public bool OpensFileDialog { get; set; }
 
-    [Parameter]
-    public EventCallback<string> Base64Callback { get; set; }
-    
+    [Parameter] public EventCallback<string> Base64Callback { get; set; }
+
     private async void OpenFileDialog()
     {
-        if(OpensFileDialog)
-        await JSRuntime.InvokeVoidAsync("OpenFileDialog", "fileInput");
+        if (OpensFileDialog)
+            await JSRuntime.InvokeVoidAsync("OpenFileDialog", "fileInput");
     }
-    
+
     private async Task OnFileSelected(InputFileChangeEventArgs e)
     {
         var file = e.File;
@@ -55,9 +51,8 @@
             await Base64Callback.InvokeAsync(base64String);
         }
     }
-    
-    
-    
+
+
     private bool _mouseOverAvatar = false;
 
     private void MouseOver()
@@ -69,4 +64,5 @@
     {
         _mouseOverAvatar = false;
     }
+
 }

@@ -51,7 +51,6 @@ public class PostDtoTest : BaseDatabaseTestClass
         }
         catch (DatabaseMissingItemException)
         {
-            
         }
         catch (Exception ex)
         {

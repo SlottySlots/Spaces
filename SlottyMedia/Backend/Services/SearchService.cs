@@ -14,7 +14,7 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class SearchService : ISearchService
 {
-    private static readonly Logging<SearchService> Logger =new ();
+    private static readonly Logging<SearchService> Logger = new();
     private readonly IDatabaseActions _databaseActions;
 
 

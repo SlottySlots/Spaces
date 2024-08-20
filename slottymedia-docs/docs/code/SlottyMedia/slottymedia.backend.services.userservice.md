@@ -31,13 +31,13 @@ This parameter is used to interact with the post service
 
 ## Methods
 
-### **CreateUser(String, String, String, String)**
+### **CreateUser(String, String, String, Guid, String, String)**
 
 This method creates a new User object in the database and returns the created object. This method does not check if
  the User already exists.
 
 ```csharp
-public Task<UserDto> CreateUser(string userId, string username, string description, string profilePicture)
+public Task<UserDto> CreateUser(string userId, string username, string email, Guid roleId, string description, string profilePicture)
 ```
 
 #### Parameters
@@ -47,6 +47,10 @@ The ID we get from the Supabase Authentication Service
 
 `username` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The Username of the User
+
+`email` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+`roleId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 `description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The Description of the User (optional)

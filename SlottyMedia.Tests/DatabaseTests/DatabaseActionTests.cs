@@ -29,7 +29,6 @@ public class DatabaseActionTests : BaseDatabaseTestClass
         }
         catch (DatabaseMissingItemException)
         {
-            
         }
         catch (Exception ex)
         {

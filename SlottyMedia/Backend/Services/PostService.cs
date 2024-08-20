@@ -14,7 +14,7 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class PostService : IPostService
 {
-    private static readonly Logging<PostService> Logger =new ();
+    private static readonly Logging<PostService> Logger = new();
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="PostService" /> class.

@@ -31,7 +31,7 @@ public static class InitializeModels
         return new UserDao
         {
             UserId = userID == default ? Guid.NewGuid() : userID,
-            UserName = "I'm a Test User",
+            UserName = Guid.NewGuid().ToString(),
             Description = "Please don't delete me",
             RoleId = GetRoleDto().RoleId,
             Email = Guid.NewGuid() + "@test.de"

@@ -10,6 +10,8 @@ namespace SlottyMedia.Tests.DatabaseTests;
 /// </summary>
 public class BaseDatabaseTestClass
 {
+    private readonly Client _client = InitializeSupabaseClient.GetSupabaseClient();
+
     /// <summary>
     ///     The UserId of the User
     /// </summary>
@@ -19,9 +21,7 @@ public class BaseDatabaseTestClass
     ///     The DatabaseActions Object
     /// </summary>
     public DatabaseActions DatabaseActions { get; set; }
-    
-    private readonly Client _client = InitializeSupabaseClient.GetSupabaseClient();
-    
+
     public UserDao UserToWorkWith { get; set; }
 
 
@@ -53,9 +53,9 @@ public class BaseDatabaseTestClass
 
         DatabaseActions = new DatabaseActions(_client);
     }
-    
+
     /// <summary>
-    /// This Method is used to TearDown the Tests. It logs out the User
+    ///     This Method is used to TearDown the Tests. It logs out the User
     /// </summary>
     [OneTimeTearDown]
     public async Task TearDown()

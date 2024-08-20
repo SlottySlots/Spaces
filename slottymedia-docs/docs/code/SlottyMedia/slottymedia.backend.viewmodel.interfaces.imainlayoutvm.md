@@ -25,7 +25,8 @@ Returns the restored session, or null if nothing was restored.
 
 ### **SetUserInfo()**
 
-This sets a dto holding information about the current user in order to show the current users infos in the profile card
+This sets a dto holding information about the current user in order to show the current users infos in the profile
+ card
 
 ```csharp
 Task<UserInformationDto> SetUserInfo()
@@ -34,7 +35,8 @@ Task<UserInformationDto> SetUserInfo()
 #### Returns
 
 [Task&lt;UserInformationDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns a task of type UserInformationDto. The dto is used to update the state in the view. It's null if a error occured.
+Returns a task of type UserInformationDto. The dto is used to update the state in the view. It's null if a error
+ occured.
 
 ### **PersistUserAvatarInDb(String)**
 
@@ -52,4 +54,5 @@ The base64Encoding to persist to db
 #### Returns
 
 [Task&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns a task of type string. The string represents the base64 encoding persisted in db. Or null if a error occured;
+Returns a task of type string. The string represents the base64 encoding persisted in db. Or null if a error
+ occured;

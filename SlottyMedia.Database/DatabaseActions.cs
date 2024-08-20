@@ -1,6 +1,5 @@
 ﻿using System.Linq.Expressions;
 using SlottyMedia.Database.Exceptions;
-using SlottyMedia.LoggingProvider;
 using Supabase.Postgrest;
 using Supabase.Postgrest.Models;
 using Client = Supabase.Client;

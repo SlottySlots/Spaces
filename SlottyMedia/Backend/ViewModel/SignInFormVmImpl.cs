@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.IdentityModel.Tokens;
-using SlottyMedia.Backend.Exceptions.auth;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.LoggingProvider;
@@ -12,14 +11,14 @@ namespace SlottyMedia.Backend.ViewModel;
 /// </summary>
 public class SignInFormVmImpl : ISignInFormVm
 {
-    private static readonly Logging<SignInFormVmImpl> Logger =new ();
-
-    private readonly NavigationManager _navigationManager;
+    private static readonly Logging<SignInFormVmImpl> Logger = new();
 
     /// <summary>
     ///     AuthService used for supabase authentication
     /// </summary>
     private readonly IAuthService _authService;
+
+    private readonly NavigationManager _navigationManager;
 
 
     /// <summary>
@@ -36,34 +35,35 @@ public class SignInFormVmImpl : ISignInFormVm
     }
 
     public string? Email { get; set; }
-    
+
     public string? EmailErrorMessage { get; set; }
 
     public string? Password { get; set; }
-    
+
     public string? PasswordErrorMessage { get; set; }
 
     public string? ServerErrorMessage { get; set; }
-    
+
     public async Task SubmitSignInForm()
     {
         Logger.LogDebug("SubmitSignInForm called");
-        
+
         // reset all error messages when (re-)submitting the form
         _resetErrorMessages();
-        
+
         // display error message when fields were empty
         if (Email.IsNullOrEmpty())
         {
             EmailErrorMessage = "Email is required";
             return;
         }
+
         if (Password.IsNullOrEmpty())
         {
             PasswordErrorMessage = "Password is required";
             return;
         }
-        
+
         // attempt signin
         try
         {
@@ -71,7 +71,7 @@ public class SignInFormVmImpl : ISignInFormVm
             await _authService.SignOut();
             // perform signin
             await _authService.SignIn(Email!, Password!);
-            
+
             // TODO display error message when password was invalid! This is urgent!
         }
         catch
@@ -79,7 +79,7 @@ public class SignInFormVmImpl : ISignInFormVm
             ServerErrorMessage = "An unknown error occurred. Try again later.";
             return;
         }
-        
+
         // if no errors occurred and user was signed in successfully: redirect to home page
         _navigationManager.NavigateTo("/");
     }

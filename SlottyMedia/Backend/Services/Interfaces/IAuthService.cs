@@ -90,6 +90,7 @@ public interface IAuthService
     ///     Returns the session
     /// </returns>
     Session? GetCurrentSession();
+
     /// <summary>
     ///     This sets the session on initialization of the page.
     /// </summary>

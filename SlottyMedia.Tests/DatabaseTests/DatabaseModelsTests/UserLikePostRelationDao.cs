@@ -81,7 +81,6 @@ public class UserLikePostRelationDaoTest : BaseDatabaseTestClass
         }
         catch (DatabaseMissingItemException)
         {
-            
         }
         catch (Exception ex)
         {
@@ -134,7 +133,6 @@ public class UserLikePostRelationDaoTest : BaseDatabaseTestClass
         }
         catch (DatabaseMissingItemException)
         {
-            
         }
         catch (GeneralDatabaseException ex)
         {

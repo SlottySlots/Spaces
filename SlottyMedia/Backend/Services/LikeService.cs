@@ -1,6 +1,4 @@
 ﻿using SlottyMedia.Backend.Exceptions.Services.LikeExceptions;
-using SlottyMedia.Backend.Exceptions.Services.PostExceptions;
-using SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
@@ -14,7 +12,7 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class LikeService
 {
-    private static readonly Logging<LikeService> Logger =new ();
+    private static readonly Logging<LikeService> Logger = new();
     private readonly IDatabaseActions _databaseActions;
 
 

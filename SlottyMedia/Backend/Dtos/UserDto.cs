@@ -1,4 +1,3 @@
-using NLog;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.LoggingProvider;
 
@@ -9,9 +8,9 @@ namespace SlottyMedia.Backend.Dtos;
 /// </summary>
 public class UserDto
 {
-    private static readonly Logging<UserDto> Logger =new ();
+    private static readonly Logging<UserDto> Logger = new();
 
-    
+
     /// <summary>
     ///     Initializes a new instance of the <see cref="UserDto" /> class.
     /// </summary>
@@ -56,7 +55,7 @@ public class UserDto
     public UserDao Mapper()
     {
         Logger.LogInfo($"Mapping UserDto to UserDao. UserDto: {this}");
-        
+
         return new UserDao
         {
             UserId = UserId,
@@ -73,7 +72,7 @@ public class UserDto
     public UserDto Mapper(UserDao user)
     {
         Logger.LogInfo($"Mapping UserDao to UserDto. UserDao: {user}");
-        
+
         UserId = user.UserId ?? Guid.Empty;
         Username = user.UserName ?? string.Empty;
         Description = user.Description ?? string.Empty;
@@ -93,8 +92,8 @@ public class UserDto
 /// </summary>
 public class UserInformationDto
 {
-    private static readonly Logging<UserInformationDto> Logger =new ();
-    
+    private static readonly Logging<UserInformationDto> Logger = new();
+
     /// <summary>
     ///     Initializes a new instance of the <see cref="UserInformationDto" /> class.
     /// </summary>
@@ -122,9 +121,9 @@ public class UserInformationDto
     ///     Gets or sets the Description of the User.
     /// </summary>
     public string Description { get; set; }
-    
+
     /// <summary>
-    /// ProfilePic of a user
+    ///     ProfilePic of a user
     /// </summary>
     public string? ProfilePic { get; set; }
 
@@ -141,7 +140,7 @@ public class UserInformationDto
     public UserDao Mapper()
     {
         Logger.LogInfo($"Mapping UserInformationDto to UserDao. UserInformationDto: {this}");
-        
+
         return new UserDao
         {
             UserId = UserId,
@@ -159,7 +158,7 @@ public class UserInformationDto
     public UserInformationDto Mapper(UserDao user)
     {
         Logger.LogInfo($"Mapping UserDao to UserInformationDto. UserDao: {user}");
-        
+
         UserId = user.UserId ?? Guid.Empty;
         Username = user.UserName ?? string.Empty;
         Description = user.Description ?? string.Empty;

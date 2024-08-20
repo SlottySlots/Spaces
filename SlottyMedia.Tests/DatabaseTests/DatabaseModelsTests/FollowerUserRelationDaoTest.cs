@@ -49,7 +49,6 @@ public class FollowerUserRelationDaoTest : BaseDatabaseTestClass
         }
         catch (DatabaseMissingItemException)
         {
-            
         }
         catch (Exception ex)
         {

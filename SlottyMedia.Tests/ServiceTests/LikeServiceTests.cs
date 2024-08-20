@@ -1,8 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Moq;
 using SlottyMedia.Backend.Exceptions.Services.LikeExceptions;
-using SlottyMedia.Backend.Exceptions.Services.PostExceptions;
-using SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;

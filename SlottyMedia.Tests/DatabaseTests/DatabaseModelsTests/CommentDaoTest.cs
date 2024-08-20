@@ -55,7 +55,6 @@ public class CommentDaoTest : BaseDatabaseTestClass
         }
         catch (DatabaseMissingItemException)
         {
-            
         }
         catch (Exception ex)
         {

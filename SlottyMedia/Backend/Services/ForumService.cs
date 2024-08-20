@@ -1,6 +1,5 @@
 ﻿using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.ForumExceptions;
-using SlottyMedia.Backend.Exceptions.Services.PostExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
@@ -14,7 +13,7 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class ForumService : IForumService
 {
-    private static readonly Logging<ForumService> Logger =new ();
+    private static readonly Logging<ForumService> Logger = new();
     private readonly IDatabaseActions _databaseActions;
 
     /// Constructor to initialize the ForumService with the required database actions.

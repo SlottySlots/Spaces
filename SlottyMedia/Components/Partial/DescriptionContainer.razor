@@ -1,4 +1,3 @@
-@using System.Runtime.InteropServices
 @using SlottyMedia.Backend.Services.Interfaces
 @using SlottyMedia.Database
 @using SlottyMedia.Database.Daos
@@ -6,7 +5,7 @@
 {
     <h3 class="text-sm font-medium text-center text-cadet-gray w-fit" @onclick="SubmitDescriptionText">
         @DescriptionText
-    </h3>    
+    </h3>
 }
 else
 {
@@ -14,8 +13,7 @@ else
         Id="description-input-field"
         Name="description"
         @bind-Value="DescriptionText"
-        OnEnter="SubmitDescriptionText"
-        >
+        OnEnter="SubmitDescriptionText">
         <InputFieldIcon>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" @onclick="SubmitDescriptionText">
                 <path d="M1 8H15" stroke="#A0A0A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -27,12 +25,9 @@ else
 
 
 @code {
-    [Parameter]
-    public string? DescriptionText { get; set; }
-    [Inject]
-    public IDatabaseActions DatabaseActions { get; private set; }
-    [Inject]
-    public IAuthService AuthService { get; set; }
+    [Parameter] public string? DescriptionText { get; set; }
+    [Inject] public IDatabaseActions DatabaseActions { get; private set; }
+    [Inject] public IAuthService AuthService { get; set; }
 
     private bool ShowDescriptionText = true;
 
@@ -47,10 +42,11 @@ else
             await DatabaseActions.Update(userDao);
         }
     }
-    
+
 
     private void HandleEnterClick()
     {
-        SubmitDescriptionText(); 
+        SubmitDescriptionText();
     }
+
 }

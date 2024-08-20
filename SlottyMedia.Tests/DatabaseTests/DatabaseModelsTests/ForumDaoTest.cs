@@ -67,7 +67,6 @@ public class ForumDaoTest : BaseDatabaseTestClass
         }
         catch (DatabaseMissingItemException)
         {
-            
         }
         catch (Exception ex)
         {
