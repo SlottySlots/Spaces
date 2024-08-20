@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using Microsoft.IdentityModel.Tokens;
 using SlottyMedia.Backend.Exceptions.auth;
 using SlottyMedia.Backend.Services.Interfaces;
@@ -13,6 +14,8 @@ public class SignInFormVmImpl : ISignInFormVm
 {
     private static readonly Logging Logger = Logging.Instance;
 
+    private readonly NavigationManager _navigationManager;
+
     /// <summary>
     ///     AuthService used for supabase authentication
     /// </summary>
@@ -25,10 +28,11 @@ public class SignInFormVmImpl : ISignInFormVm
     /// <param name="authService">
     ///     AuthService about to being injected
     /// </param>
-    public SignInFormVmImpl(IAuthService authService)
+    public SignInFormVmImpl(IAuthService authService, NavigationManager navigationManager)
     {
         Logger.LogInfo("SignInFormVm initialized");
         _authService = authService;
+        _navigationManager = navigationManager;
     }
 
     public string? Email { get; set; }
@@ -73,8 +77,11 @@ public class SignInFormVmImpl : ISignInFormVm
         catch
         {
             ServerErrorMessage = "An unknown error occurred. Try again later.";
-            throw;
+            return;
         }
+        
+        // if no errors occurred and user was signed in successfully: redirect to home page
+        _navigationManager.NavigateTo("/");
     }
 
     private void _resetErrorMessages()

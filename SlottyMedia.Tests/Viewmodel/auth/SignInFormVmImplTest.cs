@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using Moq;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
@@ -10,7 +11,7 @@ namespace SlottyMedia.Tests.Viewmodel.auth;
 public class SignInFormVmImplTest
 {
     private Mock<AuthService> _authService;
-
+    private Mock<NavigationManager> _navigationManager;
     private Client _client;
     private Mock<ICookieService> _cookieServiceMock;
     private SignInFormVmImpl _service;
@@ -21,7 +22,8 @@ public class SignInFormVmImplTest
         _client = InitializeSupabaseClient.GetSupabaseClient();
         _cookieServiceMock = new Mock<ICookieService>();
         _authService = new Mock<AuthService>(_client, _cookieServiceMock.Object);
-        _service = new SignInFormVmImpl(_authService.Object);
+        _navigationManager = new Mock<NavigationManager>();
+        _service = new SignInFormVmImpl(_authService.Object, _navigationManager.Object);
     }
 
     [TearDown]

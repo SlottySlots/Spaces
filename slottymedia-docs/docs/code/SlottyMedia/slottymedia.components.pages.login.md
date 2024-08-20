@@ -9,6 +9,18 @@ public class Login : Microsoft.AspNetCore.Components.ComponentBase, Microsoft.As
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → ComponentBase → [Login](./slottymedia.components.pages.login.md)<br>
 Implements IComponent, IHandleEvent, IHandleAfterRender
 
+## Properties
+
+### **ViewModel**
+
+```csharp
+public ISignInFormVm ViewModel { get; set; }
+```
+
+#### Property Value
+
+[ISignInFormVm](./slottymedia.backend.viewmodel.interfaces.isigninformvm.md)<br>
+
 ## Constructors
 
 ### **Login()**
