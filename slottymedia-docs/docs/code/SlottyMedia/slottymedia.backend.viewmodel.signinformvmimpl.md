@@ -15,8 +15,6 @@ Implements [ISignInFormVm](./slottymedia.backend.viewmodel.interfaces.isigninfor
 
 ### **Email**
 
-Corresponds to the email a user sets in the form. This is achieved via data-binding.
-
 ```csharp
 public string Email { get; set; }
 ```
@@ -25,9 +23,17 @@ public string Email { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **Password**
+### **EmailErrorMessage**
 
-Corresponds to the password a user sets in the form. This is achieved via data-binding.
+```csharp
+public string EmailErrorMessage { get; set; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+### **Password**
 
 ```csharp
 public string Password { get; set; }
@@ -37,12 +43,20 @@ public string Password { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **LoginErrorMessage**
-
-Field for setting a user exposing error message.
+### **PasswordErrorMessage**
 
 ```csharp
-public string LoginErrorMessage { get; set; }
+public string PasswordErrorMessage { get; set; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+### **ServerErrorMessage**
+
+```csharp
+public string ServerErrorMessage { get; set; }
 ```
 
 #### Property Value
@@ -68,8 +82,6 @@ AuthService about to being injected
 
 ### **SubmitSignInForm()**
 
-Function called on submition of the SignInForm
-
 ```csharp
 public Task SubmitSignInForm()
 ```
@@ -77,11 +89,3 @@ public Task SubmitSignInForm()
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
-#### Exceptions
-
-[ArgumentException](https://docs.microsoft.com/en-us/dotnet/api/system.argumentexception)<br>
-Exception thrown on a missing email / password
-
-[UserAlreadySignedInException](./slottymedia.backend.exceptions.auth.useralreadysignedinexception.md)<br>
-Exception thrown on a already authenticated user

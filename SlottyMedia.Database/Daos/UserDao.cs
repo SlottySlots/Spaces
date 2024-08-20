@@ -26,7 +26,7 @@ public class UserDao : BaseModel
     /// <param name="description"></param>
     /// <param name="profilePic"></param>
     public UserDao(Guid userId, Guid roleId, string userName, string email, string? description = null,
-        long? profilePic = null)
+        string? profilePic = null)
     {
         UserId = userId;
         RoleId = roleId;
@@ -77,7 +77,7 @@ public class UserDao : BaseModel
     ///     The Profile Picture of the User.
     /// </summary>
     [Column("profilePic")]
-    public long? ProfilePic { get; set; }
+    public string? ProfilePic { get; set; }
 
     /// <summary>
     ///     The Date and Time the User was created.
@@ -87,6 +87,6 @@ public class UserDao : BaseModel
 
     public override string ToString()
     {
-        return $"UserDao: {UserId}, {RoleId}, {UserName}, {Description}, {ProfilePic}, {CreatedAt}";
+        return $"UserDao: {UserId}, {RoleId}, {UserName}, {Description}, {CreatedAt}";
     }
 }

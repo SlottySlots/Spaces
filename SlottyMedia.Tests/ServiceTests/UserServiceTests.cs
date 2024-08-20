@@ -212,7 +212,7 @@ public class UserServiceTests
         var user = new UserDao { UserId = Guid.NewGuid(), UserName = "updatedUsername" };
         _mockDatabaseActions.Setup(x => x.Update(It.IsAny<UserDao>())).ReturnsAsync(user);
 
-        var result = await _userService.UpdateUser(new UserDto().Mapper(user));
+        var result = await _userService.UpdateUser(user);
         var resultDao = result.Mapper();
 
         Assert.That(resultDao, Is.Not.Null);
@@ -229,7 +229,7 @@ public class UserServiceTests
         var user = new UserDao { UserId = Guid.NewGuid(), UserName = "updatedUsername" };
         _mockDatabaseActions.Setup(x => x.Update(It.IsAny<UserDao>())).ThrowsAsync(new DatabaseIudActionException());
 
-        Assert.ThrowsAsync<UserIudException>(async () => await _userService.UpdateUser(new UserDto().Mapper(user)));
+        Assert.ThrowsAsync<UserIudException>(async () => await _userService.UpdateUser(user));
     }
 
     /// <summary>
@@ -241,7 +241,7 @@ public class UserServiceTests
         var user = new UserDao { UserId = Guid.NewGuid(), UserName = "updatedUsername" };
         _mockDatabaseActions.Setup(x => x.Update(It.IsAny<UserDao>())).ThrowsAsync(new GeneralDatabaseException());
 
-        Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.UpdateUser(new UserDto().Mapper(user)));
+        Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.UpdateUser(user));
     }
 
     /// <summary>
@@ -251,13 +251,13 @@ public class UserServiceTests
     public async Task GetProfilePic_ShouldReturnProfilePic_WhenUserExists()
     {
         var userId = Guid.NewGuid();
-        var user = new UserDao { UserId = userId, ProfilePic = 123 };
+        var user = new UserDao { UserId = userId, ProfilePic = "123" };
         _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString())).ReturnsAsync(user);
 
         var result = await _userService.GetProfilePic(userId);
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.ProfilePic, Is.EqualTo(123));
+        Assert.That(result.ProfilePic, Is.EqualTo("123"));
         _mockDatabaseActions.VerifyAll();
     }
 

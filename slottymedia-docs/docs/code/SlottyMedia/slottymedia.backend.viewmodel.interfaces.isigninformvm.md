@@ -12,7 +12,7 @@ public interface ISignInFormVm
 
 ### **Email**
 
-Email to authenticate a user
+The form's email address
 
 ```csharp
 public abstract string Email { get; set; }
@@ -22,9 +22,21 @@ public abstract string Email { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+### **EmailErrorMessage**
+
+An optional error message that is caused by the email address
+
+```csharp
+public abstract string EmailErrorMessage { get; set; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
 ### **Password**
 
-Password to authenticate a user
+The form's password
 
 ```csharp
 public abstract string Password { get; set; }
@@ -34,12 +46,24 @@ public abstract string Password { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **LoginErrorMessage**
+### **PasswordErrorMessage**
 
-Error message displayed in login field
+An optional error message that is caused by the password
 
 ```csharp
-public abstract string LoginErrorMessage { get; set; }
+public abstract string PasswordErrorMessage { get; set; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+### **ServerErrorMessage**
+
+An optional error message that is caused by some internal server error
+
+```csharp
+public abstract string ServerErrorMessage { get; set; }
 ```
 
 #### Property Value
@@ -50,7 +74,9 @@ public abstract string LoginErrorMessage { get; set; }
 
 ### **SubmitSignInForm()**
 
-Used to sign in a user by email and password
+Attempts to submit the form. If this is successful, then the user was signed in
+ successfully and cookies have been set. Otherwise, displays an appropriate error
+ message.
 
 ```csharp
 Task SubmitSignInForm()

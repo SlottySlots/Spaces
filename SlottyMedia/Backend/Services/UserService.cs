@@ -40,14 +40,14 @@ public class UserService : IUserService
     /// <returns>Returns the created UserDto. If it was unable to create a User, it will throw an exception.</returns>
     public async Task<UserDto> CreateUser(string userId, string username, string email, Guid roleId,
         string? description = null,
-        long? profilePicture = null)
+        string? profilePicture = null)
     {
         var user = new UserDao
         {
             UserId = Guid.Parse(userId),
             UserName = username,
             Description = description ?? string.Empty,
-            ProfilePic = profilePicture ?? 0,
+            ProfilePic = profilePicture ?? string.Empty
             Email = email,
             RoleId = roleId
         };
@@ -164,12 +164,12 @@ public class UserService : IUserService
     /// </summary>
     /// <param name="user">The updated UserDto</param>
     /// <returns>Returns the updated UserDto. If it was unable to update the User, it will throw an exception.</returns>
-    public async Task<UserDto> UpdateUser(UserDto user)
+    public async Task<UserDto> UpdateUser(UserDao user)
     {
         try
         {
             Logger.LogInfo($"Updating user {user}");
-            var result = await _databaseActions.Update(user.Mapper());
+            var result = await _databaseActions.Update(user);
             return new UserDto().Mapper(result);
         }
         catch (DatabaseIudActionException ex)
@@ -183,6 +183,90 @@ public class UserService : IUserService
         catch (Exception ex)
         {
             throw new UserGeneralException($"An error occurred while updating the user. User {user}", ex);
+        }
+    }
+    
+    /// <summary>
+    /// Retrieves a user from the database based on the provided criteria (ID, username, or email).
+    /// </summary>
+    /// <param name="userID">The ID of the user to retrieve (optional).</param>
+    /// <param name="username">The username of the user to retrieve (optional).</param>
+    /// <param name="email">The email of the user to retrieve (optional).</param>
+    /// <returns>Returns the UserDao object if found, otherwise null.</returns>
+    /// <exception cref="UserNotFoundException">Thrown when no user is found with the provided criteria.</exception>
+    /// <exception cref="UserGeneralException">Thrown when a general database error occurs.</exception>
+    public async Task<UserDao> GetUserBy(Guid? userID = null, string? username = null, string? email = null)
+    {
+        try
+        {
+            Logger.LogInfo("Starting GetUser method to retrieve user by ID, username, or email.");
+
+            UserDao user = null;
+
+            if (userID is not null)
+            {
+                Logger.LogInfo($"Attempting to retrieve user by ID: {userID}");
+                user = await GetUserDaoById(userID.Value);
+            }
+            else if (username is not null)
+            {
+                Logger.LogInfo($"Attempting to retrieve user by username: {username}");
+                user = await _databaseActions.GetEntityByField<UserDao>("userName", username);
+            }
+            else if (email is not null)
+            {
+                Logger.LogInfo($"Attempting to retrieve user by email: {email}");
+                user = await _databaseActions.GetEntityByField<UserDao>("email", email);
+            }
+
+            if (user != null)
+            {
+                Logger.LogInfo($"Successfully retrieved user: {user}");
+            }
+            else
+            {
+                Logger.LogWarn("No user found with the provided criteria.");
+            }
+
+            return user;
+        }
+        catch (DatabaseMissingItemException ex)
+        {
+            if (userID is not null)
+            {
+                throw new UserNotFoundException($"User with the given ID was not found. ID: {userID}", ex);
+            }
+            else if (username is not null)
+            {
+                throw new UserNotFoundException($"User with the given username was not found. Username: {username}", ex);
+            }
+            else if (email is not null)
+            {
+                throw new UserNotFoundException($"User with the given email was not found. Email: {email}", ex);
+            }
+            else
+            {
+                throw new UserNotFoundException("User not found.", ex);
+            }
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            if (userID is not null)
+            {
+                throw new UserGeneralException($"An error occurred while fetching the user. ID: {userID}", ex);
+            }
+            else if (username is not null)
+            {
+                throw new UserGeneralException($"An error occurred while fetching the user. Username: {username}", ex);
+            }
+            else if (email is not null)
+            {
+                throw new UserGeneralException($"An error occurred while fetching the user. Email: {email}", ex);
+            }
+            else
+            {
+                throw new UserGeneralException("An error occurred while fetching the user.", ex);
+            } 
         }
     }
 

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using Moq;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
@@ -10,7 +11,7 @@ namespace SlottyMedia.Tests.Viewmodel.auth;
 public class SignInFormVmImplTest
 {
     private Mock<AuthService> _authService;
-
+    private Mock<NavigationManager> _navigationManager;
     private Client _client;
     private Mock<ICookieService> _cookieServiceMock;
     private SignInFormVmImpl _service;
@@ -21,7 +22,8 @@ public class SignInFormVmImplTest
         _client = InitializeSupabaseClient.GetSupabaseClient();
         _cookieServiceMock = new Mock<ICookieService>();
         _authService = new Mock<AuthService>(_client, _cookieServiceMock.Object);
-        _service = new SignInFormVmImpl(_authService.Object);
+        _navigationManager = new Mock<NavigationManager>();
+        _service = new SignInFormVmImpl(_authService.Object, _navigationManager.Object);
     }
 
     [TearDown]
@@ -32,15 +34,29 @@ public class SignInFormVmImplTest
     }
 
     [Test]
-    public void SubmitSignInForm_EmailNotProvided()
+    [TestCase("", "password")]
+    [TestCase(null, "password")]
+    public async Task SubmitSignInForm_WhenEmailEmpty_ShouldDisplayErrorMessage(string? email, string? password)
     {
-        Assert.ThrowsAsync<ArgumentException>(async () => await _service.SubmitSignInForm());
+        _service.Email = email;
+        _service.Password = password;
+        
+        await _service.SubmitSignInForm();
+        Assert.That(_service.EmailErrorMessage, Is.Not.Null);
+        Assert.That(_service.EmailErrorMessage, Is.Not.Empty);
     }
 
     [Test]
-    public void SubmitSignInForm_PasswordNotProvided()
+    [TestCase("user@gmail.com", "")]
+    [TestCase("user@gmail.com", null)]
+    public async Task SubmitSignInForm_WhenPasswordEmpty_ShouldDisplayErrorMessage(string? email, string? password)
     {
-        _service.Email = "test@test.de";
-        Assert.ThrowsAsync<ArgumentException>(async () => await _service.SubmitSignInForm());
+        _service.Email = email;
+        _service.Password = password;
+        
+        await _service.SubmitSignInForm();
+        Assert.That(_service.PasswordErrorMessage, Is.Not.Null);
+        Assert.That(_service.PasswordErrorMessage, Is.Not.Empty);
     }
+    
 }

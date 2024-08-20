@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using Microsoft.IdentityModel.Tokens;
 using SlottyMedia.Backend.Exceptions.auth;
 using SlottyMedia.Backend.Services.Interfaces;
@@ -13,6 +14,8 @@ public class SignInFormVmImpl : ISignInFormVm
 {
     private static readonly Logging<SignInFormVmImpl> Logger =new ();
 
+    private readonly NavigationManager _navigationManager;
+
     /// <summary>
     ///     AuthService used for supabase authentication
     /// </summary>
@@ -25,64 +28,65 @@ public class SignInFormVmImpl : ISignInFormVm
     /// <param name="authService">
     ///     AuthService about to being injected
     /// </param>
-    public SignInFormVmImpl(IAuthService authService)
+    public SignInFormVmImpl(IAuthService authService, NavigationManager navigationManager)
     {
         Logger.LogInfo("SignInFormVm initialized");
         _authService = authService;
+        _navigationManager = navigationManager;
     }
 
-    /// <summary>
-    ///     Corresponds to the email a user sets in the form. This is achieved via data-binding.
-    /// </summary>
     public string? Email { get; set; }
+    
+    public string? EmailErrorMessage { get; set; }
 
-    /// <summary>
-    ///     Corresponds to the password a user sets in the form. This is achieved via data-binding.
-    /// </summary>
     public string? Password { get; set; }
+    
+    public string? PasswordErrorMessage { get; set; }
 
-    /// <summary>
-    ///     Field for setting a user exposing error message.
-    /// </summary>
-    public string? LoginErrorMessage { get; set; }
-
-
-    /// <summary>
-    ///     Function called on submition of the SignInForm
-    /// </summary>
-    /// <exception cref="ArgumentException">
-    ///     Exception thrown on a missing email / password
-    /// </exception>
-    /// <exception cref="UserAlreadySignedInException">
-    ///     Exception thrown on a already authenticated user
-    /// </exception>
+    public string? ServerErrorMessage { get; set; }
+    
     public async Task SubmitSignInForm()
     {
         Logger.LogDebug("SubmitSignInForm called");
-        LoginErrorMessage = "";
-
+        
+        // reset all error messages when (re-)submitting the form
+        _resetErrorMessages();
+        
+        // display error message when fields were empty
         if (Email.IsNullOrEmpty())
         {
-            LoginErrorMessage = "Email must be set!";
-            throw new ArgumentException("Email must be set!");
+            EmailErrorMessage = "Email is required";
+            return;
         }
-
         if (Password.IsNullOrEmpty())
         {
-            LoginErrorMessage = "Password must be set!";
-            throw new ArgumentException("Password must be set!");
+            PasswordErrorMessage = "Password is required";
+            return;
         }
+        
+        // attempt signin
+        try
+        {
+            // sign out if user was already signed in
+            await _authService.SignOut();
+            // perform signin
+            await _authService.SignIn(Email!, Password!);
+            
+            // TODO display error message when password was invalid! This is urgent!
+        }
+        catch
+        {
+            ServerErrorMessage = "An unknown error occurred. Try again later.";
+            return;
+        }
+        
+        // if no errors occurred and user was signed in successfully: redirect to home page
+        _navigationManager.NavigateTo("/");
+    }
 
-        if (!_authService.IsAuthenticated())
-            try
-            {
-                await _authService.SignIn(Email!, Password!);
-            }
-            catch (Exception)
-            {
-                LoginErrorMessage = "Invalid credentials!";
-            }
-        else
-            throw new UserAlreadySignedInException();
+    private void _resetErrorMessages()
+    {
+        EmailErrorMessage = null;
+        ServerErrorMessage = null;
     }
 }

@@ -110,11 +110,15 @@
 
 ## SlottyMedia.Backend.ViewModel
 
+[MainLayoutVmImpl](./slottymedia.backend.viewmodel.mainlayoutvmimpl.md)
+
 [SignInFormVmImpl](./slottymedia.backend.viewmodel.signinformvmimpl.md)
 
 [SignupFormVmImpl](./slottymedia.backend.viewmodel.signupformvmimpl.md)
 
 ## SlottyMedia.Backend.ViewModel.Interfaces
+
+[IMainLayoutVm](./slottymedia.backend.viewmodel.interfaces.imainlayoutvm.md)
 
 [ISignInFormVm](./slottymedia.backend.viewmodel.interfaces.isigninformvm.md)
 
@@ -149,6 +153,8 @@
 [Card](./slottymedia.components.partial.card.md)
 
 [Checkbox](./slottymedia.components.partial.checkbox.md)
+
+[DescriptionContainer](./slottymedia.components.partial.descriptioncontainer.md)
 
 [HotButton](./slottymedia.components.partial.hotbutton.md)
 

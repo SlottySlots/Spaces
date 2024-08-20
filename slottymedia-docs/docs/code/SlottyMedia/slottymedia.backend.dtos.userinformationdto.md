@@ -17,12 +17,12 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 Gets or sets the User Id.
 
 ```csharp
-public Guid UserId { get; set; }
+public Nullable<Guid> UserId { get; set; }
 ```
 
 #### Property Value
 
-[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+[Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
 ### **Username**
 
@@ -42,6 +42,18 @@ Gets or sets the Description of the User.
 
 ```csharp
 public string Description { get; set; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+### **ProfilePic**
+
+ProfilePic of a user
+
+```csharp
+public string ProfilePic { get; set; }
 ```
 
 #### Property Value

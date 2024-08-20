@@ -87,6 +87,16 @@ public EventCallback<string> ValueChanged { get; set; }
 
 EventCallback&lt;String&gt;<br>
 
+### **OnEnter**
+
+```csharp
+public EventCallback OnEnter { get; set; }
+```
+
+#### Property Value
+
+EventCallback<br>
+
 ## Constructors
 
 ### **InputField()**

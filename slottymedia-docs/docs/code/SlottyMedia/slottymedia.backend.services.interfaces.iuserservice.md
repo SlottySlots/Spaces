@@ -46,12 +46,12 @@ The user's username
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 The queried user or null if no such user was found
 
-### **CreateUser(String, String, String, Guid, String, Nullable&lt;Int64&gt;)**
+### **CreateUser(String, String, String, String)**
 
 This method creates a new User object in the database and returns the created object.
 
 ```csharp
-Task<UserDto> CreateUser(string userId, string username, string email, Guid roleId, string description, Nullable<long> profilePicture)
+Task<UserDto> CreateUser(string userId, string username, string description, string profilePicture)
 ```
 
 #### Parameters
@@ -62,14 +62,10 @@ The UserID from the Authentication Service
 `username` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The Username, which the User set himself
 
-`email` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-`roleId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-
 `description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The Description about the User
 
-`profilePicture` [Nullable&lt;Int64&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+`profilePicture` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The ProfilePicture
 
 #### Returns
@@ -77,17 +73,17 @@ The ProfilePicture
 [Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 UserDto
 
-### **UpdateUser(UserDto)**
+### **UpdateUser(UserDao)**
 
 This method updates the given User object in the database and returns the updated object.
 
 ```csharp
-Task<UserDto> UpdateUser(UserDto user)
+Task<UserDto> UpdateUser(UserDao user)
 ```
 
 #### Parameters
 
-`user` [UserDto](./slottymedia.backend.dtos.userdto.md)<br>
+`user` UserDao<br>
 The User object
 
 #### Returns
@@ -169,3 +165,35 @@ The ID of the user
 
 [Task&lt;FriendsOfUserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns a FriendsOfUserDto object containing the list of friends
+
+### **GetUserBy(Nullable&lt;Guid&gt;, String, String)**
+
+Retrieves a user from the database based on the provided criteria (ID, username, or email).
+
+```csharp
+Task<UserDao> GetUserBy(Nullable<Guid> userID, string username, string email)
+```
+
+#### Parameters
+
+`userID` [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+The ID of the user to retrieve (optional).
+
+`username` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The username of the user to retrieve (optional).
+
+`email` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The email of the user to retrieve (optional).
+
+#### Returns
+
+[Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns the UserDao object if found, otherwise null.
+
+#### Exceptions
+
+!:UserNotFoundException<br>
+Thrown when no user is found with the provided criteria.
+
+!:UserGeneralException<br>
+Thrown when a general database error occurs.

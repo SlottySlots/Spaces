@@ -58,11 +58,6 @@ try
     builder.Services.AddSingleton<ProfilePicDto>();
     builder.Services.AddSingleton<SearchDto>();
 
-    // Viewmodel
-    logger.LogInfo("Adding Viewmodels to the container");
-    builder.Services.AddScoped<ISignupFormVm, SignupFormVmImpl>();
-    builder.Services.AddScoped<ISignInFormVm, SignInFormVmImpl>();
-
     // Services
     logger.LogInfo("Adding Services to the container");
     builder.Services.AddScoped<IUserService, UserService>();
@@ -71,6 +66,12 @@ try
     builder.Services.AddScoped<IAuthService, AuthService>(); // Scoped
     builder.Services.AddScoped<ISignupService, SignupServiceImpl>();
     builder.Services.AddScoped<ISearchService, SearchService>();
+    
+    // Viewmodel
+    logger.LogInfo("Adding Viewmodels to the container");
+    builder.Services.AddScoped<ISignupFormVm, SignupFormVmImpl>();
+    builder.Services.AddScoped<ISignInFormVm, SignInFormVmImpl>();
+    builder.Services.AddScoped<IMainLayoutVm, MainLayoutVmImpl>();
 
 
     var app = builder.Build();
