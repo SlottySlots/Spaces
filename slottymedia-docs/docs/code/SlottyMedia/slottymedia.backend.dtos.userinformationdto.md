@@ -48,6 +48,18 @@ public string Description { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+### **ProfilePic**
+
+ProfilePic of a user
+
+```csharp
+public string ProfilePic { get; set; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
 ### **CreatedAt**
 
 Gets or sets the date and time when the User was created.

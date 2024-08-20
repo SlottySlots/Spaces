@@ -80,7 +80,7 @@ public class MainLayoutVmImplTest
     {
         _authService.Setup(service => service.GetCurrentSession()).Returns(new Session() { User = new User() {Email = "test@test.de"}});
         UserDao userDao = new UserDao()
-            { UserId = Guid.NewGuid(), UserName = "Test", Description = "TestDesc", Email = "test@test.de" };
+            { UserId = Guid.NewGuid(), UserName = "Test", Description = "TestDesc", Email = "test@test.de", ProfilePic = "123"};
         _dbActions.Setup(service => service.GetEntityByField<UserDao>("email", "test@test.de")).ReturnsAsync(userDao);
         Assert.MultipleAsync(async () =>
             {
@@ -89,10 +89,38 @@ public class MainLayoutVmImplTest
                 Assert.That(serviceCall!.UserId, Is.EqualTo(userDao.UserId));
                 Assert.That(serviceCall!.Username, Is.EqualTo(userDao.UserName));
                 Assert.That(serviceCall!.Description, Is.EqualTo(userDao.Description));
+                Assert.That(serviceCall!.ProfilePic, Is.EqualTo(userDao.ProfilePic));
                 Assert.That(serviceCall!.CreatedAt, Is.EqualTo(userDao.CreatedAt));
+                
             }
         );
         _authService.VerifyAll();
         _authService.VerifyNoOtherCalls();
-    } 
+    }
+
+    [Test]
+    public void PersistUserAvatarInDb_ReturnsNullOnNoSession()
+    {
+        _authService.Setup(service => service.GetCurrentSession()).Returns((Session?)null);
+        Assert.ThatAsync(async () => await _vm.PersistUserAvatarInDb("123"), Is.Null);
+        _authService.VerifyAll();
+    }
+
+    [Test]
+    public void PersistsUserAvatarInDb()
+    {
+        var session = new Session();
+        session.User = new User();
+        session.User.Email = "test@test.de";
+        _authService.Setup(service => service.GetCurrentSession()).Returns(session);
+        var user = new UserDao();
+        _dbActions.Setup(actions => actions.GetEntityByField<UserDao>("email", session.User.Email))
+            .ReturnsAsync(user);
+        user.ProfilePic = "123";
+        _dbActions.Setup(actions => actions.Update(user));
+
+        Assert.ThatAsync(async () => await _vm.PersistUserAvatarInDb("123"), Is.EqualTo("123"));
+        _authService.VerifyAll();
+        _dbActions.VerifyAll();
+    }
 }

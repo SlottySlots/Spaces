@@ -29,12 +29,12 @@ public Guid UserId { get; set; }
 Gets or sets the Profile Picture in binary.
 
 ```csharp
-public long ProfilePic { get; set; }
+public string ProfilePic { get; set; }
 ```
 
 #### Property Value
 
-[Int64](https://docs.microsoft.com/en-us/dotnet/api/system.int64)<br>
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ## Constructors
 

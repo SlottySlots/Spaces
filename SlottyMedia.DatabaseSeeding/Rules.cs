@@ -25,7 +25,7 @@ public class Rules
             .RuleFor(u => u.RoleId, Guid.Parse("c0589855-a81c-451d-8587-3061926a1f3a"))
             .RuleFor(u => u.UserName, f => f.Internet.UserName())
             .RuleFor(u => u.Description, f => f.Lorem.Sentence())
-            .RuleFor(u => u.ProfilePic, f => f.Random.Long(1, 1000))
+            .RuleFor(u => u.ProfilePic, f => null)
             .RuleFor(u => u.CreatedAt, f => f.Date.Past());
         return userFaker;
     }

@@ -31,13 +31,13 @@ This parameter is used to interact with the post service
 
 ## Methods
 
-### **CreateUser(String, String, String, Nullable&lt;Int64&gt;)**
+### **CreateUser(String, String, String, String)**
 
 This method creates a new User object in the database and returns the created object. This method does not check if
  the User already exists.
 
 ```csharp
-public Task<UserDto> CreateUser(string userId, string username, string description, Nullable<long> profilePicture)
+public Task<UserDto> CreateUser(string userId, string username, string description, string profilePicture)
 ```
 
 #### Parameters
@@ -51,7 +51,7 @@ The Username of the User
 `description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The Description of the User (optional)
 
-`profilePicture` [Nullable&lt;Int64&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+`profilePicture` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The Profile Picture of the User (optional)
 
 #### Returns

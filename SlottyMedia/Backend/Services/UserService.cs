@@ -39,14 +39,14 @@ public class UserService : IUserService
     /// <param name="profilePicture">The Profile Picture of the User (optional)</param>
     /// <returns>Returns the created UserDto. If it was unable to create a User, it will throw an exception.</returns>
     public async Task<UserDto> CreateUser(string userId, string username, string? description = null,
-        long? profilePicture = null)
+        string? profilePicture = null)
     {
         var user = new UserDao
         {
             UserId = Guid.Parse(userId),
             UserName = username,
             Description = description ?? string.Empty,
-            ProfilePic = profilePicture ?? 0
+            ProfilePic = profilePicture ?? string.Empty
         };
 
         try
@@ -198,7 +198,7 @@ public class UserService : IUserService
             return new ProfilePicDto
             {
                 UserId = userId,
-                ProfilePic = user.ProfilePic ?? 0
+                ProfilePic = user.ProfilePic ?? String.Empty
             };
         }
         catch (DatabaseMissingItemException ex)
