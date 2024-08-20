@@ -15,7 +15,13 @@
     <div class="h-full border-r border-athens-gray">
 
         <!-- top box -->
-        <div class="relative w-full h-2/5 bg-gradient-to-br from-grape to-fandango">
+        <div class="relative w-full h-2/5 flex justify-center items-center bg-gradient-to-br from-grape to-fandango">
+            
+            <!-- logo -->
+            <div class="mb-20">
+                <img src="static/logo/logo-simple-x100.webp" alt="" />
+            </div>
+            
 
             <!-- login box -->
             @if (!AuthService.IsAuthenticated())
@@ -45,7 +51,7 @@
                                 </svg>
                             </InputFieldIcon>
                         </InputField>
-                        
+
                         <!-- email error message -->
                         @if (ViewModelSignUp.EmailErrorMessage != null)
                         {
@@ -103,39 +109,39 @@
                     absolute w-full max-w-[280px]
                     flex flex-col items-center gap-5
                     left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2">
-                <!-- Profile Card -->
-                <div class="h-full w-full p-5 flex flex-col justify-center items-center gap-1">
-                    <Avatar/>
-                    <h3 class="text-xl font-semibold text-center w-fit">
-                        @UserInformationDto.Username
-                    </h3>
-                    <DescriptionContainer DescriptionText="@UserInformationDto.Description"/>
-                    <!-- Horizontal Spacer -->
-                    <div class="w-full border-b border-athens-gray my-3"></div>
-                    <!-- Spaces and Friends in Profile -->
-                    <div class="flex w-full">
-                        <!-- Friends Container in Profile  -->
-                        <div class="w-full">
-                            <h3 class="text-xl text-center font-semibold">
-                                7
-                            </h3>
+                    <!-- Profile Card -->
+                    <div class="h-full w-full p-5 flex flex-col justify-center items-center gap-1">
+                        <Avatar/>
+                        <h3 class="text-xl font-semibold text-center w-fit">
+                            @UserInformationDto.Username
+                        </h3>
+                        <DescriptionContainer DescriptionText="@UserInformationDto.Description"/>
+                        <!-- Horizontal Spacer -->
+                        <div class="w-full border-b border-athens-gray my-3"></div>
+                        <!-- Spaces and Friends in Profile -->
+                        <div class="flex w-full">
+                            <!-- Friends Container in Profile  -->
+                            <div class="w-full">
+                                <h3 class="text-xl text-center font-semibold">
+                                    7
+                                </h3>
 
-                            <h3 class="text-sm font-medium w-fit mx-auto">
-                                Friends
-                            </h3>
-                        </div>
+                                <h3 class="text-sm font-medium w-fit mx-auto">
+                                    Friends
+                                </h3>
+                            </div>
 
-                        <div class="w-full">
-                            <h3 class="text-xl text-center font-semibold">
-                                13
-                            </h3>
+                            <div class="w-full">
+                                <h3 class="text-xl text-center font-semibold">
+                                    13
+                                </h3>
 
-                            <h3 class="text-sm font-medium w-fit mx-auto">
-                                Spaces
-                            </h3>
+                                <h3 class="text-sm font-medium w-fit mx-auto">
+                                    Spaces
+                                </h3>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </Card>
             }
 
