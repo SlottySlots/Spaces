@@ -59,15 +59,14 @@ public class Seeding
 
             var userLikePostRelationFaker = rules.UserLikePostRelationRules(userIds, postIds);
             await GenerateUserLikePostRelation(userLikePostRelationFaker, userIds.Count * postIds.Count / 2);
-
-            await login.LogoutUser(_client);
-
+            
             Logger.LogDebug("Database seeded with random data.");
         }
         else
         {
             Logger.LogDebug("Seeding is not needed.");
         }
+        await login.LogoutUser(_client);
     }
 
     private async Task<bool> CheckIfSeedingIsNeeded()
