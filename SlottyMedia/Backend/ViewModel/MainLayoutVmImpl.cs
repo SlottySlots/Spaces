@@ -1,4 +1,5 @@
 using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Database;
@@ -27,10 +28,13 @@ public class MainLayoutVmImpl : IMainLayoutVm
     /// </summary>
     private readonly Logging _logger = Logging.Instance;
     
-    public MainLayoutVmImpl(IAuthService authService, IDatabaseActions databaseActions)
+    private readonly IUserService _userService;
+    
+    public MainLayoutVmImpl(IAuthService authService, IDatabaseActions databaseActions, IUserService userService)
     {
         _authService = authService;
         _databaseActions = databaseActions;
+        _userService = userService;
     }
     
     /// <summary>
@@ -97,16 +101,14 @@ public class MainLayoutVmImpl : IMainLayoutVm
     public async Task<string?> PersistUserAvatarInDb(string base64Encoding)
     {
         _logger.LogDebug("User ProfilePic tried to retrieve");
-        var currentUserEmail = _authService.GetCurrentSession()?.User?.Email;
-        if (currentUserEmail != null)
+        var currentUserId = _authService.GetCurrentSession()?.User?.Id;
+        if (currentUserId != null)
         {
             try
             {
-                _logger.LogInfo($"Current User with email: {currentUserEmail} retrieved from database");
-                var currentUser = await _databaseActions.GetEntityByField<UserDao>("email", currentUserEmail);
+                var currentUser = await _userService.GetUserBy(Guid.Parse(currentUserId));
                 currentUser.ProfilePic = base64Encoding;
-                _logger.LogInfo($"Updating database record of User with email: {currentUserEmail}");
-                await _databaseActions.Update(currentUser);
+                await _userService.UpdateUser(currentUser);
                 return base64Encoding;
             }
             catch (Exception ex)
