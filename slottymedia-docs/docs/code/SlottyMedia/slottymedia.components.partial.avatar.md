@@ -9,6 +9,18 @@ public class Avatar : Microsoft.AspNetCore.Components.ComponentBase, Microsoft.A
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → ComponentBase → [Avatar](./slottymedia.components.partial.avatar.md)<br>
 Implements IComponent, IHandleEvent, IHandleAfterRender
 
+## Properties
+
+### **ChildContent**
+
+```csharp
+public RenderFragment ChildContent { get; set; }
+```
+
+#### Property Value
+
+RenderFragment<br>
+
 ## Constructors
 
 ### **Avatar()**

@@ -1,8 +1,33 @@
-<div class="h-[80px] w-[80px]">
-    <img class="h-full w-full rounded-full" src="static/profilePic.png" alt="Profile Picture">
+<div class="h-[80px] w-[80px]" @onmouseenter="MouseOver" @onmouseleave="MouseLeave">
+    @if (!_mouseOverAvatar)
+    {
+        <img class="h-full w-full rounded-full" src="static/profilePic.png" alt="Profile Picture">
+    }
+    else
+    {
+        <div class="relative opacity-50 h-[80px] w-[80px]">
+            <img class="h-full w-full rounded-full" src="static/profilePic.png" alt="Profile Picture">
+            @ChildContent
+        </div>
+        <InputFile id="fn" hidden multiple></InputFile>
+    }
 </div>
 
 
 @code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+    
+    
+    private bool _mouseOverAvatar = false;
 
+    private void MouseOver()
+    {
+        _mouseOverAvatar = true;
+    }
+
+    private void MouseLeave()
+    {
+        _mouseOverAvatar = false;
+    }
 }
