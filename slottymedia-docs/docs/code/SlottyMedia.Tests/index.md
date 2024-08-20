@@ -42,6 +42,10 @@
 
 [UserServiceTests](./slottymedia.tests.servicetests.userservicetests.md)
 
+## SlottyMedia.Tests.Viewmodel
+
+[MainLayoutVmImplTest](./slottymedia.tests.viewmodel.mainlayoutvmimpltest.md)
+
 ## SlottyMedia.Tests.Viewmodel.auth
 
 [SignInFormVmImplTest](./slottymedia.tests.viewmodel.auth.signinformvmimpltest.md)

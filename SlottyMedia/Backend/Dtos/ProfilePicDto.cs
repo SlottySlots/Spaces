@@ -13,7 +13,7 @@ public class ProfilePicDto
     public ProfilePicDto()
     {
         UserId = Guid.Empty;
-        ProfilePic = 0;
+        ProfilePic = string.Empty;
     }
 
     /// <summary>
@@ -24,7 +24,7 @@ public class ProfilePicDto
     /// <summary>
     ///     Gets or sets the Profile Picture in binary.
     /// </summary>
-    public long ProfilePic { get; set; }
+    public string ProfilePic { get; set; }
 
     /// <summary>
     ///     This method maps the ProfilePicDto to a UserDao.
@@ -49,7 +49,7 @@ public class ProfilePicDto
         return new ProfilePicDto
         {
             UserId = userDao.UserId ?? Guid.Empty,
-            ProfilePic = userDao.ProfilePic ?? 0
+            ProfilePic = userDao.ProfilePic ?? string.Empty
         };
     }
 

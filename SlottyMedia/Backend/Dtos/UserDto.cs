@@ -92,6 +92,7 @@ public class UserInformationDto
         UserId = Guid.Empty;
         Username = string.Empty;
         Description = string.Empty;
+        ProfilePic = null;
         CreatedAt = DateTime.MinValue;
     }
 
@@ -110,6 +111,11 @@ public class UserInformationDto
     ///     Gets or sets the Description of the User.
     /// </summary>
     public string Description { get; set; }
+    
+    /// <summary>
+    /// ProfilePic of a user
+    /// </summary>
+    public string? ProfilePic { get; set; }
 
     /// <summary>
     ///     Gets or sets the date and time when the User was created.
@@ -128,6 +134,7 @@ public class UserInformationDto
             UserId = UserId,
             UserName = Username,
             Description = Description,
+            ProfilePic = ProfilePic,
             CreatedAt = CreatedAt
         };
     }
@@ -141,6 +148,7 @@ public class UserInformationDto
         UserId = user.UserId ?? Guid.Empty;
         Username = user.UserName ?? string.Empty;
         Description = user.Description ?? string.Empty;
+        ProfilePic = user.ProfilePic;
         CreatedAt = user.CreatedAt;
 
         return this;
