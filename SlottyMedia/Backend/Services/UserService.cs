@@ -373,4 +373,30 @@ public class UserService : IUserService
             throw new UserGeneralException($"An error occurred while fetching the user. ID: {userId}", ex);
         }
     }
+    
+    /// <summary>
+    ///     This method retrieves the count of friends for a given user from the database.
+    /// </summary>
+    /// <param name="userId">The ID of the user whose friends count is to be retrieved.</param>
+    /// <returns>Returns the count of friends for the specified user.</returns>
+    /// <exception cref="UserGeneralException">
+    ///     Thrown when a general database error occurs while fetching the friends count.
+    /// </exception>
+    public async Task<int> GetCountOfUserFriends(Guid userId)
+    {
+        try
+        {
+            Logger.LogInfo($"Fetching friends count for user with ID {userId}");
+            var friends = await _databaseActions.GetCountByField<UserDao>("userID", userId.ToString());
+            return friends;
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new UserGeneralException($"An error occurred while fetching the friends count. ID {userId}", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new UserGeneralException($"An error occurred while fetching the friends count. ID {userId}", ex);
+        }
+    }
 }

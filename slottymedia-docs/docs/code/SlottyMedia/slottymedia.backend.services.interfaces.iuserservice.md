@@ -196,8 +196,31 @@ Returns the UserDao object if found, otherwise null.
 
 #### Exceptions
 
-!:UserNotFoundException<br>
+[UserNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.usernotfoundexception.md)<br>
 Thrown when no user is found with the provided criteria.
 
-!:UserGeneralException<br>
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
 Thrown when a general database error occurs.
+
+### **GetCountOfUserFriends(Guid)**
+
+This method retrieves the count of friends for a given user from the database.
+
+```csharp
+Task<int> GetCountOfUserFriends(Guid userId)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the user whose friends count is to be retrieved.
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns the count of friends for the specified user.
+
+#### Exceptions
+
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
+Thrown when a general database error occurs while fetching the friends count.

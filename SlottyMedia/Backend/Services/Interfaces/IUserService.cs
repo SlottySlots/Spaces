@@ -1,4 +1,5 @@
 using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 using SlottyMedia.Database.Daos;
 
 namespace SlottyMedia.Backend.Services.Interfaces;
@@ -79,4 +80,14 @@ public interface IUserService
     /// <exception cref="UserNotFoundException">Thrown when no user is found with the provided criteria.</exception>
     /// <exception cref="UserGeneralException">Thrown when a general database error occurs.</exception>
     public Task<UserDao> GetUserBy(Guid? userID = null, string? username = null, string? email = null);
+    
+    /// <summary>
+    ///     This method retrieves the count of friends for a given user from the database.
+    /// </summary>
+    /// <param name="userId">The ID of the user whose friends count is to be retrieved.</param>
+    /// <returns>Returns the count of friends for the specified user.</returns>
+    /// <exception cref="UserGeneralException">
+    ///     Thrown when a general database error occurs while fetching the friends count.
+    /// </exception>
+    public Task<int> GetCountOfUserFriends(Guid userId);
 }

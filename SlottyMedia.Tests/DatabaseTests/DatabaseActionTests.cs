@@ -293,4 +293,35 @@ public class DatabaseActionTests : BaseDatabaseTestClass
         Assert.ThrowsAsync<GeneralDatabaseException>(async () =>
             await DatabaseActions.GetEntitiesWithSelectorById(selector, "userID", "invalid-id"));
     }
+    
+    /// <summary>
+    /// Tests the GetCountByField method of DatabaseActions.
+    /// </summary>
+    /// <remarks>
+    /// This test ensures that the GetCountByField method correctly returns the count of users
+    /// with a specific field and value. It first inserts a user into the database to ensure
+    /// there is at least one entry, then retrieves the count of users with the specific field
+    /// and value, and asserts that the count is greater than 0.
+    /// </remarks>
+    /// <exception cref="GeneralDatabaseException">
+    /// Thrown when there is a database-related error during the test execution.
+    /// </exception>
+    [Test]
+    public async Task GetCountByField()
+    {
+        try
+        {
+            // Insert a user to ensure there is at least one entry in the database
+            var insertedUser = await DatabaseActions.Insert(_userToWorkWith);
+            Assert.That(insertedUser, Is.Not.Null, "Inserted user should not be null");
+
+            // Get the count of users with the specific field and value
+            var count = await DatabaseActions.GetCountByField<UserDao>("userID", insertedUser.UserId.ToString() ?? "");
+            Assert.That(count, Is.GreaterThan(0), "Count should be greater than 0");
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            Assert.Fail($"GetCountByField test failed with database exception: {ex.Message}");
+        }
+    }
 }

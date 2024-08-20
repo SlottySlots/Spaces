@@ -511,4 +511,50 @@ public class DatabaseActions : IDatabaseActions
             throw new GeneralDatabaseException("An unexpected error occurred while checking if the item exists.", ex);
         }
     }
+    
+    /// <summary>
+    ///     Retrieves the count of entities from the database by a specific field and value.
+    /// </summary>
+    /// <typeparam name="T">The type of the entities to count.</typeparam>
+    /// <param name="field">The field to filter by.</param>
+    /// <param name="value">The value to filter by.</param>
+    /// <returns>The count of entities.</returns>
+    /// <exception cref="GeneralDatabaseException">
+    ///     Thrown when a network error, argument null, invalid operation, timeout, task
+    ///     cancellation, or unexpected error occurs.
+    /// </exception>
+    public async Task<int> GetCountByField<T>(string field, string value) where T : BaseModel, new()
+    {
+        try
+        {
+            var result = await _supabaseClient.From<T>()
+                .Filter(field, Constants.Operator.Equals, value)
+                .Count(Constants.CountType.Exact);
+            return result;
+        }
+        catch (HttpRequestException ex)
+        {
+            throw new GeneralDatabaseException("A network error occurred while retrieving the count.", ex);
+        }
+        catch (ArgumentNullException ex)
+        {
+            throw new GeneralDatabaseException("A required argument was null while retrieving the count.", ex);
+        }
+        catch (InvalidOperationException ex)
+        {
+            throw new GeneralDatabaseException("An invalid operation occurred while retrieving the count.", ex);
+        }
+        catch (TimeoutException ex)
+        {
+            throw new GeneralDatabaseException("A timeout occurred while retrieving the count.", ex);
+        }
+        catch (TaskCanceledException ex)
+        {
+            throw new GeneralDatabaseException("The task was canceled while retrieving the count.", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the count.", ex);
+        }
+    }
 }
