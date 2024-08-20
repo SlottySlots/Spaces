@@ -191,3 +191,27 @@ Tests the GetEntitiesWithSelectorById method of DatabaseActions for failure.
 ```csharp
 public void GetEntitiesWithSelectorById_Failure()
 ```
+
+### **GetCountByField()**
+
+Tests the GetCountByField method of DatabaseActions.
+
+```csharp
+public Task GetCountByField()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+#### Exceptions
+
+T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
+Thrown when there is a database-related error during the test execution.
+
+**Remarks:**
+
+This test ensures that the GetCountByField method correctly returns the count of users
+ with a specific field and value. It first inserts a user into the database to ensure
+ there is at least one entry, then retrieves the count of users with the specific field
+ and value, and asserts that the count is greater than 0.

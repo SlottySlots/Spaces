@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using SlottyMedia.Database.Exceptions;
 using Supabase.Postgrest;
 using Supabase.Postgrest.Models;
 
@@ -103,4 +104,17 @@ public interface IDatabaseActions
     /// <param name="value">The value to search for.</param>
     /// <returns>Returns true if the entity exists.</returns>
     public Task<bool> CheckIfEntityExists<T>(string field, string value) where T : BaseModel, new();
+
+    /// <summary>
+    ///     Retrieves the count of entities from the database by a specific field and value.
+    /// </summary>
+    /// <typeparam name="T">The type of the entities to count.</typeparam>
+    /// <param name="field">The field to filter by.</param>
+    /// <param name="value">The value to filter by.</param>
+    /// <returns>The count of entities.</returns>
+    /// <exception cref="GeneralDatabaseException">
+    ///     Thrown when a network error, argument null, invalid operation, timeout, task
+    ///     cancellation, or unexpected error occurs.
+    /// </exception>
+    public Task<int> GetCountByField<T>(string field, string value) where T : BaseModel, new();
 }

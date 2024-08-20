@@ -405,4 +405,66 @@ public class UserServiceTests
 
         Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.GetFriends(userId));
     }
+
+    /// <summary>
+    ///     Tests if GetCountOfUserFriends method returns the correct count of user friends.
+    /// </summary>
+    /// <remarks>
+    ///     This test ensures that the GetCountOfUserFriends method correctly returns the expected count of friends for a user.
+    /// </remarks>
+    [Test]
+    public async Task GetCountOfUserFriends_ReturnsCorrectCount()
+    {
+        // Arrange
+        var userId = Guid.NewGuid();
+        var expectedCount = 5;
+        _mockDatabaseActions.Setup(d => d.GetCountByField<UserDao>("userID", userId.ToString()))
+            .ReturnsAsync(expectedCount);
+
+        // Act
+        var result = await _userService.GetCountOfUserFriends(userId);
+
+        // Assert
+        Assert.That(result, Is.EqualTo(expectedCount));
+    }
+
+    /// <summary>
+    ///     Tests if GetCountOfUserFriends method throws UserGeneralException when GeneralDatabaseException is thrown.
+    /// </summary>
+    /// <remarks>
+    ///     This test ensures that the GetCountOfUserFriends method throws a UserGeneralException when a
+    ///     GeneralDatabaseException occurs.
+    /// </remarks>
+    [Test]
+    public void GetCountOfUserFriends_ThrowsUserGeneralException_OnGeneralDatabaseException()
+    {
+        // Arrange
+        var userId = Guid.NewGuid();
+        _mockDatabaseActions.Setup(d => d.GetCountByField<UserDao>("userID", userId.ToString()))
+            .ThrowsAsync(new GeneralDatabaseException("Database error"));
+
+        // Act & Assert
+        var ex = Assert.ThrowsAsync<UserGeneralException>(() => _userService.GetCountOfUserFriends(userId));
+        Assert.That(ex.Message, Is.EqualTo($"An error occurred while fetching the friends count. ID {userId}"));
+    }
+
+    /// <summary>
+    ///     Tests if GetCountOfUserFriends method throws UserGeneralException when an unexpected exception is thrown.
+    /// </summary>
+    /// <remarks>
+    ///     This test ensures that the GetCountOfUserFriends method throws a UserGeneralException when an unexpected exception
+    ///     occurs.
+    /// </remarks>
+    [Test]
+    public void GetCountOfUserFriends_ThrowsUserGeneralException_OnUnexpectedException()
+    {
+        // Arrange
+        var userId = Guid.NewGuid();
+        _mockDatabaseActions.Setup(d => d.GetCountByField<UserDao>("userID", userId.ToString()))
+            .ThrowsAsync(new Exception("Unexpected error"));
+
+        // Act & Assert
+        var ex = Assert.ThrowsAsync<UserGeneralException>(() => _userService.GetCountOfUserFriends(userId));
+        Assert.That(ex.Message, Is.EqualTo($"An error occurred while fetching the friends count. ID {userId}"));
+    }
 }

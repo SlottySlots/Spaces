@@ -243,3 +243,45 @@ Tests if GetFriends method throws UserGeneralException when GeneralDatabaseExcep
 ```csharp
 public void GetFriends_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
 ```
+
+### **GetCountOfUserFriends_ReturnsCorrectCount()**
+
+Tests if GetCountOfUserFriends method returns the correct count of user friends.
+
+```csharp
+public Task GetCountOfUserFriends_ReturnsCorrectCount()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+**Remarks:**
+
+This test ensures that the GetCountOfUserFriends method correctly returns the expected count of friends for a user.
+
+### **GetCountOfUserFriends_ThrowsUserGeneralException_OnGeneralDatabaseException()**
+
+Tests if GetCountOfUserFriends method throws UserGeneralException when GeneralDatabaseException is thrown.
+
+```csharp
+public void GetCountOfUserFriends_ThrowsUserGeneralException_OnGeneralDatabaseException()
+```
+
+**Remarks:**
+
+This test ensures that the GetCountOfUserFriends method throws a UserGeneralException when a
+ GeneralDatabaseException occurs.
+
+### **GetCountOfUserFriends_ThrowsUserGeneralException_OnUnexpectedException()**
+
+Tests if GetCountOfUserFriends method throws UserGeneralException when an unexpected exception is thrown.
+
+```csharp
+public void GetCountOfUserFriends_ThrowsUserGeneralException_OnUnexpectedException()
+```
+
+**Remarks:**
+
+This test ensures that the GetCountOfUserFriends method throws a UserGeneralException when an unexpected exception
+ occurs.
