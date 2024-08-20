@@ -5,6 +5,7 @@ nav:
   - Database: 
     - Database Model: database.md
     - Role Level Security: rls.md
+    - Local Database Migration: ldm.md
   - MVVM: mvvm.md
   - Coding Guidelines: guidelines.md
   - Code Documentation: 
