@@ -87,6 +87,6 @@ public class UserDao : BaseModel
 
     public override string ToString()
     {
-        return $"UserDao: {UserId}, {RoleId}, {UserName}, {Description}, {ProfilePic}, {CreatedAt}";
+        return $"UserDao: {UserId}, {RoleId}, {UserName}, {Description}, {CreatedAt}";
     }
 }

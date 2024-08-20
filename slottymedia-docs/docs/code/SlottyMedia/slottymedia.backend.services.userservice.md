@@ -113,23 +113,55 @@ Username used for retrieving a user
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 The corresponding UserDTO
 
-### **UpdateUser(UserDto)**
+### **UpdateUser(UserDao)**
 
 This method updates the given User object in the database and returns the updated object.
 
 ```csharp
-public Task<UserDto> UpdateUser(UserDto user)
+public Task<UserDto> UpdateUser(UserDao user)
 ```
 
 #### Parameters
 
-`user` [UserDto](./slottymedia.backend.dtos.userdto.md)<br>
+`user` UserDao<br>
 The updated UserDto
 
 #### Returns
 
 [Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns the updated UserDto. If it was unable to update the User, it will throw an exception.
+
+### **GetUserBy(Nullable&lt;Guid&gt;, String, String)**
+
+Retrieves a user from the database based on the provided criteria (ID, username, or email).
+
+```csharp
+public Task<UserDao> GetUserBy(Nullable<Guid> userID, string username, string email)
+```
+
+#### Parameters
+
+`userID` [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+The ID of the user to retrieve (optional).
+
+`username` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The username of the user to retrieve (optional).
+
+`email` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The email of the user to retrieve (optional).
+
+#### Returns
+
+[Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns the UserDao object if found, otherwise null.
+
+#### Exceptions
+
+[UserNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.usernotfoundexception.md)<br>
+Thrown when no user is found with the provided criteria.
+
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
+Thrown when a general database error occurs.
 
 ### **GetProfilePic(Guid)**
 

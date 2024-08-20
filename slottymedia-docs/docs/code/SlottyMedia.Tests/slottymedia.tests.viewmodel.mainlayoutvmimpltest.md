@@ -69,5 +69,9 @@ public void PersistUserAvatarInDb_ReturnsNullOnNoSession()
 ### **PersistsUserAvatarInDb()**
 
 ```csharp
-public void PersistsUserAvatarInDb()
+public Task PersistsUserAvatarInDb()
 ```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>

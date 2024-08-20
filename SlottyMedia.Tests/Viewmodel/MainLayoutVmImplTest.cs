@@ -19,6 +19,7 @@ public class MainLayoutVmImplTest
     private Mock<ICookieService> _cookieServiceMock;
     private Mock<DatabaseActions> _dbActions;
     private MainLayoutVmImpl _vm;
+    private Mock<IUserService> _userService;
 
     [OneTimeSetUp]
     public void OneTimeSetup()
@@ -27,7 +28,9 @@ public class MainLayoutVmImplTest
         _cookieServiceMock = new Mock<ICookieService>();
         _authService = new Mock<AuthService>(_client, _cookieServiceMock.Object);
         _dbActions = new Mock<DatabaseActions>(_client);
-        _vm = new MainLayoutVmImpl(_authService.Object, _dbActions.Object);
+        var postServide = new Mock<IPostService>();
+        _userService = new Mock<IUserService>();
+        _vm = new MainLayoutVmImpl(_authService.Object, _dbActions.Object, _userService.Object);
     }
 
     [TearDown]
@@ -107,20 +110,22 @@ public class MainLayoutVmImplTest
     }
 
     [Test]
-    public void PersistsUserAvatarInDb()
+    public async Task PersistsUserAvatarInDb()
     {
-        var session = new Session();
-        session.User = new User();
-        session.User.Email = "test@test.de";
+        // Arrange
+        var session = new Session { User = new User { Email = "test@test.de", Id = new Guid().ToString()} };
         _authService.Setup(service => service.GetCurrentSession()).Returns(session);
-        var user = new UserDao();
-        _dbActions.Setup(actions => actions.GetEntityByField<UserDao>("email", session.User.Email))
-            .ReturnsAsync(user);
-        user.ProfilePic = "123";
-        _dbActions.Setup(actions => actions.Update(user));
+        var user = new UserDao { ProfilePic = "123" };
+        _userService.Setup(service => service.UpdateUser(It.IsAny<UserDao>())).ReturnsAsync(new UserDto().Mapper(user));
+        _userService.Setup(service => service.GetUserBy(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(user);
 
-        Assert.ThatAsync(async () => await _vm.PersistUserAvatarInDb("123"), Is.EqualTo("123"));
+        // Act
+        var result = await _vm.PersistUserAvatarInDb("123");
+
+        // Assert
+        Assert.That(result, Is.EqualTo("123"));
         _authService.VerifyAll();
         _dbActions.VerifyAll();
+        _userService.Verify(service => service.UpdateUser(It.Is<UserDao>(u => u.ProfilePic == "123")), Times.Once);
     }
 }

@@ -1,4 +1,5 @@
 using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Database.Daos;
 
 namespace SlottyMedia.Backend.Services.Interfaces;
 
@@ -36,7 +37,7 @@ public interface IUserService
     /// </summary>
     /// <param name="user">The User object</param>
     /// <returns>UserDao</returns>
-    Task<UserDto> UpdateUser(UserDto user);
+    Task<UserDto> UpdateUser(UserDao user);
 
     /// <summary>
     ///     This method deletes the given User object from the database.
@@ -66,4 +67,16 @@ public interface IUserService
     /// <param name="userId">The ID of the user</param>
     /// <returns>Returns a FriendsOfUserDto object containing the list of friends</returns>
     Task<FriendsOfUserDto> GetFriends(Guid userId);
+
+    /// <summary>
+    /// Retrieves a user from the database based on the provided criteria (ID, username, or email).
+    /// </summary>
+    /// <param name="userID">The ID of the user to retrieve (optional).</param>
+    /// <param name="username">The username of the user to retrieve (optional).</param>
+    /// <param name="email">The email of the user to retrieve (optional).</param>
+    /// <returns>Returns the UserDao object if found, otherwise null.</returns>
+    /// <exception cref="UserNotFoundException">Thrown when no user is found with the provided criteria.</exception>
+    /// <exception cref="UserGeneralException">Thrown when a general database error occurs.</exception>
+    public Task<UserDao> GetUserBy(Guid? userID = null, string? username = null, string? email = null);
+
 }
