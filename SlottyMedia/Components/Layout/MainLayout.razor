@@ -278,13 +278,18 @@
     
     protected override async void OnAfterRender(bool firstRender)
     {
-        var userInfo = await MainLayoutVm!.SetUserInfo();
-        if (userInfo != null)
+        if(firstRender || UserInformationDto.Username == "Username is loading..")
         {
-            UserInformationDto.Username = userInfo.Username;
-            UserInformationDto.Description = userInfo.Description;
+            var userInfo = await MainLayoutVm!.SetUserInfo();
+            if (userInfo != null)
+            {
+                UserInformationDto.Username = userInfo.Username;
+                UserInformationDto.Description = userInfo.Description;
+                StateHasChanged();
+            }
+                 
         }
-        StateHasChanged();
+        
     }
 
     private async Task SubmitForm()
