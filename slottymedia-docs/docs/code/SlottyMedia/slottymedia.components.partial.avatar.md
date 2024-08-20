@@ -21,6 +21,36 @@ public RenderFragment ChildContent { get; set; }
 
 RenderFragment<br>
 
+### **Base64PNG**
+
+```csharp
+public string Base64PNG { private get; set; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+### **OpensFileDialog**
+
+```csharp
+public bool OpensFileDialog { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### **Base64Callback**
+
+```csharp
+public EventCallback<string> Base64Callback { get; set; }
+```
+
+#### Property Value
+
+EventCallback&lt;String&gt;<br>
+
 ## Constructors
 
 ### **Avatar()**

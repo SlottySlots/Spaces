@@ -90,12 +90,12 @@ public string Description { get; set; }
 The Profile Picture of the User.
 
 ```csharp
-public Nullable<long> ProfilePic { get; set; }
+public string ProfilePic { get; set; }
 ```
 
 #### Property Value
 
-[Nullable&lt;Int64&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **CreatedAt**
 
@@ -159,12 +159,12 @@ The defaulkt constructor for the User Dao.
 public UserDao()
 ```
 
-### **UserDao(Guid, Guid, String, String, String, Nullable&lt;Int64&gt;)**
+### **UserDao(Guid, Guid, String, String, String, String)**
 
 The constructor for the User Dao.
 
 ```csharp
-public UserDao(Guid userId, Guid roleId, string userName, string email, string description, Nullable<long> profilePic)
+public UserDao(Guid userId, Guid roleId, string userName, string email, string description, string profilePic)
 ```
 
 #### Parameters
@@ -179,7 +179,7 @@ public UserDao(Guid userId, Guid roleId, string userName, string email, string d
 
 `description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-`profilePic` [Nullable&lt;Int64&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+`profilePic` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ## Methods
 

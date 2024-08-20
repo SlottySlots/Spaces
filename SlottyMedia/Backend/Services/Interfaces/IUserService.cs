@@ -29,7 +29,7 @@ public interface IUserService
     /// <param name="description">The Description about the User</param>
     /// <param name="profilePicture">The ProfilePicture</param>
     /// <returns>UserDto</returns>
-    Task<UserDto> CreateUser(string userId, string username, string? description = null, long? profilePicture = null);
+    Task<UserDto> CreateUser(string userId, string username, string? description = null, string? profilePicture = null);
 
     /// <summary>
     ///     This method updates the given User object in the database and returns the updated object.

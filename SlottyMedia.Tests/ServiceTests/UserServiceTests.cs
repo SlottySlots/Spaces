@@ -240,13 +240,13 @@ public class UserServiceTests
     public async Task GetProfilePic_ShouldReturnProfilePic_WhenUserExists()
     {
         var userId = Guid.NewGuid();
-        var user = new UserDao { UserId = userId, ProfilePic = 123 };
+        var user = new UserDao { UserId = userId, ProfilePic = "123" };
         _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString())).ReturnsAsync(user);
 
         var result = await _userService.GetProfilePic(userId);
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.ProfilePic, Is.EqualTo(123));
+        Assert.That(result.ProfilePic, Is.EqualTo("123"));
         _mockDatabaseActions.VerifyAll();
     }
 

@@ -76,11 +76,35 @@ public class MainLayoutVmImpl : IMainLayoutVm
                     UserId = userDao.UserId!,
                     Username = userDao.UserName!,
                     Description = userDao.Description!,
+                    ProfilePic = userDao.ProfilePic,
                     CreatedAt = userDao.CreatedAt!
                 };
                 return userInformationDto;
             }
         }
+        return null;
+    }
+    
+    /// <summary>
+    /// This function persists a new avatar of the currently authenticated user
+    /// </summary>
+    /// <param name="base64Encoding">
+    /// The base64Encoding to persist to db
+    /// </param>
+    /// <returns>
+    /// Returns a task of type string. The string represents the base64 encoding persisted in db.
+    /// </returns>
+    public async Task<string?> PersistUserAvatarInDb(string base64Encoding)
+    {
+        var currentUserEmail = _authService.GetCurrentSession()?.User?.Email;
+        if (currentUserEmail != null)
+        {
+            var currentUser = await _databaseActions.GetEntityByField<UserDao>("email", currentUserEmail);
+            currentUser.ProfilePic = base64Encoding;
+            await _databaseActions.Update(currentUser);
+            return base64Encoding;
+        }
+
         return null;
     }
 }

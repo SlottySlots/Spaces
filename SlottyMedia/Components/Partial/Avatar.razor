@@ -1,22 +1,61 @@
-<div class="h-[80px] w-[80px]" @onmouseenter="MouseOver" @onmouseleave="MouseLeave">
+@inject IJSRuntime JSRuntime
+
+<div class="h-[80px] w-[80px]" @onmouseenter="MouseOver" @onmouseleave="MouseLeave" @onclick="OpenFileDialog">
     @if (!_mouseOverAvatar)
     {
-        <img class="h-full w-full rounded-full" src="static/profilePic.png" alt="Profile Picture">
+        <img class="h-full w-full rounded-full" src=@Base64PNG alt="Profile Picture">
     }
     else
     {
         <div class="relative opacity-50 h-[80px] w-[80px]">
-            <img class="h-full w-full rounded-full" src="static/profilePic.png" alt="Profile Picture">
+            <img class="h-full w-full rounded-full" src="@Base64PNG" alt="Profile Picture">
             @ChildContent
         </div>
-        <InputFile id="fn" hidden multiple></InputFile>
     }
 </div>
+<InputFile id="fileInput" OnChange="OnFileSelected" hidden></InputFile>
+
 
 
 @code {
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
+
+    private string? _base64Png;
+
+    [Parameter]
+    public string Base64PNG
+    {
+        private get => _base64Png == null ? "static/profilePic.png" : $"data:image/png;base64, {_base64Png}";
+        set => _base64Png = value;
+    }
+
+    [Parameter]
+    public bool OpensFileDialog { get; set; }
+
+    [Parameter]
+    public EventCallback<string> Base64Callback { get; set; }
+    
+    private async void OpenFileDialog()
+    {
+        if(OpensFileDialog)
+        await JSRuntime.InvokeVoidAsync("OpenFileDialog", "fileInput");
+    }
+    
+    private async Task OnFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+
+        if (file != null)
+        {
+            var buffer = new byte[file.Size];
+            await file.OpenReadStream().ReadAsync(buffer);
+            var base64String = Convert.ToBase64String(buffer);
+            Base64PNG = base64String;
+            await Base64Callback.InvokeAsync(base64String);
+        }
+    }
+    
     
     
     private bool _mouseOverAvatar = false;

@@ -52,3 +52,21 @@ public Task<UserInformationDto> SetUserInfo()
 
 [Task&lt;UserInformationDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns a task of type UserInformationDto. The dto is used to update the state in the view.
+
+### **PersistUserAvatarInDb(String)**
+
+This function persists a new avatar of the currently authenticated user
+
+```csharp
+public Task<string> PersistUserAvatarInDb(string base64Encoding)
+```
+
+#### Parameters
+
+`base64Encoding` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The base64Encoding to persist to db
+
+#### Returns
+
+[Task&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns a task of type string. The string represents the base64 encoding persisted in db.
