@@ -310,7 +310,7 @@ public class UserService : IUserService
             throw new UserGeneralException($"An error occurred while fetching the user. ID {userId}", ex);
         }
     }
-
+    
     /// <summary>
     ///     This method returns a list of friends for the given user.
     /// </summary>
@@ -398,5 +398,22 @@ public class UserService : IUserService
         {
             throw new UserGeneralException($"An error occurred while fetching the friends count. ID {userId}", ex);
         }
+    }
+
+    /// <summary>
+    /// Gets all spaces a user has wrote in
+    /// </summary>
+    /// <param name="userId">
+    /// User from which it should be retrieved
+    /// </param>
+    /// <returns>
+    /// Returns the amount of spaces as task
+    /// </returns>
+    public async Task<int> GetCountOfUserSpaces(Guid userId)
+    {
+        //TODO: Currently not working
+        //var spaces = await _postService.GetPostsFromForum(userId, 0, 1000);
+        var spaces = 10;
+        return spaces;
     }
 }

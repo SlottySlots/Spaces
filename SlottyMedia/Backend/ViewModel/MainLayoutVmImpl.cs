@@ -64,7 +64,10 @@ public class MainLayoutVmImpl : IMainLayoutVm
         var currentSession = _authService.GetCurrentSession();
         if (currentSession != null)
         {
-            var userDao = await _databaseActions.GetEntityByField<UserDao>("email", currentSession.User!.Email!);
+            var userId = Guid.Parse(currentSession.User!.Id!); 
+            var userDao = await _userService.GetUserBy(userId);
+            var amountOfFriends = await _userService.GetCountOfUserFriends(userId);
+            var amountOfSpaces = await _userService.GetCountOfUserSpaces(userId);
             if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
             {
                 _logger.LogError(
@@ -78,6 +81,8 @@ public class MainLayoutVmImpl : IMainLayoutVm
                     Username = userDao.UserName!,
                     Description = userDao.Description!,
                     ProfilePic = userDao.ProfilePic,
+                    FriendsAmount = amountOfFriends,
+                    SpacesAmount = amountOfSpaces,
                     CreatedAt = userDao.CreatedAt!
                 };
                 return userInformationDto;
