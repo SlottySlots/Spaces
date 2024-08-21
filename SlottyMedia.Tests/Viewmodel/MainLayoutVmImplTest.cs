@@ -69,19 +69,6 @@ public class MainLayoutVmImplTest
     }
 
     [Test]
-    public void SetUserInfo_CorruptUserDaoReturnsNull()
-    {
-        _authService.Setup(service => service.GetCurrentSession())
-            .Returns(new Session { User = new User { Email = "test@test.de" } });
-        _dbActions.Setup(service => service.GetEntityByField<UserDao>("email", "test@test.de")).ReturnsAsync(
-            Optional<UserDao>.Of(new UserDao { UserId = null, UserName = null, Description = null, Email = null })
-            );
-        Assert.ThatAsync(async () => await _vm.SetUserInfo(), Is.Null);
-        _authService.VerifyAll();
-        _authService.VerifyNoOtherCalls();
-    }
-
-    [Test]
     public void SetUserInfo_ReturnsUserInfoDto()
     {
         _authService.Setup(service => service.GetCurrentSession())

@@ -132,6 +132,7 @@ public class PostService : IPostService
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of post titles.</returns>
     public async Task<List<string>> GetPostsFromForum(Guid userId, int startOfSet, int endOfSet)
     {
+        //TODO Fix this method!!
         try
         {
             Logger.LogInfo($"Fetching posts for the user with ID: {userId} from index {startOfSet} to {endOfSet}");
@@ -315,4 +316,22 @@ public class PostService : IPostService
         Logger.LogInfo("Mapping posts to DTOs");
         return posts.Select(post => new PostDto().Mapper(post)).ToList();
     }
+    
+    public async Task<int> GetForumCountByUserId(Guid userId)
+{
+    try
+    {
+        Logger.LogInfo($"Counting forums for the user with ID: {userId}");
+        var forumCount = await DatabaseActions.GetCountForUserForums(userId.ToString());
+        return forumCount;
+    }
+    catch (GeneralDatabaseException ex)
+    {
+        throw new PostGeneralException($"A database error occurred while counting the forums. UserID: {userId}", ex);
+    }
+    catch (Exception ex)
+    {
+        throw new PostGeneralException($"An error occurred while counting the forums. UserID: {userId}", ex);
+    }
+}
 }

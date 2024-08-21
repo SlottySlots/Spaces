@@ -419,7 +419,7 @@ public class UserServiceTests
         // Arrange
         var userId = Guid.NewGuid();
         var expectedCount = 5;
-        _mockDatabaseActions.Setup(d => d.GetCountByField<UserDao>("userID", userId.ToString()))
+        _mockDatabaseActions.Setup(d => d.GetCountByField<FollowerUserRelationDao>("userIsFollowed", userId.ToString()))
             .ReturnsAsync(expectedCount);
 
         // Act
@@ -441,7 +441,7 @@ public class UserServiceTests
     {
         // Arrange
         var userId = Guid.NewGuid();
-        _mockDatabaseActions.Setup(d => d.GetCountByField<UserDao>("userID", userId.ToString()))
+        _mockDatabaseActions.Setup(d => d.GetCountByField<FollowerUserRelationDao>("userIsFollowed", userId.ToString()))
             .ThrowsAsync(new GeneralDatabaseException("Database error"));
 
         // Act & Assert
@@ -461,11 +461,26 @@ public class UserServiceTests
     {
         // Arrange
         var userId = Guid.NewGuid();
-        _mockDatabaseActions.Setup(d => d.GetCountByField<UserDao>("userID", userId.ToString()))
+        _mockDatabaseActions.Setup(d => d.GetCountByField<FollowerUserRelationDao>("userIsFollowed", userId.ToString()))
             .ThrowsAsync(new Exception("Unexpected error"));
 
         // Act & Assert
         var ex = Assert.ThrowsAsync<UserGeneralException>(() => _userService.GetCountOfUserFriends(userId));
         Assert.That(ex.Message, Is.EqualTo($"An error occurred while fetching the friends count. ID {userId}"));
+    }
+
+    [Test]
+    public async Task GetCountOfUserSpaces()
+    {
+        var userId = Guid.NewGuid();
+        var expectedCount = 5;
+        _mockPostService.Setup(d => d.GetForumCountByUserId(userId))
+            .ReturnsAsync(expectedCount);
+
+        // Act
+        var result = await _userService.GetCountOfUserSpaces(userId);
+
+        // Assert
+        Assert.That(result, Is.EqualTo(expectedCount)); 
     }
 }
