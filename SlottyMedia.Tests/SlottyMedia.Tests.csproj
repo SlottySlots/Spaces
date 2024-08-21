@@ -36,6 +36,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\SlottyMedia.Database\SlottyMedia.Database.csproj"/>
+        <ProjectReference Include="..\SlottyMedia.Utils\SlottyMedia.Utils.csproj" />
         <ProjectReference Include="..\SlottyMedia\SlottyMedia.csproj"/>
     </ItemGroup>
 
