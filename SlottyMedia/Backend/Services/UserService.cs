@@ -387,7 +387,7 @@ public class UserService : IUserService
         try
         {
             Logger.LogInfo($"Fetching friends count for user with ID {userId}");
-            var friends = await _databaseActions.GetCountByField<UserDao>("userID", userId.ToString());
+            var friends = await _databaseActions.GetCountByField<FollowerUserRelationDao>("userIsFollowed", userId.ToString());
             return friends;
         }
         catch (GeneralDatabaseException ex)
@@ -412,8 +412,7 @@ public class UserService : IUserService
     public async Task<int> GetCountOfUserSpaces(Guid userId)
     {
         //TODO: Currently not working
-        //var spaces = await _postService.GetPostsFromForum(userId, 0, 1000);
-        var spaces = 10;
+        var spaces = await _postService.GetForumCountByUserId(userId);
         return spaces;
     }
 }
