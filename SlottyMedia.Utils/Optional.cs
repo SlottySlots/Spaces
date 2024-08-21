@@ -38,6 +38,19 @@ public class Optional<T>
     private Optional() {}
 
     /// <summary>
+    /// Creates an optional value form the given instance.
+    /// </summary>
+    /// <param name="instance">The value to encapsulate</param>
+    /// <returns>The optional value</returns>
+    public static Optional<T> Of(T instance)
+    {
+        return new Optional<T>
+        {
+            _instance = instance
+        };
+    }
+
+    /// <summary>
     /// Creates an optional value from the given function.
     /// </summary>
     /// <param name="function">The function that evaluates the optional value</param>
