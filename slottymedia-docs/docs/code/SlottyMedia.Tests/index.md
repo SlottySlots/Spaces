@@ -44,6 +44,10 @@
 
 [UserServiceTests](./slottymedia.tests.servicetests.userservicetests.md)
 
+## SlottyMedia.Tests.UtilTests
+
+[OptionalTests](./slottymedia.tests.utiltests.optionaltests.md)
+
 ## SlottyMedia.Tests.Viewmodel
 
 [MainLayoutVmImplTest](./slottymedia.tests.viewmodel.mainlayoutvmimpltest.md)
