@@ -125,7 +125,7 @@
                         <!-- Friends Container in Profile  -->
                         <div class="w-full">
                             <h3 class="text-xl text-center font-semibold">
-                                7
+                                @UserInformationDto.FriendsAmount
                             </h3>
 
                             <h3 class="text-sm font-medium w-fit mx-auto">
@@ -135,7 +135,7 @@
 
                         <div class="w-full">
                             <h3 class="text-xl text-center font-semibold">
-                                13
+                                @UserInformationDto.SpacesAmount
                             </h3>
 
                             <h3 class="text-sm font-medium w-fit mx-auto">
@@ -298,6 +298,8 @@
                 UserInformationDto.Username = userInfo.Username;
                 UserInformationDto.Description = userInfo.Description;
                 UserInformationDto.ProfilePic = userInfo.ProfilePic;
+                UserInformationDto.FriendsAmount = userInfo.FriendsAmount;
+                UserInformationDto.SpacesAmount = userInfo.SpacesAmount;
                 StateHasChanged();
             }
         }

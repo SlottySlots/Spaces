@@ -60,6 +60,30 @@ public string ProfilePic { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+### **FriendsAmount**
+
+Amount of Follow4Follows of User
+
+```csharp
+public int FriendsAmount { get; set; }
+```
+
+#### Property Value
+
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+### **SpacesAmount**
+
+Amount of Spaces of a User
+
+```csharp
+public int SpacesAmount { get; set; }
+```
+
+#### Property Value
+
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
 ### **CreatedAt**
 
 Gets or sets the date and time when the User was created.
