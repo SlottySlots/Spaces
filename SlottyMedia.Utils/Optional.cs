@@ -38,6 +38,15 @@ public class Optional<T>
     private Optional() {}
 
     /// <summary>
+    /// Creates an empty optional value.
+    /// </summary>
+    /// <returns>The optional value</returns>
+    public static Optional<T> Empty()
+    {
+        return new Optional<T>();
+    }
+
+    /// <summary>
     /// Creates an optional value form the given instance.
     /// </summary>
     /// <param name="instance">The value to encapsulate</param>
@@ -109,6 +118,19 @@ public class Optional<T>
             throw new InvalidOperationException("Could not retrieve optional data because an exception was thrown during callback invocation", _innerException);
         if (_instance is null)
             throw new NullReferenceException("Could not retrieve optional data because data was null");
+        return _instance!;
+    }
+
+    /// <summary>
+    /// Attempts to retrieve the value contained by this object. If no value was present, returns the supplied
+    /// instance instead.
+    /// </summary>
+    /// <param name="instance">The instance to return if this object was empty</param>
+    /// <returns>The value</returns>
+    public T OrElse(T instance)
+    {
+        if (_innerException is not null || _instance is not null)
+            return instance;
         return _instance!;
     }
 
