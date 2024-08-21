@@ -116,5 +116,6 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
     {
         TextErrorMessage = null;
         SpaceErrorMessage = null;
+        ServerErrorMessage = null;
     }
 }

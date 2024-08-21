@@ -73,10 +73,10 @@ public string ServerErrorMessage { get; set; }
 
 ## Constructors
 
-### **PostSubmissionFormVmImpl(IAuthService, IPostService, NavigationManager)**
+### **PostSubmissionFormVmImpl(IAuthService, IPostService, IForumService, NavigationManager)**
 
 ```csharp
-public PostSubmissionFormVmImpl(IAuthService authService, IPostService postService, NavigationManager navigationManager)
+public PostSubmissionFormVmImpl(IAuthService authService, IPostService postService, IForumService forumService, NavigationManager navigationManager)
 ```
 
 #### Parameters
@@ -84,6 +84,8 @@ public PostSubmissionFormVmImpl(IAuthService authService, IPostService postServi
 `authService` [IAuthService](./slottymedia.backend.services.interfaces.iauthservice.md)<br>
 
 `postService` [IPostService](./slottymedia.backend.services.interfaces.ipostservice.md)<br>
+
+`forumService` [IForumService](./slottymedia.backend.services.interfaces.iforumservice.md)<br>
 
 `navigationManager` NavigationManager<br>
 
@@ -105,17 +107,15 @@ public Task HandleSpacePromptChange(ChangeEventArgs e, EventCallback<string> pro
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **HandleSpaceSelection(String, EventCallback&lt;String&gt;)**
+### **HandleSpaceSelection(String)**
 
 ```csharp
-public Task HandleSpaceSelection(string spaceName, EventCallback<string> promptValueChanged)
+public Task HandleSpaceSelection(string spaceName)
 ```
 
 #### Parameters
 
 `spaceName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-`promptValueChanged` EventCallback&lt;String&gt;<br>
 
 #### Returns
 

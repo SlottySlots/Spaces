@@ -107,7 +107,7 @@ A callback that is invoked asynchronously
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **HandleSpaceSelection(String, EventCallback&lt;String&gt;)**
+### **HandleSpaceSelection(String)**
 
 Handles an event that is triggered when the user selects a space from the list of available spaces
  based on the entered prompt. This sets "SpacePrompt" to null and "SpaceName" to the selected space name.
@@ -115,16 +115,13 @@ Handles an event that is triggered when the user selects a space from the list o
  actually exists!
 
 ```csharp
-Task HandleSpaceSelection(string spaceName, EventCallback<string> promptValueChanged)
+Task HandleSpaceSelection(string spaceName)
 ```
 
 #### Parameters
 
 `spaceName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The name of the selected space (without hashtag!)
-
-`promptValueChanged` EventCallback&lt;String&gt;<br>
-A callback that is invoked asynchronously
 
 #### Returns
 

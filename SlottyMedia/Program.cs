@@ -69,6 +69,7 @@ try
     logger.LogInfo("Adding Services to the container");
     builder.Services.AddScoped<IUserService, UserService>();
     builder.Services.AddScoped<IPostService, PostService>();
+    builder.Services.AddScoped<IForumService, ForumService>();
     builder.Services.AddScoped<ICookieService, CookieService>();
     builder.Services.AddScoped<IAuthService, AuthService>(); // Scoped
     builder.Services.AddScoped<ISignupService, SignupServiceImpl>();
