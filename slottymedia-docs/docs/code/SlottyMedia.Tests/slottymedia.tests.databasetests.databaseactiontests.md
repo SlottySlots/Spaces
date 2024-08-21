@@ -149,8 +149,12 @@ public Task GetEntityByField()
 Tests the GetEntityByField method of DatabaseActions for failure.
 
 ```csharp
-public void GetEntityByField_Failure()
+public Task GetEntityByField_Failure()
 ```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **GetEntitieWithSelectorById()**
 
@@ -169,8 +173,12 @@ public Task GetEntitieWithSelectorById()
 Tests the GetEntitieWithSelectorById method of DatabaseActions for failure.
 
 ```csharp
-public void GetEntitieWithSelectorById_Failure()
+public Task GetEntitieWithSelectorById_Failure()
 ```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **GetEntitiesWithSelectorById()**
 

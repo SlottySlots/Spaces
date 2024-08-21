@@ -47,3 +47,33 @@ public void OrElse_WhenCallbackReturns_ShouldReturn()
 ```csharp
 public void OrElse_WhenCallbackThrows_ShouldThrow()
 ```
+
+### **OrElseNull_WhenInstanceNotNull_ShouldReturnInstance()**
+
+```csharp
+public void OrElseNull_WhenInstanceNotNull_ShouldReturnInstance()
+```
+
+### **OrElseNull_WhenInstanceNull_ShouldReturnNull()**
+
+```csharp
+public void OrElseNull_WhenInstanceNull_ShouldReturnNull()
+```
+
+### **OrElseThrow_WhenEvaluationThrows_ShouldRethrow()**
+
+```csharp
+public void OrElseThrow_WhenEvaluationThrows_ShouldRethrow()
+```
+
+### **OrElseThrow_WhenEmpty_ShouldThrow()**
+
+```csharp
+public void OrElseThrow_WhenEmpty_ShouldThrow()
+```
+
+### **OrElseThrow_WhenInstancePresent_ShouldReturnInstance()**
+
+```csharp
+public void OrElseThrow_WhenInstancePresent_ShouldReturnInstance()
+```

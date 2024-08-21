@@ -9,27 +9,30 @@ namespace SlottyMedia.Utils;
 ///     OrElseNull() will return null if no value is present and OrElseThrow() throws an exception instead.
 ///     <br /> <br />
 ///     This class can be instantiated with the static Of() and OfAsync() methods.
+///     <br /><br />
+///     <b>NOTE: </b> This class is intended for reference types only! If used with value types, this class may
+///     give unexpected results.
 /// </summary>
 /// <example>
 ///     <code>
 ///     // simply retrieve the contained value
-///     var opt = Optional&lt;int&gt;.Of(() => 7);
-///     var result = opt.Get(); // = 7
+///     var opt = Optional&lt;string&gt;.Of("Hello");
+///     var result = opt.Get(); // = "Hello"
 ///     <br />
 ///     // return null if an exception is thrown
-///     var opt = Optional&lt;int&gt;.Of(() => throw new ArithmeticException());
+///     var opt = Optional&lt;string&gt;.Of(() => throw new ArithmeticException());
 ///     var result = opt.OrElseNull(); // = null
 ///     <br />
 ///     // throw exception if no value is present
-///     var opt = Optional&lt;int&gt;.Of(() => throw new ArithmeticException());
+///     var opt = Optional&lt;string&gt;.Of(() => throw new ArithmeticException());
 ///     var result = opt.OrElseThrow();
 ///     <br />
 ///     // get value asynchronously
-///     var opt = await Optional&lt;int&gt;.OfAsync(async () => await someAsyncCalculation());
+///     var opt = await Optional&lt;string&gt;.OfAsync(async () => await someAsyncCalculation());
 ///     var result = opt.OrElseNull();
 ///     </code>
 /// </example>
-/// <typeparam name="T">The type of the optional value</typeparam>
+/// <typeparam name="T">The type of the optional value. Should be a reference type!</typeparam>
 public class Optional<T>
 {
     private T? _instance;

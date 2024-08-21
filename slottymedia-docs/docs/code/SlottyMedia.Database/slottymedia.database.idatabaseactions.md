@@ -84,7 +84,7 @@ Returns true if the operation was successful.
 Returns an entity from the database based on the given field and value.
 
 ```csharp
-Task<T> GetEntityByField<T>(string field, string value)
+Task<Optional<T>> GetEntityByField<T>(string field, string value)
 ```
 
 #### Type Parameters
@@ -102,7 +102,7 @@ The value to search for.
 
 #### Returns
 
-Task&lt;T&gt;<br>
+Task&lt;Optional&lt;T&gt;&gt;<br>
 Returns the entity from the database.
 
 ### **GetEntitieWithSelectorById&lt;T&gt;(Expression&lt;Func&lt;T, Object[]&gt;&gt;, String, String)**
@@ -110,7 +110,7 @@ Returns the entity from the database.
 Returns an entity with a selector from the database based on the given field and value.
 
 ```csharp
-Task<T> GetEntitieWithSelectorById<T>(Expression<Func<T, Object[]>> selector, string field, string value)
+Task<Optional<T>> GetEntitieWithSelectorById<T>(Expression<Func<T, Object[]>> selector, string field, string value)
 ```
 
 #### Type Parameters
@@ -131,7 +131,7 @@ The value to search for.
 
 #### Returns
 
-Task&lt;T&gt;<br>
+Task&lt;Optional&lt;T&gt;&gt;<br>
 Returns the entity from the database.
 
 ### **GetEntitiesWithSelectorById&lt;T&gt;(Expression&lt;Func&lt;T, Object[]&gt;&gt;, String, String, Int32, Int32, ValueTuple`3[])**

@@ -128,7 +128,7 @@ Thrown when a network error, argument null, invalid operation, timeout, task
 Retrieves an entity from the database by a specific field and value.
 
 ```csharp
-public Task<T> GetEntityByField<T>(string field, string value)
+public Task<Optional<T>> GetEntityByField<T>(string field, string value)
 ```
 
 #### Type Parameters
@@ -146,7 +146,7 @@ The value to filter by.
 
 #### Returns
 
-Task&lt;T&gt;<br>
+Task&lt;Optional&lt;T&gt;&gt;<br>
 The retrieved entity.
 
 #### Exceptions
@@ -163,7 +163,7 @@ Thrown when a network error, argument null, invalid operation, timeout, task
 Retrieves an entity from the database by a specific field and value with a selector.
 
 ```csharp
-public Task<T> GetEntitieWithSelectorById<T>(Expression<Func<T, Object[]>> selector, string field, string value)
+public Task<Optional<T>> GetEntitieWithSelectorById<T>(Expression<Func<T, Object[]>> selector, string field, string value)
 ```
 
 #### Type Parameters
@@ -184,7 +184,7 @@ The value to filter by.
 
 #### Returns
 
-Task&lt;T&gt;<br>
+Task&lt;Optional&lt;T&gt;&gt;<br>
 The retrieved entity.
 
 #### Exceptions
