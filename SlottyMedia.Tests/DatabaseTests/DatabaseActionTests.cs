@@ -184,10 +184,13 @@ public class DatabaseActionTests : BaseDatabaseTestClass
     ///     Tests the GetEntityByField method of DatabaseActions for failure.
     /// </summary>
     [Test]
-    public void GetEntityByField_Failure()
+    public async Task GetEntityByField_Failure()
     {
-        Assert.ThrowsAsync<GeneralDatabaseException>(async () =>
-            await DatabaseActions.GetEntityByField<UserDao>("userID", "invalid-id"));
+        var optional = await DatabaseActions.GetEntityByField<UserDao>("userID", "invalid-id");
+        Assert.Throws<GeneralDatabaseException>(() =>
+        {
+            optional.OrElseThrow();
+        });
     }
 
     /// <summary>
@@ -232,11 +235,14 @@ public class DatabaseActionTests : BaseDatabaseTestClass
     ///     Tests the GetEntitieWithSelectorById method of DatabaseActions for failure.
     /// </summary>
     [Test]
-    public void GetEntitieWithSelectorById_Failure()
+    public async Task GetEntitieWithSelectorById_Failure()
     {
         Expression<Func<UserDao, object[]>> selector = u => new object[] { u.UserId!, u.UserName!, u.Description! };
-        Assert.ThrowsAsync<GeneralDatabaseException>(async () =>
-            await DatabaseActions.GetEntitieWithSelectorById(selector, "userID", "invalid-id"));
+        var optional = await DatabaseActions.GetEntitieWithSelectorById(selector, "userID", "invalid-id");
+        Assert.Throws<GeneralDatabaseException>(() =>
+        {
+            optional.OrElseThrow();
+        });
     }
 
     /// <summary>
