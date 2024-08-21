@@ -8,4 +8,8 @@
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     </PropertyGroup>
 
+    <Target Name="GenerateDocumentation" AfterTargets="Build" Condition="'$(GITHUB_ACTIONS)' != 'true'">
+        <Exec Command="dotnet tool run xmldoc2md ./bin/Debug/net8.0/SlottyMedia.Utils.dll ../slottymedia-docs/docs/code/SlottyMedia.Utils"/>
+    </Target>
+
 </Project>
