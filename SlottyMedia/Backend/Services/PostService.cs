@@ -37,14 +37,16 @@ public class PostService : IPostService
     /// <param name="content">The content of the post.</param>
     /// <param name="creatorUserId">The ID of the user who created the post.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the inserted post.</returns>
-    public async Task<PostDto> InsertPost(string content, Guid creatorUserId)
+    public async Task<PostDto> InsertPost(string content, Guid creatorUserId, Guid forumId)
     {
         try
         {
             var post = new PostsDao
             {
+                Headline = "",
                 Content = content,
                 UserId = creatorUserId,
+                ForumId = forumId,
             };
             Logger.LogInfo($"Inserting a new post into the database {post}");
             var insertedPost = await DatabaseActions.Insert(post);
@@ -53,19 +55,19 @@ public class PostService : IPostService
         catch (DatabaseIudActionException ex)
         {
             throw new PostIudException(
-                $"An error occurred while inserting the post. Parameters: {title} {content}, {creatorUserId}, {forumId}",
+                $"An error occurred while inserting a post starting with '{content[..Math.Min(15, content.Length)]}...'",
                 ex);
         }
         catch (GeneralDatabaseException ex)
         {
             throw new PostGeneralException(
-                $"A database error occurred while inserting the post. Parameters: {title} {content}, {creatorUserId}, {forumId}",
+                $"A database error occurred while inserting a post starting with '{content[..Math.Min(15, content.Length)]}...'",
                 ex);
         }
         catch (Exception ex)
         {
             throw new PostGeneralException(
-                $"An error occurred while inserting the post. Parameters: {title} {content}, {creatorUserId}, {forumId}",
+                $"An error occurred while inserting the post starting with '{content[..Math.Min(15, content.Length)]}...'",
                 ex);
         }
     }

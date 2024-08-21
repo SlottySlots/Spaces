@@ -27,8 +27,9 @@ public interface IPostService
     /// </summary>
     /// <param name="content">The content of the post</param>
     /// <param name="creatorUserId">The UserId who created the post</param>
+    /// /// <param name="forumId">The ID of the forum the post should belong to</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the inserted post.</returns>
-    public Task<PostDto> InsertPost(string content, Guid creatorUserId);
+    public Task<PostDto> InsertPost(string content, Guid creatorUserId, Guid forumId);
 
     /// <summary>
     ///     Updates an existing post in the database.
