@@ -120,7 +120,9 @@ public class Optional<T>
     /// <returns>The value</returns>
     public T? OrElse(Func<T?> function)
     {
-        return _instance ?? function.Invoke();
+        if (_innerException is not null || _instance is not null)
+            return function.Invoke();
+        return _instance;
     }
 
     /// <summary>
@@ -135,7 +137,9 @@ public class Optional<T>
     /// <returns>The value</returns>
     public T? OrElse(Func<Exception?, T?> function)
     {
-        return _instance ?? function.Invoke(_innerException);
+        if (_innerException is not null || _instance is not null)
+            return function.Invoke(_innerException);
+        return _instance;
     }
     
     /// <summary>
@@ -146,7 +150,9 @@ public class Optional<T>
     /// <returns>The value</returns>
     public async Task<T?> OrElseAsync(Func<Task<T?>> function)
     {
-        return _instance ?? await function.Invoke();
+        if (_innerException is not null || _instance is not null)
+            return await function.Invoke();
+        return _instance;
     }
 
     /// <summary>
@@ -161,7 +167,9 @@ public class Optional<T>
     /// <returns>The value</returns>
     public async Task<T?> OrElseAsync(Func<Exception?, Task<T?>> function)
     {
-        return _instance ?? await function.Invoke(_innerException);
+        if (_innerException is not null || _instance is not null)
+            return await function.Invoke(_innerException);
+        return _instance;
     }
 
     /// <summary>
