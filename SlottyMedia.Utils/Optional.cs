@@ -1,4 +1,4 @@
-namespace SlottyMedia.Backend.Util;
+namespace SlottyMedia.Utils;
 
 
 /// <summary>
