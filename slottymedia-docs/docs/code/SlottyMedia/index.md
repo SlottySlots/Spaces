@@ -100,6 +100,8 @@
 
 [IForumService](./slottymedia.backend.services.interfaces.iforumservice.md)
 
+[ILikeService](./slottymedia.backend.services.interfaces.ilikeservice.md)
+
 [IPostService](./slottymedia.backend.services.interfaces.ipostservice.md)
 
 [ISearchService](./slottymedia.backend.services.interfaces.isearchservice.md)

@@ -10,12 +10,18 @@ namespace SlottyMedia.Tests.DatabaseTests;
 [TestFixture]
 public class DatabaseActionTests : BaseDatabaseTestClass
 {
+    /// <summary>
+    ///     Sets up the test environment by initializing the user model.
+    /// </summary>
     [SetUp]
     public void Setup()
     {
         _userToWorkWith = InitializeModels.GetUserDto(UserId);
     }
 
+    /// <summary>
+    ///     Cleans up the test environment by deleting the user if it exists.
+    /// </summary>
     [TearDown]
     public async Task TearDown()
     {
@@ -293,18 +299,18 @@ public class DatabaseActionTests : BaseDatabaseTestClass
         Assert.ThrowsAsync<GeneralDatabaseException>(async () =>
             await DatabaseActions.GetEntitiesWithSelectorById(selector, "userID", "invalid-id"));
     }
-    
+
     /// <summary>
-    /// Tests the GetCountByField method of DatabaseActions.
+    ///     Tests the GetCountByField method of DatabaseActions.
     /// </summary>
     /// <remarks>
-    /// This test ensures that the GetCountByField method correctly returns the count of users
-    /// with a specific field and value. It first inserts a user into the database to ensure
-    /// there is at least one entry, then retrieves the count of users with the specific field
-    /// and value, and asserts that the count is greater than 0.
+    ///     This test ensures that the GetCountByField method correctly returns the count of users
+    ///     with a specific field and value. It first inserts a user into the database to ensure
+    ///     there is at least one entry, then retrieves the count of users with the specific field
+    ///     and value, and asserts that the count is greater than 0.
     /// </remarks>
     /// <exception cref="GeneralDatabaseException">
-    /// Thrown when there is a database-related error during the test execution.
+    ///     Thrown when there is a database-related error during the test execution.
     /// </exception>
     [Test]
     public async Task GetCountByField()

@@ -109,3 +109,27 @@ The the post to delete.
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result indicates whether the deletion was
  successful.
+
+### **GetPostsByUserId(Guid, Int32, Int32)**
+
+Retrieves a list of posts from the database based on the given userId.
+
+```csharp
+Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the user.
+
+`startOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The starting index of the set.
+
+`endOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The ending index of the set.
+
+#### Returns
+
+[Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains a list of PostDto objects.

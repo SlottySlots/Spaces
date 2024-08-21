@@ -8,6 +8,9 @@ using Supabase;
 
 namespace SlottyMedia.Tests.Viewmodel.auth;
 
+/// <summary>
+///     Unit tests for the SignInFormVmImpl class.
+/// </summary>
 public class SignInFormVmImplTest
 {
     private Mock<AuthService> _authService;
@@ -16,6 +19,9 @@ public class SignInFormVmImplTest
     private Mock<NavigationManager> _navigationManager;
     private SignInFormVmImpl _service;
 
+    /// <summary>
+    ///     Sets up the test environment before any tests are run.
+    /// </summary>
     [OneTimeSetUp]
     public void OneTimeSetup()
     {
@@ -26,6 +32,9 @@ public class SignInFormVmImplTest
         _service = new SignInFormVmImpl(_authService.Object, _navigationManager.Object);
     }
 
+    /// <summary>
+    ///     Resets the mocks after each test.
+    /// </summary>
     [TearDown]
     public void TearDown()
     {
@@ -33,6 +42,11 @@ public class SignInFormVmImplTest
         _authService.Reset();
     }
 
+    /// <summary>
+    ///     Tests that an error message is displayed when the email is empty or null.
+    /// </summary>
+    /// <param name="email">The email input.</param>
+    /// <param name="password">The password input.</param>
     [Test]
     [TestCase("", "password")]
     [TestCase(null, "password")]
@@ -46,6 +60,11 @@ public class SignInFormVmImplTest
         Assert.That(_service.EmailErrorMessage, Is.Not.Empty);
     }
 
+    /// <summary>
+    ///     Tests that an error message is displayed when the password is empty or null.
+    /// </summary>
+    /// <param name="email">The email input.</param>
+    /// <param name="password">The password input.</param>
     [Test]
     [TestCase("user@gmail.com", "")]
     [TestCase("user@gmail.com", null)]

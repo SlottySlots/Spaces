@@ -1,4 +1,5 @@
 ﻿using SlottyMedia.Backend.Exceptions.Services.LikeExceptions;
+using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
@@ -10,7 +11,7 @@ namespace SlottyMedia.Backend.Services;
 /// <summary>
 ///     The service responsible for handling likes.
 /// </summary>
-public class LikeService
+public class LikeService : ILikeService
 {
     private static readonly Logging<LikeService> Logger = new();
     private readonly IDatabaseActions _databaseActions;
@@ -26,12 +27,7 @@ public class LikeService
         _databaseActions = databaseActions;
     }
 
-    /// <summary>
-    ///     Inserts a like for a given user and post.
-    /// </summary>
-    /// <param name="userId">The ID of the user.</param>
-    /// <param name="postId">The ID of the post.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a boolean indicating success.</returns>
+    //<inheritdoc />
     public async Task<bool> InsertLike(Guid userId, Guid postId)
     {
         try
@@ -58,12 +54,7 @@ public class LikeService
         }
     }
 
-    /// <summary>
-    ///     Deletes a like for a given user and post.
-    /// </summary>
-    /// <param name="userId">The ID of the user.</param>
-    /// <param name="postId">The ID of the post.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a boolean indicating success.</returns>
+    /// <inheritdoc />
     public async Task<bool> DeleteLike(Guid userId, Guid postId)
     {
         try
@@ -89,11 +80,7 @@ public class LikeService
         }
     }
 
-    /// <summary>
-    ///     Retrieves a list of user IDs who liked a given post.
-    /// </summary>
-    /// <param name="postId">The ID of the post.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of user IDs.</returns>
+    /// <inheritdoc />
     public async Task<List<Guid>> GetLikesForPost(Guid postId)
     {
         try

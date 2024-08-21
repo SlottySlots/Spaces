@@ -48,4 +48,13 @@ public interface IPostService
     ///     successful.
     /// </returns>
     Task<bool> DeletePost(PostDto post);
+
+    /// <summary>
+    ///     Retrieves a list of posts from the database based on the given userId.
+    /// </summary>
+    /// <param name="userId">The ID of the user.</param>
+    /// <param name="startOfSet">The starting index of the set.</param>
+    /// <param name="endOfSet">The ending index of the set.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a list of PostDto objects.</returns>
+    public Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet);
 }

@@ -22,11 +22,15 @@ public SignUpServiceTest()
 
 ### **OneTimeSetup()**
 
+Sets up the test fixture. Initializes the Supabase client and mocks the necessary services.
+
 ```csharp
 public void OneTimeSetup()
 ```
 
 ### **Setup()**
+
+Sets up each test. Generates a new UUID for the username, email, and password.
 
 ```csharp
 public void Setup()
@@ -34,17 +38,23 @@ public void Setup()
 
 ### **TearDown()**
 
+Tears down each test. Resets the mocks and clears the session.
+
 ```csharp
 public void TearDown()
 ```
 
 ### **SignUp_UserAlreadyExists()**
 
+Tests that SignUp throws a UsernameAlreadyExistsException when the username already exists.
+
 ```csharp
 public void SignUp_UserAlreadyExists()
 ```
 
 ### **SignUp()**
+
+Tests that SignUp successfully registers a new user and sets the session.
 
 ```csharp
 public Task SignUp()

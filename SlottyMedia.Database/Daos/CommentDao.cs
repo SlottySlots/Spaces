@@ -87,6 +87,10 @@ public class CommentDao : BaseModel
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
 
+    /// <summary>
+    ///     The ToString method is used to return a string representation of the CommentDao object.
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
         return

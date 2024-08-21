@@ -85,6 +85,10 @@ public class UserDao : BaseModel
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
 
+    /// <summary>
+    ///     The ToString method returns a string representation of the UserDao object.
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
         return $"UserDao: {UserId}, {RoleId}, {UserName}, {Description}, {CreatedAt}";

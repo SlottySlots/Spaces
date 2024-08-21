@@ -15,6 +15,9 @@ namespace SlottyMedia.Tests.Auth;
 [TestFixture]
 public class SignUpServiceTest
 {
+    /// <summary>
+    ///     Sets up the test fixture. Initializes the Supabase client and mocks the necessary services.
+    /// </summary>
     [OneTimeSetUp]
     public void OneTimeSetup()
     {
@@ -27,6 +30,9 @@ public class SignUpServiceTest
             _dbActionMock.Object);
     }
 
+    /// <summary>
+    ///     Sets up each test. Generates a new UUID for the username, email, and password.
+    /// </summary>
     [SetUp]
     public void Setup()
     {
@@ -37,6 +43,9 @@ public class SignUpServiceTest
         _password = "TestPassword1!";
     }
 
+    /// <summary>
+    ///     Tears down each test. Resets the mocks and clears the session.
+    /// </summary>
     [TearDown]
     public void TearDown()
     {
@@ -59,6 +68,9 @@ public class SignUpServiceTest
 
     private Session? _session;
 
+    /// <summary>
+    ///     Tests that SignUp throws a UsernameAlreadyExistsException when the username already exists.
+    /// </summary>
     [Test]
     public void SignUp_UserAlreadyExists()
     {
@@ -70,6 +82,9 @@ public class SignUpServiceTest
         );
     }
 
+    /// <summary>
+    ///     Tests that SignUp successfully registers a new user and sets the session.
+    /// </summary>
     [Test]
     public async Task SignUp()
     {

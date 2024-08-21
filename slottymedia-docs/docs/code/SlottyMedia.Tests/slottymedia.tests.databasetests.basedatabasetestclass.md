@@ -38,6 +38,8 @@ DatabaseActions<br>
 
 ### **UserToWorkWith**
 
+The User to work with
+
 ```csharp
 public UserDao UserToWorkWith { get; set; }
 ```
@@ -56,25 +58,25 @@ public BaseDatabaseTestClass()
 
 ## Methods
 
-### **Setup()**
+### **BaseSetup()**
 
 This Method is used to setup the Tests. It logs in the User and sets the UserId Property
  if the Login was successful if not it will signup the User and set the UserId Property
 
 ```csharp
-public Task Setup()
+public Task BaseSetup()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **TearDown()**
+### **BaseTearDown()**
 
 This Method is used to TearDown the Tests. It logs out the User
 
 ```csharp
-public Task TearDown()
+public Task BaseTearDown()
 ```
 
 #### Returns

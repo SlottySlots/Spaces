@@ -22,11 +22,15 @@ public SignUpFormVmImplTest()
 
 ### **OneTimeSetup()**
 
+Sets up the necessary mocks and initializes the service before any tests are run.
+
 ```csharp
 public void OneTimeSetup()
 ```
 
 ### **TearDown()**
+
+Resets the mocks after each test.
 
 ```csharp
 public void TearDown()
@@ -34,11 +38,15 @@ public void TearDown()
 
 ### **SubmitSignUpForm_UsernameNotProvided()**
 
+Tests that an ArgumentException is thrown when the username is not provided.
+
 ```csharp
 public void SubmitSignUpForm_UsernameNotProvided()
 ```
 
 ### **SubmitSignUpForm_EmailNotProvided()**
+
+Tests that an ArgumentException is thrown when the email is not provided.
 
 ```csharp
 public void SubmitSignUpForm_EmailNotProvided()
@@ -46,17 +54,23 @@ public void SubmitSignUpForm_EmailNotProvided()
 
 ### **SubmitSignUpForm_PasswordNotProvided()**
 
+Tests that an ArgumentException is thrown when the password is not provided.
+
 ```csharp
 public void SubmitSignUpForm_PasswordNotProvided()
 ```
 
 ### **SubmitSignUpForm_UserNameAlreadyExists()**
 
+Tests that a UsernameAlreadyExistsException is thrown when the username already exists.
+
 ```csharp
 public void SubmitSignUpForm_UserNameAlreadyExists()
 ```
 
 ### **SubmitSignUpForm_EmailAlreadyExists()**
+
+Tests that an EmailAlreadyExistsException is thrown when the email already exists.
 
 ```csharp
 public void SubmitSignUpForm_EmailAlreadyExists()
