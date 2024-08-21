@@ -46,8 +46,8 @@ public class UserLikePostRelationDaoTest : BaseDatabaseTestClass
         {
             if (_relationToWorkWith.UserLikePostRelationId is null) return;
 
-            var relation = await DatabaseActions.GetEntityByField<UserLikePostRelationDao>("userLikePostRelationID",
-                _relationToWorkWith.UserLikePostRelationId.ToString() ?? "");
+            var relation = (await DatabaseActions.GetEntityByField<UserLikePostRelationDao>("userLikePostRelationID",
+                _relationToWorkWith.UserLikePostRelationId.ToString() ?? "")).OrElseThrow();
             if (relation != null) await DatabaseActions.Delete(relation);
         }
         catch (Exception ex)
@@ -67,16 +67,16 @@ public class UserLikePostRelationDaoTest : BaseDatabaseTestClass
             if (_postToWorkWith.PostId is null || _forumToWorkWirh.ForumId is null ||
                 _userToWorkWith.UserId is null) return;
 
-            var post = await DatabaseActions.GetEntityByField<PostsDao>("postID",
-                _postToWorkWith.PostId.ToString() ?? "");
+            var post = (await DatabaseActions.GetEntityByField<PostsDao>("postID",
+                _postToWorkWith.PostId.ToString() ?? "")).OrElseThrow();
             if (post != null) await DatabaseActions.Delete(post);
 
-            var forum = await DatabaseActions.GetEntityByField<ForumDao>("forumID",
-                _forumToWorkWirh.ForumId.ToString() ?? "");
+            var forum = (await DatabaseActions.GetEntityByField<ForumDao>("forumID",
+                _forumToWorkWirh.ForumId.ToString() ?? "")).OrElseThrow();
             if (forum != null) await DatabaseActions.Delete(forum);
 
-            var user = await DatabaseActions.GetEntityByField<UserDao>("userID",
-                _userToWorkWith.UserId.ToString() ?? "");
+            var user = (await DatabaseActions.GetEntityByField<UserDao>("userID",
+                _userToWorkWith.UserId.ToString() ?? "")).OrElseThrow();
             if (user != null) await DatabaseActions.Delete(user);
         }
         catch (DatabaseMissingItemException)
@@ -156,8 +156,8 @@ public class UserLikePostRelationDaoTest : BaseDatabaseTestClass
                     "Inserted relation ID should not be null");
             });
 
-            var relation = await DatabaseActions.GetEntityByField<UserLikePostRelationDao>("userLikePostRelationID",
-                insertedRelation.UserLikePostRelationId.ToString() ?? "");
+            var relation = (await DatabaseActions.GetEntityByField<UserLikePostRelationDao>("userLikePostRelationID",
+                insertedRelation.UserLikePostRelationId.ToString() ?? "")).OrElseThrow();
             Assert.Multiple(() =>
             {
                 Assert.That(relation, Is.Not.Null, "Retrieved relation should not be null");

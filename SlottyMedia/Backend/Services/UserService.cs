@@ -113,7 +113,7 @@ public class UserService : IUserService
         try
         {
             Logger.LogInfo($"Fetching user with ID {userId}");
-            var user = await _databaseActions.GetEntityByField<UserDao>("userID", userId.ToString());
+            var user = (await _databaseActions.GetEntityByField<UserDao>("userID", userId.ToString())).OrElseThrow();
             return new UserDto().Mapper(user);
         }
         catch (DatabaseMissingItemException ex)
@@ -211,12 +211,12 @@ public class UserService : IUserService
             else if (username is not null)
             {
                 Logger.LogInfo($"Attempting to retrieve user by username: {username}");
-                user = await _databaseActions.GetEntityByField<UserDao>("userName", username);
+                user = (await _databaseActions.GetEntityByField<UserDao>("userName", username)).OrElseThrow();
             }
             else if (email is not null)
             {
                 Logger.LogInfo($"Attempting to retrieve user by email: {email}");
-                user = await _databaseActions.GetEntityByField<UserDao>("email", email);
+                user = (await _databaseActions.GetEntityByField<UserDao>("email", email)).OrElseThrow();
             }
 
             if (user != null)
@@ -290,7 +290,7 @@ public class UserService : IUserService
             Logger.LogInfo($"Fetching user with ID {userId} and recent forums {recentForums}");
             var result = await _databaseActions.GetEntitieWithSelectorById<UserDao>(
                 x => new object[] { x.UserId!, x.UserName!, x.Description!, x.CreatedAt }, "userID", userId.ToString());
-            var user = new UserDto().Mapper(result);
+            var user = new UserDto().Mapper(result.OrElseThrow());
 
             Logger.LogInfo($"Fetching recent forums for user with ID {userId}");
             user.RecentForums = await _postService.GetPostsFromForum(userId, 0, recentForums);
@@ -362,7 +362,7 @@ public class UserService : IUserService
         {
             Logger.LogInfo($"Fetching user with ID {userId}");
             var user = await _databaseActions.GetEntityByField<UserDao>("userID", userId.ToString());
-            return user;
+            return user.OrElseThrow();
         }
         catch (DatabaseMissingItemException ex)
         {

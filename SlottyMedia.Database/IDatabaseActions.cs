@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Utils;
 using Supabase.Postgrest;
 using Supabase.Postgrest.Models;
 
@@ -41,7 +42,7 @@ public interface IDatabaseActions
     /// <param name="field">The field to search.</param>
     /// <param name="value">The value to search for.</param>
     /// <returns>Returns the entity from the database.</returns>
-    Task<T> GetEntityByField<T>(string field, string value) where T : BaseModel, new();
+    Task<Optional<T>> GetEntityByField<T>(string field, string value) where T : BaseModel, new();
 
     /// <summary>
     ///     Returns an entity with a selector from the database based on the given field and value.
@@ -51,7 +52,7 @@ public interface IDatabaseActions
     /// <param name="field">The field to search.</param>
     /// <param name="value">The value to search for.</param>
     /// <returns>Returns the entity from the database.</returns>
-    Task<T> GetEntitieWithSelectorById<T>(Expression<Func<T, object[]>> selector, string field, string value)
+    Task<Optional<T>> GetEntitieWithSelectorById<T>(Expression<Func<T, object[]>> selector, string field, string value)
         where T : BaseModel, new();
 
     /// <summary>

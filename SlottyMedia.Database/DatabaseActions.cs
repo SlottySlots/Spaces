@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Utils;
 using Supabase.Postgrest;
 using Supabase.Postgrest.Models;
 using Client = Supabase.Client;
@@ -187,45 +188,49 @@ public class DatabaseActions : IDatabaseActions
     ///     Thrown when a network error, argument null, invalid operation, timeout, task
     ///     cancellation, or unexpected error occurs.
     /// </exception>
-    public virtual async Task<T> GetEntityByField<T>(string field, string value) where T : BaseModel, new()
+    public virtual Task<Optional<T>> GetEntityByField<T>(string field, string value) where T : BaseModel, new()
     {
-        try
+        return Optional<T>.OfAsync(async () =>
         {
-            var result = await _supabaseClient.From<T>().Filter(field, Constants.Operator.Equals, value).Single();
-            if (result is null)
-                throw new DatabaseMissingItemException(
-                    $"The Entity with the Value {value} in the Field {field} in the " +
-                    $"Table {typeof(T)} could not be found in the database.");
-            return result;
-        }
-        catch (DatabaseMissingItemException)
-        {
-            throw;
-        }
-        catch (HttpRequestException ex)
-        {
-            throw new GeneralDatabaseException("A network error occurred while retrieving the entity.", ex);
-        }
-        catch (ArgumentNullException ex)
-        {
-            throw new GeneralDatabaseException("A required argument was null while retrieving the entity.", ex);
-        }
-        catch (InvalidOperationException ex)
-        {
-            throw new GeneralDatabaseException("An invalid operation occurred while retrieving the entity.", ex);
-        }
-        catch (TimeoutException ex)
-        {
-            throw new GeneralDatabaseException("A timeout occurred while retrieving the entity.", ex);
-        }
-        catch (TaskCanceledException ex)
-        {
-            throw new GeneralDatabaseException("The task was canceled while retrieving the entity.", ex);
-        }
-        catch (Exception ex)
-        {
-            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the entity.", ex);
-        }
+            try
+            {
+                var result = await _supabaseClient.From<T>().Filter(field, Constants.Operator.Equals, value).Single();
+                if (result is null)
+                    throw new DatabaseMissingItemException(
+                        $"The Entity with the Value {value} in the Field {field} in the " +
+                        $"Table {typeof(T)} could not be found in the database.");
+                return result;
+            }
+            catch (DatabaseMissingItemException)
+            {
+                throw;
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new GeneralDatabaseException("A network error occurred while retrieving the entity.", ex);
+            }
+            catch (ArgumentNullException ex)
+            {
+                throw new GeneralDatabaseException("A required argument was null while retrieving the entity.", ex);
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new GeneralDatabaseException("An invalid operation occurred while retrieving the entity.", ex);
+            }
+            catch (TimeoutException ex)
+            {
+                throw new GeneralDatabaseException("A timeout occurred while retrieving the entity.", ex);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw new GeneralDatabaseException("The task was canceled while retrieving the entity.", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new GeneralDatabaseException("An unexpected error occurred while retrieving the entity.", ex);
+            }
+        });
+        
     }
 
     /// <summary>
@@ -241,45 +246,48 @@ public class DatabaseActions : IDatabaseActions
     ///     Thrown when a network error, argument null, invalid operation, timeout, task
     ///     cancellation, or unexpected error occurs.
     /// </exception>
-    public async Task<T> GetEntitieWithSelectorById<T>(Expression<Func<T, object[]>> selector, string field,
+    public Task<Optional<T>> GetEntitieWithSelectorById<T>(Expression<Func<T, object[]>> selector, string field,
         string value) where T : BaseModel, new()
     {
-        try
+        return Optional<T>.OfAsync(async () =>
         {
-            var result = await _supabaseClient.From<T>().Filter(field, Constants.Operator.Equals, value)
-                .Select(selector).Single();
-            if (result is null)
-                throw new DatabaseMissingItemException("The Items could not be retrieved from the database.");
-            return result;
-        }
-        catch (DatabaseMissingItemException)
-        {
-            throw;
-        }
-        catch (HttpRequestException ex)
-        {
-            throw new GeneralDatabaseException("A network error occurred while retrieving the entity.", ex);
-        }
-        catch (ArgumentNullException ex)
-        {
-            throw new GeneralDatabaseException("A required argument was null while retrieving the entity.", ex);
-        }
-        catch (InvalidOperationException ex)
-        {
-            throw new GeneralDatabaseException("An invalid operation occurred while retrieving the entity.", ex);
-        }
-        catch (TimeoutException ex)
-        {
-            throw new GeneralDatabaseException("A timeout occurred while retrieving the entity.", ex);
-        }
-        catch (TaskCanceledException ex)
-        {
-            throw new GeneralDatabaseException("The task was canceled while retrieving the entity.", ex);
-        }
-        catch (Exception ex)
-        {
-            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the entity.", ex);
-        }
+            try
+            {
+                var result = await _supabaseClient.From<T>().Filter(field, Constants.Operator.Equals, value)
+                    .Select(selector).Single();
+                if (result is null)
+                    throw new DatabaseMissingItemException("The Items could not be retrieved from the database.");
+                return result;
+            }
+            catch (DatabaseMissingItemException)
+            {
+                throw;
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new GeneralDatabaseException("A network error occurred while retrieving the entity.", ex);
+            }
+            catch (ArgumentNullException ex)
+            {
+                throw new GeneralDatabaseException("A required argument was null while retrieving the entity.", ex);
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new GeneralDatabaseException("An invalid operation occurred while retrieving the entity.", ex);
+            }
+            catch (TimeoutException ex)
+            {
+                throw new GeneralDatabaseException("A timeout occurred while retrieving the entity.", ex);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw new GeneralDatabaseException("The task was canceled while retrieving the entity.", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new GeneralDatabaseException("An unexpected error occurred while retrieving the entity.", ex);
+            }
+        });
     }
 
     /// <summary>

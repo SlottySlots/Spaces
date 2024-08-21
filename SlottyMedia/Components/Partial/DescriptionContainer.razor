@@ -37,7 +37,7 @@ else
         if (emailOfUser != null)
         {
             ShowDescriptionText = !ShowDescriptionText;
-            var userDao = await DatabaseActions.GetEntityByField<UserDao>("email", emailOfUser);
+            var userDao = (await DatabaseActions.GetEntityByField<UserDao>("email", emailOfUser)).OrElseThrow();
             userDao.Description = DescriptionText;
             await DatabaseActions.Update(userDao);
         }

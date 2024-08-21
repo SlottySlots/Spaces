@@ -64,7 +64,7 @@ public class MainLayoutVmImpl : IMainLayoutVm
         var currentSession = _authService.GetCurrentSession();
         if (currentSession != null)
         {
-            var userDao = await _databaseActions.GetEntityByField<UserDao>("email", currentSession.User!.Email!);
+            var userDao = (await _databaseActions.GetEntityByField<UserDao>("email", currentSession.User!.Email!)).OrElseThrow();
             if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
             {
                 _logger.LogError(

@@ -72,7 +72,7 @@ public class SignupServiceImpl : ISignupService
         if (session == null)
             throw new InvalidOperationException(
                 "An unknown error occured in the Supabase client while attempting to perform a signup.");
-        var userRole = await _databaseActions.GetEntityByField<RoleDao>("role", "User");
+        var userRole = (await _databaseActions.GetEntityByField<RoleDao>("role", "User")).OrElseThrow();
         var roleId = userRole.RoleId.HasValue
             ? userRole.RoleId.Value
             : throw new NullReferenceException("RoleId not found!");
