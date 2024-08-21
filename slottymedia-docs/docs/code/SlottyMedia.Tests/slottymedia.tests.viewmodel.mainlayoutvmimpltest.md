@@ -48,12 +48,6 @@ public void RestoreSessionOnInit_NoSessionRestoredReturnsNull()
 public void SetUserInfo_SessionNotSetReturnsNull()
 ```
 
-### **SetUserInfo_CorruptUserDaoReturnsNull()**
-
-```csharp
-public void SetUserInfo_CorruptUserDaoReturnsNull()
-```
-
 ### **SetUserInfo_ReturnsUserInfoDto()**
 
 ```csharp

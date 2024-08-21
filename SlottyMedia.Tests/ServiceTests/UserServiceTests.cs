@@ -418,7 +418,7 @@ public class UserServiceTests
         // Arrange
         var userId = Guid.NewGuid();
         var expectedCount = 5;
-        _mockDatabaseActions.Setup(d => d.GetCountByField<UserDao>("userID", userId.ToString()))
+        _mockDatabaseActions.Setup(d => d.GetCountByField<FollowerUserRelationDao>("userIsFollowed", userId.ToString()))
             .ReturnsAsync(expectedCount);
 
         // Act
@@ -440,7 +440,7 @@ public class UserServiceTests
     {
         // Arrange
         var userId = Guid.NewGuid();
-        _mockDatabaseActions.Setup(d => d.GetCountByField<UserDao>("userID", userId.ToString()))
+        _mockDatabaseActions.Setup(d => d.GetCountByField<FollowerUserRelationDao>("userIsFollowed", userId.ToString()))
             .ThrowsAsync(new GeneralDatabaseException("Database error"));
 
         // Act & Assert
@@ -460,7 +460,7 @@ public class UserServiceTests
     {
         // Arrange
         var userId = Guid.NewGuid();
-        _mockDatabaseActions.Setup(d => d.GetCountByField<UserDao>("userID", userId.ToString()))
+        _mockDatabaseActions.Setup(d => d.GetCountByField<FollowerUserRelationDao>("userIsFollowed", userId.ToString()))
             .ThrowsAsync(new Exception("Unexpected error"));
 
         // Act & Assert
