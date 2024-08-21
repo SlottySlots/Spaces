@@ -5,10 +5,46 @@ Namespace: SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests
 Test class for the PostsDao model.
 
 ```csharp
-public class PostDtoTest
+public class PostDtoTest : SlottyMedia.Tests.DatabaseTests.BaseDatabaseTestClass
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [PostDtoTest](./slottymedia.tests.databasetests.databasemodelstests.postdtotest.md)
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [BaseDatabaseTestClass](./slottymedia.tests.databasetests.basedatabasetestclass.md) → [PostDtoTest](./slottymedia.tests.databasetests.databasemodelstests.postdtotest.md)
+
+## Properties
+
+### **UserId**
+
+The UserId of the User
+
+```csharp
+public Guid UserId { get; set; }
+```
+
+#### Property Value
+
+[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+### **DatabaseActions**
+
+The DatabaseActions Object
+
+```csharp
+public DatabaseActions DatabaseActions { get; set; }
+```
+
+#### Property Value
+
+DatabaseActions<br>
+
+### **UserToWorkWith**
+
+```csharp
+public UserDao UserToWorkWith { get; set; }
+```
+
+#### Property Value
+
+UserDao<br>
 
 ## Constructors
 

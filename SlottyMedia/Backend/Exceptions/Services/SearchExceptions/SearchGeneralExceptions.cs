@@ -5,7 +5,7 @@ namespace SlottyMedia.Backend.Exceptions.Services.SearchExceptions;
 /// <summary>
 ///     Represents a general exception that occurs in the Search service.
 /// </summary>
-public class SearchGeneralExceptions : BaseException
+public class SearchGeneralExceptions : BaseException<SearchGeneralExceptions>
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="SearchGeneralExceptions" /> class with a specified error message.

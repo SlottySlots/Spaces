@@ -11,13 +11,14 @@ namespace SlottyMedia.Backend.ViewModel;
 /// </summary>
 public class SignupFormVmImpl : ISignupFormVm
 {
-    private static readonly Logging Logger = Logging.Instance;
+    private static readonly Logging<SignupFormVmImpl> Logger = new();
 
     /// <summary>
     ///     Service used for signing up a user
     /// </summary>
     private readonly ISignupService _signupService;
 
+    private Logging<SignupFormVmImpl> logger = new();
 
     /// <summary>
     ///     Standard Constructor used for dependency injection
@@ -113,7 +114,7 @@ public class SignupFormVmImpl : ISignupFormVm
             EmailErrorMessage = "Email already in use";
             throw;
         }
-        catch
+        catch (Exception ex)
         {
             ServerErrorMessage = "An unknown error has occured. Please try again later.";
             throw;

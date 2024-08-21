@@ -7,13 +7,13 @@ public interface ISignInFormVm
 {
     /// <summary>The form's email address</summary>
     string? Email { get; set; }
-    
+
     /// <summary>An optional error message that is caused by the email address</summary>
     string? EmailErrorMessage { get; set; }
 
     /// <summary>The form's password</summary>
     string? Password { get; set; }
-    
+
     /// <summary>An optional error message that is caused by the password</summary>
     string? PasswordErrorMessage { get; set; }
 

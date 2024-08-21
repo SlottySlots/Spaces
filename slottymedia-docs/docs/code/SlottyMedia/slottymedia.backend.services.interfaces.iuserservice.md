@@ -46,12 +46,12 @@ The user's username
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 The queried user or null if no such user was found
 
-### **CreateUser(String, String, String, String)**
+### **CreateUser(String, String, String, Guid, String, String)**
 
 This method creates a new User object in the database and returns the created object.
 
 ```csharp
-Task<UserDto> CreateUser(string userId, string username, string description, string profilePicture)
+Task<UserDto> CreateUser(string userId, string username, string email, Guid roleId, string description, string profilePicture)
 ```
 
 #### Parameters
@@ -61,6 +61,10 @@ The UserID from the Authentication Service
 
 `username` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The Username, which the User set himself
+
+`email` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+`roleId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 `description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The Description about the User
@@ -192,8 +196,31 @@ Returns the UserDao object if found, otherwise null.
 
 #### Exceptions
 
-!:UserNotFoundException<br>
+[UserNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.usernotfoundexception.md)<br>
 Thrown when no user is found with the provided criteria.
 
-!:UserGeneralException<br>
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
 Thrown when a general database error occurs.
+
+### **GetCountOfUserFriends(Guid)**
+
+This method retrieves the count of friends for a given user from the database.
+
+```csharp
+Task<int> GetCountOfUserFriends(Guid userId)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the user whose friends count is to be retrieved.
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns the count of friends for the specified user.
+
+#### Exceptions
+
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
+Thrown when a general database error occurs while fetching the friends count.

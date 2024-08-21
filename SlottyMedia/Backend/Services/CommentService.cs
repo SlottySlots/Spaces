@@ -1,5 +1,5 @@
 ﻿using SlottyMedia.Backend.Dtos;
-using SlottyMedia.Backend.Exceptions.Services.PostExceptions;
+using SlottyMedia.Backend.Exceptions.Services.CommentExceptions;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
@@ -12,7 +12,7 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class CommentService
 {
-    private static readonly Logging Logger = Logging.Instance;
+    private static readonly Logging<CommentService> Logger = new();
     private readonly IDatabaseActions _databaseActions;
 
 

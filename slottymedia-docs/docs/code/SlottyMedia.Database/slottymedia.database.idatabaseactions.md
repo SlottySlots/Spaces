@@ -250,3 +250,35 @@ The value to search for.
 
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns true if the entity exists.
+
+### **GetCountByField&lt;T&gt;(String, String)**
+
+Retrieves the count of entities from the database by a specific field and value.
+
+```csharp
+Task<int> GetCountByField<T>(string field, string value)
+```
+
+#### Type Parameters
+
+`T`<br>
+The type of the entities to count.
+
+#### Parameters
+
+`field` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The field to filter by.
+
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The value to filter by.
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+The count of entities.
+
+#### Exceptions
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.

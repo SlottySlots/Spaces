@@ -3,9 +3,9 @@
 /// <summary>
 ///     This exception is the base exception for all exceptions in the application.
 /// </summary>
-public class BaseException : Exception
+public class BaseException<T> : Exception
 {
-    private static readonly Logging Logger = Logging.Instance;
+    private static readonly Logging<T> Logger = new();
 
     /// <summary>
     ///     The default constructor.

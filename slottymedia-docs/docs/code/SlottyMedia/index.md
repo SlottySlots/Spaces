@@ -24,19 +24,27 @@
 
 [UserAlreadySignedInException](./slottymedia.backend.exceptions.auth.useralreadysignedinexception.md)
 
+## SlottyMedia.Backend.Exceptions.Services.CommentExceptions
+
+[CommentGeneralException](./slottymedia.backend.exceptions.services.commentexceptions.commentgeneralexception.md)
+
+[CommentIudException](./slottymedia.backend.exceptions.services.commentexceptions.commentiudexception.md)
+
+## SlottyMedia.Backend.Exceptions.Services.ForumExceptions
+
+[ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)
+
+[ForumIudException](./slottymedia.backend.exceptions.services.forumexceptions.forumiudexception.md)
+
+## SlottyMedia.Backend.Exceptions.Services.LikeExceptions
+
+[LikeGeneralException](./slottymedia.backend.exceptions.services.likeexceptions.likegeneralexception.md)
+
+[LikeIudException](./slottymedia.backend.exceptions.services.likeexceptions.likeiudexception.md)
+
+[LikeNotFoundException](./slottymedia.backend.exceptions.services.likeexceptions.likenotfoundexception.md)
+
 ## SlottyMedia.Backend.Exceptions.Services.PostExceptions
-
-[CommentGeneralException](./slottymedia.backend.exceptions.services.postexceptions.commentgeneralexception.md)
-
-[CommentIudException](./slottymedia.backend.exceptions.services.postexceptions.commentiudexception.md)
-
-[ForumGeneralException](./slottymedia.backend.exceptions.services.postexceptions.forumgeneralexception.md)
-
-[ForumIudException](./slottymedia.backend.exceptions.services.postexceptions.forumiudexception.md)
-
-[LikeGeneralException](./slottymedia.backend.exceptions.services.postexceptions.likegeneralexception.md)
-
-[LikeIudException](./slottymedia.backend.exceptions.services.postexceptions.likeiudexception.md)
 
 [PostGeneralException](./slottymedia.backend.exceptions.services.postexceptions.postgeneralexception.md)
 
@@ -49,8 +57,6 @@
 [SearchGeneralExceptions](./slottymedia.backend.exceptions.services.searchexceptions.searchgeneralexceptions.md)
 
 ## SlottyMedia.Backend.Exceptions.Services.UserExceptions
-
-[LikeNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.likenotfoundexception.md)
 
 [UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)
 

@@ -11,9 +11,9 @@ namespace SlottyMedia.Tests.Viewmodel.auth;
 public class SignInFormVmImplTest
 {
     private Mock<AuthService> _authService;
-    private Mock<NavigationManager> _navigationManager;
     private Client _client;
     private Mock<ICookieService> _cookieServiceMock;
+    private Mock<NavigationManager> _navigationManager;
     private SignInFormVmImpl _service;
 
     [OneTimeSetUp]
@@ -40,7 +40,7 @@ public class SignInFormVmImplTest
     {
         _service.Email = email;
         _service.Password = password;
-        
+
         await _service.SubmitSignInForm();
         Assert.That(_service.EmailErrorMessage, Is.Not.Null);
         Assert.That(_service.EmailErrorMessage, Is.Not.Empty);
@@ -53,10 +53,9 @@ public class SignInFormVmImplTest
     {
         _service.Email = email;
         _service.Password = password;
-        
+
         await _service.SubmitSignInForm();
         Assert.That(_service.PasswordErrorMessage, Is.Not.Null);
         Assert.That(_service.PasswordErrorMessage, Is.Not.Empty);
     }
-    
 }

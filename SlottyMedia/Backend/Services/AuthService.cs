@@ -11,7 +11,7 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class AuthService : IAuthService
 {
-    private static readonly Logging Logger = Logging.Instance;
+    private static readonly Logging<AuthService> Logger = new();
     private readonly ICookieService _cookieService;
     private readonly Client _supabaseClient;
 
@@ -191,13 +191,13 @@ public class AuthService : IAuthService
         var session = _supabaseClient.Auth.CurrentSession;
         return session;
     }
+
     /// <summary>
-    /// This restores the session on initialization of the page.
+    ///     This restores the session on initialization of the page.
     /// </summary>
     public virtual async Task<Session?> RestoreSessionOnInit()
     {
         if (GetCurrentSession() == null)
-        {
             try
             {
                 var session = await RestoreSessionAsync();
@@ -207,7 +207,6 @@ public class AuthService : IAuthService
             {
                 Console.WriteLine($"Error: {ex.Message}");
             }
-        }
 
         return null;
     }

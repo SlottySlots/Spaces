@@ -5,10 +5,46 @@ Namespace: SlottyMedia.Tests.DatabaseTests
 Tests for DatabaseActions class.
 
 ```csharp
-public class DatabaseActionTests
+public class DatabaseActionTests : BaseDatabaseTestClass
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [DatabaseActionTests](./slottymedia.tests.databasetests.databaseactiontests.md)
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [BaseDatabaseTestClass](./slottymedia.tests.databasetests.basedatabasetestclass.md) → [DatabaseActionTests](./slottymedia.tests.databasetests.databaseactiontests.md)
+
+## Properties
+
+### **UserId**
+
+The UserId of the User
+
+```csharp
+public Guid UserId { get; set; }
+```
+
+#### Property Value
+
+[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+### **DatabaseActions**
+
+The DatabaseActions Object
+
+```csharp
+public DatabaseActions DatabaseActions { get; set; }
+```
+
+#### Property Value
+
+DatabaseActions<br>
+
+### **UserToWorkWith**
+
+```csharp
+public UserDao UserToWorkWith { get; set; }
+```
+
+#### Property Value
+
+UserDao<br>
 
 ## Constructors
 
@@ -19,12 +55,6 @@ public DatabaseActionTests()
 ```
 
 ## Methods
-
-### **OneTimeSetup()**
-
-```csharp
-public void OneTimeSetup()
-```
 
 ### **Setup()**
 
@@ -161,3 +191,27 @@ Tests the GetEntitiesWithSelectorById method of DatabaseActions for failure.
 ```csharp
 public void GetEntitiesWithSelectorById_Failure()
 ```
+
+### **GetCountByField()**
+
+Tests the GetCountByField method of DatabaseActions.
+
+```csharp
+public Task GetCountByField()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+#### Exceptions
+
+T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
+Thrown when there is a database-related error during the test execution.
+
+**Remarks:**
+
+This test ensures that the GetCountByField method correctly returns the count of users
+ with a specific field and value. It first inserts a user into the database to ensure
+ there is at least one entry, then retrieves the count of users with the specific field
+ and value, and asserts that the count is greater than 0.

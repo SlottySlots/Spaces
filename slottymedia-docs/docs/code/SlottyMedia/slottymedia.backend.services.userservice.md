@@ -31,13 +31,13 @@ This parameter is used to interact with the post service
 
 ## Methods
 
-### **CreateUser(String, String, String, String)**
+### **CreateUser(String, String, String, Guid, String, String)**
 
 This method creates a new User object in the database and returns the created object. This method does not check if
  the User already exists.
 
 ```csharp
-public Task<UserDto> CreateUser(string userId, string username, string description, string profilePicture)
+public Task<UserDto> CreateUser(string userId, string username, string email, Guid roleId, string description, string profilePicture)
 ```
 
 #### Parameters
@@ -47,6 +47,10 @@ The ID we get from the Supabase Authentication Service
 
 `username` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The Username of the User
+
+`email` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+`roleId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 `description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The Description of the User (optional)
@@ -224,3 +228,26 @@ The ID of the user
 
 [Task&lt;FriendsOfUserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns a FriendsOfUserDto object containing the list of friends.
+
+### **GetCountOfUserFriends(Guid)**
+
+This method retrieves the count of friends for a given user from the database.
+
+```csharp
+public Task<int> GetCountOfUserFriends(Guid userId)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the user whose friends count is to be retrieved.
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns the count of friends for the specified user.
+
+#### Exceptions
+
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
+Thrown when a general database error occurs while fetching the friends count.

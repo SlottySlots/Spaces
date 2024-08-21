@@ -1,14 +1,14 @@
-# BaseException
+# ForumIudException
 
-Namespace: SlottyMedia.LoggingProvider
+Namespace: SlottyMedia.Backend.Exceptions.Services.ForumExceptions
 
-This exception is the base exception for all exceptions in the application.
+Represents an exception that occurs during Insert, Update, or Delete operations in the Forum service.
 
 ```csharp
-public class BaseException : System.Exception, System.Runtime.Serialization.ISerializable
+public class ForumIudException : SlottyMedia.LoggingProvider.BaseException`1[[SlottyMedia.Backend.Exceptions.Services.ForumExceptions.ForumIudException, SlottyMedia, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [BaseException](./slottymedia.loggingprovider.baseexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException&lt;ForumIudException&gt; → [ForumIudException](./slottymedia.backend.exceptions.services.forumexceptions.forumiudexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties
@@ -95,50 +95,32 @@ public string StackTrace { get; }
 
 ## Constructors
 
-### **BaseException()**
+### **ForumIudException(String)**
 
-The default constructor.
-
-```csharp
-public BaseException()
-```
-
-### **BaseException(String)**
-
-The constructor with parameters.
+Initializes a new instance of the [ForumIudException](./slottymedia.backend.exceptions.services.forumexceptions.forumiudexception.md) class with a specified error message.
 
 ```csharp
-public BaseException(string message)
+public ForumIudException(string message)
 ```
 
 #### Parameters
 
 `message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The message that describes the error.
 
-### **BaseException(String, String)**
+### **ForumIudException(String, Exception)**
 
-The constructor with parameters.
-
-```csharp
-public BaseException(string propertyName, string message)
-```
-
-#### Parameters
-
-`propertyName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-### **BaseException(String, Exception)**
-
-The constructor with parameters.
+Initializes a new instance of the [ForumIudException](./slottymedia.backend.exceptions.services.forumexceptions.forumiudexception.md) class with a specified error message and a
+ reference to the inner exception that is the cause of this exception.
 
 ```csharp
-public BaseException(string message, Exception innerException)
+public ForumIudException(string message, Exception innerException)
 ```
 
 #### Parameters
 
 `message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The message that describes the error.
 
 `innerException` [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
+The exception that is the cause of the current exception.

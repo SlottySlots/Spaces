@@ -5,7 +5,7 @@ namespace SlottyMedia.Backend.Exceptions.Services.PostExceptions;
 /// <summary>
 ///     Represents an exception that occurs during Insert, Update, or Delete operations in the Post service.
 /// </summary>
-public class PostIudException : BaseException
+public class PostIudException : BaseException<PostIudException>
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="PostIudException" /> class with a specified error message.

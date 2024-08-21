@@ -1,6 +1,6 @@
 ﻿using Moq;
 using SlottyMedia.Backend.Dtos;
-using SlottyMedia.Backend.Exceptions.Services.PostExceptions;
+using SlottyMedia.Backend.Exceptions.Services.CommentExceptions;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;

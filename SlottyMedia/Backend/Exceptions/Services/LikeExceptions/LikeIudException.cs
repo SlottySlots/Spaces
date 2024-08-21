@@ -1,11 +1,12 @@
+using SlottyMedia.Backend.Exceptions.Services.ForumExceptions;
 using SlottyMedia.LoggingProvider;
 
-namespace SlottyMedia.Backend.Exceptions.Services.PostExceptions;
+namespace SlottyMedia.Backend.Exceptions.Services.LikeExceptions;
 
 /// <summary>
 ///     Represents an exception that occurs during Insert, Update, or Delete operations in the Forum service.
 /// </summary>
-public class LikeIudException : BaseException
+public class LikeIudException : BaseException<LikeIudException>
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="ForumIudException" /> class with a specified error message.

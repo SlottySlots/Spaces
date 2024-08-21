@@ -39,7 +39,7 @@
         <ProjectReference Include="..\SlottyMedia\SlottyMedia.csproj"/>
     </ItemGroup>
 
-    <Target Name="GenerateDocumentation" AfterTargets="Build;Run">
+    <Target Name="GenerateDocumentation" AfterTargets="Build;Run" Condition="'$(GITHUB_ACTIONS)' != 'true'">
         <Exec Command="dotnet tool run xmldoc2md ./bin/Debug/net8.0/SlottyMedia.Tests.dll ../slottymedia-docs/docs/code/SlottyMedia.Tests"/>
     </Target>
 

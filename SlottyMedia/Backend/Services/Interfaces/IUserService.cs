@@ -1,4 +1,5 @@
 using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 using SlottyMedia.Database.Daos;
 
 namespace SlottyMedia.Backend.Services.Interfaces;
@@ -30,7 +31,8 @@ public interface IUserService
     /// <param name="description">The Description about the User</param>
     /// <param name="profilePicture">The ProfilePicture</param>
     /// <returns>UserDto</returns>
-    Task<UserDto> CreateUser(string userId, string username, string? description = null, string? profilePicture = null);
+    Task<UserDto> CreateUser(string userId, string username, string email, Guid roleId, string? description = null,
+        string? profilePicture = null);
 
     /// <summary>
     ///     This method updates the given User object in the database and returns the updated object.
@@ -69,7 +71,7 @@ public interface IUserService
     Task<FriendsOfUserDto> GetFriends(Guid userId);
 
     /// <summary>
-    /// Retrieves a user from the database based on the provided criteria (ID, username, or email).
+    ///     Retrieves a user from the database based on the provided criteria (ID, username, or email).
     /// </summary>
     /// <param name="userID">The ID of the user to retrieve (optional).</param>
     /// <param name="username">The username of the user to retrieve (optional).</param>
@@ -78,5 +80,14 @@ public interface IUserService
     /// <exception cref="UserNotFoundException">Thrown when no user is found with the provided criteria.</exception>
     /// <exception cref="UserGeneralException">Thrown when a general database error occurs.</exception>
     public Task<UserDao> GetUserBy(Guid? userID = null, string? username = null, string? email = null);
-
+    
+    /// <summary>
+    ///     This method retrieves the count of friends for a given user from the database.
+    /// </summary>
+    /// <param name="userId">The ID of the user whose friends count is to be retrieved.</param>
+    /// <returns>Returns the count of friends for the specified user.</returns>
+    /// <exception cref="UserGeneralException">
+    ///     Thrown when a general database error occurs while fetching the friends count.
+    /// </exception>
+    public Task<int> GetCountOfUserFriends(Guid userId);
 }

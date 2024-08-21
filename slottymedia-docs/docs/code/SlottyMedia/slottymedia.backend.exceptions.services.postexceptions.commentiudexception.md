@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Backend.Exceptions.Services.PostExceptions
 Represents an exception that occurs during Insert, Update, or Delete operations in the Forum service.
 
 ```csharp
-public class CommentIudException : SlottyMedia.LoggingProvider.BaseException, System.Runtime.Serialization.ISerializable
+public class CommentIudException : SlottyMedia.LoggingProvider.BaseException`1[[SlottyMedia.Backend.Exceptions.Services.PostExceptions.CommentIudException, SlottyMedia, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException → [CommentIudException](./slottymedia.backend.exceptions.services.postexceptions.commentiudexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException&lt;CommentIudException&gt; → [CommentIudException](./slottymedia.backend.exceptions.services.postexceptions.commentiudexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties

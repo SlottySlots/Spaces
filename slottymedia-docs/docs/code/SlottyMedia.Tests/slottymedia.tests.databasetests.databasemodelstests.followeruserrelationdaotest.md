@@ -5,10 +5,46 @@ Namespace: SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests
 Test class for the FollowerUserRelationDao model.
 
 ```csharp
-public class FollowerUserRelationDaoTest
+public class FollowerUserRelationDaoTest : SlottyMedia.Tests.DatabaseTests.BaseDatabaseTestClass
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [FollowerUserRelationDaoTest](./slottymedia.tests.databasetests.databasemodelstests.followeruserrelationdaotest.md)
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [BaseDatabaseTestClass](./slottymedia.tests.databasetests.basedatabasetestclass.md) → [FollowerUserRelationDaoTest](./slottymedia.tests.databasetests.databasemodelstests.followeruserrelationdaotest.md)
+
+## Properties
+
+### **UserId**
+
+The UserId of the User
+
+```csharp
+public Guid UserId { get; set; }
+```
+
+#### Property Value
+
+[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+### **DatabaseActions**
+
+The DatabaseActions Object
+
+```csharp
+public DatabaseActions DatabaseActions { get; set; }
+```
+
+#### Property Value
+
+DatabaseActions<br>
+
+### **UserToWorkWith**
+
+```csharp
+public UserDao UserToWorkWith { get; set; }
+```
+
+#### Property Value
+
+UserDao<br>
 
 ## Constructors
 

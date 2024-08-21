@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Database.Exceptions
 /// This exception is thrown when an item is missing from the database.
 
 ```csharp
-public class DatabaseMissingItemException : SlottyMedia.LoggingProvider.BaseException, System.Runtime.Serialization.ISerializable
+public class DatabaseMissingItemException : SlottyMedia.LoggingProvider.BaseException`1[[SlottyMedia.Database.Exceptions.DatabaseMissingItemException, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException → [DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → BaseException&lt;DatabaseMissingItemException&gt; → [DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)<br>
 Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
 
 ## Properties

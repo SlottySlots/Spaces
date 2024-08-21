@@ -1,4 +1,5 @@
 using SlottyMedia.Database.Daos;
+using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.Dtos;
 
@@ -7,6 +8,8 @@ namespace SlottyMedia.Backend.Dtos;
 /// </summary>
 public class PostDto
 {
+    private static readonly Logging<PostDto> Logger = new();
+
     /// <summary>
     ///     Initializes a new instance of the <see cref="PostDto" /> class.
     /// </summary>
@@ -68,6 +71,8 @@ public class PostDto
     /// <returns></returns>
     public PostsDao Mapper()
     {
+        Logger.LogInfo($"Mapping PostDto to PostDao. Post: {this}");
+
         var postDao = new PostsDao
         {
             PostId = PostId,
@@ -87,6 +92,8 @@ public class PostDto
     /// <returns></returns>
     public PostDto Mapper(PostsDao post)
     {
+        Logger.LogInfo($"Mapping PostDao to PostDto. Post: {post}");
+
         PostId = post.PostId ?? Guid.Empty;
         Content = post.Content ?? string.Empty;
         Forum = post.Forum != null ? new ForumDto().Mapper(post.Forum) : new ForumDto();
