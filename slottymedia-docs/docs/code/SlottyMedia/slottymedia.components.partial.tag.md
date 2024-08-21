@@ -54,6 +54,18 @@ public string Class { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+### **OnClick**
+
+An event that is triggered when this tag is clicked.
+
+```csharp
+public EventCallback OnClick { get; set; }
+```
+
+#### Property Value
+
+EventCallback<br>
+
 ## Constructors
 
 ### **Tag()**

@@ -106,6 +106,8 @@
 
 [MainLayoutVmImpl](./slottymedia.backend.viewmodel.mainlayoutvmimpl.md)
 
+[PostSubmissionFormVmImpl](./slottymedia.backend.viewmodel.postsubmissionformvmimpl.md)
+
 [SignInFormVmImpl](./slottymedia.backend.viewmodel.signinformvmimpl.md)
 
 [SignupFormVmImpl](./slottymedia.backend.viewmodel.signupformvmimpl.md)
@@ -113,6 +115,8 @@
 ## SlottyMedia.Backend.ViewModel.Interfaces
 
 [IMainLayoutVm](./slottymedia.backend.viewmodel.interfaces.imainlayoutvm.md)
+
+[IPostSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.ipostsubmissionformvm.md)
 
 [ISignInFormVm](./slottymedia.backend.viewmodel.interfaces.isigninformvm.md)
 
@@ -152,6 +156,8 @@
 
 [HotButton](./slottymedia.components.partial.hotbutton.md)
 
+[InputArea](./slottymedia.components.partial.inputarea.md)
+
 [InputField](./slottymedia.components.partial.inputfield.md)
 
 [InputFieldIcon](./slottymedia.components.partial.inputfieldicon.md)
@@ -163,3 +169,7 @@
 [Post](./slottymedia.components.partial.post.md)
 
 [Tag](./slottymedia.components.partial.tag.md)
+
+## SlottyMedia.Components.Partial.MainLayout
+
+[PostSubmissionForm](./slottymedia.components.partial.mainlayout.postsubmissionform.md)
