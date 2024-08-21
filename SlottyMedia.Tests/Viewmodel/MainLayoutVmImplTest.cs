@@ -5,6 +5,7 @@ using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Utils;
 using Supabase.Gotrue;
 using Client = Supabase.Client;
 
@@ -72,8 +73,9 @@ public class MainLayoutVmImplTest
     {
         _authService.Setup(service => service.GetCurrentSession())
             .Returns(new Session { User = new User { Email = "test@test.de" } });
-        _dbActions.Setup(service => service.GetEntityByField<UserDao>("email", "test@test.de")).ReturnsAsync(new UserDao
-            { UserId = null, UserName = null, Description = null, Email = null });
+        _dbActions.Setup(service => service.GetEntityByField<UserDao>("email", "test@test.de")).ReturnsAsync(
+            Optional<UserDao>.Of(new UserDao { UserId = null, UserName = null, Description = null, Email = null })
+            );
         Assert.ThatAsync(async () => await _vm.SetUserInfo(), Is.Null);
         _authService.VerifyAll();
         _authService.VerifyNoOtherCalls();
@@ -89,7 +91,7 @@ public class MainLayoutVmImplTest
             UserId = Guid.NewGuid(), UserName = "Test", Description = "TestDesc", Email = "test@test.de",
             ProfilePic = "123"
         };
-        _dbActions.Setup(service => service.GetEntityByField<UserDao>("email", "test@test.de")).ReturnsAsync(userDao);
+        _dbActions.Setup(service => service.GetEntityByField<UserDao>("email", "test@test.de")).ReturnsAsync(Optional<UserDao>.Of(userDao));
         Assert.MultipleAsync(async () =>
             {
                 var serviceCall = await _vm.SetUserInfo();

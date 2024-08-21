@@ -43,8 +43,8 @@ public class FollowerUserRelationDaoTest : BaseDatabaseTestClass
         {
             if (_relationToWorkWith.FollowerUserRelationId is null) return;
 
-            var relation = await DatabaseActions.GetEntityByField<FollowerUserRelationDao>("followerUserRelationID",
-                _relationToWorkWith.FollowerUserRelationId.ToString() ?? "");
+            var relation = (await DatabaseActions.GetEntityByField<FollowerUserRelationDao>("followerUserRelationID",
+                _relationToWorkWith.FollowerUserRelationId.ToString() ?? "")).OrElseThrow();
             if (relation != null) await DatabaseActions.Delete(relation);
         }
         catch (DatabaseMissingItemException)
@@ -67,11 +67,11 @@ public class FollowerUserRelationDaoTest : BaseDatabaseTestClass
             if (_followerUser.UserId is null || _followedUser.UserId is null) return;
 
             var follower =
-                await DatabaseActions.GetEntityByField<UserDao>("userID", _followerUser.UserId.ToString() ?? "");
+                (await DatabaseActions.GetEntityByField<UserDao>("userID", _followerUser.UserId.ToString() ?? "")).OrElseThrow();
             if (follower != null) await DatabaseActions.Delete(follower);
 
             var followed =
-                await DatabaseActions.GetEntityByField<UserDao>("userID", _followedUser.UserId.ToString() ?? "");
+                (await DatabaseActions.GetEntityByField<UserDao>("userID", _followedUser.UserId.ToString() ?? "")).OrElseThrow();
             if (followed != null) await DatabaseActions.Delete(followed);
         }
         catch (Exception ex)
@@ -146,8 +146,8 @@ public class FollowerUserRelationDaoTest : BaseDatabaseTestClass
                     "Inserted relation should have a FollowerUserRelationId");
             });
 
-            var relation = await DatabaseActions.GetEntityByField<FollowerUserRelationDao>("followerUserRelationID",
-                insertedRelation.FollowerUserRelationId.ToString() ?? "");
+            var relation = (await DatabaseActions.GetEntityByField<FollowerUserRelationDao>("followerUserRelationID",
+                insertedRelation.FollowerUserRelationId.ToString() ?? "")).OrElseThrow();
             Assert.Multiple(() =>
             {
                 Assert.That(relation, Is.Not.Null, "Retrieved relation should not be null");

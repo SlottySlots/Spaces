@@ -4,6 +4,7 @@ using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Utils;
 using Supabase.Gotrue;
 using Client = Supabase.Client;
 
@@ -86,7 +87,7 @@ public class SignUpServiceTest
 
         var user = new UserDao(Guid.NewGuid(), roleDao.RoleId ?? Guid.Empty, _userName, _email, "TestPassword1!");
 
-        _dbActionMock.Setup(dbAction => dbAction.GetEntityByField<RoleDao>("role", "User")).ReturnsAsync(roleDao);
+        _dbActionMock.Setup(dbAction => dbAction.GetEntityByField<RoleDao>("role", "User")).ReturnsAsync(Optional<RoleDao>.Of(roleDao));
         _dbActionMock.Setup(dbAction =>
             dbAction.Insert(It.Is<UserDao>(u => u.UserName == _userName && u.Email == _email))).ReturnsAsync(user);
 

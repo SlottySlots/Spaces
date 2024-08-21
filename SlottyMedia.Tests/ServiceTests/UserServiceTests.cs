@@ -8,6 +8,7 @@ using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Tests.DatabaseTests;
+using SlottyMedia.Utils;
 
 namespace SlottyMedia.Tests.ServiceTests;
 
@@ -151,7 +152,7 @@ public class UserServiceTests
     {
         var userId = Guid.NewGuid();
         var user = new UserDao { UserId = userId };
-        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString())).ReturnsAsync(user);
+        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString())).ReturnsAsync(Optional<UserDao>.Of(user));
 
         var result = await _userService.GetUserById(userId);
 
@@ -252,7 +253,7 @@ public class UserServiceTests
     {
         var userId = Guid.NewGuid();
         var user = new UserDao { UserId = userId, ProfilePic = "123" };
-        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString())).ReturnsAsync(user);
+        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString())).ReturnsAsync(Optional<UserDao>.Of(user));
 
         var result = await _userService.GetProfilePic(userId);
 
@@ -306,7 +307,7 @@ public class UserServiceTests
 
         _mockDatabaseActions
             .Setup(x => x.GetEntitieWithSelectorById(It.IsAny<Expression<Func<UserDao, object[]>>>(), "userID",
-                userId.ToString())).ReturnsAsync(user);
+                userId.ToString())).ReturnsAsync(Optional<UserDao>.Of(user));
         _mockPostService
             .Setup(x => x.GetPostsFromForum(userId, 0, 5)).ReturnsAsync(forumName);
 

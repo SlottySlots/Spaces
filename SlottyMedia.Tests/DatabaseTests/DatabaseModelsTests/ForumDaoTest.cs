@@ -41,8 +41,8 @@ public class ForumDaoTest : BaseDatabaseTestClass
         {
             if (_forumToWorkWith.ForumId is null) return;
 
-            var forum = await DatabaseActions.GetEntityByField<ForumDao>("forumID",
-                _forumToWorkWith.ForumId.ToString() ?? "");
+            var forum = (await DatabaseActions.GetEntityByField<ForumDao>("forumID",
+                _forumToWorkWith.ForumId.ToString() ?? "")).OrElseThrow();
             if (forum != null) await DatabaseActions.Delete(forum);
         }
         catch (Exception ex)
@@ -61,8 +61,8 @@ public class ForumDaoTest : BaseDatabaseTestClass
         {
             if (_userToWorkWith.UserId is null) return;
 
-            var user = await DatabaseActions.GetEntityByField<UserDao>("userID",
-                _userToWorkWith.UserId.ToString() ?? "");
+            var user = (await DatabaseActions.GetEntityByField<UserDao>("userID",
+                _userToWorkWith.UserId.ToString() ?? "")).OrElseThrow();
             if (user != null) await DatabaseActions.Delete(user);
         }
         catch (DatabaseMissingItemException)
@@ -169,8 +169,8 @@ public class ForumDaoTest : BaseDatabaseTestClass
                 Assert.That(insertedForum.ForumId, Is.Not.Null, "Inserted forum should have a ForumId");
             });
 
-            var forum = await DatabaseActions.GetEntityByField<ForumDao>("forumID",
-                insertedForum.ForumId.ToString() ?? "");
+            var forum = (await DatabaseActions.GetEntityByField<ForumDao>("forumID",
+                insertedForum.ForumId.ToString() ?? "")).OrElseThrow();
             Assert.Multiple(() =>
             {
                 Assert.That(forum, Is.Not.Null, "Retrieved forum should not be null");

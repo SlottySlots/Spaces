@@ -45,8 +45,8 @@ public class PostDtoTest : BaseDatabaseTestClass
         {
             if (_postToWorkWith.PostId is null) return;
 
-            var post = await DatabaseActions.GetEntityByField<PostsDao>("postID",
-                _postToWorkWith.PostId.ToString() ?? "");
+            var post = (await DatabaseActions.GetEntityByField<PostsDao>("postID",
+                _postToWorkWith.PostId.ToString() ?? "")).OrElseThrow();
             if (post != null) await DatabaseActions.Delete(post);
         }
         catch (DatabaseMissingItemException)
@@ -68,12 +68,12 @@ public class PostDtoTest : BaseDatabaseTestClass
         {
             if (_forumToWorkWith.ForumId is null || _userToWorkWith.UserId is null) return;
 
-            var forum = await DatabaseActions.GetEntityByField<ForumDao>("forumID",
-                _forumToWorkWith.ForumId.ToString() ?? "");
+            var forum = (await DatabaseActions.GetEntityByField<ForumDao>("forumID",
+                _forumToWorkWith.ForumId.ToString() ?? "")).OrElseThrow();
             if (forum != null) await DatabaseActions.Delete(forum);
 
-            var user = await DatabaseActions.GetEntityByField<UserDao>("userID",
-                _userToWorkWith.UserId.ToString() ?? "");
+            var user = (await DatabaseActions.GetEntityByField<UserDao>("userID",
+                _userToWorkWith.UserId.ToString() ?? "")).OrElseThrow();
             if (user != null) await DatabaseActions.Delete(user);
         }
         catch (Exception ex)
@@ -175,8 +175,8 @@ public class PostDtoTest : BaseDatabaseTestClass
                 Assert.That(insertedPost.PostId, Is.Not.Null, "Inserted post's PostId should not be null");
             });
 
-            var post = await DatabaseActions.GetEntityByField<PostsDao>("postID",
-                insertedPost.PostId.ToString() ?? string.Empty);
+            var post = (await DatabaseActions.GetEntityByField<PostsDao>("postID",
+                insertedPost.PostId.ToString() ?? string.Empty)).OrElseThrow();
             Assert.Multiple(() =>
             {
                 Assert.That(post, Is.Not.Null, "Retrieved post should not be null");

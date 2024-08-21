@@ -23,8 +23,8 @@ public class DatabaseActionTests : BaseDatabaseTestClass
         {
             if (_userToWorkWith.UserId is null) return;
 
-            var user = await DatabaseActions.GetEntityByField<UserDao>("userID",
-                _userToWorkWith.UserId.ToString() ?? "");
+            var user = (await DatabaseActions.GetEntityByField<UserDao>("userID",
+                _userToWorkWith.UserId.ToString() ?? "")).OrElseThrow();
             if (user != null) await DatabaseActions.Delete(user);
         }
         catch (DatabaseMissingItemException)
@@ -155,7 +155,7 @@ public class DatabaseActionTests : BaseDatabaseTestClass
                 Assert.That(insertedUser.UserId, Is.Not.Null, "Inserted user's UserId should not be null");
             });
 
-            var user = await DatabaseActions.GetEntityByField<UserDao>("userID", insertedUser.UserId.ToString() ?? "");
+            var user = (await DatabaseActions.GetEntityByField<UserDao>("userID", insertedUser.UserId.ToString() ?? "")).OrElseThrow();
             Assert.Multiple(() =>
             {
                 Assert.That(user, Is.Not.Null, "Retrieved user should not be null");
@@ -206,8 +206,8 @@ public class DatabaseActionTests : BaseDatabaseTestClass
             });
 
             Expression<Func<UserDao, object[]>> selector = u => new object[] { u.UserId!, u.UserName!, u.Description! };
-            var user = await DatabaseActions.GetEntitieWithSelectorById(selector, "userID",
-                insertedUser.UserId.ToString() ?? "");
+            var user = (await DatabaseActions.GetEntitieWithSelectorById(selector, "userID",
+                insertedUser.UserId.ToString() ?? "")).OrElseThrow();
             Assert.Multiple(() =>
             {
                 Assert.That(user, Is.Not.Null, "Retrieved user should not be null");
