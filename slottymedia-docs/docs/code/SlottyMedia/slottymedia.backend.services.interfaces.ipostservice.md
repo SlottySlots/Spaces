@@ -46,6 +46,41 @@ The ID of the user.
 [Task&lt;List&lt;String&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of post titles.
 
+### **GetAllPosts(Int32, Int32)**
+
+Fetches all posts sorted by date in descending order. Fetches only a specified number of posts
+ on the specified page.
+
+```csharp
+Task<List<Guid>> GetAllPosts(int page, int pageSize)
+```
+
+#### Parameters
+
+`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The page to fetch (one-based)
+
+`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The number of posts per page (default is 10)
+
+#### Returns
+
+[Task&lt;List&lt;Guid&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetPostById(Guid)**
+
+```csharp
+Task<PostDto> GetPostById(Guid postId)
+```
+
+#### Parameters
+
+`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
 ### **InsertPost(String, Guid, Guid)**
 
 Inserts a new post into the database.

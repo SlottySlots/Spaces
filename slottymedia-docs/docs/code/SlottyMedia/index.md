@@ -110,6 +110,8 @@
 
 ## SlottyMedia.Backend.ViewModel
 
+[HomePageVmImpl](./slottymedia.backend.viewmodel.homepagevmimpl.md)
+
 [MainLayoutVmImpl](./slottymedia.backend.viewmodel.mainlayoutvmimpl.md)
 
 [PostSubmissionFormVmImpl](./slottymedia.backend.viewmodel.postsubmissionformvmimpl.md)
@@ -119,6 +121,8 @@
 [SignupFormVmImpl](./slottymedia.backend.viewmodel.signupformvmimpl.md)
 
 ## SlottyMedia.Backend.ViewModel.Interfaces
+
+[IHomePageVm](./slottymedia.backend.viewmodel.interfaces.ihomepagevm.md)
 
 [IMainLayoutVm](./slottymedia.backend.viewmodel.interfaces.imainlayoutvm.md)
 
