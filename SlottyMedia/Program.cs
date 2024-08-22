@@ -80,7 +80,7 @@ try
     builder.Services.AddScoped<ISignupFormVm, SignupFormVmImpl>();
     builder.Services.AddScoped<ISignInFormVm, SignInFormVmImpl>();
     builder.Services.AddScoped<IMainLayoutVm, MainLayoutVmImpl>();
-
+    builder.Services.AddScoped<IHomePageVm, HomePageVmImpl>();
 
     var app = builder.Build();
 
