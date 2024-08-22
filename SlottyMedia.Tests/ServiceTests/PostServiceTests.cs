@@ -7,6 +7,7 @@ using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using Supabase.Postgrest;
+using Client = Supabase.Client;
 
 namespace SlottyMedia.Tests.ServiceTests;
 
@@ -23,7 +24,8 @@ public class PostServiceTests
     public void Setup()
     {
         _mockDatabaseActions = new Mock<IDatabaseActions>();
-        _postService = new PostService(_mockDatabaseActions.Object);
+        _supabaseClient = new Mock<Client>();
+        _postService = new PostService(_mockDatabaseActions.Object, _supabaseClient.Object);
     }
 
     /// <summary>
@@ -36,6 +38,7 @@ public class PostServiceTests
     }
 
     private Mock<IDatabaseActions> _mockDatabaseActions;
+    private Mock<Client> _supabaseClient;
     private PostService _postService;
 
     /// <summary>
