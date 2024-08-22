@@ -69,6 +69,8 @@ The number of posts per page (default is 10)
 
 ### **GetPostById(Guid)**
 
+Attempts to fetch a post by ID. Returns null if such a post could not be found.
+
 ```csharp
 Task<PostDto> GetPostById(Guid postId)
 ```
@@ -76,10 +78,12 @@ Task<PostDto> GetPostById(Guid postId)
 #### Parameters
 
 `postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The post's ID
 
 #### Returns
 
 [Task&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+The post or null if not found
 
 ### **InsertPost(String, Guid, Guid)**
 

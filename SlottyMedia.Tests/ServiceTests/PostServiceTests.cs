@@ -7,7 +7,6 @@ using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using Supabase.Postgrest;
-using Client = Supabase.Client;
 
 namespace SlottyMedia.Tests.ServiceTests;
 
@@ -24,8 +23,7 @@ public class PostServiceTests
     public void Setup()
     {
         _mockDatabaseActions = new Mock<IDatabaseActions>();
-        _supabaseClient = new Mock<Client>();
-        _postService = new PostService(_mockDatabaseActions.Object, _supabaseClient.Object);
+        _postService = new PostService(_mockDatabaseActions.Object, InitializeSupabaseClient.GetSupabaseClient());
     }
 
     /// <summary>
@@ -38,7 +36,6 @@ public class PostServiceTests
     }
 
     private Mock<IDatabaseActions> _mockDatabaseActions;
-    private Mock<Client> _supabaseClient;
     private PostService _postService;
 
     /// <summary>
@@ -258,7 +255,7 @@ public class PostServiceTests
 
         _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<PostsDao, object[]>>>(),
                 "creator_userID", userId.ToString(), 0, 10,
-                tuple))!
+                tuple))
             .ReturnsAsync(posts);
 
         var result = await _postService.GetPostsFromForum(userId, 0, 10);

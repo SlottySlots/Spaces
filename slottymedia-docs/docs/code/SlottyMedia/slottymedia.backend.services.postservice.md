@@ -232,3 +232,17 @@ public Task<PostDto> GetPostById(Guid postId)
 #### Returns
 
 [Task&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetForumCountByUserId(Guid)**
+
+```csharp
+public Task<int> GetForumCountByUserId(Guid userId)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
