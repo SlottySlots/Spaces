@@ -138,6 +138,10 @@
 
 [MainLayout](./slottymedia.components.layout.mainlayout.md)
 
+[SpaceLayout](./slottymedia.components.layout.spacelayout.md)
+
+[SpacesLayout](./slottymedia.components.layout.spaceslayout.md)
+
 ## SlottyMedia.Components.Pages
 
 [Home](./slottymedia.components.pages.home.md)
@@ -145,6 +149,8 @@
 [Login](./slottymedia.components.pages.login.md)
 
 [Register](./slottymedia.components.pages.register.md)
+
+[Spaces](./slottymedia.components.pages.spaces.md)
 
 ## SlottyMedia.Components.Partial
 

@@ -218,7 +218,22 @@
 
         <!-- main content (center) -->
         <div class="h-full col-span-3">
-            @Body
+            <div class="h-full bg-[#FEFDFE] border-l border-athens-gray">
+                <!-- Space#1 -->
+                <Card class="min-h-[150px] mt-20 mx-7 flex flex-col items-center">
+                    <h3 class="font-semibold text-lg">
+                        SpaceNo1
+                    </h3>
+                </Card>
+
+                <!-- Space#2 -->
+                <Card class="min-h-[150px] mt-20 mx-7 flex flex-col items-center">
+                    <h3 class="font-semibold text-lg">
+                        SpaceNo2
+                    </h3>
+                </Card>
+            </div>
+            
         </div>
 
         <!-- friends bar on the right -->
@@ -228,26 +243,25 @@
             <Card Class="min-h-[250px] mt-20 mx-7 flex flex-col items-center">
                 @if (!AuthService.IsAuthenticated())
                 {
-                <!-- title -->
-                <h3 class="font-semibold text-lg">
-                    Friends
-                </h3>
+                    <!-- title -->
+                    <h3 class="font-semibold text-lg">
+                        Friends
+                    </h3>
 
-                <!-- no friends :( -->
-                <div class="grow flex flex-col justify-center items-center">
-                    <span>So empty here...</span>
-                    <span>Sign in to see your friends!</span>
-                </div>
+                    <!-- no friends :( -->
+                    <div class="grow flex flex-col justify-center items-center">
+                        <span>So empty here...</span>
+                        <span>Sign in to see your friends!</span>
+                    </div>
                 }
                 else
                 {
-                <!-- title -->
-                <h3 class="font-semibold text-lg">
-                    Friends
-                </h3>
+                    <!-- title -->
+                    <h3 class="font-semibold text-lg">
+                        Friends
+                    </h3>
                 }
             </Card>
-            
 
             <!-- spaces card -->
             <Card Class="min-h-[250px] mt-20 mx-7 flex flex-col items-center">

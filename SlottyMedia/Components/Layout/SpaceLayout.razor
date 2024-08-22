@@ -213,98 +213,21 @@
 
     </div>
 
-    <!-- container for main content, friends, spaces section -->
+    <!-- container for main content -->
     <div class="h-full grid grid-cols-4">
 
         <!-- main content (center) -->
         <div class="h-full col-span-3">
+            <h4 class="text-xl font-semibold">
+                Welcome
+            </h4>
+            
             @Body
-        </div>
-
-        <!-- friends bar on the right -->
-        <div class="h-full bg-[#FEFDFE] border-l border-athens-gray">
-
-            <!-- friends card -->
-            <Card Class="min-h-[250px] mt-20 mx-7 flex flex-col items-center">
-                @if (!AuthService.IsAuthenticated())
-                {
-                <!-- title -->
-                <h3 class="font-semibold text-lg">
-                    Friends
-                </h3>
-
-                <!-- no friends :( -->
-                <div class="grow flex flex-col justify-center items-center">
-                    <span>So empty here...</span>
-                    <span>Sign in to see your friends!</span>
-                </div>
-                }
-                else
-                {
-                <!-- title -->
-                <h3 class="font-semibold text-lg">
-                    Friends
-                </h3>
-                }
-            </Card>
             
-
-            <!-- spaces card -->
-            <Card Class="min-h-[250px] mt-20 mx-7 flex flex-col items-center">
-                
-                @if (!AuthService.IsAuthenticated())
-                {
-                  
-                    <!-- title -->
-                    <h3 class="font-semibold text-lg">
-                        Spaces
-                    </h3>
-
-                    <!-- trending spaces -->
-                    <div class="w-full border-b border-athens-gray my-3">
-                        <span h3 class="text-sm font-medium text-center text-cadet-gray w-fit">Trending</span>
-                    </div>
-                
-                    <!-- recent spaces -->
-                    <div class="w-full border-b border-athens-gray my-3">
-                        <span h3 class="text-sm font-medium text-center text-cadet-gray w-fit">Recent</span>
-                    </div>
-                    
-                    <!-- no (recent) spaces :( -->
-                    <div class="grow flex flex-col justify-center items-center">
-                        <span>So empty here...</span>
-                        <span>Sign in to see your</span>
-                        <span>recent spaces!</span>
-                    </div>
-                }
-                else
-                {
-                    <!-- title -->
-                    <h3 class="font-semibold text-lg">
-                        Spaces
-                    </h3>
-
-                    <!-- trending spaces -->
-                    <div class="w-full border-b border-athens-gray my-3">
-                        <span h3 class="text-sm font-medium text-center text-cadet-gray w-fit">Trending</span>
-                    </div>
-                
-                    <!-- recent spaces -->
-                    <div class="w-full border-b border-athens-gray my-3">
-                        <span h3 class="text-sm font-medium text-center text-cadet-gray w-fit">Recent</span>
-                    </div>
-                    
-                    <a href="/spaces" class="self-start mb-3 text-sm text-fandango underline duration-500 hover:text-crayola-orange">
-                        View all
-                    </a>
-                    
-                }
-                
-                
-            </Card>
+            
             
         </div>
-
+        
     </div>
 
 </div>
