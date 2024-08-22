@@ -1,8 +1,10 @@
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.IdentityModel.Tokens;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.LoggingProvider;
+using Supabase.Gotrue.Exceptions;
 
 namespace SlottyMedia.Backend.ViewModel;
 
@@ -74,8 +76,24 @@ public class SignInFormVmImpl : ISignInFormVm
 
             // TODO display error message when password was invalid! This is urgent!
         }
+        catch(GotrueException ex)
+        {
+            var message = ex.Message;
+            Regex regex = new Regex("\"error_description\"\\s*:\\s*\"([^\"]*)\"");
+            var errorDescription = regex.Match(message);
+            if (errorDescription.Success && errorDescription.Groups[1].Value == "Invalid login credentials")
+            {
+                ServerErrorMessage = "Provided credentials were invalid!";
+            }
+            else
+            {
+                ServerErrorMessage = "An unknown error occurred. Try again later."; 
+            }
+            return;
+        }
         catch
         {
+            
             ServerErrorMessage = "An unknown error occurred. Try again later.";
             return;
         }

@@ -63,4 +63,7 @@ public interface IPostService
     ///     successful.
     /// </returns>
     Task<bool> DeletePost(PostDto post);
+
+    public Task<int> GetForumCountByUserId(Guid userId);
+
 }

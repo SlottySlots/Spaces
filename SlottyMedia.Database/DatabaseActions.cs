@@ -557,4 +557,38 @@ public class DatabaseActions : IDatabaseActions
             throw new GeneralDatabaseException("An unexpected error occurred while retrieving the count.", ex);
         }
     }
+    
+    public async Task<int> GetCountForUserForums(string userID)
+    {
+        try
+        {
+            // Call the RPC function with the userId parameter
+            var result = await _supabaseClient.Rpc<int>("get_post_count_by_user", new Dictionary<string, object>(){ {"user_id" , userID }});
+            return result;
+        }
+        catch (HttpRequestException ex)
+        {
+            throw new GeneralDatabaseException("A network error occurred while retrieving the count.", ex);
+        }
+        catch (ArgumentNullException ex)
+        {
+            throw new GeneralDatabaseException("A required argument was null while retrieving the count.", ex);
+        }
+        catch (InvalidOperationException ex)
+        {
+            throw new GeneralDatabaseException("An invalid operation occurred while retrieving the count.", ex);
+        }
+        catch (TimeoutException ex)
+        {
+            throw new GeneralDatabaseException("A timeout occurred while retrieving the count.", ex);
+        }
+        catch (TaskCanceledException ex)
+        {
+            throw new GeneralDatabaseException("The task was canceled while retrieving the count.", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the count.", ex);
+        }
+    }
 }
