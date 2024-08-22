@@ -23,6 +23,22 @@ public interface IPostService
     public Task<List<string>> GetPostsFromForum(Guid userId, int startOfSet, int endOfSet);
 
     /// <summary>
+    /// Fetches all posts sorted by date in descending order. Fetches only a specified number of posts
+    /// on the specified page.
+    /// </summary>
+    /// <param name="page">The page to fetch (one-based)</param>
+    /// <param name="pageSize">The number of posts per page (default is 10)</param>
+    /// <returns></returns>
+    public Task<List<Guid>> GetAllPosts(int page, int pageSize = 10);
+
+    /// <summary>
+    /// Attempts to fetch a post by ID. Returns null if such a post could not be found.
+    /// </summary>
+    /// <param name="postId">The post's ID</param>
+    /// <returns>The post or null if not found</returns>
+    public Task<PostDto?> GetPostById(Guid postId);
+
+    /// <summary>
     ///     Inserts a new post into the database.
     /// </summary>
     /// <param name="content">The content of the post</param>

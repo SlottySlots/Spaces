@@ -16,14 +16,17 @@ public class PostService : IPostService
 {
     private static readonly Logging<PostService> Logger = new();
 
+    private readonly Supabase.Client _supabaseClient;
+
     /// <summary>
     ///     Initializes a new instance of the <see cref="PostService" /> class.
     /// </summary>
     /// <param name="databaseActions">The database actions interface.</param>
-    public PostService(IDatabaseActions databaseActions)
+    public PostService(IDatabaseActions databaseActions, Supabase.Client supabaseClient)
     {
         Logger.LogInfo("PostService initialized");
         DatabaseActions = databaseActions;
+        _supabaseClient = supabaseClient;
     }
 
     /// <summary>
@@ -301,6 +304,33 @@ public class PostService : IPostService
                 $"An error occurred while fetching the posts. FormID: {forumId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
                 ex);
         }
+    }
+
+    /// <inheritdoc />
+    public async Task<List<Guid>> GetAllPosts(int page, int pageSize)
+    {
+        var query = await _supabaseClient
+            .From<PostsDao>()
+            .Range((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
+            .Order("created_at", Constants.Ordering.Descending)
+            .Get();
+        var daoList = query.Models;
+        var result =
+            from dao in daoList
+            where dao.PostId is not null
+            select dao.PostId;
+        return result.OfType<Guid>().ToList();
+    }
+
+    public async Task<PostDto?> GetPostById(Guid postId)
+    {
+        var query = await _supabaseClient
+            .From<PostsDao>()
+            .Where(post => post.PostId == postId)
+            .Get();
+        if (query.Model is null)
+            return null;
+        return new PostDto().Mapper(query.Model);
     }
 
     /// <summary>
