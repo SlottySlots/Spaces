@@ -313,7 +313,7 @@ public class PostService : IPostService
             var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
                 x => new object[] { x.PostId!, x.Content!, x.CreatedAt, x.UserId!, x.ForumId! },
                 new List<(string, Constants.Operator, string)>(),
-                page * pageSize,
+                (page - 1) * pageSize + pageSize,
                 (page - 1) * pageSize,
                 ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
             );
