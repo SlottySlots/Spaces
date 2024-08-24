@@ -27,7 +27,7 @@ public class LikeService : ILikeService
         _databaseActions = databaseActions;
     }
 
-    //<inheritdoc />
+    ///<inheritdoc />
     public async Task<bool> InsertLike(Guid userId, Guid postId)
     {
         try

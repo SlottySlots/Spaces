@@ -148,6 +148,8 @@ A task that represents the asynchronous operation. The task result indicates whe
 
 ### **GetForumCountByUserId(Guid)**
 
+This method fetches the number of forums the user has created posts in.
+
 ```csharp
 Task<int> GetForumCountByUserId(Guid userId)
 ```

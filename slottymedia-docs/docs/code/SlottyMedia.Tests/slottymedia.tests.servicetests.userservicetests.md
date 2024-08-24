@@ -288,6 +288,8 @@ This test ensures that the GetCountOfUserFriends method throws a UserGeneralExce
 
 ### **GetCountOfUserSpaces()**
 
+Tests if GetCountOfUserSpaces method returns the correct count of user spaces.
+
 ```csharp
 public Task GetCountOfUserSpaces()
 ```

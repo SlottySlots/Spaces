@@ -313,6 +313,7 @@ public class PostService : IPostService
         return posts.Select(post => new PostDto().Mapper(post)).ToList();
     }
     
+    /// <inheritdoc />
     public async Task<int> GetForumCountByUserId(Guid userId)
 {
     try

@@ -154,7 +154,13 @@ public interface IDatabaseActions
     /// </exception>
     public Task<int> GetCountByField<T>(string field, string value) where T : BaseModel, new();
 
-    public Task<int> GetCountForUserForums(string userID);
+    /// <summary>
+    /// This method retrieves the count of Forums for a specific user.
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    /// <exception cref="GeneralDatabaseException"></exception>
+    public Task<int> GetCountForUserForums(string userId);
 
 
 }

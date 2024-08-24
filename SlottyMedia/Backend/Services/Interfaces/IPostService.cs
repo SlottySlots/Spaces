@@ -64,6 +64,11 @@ public interface IPostService
     /// </returns>
     Task<bool> DeletePost(PostDto post);
     
+    /// <summary>
+    /// This method fetches the number of forums the user has created posts in.
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
     public Task<int> GetForumCountByUserId(Guid userId);
 
 }

@@ -450,12 +450,13 @@ public class DatabaseActions : IDatabaseActions
         }
     }
     
-    public async Task<int> GetCountForUserForums(string userID)
+    /// <inheritdoc />
+    public async Task<int> GetCountForUserForums(string userId)
     {
         try
         {
             // Call the RPC function with the userId parameter
-            var result = await _supabaseClient.Rpc<int>("get_post_count_by_user", new Dictionary<string, object>(){ {"user_id" , userID }});
+            var result = await _supabaseClient.Rpc<int>("get_post_count_by_user", new Dictionary<string, object>(){ {"user_id" , userId }});
             return result;
         }
         catch (HttpRequestException ex)

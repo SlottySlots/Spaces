@@ -339,14 +339,20 @@ Thrown when a network error, argument null, invalid operation, timeout, task
 
 ### **GetCountForUserForums(String)**
 
+This method retrieves the count of Forums for a specific user.
+
 ```csharp
-Task<int> GetCountForUserForums(string userID)
+Task<int> GetCountForUserForums(string userId)
 ```
 
 #### Parameters
 
-`userID` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+`userId` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 #### Returns
 
 [Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+#### Exceptions
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>

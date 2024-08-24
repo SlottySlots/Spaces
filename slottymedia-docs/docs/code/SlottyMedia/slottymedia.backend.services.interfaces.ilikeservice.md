@@ -29,7 +29,8 @@ The ID of the post to be liked.
 #### Returns
 
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains a boolean indicating whether the like was successfully inserted.
+A task that represents the asynchronous operation. The task result contains a boolean indicating whether the
+ like was successfully inserted.
 
 ### **DeleteLike(Guid, Guid)**
 
@@ -50,7 +51,8 @@ The ID of the post to be unliked.
 #### Returns
 
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains a boolean indicating whether the like was successfully deleted.
+A task that represents the asynchronous operation. The task result contains a boolean indicating whether the
+ like was successfully deleted.
 
 ### **GetLikesForPost(Guid)**
 
@@ -68,4 +70,5 @@ The ID of the post for which to retrieve likes.
 #### Returns
 
 [Task&lt;List&lt;Guid&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains a list of user IDs who liked the post.
+A task that represents the asynchronous operation. The task result contains a list of user IDs who liked the
+ post.
