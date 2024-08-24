@@ -27,12 +27,12 @@ IDatabaseActions<br>
 
 ## Constructors
 
-### **PostService(IDatabaseActions)**
+### **PostService(IDatabaseActions, Client)**
 
 Initializes a new instance of the [PostService](./slottymedia.backend.services.postservice.md) class.
 
 ```csharp
-public PostService(IDatabaseActions databaseActions)
+public PostService(IDatabaseActions databaseActions, Client supabaseClient)
 ```
 
 #### Parameters
@@ -40,20 +40,19 @@ public PostService(IDatabaseActions databaseActions)
 `databaseActions` IDatabaseActions<br>
 The database actions interface.
 
+`supabaseClient` Client<br>
+
 ## Methods
 
-### **InsertPost(String, String, Guid, Guid)**
+### **InsertPost(String, Guid, Guid)**
 
 Inserts a new post into the database.
 
 ```csharp
-public Task<PostDto> InsertPost(string title, string content, Guid creatorUserId, Guid forumId)
+public Task<PostDto> InsertPost(string content, Guid creatorUserId, Guid forumId)
 ```
 
 #### Parameters
-
-`title` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The title of the post.
 
 `content` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The content of the post.
@@ -62,7 +61,6 @@ The content of the post.
 The ID of the user who created the post.
 
 `forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The ID of the forum where the post is created.
 
 #### Returns
 
@@ -204,6 +202,36 @@ The ending index of the set.
 
 [Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of PostDto objects.
+
+### **GetAllPosts(Int32, Int32)**
+
+```csharp
+public Task<List<Guid>> GetAllPosts(int page, int pageSize)
+```
+
+#### Parameters
+
+`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+#### Returns
+
+[Task&lt;List&lt;Guid&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetPostById(Guid)**
+
+```csharp
+public Task<PostDto> GetPostById(Guid postId)
+```
+
+#### Parameters
+
+`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **GetForumCountByUserId(Guid)**
 

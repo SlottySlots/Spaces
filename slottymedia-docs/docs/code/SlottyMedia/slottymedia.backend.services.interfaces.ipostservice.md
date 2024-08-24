@@ -46,18 +46,54 @@ The ID of the user.
 [Task&lt;List&lt;String&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of post titles.
 
-### **InsertPost(String, String, Guid, Guid)**
+### **GetAllPosts(Int32, Int32)**
 
-Inserts a new post into the database.
+Fetches all posts sorted by date in descending order. Fetches only a specified number of posts
+ on the specified page.
 
 ```csharp
-Task<PostDto> InsertPost(string title, string content, Guid creatorUserId, Guid forumId)
+Task<List<Guid>> GetAllPosts(int page, int pageSize)
 ```
 
 #### Parameters
 
-`title` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The title of the post.
+`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The page to fetch (one-based)
+
+`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The number of posts per page (default is 10)
+
+#### Returns
+
+[Task&lt;List&lt;Guid&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetPostById(Guid)**
+
+Attempts to fetch a post by ID. Returns null if such a post could not be found.
+
+```csharp
+Task<PostDto> GetPostById(Guid postId)
+```
+
+#### Parameters
+
+`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The post's ID
+
+#### Returns
+
+[Task&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+The post or null if not found
+
+### **InsertPost(String, Guid, Guid)**
+
+Inserts a new post into the database.
+
+```csharp
+Task<PostDto> InsertPost(string content, Guid creatorUserId, Guid forumId)
+```
+
+#### Parameters
 
 `content` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The content of the post
@@ -66,7 +102,7 @@ The content of the post
 The UserId who created the post
 
 `forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The forum in which the post was posted
+The ID of the forum the post should belong to
 
 #### Returns
 

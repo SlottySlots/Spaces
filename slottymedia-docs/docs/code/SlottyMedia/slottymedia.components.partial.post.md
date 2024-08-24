@@ -9,6 +9,18 @@ public class Post : Microsoft.AspNetCore.Components.ComponentBase, Microsoft.Asp
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → ComponentBase → [Post](./slottymedia.components.partial.post.md)<br>
 Implements IComponent, IHandleEvent, IHandleAfterRender
 
+## Properties
+
+### **Dto**
+
+```csharp
+public PostDto Dto { get; set; }
+```
+
+#### Property Value
+
+[PostDto](./slottymedia.backend.dtos.postdto.md)<br>
+
 ## Constructors
 
 ### **Post()**
@@ -28,3 +40,13 @@ protected void BuildRenderTree(RenderTreeBuilder __builder)
 #### Parameters
 
 `__builder` RenderTreeBuilder<br>
+
+### **OnParametersSetAsync()**
+
+```csharp
+protected Task OnParametersSetAsync()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
