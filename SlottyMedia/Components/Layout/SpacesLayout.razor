@@ -5,6 +5,7 @@
 @inherits LayoutComponentBase
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
+@inject ISpacesVm SpacesVm
 
 <div class="w-screen h-screen grid grid-cols-5">
 
@@ -213,6 +214,7 @@
 
     </div>
 
+
     <!-- container for main content, friends, spaces section -->
     <div class="h-full grid grid-cols-4">
 
@@ -222,7 +224,7 @@
                 <!-- Space#1 -->
                 <Card class="min-h-[150px] mt-20 mx-7 flex flex-col items-center">
                     <h3 class="font-semibold text-lg">
-                        SpaceNo1
+                           SpaceNo1   
                     </h3>
                 </Card>
 

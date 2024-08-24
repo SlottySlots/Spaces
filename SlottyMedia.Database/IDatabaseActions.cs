@@ -116,9 +116,11 @@ public interface IDatabaseActions
     ///     Thrown when a network error, argument null, invalid operation, timeout, task
     ///     cancellation, or unexpected error occurs.
     /// </exception>
+    
     public Task<int> GetCountByField<T>(string field, string value) where T : BaseModel, new();
 
     public Task<int> GetCountForUserForums(string userID);
 
-
+    public Task<int> GetTotalForumCount(string forumID);
+    
 }

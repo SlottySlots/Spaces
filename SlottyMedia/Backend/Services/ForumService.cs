@@ -97,4 +97,34 @@ public class ForumService : IForumService
             throw new ForumGeneralException($"An error occurred while deleting the forum. Forum: {forum}", ex);
         }
     }
+    
+    /// <summary>
+    ///     Retrieves all forums from the database.
+    /// </summary>
+    /// <returns>A list of ForumDto objects representing all forums.</returns>
+    public async Task<List<ForumDto>> GetForums()
+    {
+        try
+        {
+            Logger.LogDebug("Retrieving all forums from the database.");
+            
+            var forumDaos = await _databaseActions.GetEntities<ForumDao>();
+
+            // Mapping ForumDao objects to ForumDto objects
+            var forumDtos = forumDaos.Select(forum => new ForumDto().Mapper(forum)).ToList();
+
+            Logger.LogDebug($"{forumDtos.Count} forums retrieved successfully.");
+
+            return forumDtos;
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new ForumGeneralException("An error occurred while retrieving the forums.", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new ForumGeneralException("An unexpected error occurred while retrieving the forums.", ex);
+        }
+    }
+    
 }

@@ -116,6 +116,8 @@
 
 [SignupFormVmImpl](./slottymedia.backend.viewmodel.signupformvmimpl.md)
 
+[SpacesVmImpl](./slottymedia.backend.viewmodel.spacesvmimpl.md)
+
 ## SlottyMedia.Backend.ViewModel.Interfaces
 
 [IMainLayoutVm](./slottymedia.backend.viewmodel.interfaces.imainlayoutvm.md)
@@ -123,6 +125,8 @@
 [ISignInFormVm](./slottymedia.backend.viewmodel.interfaces.isigninformvm.md)
 
 [ISignupFormVm](./slottymedia.backend.viewmodel.interfaces.isignupformvm.md)
+
+[ISpacesVm](./slottymedia.backend.viewmodel.interfaces.ispacesvm.md)
 
 ## SlottyMedia.Components
 

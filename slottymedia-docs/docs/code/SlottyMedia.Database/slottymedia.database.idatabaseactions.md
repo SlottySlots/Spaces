@@ -296,3 +296,17 @@ Task<int> GetCountForUserForums(string userID)
 #### Returns
 
 [Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetTotalForumCount(String)**
+
+```csharp
+Task<int> GetTotalForumCount(string forumID)
+```
+
+#### Parameters
+
+`forumID` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

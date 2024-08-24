@@ -14,7 +14,6 @@
         <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.12"/>
         <PackageReference Include="Supabase" Version="1.1.1"/>
         <Folder Include="wwwroot\static\login\"/>
-        <Folder Include="Backend\ViewModel\"/>
     </ItemGroup>
 
     <ItemGroup>

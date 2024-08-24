@@ -25,4 +25,6 @@ public interface IForumService
     /// <returns>Returns a Task representing the asynchronous operation.</returns>
     /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while deleting the forum.</exception>
     Task DeleteForum(ForumDto forum);
+    
+    Task<List<ForumDto>> GetForums();
 }
