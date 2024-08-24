@@ -98,9 +98,9 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
         // attempt to submit post
         try
         {
-            var forum = _forumService.GetForumByName(SpaceName!);
+            var forum = await _forumService.GetForumByName(SpaceName!);
             var userId = _authService.GetCurrentSession()!.User!.Id;
-            await _postService.InsertPost(Text!, new Guid(userId!), new Guid(forum.Id.ToString()));
+            await _postService.InsertPost(Text!, new Guid(userId!), forum.ForumId);
         }
         catch
         {
