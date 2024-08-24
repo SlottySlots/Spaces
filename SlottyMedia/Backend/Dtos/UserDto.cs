@@ -126,6 +126,16 @@ public class UserInformationDto
     ///     ProfilePic of a user
     /// </summary>
     public string? ProfilePic { get; set; }
+    
+    /// <summary>
+    /// Amount of Follow4Follows of User 
+    /// </summary>
+    public int FriendsAmount { get; set; }
+    
+    /// <summary>
+    /// Amount of Spaces of a User
+    /// </summary>
+    public int SpacesAmount { get; set; }
 
     /// <summary>
     ///     Gets or sets the date and time when the User was created.

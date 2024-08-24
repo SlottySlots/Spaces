@@ -92,4 +92,15 @@ public interface IUserService
     ///     Thrown when a general database error occurs while fetching the friends count.
     /// </exception>
     public Task<int> GetCountOfUserFriends(Guid userId);
+
+    /// <summary>
+    /// Gets all spaces a user has wrote in
+    /// </summary>
+    /// <param name="userId">
+    /// User from which it should be retrieved
+    /// </param>
+    /// <returns>
+    /// Returns the amount of spaces as task
+    /// </returns>
+    public Task<int> GetCountOfUserSpaces(Guid userId);
 }

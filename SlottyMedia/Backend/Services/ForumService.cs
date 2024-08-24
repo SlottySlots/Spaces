@@ -83,4 +83,12 @@ public class ForumService : IForumService
             throw new ForumGeneralException($"An error occurred while deleting the forum. Forum: {forum}", ex);
         }
     }
+
+    /// <inheritdoc />
+    public async Task<ForumDto> GetForumByName(string forumName)
+    {
+        Logger.LogDebug($"Fetching forum with name '{forumName}'...");
+        var dao = await _databaseActions.GetEntityByField<ForumDao>("forumTopic", forumName);
+        return new ForumDto().Mapper(dao);
+    }
 }

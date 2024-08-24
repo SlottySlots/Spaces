@@ -226,3 +226,21 @@ Returns the count of friends for the specified user.
 
 [UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
 Thrown when a general database error occurs while fetching the friends count.
+
+### **GetCountOfUserSpaces(Guid)**
+
+Gets all spaces a user has wrote in
+
+```csharp
+Task<int> GetCountOfUserSpaces(Guid userId)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+User from which it should be retrieved
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns the amount of spaces as task

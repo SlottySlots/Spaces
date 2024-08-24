@@ -336,3 +336,17 @@ The count of entities.
 [GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
 Thrown when a network error, argument null, invalid operation, timeout, task
  cancellation, or unexpected error occurs.
+
+### **GetCountForUserForums(String)**
+
+```csharp
+Task<int> GetCountForUserForums(string userID)
+```
+
+#### Parameters
+
+`userID` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

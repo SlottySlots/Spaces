@@ -14,30 +14,33 @@ public class PostService : IPostService
 {
     private static readonly Logging<PostService> Logger = new();
 
+    private readonly Supabase.Client _supabaseClient;
+
     /// <summary>
     ///     Initializes a new instance of the <see cref="PostService" /> class.
     /// </summary>
     /// <param name="databaseActions">The database actions interface.</param>
-    public PostService(IDatabaseActions databaseActions)
+    public PostService(IDatabaseActions databaseActions, Supabase.Client supabaseClient)
     {
         Logger.LogInfo("PostService initialized");
         DatabaseActions = databaseActions;
+        _supabaseClient = supabaseClient;
     }
 
     /// <inheritdoc />
     public IDatabaseActions DatabaseActions { get; set; }
 
     /// <inheritdoc />
-    public async Task<PostDto> InsertPost(string title, string content, Guid creatorUserId, Guid forumId)
+    public async Task<PostDto> InsertPost(string content, Guid creatorUserId, Guid forumId)
     {
         try
         {
             var post = new PostsDao
             {
-                Headline = title,
+                Headline = "",
                 Content = content,
                 UserId = creatorUserId,
-                ForumId = forumId
+                ForumId = forumId,
             };
             Logger.LogInfo($"Inserting a new post into the database {post}");
             var insertedPost = await DatabaseActions.Insert(post);
@@ -46,19 +49,19 @@ public class PostService : IPostService
         catch (DatabaseIudActionException ex)
         {
             throw new PostIudException(
-                $"An error occurred while inserting the post. Parameters: {title} {content}, {creatorUserId}, {forumId}",
+                $"An error occurred while inserting a post starting with '{content[..Math.Min(15, content.Length)]}...'",
                 ex);
         }
         catch (GeneralDatabaseException ex)
         {
             throw new PostGeneralException(
-                $"A database error occurred while inserting the post. Parameters: {title} {content}, {creatorUserId}, {forumId}",
+                $"A database error occurred while inserting a post starting with '{content[..Math.Min(15, content.Length)]}...'",
                 ex);
         }
         catch (Exception ex)
         {
             throw new PostGeneralException(
-                $"An error occurred while inserting the post. Parameters: {title} {content}, {creatorUserId}, {forumId}",
+                $"An error occurred while inserting the post starting with '{content[..Math.Min(15, content.Length)]}...'",
                 ex);
         }
     }
@@ -104,6 +107,7 @@ public class PostService : IPostService
     /// <inheritdoc />
     public async Task<List<string>> GetPostsFromForum(Guid userId, int startOfSet, int endOfSet)
     {
+        //TODO Fix this method!!
         try
         {
             Logger.LogInfo($"Fetching posts for the user with ID: {userId} from index {startOfSet} to {endOfSet}");
@@ -271,6 +275,33 @@ public class PostService : IPostService
         }
     }
 
+    /// <inheritdoc />
+    public async Task<List<Guid>> GetAllPosts(int page, int pageSize)
+    {
+        var query = await _supabaseClient
+            .From<PostsDao>()
+            .Range((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
+            .Order("created_at", Constants.Ordering.Descending)
+            .Get();
+        var daoList = query.Models;
+        var result =
+            from dao in daoList
+            where dao.PostId is not null
+            select dao.PostId;
+        return result.OfType<Guid>().ToList();
+    }
+
+    public async Task<PostDto?> GetPostById(Guid postId)
+    {
+        var query = await _supabaseClient
+            .From<PostsDao>()
+            .Where(post => post.PostId == postId)
+            .Get();
+        if (query.Model is null)
+            return null;
+        return new PostDto().Mapper(query.Model);
+    }
+
     /// <summary>
     ///     Converts a list of PostsDao objects to a list of PostDto objects.
     /// </summary>
@@ -281,4 +312,22 @@ public class PostService : IPostService
         Logger.LogInfo("Mapping posts to DTOs");
         return posts.Select(post => new PostDto().Mapper(post)).ToList();
     }
+    
+    public async Task<int> GetForumCountByUserId(Guid userId)
+{
+    try
+    {
+        Logger.LogInfo($"Counting forums for the user with ID: {userId}");
+        var forumCount = await DatabaseActions.GetCountForUserForums(userId.ToString());
+        return forumCount;
+    }
+    catch (GeneralDatabaseException ex)
+    {
+        throw new PostGeneralException($"A database error occurred while counting the forums. UserID: {userId}", ex);
+    }
+    catch (Exception ex)
+    {
+        throw new PostGeneralException($"An error occurred while counting the forums. UserID: {userId}", ex);
+    }
+}
 }
