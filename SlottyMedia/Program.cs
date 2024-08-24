@@ -2,6 +2,8 @@ using Blazored.SessionStorage;
 using NLog;
 using NLog.Web;
 using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Backend.Repositories;
+using SlottyMedia.Backend.Repositories.Impl;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
@@ -40,6 +42,9 @@ try
     // Database
     logger.LogInfo("Adding Database to the container");
     builder.Services.AddSingleton<IDatabaseActions, DatabaseActions>();
+    
+    // Repositories
+    builder.Services.AddSingleton<IUserRepository, UserRepositoryImpl>();
 
     // Daos
     logger.LogInfo("Adding Daos to the container");
