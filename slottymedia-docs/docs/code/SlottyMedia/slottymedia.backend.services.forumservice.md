@@ -13,15 +13,17 @@ Implements [IForumService](./slottymedia.backend.services.interfaces.iforumservi
 
 ## Constructors
 
-### **ForumService(IDatabaseActions)**
+### **ForumService(IDatabaseActions, Client)**
 
 ```csharp
-public ForumService(IDatabaseActions databaseActions)
+public ForumService(IDatabaseActions databaseActions, Client supabaseClient)
 ```
 
 #### Parameters
 
 `databaseActions` IDatabaseActions<br>
+
+`supabaseClient` Client<br>
 
 ## Methods
 

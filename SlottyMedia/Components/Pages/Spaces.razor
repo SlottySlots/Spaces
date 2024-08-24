@@ -12,17 +12,19 @@
 {
     <p>Loading...</p>
 }
-<!-- Display the list of forums -->
 else if (SpacesVm.Forums.Any())
 {
 <ul>
     @foreach (var forum in SpacesVm.Forums)
     {
-        <li>@forum.ForumId</li> 
+        <Card class="min-h-[150px] mt-20 mx-7 flex flex-col items-center">
+            <h3 class="font-semibold text-lg">
+                @(forum.Topic)
+            </h3>
+        </Card>
     }
 </ul>
 }
-<!-- Display message if no forums are available -->
 else
 {
 <p>No forums available.</p>

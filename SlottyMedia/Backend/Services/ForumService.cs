@@ -5,6 +5,7 @@ using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.LoggingProvider;
+using Supabase;
 
 namespace SlottyMedia.Backend.Services;
 
@@ -15,12 +16,14 @@ public class ForumService : IForumService
 {
     private static readonly Logging<ForumService> Logger = new();
     private readonly IDatabaseActions _databaseActions;
+    private readonly Client _supabaseClient;
 
     /// Constructor to initialize the ForumService with the required database actions.
-    public ForumService(IDatabaseActions databaseActions)
+    public ForumService(IDatabaseActions databaseActions, Client supabaseClient)
     {
         Logger.LogInfo("ForumService initialized");
         _databaseActions = databaseActions;
+        _supabaseClient = supabaseClient;
     }
 
     /// <summary>
@@ -104,27 +107,11 @@ public class ForumService : IForumService
     /// <returns>A list of ForumDto objects representing all forums.</returns>
     public async Task<List<ForumDto>> GetForums()
     {
-        try
-        {
-            Logger.LogDebug("Retrieving all forums from the database.");
-            
-            var forumDaos = await _databaseActions.GetEntities<ForumDao>();
-
-            // Mapping ForumDao objects to ForumDto objects
-            var forumDtos = forumDaos.Select(forum => new ForumDto().Mapper(forum)).ToList();
-
-            Logger.LogDebug($"{forumDtos.Count} forums retrieved successfully.");
-
-            return forumDtos;
-        }
-        catch (GeneralDatabaseException ex)
-        {
-            throw new ForumGeneralException("An error occurred while retrieving the forums.", ex);
-        }
-        catch (Exception ex)
-        {
-            throw new ForumGeneralException("An unexpected error occurred while retrieving the forums.", ex);
-        }
+        var query = await _supabaseClient
+            .From<ForumDao>()
+            .Get();
+        var forumDaos = query.Models;
+        return forumDaos.Select(dao => new ForumDto().Mapper(dao)).ToList();
     }
     
 }

@@ -126,6 +126,8 @@
 
 [ISignupFormVm](./slottymedia.backend.viewmodel.interfaces.isignupformvm.md)
 
+[ISpacesCardVm](./slottymedia.backend.viewmodel.interfaces.ispacescardvm.md)
+
 [ISpacesVm](./slottymedia.backend.viewmodel.interfaces.ispacesvm.md)
 
 ## SlottyMedia.Components
@@ -179,3 +181,7 @@
 [Post](./slottymedia.components.partial.post.md)
 
 [Tag](./slottymedia.components.partial.tag.md)
+
+## SlottyMedia.Components.Partial.MainLayout
+
+[SpacesCard](./slottymedia.components.partial.mainlayout.spacescard.md)
