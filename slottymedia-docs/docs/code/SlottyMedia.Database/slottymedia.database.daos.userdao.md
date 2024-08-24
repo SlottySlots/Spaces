@@ -185,6 +185,8 @@ public UserDao(Guid userId, Guid roleId, string userName, string email, string d
 
 ### **ToString()**
 
+The ToString method returns a string representation of the UserDao object.
+
 ```csharp
 public string ToString()
 ```

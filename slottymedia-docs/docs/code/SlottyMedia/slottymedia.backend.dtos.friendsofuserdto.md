@@ -50,6 +50,8 @@ public FriendsOfUserDto()
 
 ### **ToString()**
 
+This ToString method returns a string representation of the FriendsOfUserDto object.
+
 ```csharp
 public string ToString()
 ```

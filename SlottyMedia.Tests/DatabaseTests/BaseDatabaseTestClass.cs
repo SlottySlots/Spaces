@@ -22,15 +22,17 @@ public class BaseDatabaseTestClass
     /// </summary>
     public DatabaseActions DatabaseActions { get; set; }
 
+    /// <summary>
+    ///     The User to work with
+    /// </summary>
     public UserDao UserToWorkWith { get; set; }
-
 
     /// <summary>
     ///     This Method is used to setup the Tests. It logs in the User and sets the UserId Property
     ///     if the Login was successful if not it will signup the User and set the UserId Property
     /// </summary>
     [OneTimeSetUp]
-    public async Task Setup()
+    public async Task BaseSetup()
     {
         try
         {
@@ -58,7 +60,7 @@ public class BaseDatabaseTestClass
     ///     This Method is used to TearDown the Tests. It logs out the User
     /// </summary>
     [OneTimeTearDown]
-    public async Task TearDown()
+    public async Task BaseTearDown()
     {
         await _client.Auth.SignOut();
     }

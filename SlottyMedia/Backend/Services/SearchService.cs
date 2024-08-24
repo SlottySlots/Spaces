@@ -28,11 +28,7 @@ public class SearchService : ISearchService
         _databaseActions = databaseActions;
     }
 
-    /// <summary>
-    ///     Method to search for users or topics by a given search term.
-    /// </summary>
-    /// <param name="searchTerm">The search term to look for.</param>
-    /// <returns>Returns a list of user or topic IDs that match the search term.</returns>
+    /// <inheritdoc />
     public async Task<SearchDto> SearchByUsernameOrTopic(string searchTerm)
     {
         try

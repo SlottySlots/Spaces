@@ -150,6 +150,8 @@ public PostDto Mapper(PostsDao post)
 
 ### **ToString()**
 
+The ToString method returns a string representation of the object.
+
 ```csharp
 public string ToString()
 ```

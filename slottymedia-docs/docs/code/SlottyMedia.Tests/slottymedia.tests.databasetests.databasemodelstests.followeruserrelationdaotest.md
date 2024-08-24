@@ -38,6 +38,8 @@ DatabaseActions<br>
 
 ### **UserToWorkWith**
 
+The User to work with
+
 ```csharp
 public UserDao UserToWorkWith { get; set; }
 ```
