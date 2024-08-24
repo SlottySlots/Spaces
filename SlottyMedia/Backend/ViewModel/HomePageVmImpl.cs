@@ -17,11 +17,6 @@ public class HomePageVmImpl : IHomePageVm
     public async Task FetchPosts()
     {
         Posts.Clear();
-        var page = await _postService.GetAllPosts(1);
-        foreach (var postId in page)
-        {
-            var dto = await _postService.GetPostById(postId);
-            Posts.Add(dto);
-        }
+        Posts = await _postService.GetAllPosts(1);
     }
 }

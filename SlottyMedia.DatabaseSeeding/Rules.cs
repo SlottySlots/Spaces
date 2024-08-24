@@ -20,11 +20,11 @@ public class Rules
     /// <returns>A Faker&lt;\<see cref="UserDao" />&gt; object with predefined rules.</returns>
     public Faker<UserDao> UserRules()
     {
-        var userFaker = new Faker<UserDao>()
+        var userFaker = new Faker<UserDao>("de")
             .RuleFor(u => u.UserId, f => f.Random.Guid())
             .RuleFor(u => u.RoleId, Guid.Parse("c0589855-a81c-451d-8587-3061926a1f3a"))
             .RuleFor(u => u.UserName, f => f.Internet.UserName())
-            .RuleFor(u => u.Description, f => f.Lorem.Sentence())
+            .RuleFor(u => u.Description, f => f.WaffleTitle())
             .RuleFor(u => u.ProfilePic, f => null)
             .RuleFor(u => u.CreatedAt, f => f.Date.Past())
             .RuleFor(u => u.Email, f => f.Internet.Email());
@@ -45,7 +45,7 @@ public class Rules
         var forumFaker = new Faker<ForumDao>()
             .RuleFor(f => f.ForumId, f => f.Random.Guid())
             .RuleFor(f => f.CreatorUserId, f => userIds[f.Random.Int(0, userIds.Count - 1)])
-            .RuleFor(f => f.ForumTopic, f => f.Lorem.Sentence())
+            .RuleFor(f => f.ForumTopic, f => f.Internet.DomainWord())
             .RuleFor(f => f.CreatedAt, f => f.Date.Past());
         return forumFaker;
     }
@@ -69,7 +69,7 @@ public class Rules
             .RuleFor(p => p.UserId, f => userIds[f.Random.Int(0, userIds.Count - 1)])
             .RuleFor(p => p.ForumId, f => forumIds[f.Random.Int(0, forumIds.Count - 1)])
             .RuleFor(p => p.Headline, f => f.Lorem.Sentence())
-            .RuleFor(p => p.Content, f => f.Lorem.Paragraphs())
+            .RuleFor(p => p.Content, f => f.WaffleText(f.Random.Int(1, 3), includeHeading: false))
             .RuleFor(p => p.CreatedAt, f => f.Date.Past());
         return postFaker;
     }
