@@ -249,6 +249,16 @@
 
                 </Card>
 
+                <!-- spaces card -->
+                @if (!AuthService.IsAuthenticated())
+                {
+                    <SpacesCardNoAccount />
+                }
+                else
+                {
+                    <SpacesCard />
+                }
+
             </div>
 
         </div>
