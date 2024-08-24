@@ -14,6 +14,9 @@ namespace SlottyMedia.Tests.Auth;
 [TestFixture]
 public class AuthServiceTest
 {
+    /// <summary>
+    ///     Sets up the test fixture. Initializes the Supabase client and mocks the cookie service.
+    /// </summary>
     [OneTimeSetUp]
     public void OneTimeSetup()
     {
@@ -22,6 +25,9 @@ public class AuthServiceTest
         _authService = new AuthService(_client, _cookieServiceMock.Object);
     }
 
+    /// <summary>
+    ///     Sets up each test. Generates a new UUID for the username and email.
+    /// </summary>
     [SetUp]
     public void Setup()
     {
@@ -31,6 +37,9 @@ public class AuthServiceTest
         _email = testUuid + "@unittest.de";
     }
 
+    /// <summary>
+    ///     Tears down each test. Resets the cookie service mock and clears the session.
+    /// </summary>
     [TearDown]
     public void TearDown()
     {
@@ -47,6 +56,9 @@ public class AuthServiceTest
 
     private Session? _session;
 
+    /// <summary>
+    ///     Tests that SaveSessionAsync throws a TokenNotProvidedException when the token is not provided.
+    /// </summary>
     [Test]
     public void SaveSessionAsync_TokenNotProvided()
     {
@@ -55,6 +67,9 @@ public class AuthServiceTest
         );
     }
 
+    /// <summary>
+    ///     Tests that SaveSessionAsync saves the session and sets the cookies correctly.
+    /// </summary>
     [Test]
     public void SaveSessionAsync()
     {
@@ -72,6 +87,9 @@ public class AuthServiceTest
         _cookieServiceMock.VerifyAll();
     }
 
+    /// <summary>
+    ///     Tests that RestoreSessionAsync throws a TokenNotProvidedException when the token is not provided.
+    /// </summary>
     [Test]
     public void RestoreSessionAsync_TokenNotProvided()
     {
@@ -85,6 +103,9 @@ public class AuthServiceTest
         _cookieServiceMock.VerifyAll();
     }
 
+    /// <summary>
+    ///     Tests that SignOut does not remove the cookies.
+    /// </summary>
     [Test]
     public void SignOut_CookiesNotRemoved()
     {

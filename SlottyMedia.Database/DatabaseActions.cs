@@ -22,17 +22,7 @@ public class DatabaseActions : IDatabaseActions
         _supabaseClient = supabaseClient;
     }
 
-    /// <summary>
-    ///     Inserts an item into the database.
-    /// </summary>
-    /// <typeparam name="T">The type of the item to insert.</typeparam>
-    /// <param name="item">The item to insert.</param>
-    /// <returns>The inserted item.</returns>
-    /// <exception cref="DatabaseIudActionException">Thrown when the item could not be inserted into the database.</exception>
-    /// <exception cref="GeneralDatabaseException">
-    ///     Thrown when a network error, argument null, invalid operation, timeout, task
-    ///     cancellation, or unexpected error occurs.
-    /// </exception>
+    /// <inheritdoc />
     public virtual async Task<T> Insert<T>(T item) where T : BaseModel, new()
     {
         try
@@ -72,17 +62,7 @@ public class DatabaseActions : IDatabaseActions
         }
     }
 
-    /// <summary>
-    ///     Updates an item in the database.
-    /// </summary>
-    /// <typeparam name="T">The type of the item to update.</typeparam>
-    /// <param name="item">The item to update.</param>
-    /// <returns>The updated item.</returns>
-    /// <exception cref="DatabaseIudActionException">Thrown when the item could not be updated in the database.</exception>
-    /// <exception cref="GeneralDatabaseException">
-    ///     Thrown when a network error, argument null, invalid operation, timeout, task
-    ///     cancellation, or unexpected error occurs.
-    /// </exception>
+    /// <inheritdoc />
     public virtual async Task<T> Update<T>(T item) where T : BaseModel, new()
     {
         try
@@ -122,17 +102,7 @@ public class DatabaseActions : IDatabaseActions
         }
     }
 
-    /// <summary>
-    ///     Deletes an item from the database.
-    /// </summary>
-    /// <typeparam name="T">The type of the item to delete.</typeparam>
-    /// <param name="item">The item to delete.</param>
-    /// <returns>True if the item was deleted successfully, otherwise false.</returns>
-    /// <exception cref="DatabaseIudActionException">Thrown when the item could not be deleted from the database.</exception>
-    /// <exception cref="GeneralDatabaseException">
-    ///     Thrown when a network error, argument null, invalid operation, timeout, task
-    ///     cancellation, or unexpected error occurs.
-    /// </exception>
+    /// <inheritdoc />
     public virtual async Task<bool> Delete<T>(T item) where T : BaseModel, new()
     {
         try
@@ -175,18 +145,7 @@ public class DatabaseActions : IDatabaseActions
         }
     }
 
-    /// <summary>
-    ///     Retrieves an entity from the database by a specific field and value.
-    /// </summary>
-    /// <typeparam name="T">The type of the entity to retrieve.</typeparam>
-    /// <param name="field">The field to filter by.</param>
-    /// <param name="value">The value to filter by.</param>
-    /// <returns>The retrieved entity.</returns>
-    /// <exception cref="DatabaseMissingItemException">Thrown when the entity could not be found in the database.</exception>
-    /// <exception cref="GeneralDatabaseException">
-    ///     Thrown when a network error, argument null, invalid operation, timeout, task
-    ///     cancellation, or unexpected error occurs.
-    /// </exception>
+    /// <inheritdoc />
     public virtual async Task<T> GetEntityByField<T>(string field, string value) where T : BaseModel, new()
     {
         try
@@ -228,19 +187,7 @@ public class DatabaseActions : IDatabaseActions
         }
     }
 
-    /// <summary>
-    ///     Retrieves an entity from the database by a specific field and value with a selector.
-    /// </summary>
-    /// <typeparam name="T">The type of the entity to retrieve.</typeparam>
-    /// <param name="selector">The selector expression.</param>
-    /// <param name="field">The field to filter by.</param>
-    /// <param name="value">The value to filter by.</param>
-    /// <returns>The retrieved entity.</returns>
-    /// <exception cref="DatabaseMissingItemException">Thrown when the entity could not be found in the database.</exception>
-    /// <exception cref="GeneralDatabaseException">
-    ///     Thrown when a network error, argument null, invalid operation, timeout, task
-    ///     cancellation, or unexpected error occurs.
-    /// </exception>
+    /// <inheritdoc />
     public async Task<T> GetEntitieWithSelectorById<T>(Expression<Func<T, object[]>> selector, string field,
         string value) where T : BaseModel, new()
     {
@@ -282,22 +229,7 @@ public class DatabaseActions : IDatabaseActions
         }
     }
 
-    /// <summary>
-    ///     Retrieves a list of entities from the database by a specific field and value with a selector.
-    /// </summary>
-    /// <typeparam name="T">The type of the entities to retrieve.</typeparam>
-    /// <param name="selector">The selector expression.</param>
-    /// <param name="field">The field to filter by.</param>
-    /// <param name="value">The value to filter by.</param>
-    /// <param name="max">The maximum number of entities to retrieve.</param>
-    /// <param name="min">The minimum number of entities to retrieve.</param>
-    /// <param name="orderByFields">The fields to order by.</param>
-    /// <returns>The list of retrieved entities.</returns>
-    /// <exception cref="DatabaseMissingItemException">Thrown when the entities could not be found in the database.</exception>
-    /// <exception cref="GeneralDatabaseException">
-    ///     Thrown when a network error, argument null, invalid operation, timeout, task
-    ///     cancellation, or unexpected error occurs.
-    /// </exception>
+    /// <inheritdoc />
     public async Task<List<T>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector, string field,
         string value,
         int max = -1,
@@ -349,21 +281,7 @@ public class DatabaseActions : IDatabaseActions
         }
     }
 
-    /// <summary>
-    ///     Retrieves a list of entities from the database by a specific field and value with a selector and search criteria.
-    /// </summary>
-    /// <typeparam name="T">The type of the entities to retrieve.</typeparam>
-    /// <param name="selector">The selector expression.</param>
-    /// <param name="search">The search criteria.</param>
-    /// <param name="max">The maximum number of entities to retrieve.</param>
-    /// <param name="min">The minimum number of entities to retrieve.</param>
-    /// <param name="orderByFields">The fields to order by.</param>
-    /// <returns>The list of retrieved entities.</returns>
-    /// <exception cref="DatabaseMissingItemException">Thrown when the entities could not be found in the database.</exception>
-    /// <exception cref="GeneralDatabaseException">
-    ///     Thrown when a network error, argument null, invalid operation, timeout, task
-    ///     cancellation, or unexpected error occurs.
-    /// </exception>
+    /// <inheritdoc />
     public async Task<List<T>> GetEntitiesWithSelectorById<T>(Expression<Func<T, object[]>> selector,
         List<(string, Constants.Operator, string)> search,
         int max = -1,
@@ -418,16 +336,7 @@ public class DatabaseActions : IDatabaseActions
         }
     }
 
-    /// <summary>
-    ///     Retrieves a list of entities from the database.
-    /// </summary>
-    /// <typeparam name="T">The type of the entities to retrieve.</typeparam>
-    /// <returns>The list of retrieved entities.</returns>
-    /// <exception cref="DatabaseMissingItemException">Thrown when the entities could not be found in the database.</exception>
-    /// <exception cref="GeneralDatabaseException">
-    ///     Thrown when a network error, argument null, invalid operation, timeout, task
-    ///     cancellation, or unexpected error occurs.
-    /// </exception>
+    /// <inheritdoc />
     public async Task<List<T>> GetEntities<T>() where T : BaseModel, new()
     {
         try
@@ -468,14 +377,7 @@ public class DatabaseActions : IDatabaseActions
         }
     }
 
-    /// <summary>
-    ///     The method checks if an entity exists in the database. It returns true if the entity exists, otherwise false.
-    /// </summary>
-    /// <param name="field">The filed to check</param>
-    /// <param name="value">The value to Check</param>
-    /// <typeparam name="T">A Dao</typeparam>
-    /// <returns></returns>
-    /// <exception cref="GeneralDatabaseException"></exception>
+    /// <inheritdoc />
     public async Task<bool> CheckIfEntityExists<T>(string field, string value) where T : BaseModel, new()
     {
         try
@@ -511,18 +413,8 @@ public class DatabaseActions : IDatabaseActions
             throw new GeneralDatabaseException("An unexpected error occurred while checking if the item exists.", ex);
         }
     }
-    
-    /// <summary>
-    ///     Retrieves the count of entities from the database by a specific field and value.
-    /// </summary>
-    /// <typeparam name="T">The type of the entities to count.</typeparam>
-    /// <param name="field">The field to filter by.</param>
-    /// <param name="value">The value to filter by.</param>
-    /// <returns>The count of entities.</returns>
-    /// <exception cref="GeneralDatabaseException">
-    ///     Thrown when a network error, argument null, invalid operation, timeout, task
-    ///     cancellation, or unexpected error occurs.
-    /// </exception>
+
+    /// <inheritdoc />
     public async Task<int> GetCountByField<T>(string field, string value) where T : BaseModel, new()
     {
         try
@@ -558,12 +450,13 @@ public class DatabaseActions : IDatabaseActions
         }
     }
     
-    public async Task<int> GetCountForUserForums(string userID)
+    /// <inheritdoc />
+    public async Task<int> GetCountForUserForums(string userId)
     {
         try
         {
-            // Call the RPC function with the userID parameter
-            var result = await _supabaseClient.Rpc<int>("get_post_count_by_user", new Dictionary<string, object>(){ {"user_id" , userID }});
+            // Call the RPC function with the userId parameter
+            var result = await _supabaseClient.Rpc<int>("get_post_count_by_user", new Dictionary<string, object>(){ {"user_id" , userId }});
             return result;
         }
         catch (HttpRequestException ex)

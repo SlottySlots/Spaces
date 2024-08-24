@@ -63,6 +63,7 @@ try
     logger.LogInfo("Adding Services to the container");
     builder.Services.AddScoped<IUserService, UserService>();
     builder.Services.AddScoped<IPostService, PostService>();
+    builder.Services.AddScoped<IForumService, ForumService>();
     builder.Services.AddScoped<ICookieService, CookieService>();
     builder.Services.AddScoped<IAuthService, AuthService>(); // Scoped
     builder.Services.AddScoped<ISignupService, SignupServiceImpl>();
@@ -76,7 +77,8 @@ try
     builder.Services.AddScoped<IMainLayoutVm, MainLayoutVmImpl>();
     builder.Services.AddScoped<ISpacesVm, SpacesVmImpl>();
     builder.Services.AddScoped<ISpacesCardVm, SpacesCardVmImpl>();
-
+    builder.Services.AddScoped<IPostSubmissionFormVm, PostSubmissionFormVmImpl>();
+    builder.Services.AddScoped<IHomePageVm, HomePageVmImpl>();
 
     var app = builder.Build();
 

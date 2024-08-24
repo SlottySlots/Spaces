@@ -63,8 +63,10 @@ The UserID from the Authentication Service
 The Username, which the User set himself
 
 `email` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The Email of the User
 
 `roleId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The Role ID of the User
 
 `description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The Description about the User

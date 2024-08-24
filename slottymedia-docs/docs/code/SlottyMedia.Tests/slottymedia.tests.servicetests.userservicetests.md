@@ -285,3 +285,15 @@ public void GetCountOfUserFriends_ThrowsUserGeneralException_OnUnexpectedExcepti
 
 This test ensures that the GetCountOfUserFriends method throws a UserGeneralException when an unexpected exception
  occurs.
+
+### **GetCountOfUserSpaces()**
+
+Tests if GetCountOfUserSpaces method returns the correct count of user spaces.
+
+```csharp
+public Task GetCountOfUserSpaces()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>

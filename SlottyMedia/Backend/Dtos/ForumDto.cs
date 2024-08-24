@@ -68,6 +68,10 @@ public class ForumDto
         };
     }
 
+    /// <summary>
+    ///     The ToString method returns a string representation of the object.
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
         return $"ForumId: {ForumId}, Topic: {Topic}; CreatedAt: {CreatedAt}";

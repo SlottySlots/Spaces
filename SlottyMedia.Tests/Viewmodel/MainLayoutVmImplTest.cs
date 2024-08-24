@@ -10,9 +10,15 @@ using Client = Supabase.Client;
 
 namespace SlottyMedia.Tests.Viewmodel;
 
+/// <summary>
+///     Unit tests for the MainLayoutVmImpl class.
+/// </summary>
 [TestFixture]
 public class MainLayoutVmImplTest
 {
+    /// <summary>
+    ///     Sets up the necessary mocks and initializes the service before any tests are run.
+    /// </summary>
     [OneTimeSetUp]
     public void OneTimeSetup()
     {
@@ -25,6 +31,9 @@ public class MainLayoutVmImplTest
         _vm = new MainLayoutVmImpl(_authService.Object, _dbActions.Object, _userService.Object);
     }
 
+    /// <summary>
+    ///     Resets the mocks after each test.
+    /// </summary>
     [TearDown]
     public void TearDown()
     {
@@ -40,6 +49,9 @@ public class MainLayoutVmImplTest
     private MainLayoutVmImpl _vm;
     private Mock<IUserService> _userService;
 
+    /// <summary>
+    ///     Tests that a session is restored on initialization.
+    /// </summary>
     [Test]
     public void RestoreSessionOnInit_ReturnsSession()
     {
@@ -49,6 +61,9 @@ public class MainLayoutVmImplTest
         _authService.VerifyNoOtherCalls();
     }
 
+    /// <summary>
+    ///     Tests that no session is restored and returns null.
+    /// </summary>
     [Test]
     public void RestoreSessionOnInit_NoSessionRestoredReturnsNull()
     {
@@ -58,6 +73,9 @@ public class MainLayoutVmImplTest
         _authService.VerifyNoOtherCalls();
     }
 
+    /// <summary>
+    ///     Tests that SetUserInfo returns null when no session is set.
+    /// </summary>
     [Test]
     public void SetUserInfo_SessionNotSetReturnsNull()
     {
@@ -67,6 +85,24 @@ public class MainLayoutVmImplTest
         _authService.VerifyNoOtherCalls();
     }
 
+    /// <summary>
+    ///     Tests that SetUserInfo returns null when the user DAO is corrupt.
+    /// </summary>
+    [Test]
+    public void SetUserInfo_CorruptUserDaoReturnsNull()
+    {
+        _authService.Setup(service => service.GetCurrentSession())
+            .Returns(new Session { User = new User { Email = "test@test.de" } });
+        _dbActions.Setup(service => service.GetEntityByField<UserDao>("email", "test@test.de")).ReturnsAsync(new UserDao
+            { UserId = null, UserName = null, Description = null, Email = null });
+        Assert.ThatAsync(async () => await _vm.SetUserInfo(), Is.Null);
+        _authService.VerifyAll();
+        _authService.VerifyNoOtherCalls();
+    }
+
+    /// <summary>
+    ///     Tests that SetUserInfo returns a UserInfoDto when the user DAO is valid.
+    /// </summary>
     [Test]
     public void SetUserInfo_ReturnsUserInfoDto()
     {
@@ -93,6 +129,9 @@ public class MainLayoutVmImplTest
         _authService.VerifyNoOtherCalls();
     }
 
+    /// <summary>
+    ///     Tests that PersistUserAvatarInDb returns null when no session is set.
+    /// </summary>
     [Test]
     public void PersistUserAvatarInDb_ReturnsNullOnNoSession()
     {
@@ -101,6 +140,9 @@ public class MainLayoutVmImplTest
         _authService.VerifyAll();
     }
 
+    /// <summary>
+    ///     Tests that PersistUserAvatarInDb persists the user avatar in the database.
+    /// </summary>
     [Test]
     public async Task PersistsUserAvatarInDb()
     {

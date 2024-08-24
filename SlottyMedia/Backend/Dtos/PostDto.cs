@@ -104,6 +104,10 @@ public class PostDto
         return this;
     }
 
+    /// <summary>
+    ///     The ToString method returns a string representation of the object.
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
         return

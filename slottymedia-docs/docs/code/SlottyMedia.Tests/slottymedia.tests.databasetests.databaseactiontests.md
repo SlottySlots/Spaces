@@ -38,6 +38,8 @@ DatabaseActions<br>
 
 ### **UserToWorkWith**
 
+The User to work with
+
 ```csharp
 public UserDao UserToWorkWith { get; set; }
 ```
@@ -58,11 +60,15 @@ public DatabaseActionTests()
 
 ### **Setup()**
 
+Sets up the test environment by initializing the user model.
+
 ```csharp
 public void Setup()
 ```
 
 ### **TearDown()**
+
+Cleans up the test environment by deleting the user if it exists.
 
 ```csharp
 public Task TearDown()

@@ -59,12 +59,20 @@ Returns a Task representing the asynchronous operation.
 T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
 Throws an exception if an error occurs while deleting the forum.
 
-### **GetForums()**
+### **GetForumByName(String)**
+
+Retrieves a forum with the given name.
 
 ```csharp
-Task<List<ForumDto>> GetForums()
+Task<ForumDto> GetForumByName(string forumName)
 ```
+
+#### Parameters
+
+`forumName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The forum's name.
 
 #### Returns
 
-[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+The requested forum

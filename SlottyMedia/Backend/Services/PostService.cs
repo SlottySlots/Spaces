@@ -10,48 +10,38 @@ using Client = Supabase.Client;
 
 namespace SlottyMedia.Backend.Services;
 
-/// <summary>
-///     This class represents the Post Service. It is used to interact with the Post table in the database.
-/// </summary>
+/// <inheritdoc />
 public class PostService : IPostService
 {
     private static readonly Logging<PostService> Logger = new();
-    private readonly Client _supabaseClient;
+
+    private readonly Supabase.Client _supabaseClient;
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="PostService" /> class.
     /// </summary>
     /// <param name="databaseActions">The database actions interface.</param>
-    public PostService(IDatabaseActions databaseActions, Client supabaseClient)
+    public PostService(IDatabaseActions databaseActions, Supabase.Client supabaseClient)
     {
         Logger.LogInfo("PostService initialized");
         DatabaseActions = databaseActions;
         _supabaseClient = supabaseClient;
     }
 
-    /// <summary>
-    ///     Gets or sets the database actions interface.
-    /// </summary>
+    /// <inheritdoc />
     public IDatabaseActions DatabaseActions { get; set; }
 
-    /// <summary>
-    ///     Inserts a new post into the database.
-    /// </summary>
-    /// <param name="title">The title of the post.</param>
-    /// <param name="content">The content of the post.</param>
-    /// <param name="creatorUserId">The ID of the user who created the post.</param>
-    /// <param name="forumId">The ID of the forum where the post is created.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the inserted post.</returns>
-    public async Task<PostDto> InsertPost(string title, string content, Guid creatorUserId, Guid forumId)
+    /// <inheritdoc />
+    public async Task<PostDto> InsertPost(string content, Guid creatorUserId, Guid forumId)
     {
         try
         {
             var post = new PostsDao
             {
-                Headline = title,
+                Headline = "",
                 Content = content,
                 UserId = creatorUserId,
-                ForumId = forumId
+                ForumId = forumId,
             };
             Logger.LogInfo($"Inserting a new post into the database {post}");
             var insertedPost = await DatabaseActions.Insert(post);
@@ -60,28 +50,24 @@ public class PostService : IPostService
         catch (DatabaseIudActionException ex)
         {
             throw new PostIudException(
-                $"An error occurred while inserting the post. Parameters: {title} {content}, {creatorUserId}, {forumId}",
+                $"An error occurred while inserting a post starting with '{content[..Math.Min(15, content.Length)]}...'",
                 ex);
         }
         catch (GeneralDatabaseException ex)
         {
             throw new PostGeneralException(
-                $"A database error occurred while inserting the post. Parameters: {title} {content}, {creatorUserId}, {forumId}",
+                $"A database error occurred while inserting a post starting with '{content[..Math.Min(15, content.Length)]}...'",
                 ex);
         }
         catch (Exception ex)
         {
             throw new PostGeneralException(
-                $"An error occurred while inserting the post. Parameters: {title} {content}, {creatorUserId}, {forumId}",
+                $"An error occurred while inserting the post starting with '{content[..Math.Min(15, content.Length)]}...'",
                 ex);
         }
     }
 
-    /// <summary>
-    ///     Updates an existing post in the database.
-    /// </summary>
-    /// <param name="post">The post to update.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the updated post.</returns>
+    /// <inheritdoc />
     public async Task<PostDto> UpdatePost(PostDto post)
     {
         try
@@ -100,14 +86,7 @@ public class PostService : IPostService
         }
     }
 
-    /// <summary>
-    ///     Deletes a post from the database.
-    /// </summary>
-    /// <param name="post">The post to delete.</param>
-    /// <returns>
-    ///     A task that represents the asynchronous operation. The task result indicates whether the deletion was
-    ///     successful.
-    /// </returns>
+    /// <inheritdoc />
     public async Task<bool> DeletePost(PostDto post)
     {
         try
@@ -126,13 +105,7 @@ public class PostService : IPostService
         }
     }
 
-    /// <summary>
-    ///     Retrieves a list of post titles from a forum for a given user, limited by the specified number.
-    /// </summary>
-    /// <param name="userId">The ID of the user.</param>
-    /// <param name="startOfSet">The starting index of the set.</param>
-    /// <param name="endOfSet">The ending index of the set.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of post titles.</returns>
+    /// <inheritdoc />
     public async Task<List<string>> GetPostsFromForum(Guid userId, int startOfSet, int endOfSet)
     {
         //TODO Fix this method!!
@@ -174,13 +147,7 @@ public class PostService : IPostService
         }
     }
 
-    /// <summary>
-    ///     Retrieves a list of posts from the database based on the given userId.
-    /// </summary>
-    /// <param name="userId">The ID of the user.</param>
-    /// <param name="startOfSet">The starting index of the set.</param>
-    /// <param name="endOfSet">The ending index of the set.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of PostDto objects.</returns>
+    /// <inheritdoc />
     public async Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet)
     {
         try
@@ -309,6 +276,33 @@ public class PostService : IPostService
         }
     }
 
+    /// <inheritdoc />
+    public async Task<List<Guid>> GetAllPosts(int page, int pageSize)
+    {
+        var query = await _supabaseClient
+            .From<PostsDao>()
+            .Range((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
+            .Order("created_at", Constants.Ordering.Descending)
+            .Get();
+        var daoList = query.Models;
+        var result =
+            from dao in daoList
+            where dao.PostId is not null
+            select dao.PostId;
+        return result.OfType<Guid>().ToList();
+    }
+
+    public async Task<PostDto?> GetPostById(Guid postId)
+    {
+        var query = await _supabaseClient
+            .From<PostsDao>()
+            .Where(post => post.PostId == postId)
+            .Get();
+        if (query.Model is null)
+            return null;
+        return new PostDto().Mapper(query.Model);
+    }
+
     /// <summary>
     ///     Converts a list of PostsDao objects to a list of PostDto objects.
     /// </summary>
@@ -320,6 +314,7 @@ public class PostService : IPostService
         return posts.Select(post => new PostDto().Mapper(post)).ToList();
     }
     
+    /// <inheritdoc />
     public async Task<int> GetForumCountByUserId(Guid userId)
     {
         try

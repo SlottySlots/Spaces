@@ -9,9 +9,7 @@ using Supabase;
 
 namespace SlottyMedia.Backend.Services;
 
-/// <summary>
-///     The ForumService class is responsible for handling forum related operations.
-/// </summary>
+/// <inheritdoc />
 public class ForumService : IForumService
 {
     private static readonly Logging<ForumService> Logger = new();
@@ -26,14 +24,7 @@ public class ForumService : IForumService
         _supabaseClient = supabaseClient;
     }
 
-    /// <summary>
-    ///     Inserts a new forum into the database.
-    /// </summary>
-    /// <param name="creatorUserId">The Creator UserID</param>
-    /// ///
-    /// <param name="forumTopic">The Topic from the Forum</param>
-    /// <returns>Returns the inserted ForumDto object.</returns>
-    /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while inserting the forum.</exception>
+    /// <inheritdoc />
     public async Task<ForumDto> InsertForum(Guid creatorUserId, string forumTopic)
     {
         try
@@ -70,12 +61,7 @@ public class ForumService : IForumService
         }
     }
 
-    /// <summary>
-    ///     Deletes a forum from the database based on the given forum ID.
-    /// </summary>
-    /// <param name="forum">The forum to delete.</param>
-    /// <returns>Returns a Task representing the asynchronous operation.</returns>
-    /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while deleting the forum.</exception>
+    /// <inheritdoc />
     public async Task DeleteForum(ForumDto forum)
     {
         try
@@ -99,6 +85,14 @@ public class ForumService : IForumService
             // Handle any other exceptions.
             throw new ForumGeneralException($"An error occurred while deleting the forum. Forum: {forum}", ex);
         }
+    }
+
+    /// <inheritdoc />
+    public async Task<ForumDto> GetForumByName(string forumName)
+    {
+        Logger.LogDebug($"Fetching forum with name '{forumName}'...");
+        var dao = await _databaseActions.GetEntityByField<ForumDao>("forumTopic", forumName);
+        return new ForumDto().Mapper(dao);
     }
     
     /// <summary>
