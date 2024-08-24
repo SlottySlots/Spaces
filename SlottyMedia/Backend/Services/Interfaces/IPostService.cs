@@ -51,4 +51,6 @@ public interface IPostService
 
     public Task<int> GetForumCountByUserId(Guid userId);
 
+    public Task<int> GetPostCountByForumId(Guid forumId);
+
 }

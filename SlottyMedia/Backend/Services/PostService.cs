@@ -6,6 +6,7 @@ using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.LoggingProvider;
 using Supabase.Postgrest;
+using Client = Supabase.Client;
 
 namespace SlottyMedia.Backend.Services;
 
@@ -15,15 +16,17 @@ namespace SlottyMedia.Backend.Services;
 public class PostService : IPostService
 {
     private static readonly Logging<PostService> Logger = new();
+    private readonly Client _supabaseClient;
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="PostService" /> class.
     /// </summary>
     /// <param name="databaseActions">The database actions interface.</param>
-    public PostService(IDatabaseActions databaseActions)
+    public PostService(IDatabaseActions databaseActions, Client supabaseClient)
     {
         Logger.LogInfo("PostService initialized");
         DatabaseActions = databaseActions;
+        _supabaseClient = supabaseClient;
     }
 
     /// <summary>
@@ -318,20 +321,28 @@ public class PostService : IPostService
     }
     
     public async Task<int> GetForumCountByUserId(Guid userId)
-{
-    try
     {
-        Logger.LogInfo($"Counting forums for the user with ID: {userId}");
-        var forumCount = await DatabaseActions.GetCountForUserForums(userId.ToString());
-        return forumCount;
+        try
+        {
+            Logger.LogInfo($"Counting forums for the user with ID: {userId}");
+            var forumCount = await DatabaseActions.GetCountForUserForums(userId.ToString());
+            return forumCount;
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new PostGeneralException($"A database error occurred while counting the forums. UserID: {userId}", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new PostGeneralException($"An error occurred while counting the forums. UserID: {userId}", ex);
+        }
     }
-    catch (GeneralDatabaseException ex)
+
+    public async Task<int> GetPostCountByForumId(Guid forumId)
     {
-        throw new PostGeneralException($"A database error occurred while counting the forums. UserID: {userId}", ex);
+        return await _supabaseClient
+            .From<PostsDao>()
+            .Where(post => post.ForumId == forumId)
+            .Count(Constants.CountType.Exact);
     }
-    catch (Exception ex)
-    {
-        throw new PostGeneralException($"An error occurred while counting the forums. UserID: {userId}", ex);
-    }
-}
 }
