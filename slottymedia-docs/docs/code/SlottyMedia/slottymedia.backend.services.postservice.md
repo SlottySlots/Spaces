@@ -27,18 +27,20 @@ IDatabaseActions<br>
 
 ## Constructors
 
-### **PostService(IDatabaseActions)**
+### **PostService(IDatabaseActions, Client)**
 
 Initializes a new instance of the [PostService](./slottymedia.backend.services.postservice.md) class.
 
 ```csharp
-public PostService(IDatabaseActions databaseActions)
+public PostService(IDatabaseActions databaseActions, Client supabaseClient)
 ```
 
 #### Parameters
 
 `databaseActions` IDatabaseActions<br>
 The database actions interface.
+
+`supabaseClient` Client<br>
 
 ## Methods
 
@@ -214,6 +216,23 @@ public Task<int> GetForumCountByUserId(Guid userId)
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetPostCountByForumId(Guid)**
+
+Retrieves the total number of posts associated with a specific forum by its ID.
+
+```csharp
+public Task<int> GetPostCountByForumId(Guid forumId)
+```
+
+#### Parameters
+
+`forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The unique identifier of the forum.
 
 #### Returns
 

@@ -2,7 +2,7 @@ using SlottyMedia.Backend.Dtos;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 
-public interface ISpacesCardVm
+public interface ISpacesCardVm 
 {
     /// <summary>A list containing all trending spaces</summary>
     List<ForumDto> TrendingSpaces { get; set; }
@@ -20,5 +20,5 @@ public interface ISpacesCardVm
     /// <summary>
     /// Fetches all trending spaces, recent spaces and evaluates how many posts exist per space.
     /// </summary>
-    Task Fetch();
+    Task Fetch(); 
 }

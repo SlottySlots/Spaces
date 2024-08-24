@@ -107,11 +107,43 @@ public class ForumService : IForumService
     /// <returns>A list of ForumDto objects representing all forums.</returns>
     public async Task<List<ForumDto>> GetForums()
     {
-        var query = await _supabaseClient
-            .From<ForumDao>()
-            .Get();
-        var forumDaos = query.Models;
-        return forumDaos.Select(dao => new ForumDto().Mapper(dao)).ToList();
+        try
+        {
+            // Retrieve forum data from the database
+            var query = await _supabaseClient
+                .From<ForumDao>()
+                .Get();
+
+            var forumDaos = query.Models;
+
+            // Map ForumDao to ForumDto
+            return forumDaos.Select(dao => new ForumDto().Mapper(dao)).ToList();
+        }
+        catch (ArgumentNullException ex)
+        {
+            // Handle when an argument is null that shouldn't be
+            Logger.LogError($"ArgumentNullException: An argument was null but is not allowed: {ex.Message}");
+            throw new GeneralDatabaseException("A required argument was null while retrieving the forums.", ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            // Handle general database exceptions
+            Logger.LogError($"GeneralDatabaseException: A general database error occurred: {ex.Message}");
+            throw;
+        }
+        catch (Exception ex)
+        {
+            // Handle all other unexpected exceptions
+            Logger.LogError($"Exception: An unexpected error occurred: {ex.Message}");
+            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the forums.", ex);
+        }
     }
+    
+
+    
+    
+    
+    
+    
     
 }

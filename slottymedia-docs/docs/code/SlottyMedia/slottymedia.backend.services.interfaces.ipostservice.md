@@ -123,3 +123,17 @@ Task<int> GetForumCountByUserId(Guid userId)
 #### Returns
 
 [Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetPostCountByForumId(Guid)**
+
+```csharp
+Task<int> GetPostCountByForumId(Guid forumId)
+```
+
+#### Parameters
+
+`forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

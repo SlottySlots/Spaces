@@ -75,6 +75,7 @@ try
     builder.Services.AddScoped<ISignInFormVm, SignInFormVmImpl>();
     builder.Services.AddScoped<IMainLayoutVm, MainLayoutVmImpl>();
     builder.Services.AddScoped<ISpacesVm, SpacesVmImpl>();
+    builder.Services.AddScoped<ISpacesCardVm, SpacesCardVmImpl>();
 
 
     var app = builder.Build();

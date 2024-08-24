@@ -337,12 +337,43 @@ public class PostService : IPostService
             throw new PostGeneralException($"An error occurred while counting the forums. UserID: {userId}", ex);
         }
     }
-
+    
+    
+    /// <summary>
+    /// Retrieves the total number of posts associated with a specific forum by its ID.
+    /// </summary>
+    /// <param name="forumId">The unique identifier of the forum.</param>
     public async Task<int> GetPostCountByForumId(Guid forumId)
     {
-        return await _supabaseClient
-            .From<PostsDao>()
-            .Where(post => post.ForumId == forumId)
-            .Count(Constants.CountType.Exact);
+        if (forumId == Guid.Empty)
+        {
+            Logger.LogError("Invalid forum ID provided.");
+            throw new ArgumentException("Forum ID cannot be empty.", nameof(forumId));
+        }
+
+        try
+        {
+            Logger.LogDebug($"Retrieving post count for forum ID: {forumId}");
+            
+            var postCount = await _supabaseClient
+                .From<PostsDao>()
+                .Where(post => post.ForumId == forumId)
+                .Count(Constants.CountType.Exact);
+
+            Logger.LogDebug($"Post count for forum ID {forumId}: {postCount}");
+
+            return postCount;
+        }
+    
+        catch (ArgumentNullException ex)
+        {
+            Logger.LogError($"An argument was null while retrieving the post count for forum ID {forumId}: {ex.Message}");
+            throw new GeneralDatabaseException("A required argument was null while retrieving the post count.", ex);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError($"An unexpected error occurred while retrieving the post count for forum ID {forumId}: {ex.Message}");
+            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the post count.", ex);
+        }
     }
 }

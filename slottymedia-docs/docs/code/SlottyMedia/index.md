@@ -116,6 +116,8 @@
 
 [SignupFormVmImpl](./slottymedia.backend.viewmodel.signupformvmimpl.md)
 
+[SpacesCardVmImpl](./slottymedia.backend.viewmodel.spacescardvmimpl.md)
+
 [SpacesVmImpl](./slottymedia.backend.viewmodel.spacesvmimpl.md)
 
 ## SlottyMedia.Backend.ViewModel.Interfaces
@@ -143,10 +145,6 @@
 [LoginLayout](./slottymedia.components.layout.loginlayout.md)
 
 [MainLayout](./slottymedia.components.layout.mainlayout.md)
-
-[SpaceLayout](./slottymedia.components.layout.spacelayout.md)
-
-[SpacesLayout](./slottymedia.components.layout.spaceslayout.md)
 
 ## SlottyMedia.Components.Pages
 
@@ -185,3 +183,5 @@
 ## SlottyMedia.Components.Partial.MainLayout
 
 [SpacesCard](./slottymedia.components.partial.mainlayout.spacescard.md)
+
+[SpacesCardNoAccount](./slottymedia.components.partial.mainlayout.spacescardnoaccount.md)

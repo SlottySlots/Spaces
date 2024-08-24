@@ -36,6 +36,18 @@ public string Topic { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+### **CreatedAt**
+
+The Date and Time the Forum was created.
+
+```csharp
+public DateTime CreatedAt { get; set; }
+```
+
+#### Property Value
+
+[DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)<br>
+
 ## Constructors
 
 ### **ForumDto()**
