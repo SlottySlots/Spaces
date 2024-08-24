@@ -356,3 +356,17 @@ Task<int> GetCountForUserForums(string userId)
 #### Exceptions
 
 [GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+
+### **GetTotalForumCount(String)**
+
+```csharp
+Task<int> GetTotalForumCount(string forumID)
+```
+
+#### Parameters
+
+`forumID` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

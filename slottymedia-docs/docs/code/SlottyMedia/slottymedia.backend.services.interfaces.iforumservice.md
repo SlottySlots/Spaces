@@ -76,3 +76,13 @@ The forum's name.
 
 [Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 The requested forum
+
+### **GetForums()**
+
+```csharp
+Task<List<ForumDto>> GetForums()
+```
+
+#### Returns
+
+[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
