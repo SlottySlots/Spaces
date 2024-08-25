@@ -41,3 +41,12 @@
     </div>
     
 </Card>
+
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        await ViewModel.Fetch();
+    }
+}
