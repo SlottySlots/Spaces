@@ -78,13 +78,19 @@
                 @if (!ViewModel.SpacePrompt.IsNullOrEmpty())
                 {
                     <Card Class="absolute left-0 top-0 translate-y-[40px] p-4 flex flex-col gap-3">
-                        <div>
-                            Unfortunately, there are no spaces yet.
-                            This example will fail:
+                        @foreach (var spaceName in ViewModel.SearchedSpaces)
+                        {
+                            <Tag OnClick="() => _selectSpace(spaceName)">
+                                #@spaceName
+                            </Tag>
+                        }
+                        @if (ViewModel.SearchedSpaces.Count > 0)
+                        {
+                            <div class="m-1 border-b border-athens-gray"></div>
+                        }
+                        <div class="text-sm">
+                            Your space doesn't exist? Create it!
                         </div>
-                        <Tag OnClick="_selectVivaLaVida">
-                            #VivaLaVida
-                        </Tag>
                     </Card>
                 }
                 
@@ -113,5 +119,5 @@
 
     async Task _handleInput(ChangeEventArgs e) => await ViewModel!.HandleSpacePromptChange(e, ValueChanged);
 
-    async Task _selectVivaLaVida() => await ViewModel!.HandleSpaceSelection("VivaLaVida");
+    async Task _selectSpace(string spaceName) => await ViewModel!.HandleSpaceSelection(spaceName);
 }

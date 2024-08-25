@@ -19,6 +19,9 @@ public interface IPostSubmissionFormVm
     /// <summary>The name of the space the user has selected. Null corresponds to no selection.</summary>
     string? SpaceName { get; set; }
     
+    /// <summary>A list containing all space names that contain the searched prompt</summary>
+    List<string> SearchedSpaces { get; set; }
+    
     /// <summary>An optional error message related to the post's space</summary>
     string? SpaceErrorMessage { get; set; }
     
