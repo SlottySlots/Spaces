@@ -164,8 +164,9 @@ public class UserService : IUserService
     {
         try
         {
+            var userDao = await _databaseActions.GetEntityByField<UserDao>("userID", user.UserId.ToString());
             Logger.LogInfo($"Updating user {user}");
-            var result = await _databaseActions.Update(user.Mapper());
+            var result = await _databaseActions.Update(userDao);
             return new UserDto().Mapper(result);
         }
         catch (DatabaseIudActionException ex)

@@ -61,7 +61,7 @@ public class UserDto
             UserId = UserId,
             UserName = Username,
             Description = Description,
-            CreatedAt = CreatedAt
+            CreatedAt = CreatedAt,
         };
     }
 
@@ -77,7 +77,6 @@ public class UserDto
         Username = user.UserName ?? string.Empty;
         Description = user.Description ?? string.Empty;
         CreatedAt = user.CreatedAt;
-
         return this;
     }
 

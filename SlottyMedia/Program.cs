@@ -79,6 +79,9 @@ try
     builder.Services.AddScoped<ISpacesCardVm, SpacesCardVmImpl>();
     builder.Services.AddScoped<IPostSubmissionFormVm, PostSubmissionFormVmImpl>();
     builder.Services.AddScoped<IHomePageVm, HomePageVmImpl>();
+    builder.Services.AddScoped<IAuthVmImpl, AuthVmImpl>();
+    builder.Services.AddScoped<IUserVmImpl, UserVmImpl>();
+    
 
     var app = builder.Build();
 
