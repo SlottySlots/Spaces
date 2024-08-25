@@ -2,7 +2,6 @@ using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Database;
-using SlottyMedia.Database.Daos;
 using SlottyMedia.LoggingProvider;
 using Supabase.Gotrue;
 
@@ -64,7 +63,7 @@ public class MainLayoutVmImpl : IMainLayoutVm
         var currentSession = _authService.GetCurrentSession();
         if (currentSession != null)
         {
-            var userId = Guid.Parse(currentSession.User!.Id!); 
+            var userId = Guid.Parse(currentSession.User!.Id!);
             var userDao = await _userService.GetUserBy(userId);
             var amountOfFriends = await _userService.GetCountOfUserFriends(userId);
             var amountOfSpaces = await _userService.GetCountOfUserSpaces(userId);

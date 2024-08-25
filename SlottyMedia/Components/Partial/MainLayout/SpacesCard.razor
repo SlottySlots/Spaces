@@ -1,11 +1,9 @@
-@using SlottyMedia.Backend.Services.Interfaces
 @using SlottyMedia.Backend.ViewModel.Interfaces
-@inject IAuthService AuthService
 @inject ISpacesCardVm ViewModel
 
 
 <Card Class="min-h-[250px] mt-20 mx-7 flex flex-col items-center">
-    
+
     <!-- title -->
     <h3 class="font-semibold text-lg">
         Spaces
@@ -25,7 +23,7 @@
                     #@(space.Topic)
                 </a>
                 <span h3 class="text-sm font-medium text-center text-cadet-gray w-fit">
-                    Activity: @(ViewModel.NumOfPostsInSpace[space.ForumId]) Posts
+                    Activity: @(space.PostCount) Posts
                 </span>
             </div>
         }
@@ -45,7 +43,7 @@
                     #@(space.Topic)
                 </a>
                 <span h3 class="text-sm font-medium text-center text-cadet-gray w-fit">
-                    Activity: @(ViewModel.NumOfPostsInSpace[space.ForumId]) Posts
+                    Activity: @(space.PostCount) Posts
                 </span>
             </div>
         }
@@ -54,7 +52,7 @@
     <a href="/spaces" class="mt-auto self-start mb-3 text-sm text-fandango duration-500 hover:text-crayola-orange">
         View all
     </a>
-    
+
 </Card>
 
 

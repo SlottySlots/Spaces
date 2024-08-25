@@ -79,6 +79,8 @@ The requested forum
 
 ### **GetForums()**
 
+Retrieves a list of all forums.
+
 ```csharp
 Task<List<ForumDto>> GetForums()
 ```
@@ -86,3 +88,32 @@ Task<List<ForumDto>> GetForums()
 #### Returns
 
 [Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains a list of ForumDto objects.
+
+### **DetermineRecentSpaces()**
+
+Retrieves the 3 most recent forums based on the creation date.
+
+```csharp
+Task<List<ForumDto>> DetermineRecentSpaces()
+```
+
+#### Returns
+
+[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains a list of the 3 most recent
+ ForumDto objects.
+
+### **GetTopForums()**
+
+Retrieves the top forums.
+
+```csharp
+Task<List<ForumDto>> GetTopForums()
+```
+
+#### Returns
+
+[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains a list of ForumDto objects
+ representing the top forums.

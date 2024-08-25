@@ -45,6 +45,8 @@ public Dictionary<Guid, int> NumOfPostsInSpace { get; set; }
 
 ### **SpacesCardVmImpl(IForumService, IPostService)**
 
+Initializes this ViewModel
+
 ```csharp
 public SpacesCardVmImpl(IForumService forumService, IPostService postService)
 ```

@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Backend.ViewModel.Interfaces
 
+This ViewModel represents the state of the [SpacesCard](./slottymedia.components.partial.mainlayout.spacescard.md) component.
+
 ```csharp
 public interface ISpacesCardVm
 ```

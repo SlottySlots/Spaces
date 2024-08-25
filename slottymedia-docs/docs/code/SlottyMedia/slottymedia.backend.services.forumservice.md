@@ -11,17 +11,15 @@ Implements [IForumService](./slottymedia.backend.services.interfaces.iforumservi
 
 ## Constructors
 
-### **ForumService(IDatabaseActions, Client)**
+### **ForumService(IDatabaseActions)**
 
 ```csharp
-public ForumService(IDatabaseActions databaseActions, Client supabaseClient)
+public ForumService(IDatabaseActions databaseActions)
 ```
 
 #### Parameters
 
 `databaseActions` IDatabaseActions<br>
-
-`supabaseClient` Client<br>
 
 ## Methods
 
@@ -81,3 +79,23 @@ public Task<List<ForumDto>> GetForums()
 
 [Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A list of ForumDto objects representing all forums.
+
+### **DetermineRecentSpaces()**
+
+```csharp
+public Task<List<ForumDto>> DetermineRecentSpaces()
+```
+
+#### Returns
+
+[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetTopForums()**
+
+```csharp
+public Task<List<ForumDto>> GetTopForums()
+```
+
+#### Returns
+
+[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

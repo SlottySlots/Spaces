@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using Supabase.Postgrest;
 using Supabase.Postgrest.Models;
@@ -152,17 +153,26 @@ public interface IDatabaseActions
     ///     Thrown when a network error, argument null, invalid operation, timeout, task
     ///     cancellation, or unexpected error occurs.
     /// </exception>
-    
     public Task<int> GetCountByField<T>(string field, string value) where T : BaseModel, new();
 
     /// <summary>
-    /// This method retrieves the count of Forums for a specific user.
+    ///     This method retrieves the count of Forums for a specific user.
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
     /// <exception cref="GeneralDatabaseException"></exception>
     public Task<int> GetCountForUserForums(string userId);
 
+    /// <summary>
+    ///     Retrieves the total count of forums for a specific forum ID.
+    /// </summary>
+    /// <param name="forumID">The ID of the forum to count.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the total count of forums.</returns>
+    /// <exception cref="GeneralDatabaseException">
+    ///     Thrown when a network error, argument null, invalid operation, timeout, task
+    ///     cancellation, or unexpected error occurs.
+    /// </exception>
     public Task<int> GetTotalForumCount(string forumID);
-    
+
+    public Task<List<TopForumDao>> GetTopForums();
 }

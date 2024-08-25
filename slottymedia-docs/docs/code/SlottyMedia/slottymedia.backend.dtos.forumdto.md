@@ -48,6 +48,16 @@ public DateTime CreatedAt { get; set; }
 
 [DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)<br>
 
+### **PostCount**
+
+```csharp
+public int PostCount { get; set; }
+```
+
+#### Property Value
+
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
 ## Constructors
 
 ### **ForumDto()**
@@ -83,6 +93,22 @@ public ForumDto Mapper(ForumDao forumDao)
 #### Parameters
 
 `forumDao` ForumDao<br>
+
+#### Returns
+
+[ForumDto](./slottymedia.backend.dtos.forumdto.md)<br>
+
+### **Mapper(TopForumDao)**
+
+THis method maps the ForumDao to a ForumDto.
+
+```csharp
+public ForumDto Mapper(TopForumDao forumDao)
+```
+
+#### Parameters
+
+`forumDao` TopForumDao<br>
 
 #### Returns
 

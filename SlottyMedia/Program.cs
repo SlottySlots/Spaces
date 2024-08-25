@@ -68,7 +68,7 @@ try
     builder.Services.AddScoped<IAuthService, AuthService>(); // Scoped
     builder.Services.AddScoped<ISignupService, SignupServiceImpl>();
     builder.Services.AddScoped<ISearchService, SearchService>();
-    builder.Services.AddScoped <IForumService, ForumService>();
+    builder.Services.AddScoped<IForumService, ForumService>();
 
     // Viewmodel
     logger.LogInfo("Adding Viewmodels to the container");

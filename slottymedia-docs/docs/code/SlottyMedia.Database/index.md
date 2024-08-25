@@ -20,6 +20,8 @@
 
 [RoleDao](./slottymedia.database.daos.roledao.md)
 
+[TopForumDao](./slottymedia.database.daos.topforumdao.md)
+
 [UserDao](./slottymedia.database.daos.userdao.md)
 
 [UserLikePostRelationDao](./slottymedia.database.daos.userlikepostrelationdao.md)

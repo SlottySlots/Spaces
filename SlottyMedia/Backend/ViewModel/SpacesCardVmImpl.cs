@@ -5,24 +5,14 @@ using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
 
-
 /// <inheritdoc />
 public class SpacesCardVmImpl : ISpacesCardVm
 {
+    private static readonly Logging<SpacesCardVmImpl> Logger = new();
     private readonly IForumService _forumService;
     private readonly IPostService _postService;
-    private static readonly Logging<SpacesCardVmImpl> Logger = new();
 
-    /// <inheritdoc />
-    public List<ForumDto> TrendingSpaces { get; set; }
-    
-    /// <inheritdoc />
-    public List<ForumDto> RecentSpaces { get; set; }
-    
-    /// <inheritdoc />
-    public Dictionary<Guid, int> NumOfPostsInSpace { get; set; }
 
-    
     /// <summary>Initializes this ViewModel</summary>
     public SpacesCardVmImpl(IForumService forumService, IPostService postService)
     {
@@ -34,18 +24,33 @@ public class SpacesCardVmImpl : ISpacesCardVm
     }
 
     /// <inheritdoc />
+    public List<ForumDto> TrendingSpaces { get; set; }
+
+    /// <inheritdoc />
+    public List<ForumDto> RecentSpaces { get; set; }
+
+    /// <inheritdoc />
+    public Dictionary<Guid, int> NumOfPostsInSpace { get; set; }
+
+    /// <inheritdoc />
     public async Task Fetch()
     {
+        try
+        {
+            // Calculate the number of posts in each forum and determine trending spaces
+            await DetermineTrendingSpaces();
+
+            // Determine the most recent spaces based on creation date
+            await DetermineRecentSpaces();
+        }
+        catch (Exception e)
+        {
+            Logger.LogError($"An error occurred while fetching spaces: {e.Message}");
+        }
         // Fetch all forums from the service
-        var forums = await _forumService.GetForums();
+        //var forums = await _forumService.GetForums();
 
-        await FetchNumOfPostsInSpaces(forums);
-
-        // Calculate the number of posts in each forum and determine trending spaces
-        DetermineTrendingSpaces(forums);
-            
-        // Determine the most recent spaces based on creation date
-        DetermineRecentSpaces(forums);
+        //await FetchNumOfPostsInSpaces(forums);
     }
 
     private async Task FetchNumOfPostsInSpaces(List<ForumDto> spaces)
@@ -59,39 +64,20 @@ public class SpacesCardVmImpl : ISpacesCardVm
         }
     }
 
-    private void DetermineTrendingSpaces(List<ForumDto> forums)
+    private async Task DetermineTrendingSpaces()
     {
-        var query =
-            from space in forums
-            from kvp in NumOfPostsInSpace
-            where space.ForumId == kvp.Key
-            orderby kvp.Value descending
-            select space;
-        TrendingSpaces = query.Take(3).ToList();
+        TrendingSpaces = await _forumService.GetTopForums();
 
         // Log the trending forums for debugging purposes
-        Logger.LogDebug("Trending Spaces determined:");
-        foreach (var forum in TrendingSpaces)
-        {
-            Logger.LogDebug($"Forum ID: {forum.ForumId}, Post Count: {NumOfPostsInSpace[forum.ForumId]}");
-        }
+        Logger.LogDebug("Trending Spaces determined");
     }
-    
-    private void DetermineRecentSpaces(List<ForumDto> forums)
+
+    private async Task DetermineRecentSpaces()
     {
         // Sort forums by creation date in descending order and take the top 3
-        RecentSpaces = forums
-            .OrderByDescending(f => f.CreatedAt)
-            .Take(3)
-            .ToList();
+        RecentSpaces = await _forumService.DetermineRecentSpaces();
 
         // Log the recent forums for debugging purposes
-        Logger.LogDebug("Recent Spaces determined:");
-        foreach (var forum in RecentSpaces)
-        {
-            Logger.LogDebug($"Forum ID: {forum.ForumId}, Created At: {forum.CreatedAt}");
-        }
+        Logger.LogDebug("Recent Spaces determined");
     }
-    
-    
 }

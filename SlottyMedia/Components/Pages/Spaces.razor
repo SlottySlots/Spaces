@@ -1,8 +1,7 @@
 ﻿@page "/spaces"
-@using SlottyMedia.Backend.ViewModel
-@using SlottyMedia.LoggingProvider;
 @using SlottyMedia.Backend.ViewModel.Interfaces
-@layout MainLayout 
+@using SlottyMedia.LoggingProvider
+@layout MainLayout
 
 @inject ISpacesVm SpacesVm
 <PageTitle>Slotty Media | Spaces</PageTitle>
@@ -14,32 +13,32 @@
 }
 else if (SpacesVm.Forums.Any())
 {
-<ul>
-    @foreach (var forum in SpacesVm.Forums)
-    {
-        <Card class="min-h-[150px] mt-20 mx-7 flex flex-col items-center">
-            <h3 class="font-semibold text-lg">
-                @(forum.Topic)
-            </h3>
-        </Card>
-    }
-</ul>
+    <ul>
+        @foreach (var forum in SpacesVm.Forums)
+        {
+            <Card class="min-h-[150px] mt-20 mx-7 flex flex-col items-center">
+                <h3 class="font-semibold text-lg">
+                    @(forum.Topic)
+                </h3>
+            </Card>
+        }
+    </ul>
 }
 else
 {
-<p>No forums available.</p>
+    <p>No forums available.</p>
 }
 
 @code {
-    private bool isLoading = false;
+    private bool isLoading;
     private static readonly Logging<Spaces> Logger = new();
 
     protected override async Task OnInitializedAsync()
     {
-        isLoading = true;  // Set loading state
+        isLoading = true; // Set loading state
         try
         {
-            await SpacesVm.LoadForums();  // Load forums automatically when the page is initialized
+            await SpacesVm.LoadForums(); // Load forums automatically when the page is initialized
         }
         catch (Exception ex)
         {
@@ -48,7 +47,8 @@ else
         }
         finally
         {
-            isLoading = false;  // Unset loading state
+            isLoading = false; // Unset loading state
         }
     }
+
 }

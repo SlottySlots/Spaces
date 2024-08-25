@@ -112,6 +112,8 @@
 
 ## SlottyMedia.Backend.ViewModel
 
+[AuthVmImpl](./slottymedia.backend.viewmodel.authvmimpl.md)
+
 [HomePageVmImpl](./slottymedia.backend.viewmodel.homepagevmimpl.md)
 
 [MainLayoutVmImpl](./slottymedia.backend.viewmodel.mainlayoutvmimpl.md)
@@ -126,7 +128,11 @@
 
 [SpacesVmImpl](./slottymedia.backend.viewmodel.spacesvmimpl.md)
 
+[UserVmImpl](./slottymedia.backend.viewmodel.uservmimpl.md)
+
 ## SlottyMedia.Backend.ViewModel.Interfaces
+
+[IAuthVmImpl](./slottymedia.backend.viewmodel.interfaces.iauthvmimpl.md)
 
 [IHomePageVm](./slottymedia.backend.viewmodel.interfaces.ihomepagevm.md)
 
@@ -141,6 +147,8 @@
 [ISpacesCardVm](./slottymedia.backend.viewmodel.interfaces.ispacescardvm.md)
 
 [ISpacesVm](./slottymedia.backend.viewmodel.interfaces.ispacesvm.md)
+
+[IUserVmImpl](./slottymedia.backend.viewmodel.interfaces.iuservmimpl.md)
 
 ## SlottyMedia.Components
 

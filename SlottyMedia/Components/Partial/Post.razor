@@ -1,7 +1,6 @@
 @using SlottyMedia.Backend.Dtos
-@using SlottyMedia.Backend.Services.Interfaces
-
-@inject IUserService UserService;
+@using SlottyMedia.Backend.ViewModel
+@inject UserVmImpl UserService;
 
 
 @if (!_isLoading)
@@ -70,7 +69,6 @@
 
     </div>
 }
-
 
 
 @if (_isLoading)

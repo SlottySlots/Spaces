@@ -6,7 +6,6 @@ using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.LoggingProvider;
 using Supabase.Postgrest;
-using Client = Supabase.Client;
 
 namespace SlottyMedia.Backend.Services;
 
@@ -15,17 +14,14 @@ public class PostService : IPostService
 {
     private static readonly Logging<PostService> Logger = new();
 
-    private readonly Supabase.Client _supabaseClient;
-
     /// <summary>
     ///     Initializes a new instance of the <see cref="PostService" /> class.
     /// </summary>
     /// <param name="databaseActions">The database actions interface.</param>
-    public PostService(IDatabaseActions databaseActions, Supabase.Client supabaseClient)
+    public PostService(IDatabaseActions databaseActions)
     {
         Logger.LogInfo("PostService initialized");
         DatabaseActions = databaseActions;
-        _supabaseClient = supabaseClient;
     }
 
     /// <inheritdoc />
@@ -41,7 +37,7 @@ public class PostService : IPostService
                 Headline = "",
                 Content = content,
                 UserId = creatorUserId,
-                ForumId = forumId,
+                ForumId = forumId
             };
             Logger.LogInfo($"Inserting a new post into the database {post}");
             var insertedPost = await DatabaseActions.Insert(post);
@@ -144,6 +140,120 @@ public class PostService : IPostService
             throw new PostGeneralException(
                 $"An error occurred while fetching the posts. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
                 ex);
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<List<Guid>> GetAllPosts(int page, int pageSize = 10)
+    {
+        try
+        {
+            Logger.LogInfo($"Fetching all posts for page {page} with page size {pageSize}");
+            var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
+                x => new object[] { x.PostId! },
+                new List<(string, Constants.Operator, string)>(),
+                page * pageSize,
+                (page - 1) * pageSize,
+                ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
+            );
+
+            var result = posts
+                .Where(post => post.PostId is not null)
+                .Select(post => post.PostId!.Value)
+                .ToList();
+
+            return result;
+        }
+        catch (DatabaseMissingItemException ex)
+        {
+            throw new PostNotFoundException(
+                $"Posts for the given page and page size were not found. Page: {page}, PageSize: {pageSize}", ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new PostGeneralException(
+                $"A database error occurred while fetching the posts. Page: {page}, PageSize: {pageSize}", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new PostGeneralException(
+                $"An error occurred while fetching the posts. Page: {page}, PageSize: {pageSize}", ex);
+        }
+    }
+
+    public async Task<PostDto?> GetPostById(Guid postId)
+    {
+        try
+        {
+            Logger.LogInfo($"Fetching post with ID: {postId}");
+            var post = await DatabaseActions.GetEntityByField<PostsDao>("postID", postId.ToString());
+            return new PostDto().Mapper(post);
+        }
+        catch (DatabaseMissingItemException ex)
+        {
+            throw new PostNotFoundException($"Post with ID {postId} was not found.", ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new PostGeneralException($"A database error occurred while fetching the post with ID {postId}.", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new PostGeneralException($"An error occurred while fetching the post with ID {postId}.", ex);
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<int> GetForumCountByUserId(Guid userId)
+    {
+        try
+        {
+            Logger.LogInfo($"Counting forums for the user with ID: {userId}");
+            var forumCount = await DatabaseActions.GetCountForUserForums(userId.ToString());
+            return forumCount;
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new PostGeneralException($"A database error occurred while counting the forums. UserID: {userId}",
+                ex);
+        }
+        catch (Exception ex)
+        {
+            throw new PostGeneralException($"An error occurred while counting the forums. UserID: {userId}", ex);
+        }
+    }
+
+
+    /// <summary>
+    ///     Retrieves the total number of posts associated with a specific forum by its ID.
+    /// </summary>
+    /// <param name="forumId">The unique identifier of the forum.</param>
+    public async Task<int> GetPostCountByForumId(Guid forumId)
+    {
+        if (forumId == Guid.Empty)
+        {
+            Logger.LogError("Invalid forum ID provided.");
+            throw new ArgumentException("Forum ID cannot be empty.", nameof(forumId));
+        }
+
+        try
+        {
+            Logger.LogDebug($"Retrieving post count for forum ID: {forumId}");
+            var postCount = await DatabaseActions.GetCountByField<PostsDao>("associated_forumID", forumId.ToString());
+            Logger.LogDebug($"Post count for forum ID {forumId}: {postCount}");
+            return postCount;
+        }
+        catch (ArgumentNullException ex)
+        {
+            Logger.LogError(
+                $"An argument was null while retrieving the post count for forum ID {forumId}: {ex.Message}");
+            throw new GeneralDatabaseException("A required argument was null while retrieving the post count.", ex);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(
+                $"An unexpected error occurred while retrieving the post count for forum ID {forumId}: {ex.Message}");
+            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the post count.", ex);
         }
     }
 
@@ -276,33 +386,6 @@ public class PostService : IPostService
         }
     }
 
-    /// <inheritdoc />
-    public async Task<List<Guid>> GetAllPosts(int page, int pageSize)
-    {
-        var query = await _supabaseClient
-            .From<PostsDao>()
-            .Range((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
-            .Order("created_at", Constants.Ordering.Descending)
-            .Get();
-        var daoList = query.Models;
-        var result =
-            from dao in daoList
-            where dao.PostId is not null
-            select dao.PostId;
-        return result.OfType<Guid>().ToList();
-    }
-
-    public async Task<PostDto?> GetPostById(Guid postId)
-    {
-        var query = await _supabaseClient
-            .From<PostsDao>()
-            .Where(post => post.PostId == postId)
-            .Get();
-        if (query.Model is null)
-            return null;
-        return new PostDto().Mapper(query.Model);
-    }
-
     /// <summary>
     ///     Converts a list of PostsDao objects to a list of PostDto objects.
     /// </summary>
@@ -312,63 +395,5 @@ public class PostService : IPostService
     {
         Logger.LogInfo("Mapping posts to DTOs");
         return posts.Select(post => new PostDto().Mapper(post)).ToList();
-    }
-    
-    /// <inheritdoc />
-    public async Task<int> GetForumCountByUserId(Guid userId)
-    {
-        try
-        {
-            Logger.LogInfo($"Counting forums for the user with ID: {userId}");
-            var forumCount = await DatabaseActions.GetCountForUserForums(userId.ToString());
-            return forumCount;
-        }
-        catch (GeneralDatabaseException ex)
-        {
-            throw new PostGeneralException($"A database error occurred while counting the forums. UserID: {userId}", ex);
-        }
-        catch (Exception ex)
-        {
-            throw new PostGeneralException($"An error occurred while counting the forums. UserID: {userId}", ex);
-        }
-    }
-    
-    
-    /// <summary>
-    /// Retrieves the total number of posts associated with a specific forum by its ID.
-    /// </summary>
-    /// <param name="forumId">The unique identifier of the forum.</param>
-    public async Task<int> GetPostCountByForumId(Guid forumId)
-    {
-        if (forumId == Guid.Empty)
-        {
-            Logger.LogError("Invalid forum ID provided.");
-            throw new ArgumentException("Forum ID cannot be empty.", nameof(forumId));
-        }
-
-        try
-        {
-            Logger.LogDebug($"Retrieving post count for forum ID: {forumId}");
-            
-            var postCount = await _supabaseClient
-                .From<PostsDao>()
-                .Where(post => post.ForumId == forumId)
-                .Count(Constants.CountType.Exact);
-
-            Logger.LogDebug($"Post count for forum ID {forumId}: {postCount}");
-
-            return postCount;
-        }
-    
-        catch (ArgumentNullException ex)
-        {
-            Logger.LogError($"An argument was null while retrieving the post count for forum ID {forumId}: {ex.Message}");
-            throw new GeneralDatabaseException("A required argument was null while retrieving the post count.", ex);
-        }
-        catch (Exception ex)
-        {
-            Logger.LogError($"An unexpected error occurred while retrieving the post count for forum ID {forumId}: {ex.Message}");
-            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the post count.", ex);
-        }
     }
 }

@@ -111,6 +111,20 @@ public Task<UserDto> UpdateUser(UserDao user)
 
 [Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
+### **UpdateUser(UserDto)**
+
+```csharp
+public Task<UserDto> UpdateUser(UserDto user)
+```
+
+#### Parameters
+
+`user` [UserDto](./slottymedia.backend.dtos.userdto.md)<br>
+
+#### Returns
+
+[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
 ### **GetUserBy(Nullable&lt;Guid&gt;, String, String)**
 
 ```csharp

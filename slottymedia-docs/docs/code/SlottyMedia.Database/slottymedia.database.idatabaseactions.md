@@ -359,6 +359,8 @@ Task<int> GetCountForUserForums(string userId)
 
 ### **GetTotalForumCount(String)**
 
+Retrieves the total count of forums for a specific forum ID.
+
 ```csharp
 Task<int> GetTotalForumCount(string forumID)
 ```
@@ -366,7 +368,25 @@ Task<int> GetTotalForumCount(string forumID)
 #### Parameters
 
 `forumID` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The ID of the forum to count.
 
 #### Returns
 
 [Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains the total count of forums.
+
+#### Exceptions
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.
+
+### **GetTopForums()**
+
+```csharp
+Task<List<TopForumDao>> GetTopForums()
+```
+
+#### Returns
+
+[Task&lt;List&lt;TopForumDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

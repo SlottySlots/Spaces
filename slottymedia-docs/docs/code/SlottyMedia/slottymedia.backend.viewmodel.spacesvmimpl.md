@@ -25,6 +25,8 @@ public List<ForumDto> Forums { get; private set; }
 
 ### **SpacesVmImpl(IForumService)**
 
+Initializes this ViewModel
+
 ```csharp
 public SpacesVmImpl(IForumService forumService)
 ```
