@@ -23,20 +23,18 @@ IDatabaseActions<br>
 
 ## Constructors
 
-### **PostService(IDatabaseActions, Client)**
+### **PostService(IDatabaseActions)**
 
 Initializes a new instance of the [PostService](./slottymedia.backend.services.postservice.md) class.
 
 ```csharp
-public PostService(IDatabaseActions databaseActions, Client supabaseClient)
+public PostService(IDatabaseActions databaseActions)
 ```
 
 #### Parameters
 
 `databaseActions` IDatabaseActions<br>
 The database actions interface.
-
-`supabaseClient` Client<br>
 
 ## Methods
 
@@ -176,7 +174,7 @@ A task that represents the asynchronous operation. The task result contains a li
 ### **GetAllPosts(Int32, Int32)**
 
 ```csharp
-public Task<List<Guid>> GetAllPosts(int page, int pageSize)
+public Task<List<PostDto>> GetAllPosts(int page, int pageSize)
 ```
 
 #### Parameters
@@ -187,7 +185,7 @@ public Task<List<Guid>> GetAllPosts(int page, int pageSize)
 
 #### Returns
 
-[Task&lt;List&lt;Guid&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **GetPostById(Guid)**
 

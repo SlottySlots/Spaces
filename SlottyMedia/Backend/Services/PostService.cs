@@ -14,17 +14,14 @@ public class PostService : IPostService
 {
     private static readonly Logging<PostService> Logger = new();
 
-    private readonly Supabase.Client _supabaseClient;
-
     /// <summary>
     ///     Initializes a new instance of the <see cref="PostService" /> class.
     /// </summary>
     /// <param name="databaseActions">The database actions interface.</param>
-    public PostService(IDatabaseActions databaseActions, Supabase.Client supabaseClient)
+    public PostService(IDatabaseActions databaseActions)
     {
         Logger.LogInfo("PostService initialized");
         DatabaseActions = databaseActions;
-        _supabaseClient = supabaseClient;
     }
 
     /// <inheritdoc />
@@ -276,30 +273,51 @@ public class PostService : IPostService
     }
 
     /// <inheritdoc />
-    public async Task<List<Guid>> GetAllPosts(int page, int pageSize)
+    public async Task<List<PostDto>> GetAllPosts(int page, int pageSize = 10)
     {
-        var query = await _supabaseClient
-            .From<PostsDao>()
-            .Range((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
-            .Order("created_at", Constants.Ordering.Descending)
-            .Get();
-        var daoList = query.Models;
-        var result =
-            from dao in daoList
-            where dao.PostId is not null
-            select dao.PostId;
-        return result.OfType<Guid>().ToList();
+        try
+        {
+            Logger.LogInfo($"Fetching all posts for page {page} with page size {pageSize}");
+            var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
+                x => new object[] { x.PostId!, x.Content!, x.CreatedAt, x.UserId!, x.ForumId! },
+                new List<(string, Constants.Operator, string)>(),
+                (page - 1) * pageSize + pageSize,
+                (page - 1) * pageSize,
+                ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
+            );
+
+            return ConvertPostsToPostDtos(posts);
+        }
+        catch (DatabaseMissingItemException ex)
+        {
+            Logger.LogError($"No posts found: {ex.Message}");
+            throw new PostNotFoundException("No posts found.", ex);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError($"An error occurred while fetching all posts: {ex.Message}");
+            throw new PostGeneralException("An error occurred while fetching all posts.", ex);
+        }
     }
 
     public async Task<PostDto?> GetPostById(Guid postId)
     {
-        var query = await _supabaseClient
-            .From<PostsDao>()
-            .Where(post => post.PostId == postId)
-            .Get();
-        if (query.Model is null)
-            return null;
-        return new PostDto().Mapper(query.Model);
+        try
+        {
+            Logger.LogInfo($"Fetching post with ID: {postId}");
+            var post = await DatabaseActions.GetEntityByField<PostsDao>("postID", postId.ToString());
+            return post is null ? null : new PostDto().Mapper(post);
+        }
+        catch (DatabaseMissingItemException ex)
+        {
+            Logger.LogError($"Post with ID {postId} not found: {ex.Message}");
+            throw new PostNotFoundException($"Post with the given ID was not found. ID: {postId}", ex);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError($"An error occurred while fetching the post with ID {postId}: {ex.Message}");
+            throw new PostGeneralException($"An error occurred while fetching the post. ID: {postId}", ex);
+        }
     }
 
     /// <summary>
