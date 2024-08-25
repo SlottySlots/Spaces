@@ -5,6 +5,8 @@ using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.LoggingProvider;
+using Supabase.Postgrest;
+using Client = Supabase.Client;
 
 namespace SlottyMedia.Backend.Services;
 
@@ -13,12 +15,14 @@ public class ForumService : IForumService
 {
     private static readonly Logging<ForumService> Logger = new();
     private readonly IDatabaseActions _databaseActions;
+    private readonly Client _supabase;
 
     /// Constructor to initialize the ForumService with the required database actions.
-    public ForumService(IDatabaseActions databaseActions)
+    public ForumService(IDatabaseActions databaseActions, Client supabase)
     {
         Logger.LogInfo("ForumService initialized");
         _databaseActions = databaseActions;
+        _supabase = supabase;
     }
 
     /// <inheritdoc />
@@ -91,4 +95,19 @@ public class ForumService : IForumService
         var dao = await _databaseActions.GetEntityByField<ForumDao>("forumTopic", forumName);
         return new ForumDto().Mapper(dao);
     }
+
+    /// <inheritdoc />
+    public async Task<List<ForumDto>> GetForumsByNameContaining(string name, int page, int pageSize = 10)
+    {
+        Logger.LogDebug($"Fetching all forums containing the substring '{name}' (page {page} with size {pageSize})");
+        var query = await _supabase
+            .From<ForumDao>()
+            .Filter(dao => dao.ForumTopic!, Constants.Operator.ILike, $"%{name}%")
+            .Range((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
+            .Get();
+        return query.Models
+            .Select(forum => new ForumDto().Mapper(forum))
+            .ToList();
+    }
+    
 }
