@@ -1,7 +1,12 @@
 using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Components.Partial.MainLayout;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 
+
+/// <summary>
+/// This ViewModel represents the state of the <see cref="SpacesCard"/> component.
+/// </summary>
 public interface ISpacesCardVm 
 {
     /// <summary>A list containing all trending spaces</summary>

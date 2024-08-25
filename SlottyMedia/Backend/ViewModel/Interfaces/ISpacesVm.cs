@@ -1,14 +1,21 @@
-﻿using System.Collections.ObjectModel;
-using Microsoft.IdentityModel.Tokens;
-using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Backend.ViewModel.Interfaces;
-using SlottyMedia.Backend.Dtos; 
-using SlottyMedia.LoggingProvider;
+﻿using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Components.Pages;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 
+
+/// <summary>
+/// This ViewModel represents the state of the <see cref="Spaces"/> Page.
+/// </summary>
 public interface ISpacesVm
 {
+    /// <summary>
+    /// A list containing all spaces that should be rendered
+    /// </summary>
     List<ForumDto> Forums { get; }
+    
+    /// <summary>
+    /// Fetches all forums and populates the <see cref="Forums"/> property.
+    /// </summary>
     Task LoadForums();
 }

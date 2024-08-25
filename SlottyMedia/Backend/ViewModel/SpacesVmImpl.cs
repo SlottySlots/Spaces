@@ -1,5 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using SlottyMedia.Backend.Services.Interfaces;
+﻿using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.LoggingProvider;
@@ -7,19 +6,24 @@ using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
 
+
+/// <inheritdoc />
 public class SpacesVmImpl : ISpacesVm
 {
     private readonly IForumService _forumService;
     private static readonly Logging<SpacesVmImpl> Logger = new();
-    private Logging<SpacesVmImpl> logger = new();
+    
+    /// <inheritdoc />
     public List<ForumDto> Forums { get; private set; }
 
+    /// <summary>Initializes this ViewModel</summary>
     public SpacesVmImpl(IForumService forumService)
     {
         _forumService = forumService ?? throw new ArgumentNullException(nameof(forumService));
         Forums = new List<ForumDto>();
     }
 
+    /// <inheritdoc />
     public async Task LoadForums()
     {
         try

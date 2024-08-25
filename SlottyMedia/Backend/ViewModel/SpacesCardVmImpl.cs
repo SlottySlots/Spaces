@@ -5,16 +5,25 @@ using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
 
+
+/// <inheritdoc />
 public class SpacesCardVmImpl : ISpacesCardVm
 {
     private readonly IForumService _forumService;
     private readonly IPostService _postService;
     private static readonly Logging<SpacesCardVmImpl> Logger = new();
 
+    /// <inheritdoc />
     public List<ForumDto> TrendingSpaces { get; set; }
+    
+    /// <inheritdoc />
     public List<ForumDto> RecentSpaces { get; set; }
+    
+    /// <inheritdoc />
     public Dictionary<Guid, int> NumOfPostsInSpace { get; set; }
 
+    
+    /// <summary>Initializes this ViewModel</summary>
     public SpacesCardVmImpl(IForumService forumService, IPostService postService)
     {
         _forumService = forumService;
@@ -24,6 +33,7 @@ public class SpacesCardVmImpl : ISpacesCardVm
         NumOfPostsInSpace = new Dictionary<Guid, int>();
     }
 
+    /// <inheritdoc />
     public async Task Fetch()
     {
         // Fetch all forums from the service
