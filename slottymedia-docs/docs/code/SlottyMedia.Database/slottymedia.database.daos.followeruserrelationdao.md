@@ -154,6 +154,8 @@ The ID of the User who is being followed.
 
 ### **ToString()**
 
+The ToString method returns a string representation of the FollowerUserRelationDao object.
+
 ```csharp
 public string ToString()
 ```

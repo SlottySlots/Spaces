@@ -196,6 +196,8 @@ The ID of the parent comment, if any
 
 ### **ToString()**
 
+The ToString method is used to return a string representation of the CommentDao object.
+
 ```csharp
 public string ToString()
 ```

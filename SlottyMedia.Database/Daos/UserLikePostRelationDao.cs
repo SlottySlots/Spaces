@@ -54,6 +54,10 @@ public class UserLikePostRelationDao : BaseModel
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
 
+    /// <summary>
+    ///     The ToString method returns a string representation of the object.
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
         return

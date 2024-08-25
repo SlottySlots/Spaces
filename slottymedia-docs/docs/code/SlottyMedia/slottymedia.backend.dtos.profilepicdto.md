@@ -78,6 +78,8 @@ public ProfilePicDto Mapper(UserDao userDao)
 
 ### **ToString()**
 
+This method overrides the ToString method to return the ProfilePicDto as a string.
+
 ```csharp
 public string ToString()
 ```

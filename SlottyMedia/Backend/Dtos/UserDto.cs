@@ -81,6 +81,10 @@ public class UserDto
         return this;
     }
 
+    /// <summary>
+    /// This method returns the UserDto as a string.
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
         return $"UserId: {UserId}, Username: {Username}, Description: {Description}, CreatedAt: {CreatedAt}";

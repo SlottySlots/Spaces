@@ -116,6 +116,7 @@ public class SignupFormVmImpl : ISignupFormVm
         }
         catch (Exception ex)
         {
+            Logger.LogError(ex, "An exception occurred while signing up");
             ServerErrorMessage = "An unknown error has occured. Please try again later.";
             throw;
         }

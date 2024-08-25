@@ -60,6 +60,10 @@ public class ProfilePicDto
         };
     }
 
+    /// <summary>
+    ///    This method overrides the ToString method to return the ProfilePicDto as a string.
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
         return $"UserId: {UserId}, ProfilePic: {ProfilePic}";

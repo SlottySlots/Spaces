@@ -11,10 +11,12 @@ public interface ICommentService
     /// <summary>
     ///     Inserts a new comment into the database.
     /// </summary>
-    /// <param name="comment">The CommentDto object containing the comment details.</param>
+    /// <param name="creatorUserId">The ID of the user who created the comment.</param>
+    /// <param name="postId">The ID of the post to which the comment belongs.</param>
+    /// <param name="content">The content of the comment.</param>
     /// <returns>Returns the inserted CommentDto object.</returns>
     /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while inserting the comment.</exception>
-    Task<CommentDto> InsertComment(CommentDto comment);
+    Task<CommentDto> InsertComment(Guid creatorUserId, Guid postId, string content);
 
     /// <summary>
     ///     Updates an existing comment in the database.

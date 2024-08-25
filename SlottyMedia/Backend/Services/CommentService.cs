@@ -1,5 +1,6 @@
 ﻿using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.CommentExceptions;
+using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
@@ -7,10 +8,8 @@ using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.Services;
 
-/// <summary>
-///     The CommentService class is responsible for handling comment related operations.
-/// </summary>
-public class CommentService
+/// <inheritdoc />
+public class CommentService : ICommentService
 {
     private static readonly Logging<CommentService> Logger = new();
     private readonly IDatabaseActions _databaseActions;
@@ -23,12 +22,7 @@ public class CommentService
         _databaseActions = databaseActions;
     }
 
-    /// <summary>
-    ///     Inserts a new comment into the database.
-    /// </summary>
-    /// <param name="comment">The CommentDto object containing the comment details.</param>
-    /// <returns>Returns the inserted CommentDto object.</returns>
-    /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while inserting the comment.</exception>
+    /// <inheritdoc />
     public async Task<CommentDto> InsertComment(Guid creatorUserId, Guid postId, string content)
     {
         try
@@ -64,12 +58,7 @@ public class CommentService
         }
     }
 
-    /// <summary>
-    ///     Updates an existing comment in the database.
-    /// </summary>
-    /// <param name="comment">The CommentDto object containing the updated comment details.</param>
-    /// <returns>Returns the updated CommentDto object.</returns>
-    /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while updating the comment.</exception>
+    /// <inheritdoc />
     public async Task<CommentDto> UpdateComment(CommentDto comment)
     {
         try
@@ -96,12 +85,7 @@ public class CommentService
         }
     }
 
-    /// <summary>
-    ///     Deletes a comment from the database.
-    /// </summary>
-    /// <param name="comment">The CommentDto object containing the comment details.</param>
-    /// <returns>Returns a Task representing the asynchronous operation.</returns>
-    /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while deleting the comment.</exception>
+    /// <inheritdoc />
     public async Task DeleteComment(CommentDto comment)
     {
         try
