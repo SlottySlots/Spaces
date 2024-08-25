@@ -48,6 +48,18 @@ public abstract string SpaceName { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+### **SearchedSpaces**
+
+A list containing all space names that contain the searched prompt
+
+```csharp
+public abstract List<string> SearchedSpaces { get; set; }
+```
+
+#### Property Value
+
+[List&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
+
 ### **SpaceErrorMessage**
 
 An optional error message related to the post's space

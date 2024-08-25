@@ -51,6 +51,16 @@ public string SpaceName { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+### **SearchedSpaces**
+
+```csharp
+public List<string> SearchedSpaces { get; set; }
+```
+
+#### Property Value
+
+[List&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
+
 ### **SpaceErrorMessage**
 
 ```csharp
