@@ -94,13 +94,20 @@ public interface IUserService
     public Task<int> GetCountOfUserFriends(Guid userId);
 
     /// <summary>
-    /// Gets all spaces a user has wrote in
+    ///     Gets all spaces a user has wrote in
     /// </summary>
     /// <param name="userId">
-    /// User from which it should be retrieved
+    ///     User from which it should be retrieved
     /// </param>
     /// <returns>
-    /// Returns the amount of spaces as task
+    ///     Returns the amount of spaces as task
     /// </returns>
     public Task<int> GetCountOfUserSpaces(Guid userId);
+
+    /// <summary>
+    ///     Updates the given UserDto object in the database and returns the updated object.
+    /// </summary>
+    /// <param name="user">The UserDto object to be updated.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the updated UserDto object.</returns>
+    public Task<UserDto> UpdateUser(UserDto user);
 }

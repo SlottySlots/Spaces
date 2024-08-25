@@ -17,6 +17,7 @@ public class ForumDto
     {
         ForumId = Guid.Empty;
         Topic = string.Empty;
+        CreatedAt = DateTime.MinValue;
     }
 
     /// <summary>
@@ -30,6 +31,13 @@ public class ForumDto
     public string Topic { get; set; }
 
     /// <summary>
+    ///     The Date and Time the Forum was created.
+    /// </summary>
+    public DateTime CreatedAt { get; set; }
+
+    public int PostCount { get; set; }
+
+    /// <summary>
     ///     This method maps the ForumDto to a ForumDao.
     /// </summary>
     /// <returns></returns>
@@ -40,7 +48,8 @@ public class ForumDto
         return new ForumDao
         {
             ForumId = ForumId,
-            ForumTopic = Topic
+            ForumTopic = Topic,
+            CreatedAt = CreatedAt
         };
     }
 
@@ -56,7 +65,25 @@ public class ForumDto
         return new ForumDto
         {
             ForumId = forumDao.ForumId ?? Guid.Empty,
-            Topic = forumDao.ForumTopic ?? string.Empty
+            Topic = forumDao.ForumTopic ?? string.Empty,
+            CreatedAt = forumDao.CreatedAt
+        };
+    }
+
+    /// <summary>
+    ///     THis method maps the ForumDao to a ForumDto.
+    /// </summary>
+    /// <param name="forumDao"></param>
+    /// <returns></returns>
+    public ForumDto Mapper(TopForumDao forumDao)
+    {
+        Logger.LogInfo($"Mapping ForumDao to ForumDto. ForumDao: {forumDao}");
+
+        return new ForumDto
+        {
+            ForumId = forumDao.ForumId ?? Guid.Empty,
+            Topic = forumDao.ForumTopic ?? string.Empty,
+            PostCount = forumDao.PostCount ?? 0
         };
     }
 
@@ -66,6 +93,6 @@ public class ForumDto
     /// <returns></returns>
     public override string ToString()
     {
-        return $"ForumId: {ForumId}, Topic: {Topic}";
+        return $"ForumId: {ForumId}, Topic: {Topic}; CreatedAt: {CreatedAt}";
     }
 }

@@ -25,7 +25,7 @@ public class SearchDto
     public List<ForumDto> Forums { get; set; }
 
     /// <summary>
-    /// This method returns the SearchDto as a string.
+    ///     This method returns the SearchDto as a string.
     /// </summary>
     /// <returns></returns>
     public override string ToString()

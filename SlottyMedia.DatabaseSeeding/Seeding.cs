@@ -39,7 +39,7 @@ public class Seeding
             await CheckIfRoleExisits();
             Logger.LogDebug("Seeding is Needed.");
 
-            var countUser = 10;
+            var countUser = 20;
             var rules = new Rules();
 
             var userFaker = rules.UserRules();

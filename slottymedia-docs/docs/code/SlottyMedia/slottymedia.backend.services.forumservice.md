@@ -66,3 +66,36 @@ public Task<ForumDto> GetForumByName(string forumName)
 #### Returns
 
 [Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetForums()**
+
+Retrieves all forums from the database.
+
+```csharp
+public Task<List<ForumDto>> GetForums()
+```
+
+#### Returns
+
+[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A list of ForumDto objects representing all forums.
+
+### **DetermineRecentSpaces()**
+
+```csharp
+public Task<List<ForumDto>> DetermineRecentSpaces()
+```
+
+#### Returns
+
+[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetTopForums()**
+
+```csharp
+public Task<List<ForumDto>> GetTopForums()
+```
+
+#### Returns
+
+[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

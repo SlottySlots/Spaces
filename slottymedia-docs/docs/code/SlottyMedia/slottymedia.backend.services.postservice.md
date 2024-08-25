@@ -102,6 +102,67 @@ public Task<List<string>> GetPostsFromForum(Guid userId, int startOfSet, int end
 
 [Task&lt;List&lt;String&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
+### **GetPostById(Guid)**
+
+```csharp
+public Task<PostDto> GetPostById(Guid postId)
+```
+
+#### Parameters
+
+`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetForumCountByUserId(Guid)**
+
+```csharp
+public Task<int> GetForumCountByUserId(Guid userId)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetPostCountByForumId(Guid)**
+
+Retrieves the total number of posts associated with a specific forum by its ID.
+
+```csharp
+public Task<int> GetPostCountByForumId(Guid forumId)
+```
+
+#### Parameters
+
+`forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The unique identifier of the forum.
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetAllPosts(Int32, Int32)**
+
+```csharp
+public Task<List<PostDto>> GetAllPosts(int page, int pageSize)
+```
+
+#### Parameters
+
+`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+#### Returns
+
+[Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
 ### **GetPostsByUserId(Guid, Int32, Int32)**
 
 ```csharp
@@ -170,47 +231,3 @@ The ending index of the set.
 
 [Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of PostDto objects.
-
-### **GetAllPosts(Int32, Int32)**
-
-```csharp
-public Task<List<PostDto>> GetAllPosts(int page, int pageSize)
-```
-
-#### Parameters
-
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-#### Returns
-
-[Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-
-### **GetPostById(Guid)**
-
-```csharp
-public Task<PostDto> GetPostById(Guid postId)
-```
-
-#### Parameters
-
-`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-
-#### Returns
-
-[Task&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-
-### **GetForumCountByUserId(Guid)**
-
-```csharp
-public Task<int> GetForumCountByUserId(Guid userId)
-```
-
-#### Parameters
-
-`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-
-#### Returns
-
-[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

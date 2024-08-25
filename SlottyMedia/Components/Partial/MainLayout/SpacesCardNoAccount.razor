@@ -1,0 +1,51 @@
+@using SlottyMedia.Backend.ViewModel.Interfaces
+@inject ISpacesCardVm ViewModel
+
+
+<Card Class="min-h-[250px] mt-20 mx-7 flex flex-col items-center">
+
+    <!-- title -->
+    <h3 class="font-semibold text-lg">
+        Spaces
+    </h3>
+
+    <!-- trending spaces -->
+    <div class="w-full border-b border-athens-gray my-3">
+        <span h3 class="text-sm font-medium text-center text-cadet-gray w-fit">Trending</span>
+    </div>
+
+    <!-- trending spaces elements -->
+    <div class="space-y-4">
+        @foreach (var space in ViewModel.RecentSpaces)
+        {
+            <div class="flex flex-col p-4 bg-gray-100 rounded-md w-full">
+                <a href="/" class="font-semibold text-l">
+                    #@(space.Topic)
+                </a>
+                <span h3 class="text-sm font-medium text-center text-cadet-gray w-fit">
+                    Activity: @(space.PostCount) Posts
+                </span>
+            </div>
+        }
+    </div>
+
+    <!-- recent spaces -->
+    <div class="w-full border-b border-athens-gray my-3">
+        <span h3 class="text-sm font-medium text-center text-cadet-gray w-fit">Recent</span>
+    </div>
+
+    <!-- no (recent) spaces :( -->
+    <div class="grow flex flex-col justify-center items-center">
+        <span>Sign in to see all spaces!</span>
+    </div>
+
+</Card>
+
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        await ViewModel.Fetch();
+    }
+}

@@ -21,25 +21,25 @@ public string DescriptionText { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **DatabaseActions**
+### **UserService**
 
 ```csharp
-public IDatabaseActions DatabaseActions { get; private set; }
+public IUserVmImpl UserService { get; private set; }
 ```
 
 #### Property Value
 
-IDatabaseActions<br>
+[IUserVmImpl](./slottymedia.backend.viewmodel.interfaces.iuservmimpl.md)<br>
 
 ### **AuthService**
 
 ```csharp
-public IAuthService AuthService { get; set; }
+public IAuthVmImpl AuthService { get; set; }
 ```
 
 #### Property Value
 
-[IAuthService](./slottymedia.backend.services.interfaces.iauthservice.md)<br>
+[IAuthVmImpl](./slottymedia.backend.viewmodel.interfaces.iauthvmimpl.md)<br>
 
 ## Constructors
 

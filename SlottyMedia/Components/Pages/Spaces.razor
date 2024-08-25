@@ -1,0 +1,54 @@
+﻿@page "/spaces"
+@using SlottyMedia.Backend.ViewModel.Interfaces
+@using SlottyMedia.LoggingProvider
+@layout MainLayout
+
+@inject ISpacesVm SpacesVm
+<PageTitle>Slotty Media | Spaces</PageTitle>
+
+<!-- Display loading indicator -->
+@if (isLoading)
+{
+    <p>Loading...</p>
+}
+else if (SpacesVm.Forums.Any())
+{
+    <ul>
+        @foreach (var forum in SpacesVm.Forums)
+        {
+            <Card class="min-h-[150px] mt-20 mx-7 flex flex-col items-center">
+                <h3 class="font-semibold text-lg">
+                    @(forum.Topic)
+                </h3>
+            </Card>
+        }
+    </ul>
+}
+else
+{
+    <p>No forums available.</p>
+}
+
+@code {
+    private bool isLoading;
+    private static readonly Logging<Spaces> Logger = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        isLoading = true; // Set loading state
+        try
+        {
+            await SpacesVm.LoadForums(); // Load forums automatically when the page is initialized
+        }
+        catch (Exception ex)
+        {
+            // Log the error and provide feedback to the user
+            Logger.LogError($"An error occurred while loading forums: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false; // Unset loading state
+        }
+    }
+
+}

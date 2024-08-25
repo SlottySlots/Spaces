@@ -244,3 +244,21 @@ User from which it should be retrieved
 
 [Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns the amount of spaces as task
+
+### **UpdateUser(UserDto)**
+
+Updates the given UserDto object in the database and returns the updated object.
+
+```csharp
+Task<UserDto> UpdateUser(UserDto user)
+```
+
+#### Parameters
+
+`user` [UserDto](./slottymedia.backend.dtos.userdto.md)<br>
+The UserDto object to be updated.
+
+#### Returns
+
+[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains the updated UserDto object.

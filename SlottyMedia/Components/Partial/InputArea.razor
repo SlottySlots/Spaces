@@ -10,10 +10,11 @@
 
 
 @code {
+
     /// <summary>Additional CSS classes to apply to the textarea component</summary>
     [Parameter]
     public string? Class { get; set; }
-    
+
     /// <summary>The input field's ID</summary>
     [Parameter]
     public string? Id { get; set; }
@@ -46,4 +47,5 @@
             await ValueChanged.InvokeAsync(newValue);
         }
     }
+
 }

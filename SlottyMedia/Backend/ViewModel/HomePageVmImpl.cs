@@ -14,6 +14,7 @@ public class HomePageVmImpl : IHomePageVm
     }
 
     public List<PostDto> Posts { get; set; } = new();
+
     public async Task FetchPosts()
     {
         Posts.Clear();

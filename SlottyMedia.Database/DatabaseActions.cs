@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using Supabase.Postgrest;
 using Supabase.Postgrest.Models;
@@ -449,15 +450,94 @@ public class DatabaseActions : IDatabaseActions
             throw new GeneralDatabaseException("An unexpected error occurred while retrieving the count.", ex);
         }
     }
-    
+
     /// <inheritdoc />
     public async Task<int> GetCountForUserForums(string userId)
     {
         try
         {
             // Call the RPC function with the userId parameter
-            var result = await _supabaseClient.Rpc<int>("get_post_count_by_user", new Dictionary<string, object>(){ {"user_id" , userId }});
+            var result = await _supabaseClient.Rpc<int>("get_post_count_by_user",
+                new Dictionary<string, object> { { "user_id", userId } });
             return result;
+        }
+        catch (HttpRequestException ex)
+        {
+            throw new GeneralDatabaseException("A network error occurred while retrieving the count.", ex);
+        }
+        catch (ArgumentNullException ex)
+        {
+            throw new GeneralDatabaseException("A required argument was null while retrieving the count.", ex);
+        }
+        catch (InvalidOperationException ex)
+        {
+            throw new GeneralDatabaseException("An invalid operation occurred while retrieving the count.", ex);
+        }
+        catch (TimeoutException ex)
+        {
+            throw new GeneralDatabaseException("A timeout occurred while retrieving the count.", ex);
+        }
+        catch (TaskCanceledException ex)
+        {
+            throw new GeneralDatabaseException("The task was canceled while retrieving the count.", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the count.", ex);
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<int> GetTotalForumCount(string forumID)
+    {
+        try
+        {
+            // Call the RPC function with the forumID parameter
+            var result = await _supabaseClient.Rpc<int>("get_total_forum_count", null);
+            return result;
+        }
+        catch (HttpRequestException ex)
+        {
+            throw new GeneralDatabaseException("A network error occurred while retrieving the count.", ex);
+        }
+        catch (ArgumentNullException ex)
+        {
+            throw new GeneralDatabaseException("A required argument was null while retrieving the count.", ex);
+        }
+        catch (InvalidOperationException ex)
+        {
+            throw new GeneralDatabaseException("An invalid operation occurred while retrieving the count.", ex);
+        }
+        catch (TimeoutException ex)
+        {
+            throw new GeneralDatabaseException("A timeout occurred while retrieving the count.", ex);
+        }
+        catch (TaskCanceledException ex)
+        {
+            throw new GeneralDatabaseException("The task was canceled while retrieving the count.", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the count.", ex);
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<List<TopForumDao>> GetTopForums()
+    {
+        try
+        {
+            // Call the RPC function with the forumID parameter
+            var result = await _supabaseClient.Rpc<List<TopForumDao>>("get_top_forums", null);
+            if (result is null)
+                throw new DatabaseMissingItemException("The Items could not be retrieved from the database.");
+            {
+            }
+            return result;
+        }
+        catch (DatabaseMissingItemException)
+        {
+            throw;
         }
         catch (HttpRequestException ex)
         {

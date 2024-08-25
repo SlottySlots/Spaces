@@ -69,7 +69,7 @@ public class Rules
             .RuleFor(p => p.UserId, f => userIds[f.Random.Int(0, userIds.Count - 1)])
             .RuleFor(p => p.ForumId, f => forumIds[f.Random.Int(0, forumIds.Count - 1)])
             .RuleFor(p => p.Headline, f => f.Lorem.Sentence())
-            .RuleFor(p => p.Content, f => f.WaffleText(f.Random.Int(1, 3), includeHeading: false))
+            .RuleFor(p => p.Content, f => f.WaffleText(f.Random.Int(1, 3), false))
             .RuleFor(p => p.CreatedAt, f => f.Date.Past());
         return postFaker;
     }
