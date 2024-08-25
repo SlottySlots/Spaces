@@ -22,7 +22,7 @@ public class ForumServiceTests
     public void Setup()
     {
         _mockDatabaseActions = new Mock<IDatabaseActions>();
-        _forumService = new ForumService(_mockDatabaseActions.Object);
+        _forumService = new ForumService(_mockDatabaseActions.Object, InitializeSupabaseClient.GetSupabaseClient());
     }
 
     /// <summary>
