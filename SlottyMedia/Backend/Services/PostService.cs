@@ -143,44 +143,6 @@ public class PostService : IPostService
         }
     }
 
-    /// <inheritdoc />
-    public async Task<List<Guid>> GetAllPosts(int page, int pageSize = 10)
-    {
-        try
-        {
-            Logger.LogInfo($"Fetching all posts for page {page} with page size {pageSize}");
-            var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
-                x => new object[] { x.PostId! },
-                new List<(string, Constants.Operator, string)>(),
-                page * pageSize,
-                (page - 1) * pageSize,
-                ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
-            );
-
-            var result = posts
-                .Where(post => post.PostId is not null)
-                .Select(post => post.PostId!.Value)
-                .ToList();
-
-            return result;
-        }
-        catch (DatabaseMissingItemException ex)
-        {
-            throw new PostNotFoundException(
-                $"Posts for the given page and page size were not found. Page: {page}, PageSize: {pageSize}", ex);
-        }
-        catch (GeneralDatabaseException ex)
-        {
-            throw new PostGeneralException(
-                $"A database error occurred while fetching the posts. Page: {page}, PageSize: {pageSize}", ex);
-        }
-        catch (Exception ex)
-        {
-            throw new PostGeneralException(
-                $"An error occurred while fetching the posts. Page: {page}, PageSize: {pageSize}", ex);
-        }
-    }
-
     public async Task<PostDto?> GetPostById(Guid postId)
     {
         try
@@ -254,6 +216,34 @@ public class PostService : IPostService
             Logger.LogError(
                 $"An unexpected error occurred while retrieving the post count for forum ID {forumId}: {ex.Message}");
             throw new GeneralDatabaseException("An unexpected error occurred while retrieving the post count.", ex);
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<List<PostDto>> GetAllPosts(int page, int pageSize = 10)
+    {
+        try
+        {
+            Logger.LogInfo($"Fetching all posts for page {page} with page size {pageSize}");
+            var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
+                x => new object[] { x.PostId!, x.Content!, x.CreatedAt, x.UserId!, x.ForumId! },
+                new List<(string, Constants.Operator, string)>(),
+                (page - 1) * pageSize + pageSize,
+                (page - 1) * pageSize,
+                ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
+            );
+
+            return ConvertPostsToPostDtos(posts);
+        }
+        catch (DatabaseMissingItemException ex)
+        {
+            Logger.LogError($"No posts found: {ex.Message}");
+            throw new PostNotFoundException("No posts found.", ex);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError($"An error occurred while fetching all posts: {ex.Message}");
+            throw new PostGeneralException("An error occurred while fetching all posts.", ex);
         }
     }
 
@@ -385,6 +375,7 @@ public class PostService : IPostService
                 ex);
         }
     }
+
 
     /// <summary>
     ///     Converts a list of PostsDao objects to a list of PostDto objects.

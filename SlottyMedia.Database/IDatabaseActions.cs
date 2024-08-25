@@ -166,13 +166,23 @@ public interface IDatabaseActions
     /// <summary>
     ///     Retrieves the total count of forums for a specific forum ID.
     /// </summary>
-    /// <param name="forumID">The ID of the forum to count.</param>
+    /// <param name="forumId">The ID of the forum to count.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the total count of forums.</returns>
     /// <exception cref="GeneralDatabaseException">
     ///     Thrown when a network error, argument null, invalid operation, timeout, task
     ///     cancellation, or unexpected error occurs.
     /// </exception>
-    public Task<int> GetTotalForumCount(string forumID);
+    public Task<int> GetTotalForumCount(string forumId);
 
+    /// <summary>
+    ///     Retrieves a list of top forums.
+    /// </summary>
+    /// <returns>
+    ///     A task that represents the asynchronous operation. The task result contains a list of TopForumDao objects.
+    /// </returns>
+    /// <exception cref="GeneralDatabaseException">
+    ///     Thrown when a network error, argument null, invalid operation, timeout, task
+    ///     cancellation, or unexpected error occurs.
+    /// </exception>
     public Task<List<TopForumDao>> GetTopForums();
 }

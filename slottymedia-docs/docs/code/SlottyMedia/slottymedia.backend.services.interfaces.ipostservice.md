@@ -52,7 +52,7 @@ Fetches all posts sorted by date in descending order. Fetches only a specified n
  on the specified page.
 
 ```csharp
-Task<List<Guid>> GetAllPosts(int page, int pageSize)
+Task<List<PostDto>> GetAllPosts(int page, int pageSize)
 ```
 
 #### Parameters
@@ -65,7 +65,7 @@ The number of posts per page (default is 10)
 
 #### Returns
 
-[Task&lt;List&lt;Guid&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **GetPostById(Guid)**
 

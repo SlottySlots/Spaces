@@ -29,7 +29,7 @@ public interface IPostService
     /// <param name="page">The page to fetch (one-based)</param>
     /// <param name="pageSize">The number of posts per page (default is 10)</param>
     /// <returns></returns>
-    public Task<List<Guid>> GetAllPosts(int page, int pageSize = 10);
+    public Task<List<PostDto>> GetAllPosts(int page, int pageSize = 10);
 
     /// <summary>
     ///     Attempts to fetch a post by ID. Returns null if such a post could not be found.

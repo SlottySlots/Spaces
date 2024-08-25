@@ -330,7 +330,8 @@ public class UserService : IUserService
         try
         {
             Logger.LogInfo($"Fetching friends count for user with ID {userId}");
-            var friends = await _databaseActions.GetCountByField<UserDao>("userID", userId.ToString());
+            var friends =
+                await _databaseActions.GetCountByField<FollowerUserRelationDao>("userIsFollowed", userId.ToString());
             return friends;
         }
         catch (GeneralDatabaseException ex)
