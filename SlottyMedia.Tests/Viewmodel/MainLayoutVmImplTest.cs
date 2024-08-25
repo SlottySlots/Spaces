@@ -92,9 +92,10 @@ public class MainLayoutVmImplTest
     public void SetUserInfo_CorruptUserDaoReturnsNull()
     {
         _authService.Setup(service => service.GetCurrentSession())
-            .Returns(new Session { User = new User { Email = "test@test.de" } });
-        _dbActions.Setup(service => service.GetEntityByField<UserDao>("email", "test@test.de")).ReturnsAsync(new UserDao
-            { UserId = null, UserName = null, Description = null, Email = null });
+            .Returns(new Session { User = new User { Email = "test@test.de", Id = Guid.NewGuid().ToString() } });
+        _userService.Setup(service => service.GetUserBy(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>()))
+            .ReturnsAsync(new UserDao());
+
         Assert.ThatAsync(async () => await _vm.SetUserInfo(), Is.Null);
         _authService.VerifyAll();
         _authService.VerifyNoOtherCalls();
@@ -107,13 +108,14 @@ public class MainLayoutVmImplTest
     public void SetUserInfo_ReturnsUserInfoDto()
     {
         _authService.Setup(service => service.GetCurrentSession())
-            .Returns(new Session { User = new User { Email = "test@test.de" } });
+            .Returns(new Session { User = new User { Email = "test@test.de", Id = Guid.NewGuid().ToString()} });
         var userDao = new UserDao
         {
             UserId = Guid.NewGuid(), UserName = "Test", Description = "TestDesc", Email = "test@test.de",
             ProfilePic = "123"
         };
-        _dbActions.Setup(service => service.GetEntityByField<UserDao>("email", "test@test.de")).ReturnsAsync(userDao);
+        _userService.Setup(service => service.GetUserBy(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>()))
+            .ReturnsAsync(userDao);
         Assert.MultipleAsync(async () =>
             {
                 var serviceCall = await _vm.SetUserInfo();

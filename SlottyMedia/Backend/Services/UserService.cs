@@ -1,4 +1,5 @@
 using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Backend.Exceptions.Services.PostExceptions;
 using SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
@@ -355,9 +356,16 @@ public class UserService : IUserService
     /// </returns>
     public async Task<int> GetCountOfUserSpaces(Guid userId)
     {
-        //TODO: Currently not working
-        var spaces = await _postService.GetForumCountByUserId(userId);
-        return spaces;
+        try
+        {
+            //TODO: Currently not working
+            var spaces = await _postService.GetForumCountByUserId(userId);
+            return spaces;
+        }
+        catch (PostGeneralException)
+        {
+            throw;
+        }
     }
 
     /// <inheritdoc />
