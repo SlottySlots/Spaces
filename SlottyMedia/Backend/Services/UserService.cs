@@ -165,6 +165,7 @@ public class UserService : IUserService
         try
         {
             var userDao = await _databaseActions.GetEntityByField<UserDao>("userID", user.UserId.ToString());
+            userDao.Description = user.Description;
             Logger.LogInfo($"Updating user {user}");
             var result = await _databaseActions.Update(userDao);
             return new UserDto().Mapper(result);

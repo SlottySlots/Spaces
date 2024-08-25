@@ -40,7 +40,7 @@ else
             {
                 if (DescriptionText.Length < 200)
                 {
-                    //TODO: Show error message
+                    //TODO: Show error message and prevent submission
                     userDao.Description = DescriptionText;
                     await UserService.UpdateUser(userDao);
                 }
