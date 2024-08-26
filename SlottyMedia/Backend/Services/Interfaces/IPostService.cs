@@ -1,5 +1,7 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Database;
+using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Repository.PostRepo;
 
 namespace SlottyMedia.Backend.Services.Interfaces;
 
@@ -11,7 +13,7 @@ public interface IPostService
     /// <summary>
     ///     DatabaseActions property.
     /// </summary>
-    public IDatabaseActions DatabaseActions { get; set; }
+    public IPostRepository PostRepository { get; set; }
 
     /// <summary>
     ///     Retrieves a list of post titles from a forum for a given user, limited by the specified number.
@@ -46,14 +48,14 @@ public interface IPostService
     /// ///
     /// <param name="forumId">The ID of the forum the post should belong to</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the inserted post.</returns>
-    public Task<PostDto> InsertPost(string content, Guid creatorUserId, Guid forumId);
+    public Task InsertPost(string content, Guid creatorUserId, Guid forumId);
 
     /// <summary>
     ///     Updates an existing post in the database.
     /// </summary>
     /// <param name="post">The post to update.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the updated post.</returns>
-    Task<PostDto> UpdatePost(PostDto post);
+    Task UpdatePost(PostsDao post);
 
     /// <summary>
     ///     Deletes a post from the database.
@@ -63,7 +65,7 @@ public interface IPostService
     ///     A task that represents the asynchronous operation. The task result indicates whether the deletion was
     ///     successful.
     /// </returns>
-    Task<bool> DeletePost(PostDto post);
+    Task DeletePost(PostsDao post);
 
     /// <summary>
     ///     This method fetches the number of forums the user has created posts in.
@@ -71,6 +73,4 @@ public interface IPostService
     /// <param name="userId"></param>
     /// <returns></returns>
     public Task<int> GetForumCountByUserId(Guid userId);
-
-    public Task<int> GetPostCountByForumId(Guid forumId);
 }

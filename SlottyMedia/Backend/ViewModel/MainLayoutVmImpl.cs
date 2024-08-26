@@ -66,7 +66,7 @@ public class MainLayoutVmImpl : IMainLayoutVm
             if (currentSession != null)
             {
                 var userId = Guid.Parse(currentSession.User!.Id!);
-                var userDao = await _userService.GetUserBy(userId);
+                var userDao = await _userService.GetUserDaoById(userId);
                 var amountOfFriends = await _userService.GetCountOfUserFriends(userId);
                 var amountOfSpaces = await _userService.GetCountOfUserSpaces(userId);
                 if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
@@ -115,7 +115,7 @@ public class MainLayoutVmImpl : IMainLayoutVm
         if (currentUserId != null)
             try
             {
-                var currentUser = await _userService.GetUserBy(Guid.Parse(currentUserId));
+                var currentUser = await _userService.GetUserDaoById(Guid.Parse(currentUserId));
                 currentUser.ProfilePic = base64Encoding;
                 await _userService.UpdateUser(currentUser);
                 return base64Encoding;

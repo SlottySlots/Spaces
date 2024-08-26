@@ -11,22 +11,26 @@ Implements [IForumService](./slottymedia.backend.services.interfaces.iforumservi
 
 ## Constructors
 
-### **ForumService(IDatabaseActions)**
+### **ForumService(IForumRepository, ITopForumRepository, ISearchService)**
 
 ```csharp
-public ForumService(IDatabaseActions databaseActions)
+public ForumService(IForumRepository forumRepository, ITopForumRepository topForumRepository, ISearchService searchService)
 ```
 
 #### Parameters
 
-`databaseActions` IDatabaseActions<br>
+`forumRepository` IForumRepository<br>
+
+`topForumRepository` ITopForumRepository<br>
+
+`searchService` [ISearchService](./slottymedia.backend.services.interfaces.isearchservice.md)<br>
 
 ## Methods
 
 ### **InsertForum(Guid, String)**
 
 ```csharp
-public Task<ForumDto> InsertForum(Guid creatorUserId, string forumTopic)
+public Task InsertForum(Guid creatorUserId, string forumTopic)
 ```
 
 #### Parameters
@@ -37,7 +41,7 @@ public Task<ForumDto> InsertForum(Guid creatorUserId, string forumTopic)
 
 #### Returns
 
-[Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **DeleteForum(ForumDto)**
 
@@ -66,6 +70,24 @@ public Task<ForumDto> GetForumByName(string forumName)
 #### Returns
 
 [Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetForumsByNameContaining(String, Int32, Int32)**
+
+```csharp
+public Task<List<ForumDto>> GetForumsByNameContaining(string name, int page, int pageSize)
+```
+
+#### Parameters
+
+`name` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+#### Returns
+
+[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **GetForums()**
 

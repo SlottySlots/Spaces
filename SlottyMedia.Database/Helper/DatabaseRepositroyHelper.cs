@@ -1,9 +1,9 @@
 ﻿using SlottyMedia.Database.Exceptions;
 
-namespace SlottyMedia.Database.Repository;
+namespace SlottyMedia.Database.Helper;
 
 /// <summary>
-/// This class provides helper methods for database repositories.
+///     This class provides helper methods for database repositories.
 /// </summary>
 public class DatabaseRepositroyHelper
 {

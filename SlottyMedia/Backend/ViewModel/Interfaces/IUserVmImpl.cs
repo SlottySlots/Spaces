@@ -19,5 +19,5 @@ public interface IUserVmImpl
     /// </summary>
     /// <param name="user">The UserDto object to be updated.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the updated UserDto object.</returns>
-    public Task<UserDto> UpdateUser(UserDto user);
+    public Task UpdateUser(UserDto user);
 }

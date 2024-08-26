@@ -70,6 +70,14 @@
 
 [UsernameAlreadyExistsException](./slottymedia.backend.exceptions.signup.usernamealreadyexistsexception.md)
 
+## SlottyMedia.Backend.Repositories
+
+[IRepository&lt;TEntity&gt;](./slottymedia.backend.repositories.irepository-1.md)
+
+## SlottyMedia.Backend.Repositories.Impl
+
+[SupabaseRepository&lt;TEntity&gt;](./slottymedia.backend.repositories.impl.supabaserepository-1.md)
+
 ## SlottyMedia.Backend.Services
 
 [AuthService](./slottymedia.backend.services.authservice.md)

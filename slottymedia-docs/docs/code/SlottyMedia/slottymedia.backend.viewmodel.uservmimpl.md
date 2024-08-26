@@ -45,7 +45,7 @@ public Task<UserDto> GetUserById(Guid userId)
 ### **UpdateUser(UserDto)**
 
 ```csharp
-public Task<UserDto> UpdateUser(UserDto user)
+public Task UpdateUser(UserDto user)
 ```
 
 #### Parameters
@@ -54,4 +54,4 @@ public Task<UserDto> UpdateUser(UserDto user)
 
 #### Returns
 
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>

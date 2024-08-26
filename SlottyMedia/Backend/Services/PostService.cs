@@ -4,6 +4,7 @@ using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Database.Repository.PostRepo;
 using SlottyMedia.LoggingProvider;
 using Supabase.Postgrest;
 
@@ -18,17 +19,18 @@ public class PostService : IPostService
     ///     Initializes a new instance of the <see cref="PostService" /> class.
     /// </summary>
     /// <param name="databaseActions">The database actions interface.</param>
-    public PostService(IDatabaseActions databaseActions)
+    public PostService(IPostRepository postRepository)
     {
         Logger.LogInfo("PostService initialized");
-        DatabaseActions = databaseActions;
+        PostRepository = postRepository;
+
     }
 
     /// <inheritdoc />
-    public IDatabaseActions DatabaseActions { get; set; }
+    public IPostRepository PostRepository { get; set; }
 
     /// <inheritdoc />
-    public async Task<PostDto> InsertPost(string content, Guid creatorUserId, Guid forumId)
+    public async Task InsertPost(string content, Guid creatorUserId, Guid forumId)
     {
         try
         {
@@ -40,8 +42,7 @@ public class PostService : IPostService
                 ForumId = forumId
             };
             Logger.LogInfo($"Inserting a new post into the database {post}");
-            var insertedPost = await DatabaseActions.Insert(post);
-            return new PostDto().Mapper(insertedPost);
+            await PostRepository.AddElement(post);
         }
         catch (DatabaseIudActionException ex)
         {
@@ -64,13 +65,12 @@ public class PostService : IPostService
     }
 
     /// <inheritdoc />
-    public async Task<PostDto> UpdatePost(PostDto post)
+    public async Task UpdatePost(PostsDao post)
     {
         try
         {
             Logger.LogInfo($"Updating the post in the database {post}");
-            var updatedPost = await DatabaseActions.Update(post.Mapper());
-            return new PostDto().Mapper(updatedPost);
+            await PostRepository.UpdateElement(post);
         }
         catch (DatabaseIudActionException ex)
         {
@@ -83,13 +83,12 @@ public class PostService : IPostService
     }
 
     /// <inheritdoc />
-    public async Task<bool> DeletePost(PostDto post)
+    public async Task DeletePost(PostsDao post)
     {
         try
         {
             Logger.LogInfo($"Deleting the post from the database {post}");
-            var result = await DatabaseActions.Delete(post.Mapper());
-            return result;
+            await PostRepository.DeleteElement(post);
         }
         catch (DatabaseIudActionException ex)
         {
@@ -108,12 +107,7 @@ public class PostService : IPostService
         try
         {
             Logger.LogInfo($"Fetching posts for the user with ID: {userId} from index {startOfSet} to {endOfSet}");
-            var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
-                x => new object[] { x.Forum! },
-                "creator_userID",
-                userId.ToString(), startOfSet, endOfSet,
-                ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
-            );
+            var posts = await PostRepository.GetPostsByForumId(userId, startOfSet, endOfSet);
 
             Logger.LogInfo("Mapping posts to forum topics");
             var forumTopics = new List<string>();
@@ -148,7 +142,7 @@ public class PostService : IPostService
         try
         {
             Logger.LogInfo($"Fetching post with ID: {postId}");
-            var post = await DatabaseActions.GetEntityByField<PostsDao>("postID", postId.ToString());
+            var post = await PostRepository.GetElementById(postId);
             return new PostDto().Mapper(post);
         }
         catch (DatabaseMissingItemException ex)
@@ -171,7 +165,7 @@ public class PostService : IPostService
         try
         {
             Logger.LogInfo($"Counting forums for the user with ID: {userId}");
-            var forumCount = await DatabaseActions.GetCountForUserForums(userId.ToString());
+            var forumCount = await PostRepository.GetForumCountByUserId(userId);
             return forumCount;
         }
         catch (GeneralDatabaseException ex)
@@ -185,53 +179,13 @@ public class PostService : IPostService
         }
     }
 
-
-    /// <summary>
-    ///     Retrieves the total number of posts associated with a specific forum by its ID.
-    /// </summary>
-    /// <param name="forumId">The unique identifier of the forum.</param>
-    public async Task<int> GetPostCountByForumId(Guid forumId)
-    {
-        if (forumId == Guid.Empty)
-        {
-            Logger.LogError("Invalid forum ID provided.");
-            throw new ArgumentException("Forum ID cannot be empty.", nameof(forumId));
-        }
-
-        try
-        {
-            Logger.LogDebug($"Retrieving post count for forum ID: {forumId}");
-            var postCount = await DatabaseActions.GetCountByField<PostsDao>("associated_forumID", forumId.ToString());
-            Logger.LogDebug($"Post count for forum ID {forumId}: {postCount}");
-            return postCount;
-        }
-        catch (ArgumentNullException ex)
-        {
-            Logger.LogError(
-                $"An argument was null while retrieving the post count for forum ID {forumId}: {ex.Message}");
-            throw new GeneralDatabaseException("A required argument was null while retrieving the post count.", ex);
-        }
-        catch (Exception ex)
-        {
-            Logger.LogError(
-                $"An unexpected error occurred while retrieving the post count for forum ID {forumId}: {ex.Message}");
-            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the post count.", ex);
-        }
-    }
-
     /// <inheritdoc />
     public async Task<List<PostDto>> GetAllPosts(int page, int pageSize = 10)
     {
         try
         {
             Logger.LogInfo($"Fetching all posts for page {page} with page size {pageSize}");
-            var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
-                x => new object[] { x.PostId!, x.Content!, x.CreatedAt, x.UserId!, x.ForumId! },
-                new List<(string, Constants.Operator, string)>(),
-                (page - 1) * pageSize + pageSize,
-                (page - 1) * pageSize,
-                ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
-            );
+            var posts = await PostRepository.GetAllElements(page, pageSize);
 
             return ConvertPostsToPostDtos(posts);
         }
@@ -253,16 +207,7 @@ public class PostService : IPostService
         try
         {
             Logger.LogInfo($"Fetching posts for the user with ID: {userId} from index {startOfSet} to {endOfSet}");
-            var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
-                x => new object[] { x.PostId!, x.Content!, x.Forum!, x.CreatedAt },
-                new List<(string, Constants.Operator, string)>
-                {
-                    ("creator_userID", Constants.Operator.Equals, userId.ToString())
-                },
-                startOfSet,
-                endOfSet,
-                ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
-            );
+            var posts = await PostRepository.GetPostsByUserId(userId, startOfSet, endOfSet);
 
             return ConvertPostsToPostDtos(posts);
         }
@@ -300,17 +245,7 @@ public class PostService : IPostService
         {
             Logger.LogInfo(
                 $"Fetching posts for the user with ID: {userId} and forum with ID: {forumId} from index {startOfSet} to {endOfSet}");
-            var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
-                x => new object[] { x.PostId!, x.Content!, x.Forum!, x.CreatedAt },
-                new List<(string, Constants.Operator, string)>
-                {
-                    ("creator_userID", Constants.Operator.Equals, userId.ToString()),
-                    ("associated_forumID", Constants.Operator.Equals, forumId.ToString())
-                },
-                startOfSet,
-                endOfSet,
-                ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
-            );
+            var posts = await PostRepository.GetPostsByUserIdByForumId(userId, forumId, startOfSet, endOfSet);
 
             return ConvertPostsToPostDtos(posts);
         }
@@ -345,16 +280,7 @@ public class PostService : IPostService
         try
         {
             Logger.LogInfo($"Fetching posts for the forum with ID: {forumId} from index {startOfSet} to {endOfSet}");
-            var posts = await DatabaseActions.GetEntitiesWithSelectorById<PostsDao>(
-                x => new object[] { x.PostId!, x.Content!, x.Forum!, x.CreatedAt },
-                new List<(string, Constants.Operator, string)>
-                {
-                    ("associated_forumID", Constants.Operator.Equals, forumId.ToString())
-                },
-                startOfSet,
-                endOfSet,
-                ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
-            );
+            var posts = await PostRepository.GetPostsByForumId(forumId, startOfSet, endOfSet);
 
             return ConvertPostsToPostDtos(posts);
         }

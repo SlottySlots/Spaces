@@ -2,7 +2,6 @@ using Blazored.SessionStorage;
 using NLog;
 using NLog.Web;
 using SlottyMedia.Backend.Dtos;
-using SlottyMedia.Backend.Repositories;
 using SlottyMedia.Backend.Repositories.Impl;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
@@ -11,9 +10,17 @@ using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Components;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Helper;
+using SlottyMedia.Database.Repository;
+using SlottyMedia.Database.Repository.FollowerUserRelatioRepo;
+using SlottyMedia.Database.Repository.ForumRepo;
+using SlottyMedia.Database.Repository.PostRepo;
+using SlottyMedia.Database.Repository.UserRepo;
 using SlottyMedia.DatabaseSeeding;
 using SlottyMedia.LoggingProvider;
 using Supabase;
+using SlottyMedia.Database.Repository.UserLikePostRelationRepo;
+
 
 // Early init of NLog to allow startup and exception logging, before host is built
 Logging<Program> logger = new();
@@ -43,8 +50,22 @@ try
     logger.LogInfo("Adding Database to the container");
     builder.Services.AddSingleton<IDatabaseActions, DatabaseActions>();
     
+    //Helpers
+    logger.LogInfo("Adding Helpers to the container");
+    builder.Services.AddSingleton<DaoHelper>();
+    builder.Services.AddSingleton<DatabaseRepositroyHelper>();
+    
     // Repositories
-    builder.Services.AddSingleton<IUserRepository, UserRepositoryImpl>();
+    logger.LogInfo("Adding Repositories to the container");
+    builder.Services.AddSingleton<IUserRepository, UserRepository>();
+    builder.Services.AddSingleton<IPostRepository, PostRepository>();
+    builder.Services.AddSingleton<IForumRepository, ForumRepository>();
+    builder.Services.AddSingleton<ITopForumRepository, TopForumRepository>();
+    builder.Services.AddSingleton<IFollowerUserRelationRepository, FollowerUserRelationRepository>();
+    builder.Services.AddSingleton<IUserLikePostRelationRepostitory, UserLikePostRelationRepostitory>();
+    builder.Services.AddSingleton<IUserSeachRepository, UserSearchRepository>();
+    builder.Services.AddSingleton<IForumSearchRepository, ForumSearchRepository>();
+    
 
     // Daos
     logger.LogInfo("Adding Daos to the container");

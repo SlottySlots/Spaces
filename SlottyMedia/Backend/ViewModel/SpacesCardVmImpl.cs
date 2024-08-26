@@ -53,17 +53,6 @@ public class SpacesCardVmImpl : ISpacesCardVm
         //await FetchNumOfPostsInSpaces(forums);
     }
 
-    private async Task FetchNumOfPostsInSpaces(List<ForumDto> spaces)
-    {
-        foreach (var space in spaces)
-        {
-            if (NumOfPostsInSpace.ContainsKey(space.ForumId))
-                continue;
-            var postCount = await _postService.GetPostCountByForumId(space.ForumId);
-            NumOfPostsInSpace.TryAdd(space.ForumId, postCount);
-        }
-    }
-
     private async Task DetermineTrendingSpaces()
     {
         TrendingSpaces = await _forumService.GetTopForums();

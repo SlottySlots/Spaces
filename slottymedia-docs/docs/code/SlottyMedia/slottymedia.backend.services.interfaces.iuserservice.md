@@ -10,12 +10,12 @@ public interface IUserService
 
 ## Methods
 
-### **GetUserById(Guid)**
+### **GetUserDtoById(Guid)**
 
 This method returns a User object from the database based on the given userId.
 
 ```csharp
-Task<UserDto> GetUserById(Guid userId)
+Task<UserDto> GetUserDtoById(Guid userId)
 ```
 
 #### Parameters
@@ -51,7 +51,7 @@ The queried user or null if no such user was found
 This method creates a new User object in the database and returns the created object.
 
 ```csharp
-Task<UserDto> CreateUser(string userId, string username, string email, Guid roleId, string description, string profilePicture)
+Task CreateUser(string userId, string username, string email, Guid roleId, string description, string profilePicture)
 ```
 
 #### Parameters
@@ -76,7 +76,7 @@ The ProfilePicture
 
 #### Returns
 
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 UserDto
 
 ### **UpdateUser(UserDao)**
@@ -84,7 +84,7 @@ UserDto
 This method updates the given User object in the database and returns the updated object.
 
 ```csharp
-Task<UserDto> UpdateUser(UserDao user)
+Task UpdateUser(UserDao user)
 ```
 
 #### Parameters
@@ -94,7 +94,7 @@ The User object
 
 #### Returns
 
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 UserDao
 
 ### **DeleteUser(UserDto)**
@@ -102,7 +102,7 @@ UserDao
 This method deletes the given User object from the database.
 
 ```csharp
-Task<bool> DeleteUser(UserDto user)
+Task DeleteUser(UserDto user)
 ```
 
 #### Parameters
@@ -112,7 +112,7 @@ The User Object
 
 #### Returns
 
-[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 Return if the User got deleted or not
 
 ### **GetProfilePic(Guid)**
@@ -172,38 +172,6 @@ The ID of the user
 [Task&lt;FriendsOfUserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns a FriendsOfUserDto object containing the list of friends
 
-### **GetUserBy(Nullable&lt;Guid&gt;, String, String)**
-
-Retrieves a user from the database based on the provided criteria (ID, username, or email).
-
-```csharp
-Task<UserDao> GetUserBy(Nullable<Guid> userID, string username, string email)
-```
-
-#### Parameters
-
-`userID` [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The ID of the user to retrieve (optional).
-
-`username` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The username of the user to retrieve (optional).
-
-`email` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The email of the user to retrieve (optional).
-
-#### Returns
-
-[Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns the UserDao object if found, otherwise null.
-
-#### Exceptions
-
-[UserNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.usernotfoundexception.md)<br>
-Thrown when no user is found with the provided criteria.
-
-[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
-Thrown when a general database error occurs.
-
 ### **GetCountOfUserFriends(Guid)**
 
 This method retrieves the count of friends for a given user from the database.
@@ -250,7 +218,7 @@ Returns the amount of spaces as task
 Updates the given UserDto object in the database and returns the updated object.
 
 ```csharp
-Task<UserDto> UpdateUser(UserDto user)
+Task UpdateUser(UserDto user)
 ```
 
 #### Parameters
@@ -260,5 +228,19 @@ The UserDto object to be updated.
 
 #### Returns
 
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 A task that represents the asynchronous operation. The task result contains the updated UserDto object.
+
+### **GetUserDaoById(Guid)**
+
+```csharp
+Task<UserDao> GetUserDaoById(Guid userId)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

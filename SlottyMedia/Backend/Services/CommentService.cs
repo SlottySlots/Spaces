@@ -4,6 +4,7 @@ using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Database.Repository.CommentRepo;
 using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.Services;
@@ -12,18 +13,18 @@ namespace SlottyMedia.Backend.Services;
 public class CommentService : ICommentService
 {
     private static readonly Logging<CommentService> Logger = new();
-    private readonly IDatabaseActions _databaseActions;
+    private readonly ICommentRepository _commentRepository;
 
 
     /// Constructor to initialize the CommentService with the required database actions.
-    public CommentService(IDatabaseActions databaseActions)
+    public CommentService(ICommentRepository commentRepository)
     {
         Logger.LogInfo("CommentService initialized");
-        _databaseActions = databaseActions;
+        _commentRepository = commentRepository;
     }
 
     /// <inheritdoc />
-    public async Task<CommentDto> InsertComment(Guid creatorUserId, Guid postId, string content)
+    public async Task InsertComment(Guid creatorUserId, Guid postId, string content)
     {
         try
         {
@@ -31,9 +32,7 @@ public class CommentService : ICommentService
 
             Logger.LogDebug($"Inserting comment: {comment}");
             // Attempt to insert the comment into the database.
-            var insertedComment = await _databaseActions.Insert(comment);
-            // Return the inserted comment as a CommentDto object.
-            return new CommentDto().Mapper(insertedComment);
+            await _commentRepository.AddElement(comment);
         }
         catch (DatabaseIudActionException ex)
         {
@@ -59,14 +58,12 @@ public class CommentService : ICommentService
     }
 
     /// <inheritdoc />
-    public async Task<CommentDto> UpdateComment(CommentDto comment)
+    public async Task UpdateComment(CommentDao comment)
     {
         try
         {
             // Attempt to update the comment in the database.
-            var updatedComment = await _databaseActions.Update(comment.Mapper());
-            // Return the updated comment as a CommentDto object.
-            return new CommentDto().Mapper(updatedComment);
+            await _commentRepository.UpdateElement(comment);
         }
         catch (DatabaseIudActionException ex)
         {
@@ -86,12 +83,12 @@ public class CommentService : ICommentService
     }
 
     /// <inheritdoc />
-    public async Task DeleteComment(CommentDto comment)
+    public async Task DeleteComment(CommentDao comment)
     {
         try
         {
             // Attempt to delete the comment from the database.
-            await _databaseActions.Delete(comment.Mapper());
+            await _commentRepository.DeleteElement(comment);
         }
         catch (DatabaseIudActionException ex)
         {

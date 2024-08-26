@@ -4,6 +4,7 @@ using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Database.Repository.ForumRepo;
 using SlottyMedia.LoggingProvider;
 using Supabase.Postgrest;
 using Client = Supabase.Client;
@@ -14,19 +15,22 @@ namespace SlottyMedia.Backend.Services;
 public class ForumService : IForumService
 {
     private static readonly Logging<ForumService> Logger = new();
-    private readonly IDatabaseActions _databaseActions;
-    private readonly Client _supabase;
+    private readonly IForumRepository _forumRepository;
+    private readonly ITopForumRepository _topForumRepository;
+    private readonly ISearchService _searchService;
 
     /// Constructor to initialize the ForumService with the required database actions.
-    public ForumService(IDatabaseActions databaseActions, Client supabase)
+    public ForumService(IForumRepository forumRepository, ITopForumRepository topForumRepository, ISearchService searchService)
     {
         Logger.LogInfo("ForumService initialized");
-        _databaseActions = databaseActions;
-        _supabase = supabase;
+        _forumRepository = forumRepository;
+        _topForumRepository = topForumRepository;
+        _searchService = searchService;
     }
 
+
     /// <inheritdoc />
-    public async Task<ForumDto> InsertForum(Guid creatorUserId, string forumTopic)
+    public async Task InsertForum(Guid creatorUserId, string forumTopic)
     {
         try
         {
@@ -34,10 +38,7 @@ public class ForumService : IForumService
             Logger.LogDebug($"Inserting forum: {forum}");
 
             // Attempt to insert the forum into the database.
-            var insertedForum = await _databaseActions.Insert(forum);
-
-            // Return the inserted forum as a ForumDto object.
-            return new ForumDto().Mapper(insertedForum);
+            await _forumRepository.AddElement(forum);
         }
         catch (DatabaseIudActionException ex)
         {
@@ -69,7 +70,7 @@ public class ForumService : IForumService
         {
             Logger.LogDebug($"Deleting forum: {forum}");
             // Attempt to delete the forum from the database.
-            await _databaseActions.Delete(forum.Mapper());
+            await _forumRepository.DeleteElement(forum.Mapper());
         }
         catch (DatabaseIudActionException ex)
         {
@@ -92,22 +93,28 @@ public class ForumService : IForumService
     public async Task<ForumDto> GetForumByName(string forumName)
     {
         Logger.LogDebug($"Fetching forum with name '{forumName}'...");
-        var dao = await _databaseActions.GetEntityByField<ForumDao>("forumTopic", forumName);
+        var dao = await _forumRepository.GetElementById(forumName);
         return new ForumDto().Mapper(dao);
     }
 
     /// <inheritdoc />
     public async Task<List<ForumDto>> GetForumsByNameContaining(string name, int page, int pageSize = 10)
     {
+        //TODO use searchservice for this type of stuff
+        
         Logger.LogDebug($"Fetching all forums containing the substring '{name}' (page {page} with size {pageSize})");
-        var query = await _supabase
-            .From<ForumDao>()
-            .Filter(dao => dao.ForumTopic!, Constants.Operator.ILike, $"%{name}%")
-            .Range((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
-            .Get();
-        return query.Models
-            .Select(forum => new ForumDto().Mapper(forum))
-            .ToList();
+        // var query = await _supabase
+        //     .From<ForumDao>()
+        //     .Filter(dao => dao.ForumTopic!, Constants.Operator.ILike, $"%{name}%")
+        //     .Range((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
+        //     .Get();
+        // return query.Models
+        //     .Select(forum => new ForumDto().Mapper(forum))
+        //     .ToList();
+        
+        var forums = await _searchService.SearchByTopic(name, page, pageSize);
+        
+        return forums.Forums;
     }
     
 
@@ -120,7 +127,7 @@ public class ForumService : IForumService
         try
         {
             Logger.LogDebug("Fetching all forums...");
-            var forumDaos = await _databaseActions.GetEntities<ForumDao>();
+            var forumDaos = await _forumRepository.GetAllElements();
 
             // Map ForumDao to ForumDto
             return forumDaos.Select(dao => new ForumDto().Mapper(dao)).ToList();
@@ -148,13 +155,7 @@ public class ForumService : IForumService
         try
         {
             Logger.LogDebug("Fetching the 3 most recent forums...");
-            var recentForums = await _databaseActions.GetEntitiesWithSelectorById<TopForumDao>(
-                x => new object[] { x.ForumId!, x.ForumTopic! },
-                new List<(string, Constants.Operator, string)>(),
-                2,
-                0,
-                ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
-            );
+            var recentForums = await _topForumRepository.DetermineRecentSpaces();
 
             // Map ForumDao to ForumDto
             return recentForums.Select(dao => new ForumDto().Mapper(dao)).ToList();
@@ -182,7 +183,7 @@ public class ForumService : IForumService
         try
         {
             Logger.LogDebug("Fetching the top forums...");
-            var topForums = await _databaseActions.GetTopForums();
+            var topForums = await _topForumRepository.GetTopForums();
 
             // Map TopForumDao to ForumDto
             return topForums.Select(dao => new ForumDto().Mapper(dao)).ToList();
@@ -203,4 +204,5 @@ public class ForumService : IForumService
             throw new GeneralDatabaseException("An unexpected error occurred while retrieving the top forums.", ex);
         }
     }
+    
 }

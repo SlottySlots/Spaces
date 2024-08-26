@@ -144,7 +144,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    ///     Tests if GetUserById method returns the user correctly when user exists.
+    ///     Tests if GetUserDtoById method returns the user correctly when user exists.
     /// </summary>
     [Test]
     public async Task GetUserById_ShouldReturnUser_WhenUserExists()
@@ -153,7 +153,7 @@ public class UserServiceTests
         var user = new UserDao { UserId = userId };
         _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString())).ReturnsAsync(user);
 
-        var result = await _userService.GetUserById(userId);
+        var result = await _userService.GetUserDtoById(userId);
 
         var resultDao = result.Mapper();
 
@@ -163,7 +163,7 @@ public class UserServiceTests
     }
 
     /// <summary>
-    ///     Tests if GetUserById method throws UserNotFoundException when DatabaseMissingItemException is thrown.
+    ///     Tests if GetUserDtoById method throws UserNotFoundException when DatabaseMissingItemException is thrown.
     /// </summary>
     [Test]
     public void GetUserById_ShouldThrowUserNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
@@ -172,11 +172,11 @@ public class UserServiceTests
         _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
-        Assert.ThrowsAsync<UserNotFoundException>(async () => await _userService.GetUserById(userId));
+        Assert.ThrowsAsync<UserNotFoundException>(async () => await _userService.GetUserDtoById(userId));
     }
 
     /// <summary>
-    ///     Tests if GetUserById method throws UserGeneralException when GeneralDatabaseException is thrown.
+    ///     Tests if GetUserDtoById method throws UserGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void GetUserById_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
@@ -185,7 +185,7 @@ public class UserServiceTests
         _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString()))
             .ThrowsAsync(new GeneralDatabaseException());
 
-        Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.GetUserById(userId));
+        Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.GetUserDtoById(userId));
     }
 
     /// <summary>

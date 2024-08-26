@@ -1,6 +1,6 @@
 ﻿using Supabase.Postgrest.Attributes;
 
-namespace SlottyMedia.Database.Repository;
+namespace SlottyMedia.Database.Helper;
 
 /// <summary>
 ///     This class provides helper methods for DAOs.
@@ -17,8 +17,10 @@ public class DaoHelper
         var properties = typeof(T).GetProperties();
         foreach (var property in properties)
         {
-            var primaryKeyAttribute = property.GetCustomAttributes(typeof(PrimaryKeyAttribute), false).FirstOrDefault();
-            if (primaryKeyAttribute != null) return property.Name;
+            var primaryKeyAttribute =
+                property.GetCustomAttributes(typeof(PrimaryKeyAttribute), false)
+                    .FirstOrDefault() as PrimaryKeyAttribute;
+            if (primaryKeyAttribute != null) return primaryKeyAttribute.ColumnName;
         }
 
         return null;

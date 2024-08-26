@@ -83,10 +83,10 @@ public class ForumDto
         {
             ForumId = forumDao.ForumId ?? Guid.Empty,
             Topic = forumDao.ForumTopic ?? string.Empty,
-            PostCount = forumDao.PostCount ?? 0
+            PostCount = forumDao.post_count ?? 0
         };
     }
-
+    
     /// <summary>
     ///     The ToString method returns a string representation of the object.
     /// </summary>

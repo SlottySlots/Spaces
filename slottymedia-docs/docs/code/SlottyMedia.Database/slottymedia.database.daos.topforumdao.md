@@ -36,12 +36,12 @@ public string ForumTopic { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **PostCount**
+### **post_count**
 
 The Count of Posts in the Forum.
 
 ```csharp
-public Nullable<int> PostCount { get; set; }
+public Nullable<int> post_count { get; set; }
 ```
 
 #### Property Value

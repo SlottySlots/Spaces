@@ -10,17 +10,17 @@ public interface IPostService
 
 ## Properties
 
-### **DatabaseActions**
+### **PostRepository**
 
 DatabaseActions property.
 
 ```csharp
-public abstract IDatabaseActions DatabaseActions { get; set; }
+public abstract IPostRepository PostRepository { get; set; }
 ```
 
 #### Property Value
 
-IDatabaseActions<br>
+IPostRepository<br>
 
 ## Methods
 
@@ -90,7 +90,7 @@ The post or null if not found
 Inserts a new post into the database.
 
 ```csharp
-Task<PostDto> InsertPost(string content, Guid creatorUserId, Guid forumId)
+Task InsertPost(string content, Guid creatorUserId, Guid forumId)
 ```
 
 #### Parameters
@@ -106,43 +106,43 @@ The ID of the forum the post should belong to
 
 #### Returns
 
-[Task&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 A task that represents the asynchronous operation. The task result contains the inserted post.
 
-### **UpdatePost(PostDto)**
+### **UpdatePost(PostsDao)**
 
 Updates an existing post in the database.
 
 ```csharp
-Task<PostDto> UpdatePost(PostDto post)
+Task UpdatePost(PostsDao post)
 ```
 
 #### Parameters
 
-`post` [PostDto](./slottymedia.backend.dtos.postdto.md)<br>
+`post` PostsDao<br>
 The post to update.
 
 #### Returns
 
-[Task&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 A task that represents the asynchronous operation. The task result contains the updated post.
 
-### **DeletePost(PostDto)**
+### **DeletePost(PostsDao)**
 
 Deletes a post from the database.
 
 ```csharp
-Task<bool> DeletePost(PostDto post)
+Task DeletePost(PostsDao post)
 ```
 
 #### Parameters
 
-`post` [PostDto](./slottymedia.backend.dtos.postdto.md)<br>
+`post` PostsDao<br>
 The the post to delete.
 
 #### Returns
 
-[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 A task that represents the asynchronous operation. The task result indicates whether the deletion was
  successful.
 
@@ -157,20 +157,6 @@ Task<int> GetForumCountByUserId(Guid userId)
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-
-#### Returns
-
-[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-
-### **GetPostCountByForumId(Guid)**
-
-```csharp
-Task<int> GetPostCountByForumId(Guid forumId)
-```
-
-#### Parameters
-
-`forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 #### Returns
 

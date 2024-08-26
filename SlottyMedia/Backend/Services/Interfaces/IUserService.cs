@@ -14,7 +14,7 @@ public interface IUserService
     /// </summary>
     /// <param name="userId">The UserID inside the Database</param>
     /// <returns>UserDao</returns>
-    Task<UserDto> GetUserById(Guid userId);
+    Task<UserDto> GetUserDtoById(Guid userId);
 
     /// <summary>
     ///     Fetches a user by their username. Returns null if no user was found.
@@ -33,7 +33,7 @@ public interface IUserService
     /// <param name="description">The Description about the User</param>
     /// <param name="profilePicture">The ProfilePicture</param>
     /// <returns>UserDto</returns>
-    Task<UserDto> CreateUser(string userId, string username, string email, Guid roleId, string? description = null,
+    Task CreateUser(string userId, string username, string email, Guid roleId, string? description = null,
         string? profilePicture = null);
 
     /// <summary>
@@ -41,14 +41,14 @@ public interface IUserService
     /// </summary>
     /// <param name="user">The User object</param>
     /// <returns>UserDao</returns>
-    Task<UserDto> UpdateUser(UserDao user);
+    Task UpdateUser(UserDao user);
 
     /// <summary>
     ///     This method deletes the given User object from the database.
     /// </summary>
     /// <param name="user">The User Object</param>
     /// <returns name="bool">Return if the User got deleted or not</returns>
-    Task<bool> DeleteUser(UserDto user);
+    Task DeleteUser(UserDto user);
 
     /// <summary>
     ///     This method returns the Profile Picture of the given User.
@@ -71,17 +71,6 @@ public interface IUserService
     /// <param name="userId">The ID of the user</param>
     /// <returns>Returns a FriendsOfUserDto object containing the list of friends</returns>
     Task<FriendsOfUserDto> GetFriends(Guid userId);
-
-    /// <summary>
-    ///     Retrieves a user from the database based on the provided criteria (ID, username, or email).
-    /// </summary>
-    /// <param name="userID">The ID of the user to retrieve (optional).</param>
-    /// <param name="username">The username of the user to retrieve (optional).</param>
-    /// <param name="email">The email of the user to retrieve (optional).</param>
-    /// <returns>Returns the UserDao object if found, otherwise null.</returns>
-    /// <exception cref="UserNotFoundException">Thrown when no user is found with the provided criteria.</exception>
-    /// <exception cref="UserGeneralException">Thrown when a general database error occurs.</exception>
-    public Task<UserDao> GetUserBy(Guid? userID = null, string? username = null, string? email = null);
 
     /// <summary>
     ///     This method retrieves the count of friends for a given user from the database.
@@ -109,5 +98,8 @@ public interface IUserService
     /// </summary>
     /// <param name="user">The UserDto object to be updated.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the updated UserDto object.</returns>
-    public Task<UserDto> UpdateUser(UserDto user);
+    public Task UpdateUser(UserDto user);
+
+    public Task<UserDao> GetUserDaoById(Guid userId);
+
 }

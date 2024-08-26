@@ -1,4 +1,6 @@
-﻿using SlottyMedia.Database.Exceptions;
+﻿using System.Linq.Expressions;
+using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Database.Helper;
 using Supabase.Postgrest;
 using Supabase.Postgrest.Interfaces;
 using Supabase.Postgrest.Models;
@@ -16,8 +18,8 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     ///     This field is used to access the _daoHelper class.
     /// </summary>
     private readonly DaoHelper _daoHelper;
-    
-    private readonly DatabaseRepositroyHelper _databaseRepositroyHelper;
+
+    protected readonly DatabaseRepositroyHelper DatabaseRepositroyHelper;
 
     /// <summary>
     ///     This field is used to access the Supabase client.
@@ -31,34 +33,12 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     /// <param name="supabase"></param>
     /// <param name="daoHelper"></param>
     /// <param name="databaseRepositroyHelper"></param>
-    protected DatabaseRepository(Client supabase, DaoHelper daoHelper, DatabaseRepositroyHelper databaseRepositroyHelper)
+    protected DatabaseRepository(Client supabase, DaoHelper daoHelper,
+        DatabaseRepositroyHelper databaseRepositroyHelper)
     {
         Supabase = supabase;
         _daoHelper = daoHelper;
-        _databaseRepositroyHelper = databaseRepositroyHelper;
-    }
-
-    /// <summary>
-    ///     This method executes a single query and returns the result.
-    /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    /// <exception cref="DatabaseMissingItemException"></exception>
-    private async Task<T> ExecuteSingleQuery(IPostgrestTable<T> query)
-    {
-        try
-        {
-            var response = await query.Single();
-
-            if (response != null)
-                return response;
-            throw new DatabaseMissingItemException("The entity was not found in the database.");
-        }
-        catch (Exception ex)
-        {
-            _databaseRepositroyHelper.HandleException(ex, "retrieving Single");
-            return null;
-        }
+        DatabaseRepositroyHelper = databaseRepositroyHelper;
     }
 
     /// <summary>
@@ -66,7 +46,7 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>
-    private async Task<List<T>> ExecuteQuery(IPostgrestTable<T> query)
+    public async Task<List<T>> ExecuteQuery(IPostgrestTable<T> query)
     {
         try
         {
@@ -78,53 +58,47 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         }
         catch (Exception ex)
         {
-            _databaseRepositroyHelper.HandleException(ex, "retrieving Multiple");
+            DatabaseRepositroyHelper.HandleException(ex, "retrieving Multiple");
             return null;
         }
     }
 
-
-    /// <summary>
-    ///     This method fetches an entity by their designated primary key.
-    /// </summary>
-    /// <param name="entityId"></param>
-    /// <returns></returns>
-    /// <exception cref="TableHasNoPrimaryKeyException">When the Table has no Primary Key, this exception will be returned</exception>
+    /// <inheritdoc />
     public virtual async Task<T> GetElementById(Guid entityId)
     {
         var primaryKeyField = _daoHelper.GetPrimaryKeyField<T>();
         if (primaryKeyField == null) throw new TableHasNoPrimaryKeyException("The table has no primary key.");
 
         return await ExecuteSingleQuery(Supabase.From<T>()
-            .Filter(primaryKeyField, Constants.Operator.Equals, entityId));
+            .Filter(primaryKeyField, Constants.Operator.Equals, entityId.ToString()));
     }
-    
-    /// <summary>
-    /// This method fetches an entity by their field name and value.
-    /// </summary>
-    /// <param name="fieldName"></param>
-    /// <param name="fieldValue"></param>
-    /// <returns></returns>
+
+    /// <inheritdoc />
+    public virtual async Task<T> GetElementById(Guid entityId, Expression<Func<T, object[]>> selector)
+    {
+        var primaryKeyField = _daoHelper.GetPrimaryKeyField<T>();
+        if (primaryKeyField == null) throw new TableHasNoPrimaryKeyException("The table has no primary key.");
+
+        return await ExecuteSingleQuery(Supabase.From<T>()
+            .Filter(primaryKeyField, Constants.Operator.Equals, entityId.ToString())
+            .Select(selector));
+    }
+
+
+    /// <inheritdoc />
     public virtual async Task<T> GetElementByField(string fieldName, string fieldValue)
     {
         return await ExecuteSingleQuery(Supabase.From<T>()
             .Filter(fieldName, Constants.Operator.Equals, fieldValue));
     }
 
-    /// <summary>
-    ///     This method fetches all entities of the designated type.
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc />
     public virtual async Task<List<T>> GetAllElements()
     {
         return await ExecuteQuery(Supabase.From<T>());
     }
 
-    /// <summary>
-    ///     This method adds an entity to the database.
-    /// </summary>
-    /// <param name="entity"></param>
-    /// <exception cref="DatabaseIudActionException">This Exception is thrown when we weren't able to insert the item</exception>
+    /// <inheritdoc />
     public virtual async Task AddElement(T entity)
     {
         try
@@ -135,15 +109,11 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         }
         catch (Exception e)
         {
-            _databaseRepositroyHelper.HandleException(e, "inserting");
+            DatabaseRepositroyHelper.HandleException(e, "inserting");
         }
     }
 
-    /// <summary>
-    ///     This method updates an entity in the database.
-    /// </summary>
-    /// <param name="entity"></param>
-    /// <exception cref="DatabaseIudActionException">This Exception is thrown when we weren't able to update the item</exception>
+    /// <inheritdoc />
     public virtual async Task UpdateElement(T entity)
     {
         try
@@ -154,15 +124,11 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         }
         catch (Exception e)
         {
-            _databaseRepositroyHelper.HandleException(e, "updating");
+            DatabaseRepositroyHelper.HandleException(e, "updating");
         }
     }
 
-    /// <summary>
-    ///     This method deletes an entity in the database.
-    /// </summary>
-    /// <param name="entity"></param>
-    /// <exception cref="DatabaseIudActionException">This Exception is thrown when we weren't able to delete the item</exception>
+    /// <inheritdoc />
     public virtual async Task DeleteElement(T entity)
     {
         try
@@ -173,7 +139,68 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         }
         catch (Exception e)
         {
-            _databaseRepositroyHelper.HandleException(e, "deleting");
+            DatabaseRepositroyHelper.HandleException(e, "deleting");
+        }
+    }
+
+    /// <summary>
+    ///     This method executes a single query and returns the result.
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    /// <exception cref="DatabaseMissingItemException"></exception>
+    public async Task<T> ExecuteSingleQuery(IPostgrestTable<T> query)
+    {
+        try
+        {
+            var response = await query.Single();
+
+            if (response != null)
+                return response;
+            throw new DatabaseMissingItemException("The entity was not found in the database.");
+        }
+        catch (Exception ex)
+        {
+            DatabaseRepositroyHelper.HandleException(ex, "retrieving Single");
+            return null;
+        }
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<object> ExecuteFunction(string nameOfFunction)
+    {
+        try
+        {
+            var result = await Supabase.Rpc<object>(nameOfFunction, null);
+            if (result is null)
+                throw new DatabaseMissingItemException("The Items could not be retrieved from the database.");
+            {
+            }
+            return result;
+        }
+        catch (Exception e)
+        {
+            DatabaseRepositroyHelper.HandleException(e, "executing function");
+            return null;
+        }
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<object> ExecuteFunction(string nameOfFunction, Dictionary<string, object> parameters)
+    {
+        try
+        {
+            var result = await Supabase.Rpc<object>(nameOfFunction, parameters);
+            if (result is null)
+                throw new DatabaseMissingItemException("The Items could not be retrieved from the database.");
+            {
+            }
+            return result;
+        }
+        catch (Exception e)
+        {
+            DatabaseRepositroyHelper.HandleException(e, "executing function");
+            return null;
         }
     }
 }

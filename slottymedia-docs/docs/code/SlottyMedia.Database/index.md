@@ -6,6 +6,8 @@
 
 [IDatabaseActions](./slottymedia.database.idatabaseactions.md)
 
+[IDatabaseRepository&lt;T&gt;](./slottymedia.database.idatabaserepository-1.md)
+
 [InitializeSupabaseClient](./slottymedia.database.initializesupabaseclient.md)
 
 ## SlottyMedia.Database.Daos
@@ -33,3 +35,63 @@
 [DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)
 
 [GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)
+
+[TableHasNoPrimaryKeyException](./slottymedia.database.exceptions.tablehasnoprimarykeyexception.md)
+
+## SlottyMedia.Database.Helper
+
+[DaoHelper](./slottymedia.database.helper.daohelper.md)
+
+[DatabaseRepositroyHelper](./slottymedia.database.helper.databaserepositroyhelper.md)
+
+## SlottyMedia.Database.Repository
+
+[DatabaseRepository&lt;T&gt;](./slottymedia.database.repository.databaserepository-1.md)
+
+[ForumSearchRepository](./slottymedia.database.repository.forumsearchrepository.md)
+
+[IForumSearchRepository](./slottymedia.database.repository.iforumsearchrepository.md)
+
+[IUserSeachRepository](./slottymedia.database.repository.iuserseachrepository.md)
+
+[UserSearchRepository](./slottymedia.database.repository.usersearchrepository.md)
+
+## SlottyMedia.Database.Repository.CommentRepo
+
+[CommentRepository](./slottymedia.database.repository.commentrepo.commentrepository.md)
+
+[ICommentRepository](./slottymedia.database.repository.commentrepo.icommentrepository.md)
+
+## SlottyMedia.Database.Repository.FollowerUserRelatioRepo
+
+[FollowerUserRelationRepository](./slottymedia.database.repository.followeruserrelatiorepo.followeruserrelationrepository.md)
+
+[IFollowerUserRelationRepository](./slottymedia.database.repository.followeruserrelatiorepo.ifolloweruserrelationrepository.md)
+
+## SlottyMedia.Database.Repository.ForumRepo
+
+[ForumRepository](./slottymedia.database.repository.forumrepo.forumrepository.md)
+
+[IForumRepository](./slottymedia.database.repository.forumrepo.iforumrepository.md)
+
+[ITopForumRepository](./slottymedia.database.repository.forumrepo.itopforumrepository.md)
+
+[TopForumRepository](./slottymedia.database.repository.forumrepo.topforumrepository.md)
+
+## SlottyMedia.Database.Repository.PostRepo
+
+[IPostRepository](./slottymedia.database.repository.postrepo.ipostrepository.md)
+
+[PostRepository](./slottymedia.database.repository.postrepo.postrepository.md)
+
+## SlottyMedia.Database.Repository.UserLikePostRelationRepo
+
+[IUserLikePostRelationRepostitory](./slottymedia.database.repository.userlikepostrelationrepo.iuserlikepostrelationrepostitory.md)
+
+[UserLikePostRelationRepostitory](./slottymedia.database.repository.userlikepostrelationrepo.userlikepostrelationrepostitory.md)
+
+## SlottyMedia.Database.Repository.UserRepo
+
+[IUserRepository](./slottymedia.database.repository.userrepo.iuserrepository.md)
+
+[UserRepository](./slottymedia.database.repository.userrepo.userrepository.md)
