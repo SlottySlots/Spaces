@@ -1,9 +1,11 @@
+using SlottyMedia.LoggingProvider;
+
 namespace SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 
 /// <summary>
 ///     This exception is thrown when a user is not found.
 /// </summary>
-public class UserNotFoundException : BaseException
+public class UserNotFoundException : BaseException<UserNotFoundException>
 {
     /// <summary>
     ///     This constructor creates a new UserNotFoundException object.

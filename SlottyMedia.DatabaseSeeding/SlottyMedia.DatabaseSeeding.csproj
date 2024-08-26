@@ -4,6 +4,8 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,8 +14,12 @@
 
     <ItemGroup>
         <PackageReference Include="Bogus" Version="35.6.0"/>
-        <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.11"/>
         <PackageReference Include="Supabase" Version="1.1.1"/>
+        <PackageReference Include="WaffleGenerator.Bogus" Version="4.2.1"/>
     </ItemGroup>
+
+    <Target Name="GenerateDocumentation" AfterTargets="Build;Run" Condition="'$(GITHUB_ACTIONS)' != 'true'">
+        <Exec Command="dotnet tool run xmldoc2md ./bin/Debug/net8.0/SlottyMedia.DatabaseSeeding.dll ../slottymedia-docs/docs/code/SlottyMedia.DatabaseSeeding"/>
+    </Target>
 
 </Project>

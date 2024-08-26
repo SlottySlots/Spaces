@@ -1,5 +1,6 @@
 using Microsoft.JSInterop;
 using SlottyMedia.Backend.Services.Interfaces;
+using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.Services;
 
@@ -9,10 +10,13 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class CookieService : ICookieService
 {
+    private static readonly Logging<CookieService> Logger = new();
+
     /// <summary>
     ///     Runtime to perform js operations on client side
     /// </summary>
     private readonly IJSRuntime _jsRuntime;
+
 
     /// <summary>
     ///     Sets a singleton by using ctor injection
@@ -20,6 +24,7 @@ public class CookieService : ICookieService
     /// <param name="jsRuntime"></param>
     public CookieService(IJSRuntime jsRuntime)
     {
+        Logger.LogInfo("CookieService initialized");
         _jsRuntime = jsRuntime;
     }
 
@@ -41,6 +46,7 @@ public class CookieService : ICookieService
     /// </returns>
     public ValueTask SetCookie(string name, string value, int days = 7)
     {
+        Logger.LogDebug($"Setting cookie {name} with expiration {days} days");
         return _jsRuntime.InvokeVoidAsync("setCookie", name, value, days);
     }
 
@@ -55,6 +61,7 @@ public class CookieService : ICookieService
     /// </returns>
     public ValueTask<string> GetCookie(string name)
     {
+        Logger.LogDebug($"Getting cookie {name}");
         return _jsRuntime.InvokeAsync<string>("getCookie", name);
     }
 
@@ -69,6 +76,7 @@ public class CookieService : ICookieService
     /// </returns>
     public ValueTask<string> RemoveCookie(string name)
     {
+        Logger.LogDebug($"Removing cookie {name}");
         return _jsRuntime.InvokeAsync<string>("removeCookie", name);
     }
 }

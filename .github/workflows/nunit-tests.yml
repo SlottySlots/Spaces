@@ -29,6 +29,7 @@ jobs:
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+      GITHUB_ACTIONS: true
 
     steps:
     - uses: actions/checkout@v4

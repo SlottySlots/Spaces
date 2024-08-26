@@ -1,5 +1,4 @@
-﻿using SlottyMedia.Database;
-using SlottyMedia.Database.Daos;
+﻿using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using Supabase;
 
@@ -9,7 +8,7 @@ namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
 ///     Test class for the CommentDto model.
 /// </summary>
 [TestFixture]
-public class CommentDaoTest
+public class CommentDaoTest : BaseDatabaseTestClass
 {
     /// <summary>
     ///     One-time setup method to initialize Supabase client and insert test data.
@@ -17,15 +16,12 @@ public class CommentDaoTest
     [OneTimeSetUp]
     public async Task OneTimeSetup()
     {
-        _supabaseClient = InitializeSupabaseClient.GetSupabaseClient();
-        _databaseActions = new DatabaseActions(_supabaseClient);
+        _userToWorkWith = await DatabaseActions.Insert(InitializeModels.GetUserDto(UserId));
 
-        _userToWorkWith = await _databaseActions.Insert(InitializeModels.GetUserDto());
-
-        _forumToWorkWith = await _databaseActions.Insert(InitializeModels.GetForumDto(_userToWorkWith));
+        _forumToWorkWith = await DatabaseActions.Insert(InitializeModels.GetForumDto(_userToWorkWith));
 
         _postToWorkWith =
-            await _databaseActions.Insert(InitializeModels.GetPostsDto(_forumToWorkWith, _userToWorkWith));
+            await DatabaseActions.Insert(InitializeModels.GetPostsDto(_forumToWorkWith, _userToWorkWith));
     }
 
     /// <summary>
@@ -53,9 +49,12 @@ public class CommentDaoTest
             if (_commentToWorkWith.CommentId is null) return;
 
             var comment =
-                await _databaseActions.GetEntityByField<CommentDao>("commentID",
+                await DatabaseActions.GetEntityByField<CommentDao>("commentID",
                     _commentToWorkWith.CommentId.ToString() ?? "");
-            if (comment != null) await _databaseActions.Delete(comment);
+            if (comment != null) await DatabaseActions.Delete(comment);
+        }
+        catch (DatabaseMissingItemException)
+        {
         }
         catch (Exception ex)
         {
@@ -74,17 +73,17 @@ public class CommentDaoTest
             if (_postToWorkWith.PostId is null || _forumToWorkWith.ForumId is null ||
                 _userToWorkWith.UserId is null) return;
 
-            var post = await _databaseActions.GetEntityByField<PostsDao>("postID",
+            var post = await DatabaseActions.GetEntityByField<PostsDao>("postID",
                 _postToWorkWith.PostId.ToString() ?? "");
-            if (post != null) await _databaseActions.Delete(post);
+            if (post != null) await DatabaseActions.Delete(post);
 
-            var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID",
+            var forum = await DatabaseActions.GetEntityByField<ForumDao>("forumID",
                 _forumToWorkWith.ForumId.ToString() ?? "");
-            if (forum != null) await _databaseActions.Delete(forum);
+            if (forum != null) await DatabaseActions.Delete(forum);
 
-            var user = await _databaseActions.GetEntityByField<UserDao>("userID",
+            var user = await DatabaseActions.GetEntityByField<UserDao>("userID",
                 _userToWorkWith.UserId.ToString() ?? "");
-            if (user != null) await _databaseActions.Delete(user);
+            if (user != null) await DatabaseActions.Delete(user);
         }
         catch (Exception ex)
         {
@@ -93,7 +92,6 @@ public class CommentDaoTest
     }
 
     private Client _supabaseClient;
-    private IDatabaseActions _databaseActions;
     private CommentDao _commentToWorkWith;
     private UserDao _userToWorkWith;
     private PostsDao _postToWorkWith;
@@ -107,7 +105,7 @@ public class CommentDaoTest
     {
         try
         {
-            var insertedComment = await _databaseActions.Insert(_commentToWorkWith);
+            var insertedComment = await DatabaseActions.Insert(_commentToWorkWith);
             Assert.That(insertedComment, Is.Not.Null, "Inserted comment should not be null");
             Assert.That(insertedComment.CreatorUserId, Is.EqualTo(_commentToWorkWith.CreatorUserId),
                 "CreatorUserId should match");
@@ -129,11 +127,11 @@ public class CommentDaoTest
     {
         try
         {
-            var insertedComment = await _databaseActions.Insert(_commentToWorkWith);
+            var insertedComment = await DatabaseActions.Insert(_commentToWorkWith);
             Assert.That(insertedComment, Is.Not.Null, "Inserted comment should not be null");
 
             insertedComment.Content = "I'm an updated Test Comment";
-            var updatedComment = await _databaseActions.Update(insertedComment);
+            var updatedComment = await DatabaseActions.Update(insertedComment);
 
             Assert.Multiple(() =>
             {
@@ -158,10 +156,10 @@ public class CommentDaoTest
     {
         try
         {
-            var insertedComment = await _databaseActions.Insert(_commentToWorkWith);
+            var insertedComment = await DatabaseActions.Insert(_commentToWorkWith);
             Assert.That(insertedComment, Is.Not.Null, "Inserted comment should not be null");
 
-            var deletedComment = await _databaseActions.Delete(insertedComment);
+            var deletedComment = await DatabaseActions.Delete(insertedComment);
             Assert.That(deletedComment, Is.True, "Deleted comment should not be false");
         }
         catch (GeneralDatabaseException ex)
@@ -178,8 +176,8 @@ public class CommentDaoTest
     {
         try
         {
-            var insertedComment = await _databaseActions.Insert(_commentToWorkWith);
-            //var insertedSubcomment = await _databaseActions.Insert(_subcommentToWorkWith);
+            var insertedComment = await DatabaseActions.Insert(_commentToWorkWith);
+            //var insertedSubcomment = await DatabaseActions.Insert(_subcommentToWorkWith);
             Assert.Multiple(() =>
             {
                 Assert.That(insertedComment, Is.Not.Null, "Inserted comment should not be null");
@@ -188,7 +186,7 @@ public class CommentDaoTest
 
 
             var comment =
-                await _databaseActions.GetEntityByField<CommentDao>("commentID",
+                await DatabaseActions.GetEntityByField<CommentDao>("commentID",
                     insertedComment.CommentId.ToString() ?? "");
             Assert.Multiple(() =>
             {

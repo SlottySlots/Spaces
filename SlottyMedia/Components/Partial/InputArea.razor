@@ -1,0 +1,51 @@
+<textarea
+    id="@Id"
+    name="@Name"
+    placeholder="@Placeholder"
+    type="@Type"
+    @bind="Value"
+    @oninput="_handleInput"
+    class=@("p-2 rounded-[12px] bg-cadet-gray-100 text-cadet-gray-800 outline-none " + Class)
+></textarea>
+
+
+@code {
+
+    /// <summary>Additional CSS classes to apply to the textarea component</summary>
+    [Parameter]
+    public string? Class { get; set; }
+
+    /// <summary>The input field's ID</summary>
+    [Parameter]
+    public string? Id { get; set; }
+
+    /// <summary>The input field's name</summary>
+    [Parameter]
+    public string? Name { get; set; }
+
+    /// The input field's placeholder
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    /// The input field's type
+    [Parameter]
+    public string? Type { get; set; }
+
+    /// The input field's value. Use data binding (@bind-Value) instead of manually setting this field!
+    [Parameter]
+    public string? Value { get; set; }
+
+    /// An event that is invoked whenever this input field's value changes
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    async Task _handleInput(ChangeEventArgs e)
+    {
+        if (e.Value != null)
+        {
+            var newValue = e.Value.ToString();
+            await ValueChanged.InvokeAsync(newValue);
+        }
+    }
+
+}

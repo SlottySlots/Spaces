@@ -1,7 +1,10 @@
+using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Components;
 using Microsoft.IdentityModel.Tokens;
-using SlottyMedia.Backend.Exceptions.auth;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
+using SlottyMedia.LoggingProvider;
+using Supabase.Gotrue.Exceptions;
 
 namespace SlottyMedia.Backend.ViewModel;
 
@@ -10,10 +13,15 @@ namespace SlottyMedia.Backend.ViewModel;
 /// </summary>
 public class SignInFormVmImpl : ISignInFormVm
 {
+    private static readonly Logging<SignInFormVmImpl> Logger = new();
+
     /// <summary>
     ///     AuthService used for supabase authentication
     /// </summary>
     private readonly IAuthService _authService;
+
+    private readonly NavigationManager _navigationManager;
+
 
     /// <summary>
     ///     Standard Constructor used for dependency injection
@@ -21,62 +29,77 @@ public class SignInFormVmImpl : ISignInFormVm
     /// <param name="authService">
     ///     AuthService about to being injected
     /// </param>
-    public SignInFormVmImpl(IAuthService authService)
+    public SignInFormVmImpl(IAuthService authService, NavigationManager navigationManager)
     {
+        Logger.LogInfo("SignInFormVm initialized");
         _authService = authService;
+        _navigationManager = navigationManager;
     }
 
-    /// <summary>
-    ///     Corresponds to the email a user sets in the form. This is achieved via data-binding.
-    /// </summary>
     public string? Email { get; set; }
 
-    /// <summary>
-    ///     Corresponds to the password a user sets in the form. This is achieved via data-binding.
-    /// </summary>
+    public string? EmailErrorMessage { get; set; }
+
     public string? Password { get; set; }
 
-    /// <summary>
-    ///     Field for setting a user exposing error message.
-    /// </summary>
-    public string? LoginErrorMessage { get; set; }
+    public string? PasswordErrorMessage { get; set; }
 
+    public string? ServerErrorMessage { get; set; }
 
-    /// <summary>
-    ///     Function called on submition of the SignInForm
-    /// </summary>
-    /// <exception cref="ArgumentException">
-    ///     Exception thrown on a missing email / password
-    /// </exception>
-    /// <exception cref="UserAlreadySignedInException">
-    ///     Exception thrown on a already authenticated user
-    /// </exception>
     public async Task SubmitSignInForm()
     {
-        LoginErrorMessage = "";
+        Logger.LogDebug("SubmitSignInForm called");
 
+        // reset all error messages when (re-)submitting the form
+        _resetErrorMessages();
+
+        // display error message when fields were empty
         if (Email.IsNullOrEmpty())
         {
-            LoginErrorMessage = "Email must be set!";
-            throw new ArgumentException("Email must be set!");
+            EmailErrorMessage = "Email is required";
+            return;
         }
 
         if (Password.IsNullOrEmpty())
         {
-            LoginErrorMessage = "Password must be set!";
-            throw new ArgumentException("Password must be set!");
+            PasswordErrorMessage = "Password is required";
+            return;
         }
 
-        if (!_authService.IsAuthenticated())
-            try
-            {
-                await _authService.SignIn(Email!, Password!);
-            }
-            catch (Exception)
-            {
-                LoginErrorMessage = "Invalid credentials!";
-            }
-        else
-            throw new UserAlreadySignedInException();
+        // attempt signin
+        try
+        {
+            // sign out if user was already signed in
+            await _authService.SignOut();
+            // perform signin
+            await _authService.SignIn(Email!, Password!);
+
+            // TODO display error message when password was invalid! This is urgent!
+        }
+        catch (GotrueException ex)
+        {
+            var message = ex.Message;
+            var regex = new Regex("\"error_description\"\\s*:\\s*\"([^\"]*)\"");
+            var errorDescription = regex.Match(message);
+            if (errorDescription.Success && errorDescription.Groups[1].Value == "Invalid login credentials")
+                ServerErrorMessage = "Provided credentials were invalid!";
+            else
+                ServerErrorMessage = "An unknown error occurred. Try again later.";
+            return;
+        }
+        catch
+        {
+            ServerErrorMessage = "An unknown error occurred. Try again later.";
+            return;
+        }
+
+        // if no errors occurred and user was signed in successfully: redirect to home page
+        _navigationManager.NavigateTo("/");
+    }
+
+    private void _resetErrorMessages()
+    {
+        EmailErrorMessage = null;
+        ServerErrorMessage = null;
     }
 }

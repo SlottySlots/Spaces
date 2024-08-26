@@ -1,9 +1,11 @@
+using SlottyMedia.LoggingProvider;
+
 namespace SlottyMedia.Backend.Exceptions.Services.PostExceptions;
 
 /// <summary>
 ///     Represents an exception that is thrown when a requested post is not found.
 /// </summary>
-public class PostNotFoundException : BaseException
+public class PostNotFoundException : BaseException<PostNotFoundException>
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="PostNotFoundException" /> class with a specified error message.

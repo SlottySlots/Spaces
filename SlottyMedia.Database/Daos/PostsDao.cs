@@ -9,10 +9,24 @@ namespace SlottyMedia.Database.Daos;
 [Table("Posts")]
 public class PostsDao : BaseModel
 {
+    /// <summary>
+    ///     The default constructor.
+    /// </summary>
     public PostsDao()
     {
+        UserId = Guid.Empty;
+        ForumId = Guid.Empty;
+        Headline = string.Empty;
+        Content = string.Empty;
     }
 
+    /// <summary>
+    ///     The constructor with parameters.
+    /// </summary>
+    /// <param name="userId">The UserId of the Post</param>
+    /// <param name="forumId">The ForumId of the Post</param>
+    /// <param name="headline">The Headline of the Post</param>
+    /// <param name="content">The Content of the Post</param>
     public PostsDao(Guid userId, Guid forumId, string headline, string content)
     {
         UserId = userId;
@@ -66,12 +80,25 @@ public class PostsDao : BaseModel
     [Column("content")]
     public string? Content { get; set; }
 
-    [Reference(typeof(CommentDao), ReferenceAttribute.JoinType.Left, true, "corresponding_PostID")]
-    public List<CommentDao?>? Comments { get; set; }
+    /// <summary>
+    ///     The Comments of the Post. This is a Reference to the Comment Table. It is a Foreign Key. Be aware, that this
+    /// </summary>
+    // [Reference(typeof(CommentDao), ReferenceAttribute.JoinType.Left, true, "corresponding_PostID")]
+    // public List<CommentDao?>? Comments { get; set; }
 
     /// <summary>
     ///     The Date and Time the Post was created.
     /// </summary>
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
+
+    /// <summary>
+    ///     The ToString method returns a string representation of the object.
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return
+            $"PostId: {PostId}, UserId: {UserId}, ForumId: {ForumId}, Headline: {Headline}, Content: {Content}, CreatedAt: {CreatedAt}";
+    }
 }

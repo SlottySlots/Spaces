@@ -1,10 +1,12 @@
+using SlottyMedia.LoggingProvider;
+
 namespace SlottyMedia.Backend.Exceptions.signup;
 
 /// <summary>
 ///     This exception is thrown after an illegal attempt to sign up a user with an already
 ///     existing username.
 /// </summary>
-public class UsernameAlreadyExistsException : BaseException
+public class UsernameAlreadyExistsException : BaseException<UsernameAlreadyExistsException>
 {
     /// <summary>
     ///     Build an exception with the given username.

@@ -1,4 +1,5 @@
 using SlottyMedia.Database.Daos;
+using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.Dtos;
 
@@ -7,6 +8,8 @@ namespace SlottyMedia.Backend.Dtos;
 /// </summary>
 public class PostDto
 {
+    private static readonly Logging<PostDto> Logger = new();
+
     /// <summary>
     ///     Initializes a new instance of the <see cref="PostDto" /> class.
     /// </summary>
@@ -18,7 +21,7 @@ public class PostDto
         Likes = new List<Guid>();
         CreatedAt = DateTime.MinValue;
         Content = string.Empty;
-        Comments = new List<CommentDao>();
+        Comments = new List<CommentDto>();
         Headline = string.Empty;
     }
 
@@ -60,7 +63,7 @@ public class PostDto
     /// <summary>
     ///     Gets or sets the comments on the post.
     /// </summary>
-    public List<CommentDao> Comments { get; set; }
+    public List<CommentDto> Comments { get; set; }
 
     /// <summary>
     ///     The Mapper for the Post Dto to the Post Dao.
@@ -68,6 +71,8 @@ public class PostDto
     /// <returns></returns>
     public PostsDao Mapper()
     {
+        Logger.LogInfo($"Mapping PostDto to PostDao. Post: {this}");
+
         var postDao = new PostsDao
         {
             PostId = PostId,
@@ -87,13 +92,26 @@ public class PostDto
     /// <returns></returns>
     public PostDto Mapper(PostsDao post)
     {
+        Logger.LogInfo($"Mapping PostDao to PostDto. Post: {post}");
+
         PostId = post.PostId ?? Guid.Empty;
         Content = post.Content ?? string.Empty;
         Forum = post.Forum != null ? new ForumDto().Mapper(post.Forum) : new ForumDto();
         CreatedAt = post.CreatedAt;
-        Comments = post.Comments ?? new List<CommentDao>();
+        //Comments = post.Comments?.Select(c => new CommentDto().Mapper(c)).ToList() ?? new List<CommentDto>();
+        //TODO Add Comment Mapping
         UserId = post.UserId ?? Guid.Empty;
         Headline = post.Headline ?? string.Empty;
         return this;
+    }
+
+    /// <summary>
+    ///     The ToString method returns a string representation of the object.
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return
+            $"PostId: {PostId}, UserId: {UserId}, Likes: {Likes.Count}, CreatedAt: {CreatedAt}, Content: {Content}, Comments: {Comments.Count}, Headline: {Headline}";
     }
 }

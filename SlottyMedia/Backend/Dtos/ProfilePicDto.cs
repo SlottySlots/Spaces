@@ -1,4 +1,5 @@
 using SlottyMedia.Database.Daos;
+using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.Dtos;
 
@@ -7,13 +8,15 @@ namespace SlottyMedia.Backend.Dtos;
 /// </summary>
 public class ProfilePicDto
 {
+    private static readonly Logging<ProfilePicDto> Logger = new();
+
     /// <summary>
     ///     Initializes a new instance of the <see cref="ProfilePicDto" /> class.
     /// </summary>
     public ProfilePicDto()
     {
         UserId = Guid.Empty;
-        ProfilePic = 0;
+        ProfilePic = string.Empty;
     }
 
     /// <summary>
@@ -24,7 +27,7 @@ public class ProfilePicDto
     /// <summary>
     ///     Gets or sets the Profile Picture in binary.
     /// </summary>
-    public long ProfilePic { get; set; }
+    public string ProfilePic { get; set; }
 
     /// <summary>
     ///     This method maps the ProfilePicDto to a UserDao.
@@ -32,6 +35,8 @@ public class ProfilePicDto
     /// <returns></returns>
     public UserDao Mapper()
     {
+        Logger.LogInfo($"Mapping ProfilePicDto to UserDao. ProfilePicDto: {this}");
+
         return new UserDao
         {
             UserId = UserId,
@@ -46,10 +51,21 @@ public class ProfilePicDto
     /// <returns></returns>
     public ProfilePicDto Mapper(UserDao userDao)
     {
+        Logger.LogInfo($"Mapping UserDao to ProfilePicDto. UserDao: {userDao}");
+
         return new ProfilePicDto
         {
             UserId = userDao.UserId ?? Guid.Empty,
-            ProfilePic = userDao.ProfilePic ?? 0
+            ProfilePic = userDao.ProfilePic ?? string.Empty
         };
+    }
+
+    /// <summary>
+    ///     This method overrides the ToString method to return the ProfilePicDto as a string.
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return $"UserId: {UserId}, ProfilePic: {ProfilePic}";
     }
 }

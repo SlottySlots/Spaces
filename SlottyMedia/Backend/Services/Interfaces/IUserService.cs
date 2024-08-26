@@ -1,4 +1,6 @@
 using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Backend.Exceptions.Services.UserExceptions;
+using SlottyMedia.Database.Daos;
 
 namespace SlottyMedia.Backend.Services.Interfaces;
 
@@ -19,24 +21,27 @@ public interface IUserService
     /// </summary>
     /// <param name="username">The user's username</param>
     /// <returns>The queried user or null if no such user was found</returns>
-    Task<UserDto?> GetUserByUsername(string username);
+    Task<bool> CheckIfUserExistsByUserName(string username);
 
     /// <summary>
     ///     This method creates a new User object in the database and returns the created object.
     /// </summary>
     /// <param name="userId">The UserID from the Authentication Service</param>
     /// <param name="username">The Username, which the User set himself</param>
+    /// <param name="email">The Email of the User</param>
+    /// <param name="roleId">The Role ID of the User</param>
     /// <param name="description">The Description about the User</param>
     /// <param name="profilePicture">The ProfilePicture</param>
     /// <returns>UserDto</returns>
-    Task<UserDto> CreateUser(string userId, string username, string? description = null, long? profilePicture = null);
+    Task<UserDto> CreateUser(string userId, string username, string email, Guid roleId, string? description = null,
+        string? profilePicture = null);
 
     /// <summary>
     ///     This method updates the given User object in the database and returns the updated object.
     /// </summary>
     /// <param name="user">The User object</param>
     /// <returns>UserDao</returns>
-    Task<UserDto> UpdateUser(UserDto user);
+    Task<UserDto> UpdateUser(UserDao user);
 
     /// <summary>
     ///     This method deletes the given User object from the database.
@@ -66,4 +71,43 @@ public interface IUserService
     /// <param name="userId">The ID of the user</param>
     /// <returns>Returns a FriendsOfUserDto object containing the list of friends</returns>
     Task<FriendsOfUserDto> GetFriends(Guid userId);
+
+    /// <summary>
+    ///     Retrieves a user from the database based on the provided criteria (ID, username, or email).
+    /// </summary>
+    /// <param name="userID">The ID of the user to retrieve (optional).</param>
+    /// <param name="username">The username of the user to retrieve (optional).</param>
+    /// <param name="email">The email of the user to retrieve (optional).</param>
+    /// <returns>Returns the UserDao object if found, otherwise null.</returns>
+    /// <exception cref="UserNotFoundException">Thrown when no user is found with the provided criteria.</exception>
+    /// <exception cref="UserGeneralException">Thrown when a general database error occurs.</exception>
+    public Task<UserDao> GetUserBy(Guid? userID = null, string? username = null, string? email = null);
+
+    /// <summary>
+    ///     This method retrieves the count of friends for a given user from the database.
+    /// </summary>
+    /// <param name="userId">The ID of the user whose friends count is to be retrieved.</param>
+    /// <returns>Returns the count of friends for the specified user.</returns>
+    /// <exception cref="UserGeneralException">
+    ///     Thrown when a general database error occurs while fetching the friends count.
+    /// </exception>
+    public Task<int> GetCountOfUserFriends(Guid userId);
+
+    /// <summary>
+    ///     Gets all spaces a user has wrote in
+    /// </summary>
+    /// <param name="userId">
+    ///     User from which it should be retrieved
+    /// </param>
+    /// <returns>
+    ///     Returns the amount of spaces as task
+    /// </returns>
+    public Task<int> GetCountOfUserSpaces(Guid userId);
+
+    /// <summary>
+    ///     Updates the given UserDto object in the database and returns the updated object.
+    /// </summary>
+    /// <param name="user">The UserDto object to be updated.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the updated UserDto object.</returns>
+    public Task<UserDto> UpdateUser(UserDto user);
 }

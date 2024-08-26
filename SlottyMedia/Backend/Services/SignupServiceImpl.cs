@@ -1,5 +1,8 @@
 using SlottyMedia.Backend.Exceptions.signup;
 using SlottyMedia.Backend.Services.Interfaces;
+using SlottyMedia.Database;
+using SlottyMedia.Database.Daos;
+using SlottyMedia.LoggingProvider;
 using Supabase.Gotrue;
 using Client = Supabase.Client;
 
@@ -10,7 +13,9 @@ namespace SlottyMedia.Backend.Services;
 /// </summary>
 public class SignupServiceImpl : ISignupService
 {
+    private static readonly Logging<SignupServiceImpl> Logger = new();
     private readonly ICookieService _cookieService;
+    private readonly IDatabaseActions _databaseActions;
     private readonly Client _supabaseClient;
     private readonly IUserService _userService;
 
@@ -26,11 +31,13 @@ public class SignupServiceImpl : ISignupService
     /// <param name="cookieService">
     ///     Cookie Service used to set cookies on client side
     /// </param>
-    public SignupServiceImpl(Client supabaseClient, IUserService userService, ICookieService cookieService)
+    public SignupServiceImpl(Client supabaseClient, IUserService userService, ICookieService cookieService,
+        IDatabaseActions databaseActions)
     {
         _supabaseClient = supabaseClient;
         _userService = userService;
         _cookieService = cookieService;
+        _databaseActions = databaseActions;
     }
 
     /// <summary>
@@ -51,19 +58,13 @@ public class SignupServiceImpl : ISignupService
     public virtual async Task<Session> SignUp(string username, string email, string password)
     {
         // throw exception if username already exists
-        var user = await _userService.GetUserByUsername(username);
-        if (user != null)
+        var user = await _userService.CheckIfUserExistsByUserName(username);
+        if (user)
             throw new UsernameAlreadyExistsException(username);
 
-        // else: sign up user
-        var options = new SignUpOptions
-        {
-            Data = new Dictionary<string, object>
-            {
-                { "userName", username }
-            }
-        };
-        var session = await _supabaseClient.Auth.SignUp(email, password, options);
+        Logger.LogDebug($"Signing up user with username: {username}, email: {email}");
+        var session = await _supabaseClient.Auth.SignUp(email, password);
+        session = await _supabaseClient.Auth.SignIn(email, password);
 
         // TODO Check if email already exists, it is unclear how supabase responds in that case!
 
@@ -71,8 +72,16 @@ public class SignupServiceImpl : ISignupService
         if (session == null)
             throw new InvalidOperationException(
                 "An unknown error occured in the Supabase client while attempting to perform a signup.");
+        var userRole = await _databaseActions.GetEntityByField<RoleDao>("role", "User");
+        var roleId = userRole.RoleId.HasValue
+            ? userRole.RoleId.Value
+            : throw new NullReferenceException("RoleId not found!");
+        await _userService.CreateUser(session.User!.Id!, username, session.User.Email!, roleId,
+            "Hey I'm a new user. Mhhm should I add a description?");
+
 
         // save cookies
+        Logger.LogDebug("Setting cookies for user.");
         await _cookieService.SetCookie("supabase.auth.token", session.AccessToken, 7);
         await _cookieService.SetCookie("supabase.auth.refreshToken", session.RefreshToken, 7);
 

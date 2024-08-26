@@ -23,4 +23,13 @@ public class SearchDto
     ///     Gets or sets the forum that matches the search.
     /// </summary>
     public List<ForumDto> Forums { get; set; }
+
+    /// <summary>
+    ///     This method returns the SearchDto as a string.
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return $"Users: {Users}, Forums: {Forums}";
+    }
 }

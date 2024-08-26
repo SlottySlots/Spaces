@@ -9,15 +9,29 @@ namespace SlottyMedia.Database.Daos;
 [Table("User")]
 public class UserDao : BaseModel
 {
+    /// <summary>
+    ///     The defaulkt constructor for the User Dao.
+    /// </summary>
     public UserDao()
     {
     }
 
-    public UserDao(Guid userId, Guid roleId, string userName, string? description = null, long? profilePic = null)
+    /// <summary>
+    ///     The constructor for the User Dao.
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="roleId"></param>
+    /// <param name="userName"></param>
+    /// <param name="email"></param>
+    /// <param name="description"></param>
+    /// <param name="profilePic"></param>
+    public UserDao(Guid userId, Guid roleId, string userName, string email, string? description = null,
+        string? profilePic = null)
     {
         UserId = userId;
         RoleId = roleId;
         UserName = userName;
+        Email = email;
         Description = description;
         ProfilePic = profilePic;
     }
@@ -48,6 +62,12 @@ public class UserDao : BaseModel
     public string? UserName { get; set; }
 
     /// <summary>
+    ///     The Email of the User.
+    /// </summary>
+    [Column("email")]
+    public string? Email { get; set; }
+
+    /// <summary>
     ///     The Description of the User.
     /// </summary>
     [Column("description")]
@@ -57,11 +77,20 @@ public class UserDao : BaseModel
     ///     The Profile Picture of the User.
     /// </summary>
     [Column("profilePic")]
-    public long? ProfilePic { get; set; }
+    public string? ProfilePic { get; set; }
 
     /// <summary>
     ///     The Date and Time the User was created.
     /// </summary>
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
+
+    /// <summary>
+    ///     The ToString method returns a string representation of the UserDao object.
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return $"UserDao: {UserId}, {RoleId}, {UserName}, {Description}, {CreatedAt}";
+    }
 }

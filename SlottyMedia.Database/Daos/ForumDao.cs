@@ -9,10 +9,21 @@ namespace SlottyMedia.Database.Daos;
 [Table("Forum")]
 public class ForumDao : BaseModel
 {
+    /// <summary>
+    ///     The default constructor.
+    /// </summary>
     public ForumDao()
     {
+        CreatorUserId = Guid.Empty;
+        ForumTopic = string.Empty;
+        CreatedAt = DateTime.MinValue;
     }
 
+    /// <summary>
+    ///     The constructor with parameters.
+    /// </summary>
+    /// <param name="creatorUserId">The Id of the User who created the Forum</param>
+    /// <param name="forumTopic">The Topic of the Forum</param>
     public ForumDao(Guid creatorUserId, string forumTopic)
     {
         CreatorUserId = creatorUserId;
@@ -25,6 +36,10 @@ public class ForumDao : BaseModel
     [PrimaryKey("forumID")]
     public Guid? ForumId { get; set; }
 
+
+    /// <summary>
+    ///     The User who created the Forum. This is a Reference to the User Table.
+    /// </summary>
     [Reference(typeof(UserDao), ReferenceAttribute.JoinType.Inner, true, "userID")]
     public UserDao? CreatorUser { get; set; }
 
@@ -45,4 +60,13 @@ public class ForumDao : BaseModel
     /// </summary>
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
+
+    /// <summary>
+    ///     The ToString method returns a string representation of the object.
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return $"ForumId: {ForumId}, CreatorUserId: {CreatorUserId}, ForumTopic: {ForumTopic}, CreatedAt: {CreatedAt}";
+    }
 }

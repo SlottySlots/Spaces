@@ -14,6 +14,9 @@ namespace SlottyMedia.Tests.Viewmodel.auth;
 [TestFixture]
 public class SignUpFormVmImplTest
 {
+    /// <summary>
+    ///     Sets up the necessary mocks and initializes the service before any tests are run.
+    /// </summary>
     [OneTimeSetUp]
     public void OneTimeSetup()
     {
@@ -22,11 +25,15 @@ public class SignUpFormVmImplTest
         _dbActionsMock = new Mock<IDatabaseActions>();
         var postService = new Mock<IPostService>();
         _userServiceMock = new Mock<UserService>(_dbActionsMock.Object, postService.Object);
-        _signUpServiceMock = new Mock<SignupServiceImpl>(_client, _userServiceMock.Object, _cookieServiceMock.Object);
+        _signUpServiceMock = new Mock<SignupServiceImpl>(_client, _userServiceMock.Object, _cookieServiceMock.Object,
+            _dbActionsMock.Object);
 
         _service = new SignupFormVmImpl(_signUpServiceMock.Object);
     }
 
+    /// <summary>
+    ///     Resets the mocks after each test.
+    /// </summary>
     [TearDown]
     public void TearDown()
     {
@@ -37,15 +44,15 @@ public class SignUpFormVmImplTest
     }
 
     private SignupFormVmImpl _service;
-
     private Client _client;
-
-
     private Mock<UserService> _userServiceMock;
     private Mock<IDatabaseActions> _dbActionsMock;
     private Mock<ICookieService> _cookieServiceMock;
     private Mock<SignupServiceImpl> _signUpServiceMock;
 
+    /// <summary>
+    ///     Tests that an ArgumentException is thrown when the username is not provided.
+    /// </summary>
     [Test]
     public void SubmitSignUpForm_UsernameNotProvided()
     {
@@ -53,10 +60,12 @@ public class SignUpFormVmImplTest
         _service.Email = "test";
         _service.Password = "test";
 
-        Assert.ThrowsAsync<ArgumentException>(async () => { await _service.SubmitSignupForm(); }
-        );
+        Assert.ThrowsAsync<ArgumentException>(async () => { await _service.SubmitSignupForm(); });
     }
 
+    /// <summary>
+    ///     Tests that an ArgumentException is thrown when the email is not provided.
+    /// </summary>
     [Test]
     public void SubmitSignUpForm_EmailNotProvided()
     {
@@ -64,10 +73,12 @@ public class SignUpFormVmImplTest
         _service.Email = null;
         _service.Password = "test";
 
-        Assert.ThrowsAsync<ArgumentException>(async () => { await _service.SubmitSignupForm(); }
-        );
+        Assert.ThrowsAsync<ArgumentException>(async () => { await _service.SubmitSignupForm(); });
     }
 
+    /// <summary>
+    ///     Tests that an ArgumentException is thrown when the password is not provided.
+    /// </summary>
     [Test]
     public void SubmitSignUpForm_PasswordNotProvided()
     {
@@ -75,10 +86,12 @@ public class SignUpFormVmImplTest
         _service.Email = "test";
         _service.Password = null;
 
-        Assert.ThrowsAsync<ArgumentException>(async () => { await _service.SubmitSignupForm(); }
-        );
+        Assert.ThrowsAsync<ArgumentException>(async () => { await _service.SubmitSignupForm(); });
     }
 
+    /// <summary>
+    ///     Tests that a UsernameAlreadyExistsException is thrown when the username already exists.
+    /// </summary>
     [Test]
     public void SubmitSignUpForm_UserNameAlreadyExists()
     {
@@ -88,10 +101,12 @@ public class SignUpFormVmImplTest
         _signUpServiceMock.Setup(service => service.SignUp(_service.Username, _service.Email, _service.Password))
             .ThrowsAsync(new UsernameAlreadyExistsException(_service.Username));
 
-        Assert.ThrowsAsync<UsernameAlreadyExistsException>(async () => { await _service.SubmitSignupForm(); }
-        );
+        Assert.ThrowsAsync<UsernameAlreadyExistsException>(async () => { await _service.SubmitSignupForm(); });
     }
 
+    /// <summary>
+    ///     Tests that an EmailAlreadyExistsException is thrown when the email already exists.
+    /// </summary>
     [Test]
     public void SubmitSignUpForm_EmailAlreadyExists()
     {
@@ -101,7 +116,6 @@ public class SignUpFormVmImplTest
         _signUpServiceMock.Setup(service => service.SignUp(_service.Username, _service.Email, _service.Password))
             .ThrowsAsync(new EmailAlreadyExistsException(_service.Username));
 
-        Assert.ThrowsAsync<EmailAlreadyExistsException>(async () => { await _service.SubmitSignupForm(); }
-        );
+        Assert.ThrowsAsync<EmailAlreadyExistsException>(async () => { await _service.SubmitSignupForm(); });
     }
 }

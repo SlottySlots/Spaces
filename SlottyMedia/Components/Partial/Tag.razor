@@ -1,4 +1,4 @@
-<div class=@("rounded-[24px] px-3 py-1 flex justify-center items-center cursor-pointer " + TagClass + Class)>
+<div @onclick="OnClick" class=@("rounded-[24px] px-3 py-1 flex justify-center items-center cursor-pointer " + TagClass + Class)>
     <span class="w-fit text-sm select-none">
         @ChildContent
     </span>
@@ -30,6 +30,10 @@
     public string? Class { get; set; } = "";
 
     // TODO Discuss the tag color's usability and limit customization as needed! Too many colors & too much variation = bad
+
+    /// <summary>An event that is triggered when this tag is clicked.</summary>
+    [Parameter]
+    public EventCallback OnClick { get; set; }
 
     /// <summary>
     ///     Computes the final CSS classes based on the given 'Color' parameter.

@@ -1,19 +1,44 @@
-﻿namespace SlottyMedia.Database.Exceptions;
+﻿using SlottyMedia.LoggingProvider;
 
-public class GeneralDatabaseException : BaseDatabaseException
+namespace SlottyMedia.Database.Exceptions;
+
+/// <summary>
+///     This exception is thrown when a general database exception occurs.
+/// </summary>
+public class GeneralDatabaseException : BaseException<GeneralDatabaseException>
 {
-    public GeneralDatabaseException() : base()
+    /// <summary>
+    ///     This exception is thrown when a general database exception occurs.
+    /// </summary>
+    /// <summary>
+    ///     The default constructor.
+    /// </summary>
+    public GeneralDatabaseException()
     {
     }
-    
+
+    /// <summary>
+    ///     The constructor with parameters.
+    /// </summary>
+    /// <param name="message"></param>
     public GeneralDatabaseException(string message) : base(message)
     {
     }
 
+    /// <summary>
+    ///     The constructor with parameters.
+    /// </summary>
+    /// <param name="propertyName"></param>
+    /// <param name="message"></param>
     public GeneralDatabaseException(string propertyName, string message) : base($"{propertyName}: {message}")
     {
     }
 
+    /// <summary>
+    ///     The constructor with parameters.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="innerException"></param>
     public GeneralDatabaseException(string message, Exception innerException) : base(message, innerException)
     {
     }

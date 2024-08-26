@@ -1,9 +1,11 @@
+using SlottyMedia.LoggingProvider;
+
 namespace SlottyMedia.Backend.Exceptions.signup;
 
 /// <summary>
 ///     This exception is thrown after an illegal attempt to sign up a user with an already existing email.
 /// </summary>
-public class EmailAlreadyExistsException : BaseException
+public class EmailAlreadyExistsException : BaseException<EmailAlreadyExistsException>
 {
     /// <summary>
     ///     Build an exception with the given email.

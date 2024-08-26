@@ -1,6 +1,19 @@
 ﻿@page "/"
+@using SlottyMedia.Backend.ViewModel.Interfaces
+@inject IHomePageVm ViewModel
 
 
 <PageTitle>Slotty Media | Home</PageTitle>
 
-<Post></Post>
+@foreach (var post in ViewModel!.Posts)
+{
+    <Post Dto="post"/>
+}
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        await ViewModel.FetchPosts();
+    }
+}

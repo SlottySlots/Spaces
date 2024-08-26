@@ -64,4 +64,14 @@ public class FollowerUserRelationDao : BaseModel
     /// </summary>
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
+
+    /// <summary>
+    ///     The ToString method returns a string representation of the FollowerUserRelationDao object.
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return
+            $"FollowerUserRelationId: {FollowerUserRelationId}, FollowerUserId: {FollowerUserId}, FollowedUserId: {FollowedUserId}, CreatedAt: {CreatedAt}";
+    }
 }

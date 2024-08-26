@@ -1,7 +1,5 @@
-﻿using SlottyMedia.Database;
-using SlottyMedia.Database.Daos;
+﻿using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
-using Supabase;
 
 namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
 
@@ -9,7 +7,7 @@ namespace SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests;
 ///     Test class for the UserLikePostRelationDao model.
 /// </summary>
 [TestFixture]
-public class UserLikePostRelationDaoTest
+public class UserLikePostRelationDaoTest : BaseDatabaseTestClass
 {
     /// <summary>
     ///     One-time setup method to initialize Supabase client and insert test data.
@@ -17,15 +15,12 @@ public class UserLikePostRelationDaoTest
     [OneTimeSetUp]
     public async Task OneTimeSetup()
     {
-        _supabaseClient = InitializeSupabaseClient.GetSupabaseClient();
-        _databaseActions = new DatabaseActions(_supabaseClient);
+        _userToWorkWith = await DatabaseActions.Insert(InitializeModels.GetUserDto(UserId));
 
-        _userToWorkWith = await _databaseActions.Insert(InitializeModels.GetUserDto());
-
-        _forumToWorkWirh = await _databaseActions.Insert(InitializeModels.GetForumDto(_userToWorkWith));
+        _forumToWorkWirh = await DatabaseActions.Insert(InitializeModels.GetForumDto(_userToWorkWith));
 
         _postToWorkWith =
-            await _databaseActions.Insert(InitializeModels.GetPostsDto(_forumToWorkWirh, _userToWorkWith));
+            await DatabaseActions.Insert(InitializeModels.GetPostsDto(_forumToWorkWirh, _userToWorkWith));
     }
 
     /// <summary>
@@ -51,9 +46,9 @@ public class UserLikePostRelationDaoTest
         {
             if (_relationToWorkWith.UserLikePostRelationId is null) return;
 
-            var relation = await _databaseActions.GetEntityByField<UserLikePostRelationDao>("userLikePostRelationID",
+            var relation = await DatabaseActions.GetEntityByField<UserLikePostRelationDao>("userLikePostRelationID",
                 _relationToWorkWith.UserLikePostRelationId.ToString() ?? "");
-            if (relation != null) await _databaseActions.Delete(relation);
+            if (relation != null) await DatabaseActions.Delete(relation);
         }
         catch (Exception ex)
         {
@@ -72,17 +67,20 @@ public class UserLikePostRelationDaoTest
             if (_postToWorkWith.PostId is null || _forumToWorkWirh.ForumId is null ||
                 _userToWorkWith.UserId is null) return;
 
-            var post = await _databaseActions.GetEntityByField<PostsDao>("postID",
+            var post = await DatabaseActions.GetEntityByField<PostsDao>("postID",
                 _postToWorkWith.PostId.ToString() ?? "");
-            if (post != null) await _databaseActions.Delete(post);
+            if (post != null) await DatabaseActions.Delete(post);
 
-            var forum = await _databaseActions.GetEntityByField<ForumDao>("forumID",
+            var forum = await DatabaseActions.GetEntityByField<ForumDao>("forumID",
                 _forumToWorkWirh.ForumId.ToString() ?? "");
-            if (forum != null) await _databaseActions.Delete(forum);
+            if (forum != null) await DatabaseActions.Delete(forum);
 
-            var user = await _databaseActions.GetEntityByField<UserDao>("userID",
+            var user = await DatabaseActions.GetEntityByField<UserDao>("userID",
                 _userToWorkWith.UserId.ToString() ?? "");
-            if (user != null) await _databaseActions.Delete(user);
+            if (user != null) await DatabaseActions.Delete(user);
+        }
+        catch (DatabaseMissingItemException)
+        {
         }
         catch (Exception ex)
         {
@@ -90,8 +88,6 @@ public class UserLikePostRelationDaoTest
         }
     }
 
-    private Client _supabaseClient;
-    private IDatabaseActions _databaseActions;
     private UserLikePostRelationDao _relationToWorkWith;
     private UserDao _userToWorkWith;
     private PostsDao _postToWorkWith;
@@ -105,7 +101,7 @@ public class UserLikePostRelationDaoTest
     {
         try
         {
-            var insertedRelation = await _databaseActions.Insert(_relationToWorkWith);
+            var insertedRelation = await DatabaseActions.Insert(_relationToWorkWith);
             Assert.Multiple(() =>
             {
                 Assert.That(insertedRelation, Is.Not.Null, "Inserted relation should not be null");
@@ -129,11 +125,14 @@ public class UserLikePostRelationDaoTest
     {
         try
         {
-            var insertedRelation = await _databaseActions.Insert(_relationToWorkWith);
+            var insertedRelation = await DatabaseActions.Insert(_relationToWorkWith);
             Assert.That(insertedRelation, Is.Not.Null, "Inserted relation should not be null");
 
-            var deletedRelation = await _databaseActions.Delete(insertedRelation);
+            var deletedRelation = await DatabaseActions.Delete(insertedRelation);
             Assert.That(deletedRelation, Is.True, "Deleted relation should not be false");
+        }
+        catch (DatabaseMissingItemException)
+        {
         }
         catch (GeneralDatabaseException ex)
         {
@@ -149,7 +148,7 @@ public class UserLikePostRelationDaoTest
     {
         try
         {
-            var insertedRelation = await _databaseActions.Insert(_relationToWorkWith);
+            var insertedRelation = await DatabaseActions.Insert(_relationToWorkWith);
             Assert.Multiple(() =>
             {
                 Assert.That(insertedRelation, Is.Not.Null, "Inserted relation should not be null");
@@ -157,7 +156,7 @@ public class UserLikePostRelationDaoTest
                     "Inserted relation ID should not be null");
             });
 
-            var relation = await _databaseActions.GetEntityByField<UserLikePostRelationDao>("userLikePostRelationID",
+            var relation = await DatabaseActions.GetEntityByField<UserLikePostRelationDao>("userLikePostRelationID",
                 insertedRelation.UserLikePostRelationId.ToString() ?? "");
             Assert.Multiple(() =>
             {

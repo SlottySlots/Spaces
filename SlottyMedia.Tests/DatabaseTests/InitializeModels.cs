@@ -7,7 +7,11 @@ namespace SlottyMedia.Tests.DatabaseTests;
 /// </summary>
 public static class InitializeModels
 {
-    private static RoleDao GetRoleDto()
+    /// <summary>
+    ///     This method initializes a RoleDto for the tests.
+    /// </summary>
+    /// <returns></returns>
+    public static RoleDao GetRoleDto()
     {
         return new RoleDao
         {
@@ -17,17 +21,28 @@ public static class InitializeModels
         };
     }
 
-    public static UserDao GetUserDto()
+    /// <summary>
+    ///     This method initializes a UserDto for the tests.
+    /// </summary>
+    /// <param name="userID"></param>
+    /// <returns></returns>
+    public static UserDao GetUserDto(Guid userID)
     {
         return new UserDao
         {
-            UserId = Guid.NewGuid(),
-            UserName = "I'm a Test User",
+            UserId = userID == default ? Guid.NewGuid() : userID,
+            UserName = Guid.NewGuid().ToString(),
             Description = "Please don't delete me",
-            RoleId = GetRoleDto().RoleId
+            RoleId = GetRoleDto().RoleId,
+            Email = Guid.NewGuid() + "@test.de"
         };
     }
 
+    /// <summary>
+    ///     This method initializes a ForumDto for the tests.
+    /// </summary>
+    /// <param name="userDao"></param>
+    /// <returns></returns>
     public static ForumDao GetForumDto(UserDao userDao)
     {
         return new ForumDao
@@ -37,6 +52,12 @@ public static class InitializeModels
         };
     }
 
+    /// <summary>
+    ///     This method initializes a PostsDto for the tests.
+    /// </summary>
+    /// <param name="forumDao"></param>
+    /// <param name="userDao"></param>
+    /// <returns></returns>
     public static PostsDao GetPostsDto(ForumDao forumDao, UserDao userDao)
     {
         return new PostsDao

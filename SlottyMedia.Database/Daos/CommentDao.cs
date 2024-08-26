@@ -86,4 +86,14 @@ public class CommentDao : BaseModel
     /// </summary>
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
+
+    /// <summary>
+    ///     The ToString method is used to return a string representation of the CommentDao object.
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return
+            $"CommentId: {CommentId}, ParentCommentId: {ParentCommentId}, CreatorUserId: {CreatorUserId}, PostId: {PostId}, Content: {Content}, CreatedAt: {CreatedAt}";
+    }
 }

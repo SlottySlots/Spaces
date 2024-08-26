@@ -2,6 +2,7 @@ using Microsoft.IdentityModel.Tokens;
 using SlottyMedia.Backend.Exceptions.signup;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
+using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
 
@@ -10,11 +11,14 @@ namespace SlottyMedia.Backend.ViewModel;
 /// </summary>
 public class SignupFormVmImpl : ISignupFormVm
 {
+    private static readonly Logging<SignupFormVmImpl> Logger = new();
+
     /// <summary>
     ///     Service used for signing up a user
     /// </summary>
     private readonly ISignupService _signupService;
 
+    private Logging<SignupFormVmImpl> logger = new();
 
     /// <summary>
     ///     Standard Constructor used for dependency injection
@@ -24,6 +28,7 @@ public class SignupFormVmImpl : ISignupFormVm
     /// </param>
     public SignupFormVmImpl(ISignupService signupService)
     {
+        Logger.LogInfo("SignupFormVm initialized");
         _signupService = signupService;
     }
 
@@ -70,6 +75,7 @@ public class SignupFormVmImpl : ISignupFormVm
     /// </exception>
     public async Task SubmitSignupForm()
     {
+        Logger.LogDebug("SubmitSignupForm called");
         // reset all existing errors first
         _resetErrors();
 
@@ -95,6 +101,7 @@ public class SignupFormVmImpl : ISignupFormVm
         // if all fields were provided, try signing up
         try
         {
+            Logger.LogDebug("Calling signup service");
             await _signupService.SignUp(Username!, Email!, Password!);
         }
         catch (UsernameAlreadyExistsException)
@@ -107,8 +114,9 @@ public class SignupFormVmImpl : ISignupFormVm
             EmailErrorMessage = "Email already in use";
             throw;
         }
-        catch
+        catch (Exception ex)
         {
+            Logger.LogError(ex, "An exception occurred while signing up");
             ServerErrorMessage = "An unknown error has occured. Please try again later.";
             throw;
         }
