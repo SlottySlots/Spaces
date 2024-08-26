@@ -6,6 +6,7 @@ using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.LoggingProvider;
 using Supabase.Postgrest;
+using Client = Supabase.Client;
 
 namespace SlottyMedia.Backend.Services;
 
