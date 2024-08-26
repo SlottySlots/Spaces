@@ -511,7 +511,7 @@ public class DatabaseActions : IDatabaseActions
             throw new GeneralDatabaseException("An unexpected error occurred while checking if the item exists.", ex);
         }
     }
-    
+
     /// <summary>
     ///     Retrieves the count of entities from the database by a specific field and value.
     /// </summary>
@@ -557,13 +557,14 @@ public class DatabaseActions : IDatabaseActions
             throw new GeneralDatabaseException("An unexpected error occurred while retrieving the count.", ex);
         }
     }
-    
+
     public async Task<int> GetCountForUserForums(string userID)
     {
         try
         {
             // Call the RPC function with the userId parameter
-            var result = await _supabaseClient.Rpc<int>("get_post_count_by_user", new Dictionary<string, object>(){ {"user_id" , userID }});
+            var result = await _supabaseClient.Rpc<int>("get_post_count_by_user",
+                new Dictionary<string, object> { { "user_id", userID } });
             return result;
         }
         catch (HttpRequestException ex)

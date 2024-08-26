@@ -119,6 +119,4 @@ public interface IDatabaseActions
     public Task<int> GetCountByField<T>(string field, string value) where T : BaseModel, new();
 
     public Task<int> GetCountForUserForums(string userID);
-
-
 }

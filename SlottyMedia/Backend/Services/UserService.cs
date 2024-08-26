@@ -14,19 +14,17 @@ namespace SlottyMedia.Backend.Services;
 public class UserService : IUserService
 {
     private static readonly Logging<UserService> Logger = new();
-    private readonly IDatabaseActions _databaseActions;
-    private readonly IPostService _postService;
+    private readonly IUserRepository _userRepository;
 
     /// <summary>
     ///     This constructor creates a new UserService object.
     /// </summary>
     /// <param name="databaseActions">This parameter is used to interact with the database</param>
     /// <param name="postService">This parameter is used to interact with the post service</param>
-    public UserService(IDatabaseActions databaseActions, IPostService postService)
+    public UserService(IUserRepository userRepository)
     {
         Logger.LogInfo("Creating a new UserService object");
-        _databaseActions = databaseActions;
-        _postService = postService;
+        _userRepository = userRepository;
     }
 
     /// <summary>
