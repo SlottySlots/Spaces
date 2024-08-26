@@ -76,24 +76,19 @@ public class SignInFormVmImpl : ISignInFormVm
 
             // TODO display error message when password was invalid! This is urgent!
         }
-        catch(GotrueException ex)
+        catch (GotrueException ex)
         {
             var message = ex.Message;
-            Regex regex = new Regex("\"error_description\"\\s*:\\s*\"([^\"]*)\"");
+            var regex = new Regex("\"error_description\"\\s*:\\s*\"([^\"]*)\"");
             var errorDescription = regex.Match(message);
             if (errorDescription.Success && errorDescription.Groups[1].Value == "Invalid login credentials")
-            {
                 ServerErrorMessage = "Provided credentials were invalid!";
-            }
             else
-            {
-                ServerErrorMessage = "An unknown error occurred. Try again later."; 
-            }
+                ServerErrorMessage = "An unknown error occurred. Try again later.";
             return;
         }
         catch
         {
-            
             ServerErrorMessage = "An unknown error occurred. Try again later.";
             return;
         }

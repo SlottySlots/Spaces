@@ -38,4 +38,5 @@ Please make sure you have the installed:
 - <a href="https://www.python.org/downloads/">Python 3</a> : Needed for Mkdocs (only for documentation)
 - <a href="https://dotnet.microsoft.com/en-us/download/dotnet/8.0">.NET 8</a> : Needed to build the project (only development)
 - <a href="https://github.com/gitleaks/gitleaks">Gitleaks</a> : Used as a precommit hook to prevent exposure of secrets (only development)
-- <a href="https://www.docker.com/">Docker</a> : Needed for running the application locally 
+- <a href="https://www.docker.com/">Docker</a> : Needed for running the application locally
+- <a href="https://supabase.com/docs/guides/cli/local-development">Supabase CLI</a> : Needed for running the application locally

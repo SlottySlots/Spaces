@@ -27,9 +27,43 @@ public interface IForumService
     Task DeleteForum(ForumDto forum);
 
     /// <summary>
-    /// Retrieves a forum with the given name.
+    ///     Retrieves a forum with the given name.
     /// </summary>
     /// <param name="forumName">The forum's name.</param>
     /// <returns>The requested forum</returns>
     Task<ForumDto> GetForumByName(string forumName);
+
+    /// <summary>
+    /// Fetches all forums by name where the name contains the given substring.
+    /// Fetches only a specified number of forums on the specified page.
+    /// </summary>
+    /// <param name="name">The substring that should be contained by the forums' name</param>
+    /// <param name="page">The page to fetch (one-based)</param>
+    /// <param name="pageSize">The size of each page (default is 10)</param>
+    /// <returns>All forums where the name of each forum contains the given substring</returns>
+    Task<List<ForumDto>> GetForumsByNameContaining(string name, int page, int pageSize = 10);
+
+    /// <summary>
+    ///     Retrieves a list of all forums.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a list of ForumDto objects.</returns>
+    Task<List<ForumDto>> GetForums();
+
+    /// <summary>
+    ///     Retrieves the 3 most recent forums based on the creation date.
+    /// </summary>
+    /// <returns>
+    ///     A task that represents the asynchronous operation. The task result contains a list of the 3 most recent
+    ///     ForumDto objects.
+    /// </returns>
+    public Task<List<ForumDto>> DetermineRecentSpaces();
+
+    /// <summary>
+    ///     Retrieves the top forums.
+    /// </summary>
+    /// <returns>
+    ///     A task that represents the asynchronous operation. The task result contains a list of ForumDto objects
+    ///     representing the top forums.
+    /// </returns>
+    public Task<List<ForumDto>> GetTopForums();
 }

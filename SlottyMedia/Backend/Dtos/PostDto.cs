@@ -98,12 +98,17 @@ public class PostDto
         Content = post.Content ?? string.Empty;
         Forum = post.Forum != null ? new ForumDto().Mapper(post.Forum) : new ForumDto();
         CreatedAt = post.CreatedAt;
-        Comments = post.Comments?.Select(c => new CommentDto().Mapper(c)).ToList() ?? new List<CommentDto>();
+        //Comments = post.Comments?.Select(c => new CommentDto().Mapper(c)).ToList() ?? new List<CommentDto>();
+        //TODO Add Comment Mapping
         UserId = post.UserId ?? Guid.Empty;
         Headline = post.Headline ?? string.Empty;
         return this;
     }
 
+    /// <summary>
+    ///     The ToString method returns a string representation of the object.
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
         return

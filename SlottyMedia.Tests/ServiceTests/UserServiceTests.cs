@@ -468,6 +468,10 @@ public class UserServiceTests
         Assert.That(ex.Message, Is.EqualTo($"An error occurred while fetching the friends count. ID {userId}"));
     }
 
+
+    /// <summary>
+    ///     Tests if GetCountOfUserSpaces method returns the correct count of user spaces.
+    /// </summary>
     [Test]
     public async Task GetCountOfUserSpaces()
     {
@@ -480,6 +484,6 @@ public class UserServiceTests
         var result = await _userService.GetCountOfUserSpaces(userId);
 
         // Assert
-        Assert.That(result, Is.EqualTo(expectedCount)); 
+        Assert.That(result, Is.EqualTo(expectedCount));
     }
 }

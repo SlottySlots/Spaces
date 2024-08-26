@@ -1,6 +1,4 @@
-@using SlottyMedia.Backend.Services.Interfaces
-@using SlottyMedia.Database
-@using SlottyMedia.Database.Daos
+@using SlottyMedia.Backend.ViewModel.Interfaces
 @if (ShowDescriptionText)
 {
     <h3 class="text-sm font-medium text-center text-cadet-gray w-fit" @onclick="SubmitDescriptionText">
@@ -26,20 +24,27 @@ else
 
 @code {
     [Parameter] public string? DescriptionText { get; set; }
-    [Inject] public IDatabaseActions DatabaseActions { get; private set; }
-    [Inject] public IAuthService AuthService { get; set; }
+    [Inject] public IUserVmImpl UserService { get; private set; }
+    [Inject] public IAuthVmImpl AuthService { get; set; }
 
     private bool ShowDescriptionText = true;
 
     private async void SubmitDescriptionText()
     {
-        var emailOfUser = AuthService.GetCurrentSession()?.User!.Email;
-        if (emailOfUser != null)
+        var idOfUser = AuthService.GetCurrentSession()?.User!.Id;
+        if (idOfUser != null)
         {
             ShowDescriptionText = !ShowDescriptionText;
-            var userDao = await DatabaseActions.GetEntityByField<UserDao>("email", emailOfUser);
-            userDao.Description = DescriptionText;
-            await DatabaseActions.Update(userDao);
+            var userDao = await UserService.GetUserById(Guid.Parse(idOfUser));
+            if (DescriptionText != userDao.Description)
+            {
+                if (DescriptionText.Length < 200)
+                {
+                    //TODO: Show error message and prevent submission
+                    userDao.Description = DescriptionText;
+                    await UserService.UpdateUser(userDao);
+                }
+            }
         }
     }
 

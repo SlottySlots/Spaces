@@ -83,8 +83,8 @@ public class PostsDao : BaseModel
     /// <summary>
     ///     The Comments of the Post. This is a Reference to the Comment Table. It is a Foreign Key. Be aware, that this
     /// </summary>
-    [Reference(typeof(CommentDao), ReferenceAttribute.JoinType.Left, true, "corresponding_PostID")]
-    public List<CommentDao?>? Comments { get; set; }
+    // [Reference(typeof(CommentDao), ReferenceAttribute.JoinType.Left, true, "corresponding_PostID")]
+    // public List<CommentDao?>? Comments { get; set; }
 
     /// <summary>
     ///     The Date and Time the Post was created.
@@ -92,6 +92,10 @@ public class PostsDao : BaseModel
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
 
+    /// <summary>
+    ///     The ToString method returns a string representation of the object.
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
         return

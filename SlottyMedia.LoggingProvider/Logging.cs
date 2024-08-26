@@ -15,7 +15,6 @@ public class Logging<T>
     /// <summary>
     ///     Constructor for the Logging class.
     /// </summary>
-    /// <param name="type"></param>
     public Logging()
     {
         var config = NlogConfiguration.CreateNlogConfig();

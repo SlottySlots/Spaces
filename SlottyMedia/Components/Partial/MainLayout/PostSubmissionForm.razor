@@ -3,7 +3,7 @@
 
 
 <div class="w-full px-5 pt-5 grid grid-cols-10 gap-4 border-b border-athens-gray">
-    
+
     <!-- profile picture -->
     <div class="w-[50px] h-[50px] rounded-full border border-athens-gray">
         <svg width="100%" height="100%" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#000000">
@@ -12,18 +12,17 @@
             </g>
         </svg>
     </div>
-    
+
     <!-- the form -->
     <form class="col-span-9" @onsubmit="ViewModel!.SubmitForm">
-        
+
         <!-- the text -->
         <InputArea
             @bind-Value="ViewModel!.Text"
             Id="submit-post-textarea"
             Name="submit-post-textarea"
             Placeholder="What is happening?"
-            Class="w-full bg-transparent text-black"
-        />
+            Class="w-full bg-transparent text-black"/>
 
         <!-- text error message -->
         @if (ViewModel.TextErrorMessage != null)
@@ -48,13 +47,13 @@
                 @ViewModel.ServerErrorMessage
             </span>
         }
-        
+
         <!-- container for space selection & submission button -->
         <div class="w-full h-[50px] flex justify-between items-center border-t border-athens-gray">
-            
+
             <!-- space selection -->
             <div class="relative">
-                
+
                 @if (ViewModel.SpaceName.IsNullOrEmpty())
                 {
                     <!-- the input -->
@@ -78,16 +77,22 @@
                 @if (!ViewModel.SpacePrompt.IsNullOrEmpty())
                 {
                     <Card Class="absolute left-0 top-0 translate-y-[40px] p-4 flex flex-col gap-3">
-                        <div>
-                            Unfortunately, there are no spaces yet.
-                            This example will fail:
+                        @foreach (var spaceName in ViewModel.SearchedSpaces)
+                        {
+                            <Tag OnClick="() => _selectSpace(spaceName)">
+                                #@spaceName
+                            </Tag>
+                        }
+                        @if (ViewModel.SearchedSpaces.Count > 0)
+                        {
+                            <div class="m-1 border-b border-athens-gray"></div>
+                        }
+                        <div class="text-sm">
+                            Your space doesn't exist? Create it!
                         </div>
-                        <Tag OnClick="_selectVivaLaVida">
-                            #VivaLaVida
-                        </Tag>
                     </Card>
                 }
-                
+
             </div>
 
             <!-- submission button -->
@@ -96,7 +101,7 @@
             </HotButton>
 
         </div>
-        
+
     </form>
 
 </div>
@@ -113,5 +118,5 @@
 
     async Task _handleInput(ChangeEventArgs e) => await ViewModel!.HandleSpacePromptChange(e, ValueChanged);
 
-    async Task _selectVivaLaVida() => await ViewModel!.HandleSpaceSelection("VivaLaVida");
+    async Task _selectSpace(string spaceName) => await ViewModel!.HandleSpaceSelection(spaceName);
 }

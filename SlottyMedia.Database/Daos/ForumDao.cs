@@ -16,6 +16,7 @@ public class ForumDao : BaseModel
     {
         CreatorUserId = Guid.Empty;
         ForumTopic = string.Empty;
+        CreatedAt = DateTime.MinValue;
     }
 
     /// <summary>
@@ -60,6 +61,10 @@ public class ForumDao : BaseModel
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
 
+    /// <summary>
+    ///     The ToString method returns a string representation of the object.
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
         return $"ForumId: {ForumId}, CreatorUserId: {CreatorUserId}, ForumTopic: {ForumTopic}, CreatedAt: {CreatedAt}";

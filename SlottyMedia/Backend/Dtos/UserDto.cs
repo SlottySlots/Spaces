@@ -61,7 +61,7 @@ public class UserDto
             UserId = UserId,
             UserName = Username,
             Description = Description,
-            CreatedAt = CreatedAt
+            CreatedAt = CreatedAt,
         };
     }
 
@@ -77,10 +77,13 @@ public class UserDto
         Username = user.UserName ?? string.Empty;
         Description = user.Description ?? string.Empty;
         CreatedAt = user.CreatedAt;
-
         return this;
     }
 
+    /// <summary>
+    ///     This method returns the UserDto as a string.
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
         return $"UserId: {UserId}, Username: {Username}, Description: {Description}, CreatedAt: {CreatedAt}";
@@ -126,14 +129,14 @@ public class UserInformationDto
     ///     ProfilePic of a user
     /// </summary>
     public string? ProfilePic { get; set; }
-    
+
     /// <summary>
-    /// Amount of Follow4Follows of User 
+    ///     Amount of Follow4Follows of User
     /// </summary>
     public int FriendsAmount { get; set; }
-    
+
     /// <summary>
-    /// Amount of Spaces of a User
+    ///     Amount of Spaces of a User
     /// </summary>
     public int SpacesAmount { get; set; }
 

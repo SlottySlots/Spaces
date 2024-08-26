@@ -33,6 +33,12 @@ The item to insert into the database.
 Task&lt;T&gt;<br>
 Returns the inserted item.
 
+#### Exceptions
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.
+
 ### **Update&lt;T&gt;(T)**
 
 Updates an item in the database.
@@ -56,6 +62,12 @@ The item to update in the database.
 Task&lt;T&gt;<br>
 Returns the updated item.
 
+#### Exceptions
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.
+
 ### **Delete&lt;T&gt;(T)**
 
 Deletes an item from the database.
@@ -78,6 +90,12 @@ The item to delete.
 
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns true if the operation was successful.
+
+#### Exceptions
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.
 
 ### **GetEntityByField&lt;T&gt;(String, String)**
 
@@ -104,6 +122,12 @@ The value to search for.
 
 Task&lt;T&gt;<br>
 Returns the entity from the database.
+
+#### Exceptions
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.
 
 ### **GetEntitieWithSelectorById&lt;T&gt;(Expression&lt;Func&lt;T, Object[]&gt;&gt;, String, String)**
 
@@ -133,6 +157,12 @@ The value to search for.
 
 Task&lt;T&gt;<br>
 Returns the entity from the database.
+
+#### Exceptions
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.
 
 ### **GetEntitiesWithSelectorById&lt;T&gt;(Expression&lt;Func&lt;T, Object[]&gt;&gt;, String, String, Int32, Int32, ValueTuple`3[])**
 
@@ -172,6 +202,12 @@ The fields to order by.
 Task&lt;List&lt;T&gt;&gt;<br>
 Returns a list of entities from the database.
 
+#### Exceptions
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.
+
 ### **GetEntitiesWithSelectorById&lt;T&gt;(Expression&lt;Func&lt;T, Object[]&gt;&gt;, List&lt;ValueTuple&lt;String, Operator, String&gt;&gt;, Int32, Int32, ValueTuple`3[])**
 
 Returns a list of entities with a selector from the database based on the given search criteria.
@@ -207,6 +243,12 @@ The fields to order by.
 Task&lt;List&lt;T&gt;&gt;<br>
 Returns a list of entities from the database.
 
+#### Exceptions
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.
+
 ### **GetEntities&lt;T&gt;()**
 
 Returns a list of all entities from the database.
@@ -224,6 +266,12 @@ The type of the item object.
 
 Task&lt;List&lt;T&gt;&gt;<br>
 Returns a list of entities from the database.
+
+#### Exceptions
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.
 
 ### **CheckIfEntityExists&lt;T&gt;(String, String)**
 
@@ -250,6 +298,12 @@ The value to search for.
 
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns true if the entity exists.
+
+#### Exceptions
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.
 
 ### **GetCountByField&lt;T&gt;(String, String)**
 
@@ -285,14 +339,63 @@ Thrown when a network error, argument null, invalid operation, timeout, task
 
 ### **GetCountForUserForums(String)**
 
+This method retrieves the count of Forums for a specific user.
+
 ```csharp
-Task<int> GetCountForUserForums(string userID)
+Task<int> GetCountForUserForums(string userId)
 ```
 
 #### Parameters
 
-`userID` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+`userId` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 #### Returns
 
 [Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+#### Exceptions
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+
+### **GetTotalForumCount(String)**
+
+Retrieves the total count of forums for a specific forum ID.
+
+```csharp
+Task<int> GetTotalForumCount(string forumId)
+```
+
+#### Parameters
+
+`forumId` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The ID of the forum to count.
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains the total count of forums.
+
+#### Exceptions
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.
+
+### **GetTopForums()**
+
+Retrieves a list of top forums.
+
+```csharp
+Task<List<TopForumDao>> GetTopForums()
+```
+
+#### Returns
+
+[Task&lt;List&lt;TopForumDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains a list of TopForumDao objects.
+
+#### Exceptions
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.

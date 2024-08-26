@@ -39,7 +39,7 @@ public class Seeding
             await CheckIfRoleExisits();
             Logger.LogDebug("Seeding is Needed.");
 
-            var countUser = 10;
+            var countUser = 20;
             var rules = new Rules();
 
             var userFaker = rules.UserRules();
@@ -59,13 +59,14 @@ public class Seeding
 
             var userLikePostRelationFaker = rules.UserLikePostRelationRules(userIds, postIds);
             await GenerateUserLikePostRelation(userLikePostRelationFaker, userIds.Count * postIds.Count / 2);
-            
+
             Logger.LogDebug("Database seeded with random data.");
         }
         else
         {
             Logger.LogDebug("Seeding is not needed.");
         }
+
         await login.LogoutUser(_client);
     }
 

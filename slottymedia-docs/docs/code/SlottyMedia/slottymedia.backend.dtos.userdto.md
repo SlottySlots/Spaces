@@ -114,6 +114,8 @@ public UserDto Mapper(UserDao user)
 
 ### **ToString()**
 
+This method returns the UserDto as a string.
+
 ```csharp
 public string ToString()
 ```

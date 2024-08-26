@@ -50,6 +50,8 @@ public SearchDto()
 
 ### **ToString()**
 
+This method returns the SearchDto as a string.
+
 ```csharp
 public string ToString()
 ```

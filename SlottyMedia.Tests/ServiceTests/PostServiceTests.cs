@@ -23,7 +23,7 @@ public class PostServiceTests
     public void Setup()
     {
         _mockDatabaseActions = new Mock<IDatabaseActions>();
-        _postService = new PostService(_mockDatabaseActions.Object, InitializeSupabaseClient.GetSupabaseClient());
+        _postService = new PostService(_mockDatabaseActions.Object);
     }
 
     /// <summary>

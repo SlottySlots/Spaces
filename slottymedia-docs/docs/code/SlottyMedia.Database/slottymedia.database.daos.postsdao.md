@@ -99,18 +99,6 @@ public string Content { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **Comments**
-
-The Comments of the Post. This is a Reference to the Comment Table. It is a Foreign Key. Be aware, that this
-
-```csharp
-public List<CommentDao> Comments { get; set; }
-```
-
-#### Property Value
-
-[List&lt;CommentDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
-
 ### **CreatedAt**
 
 The Date and Time the Post was created.
@@ -198,6 +186,8 @@ The Content of the Post
 ## Methods
 
 ### **ToString()**
+
+The ToString method returns a string representation of the object.
 
 ```csharp
 public string ToString()

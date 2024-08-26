@@ -2,12 +2,15 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.IdentityModel.Tokens;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
+using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
 
 /// <inheritdoc />
 public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
 {
+    private static readonly Logging<PostSubmissionFormVmImpl> Logger = new();
+    
     private readonly IAuthService _authService;
     private readonly IPostService _postService;
     private readonly IForumService _forumService;
@@ -27,30 +30,36 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
 
     /// <inheritdoc />
     public string? Text { get; set; }
-    
+
     /// <inheritdoc />
     public string? TextErrorMessage { get; set; }
-    
+
     /// <inheritdoc />
     public string? SpacePrompt { get; set; }
-    
+
     /// <inheritdoc />
     public string? SpaceName { get; set; }
-    
+
+    /// <inheritdoc />
+    public List<string> SearchedSpaces { get; set; } = [];
+
     /// <inheritdoc />
     public string? SpaceErrorMessage { get; set; }
-    
+
     /// <inheritdoc />
     public string? ServerErrorMessage { get; set; }
 
     /// <inheritdoc />
     public async Task HandleSpacePromptChange(ChangeEventArgs e, EventCallback<string?> promptValueChanged)
     {
+        Logger.LogDebug($"User is searching for space in post submission form. Prompt: '{e.Value}'");
         if (e.Value is not null)
         {
             var newValue = e.Value.ToString();
             SpacePrompt = newValue;
             await promptValueChanged.InvokeAsync(newValue);
+            var searchResults = await _forumService.GetForumsByNameContaining(newValue ?? "", 1);
+            SearchedSpaces = searchResults.Select(space => space.Topic).ToList();
         }
     }
 
@@ -72,7 +81,7 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
     {
         // reset all error messages when form is (re-)submitted
         _resetErrorMessages();
-        
+
         // if no user is logged in (for whichever reason): display error
         // This case should never happen. The post submission form should only
         // be accessible to authenticated users!
@@ -82,7 +91,7 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
             ServerErrorMessage = "You need to log in to submit a post";
             return;
         }
-        
+
         // display error when fields are empty
         if (Text.IsNullOrEmpty())
         {
@@ -94,7 +103,7 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
             SpaceErrorMessage = "Must provide a space for the post";
             return;
         }
-        
+
         // attempt to submit post
         try
         {
@@ -107,7 +116,7 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
             ServerErrorMessage = "An unknown error occurred. Try again later.";
             return;
         }
-        
+
         // if no errors occurred: redirect to index page
         _navigationManager.NavigateTo("/");
     }

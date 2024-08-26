@@ -1,4 +1,5 @@
 using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Backend.Exceptions.Services.PostExceptions;
 using SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
@@ -27,15 +28,7 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    /// <summary>
-    ///     This method creates a new User object in the database and returns the created object. This method does not check if
-    ///     the User already exists.
-    /// </summary>
-    /// <param name="userId">The ID we get from the Supabase Authentication Service</param>
-    /// <param name="username">The Username of the User</param>
-    /// <param name="description">The Description of the User (optional)</param>
-    /// <param name="profilePicture">The Profile Picture of the User (optional)</param>
-    /// <returns>Returns the created UserDto. If it was unable to create a User, it will throw an exception.</returns>
+    /// <inheritdoc />
     public async Task<UserDto> CreateUser(string userId, string username, string email, Guid roleId,
         string? description = null,
         string? profilePicture = null)
@@ -74,11 +67,7 @@ public class UserService : IUserService
         }
     }
 
-    /// <summary>
-    ///     This method deletes the given User object from the database.
-    /// </summary>
-    /// <param name="user">The UserDto object to delete</param>
-    /// <returns>Returns true if the User was successfully deleted, otherwise false.</returns>
+    /// <inheritdoc />
     public async Task<bool> DeleteUser(UserDto user)
     {
         try
@@ -101,11 +90,7 @@ public class UserService : IUserService
         }
     }
 
-    /// <summary>
-    ///     This method returns a User object from the database based on the given userId.
-    /// </summary>
-    /// <param name="userId">The ID of the User to get from the Database</param>
-    /// <returns>Returns the UserDto object from the Database. If no User was found, it will throw an exception.</returns>
+    /// <inheritdoc />
     public async Task<UserDto> GetUserById(Guid userId)
     {
         try
@@ -128,15 +113,7 @@ public class UserService : IUserService
         }
     }
 
-    /// <summary>
-    ///     Gets a UserDTO by its username (usernames are duplicate free)
-    /// </summary>
-    /// <param name="username">
-    ///     Username used for retrieving a user
-    /// </param>
-    /// <returns>
-    ///     The corresponding UserDTO
-    /// </returns>
+    /// <inheritdoc />
     public virtual async Task<bool> CheckIfUserExistsByUserName(string username)
     {
         try
@@ -157,11 +134,7 @@ public class UserService : IUserService
         }
     }
 
-    /// <summary>
-    ///     This method updates the given User object in the database and returns the updated object.
-    /// </summary>
-    /// <param name="user">The updated UserDto</param>
-    /// <returns>Returns the updated UserDto. If it was unable to update the User, it will throw an exception.</returns>
+    /// <inheritdoc />
     public async Task<UserDto> UpdateUser(UserDao user)
     {
         try
@@ -184,15 +157,32 @@ public class UserService : IUserService
         }
     }
 
-    /// <summary>
-    ///     Retrieves a user from the database based on the provided criteria (ID, username, or email).
-    /// </summary>
-    /// <param name="userID">The ID of the user to retrieve (optional).</param>
-    /// <param name="username">The username of the user to retrieve (optional).</param>
-    /// <param name="email">The email of the user to retrieve (optional).</param>
-    /// <returns>Returns the UserDao object if found, otherwise null.</returns>
-    /// <exception cref="UserNotFoundException">Thrown when no user is found with the provided criteria.</exception>
-    /// <exception cref="UserGeneralException">Thrown when a general database error occurs.</exception>
+    /// <inheritdoc />
+    public async Task<UserDto> UpdateUser(UserDto user)
+    {
+        try
+        {
+            var userDao = await _databaseActions.GetEntityByField<UserDao>("userID", user.UserId.ToString());
+            userDao.Description = user.Description;
+            Logger.LogInfo($"Updating user {user}");
+            var result = await _databaseActions.Update(userDao);
+            return new UserDto().Mapper(result);
+        }
+        catch (DatabaseIudActionException ex)
+        {
+            throw new UserIudException($"An error occurred while updating the user. User {user}", ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new UserGeneralException($"An error occurred while updating the user. User {user}", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new UserGeneralException($"An error occurred while updating the user. User {user}", ex);
+        }
+    }
+
+    /// <inheritdoc />
     public async Task<UserDao> GetUserBy(Guid? userID = null, string? username = null, string? email = null)
     {
         try
@@ -247,12 +237,7 @@ public class UserService : IUserService
         }
     }
 
-    /// <summary>
-    ///     This method returns the Profile Picture of the given User.
-    /// </summary>
-    /// <param name="userId">The ID of the User</param>
-    /// <returns>Returns the ProfilePicDto containing the Profile Picture of the User.</returns>
-    /// <exception cref="UserNotFoundException">Throws an exception if the user is not found</exception>
+    /// <inheritdoc />
     public async Task<ProfilePicDto> GetProfilePic(Guid userId)
     {
         try
@@ -275,12 +260,7 @@ public class UserService : IUserService
         }
     }
 
-    /// <summary>
-    ///     This method returns a UserDto object from the database based on the given userId.
-    /// </summary>
-    /// <param name="userId">The ID of the user</param>
-    /// <param name="recentForums">The maximum number of recent forums to retrieve</param>
-    /// <returns>Returns the UserDto object with recent forums.</returns>
+    /// <inheritdoc />
     public async Task<UserDto> GetUser(Guid userId, int recentForums = 5)
     {
         try
@@ -308,12 +288,8 @@ public class UserService : IUserService
             throw new UserGeneralException($"An error occurred while fetching the user. ID {userId}", ex);
         }
     }
-    
-    /// <summary>
-    ///     This method returns a list of friends for the given user.
-    /// </summary>
-    /// <param name="userId">The ID of the user</param>
-    /// <returns>Returns a FriendsOfUserDto object containing the list of friends.</returns>
+
+    /// <inheritdoc />
     public async Task<FriendsOfUserDto> GetFriends(Guid userId)
     {
         try
@@ -349,11 +325,50 @@ public class UserService : IUserService
         }
     }
 
+    /// <inheritdoc />
+    public async Task<int> GetCountOfUserFriends(Guid userId)
+    {
+        try
+        {
+            Logger.LogInfo($"Fetching friends count for user with ID {userId}");
+            var friends =
+                await _databaseActions.GetCountByField<FollowerUserRelationDao>("userIsFollowed", userId.ToString());
+            return friends;
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new UserGeneralException($"An error occurred while fetching the friends count. ID {userId}", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new UserGeneralException($"An error occurred while fetching the friends count. ID {userId}", ex);
+        }
+    }
+
     /// <summary>
-    ///     This method returns a UserDao object from the database based on the given userId.
+    ///     Gets all spaces a user has wrote in
     /// </summary>
-    /// <param name="userId">The ID of the User to get from the Database</param>
-    /// <returns>Returns the UserDao object from the Database. If no User was found, it will throw an exception.</returns>
+    /// <param name="userId">
+    ///     User from which it should be retrieved
+    /// </param>
+    /// <returns>
+    ///     Returns the amount of spaces as task
+    /// </returns>
+    public async Task<int> GetCountOfUserSpaces(Guid userId)
+    {
+        try
+        {
+            //TODO: Currently not working
+            var spaces = await _postService.GetForumCountByUserId(userId);
+            return spaces;
+        }
+        catch (PostGeneralException)
+        {
+            throw;
+        }
+    }
+
+    /// <inheritdoc />
     private async Task<UserDao> GetUserDaoById(Guid userId)
     {
         try
@@ -370,47 +385,5 @@ public class UserService : IUserService
         {
             throw new UserGeneralException($"An error occurred while fetching the user. ID: {userId}", ex);
         }
-    }
-    
-    /// <summary>
-    ///     This method retrieves the count of friends for a given user from the database.
-    /// </summary>
-    /// <param name="userId">The ID of the user whose friends count is to be retrieved.</param>
-    /// <returns>Returns the count of friends for the specified user.</returns>
-    /// <exception cref="UserGeneralException">
-    ///     Thrown when a general database error occurs while fetching the friends count.
-    /// </exception>
-    public async Task<int> GetCountOfUserFriends(Guid userId)
-    {
-        try
-        {
-            Logger.LogInfo($"Fetching friends count for user with ID {userId}");
-            var friends = await _databaseActions.GetCountByField<FollowerUserRelationDao>("userIsFollowed", userId.ToString());
-            return friends;
-        }
-        catch (GeneralDatabaseException ex)
-        {
-            throw new UserGeneralException($"An error occurred while fetching the friends count. ID {userId}", ex);
-        }
-        catch (Exception ex)
-        {
-            throw new UserGeneralException($"An error occurred while fetching the friends count. ID {userId}", ex);
-        }
-    }
-
-    /// <summary>
-    /// Gets all spaces a user has wrote in
-    /// </summary>
-    /// <param name="userId">
-    /// User from which it should be retrieved
-    /// </param>
-    /// <returns>
-    /// Returns the amount of spaces as task
-    /// </returns>
-    public async Task<int> GetCountOfUserSpaces(Guid userId)
-    {
-        //TODO: Currently not working
-        var spaces = await _postService.GetForumCountByUserId(userId);
-        return spaces;
     }
 }
