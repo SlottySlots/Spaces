@@ -2,16 +2,19 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.IdentityModel.Tokens;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
+using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
 
 /// <inheritdoc />
 public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
 {
+    private static readonly Logging<PostSubmissionFormVmImpl> Logger = new();
+    
     private readonly IAuthService _authService;
+    private readonly IPostService _postService;
     private readonly IForumService _forumService;
     private readonly NavigationManager _navigationManager;
-    private readonly IPostService _postService;
 
     public PostSubmissionFormVmImpl(
         IAuthService authService,
@@ -38,6 +41,9 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
     public string? SpaceName { get; set; }
 
     /// <inheritdoc />
+    public List<string> SearchedSpaces { get; set; } = [];
+
+    /// <inheritdoc />
     public string? SpaceErrorMessage { get; set; }
 
     /// <inheritdoc />
@@ -46,11 +52,14 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
     /// <inheritdoc />
     public async Task HandleSpacePromptChange(ChangeEventArgs e, EventCallback<string?> promptValueChanged)
     {
+        Logger.LogDebug($"User is searching for space in post submission form. Prompt: '{e.Value}'");
         if (e.Value is not null)
         {
             var newValue = e.Value.ToString();
             SpacePrompt = newValue;
             await promptValueChanged.InvokeAsync(newValue);
+            var searchResults = await _forumService.GetForumsByNameContaining(newValue ?? "", 1);
+            SearchedSpaces = searchResults.Select(space => space.Topic).ToList();
         }
     }
 
@@ -89,7 +98,6 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
             TextErrorMessage = "Must provide some text in order to submit post";
             return;
         }
-
         if (SpaceName.IsNullOrEmpty())
         {
             SpaceErrorMessage = "Must provide a space for the post";

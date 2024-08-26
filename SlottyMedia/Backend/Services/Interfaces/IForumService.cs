@@ -34,6 +34,16 @@ public interface IForumService
     Task<ForumDto> GetForumByName(string forumName);
 
     /// <summary>
+    /// Fetches all forums by name where the name contains the given substring.
+    /// Fetches only a specified number of forums on the specified page.
+    /// </summary>
+    /// <param name="name">The substring that should be contained by the forums' name</param>
+    /// <param name="page">The page to fetch (one-based)</param>
+    /// <param name="pageSize">The size of each page (default is 10)</param>
+    /// <returns>All forums where the name of each forum contains the given substring</returns>
+    Task<List<ForumDto>> GetForumsByNameContaining(string name, int page, int pageSize = 10);
+
+    /// <summary>
     ///     Retrieves a list of all forums.
     /// </summary>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of ForumDto objects.</returns>

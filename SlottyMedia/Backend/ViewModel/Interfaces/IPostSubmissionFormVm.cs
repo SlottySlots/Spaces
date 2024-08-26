@@ -11,19 +11,22 @@ public interface IPostSubmissionFormVm
 {
     /// <summary>The post's textual content</summary>
     string? Text { get; set; }
-
+    
     /// <summary>The prompt the user should input in order to select the space. This field is null if a space was selected.</summary>
     string? SpacePrompt { get; set; }
-
+    
     /// <summary>The name of the space the user has selected. Null corresponds to no selection.</summary>
     string? SpaceName { get; set; }
-
+    
+    /// <summary>A list containing all space names that contain the searched prompt</summary>
+    List<string> SearchedSpaces { get; set; }
+    
     /// <summary>An optional error message related to the post's space</summary>
     string? SpaceErrorMessage { get; set; }
-
+    
     /// <summary>An optional error message related to the post's textual content</summary>
     string? TextErrorMessage { get; set; }
-
+    
     /// <summary>An optional error message that is caused by some internal server error</summary>
     string? ServerErrorMessage { get; set; }
 
