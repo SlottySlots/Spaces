@@ -2,7 +2,6 @@ using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Database;
-using SlottyMedia.Database.Daos;
 using SlottyMedia.LoggingProvider;
 using Supabase.Gotrue;
 
@@ -61,35 +60,43 @@ public class MainLayoutVmImpl : IMainLayoutVm
     /// </returns>
     public async Task<UserInformationDto?> SetUserInfo()
     {
-        var currentSession = _authService.GetCurrentSession();
-        if (currentSession != null)
+        try
         {
-            var userId = Guid.Parse(currentSession.User!.Id!); 
-            var userDao = await _userService.GetUserBy(userId);
-            var amountOfFriends = await _userService.GetCountOfUserFriends(userId);
-            var amountOfSpaces = await _userService.GetCountOfUserSpaces(userId);
-            if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
+            var currentSession = _authService.GetCurrentSession();
+            if (currentSession != null)
             {
-                _logger.LogError(
-                    $"User with mail {currentSession.User.Email} retrieved corrupt User entry from database!");
-            }
-            else
-            {
-                var userInformationDto = new UserInformationDto
+                var userId = Guid.Parse(currentSession.User!.Id!);
+                var userDao = await _userService.GetUserBy(userId);
+                var amountOfFriends = await _userService.GetCountOfUserFriends(userId);
+                var amountOfSpaces = await _userService.GetCountOfUserSpaces(userId);
+                if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
                 {
-                    UserId = userDao.UserId!,
-                    Username = userDao.UserName!,
-                    Description = userDao.Description!,
-                    ProfilePic = userDao.ProfilePic,
-                    FriendsAmount = amountOfFriends,
-                    SpacesAmount = amountOfSpaces,
-                    CreatedAt = userDao.CreatedAt!
-                };
-                return userInformationDto;
+                    _logger.LogError(
+                        $"User with mail {currentSession.User.Email} retrieved corrupt User entry from database!");
+                }
+                else
+                {
+                    var userInformationDto = new UserInformationDto
+                    {
+                        UserId = userDao.UserId!,
+                        Username = userDao.UserName!,
+                        Description = userDao.Description!,
+                        ProfilePic = userDao.ProfilePic,
+                        FriendsAmount = amountOfFriends,
+                        SpacesAmount = amountOfSpaces,
+                        CreatedAt = userDao.CreatedAt!
+                    };
+                    return userInformationDto;
+                }
             }
-        }
 
-        return null;
+            return null;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.Message);
+            return null;
+        }
     }
 
     /// <summary>

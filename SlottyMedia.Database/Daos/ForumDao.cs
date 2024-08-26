@@ -16,6 +16,7 @@ public class ForumDao : BaseModel
     {
         CreatorUserId = Guid.Empty;
         ForumTopic = string.Empty;
+        CreatedAt = DateTime.MinValue;
     }
 
     /// <summary>

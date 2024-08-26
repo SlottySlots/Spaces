@@ -6,7 +6,6 @@ using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.LoggingProvider;
 using Supabase.Postgrest;
-using Client = Supabase.Client;
 
 namespace SlottyMedia.Backend.Services;
 
@@ -110,4 +109,97 @@ public class ForumService : IForumService
             .ToList();
     }
     
+
+    /// <summary>
+    ///     Retrieves all forums from the database.
+    /// </summary>
+    /// <returns>A list of ForumDto objects representing all forums.</returns>
+    public async Task<List<ForumDto>> GetForums()
+    {
+        try
+        {
+            Logger.LogDebug("Fetching all forums...");
+            var forumDaos = await _databaseActions.GetEntities<ForumDao>();
+
+            // Map ForumDao to ForumDto
+            return forumDaos.Select(dao => new ForumDto().Mapper(dao)).ToList();
+        }
+        catch (DatabaseMissingItemException ex)
+        {
+            Logger.LogError($"No forums found: {ex.Message}");
+            throw new GeneralDatabaseException("No forums found.", ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            Logger.LogError($"A general database error occurred: {ex.Message}");
+            throw;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError($"An unexpected error occurred: {ex.Message}");
+            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the forums.", ex);
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<List<ForumDto>> DetermineRecentSpaces()
+    {
+        try
+        {
+            Logger.LogDebug("Fetching the 3 most recent forums...");
+            var recentForums = await _databaseActions.GetEntitiesWithSelectorById<TopForumDao>(
+                x => new object[] { x.ForumId!, x.ForumTopic! },
+                new List<(string, Constants.Operator, string)>(),
+                2,
+                0,
+                ("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last)
+            );
+
+            // Map ForumDao to ForumDto
+            return recentForums.Select(dao => new ForumDto().Mapper(dao)).ToList();
+        }
+        catch (DatabaseMissingItemException ex)
+        {
+            Logger.LogError($"No recent forums found: {ex.Message}");
+            throw new GeneralDatabaseException("No recent forums found.", ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            Logger.LogError($"A general database error occurred: {ex.Message}");
+            throw;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError($"An unexpected error occurred: {ex.Message}");
+            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the recent forums.", ex);
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<List<ForumDto>> GetTopForums()
+    {
+        try
+        {
+            Logger.LogDebug("Fetching the top forums...");
+            var topForums = await _databaseActions.GetTopForums();
+
+            // Map TopForumDao to ForumDto
+            return topForums.Select(dao => new ForumDto().Mapper(dao)).ToList();
+        }
+        catch (DatabaseMissingItemException ex)
+        {
+            Logger.LogError($"No top forums found: {ex.Message}");
+            throw new GeneralDatabaseException("No top forums found.", ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            Logger.LogError($"A general database error occurred: {ex.Message}");
+            throw;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError($"An unexpected error occurred: {ex.Message}");
+            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the top forums.", ex);
+        }
+    }
 }

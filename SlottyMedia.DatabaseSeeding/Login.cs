@@ -5,14 +5,14 @@ using Supabase.Gotrue.Exceptions;
 namespace SlottyMedia.DatabaseSeeding;
 
 /// <summary>
-/// Login class to handle user login and logout operations for the seeding process.
+///     Login class to handle user login and logout operations for the seeding process.
 /// </summary>
 public class Login
 {
     private static readonly Logging<Login> logger = new();
-    
+
     /// <summary>
-    /// Login the user with the given client.
+    ///     Login the user with the given client.
     /// </summary>
     /// <param name="client"></param>
     public async Task LoginUser(Client client)
@@ -38,7 +38,7 @@ public class Login
     }
 
     /// <summary>
-    /// This method logs out the user.
+    ///     This method logs out the user.
     /// </summary>
     /// <param name="client"></param>
     public async Task LogoutUser(Client client)

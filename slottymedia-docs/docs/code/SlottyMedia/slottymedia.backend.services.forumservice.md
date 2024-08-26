@@ -11,17 +11,15 @@ Implements [IForumService](./slottymedia.backend.services.interfaces.iforumservi
 
 ## Constructors
 
-### **ForumService(IDatabaseActions, Client)**
+### **ForumService(IDatabaseActions)**
 
 ```csharp
-public ForumService(IDatabaseActions databaseActions, Client supabase)
+public ForumService(IDatabaseActions databaseActions)
 ```
 
 #### Parameters
 
 `databaseActions` IDatabaseActions<br>
-
-`supabase` Client<br>
 
 ## Methods
 
@@ -69,19 +67,34 @@ public Task<ForumDto> GetForumByName(string forumName)
 
 [Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **GetForumsByNameContaining(String, Int32, Int32)**
+### **GetForums()**
+
+Retrieves all forums from the database.
 
 ```csharp
-public Task<List<ForumDto>> GetForumsByNameContaining(string name, int page, int pageSize)
+public Task<List<ForumDto>> GetForums()
 ```
 
-#### Parameters
+#### Returns
 
-`name` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A list of ForumDto objects representing all forums.
 
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+### **DetermineRecentSpaces()**
 
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+```csharp
+public Task<List<ForumDto>> DetermineRecentSpaces()
+```
+
+#### Returns
+
+[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetTopForums()**
+
+```csharp
+public Task<List<ForumDto>> GetTopForums()
+```
 
 #### Returns
 

@@ -1,4 +1,5 @@
 using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Backend.Exceptions.Services.PostExceptions;
 using SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
@@ -142,6 +143,31 @@ public class UserService : IUserService
         {
             Logger.LogInfo($"Updating user {user}");
             var result = await _databaseActions.Update(user);
+            return new UserDto().Mapper(result);
+        }
+        catch (DatabaseIudActionException ex)
+        {
+            throw new UserIudException($"An error occurred while updating the user. User {user}", ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new UserGeneralException($"An error occurred while updating the user. User {user}", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new UserGeneralException($"An error occurred while updating the user. User {user}", ex);
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<UserDto> UpdateUser(UserDto user)
+    {
+        try
+        {
+            var userDao = await _databaseActions.GetEntityByField<UserDao>("userID", user.UserId.ToString());
+            userDao.Description = user.Description;
+            Logger.LogInfo($"Updating user {user}");
+            var result = await _databaseActions.Update(userDao);
             return new UserDto().Mapper(result);
         }
         catch (DatabaseIudActionException ex)
@@ -307,7 +333,8 @@ public class UserService : IUserService
         try
         {
             Logger.LogInfo($"Fetching friends count for user with ID {userId}");
-            var friends = await _databaseActions.GetCountByField<FollowerUserRelationDao>("userIsFollowed", userId.ToString());
+            var friends =
+                await _databaseActions.GetCountByField<FollowerUserRelationDao>("userIsFollowed", userId.ToString());
             return friends;
         }
         catch (GeneralDatabaseException ex)
@@ -317,6 +344,29 @@ public class UserService : IUserService
         catch (Exception ex)
         {
             throw new UserGeneralException($"An error occurred while fetching the friends count. ID {userId}", ex);
+        }
+    }
+
+    /// <summary>
+    ///     Gets all spaces a user has wrote in
+    /// </summary>
+    /// <param name="userId">
+    ///     User from which it should be retrieved
+    /// </param>
+    /// <returns>
+    ///     Returns the amount of spaces as task
+    /// </returns>
+    public async Task<int> GetCountOfUserSpaces(Guid userId)
+    {
+        try
+        {
+            //TODO: Currently not working
+            var spaces = await _postService.GetForumCountByUserId(userId);
+            return spaces;
+        }
+        catch (PostGeneralException)
+        {
+            throw;
         }
     }
 
@@ -337,21 +387,5 @@ public class UserService : IUserService
         {
             throw new UserGeneralException($"An error occurred while fetching the user. ID: {userId}", ex);
         }
-    }
-
-    /// <summary>
-    /// Gets all spaces a user has wrote in
-    /// </summary>
-    /// <param name="userId">
-    /// User from which it should be retrieved
-    /// </param>
-    /// <returns>
-    /// Returns the amount of spaces as task
-    /// </returns>
-    public async Task<int> GetCountOfUserSpaces(Guid userId)
-    {
-        //TODO: Currently not working
-        var spaces = await _postService.GetForumCountByUserId(userId);
-        return spaces;
     }
 }

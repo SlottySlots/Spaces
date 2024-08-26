@@ -30,13 +30,13 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
 
     /// <inheritdoc />
     public string? Text { get; set; }
-    
+
     /// <inheritdoc />
     public string? TextErrorMessage { get; set; }
-    
+
     /// <inheritdoc />
     public string? SpacePrompt { get; set; }
-    
+
     /// <inheritdoc />
     public string? SpaceName { get; set; }
 
@@ -45,7 +45,7 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
 
     /// <inheritdoc />
     public string? SpaceErrorMessage { get; set; }
-    
+
     /// <inheritdoc />
     public string? ServerErrorMessage { get; set; }
 
@@ -81,7 +81,7 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
     {
         // reset all error messages when form is (re-)submitted
         _resetErrorMessages();
-        
+
         // if no user is logged in (for whichever reason): display error
         // This case should never happen. The post submission form should only
         // be accessible to authenticated users!
@@ -91,7 +91,7 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
             ServerErrorMessage = "You need to log in to submit a post";
             return;
         }
-        
+
         // display error when fields are empty
         if (Text.IsNullOrEmpty())
         {
@@ -103,7 +103,7 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
             SpaceErrorMessage = "Must provide a space for the post";
             return;
         }
-        
+
         // attempt to submit post
         try
         {
@@ -116,7 +116,7 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
             ServerErrorMessage = "An unknown error occurred. Try again later.";
             return;
         }
-        
+
         // if no errors occurred: redirect to index page
         _navigationManager.NavigateTo("/");
     }

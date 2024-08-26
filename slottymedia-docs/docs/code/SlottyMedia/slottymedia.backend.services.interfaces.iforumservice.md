@@ -77,27 +77,43 @@ The forum's name.
 [Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 The requested forum
 
-### **GetForumsByNameContaining(String, Int32, Int32)**
+### **GetForums()**
 
-Fetches all forums by name where the name contains the given substring.
- Fetches only a specified number of forums on the specified page.
+Retrieves a list of all forums.
 
 ```csharp
-Task<List<ForumDto>> GetForumsByNameContaining(string name, int page, int pageSize)
+Task<List<ForumDto>> GetForums()
 ```
-
-#### Parameters
-
-`name` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The substring that should be contained by the forums' name
-
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The page to fetch (one-based)
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The size of each page (default is 10)
 
 #### Returns
 
 [Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-All forums where the name of each forum contains the given substring
+A task that represents the asynchronous operation. The task result contains a list of ForumDto objects.
+
+### **DetermineRecentSpaces()**
+
+Retrieves the 3 most recent forums based on the creation date.
+
+```csharp
+Task<List<ForumDto>> DetermineRecentSpaces()
+```
+
+#### Returns
+
+[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains a list of the 3 most recent
+ ForumDto objects.
+
+### **GetTopForums()**
+
+Retrieves the top forums.
+
+```csharp
+Task<List<ForumDto>> GetTopForums()
+```
+
+#### Returns
+
+[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains a list of ForumDto objects
+ representing the top forums.
