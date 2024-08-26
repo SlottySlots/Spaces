@@ -1,12 +1,10 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.PostExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Repository.PostRepo;
 using SlottyMedia.LoggingProvider;
-using Supabase.Postgrest;
 
 namespace SlottyMedia.Backend.Services;
 
@@ -23,7 +21,6 @@ public class PostService : IPostService
     {
         Logger.LogInfo("PostService initialized");
         PostRepository = postRepository;
-
     }
 
     /// <inheritdoc />

@@ -1,6 +1,6 @@
 # IForumSearchRepository
 
-Namespace: SlottyMedia.Database.Repository
+Namespace: SlottyMedia.Database.Repository.SearchRepo
 
 Interface for the Forum Search Repository.
 

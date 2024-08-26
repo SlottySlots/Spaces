@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Database.Repository.CommentRepo
 
+Repository class for managing comments in the database.
+
 ```csharp
 public class CommentRepository : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.CommentDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.CommentDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], ICommentRepository
 ```
@@ -22,7 +24,10 @@ public CommentRepository(Client client, DaoHelper daoHelper, DatabaseRepositroyH
 #### Parameters
 
 `client` Client<br>
+The Supabase client instance.
 
 `daoHelper` [DaoHelper](./slottymedia.database.helper.daohelper.md)<br>
+The data access object helper instance.
 
 `databaseRepositroyHelper` [DatabaseRepositroyHelper](./slottymedia.database.helper.databaserepositroyhelper.md)<br>
+The database repository helper instance.

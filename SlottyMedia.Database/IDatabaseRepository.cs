@@ -55,9 +55,26 @@ public interface IDatabaseRepository<T> where T : BaseModel, new()
     /// <exception cref="Exception">Thrown when an unexpected error occurs.</exception>
     public Task DeleteElement(T entity);
 
+    /// <summary>
+    ///     Retrieves an element by a specific field.
+    /// </summary>
+    /// <param name="fieldName">The name of the field.</param>
+    /// <param name="fieldValue">The value of the field.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the entity.</returns>
     public Task<T> GetElementByField(string fieldName, string fieldValue);
 
+    /// <summary>
+    ///     Retrieves an element by its unique identifier with a specific selector.
+    /// </summary>
+    /// <param name="entityId">The unique identifier of the entity.</param>
+    /// <param name="selector">The selector expression.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the entity.</returns>
     public Task<T> GetElementById(Guid entityId, Expression<Func<T, object[]>> selector);
 
+    /// <summary>
+    ///     Executes a query on the specified table.
+    /// </summary>
+    /// <param name="query">The query to execute.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a list of entities.</returns>
     protected Task<List<T>> ExecuteQuery(IPostgrestTable<T> query);
 }

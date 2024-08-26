@@ -5,14 +5,14 @@ using Supabase.Gotrue;
 namespace SlottyMedia.Backend.ViewModel;
 
 /// <summary>
-/// This class implements the IAuthVmImpl interface
+///     This class implements the IAuthVmImpl interface
 /// </summary>
 public class AuthVmImpl : IAuthVmImpl
 {
     private readonly IAuthService _authService;
 
     /// <summary>
-    /// This constructor initializes the AuthService
+    ///     This constructor initializes the AuthService
     /// </summary>
     /// <param name="authVmImpl"></param>
     public AuthVmImpl(IAuthService authVmImpl)

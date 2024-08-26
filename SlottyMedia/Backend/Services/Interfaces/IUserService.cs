@@ -101,5 +101,4 @@ public interface IUserService
     public Task UpdateUser(UserDto user);
 
     public Task<UserDao> GetUserDaoById(Guid userId);
-
 }

@@ -86,7 +86,7 @@ public class ForumDto
             PostCount = forumDao.post_count ?? 0
         };
     }
-    
+
     /// <summary>
     ///     The ToString method returns a string representation of the object.
     /// </summary>

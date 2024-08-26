@@ -1,21 +1,21 @@
 # UserSearchRepository
 
-Namespace: SlottyMedia.Database.Repository
+Namespace: SlottyMedia.Database.Repository.SearchRepo
 
 Repository class for managing user searches in the database.
 
 ```csharp
-public class UserSearchRepository : DatabaseRepository`1, SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.UserDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], IUserSeachRepository
+public class UserSearchRepository : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.UserDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.UserDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], IUserSeachRepository
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [DatabaseRepository&lt;UserDao&gt;](./slottymedia.database.repository.databaserepository-1.md) → [UserSearchRepository](./slottymedia.database.repository.usersearchrepository.md)<br>
-Implements [IDatabaseRepository&lt;UserDao&gt;](./slottymedia.database.idatabaserepository-1.md), [IUserSeachRepository](./slottymedia.database.repository.iuserseachrepository.md)
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [DatabaseRepository&lt;UserDao&gt;](./slottymedia.database.repository.databaserepository-1.md) → [UserSearchRepository](./slottymedia.database.repository.searchrepo.usersearchrepository.md)<br>
+Implements [IDatabaseRepository&lt;UserDao&gt;](./slottymedia.database.idatabaserepository-1.md), [IUserSeachRepository](./slottymedia.database.repository.searchrepo.iuserseachrepository.md)
 
 ## Constructors
 
 ### **UserSearchRepository(Client, DaoHelper, DatabaseRepositroyHelper)**
 
-Base constructor for the [UserSearchRepository](./slottymedia.database.repository.usersearchrepository.md).
+Base constructor for the [UserSearchRepository](./slottymedia.database.repository.searchrepo.usersearchrepository.md).
 
 ```csharp
 public UserSearchRepository(Client client, DaoHelper daoHelper, DatabaseRepositroyHelper databaseRepositroyHelper)

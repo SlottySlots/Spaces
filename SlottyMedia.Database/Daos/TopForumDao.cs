@@ -42,7 +42,7 @@ public class TopForumDao : BaseModel
     /// <summary>
     ///     The Count of Posts in the Forum.
     /// </summary>
-    [Column()]
+    [Column]
     public int? post_count { get; set; }
 
     /// <summary>

@@ -48,14 +48,6 @@
 
 [DatabaseRepository&lt;T&gt;](./slottymedia.database.repository.databaserepository-1.md)
 
-[ForumSearchRepository](./slottymedia.database.repository.forumsearchrepository.md)
-
-[IForumSearchRepository](./slottymedia.database.repository.iforumsearchrepository.md)
-
-[IUserSeachRepository](./slottymedia.database.repository.iuserseachrepository.md)
-
-[UserSearchRepository](./slottymedia.database.repository.usersearchrepository.md)
-
 ## SlottyMedia.Database.Repository.CommentRepo
 
 [CommentRepository](./slottymedia.database.repository.commentrepo.commentrepository.md)
@@ -83,6 +75,16 @@
 [IPostRepository](./slottymedia.database.repository.postrepo.ipostrepository.md)
 
 [PostRepository](./slottymedia.database.repository.postrepo.postrepository.md)
+
+## SlottyMedia.Database.Repository.SearchRepo
+
+[ForumSearchRepository](./slottymedia.database.repository.searchrepo.forumsearchrepository.md)
+
+[IForumSearchRepository](./slottymedia.database.repository.searchrepo.iforumsearchrepository.md)
+
+[IUserSeachRepository](./slottymedia.database.repository.searchrepo.iuserseachrepository.md)
+
+[UserSearchRepository](./slottymedia.database.repository.searchrepo.usersearchrepository.md)
 
 ## SlottyMedia.Database.Repository.UserLikePostRelationRepo
 

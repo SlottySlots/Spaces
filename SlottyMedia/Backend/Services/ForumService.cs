@@ -1,13 +1,10 @@
 ﻿using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.ForumExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Repository.ForumRepo;
 using SlottyMedia.LoggingProvider;
-using Supabase.Postgrest;
-using Client = Supabase.Client;
 
 namespace SlottyMedia.Backend.Services;
 
@@ -16,11 +13,12 @@ public class ForumService : IForumService
 {
     private static readonly Logging<ForumService> Logger = new();
     private readonly IForumRepository _forumRepository;
-    private readonly ITopForumRepository _topForumRepository;
     private readonly ISearchService _searchService;
+    private readonly ITopForumRepository _topForumRepository;
 
     /// Constructor to initialize the ForumService with the required database actions.
-    public ForumService(IForumRepository forumRepository, ITopForumRepository topForumRepository, ISearchService searchService)
+    public ForumService(IForumRepository forumRepository, ITopForumRepository topForumRepository,
+        ISearchService searchService)
     {
         Logger.LogInfo("ForumService initialized");
         _forumRepository = forumRepository;
@@ -101,7 +99,7 @@ public class ForumService : IForumService
     public async Task<List<ForumDto>> GetForumsByNameContaining(string name, int page, int pageSize = 10)
     {
         //TODO use searchservice for this type of stuff
-        
+
         Logger.LogDebug($"Fetching all forums containing the substring '{name}' (page {page} with size {pageSize})");
         // var query = await _supabase
         //     .From<ForumDao>()
@@ -111,12 +109,12 @@ public class ForumService : IForumService
         // return query.Models
         //     .Select(forum => new ForumDto().Mapper(forum))
         //     .ToList();
-        
+
         var forums = await _searchService.SearchByTopic(name, page, pageSize);
-        
+
         return forums.Forums;
     }
-    
+
 
     /// <summary>
     ///     Retrieves all forums from the database.
@@ -204,5 +202,4 @@ public class ForumService : IForumService
             throw new GeneralDatabaseException("An unexpected error occurred while retrieving the top forums.", ex);
         }
     }
-    
 }

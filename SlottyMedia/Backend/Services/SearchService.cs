@@ -1,12 +1,10 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.SearchExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
-using SlottyMedia.Database.Repository;
+using SlottyMedia.Database.Repository.SearchRepo;
 using SlottyMedia.LoggingProvider;
-using Supabase.Postgrest;
 
 namespace SlottyMedia.Backend.Services;
 
@@ -16,8 +14,8 @@ namespace SlottyMedia.Backend.Services;
 public class SearchService : ISearchService
 {
     private static readonly Logging<SearchService> Logger = new();
-    private readonly IUserSeachRepository _userSeachRepository;
     private readonly IForumSearchRepository _forumSearchRepository;
+    private readonly IUserSeachRepository _userSeachRepository;
 
 
     /// <summary>
@@ -39,13 +37,8 @@ public class SearchService : ISearchService
             Logger.LogInfo($"Searching for users with search term: {searchTerm}");
 
             if (searchTerm.Length == 0)
-            {
                 return new SearchDto();
-            }
-            else if (searchTerm[0] == '@')
-            {
-                searchTerm = searchTerm.Substring(1);
-            }
+            if (searchTerm[0] == '@') searchTerm = searchTerm.Substring(1);
 
             var userResults = await _userSeachRepository.GetUsersByUserName(searchTerm, page, pagesize);
 
@@ -75,30 +68,25 @@ public class SearchService : ISearchService
                 $"An error occurred while searching for users or topics. Term {searchTerm}", ex);
         }
     }
-    
+
     /// <inheritdoc />
     public async Task<SearchDto> SearchByTopic(string searchTerm, int page, int pagesize)
     {
         try
         {
             Logger.LogInfo($"Searching for topics with search term: {searchTerm}");
-            
-            if (searchTerm.Length == 0)
-            {
-                return new SearchDto();
-            }
-            else if (searchTerm[0] == '#')
-            {
-                searchTerm = searchTerm.Substring(1);
-            }
 
-            var topicResults = await _forumSearchRepository.GetForumsByTopic(searchTerm,page, pagesize);
+            if (searchTerm.Length == 0)
+                return new SearchDto();
+            if (searchTerm[0] == '#') searchTerm = searchTerm.Substring(1);
+
+            var topicResults = await _forumSearchRepository.GetForumsByTopic(searchTerm, page, pagesize);
 
             if (topicResults is null || !topicResults.Any())
                 topicResults = new List<ForumDao>();
 
             var searchResult = new SearchDto();
-            
+
             searchResult.Forums.AddRange(topicResults.Select(x => new ForumDto().Mapper(x)));
 
             return searchResult;

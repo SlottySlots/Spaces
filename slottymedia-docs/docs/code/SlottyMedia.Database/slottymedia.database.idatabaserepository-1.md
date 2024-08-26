@@ -142,6 +142,8 @@ Thrown when an unexpected error occurs.
 
 ### **GetElementByField(String, String)**
 
+Retrieves an element by a specific field.
+
 ```csharp
 Task<T> GetElementByField(string fieldName, string fieldValue)
 ```
@@ -149,14 +151,19 @@ Task<T> GetElementByField(string fieldName, string fieldValue)
 #### Parameters
 
 `fieldName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The name of the field.
 
 `fieldValue` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The value of the field.
 
 #### Returns
 
 Task&lt;T&gt;<br>
+A task that represents the asynchronous operation. The task result contains the entity.
 
 ### **GetElementById(Guid, Expression&lt;Func&lt;T, Object[]&gt;&gt;)**
+
+Retrieves an element by its unique identifier with a specific selector.
 
 ```csharp
 Task<T> GetElementById(Guid entityId, Expression<Func<T, Object[]>> selector)
@@ -165,14 +172,19 @@ Task<T> GetElementById(Guid entityId, Expression<Func<T, Object[]>> selector)
 #### Parameters
 
 `entityId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The unique identifier of the entity.
 
 `selector` Expression&lt;Func&lt;T, Object[]&gt;&gt;<br>
+The selector expression.
 
 #### Returns
 
 Task&lt;T&gt;<br>
+A task that represents the asynchronous operation. The task result contains the entity.
 
 ### **ExecuteQuery(IPostgrestTable&lt;T&gt;)**
+
+Executes a query on the specified table.
 
 ```csharp
 Task<List<T>> ExecuteQuery(IPostgrestTable<T> query)
@@ -181,7 +193,9 @@ Task<List<T>> ExecuteQuery(IPostgrestTable<T> query)
 #### Parameters
 
 `query` IPostgrestTable&lt;T&gt;<br>
+The query to execute.
 
 #### Returns
 
 Task&lt;List&lt;T&gt;&gt;<br>
+A task that represents the asynchronous operation. The task result contains a list of entities.

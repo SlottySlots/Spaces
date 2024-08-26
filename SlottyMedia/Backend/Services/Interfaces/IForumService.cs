@@ -34,8 +34,8 @@ public interface IForumService
     Task<ForumDto> GetForumByName(string forumName);
 
     /// <summary>
-    /// Fetches all forums by name where the name contains the given substring.
-    /// Fetches only a specified number of forums on the specified page.
+    ///     Fetches all forums by name where the name contains the given substring.
+    ///     Fetches only a specified number of forums on the specified page.
     /// </summary>
     /// <param name="name">The substring that should be contained by the forums' name</param>
     /// <param name="page">The page to fetch (one-based)</param>

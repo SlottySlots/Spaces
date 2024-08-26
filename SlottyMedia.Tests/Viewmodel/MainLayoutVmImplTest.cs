@@ -108,7 +108,7 @@ public class MainLayoutVmImplTest
     public void SetUserInfo_ReturnsUserInfoDto()
     {
         _authService.Setup(service => service.GetCurrentSession())
-            .Returns(new Session { User = new User { Email = "test@test.de", Id = Guid.NewGuid().ToString()} });
+            .Returns(new Session { User = new User { Email = "test@test.de", Id = Guid.NewGuid().ToString() } });
         var userDao = new UserDao
         {
             UserId = Guid.NewGuid(), UserName = "Test", Description = "TestDesc", Email = "test@test.de",

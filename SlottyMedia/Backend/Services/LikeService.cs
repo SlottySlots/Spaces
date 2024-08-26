@@ -1,11 +1,9 @@
 ﻿using SlottyMedia.Backend.Exceptions.Services.LikeExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Repository.UserLikePostRelationRepo;
 using SlottyMedia.LoggingProvider;
-using Supabase.Postgrest;
 
 namespace SlottyMedia.Backend.Services;
 

@@ -1,21 +1,21 @@
 # ForumSearchRepository
 
-Namespace: SlottyMedia.Database.Repository
+Namespace: SlottyMedia.Database.Repository.SearchRepo
 
 Repository class for managing forum searches in the database.
 
 ```csharp
-public class ForumSearchRepository : DatabaseRepository`1, SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.ForumDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], IForumSearchRepository
+public class ForumSearchRepository : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.ForumDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.ForumDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], IForumSearchRepository
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [DatabaseRepository&lt;ForumDao&gt;](./slottymedia.database.repository.databaserepository-1.md) → [ForumSearchRepository](./slottymedia.database.repository.forumsearchrepository.md)<br>
-Implements [IDatabaseRepository&lt;ForumDao&gt;](./slottymedia.database.idatabaserepository-1.md), [IForumSearchRepository](./slottymedia.database.repository.iforumsearchrepository.md)
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [DatabaseRepository&lt;ForumDao&gt;](./slottymedia.database.repository.databaserepository-1.md) → [ForumSearchRepository](./slottymedia.database.repository.searchrepo.forumsearchrepository.md)<br>
+Implements [IDatabaseRepository&lt;ForumDao&gt;](./slottymedia.database.idatabaserepository-1.md), [IForumSearchRepository](./slottymedia.database.repository.searchrepo.iforumsearchrepository.md)
 
 ## Constructors
 
 ### **ForumSearchRepository(Client, DaoHelper, DatabaseRepositroyHelper)**
 
-Base constructor for the [ForumSearchRepository](./slottymedia.database.repository.forumsearchrepository.md).
+Base constructor for the [ForumSearchRepository](./slottymedia.database.repository.searchrepo.forumsearchrepository.md).
 
 ```csharp
 public ForumSearchRepository(Client client, DaoHelper daoHelper, DatabaseRepositroyHelper databaseRepositroyHelper)

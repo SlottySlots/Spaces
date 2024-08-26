@@ -1,12 +1,9 @@
 using SlottyMedia.Backend.Dtos;
-using SlottyMedia.Backend.Exceptions.Services.PostExceptions;
 using SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Repository.FollowerUserRelatioRepo;
-using SlottyMedia.Database.Repository.PostRepo;
 using SlottyMedia.Database.Repository.UserRepo;
 using SlottyMedia.LoggingProvider;
 
@@ -18,16 +15,17 @@ namespace SlottyMedia.Backend.Services;
 public class UserService : IUserService
 {
     private static readonly Logging<UserService> Logger = new();
-    private readonly IUserRepository _userRepository;
-    private readonly IPostService _postService;
     private readonly IFollowerUserRelationRepository _followerUserRelationRepository;
+    private readonly IPostService _postService;
+    private readonly IUserRepository _userRepository;
 
     /// <summary>
     ///     This constructor creates a new UserService object.
     /// </summary>
     /// <param name="databaseActions">This parameter is used to interact with the database</param>
     /// <param name="postService">This parameter is used to interact with the post service</param>
-    public UserService(IUserRepository userRepository, IPostService postService, IFollowerUserRelationRepository followerUserRelationRepository)
+    public UserService(IUserRepository userRepository, IPostService postService,
+        IFollowerUserRelationRepository followerUserRelationRepository)
     {
         Logger.LogInfo("Creating a new UserService object");
         _userRepository = userRepository;
@@ -53,7 +51,7 @@ public class UserService : IUserService
         try
         {
             Logger.LogInfo($"Creating a new user {user}");
-            
+
             await _userRepository.AddElement(user);
         }
         catch (DatabaseIudActionException ex)
@@ -242,8 +240,8 @@ public class UserService : IUserService
             throw new UserGeneralException($"An error occurred while fetching the user. ID {userId}", ex);
         }
     }
-    
-    /// <inheritdoc /> 
+
+    /// <inheritdoc />
     public async Task<FriendsOfUserDto> GetFriends(Guid userId)
     {
         try
@@ -297,7 +295,7 @@ public class UserService : IUserService
             throw new UserGeneralException($"An error occurred while fetching the friends count. ID {userId}", ex);
         }
     }
-    
+
     /// <summary>
     ///     Gets all spaces a user has wrote in
     /// </summary>
@@ -309,16 +307,9 @@ public class UserService : IUserService
     /// </returns>
     public async Task<int> GetCountOfUserSpaces(Guid userId)
     {
-        try
-        {
-            //TODO: Currently not working
-            var spaces = await _postService.GetForumCountByUserId(userId);
-            return spaces;
-        }
-        catch (PostGeneralException)
-        {
-            throw;
-        }
+        //TODO: Currently not working
+        var spaces = await _postService.GetForumCountByUserId(userId);
+        return spaces;
     }
 
     /// <inheritdoc />

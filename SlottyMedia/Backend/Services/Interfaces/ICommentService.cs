@@ -1,5 +1,4 @@
-﻿using SlottyMedia.Backend.Dtos;
-using SlottyMedia.Database.Daos;
+﻿using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 
 namespace SlottyMedia.Backend.Services.Interfaces;

@@ -8,7 +8,6 @@ namespace SlottyMedia.Backend.Services.Interfaces;
 public interface ISearchService
 {
     public Task<SearchDto> SearchByUsername(string searchTerm, int page, int pagesize);
-    
-    public Task<SearchDto> SearchByTopic(string searchTerm , int page, int pagesize);
 
+    public Task<SearchDto> SearchByTopic(string searchTerm, int page, int pagesize);
 }

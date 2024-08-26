@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Database.Repository.PostRepo
 
+Repository class for managing posts in the database.
+
 ```csharp
 public class PostRepository : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.PostsDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.PostsDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], IPostRepository
 ```
@@ -22,10 +24,13 @@ public PostRepository(Client client, DaoHelper daoHelper, DatabaseRepositroyHelp
 #### Parameters
 
 `client` Client<br>
+The Supabase client instance.
 
 `daoHelper` [DaoHelper](./slottymedia.database.helper.daohelper.md)<br>
+The data access object helper instance.
 
 `databaseRepositroyHelper` [DatabaseRepositroyHelper](./slottymedia.database.helper.databaserepositroyhelper.md)<br>
+The database repository helper instance.
 
 ## Methods
 

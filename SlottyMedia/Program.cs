@@ -2,7 +2,6 @@ using Blazored.SessionStorage;
 using NLog;
 using NLog.Web;
 using SlottyMedia.Backend.Dtos;
-using SlottyMedia.Backend.Repositories.Impl;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
@@ -11,15 +10,15 @@ using SlottyMedia.Components;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Helper;
-using SlottyMedia.Database.Repository;
 using SlottyMedia.Database.Repository.FollowerUserRelatioRepo;
 using SlottyMedia.Database.Repository.ForumRepo;
 using SlottyMedia.Database.Repository.PostRepo;
+using SlottyMedia.Database.Repository.SearchRepo;
+using SlottyMedia.Database.Repository.UserLikePostRelationRepo;
 using SlottyMedia.Database.Repository.UserRepo;
 using SlottyMedia.DatabaseSeeding;
 using SlottyMedia.LoggingProvider;
 using Supabase;
-using SlottyMedia.Database.Repository.UserLikePostRelationRepo;
 
 
 // Early init of NLog to allow startup and exception logging, before host is built
@@ -49,12 +48,12 @@ try
     // Database
     logger.LogInfo("Adding Database to the container");
     builder.Services.AddSingleton<IDatabaseActions, DatabaseActions>();
-    
+
     //Helpers
     logger.LogInfo("Adding Helpers to the container");
     builder.Services.AddSingleton<DaoHelper>();
     builder.Services.AddSingleton<DatabaseRepositroyHelper>();
-    
+
     // Repositories
     logger.LogInfo("Adding Repositories to the container");
     builder.Services.AddSingleton<IUserRepository, UserRepository>();
@@ -65,7 +64,7 @@ try
     builder.Services.AddSingleton<IUserLikePostRelationRepostitory, UserLikePostRelationRepostitory>();
     builder.Services.AddSingleton<IUserSeachRepository, UserSearchRepository>();
     builder.Services.AddSingleton<IForumSearchRepository, ForumSearchRepository>();
-    
+
 
     // Daos
     logger.LogInfo("Adding Daos to the container");
@@ -107,7 +106,7 @@ try
     builder.Services.AddScoped<IHomePageVm, HomePageVmImpl>();
     builder.Services.AddScoped<IAuthVmImpl, AuthVmImpl>();
     builder.Services.AddScoped<IUserVmImpl, UserVmImpl>();
-    
+
 
     var app = builder.Build();
 

@@ -19,6 +19,9 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     /// </summary>
     private readonly DaoHelper _daoHelper;
 
+    /// <summary>
+    ///     This field is used to access the DatabaseRepositroyHelper class.
+    /// </summary>
     protected readonly DatabaseRepositroyHelper DatabaseRepositroyHelper;
 
     /// <summary>

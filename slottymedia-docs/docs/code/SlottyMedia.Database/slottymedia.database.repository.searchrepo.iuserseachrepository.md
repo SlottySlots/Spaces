@@ -1,6 +1,6 @@
 # IUserSeachRepository
 
-Namespace: SlottyMedia.Database.Repository
+Namespace: SlottyMedia.Database.Repository.SearchRepo
 
 Interface for the User Search Repository.
 
