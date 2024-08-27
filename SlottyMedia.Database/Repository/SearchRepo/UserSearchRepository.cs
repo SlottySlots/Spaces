@@ -30,11 +30,10 @@ public class UserSearchRepository : DatabaseRepository<UserDao>, IUserSeachRepos
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of users.</returns>
     public async Task<List<UserDao>> GetUsersByUserName(string userName, int page, int pageSize)
     {
-        var query = Supabase
-            .From<UserDao>()
+        var query = BaseQuerry
             .Select(x => new object[] { x.UserId!, x.UserName! })
-            .Filter("userName", Constants.Operator.ILike, $"%{userName}%")
-            .Range((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
-        return await ExecuteQuery(query);
+            .Filter("userName", Constants.Operator.ILike, $"%{userName}%");
+
+        return await ExecuteQuery(ApplyPagination(query, page, pageSize));
     }
 }

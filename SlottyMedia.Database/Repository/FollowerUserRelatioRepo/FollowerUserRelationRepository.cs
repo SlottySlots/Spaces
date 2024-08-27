@@ -32,8 +32,7 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
     {
         try
         {
-            var result = await Supabase
-                .From<FollowerUserRelationDao>()
+            var result = await BaseQuerry
                 .Filter("userIsFollowed", Constants.Operator.Equals, userId.ToString())
                 .Count(Constants.CountType.Exact);
 
@@ -53,8 +52,7 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of follower-user relations.</returns>
     public async Task<List<FollowerUserRelationDao>> GetFriends(Guid userId)
     {
-        var querry = Supabase
-            .From<FollowerUserRelationDao>()
+        var querry = BaseQuerry
             .Filter("followerUserID", Constants.Operator.Equals, userId.ToString())
             .Select(x => new object[] { x.FollowedUserId! });
 

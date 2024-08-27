@@ -1,6 +1,7 @@
 ﻿using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Helper;
 using Supabase.Postgrest;
+using Supabase.Postgrest.Interfaces;
 using Client = Supabase.Client;
 
 namespace SlottyMedia.Database.Repository.PostRepo;
@@ -37,56 +38,44 @@ public class PostRepository : DatabaseRepository<PostsDao>, IPostRepository
             return 0;
         }
     }
+    
+    private IPostgrestTable<PostsDao> BaseSelectQuery() => BaseQuerry
+        .Select(x => new object[] { x.PostId!, x.Content!, x.CreatedAt, x.UserId!, x.ForumId! })
+        .Order("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last);
 
     /// <inheritdoc />
     public async Task<List<PostsDao>> GetAllElements(int page, int pageSize)
     {
-        var query = Supabase
-            .From<PostsDao>()
-            .Select(x => new object[] { x.PostId!, x.Content!, x.CreatedAt, x.UserId!, x.ForumId! })
-            .Range((page - 1) * pageSize, (page - 1) * pageSize + pageSize - 1)
-            .Order("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last);
+        var query = BaseSelectQuery();
 
-        return await ExecuteQuery(query);
+        return await ExecuteQuery(ApplyPagination(query, page, pageSize));
     }
 
     /// <inheritdoc />
     public async Task<List<PostsDao>> GetPostsByUserId(Guid userId, int page, int pageSize)
     {
-        var query = Supabase
-            .From<PostsDao>()
-            .Select(x => new object[] { x.PostId!, x.Content!, x.CreatedAt, x.UserId!, x.ForumId! })
-            .Filter("user_id", Constants.Operator.Equals, userId)
-            .Range((page - 1) * pageSize, (page - 1) * pageSize + pageSize - 1)
-            .Order("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last);
+        var query = BaseSelectQuery()
+            .Filter("user_id", Constants.Operator.Equals, userId);
 
-        return await ExecuteQuery(query);
+        return await ExecuteQuery(ApplyPagination(query, page, pageSize));
     }
 
     /// <inheritdoc />
     public async Task<List<PostsDao>> GetPostsByUserIdByForumId(Guid userId, Guid forumId, int page, int pageSize)
     {
-        var query = Supabase
-            .From<PostsDao>()
-            .Select(x => new object[] { x.PostId!, x.Content!, x.Forum!, x.CreatedAt })
+        var query = BaseSelectQuery()
             .Filter("creator_userID", Constants.Operator.Equals, userId.ToString())
-            .Filter("associated_forumID", Constants.Operator.Equals, forumId.ToString())
-            .Range((page - 1) * pageSize, (page - 1) * pageSize + pageSize - 1)
-            .Order("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last);
+            .Filter("associated_forumID", Constants.Operator.Equals, forumId.ToString());
 
-        return await ExecuteQuery(query);
+        return await ExecuteQuery(ApplyPagination(query, page, pageSize));
     }
 
     /// <inheritdoc />
     public async Task<List<PostsDao>> GetPostsByForumId(Guid forumId, int page, int pageSize)
     {
-        var posts = Supabase
-            .From<PostsDao>()
-            .Select(x => new object[] { x.PostId!, x.Content!, x.Forum!, x.CreatedAt })
-            .Filter("associated_forumID", Constants.Operator.Equals, forumId.ToString())
-            .Range((page - 1) * pageSize, (page - 1) * pageSize + pageSize - 1)
-            .Order("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last);
+        var query = BaseSelectQuery()
+            .Filter("associated_forumID", Constants.Operator.Equals, forumId.ToString());
 
-        return await ExecuteQuery(posts);
+        return await ExecuteQuery(ApplyPagination(query, page, pageSize));
     }
 }

@@ -3,4 +3,9 @@
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AExecutionContext_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E2_003Fresharper_002Dhost_003FSourcesCache_003F9eda537f15ea23cdfae523c19e87eb303a3ded88937ae7e55919387a43f70_003FExecutionContext_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=90307d93_002Df8be_002D4f49_002Db2d5_002D3a3177ec1f67/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;SlottyMedia.Tests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="C:\Users\manue\Documents\GitHub\SlottyMedia\SlottyMedia.Tests" Presentation="&amp;lt;SlottyMedia.Tests&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=cad599c4_002D36b7_002D4084_002Da0a1_002D65d43e106690/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CommentServiceTests #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::015A1132-F283-4EFD-ACDC-31446D699164::net8.0::SlottyMedia.Tests.ServiceTests.CommentServiceTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

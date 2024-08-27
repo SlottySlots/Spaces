@@ -180,3 +180,23 @@ public Task<object> ExecuteFunction(string nameOfFunction, Dictionary<string, ob
 #### Returns
 
 [Task&lt;Object&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **ApplyPagination(IPostgrestTable&lt;T&gt;, Int32, Int32)**
+
+This method applies pagination to a query.
+
+```csharp
+protected IPostgrestTable<T> ApplyPagination(IPostgrestTable<T> query, int page, int pageSize)
+```
+
+#### Parameters
+
+`query` IPostgrestTable&lt;T&gt;<br>
+
+`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+#### Returns
+
+IPostgrestTable&lt;T&gt;<br>

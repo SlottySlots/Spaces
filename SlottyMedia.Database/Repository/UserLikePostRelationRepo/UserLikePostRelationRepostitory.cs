@@ -33,8 +33,7 @@ public class UserLikePostRelationRepostitory : DatabaseRepository<UserLikePostRe
     /// </returns>
     public async Task<List<UserLikePostRelationDao>> GetLikesForPost(Guid userId, Guid postId)
     {
-        var likes = Supabase
-            .From<UserLikePostRelationDao>()
+        var likes = BaseQuerry
             .Filter("PostId", Constants.Operator.Equals, postId.ToString())
             .Select(x => new object[] { x.UserId! });
         return

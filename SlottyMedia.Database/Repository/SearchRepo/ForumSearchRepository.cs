@@ -30,11 +30,10 @@ public class ForumSearchRepository : DatabaseRepository<ForumDao>, IForumSearchR
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of forums.</returns>
     public async Task<List<ForumDao>> GetForumsByTopic(string topic, int page, int pageSize)
     {
-        var query = Supabase
-            .From<ForumDao>()
+        var query = BaseQuerry
             .Select(x => new object[] { x.ForumTopic! })
-            .Filter("forumTopic", Constants.Operator.ILike, $"%{topic}%")
-            .Range((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
-        return await ExecuteQuery(query);
+            .Filter("forumTopic", Constants.Operator.ILike, $"%{topic}%");
+        
+        return await ExecuteQuery(ApplyPagination(query, page, pageSize));
     }
 }

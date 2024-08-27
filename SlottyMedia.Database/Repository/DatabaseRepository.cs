@@ -29,6 +29,8 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     /// </summary>
     protected readonly Client Supabase;
 
+    protected readonly IPostgrestTable<T> BaseQuerry;
+
 
     /// <summary>
     ///     The default constructor.
@@ -42,6 +44,7 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         Supabase = supabase;
         _daoHelper = daoHelper;
         DatabaseRepositroyHelper = databaseRepositroyHelper;
+        BaseQuerry = Supabase.From<T>();
     }
 
     /// <summary>
@@ -205,5 +208,18 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
             DatabaseRepositroyHelper.HandleException(e, "executing function");
             return null;
         }
+    }
+    
+    /// <summary>
+    /// This method applies pagination to a query.
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="page"></param>
+    /// <param name="pageSize"></param>
+    protected IPostgrestTable<T> ApplyPagination(IPostgrestTable<T> query, int page, int pageSize)
+    {
+        int start = (page - 1) * pageSize;
+        int end = start + pageSize;
+     return   query.Range(start, end);
     }
 }
