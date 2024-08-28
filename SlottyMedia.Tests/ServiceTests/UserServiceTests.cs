@@ -9,7 +9,6 @@ using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Repository.FollowerUserRelatioRepo;
 using SlottyMedia.Database.Repository.UserRepo;
-using SlottyMedia.Tests.DatabaseTests;
 
 namespace SlottyMedia.Tests.ServiceTests;
 
