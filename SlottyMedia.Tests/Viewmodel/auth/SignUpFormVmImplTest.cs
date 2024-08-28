@@ -24,7 +24,7 @@ public class SignUpFormVmImplTest
         _cookieServiceMock = new Mock<ICookieService>();
         _dbActionsMock = new Mock<IDatabaseActions>();
         var postService = new Mock<IPostService>();
-        _userServiceMock = new Mock<UserService>(_dbActionsMock.Object, postService.Object);
+        _userServiceMock = new Mock<IUserService>();
         _signUpServiceMock = new Mock<SignupServiceImpl>(_client, _userServiceMock.Object, _cookieServiceMock.Object,
             _dbActionsMock.Object);
 
@@ -45,7 +45,7 @@ public class SignUpFormVmImplTest
 
     private SignupFormVmImpl _service;
     private Client _client;
-    private Mock<UserService> _userServiceMock;
+    private Mock<IUserService> _userServiceMock;
     private Mock<IDatabaseActions> _dbActionsMock;
     private Mock<ICookieService> _cookieServiceMock;
     private Mock<SignupServiceImpl> _signUpServiceMock;

@@ -18,21 +18,15 @@ public class MainLayoutVmImpl : IMainLayoutVm
     private readonly IAuthService _authService;
 
     /// <summary>
-    ///     DatabaseActions used to perform crud operations such as updating the description
-    /// </summary>
-    private readonly IDatabaseActions _databaseActions;
-
-    /// <summary>
     ///     Logger used to log restores sessions.
     /// </summary>
     private readonly Logging<MainLayoutVmImpl> _logger = new();
 
     private readonly IUserService _userService;
 
-    public MainLayoutVmImpl(IAuthService authService, IDatabaseActions databaseActions, IUserService userService)
+    public MainLayoutVmImpl(IAuthService authService,  IUserService userService)
     {
         _authService = authService;
-        _databaseActions = databaseActions;
         _userService = userService;
     }
 

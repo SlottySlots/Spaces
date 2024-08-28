@@ -25,7 +25,7 @@ public class SignUpServiceTest
         _cookieServiceMock = new Mock<ICookieService>();
         _dbActionMock = new Mock<IDatabaseActions>();
         var postService = new Mock<IPostService>();
-        _userServiceMock = new Mock<UserService>(_dbActionMock.Object, postService.Object);
+        _userServiceMock = new Mock<IUserService>();
         _signupService = new SignupServiceImpl(_client, _userServiceMock.Object, _cookieServiceMock.Object,
             _dbActionMock.Object);
     }
@@ -58,7 +58,7 @@ public class SignUpServiceTest
     private ISignupService _signupService;
     private Client _client;
 
-    private Mock<UserService> _userServiceMock;
+    private Mock<IUserService> _userServiceMock;
     private Mock<IDatabaseActions> _dbActionMock;
     private Mock<ICookieService> _cookieServiceMock;
 
@@ -101,10 +101,10 @@ public class SignUpServiceTest
 
         var user = new UserDao(Guid.NewGuid(), roleDao.RoleId ?? Guid.Empty, _userName, _email, "TestPassword1!");
 
+        _userServiceMock.Setup(userService => userService.CreateUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>()));
+        _userServiceMock.Setup(x => x.CheckIfUserExistsByUserName(It.IsAny<string>())).ReturnsAsync(false);
+        
         _dbActionMock.Setup(dbAction => dbAction.GetEntityByField<RoleDao>("role", "User")).ReturnsAsync(roleDao);
-        _dbActionMock.Setup(dbAction =>
-            dbAction.Insert(It.Is<UserDao>(u => u.UserName == _userName && u.Email == _email))).ReturnsAsync(user);
-
         _session = await _signupService.SignUp(_userName, _email, _password);
         Assert.Multiple(() => { Assert.That(_session.User?.Email, Is.EqualTo(_email)); }
         );

@@ -72,6 +72,7 @@ public class SignupServiceImpl : ISignupService
         if (session == null)
             throw new InvalidOperationException(
                 "An unknown error occured in the Supabase client while attempting to perform a signup.");
+        //TODO: Change this shit
         var userRole = await _databaseActions.GetEntityByField<RoleDao>("role", "User");
         var roleId = userRole.RoleId.HasValue
             ? userRole.RoleId.Value

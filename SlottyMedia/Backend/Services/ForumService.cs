@@ -1,5 +1,6 @@
 ﻿using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.ForumExceptions;
+using SlottyMedia.Backend.Exceptions.Services.LikeExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
@@ -90,17 +91,51 @@ public class ForumService : IForumService
     /// <inheritdoc />
     public async Task<ForumDto> GetForumByName(string forumName)
     {
-        Logger.LogDebug($"Fetching forum with name '{forumName}'...");
-        var dao = await _forumRepository.GetElementById(forumName);
-        return new ForumDto().Mapper(dao);
+        try
+        {
+            Logger.LogDebug($"Fetching forum with name '{forumName}'...");
+            var dao = await _forumRepository.GetElementById(forumName);
+            return new ForumDto().Mapper(dao);
+        }
+        catch (DatabaseMissingItemException ex)
+        {
+            throw new ForumNotFoundException($"No forum found with the name '{forumName}'", ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new ForumGeneralException("An error occurred while fetching the forum.", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new ForumGeneralException("An error occurred while fetching the forum.", ex);
+        }
     }
 
     /// <inheritdoc />
     public async Task<List<ForumDto>> GetForumsByNameContaining(string name, int page, int pageSize = 10)
     {
+        try
+        {
+            Logger.LogDebug($"Fetching all forums containing the substring '{name}' (page {page} with size {pageSize})");
+            var forums = await _searchService.SearchByTopic(name, page, pageSize);
+
+            return forums.Forums;
+        }
+        catch (DatabaseMissingItemException ex)
+        {
+            throw new ForumNotFoundException($"No forums found containing the substring '{name}'", ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new ForumGeneralException($"An error occurred while fetching forums containing the substring '{name}'", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new ForumGeneralException($"An unexpected error occurred while fetching forums containing the substring '{name}'", ex);
+        }
+        
         //TODO use searchservice for this type of stuff
 
-        Logger.LogDebug($"Fetching all forums containing the substring '{name}' (page {page} with size {pageSize})");
         // var query = await _supabase
         //     .From<ForumDao>()
         //     .Filter(dao => dao.ForumTopic!, Constants.Operator.ILike, $"%{name}%")
@@ -110,9 +145,7 @@ public class ForumService : IForumService
         //     .Select(forum => new ForumDto().Mapper(forum))
         //     .ToList();
 
-        var forums = await _searchService.SearchByTopic(name, page, pageSize);
 
-        return forums.Forums;
     }
 
 
@@ -133,17 +166,17 @@ public class ForumService : IForumService
         catch (DatabaseMissingItemException ex)
         {
             Logger.LogError($"No forums found: {ex.Message}");
-            throw new GeneralDatabaseException("No forums found.", ex);
+            throw new ForumNotFoundException("No forums found.", ex);
         }
         catch (GeneralDatabaseException ex)
         {
             Logger.LogError($"A general database error occurred: {ex.Message}");
-            throw;
+            throw new ForumGeneralException("An error occurred while retrieving the forums.", ex);
         }
         catch (Exception ex)
         {
             Logger.LogError($"An unexpected error occurred: {ex.Message}");
-            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the forums.", ex);
+            throw new ForumGeneralException("An unexpected error occurred while retrieving the forums.", ex);
         }
     }
 
@@ -161,7 +194,7 @@ public class ForumService : IForumService
         catch (DatabaseMissingItemException ex)
         {
             Logger.LogError($"No recent forums found: {ex.Message}");
-            throw new GeneralDatabaseException("No recent forums found.", ex);
+            throw new ForumNotFoundException("No recent forums found.", ex);
         }
         catch (GeneralDatabaseException ex)
         {
@@ -171,7 +204,7 @@ public class ForumService : IForumService
         catch (Exception ex)
         {
             Logger.LogError($"An unexpected error occurred: {ex.Message}");
-            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the recent forums.", ex);
+            throw new ForumGeneralException("An unexpected error occurred while retrieving the recent forums.", ex);
         }
     }
 
@@ -189,17 +222,17 @@ public class ForumService : IForumService
         catch (DatabaseMissingItemException ex)
         {
             Logger.LogError($"No top forums found: {ex.Message}");
-            throw new GeneralDatabaseException("No top forums found.", ex);
+            throw new ForumNotFoundException("No top forums found.", ex);
         }
         catch (GeneralDatabaseException ex)
         {
             Logger.LogError($"A general database error occurred: {ex.Message}");
-            throw;
+            throw new ForumGeneralException("An error occurred while retrieving the top forums.", ex);
         }
         catch (Exception ex)
         {
             Logger.LogError($"An unexpected error occurred: {ex.Message}");
-            throw new GeneralDatabaseException("An unexpected error occurred while retrieving the top forums.", ex);
+            throw new ForumGeneralException("An unexpected error occurred while retrieving the top forums.", ex);
         }
     }
 }

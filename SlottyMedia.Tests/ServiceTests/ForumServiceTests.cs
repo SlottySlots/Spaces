@@ -10,6 +10,7 @@ using SlottyMedia.Database.Repository.ForumRepo;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SlottyMedia.Backend.Exceptions.Services.LikeExceptions;
 
 namespace SlottyMedia.Tests.ServiceTests
 {
@@ -125,7 +126,7 @@ namespace SlottyMedia.Tests.ServiceTests
 
             _mockForumRepository.Setup(x => x.GetElementById(forumName)).ThrowsAsync(new DatabaseMissingItemException());
 
-            Assert.ThrowsAsync<ForumGeneralException>(async () => await _forumService.GetForumByName(forumName));
+            Assert.ThrowsAsync<ForumNotFoundException>(async () => await _forumService.GetForumByName(forumName));
         }
 
         [Test]
@@ -153,7 +154,7 @@ namespace SlottyMedia.Tests.ServiceTests
 
             _mockSearchService.Setup(x => x.SearchByTopic(forumName, 1, 10)).ThrowsAsync(new DatabaseMissingItemException());
 
-            Assert.ThrowsAsync<ForumGeneralException>(async () => await _forumService.GetForumsByNameContaining(forumName, 1));
+            Assert.ThrowsAsync<ForumNotFoundException>(async () => await _forumService.GetForumsByNameContaining(forumName, 1));
         }
 
         [Test]
@@ -177,7 +178,7 @@ namespace SlottyMedia.Tests.ServiceTests
         {
             _mockForumRepository.Setup(x => x.GetAllElements()).ThrowsAsync(new DatabaseMissingItemException());
 
-            Assert.ThrowsAsync<ForumGeneralException>(async () => await _forumService.GetForums());
+            Assert.ThrowsAsync<ForumNotFoundException>(async () => await _forumService.GetForums());
         }
 
         [Test]
@@ -201,7 +202,7 @@ namespace SlottyMedia.Tests.ServiceTests
         {
             _mockTopForumRepository.Setup(x => x.DetermineRecentSpaces()).ThrowsAsync(new DatabaseMissingItemException());
 
-            Assert.ThrowsAsync<ForumGeneralException>(async () => await _forumService.DetermineRecentSpaces());
+            Assert.ThrowsAsync<ForumNotFoundException>(async () => await _forumService.DetermineRecentSpaces());
         }
 
         [Test]
@@ -225,7 +226,7 @@ namespace SlottyMedia.Tests.ServiceTests
         {
             _mockTopForumRepository.Setup(x => x.GetTopForums()).ThrowsAsync(new DatabaseMissingItemException());
 
-            Assert.ThrowsAsync<ForumGeneralException>(async () => await _forumService.GetTopForums());
+            Assert.ThrowsAsync<ForumNotFoundException>(async () => await _forumService.GetTopForums());
         }
     }
 }
