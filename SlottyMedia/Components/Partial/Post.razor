@@ -31,7 +31,7 @@
         <div></div>
 
         <!-- actual text -->
-        <div class="col-span-9">
+        <div @onclick="OnPostClick" class="col-span-9">
             @(Dto!.Content)
         </div>
 
@@ -42,7 +42,7 @@
         <div class="col-span-9 flex gap-12 select-none">
 
             <!-- comments -->
-            <div class="flex gap-3 items-center">
+            <div @onclick="OnPostClick" class="flex gap-3 items-center">
 
                 <!-- icon -->
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -92,6 +92,14 @@
     /// </summary>
     [Parameter]
     public Guid CurrentUserId { get; set; }
+    
+    /// <summary>
+    ///     This event is triggered when either the post's text or the post's comment button is clicked.
+    ///     This event will be used to navigate to the post's dedicated page from the home page (i.e. <c>/post/{ID}</c>).
+    ///     On the post's dedicated page this event will not trigger any behaviour.
+    /// </summary>
+    [Parameter]
+    public EventCallback OnPostClick { get; set; }
 
     private bool _isLoading = true;
     private int _likeCount;
