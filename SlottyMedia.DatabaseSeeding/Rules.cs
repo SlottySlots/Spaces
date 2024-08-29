@@ -158,7 +158,7 @@ public class Rules
                 return commentId;
             })
             .RuleFor(c => c.CreatorUserId, f => userIds[f.Random.Int(0, userIds.Count - 1)])
-            .RuleFor(c => c.PostId, f => postIds[f.Random.Int(0, userIds.Count - 1)])
+            .RuleFor(c => c.PostId, f => postIds[f.Random.Int(0, postIds.Count - 1)])
             .RuleFor(c => c.Content, f => f.Lorem.Paragraph())
             .RuleFor(c => c.CreatedAt, f => f.Date.Past());
         return commentFaker;

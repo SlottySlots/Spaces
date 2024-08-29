@@ -92,11 +92,11 @@ public class Seeding
                 Logger.LogInfo("Database already seeded with random post data.");
             }
 
-            if (await CheckIfSeedingIsNeeded<CommentDao>(countUser *6))
+            if (await CheckIfSeedingIsNeeded<CommentDao>(postIds.Count * 6))
             {
                 Logger.LogInfo("Database needs seeding with random comment data.");
                 var commentFaker = rules.CommentRules(userIds, postIds);
-                await GenereateComments(commentFaker, countUser * 6);
+                await GenereateComments(commentFaker, postIds.Count * 6);
             }
             else
             {
