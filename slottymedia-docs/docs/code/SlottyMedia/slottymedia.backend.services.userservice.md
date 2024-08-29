@@ -126,6 +126,22 @@ public Task UpdateUser(UserDto user)
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
+### **UserFollowRelation(Guid, Guid)**
+
+```csharp
+public Task<bool> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn)
+```
+
+#### Parameters
+
+`userIdToCheck` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`userIdLoggedIn` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
 ### **GetProfilePic(Guid)**
 
 ```csharp

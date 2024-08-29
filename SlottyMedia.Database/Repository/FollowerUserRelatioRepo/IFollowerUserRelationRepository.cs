@@ -20,4 +20,15 @@ public interface IFollowerUserRelationRepository : IDatabaseRepository<FollowerU
     /// <param name="userId">The unique identifier of the user.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the list of friends.</returns>
     public Task<List<FollowerUserRelationDao>> GetFriends(Guid userId);
+
+    /// <summary>
+    /// Gets a list of FollowerUserRelationDaos by userId
+    /// </summary>
+    /// <param name="userId">
+    /// UserId to retrieve its follows
+    /// </param>
+    /// <returns>
+    /// List of FollowerUserRelationDaos matching the userid
+    /// </returns>
+    public Task<List<FollowerUserRelationDao>> GetFollowsOfUserById(Guid userId);
 }

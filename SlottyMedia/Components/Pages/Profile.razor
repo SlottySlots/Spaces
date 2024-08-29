@@ -1,0 +1,94 @@
+@page "/profile"
+@using SlottyMedia.Backend.Dtos
+@using SlottyMedia.Backend.Services.Interfaces
+@using SlottyMedia.Backend.ViewModel.Interfaces
+@using Supabase.Gotrue
+@inject NavigationManager NavigationManager
+@inject IProfilePageVm ProfilePageVm
+@inject IAuthService AuthService
+
+<div class="flex border-b border-athens-gray py-4 w-full">
+    <div class="px-4">
+        <Avatar Base64PNG="@UserInformationDto.ProfilePic"></Avatar>
+    </div>
+    
+    <div class="px-4 flex flex-col gap-3">
+        <h1 class="text-3xl font-medium w-1/4">
+            @UserInformationDto.Username
+        </h1> 
+        
+        <p class="text-lg">@UserInformationDto.Description</p>
+        
+        <div class="flex w-1/2">
+            <h3 class="text-sm text-cadet-gray w-full">Friends: @UserInformationDto.FriendsAmount</h3>
+            <h3 class="text-sm text-cadet-gray w-full">Spaces: @UserInformationDto.SpacesAmount</h3>
+            <h3 class="text-sm text-cadet-gray w-full">Joined at: @UserInformationDto.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
+        </div>
+    </div>
+    @if (_followsUserRetrieved != null)
+    {
+        <div class="w-1/4">
+            <HotButton Type="submit" Class="w-full">
+                @if (_followsUserRetrieved == true)
+                {
+                    <p>Unfollow</p>
+                }
+                else
+                {
+                    <p>Follow</p>
+                }
+            </HotButton> 
+            @_followsUserRetrieved
+        </div> 
+    }
+    
+</div>
+
+
+@code{
+    private Guid _profileUserId;
+
+    private Session? _currentSession;
+
+    private bool? _followsUserRetrieved;
+    
+    private bool _invalidIdFlag;
+    
+    public UserInformationDto UserInformationDto { get; set; } = new()
+    {
+        Username = "Username is loading..",
+        Description = "Description is loading..",
+        ProfilePic = null
+    };
+    
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        var uri = new Uri(NavigationManager.Uri);
+        var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        _currentSession = AuthService.GetCurrentSession();
+
+        // Retrieve query parameters
+        if (queryParams["id"] != null)
+        {
+            _profileUserId = Guid.Parse(queryParams["id"]!);
+            _followsUserRetrieved = await ProfilePageVm.UserFollowRelation(_profileUserId, Guid.Parse(_currentSession!.User!.Id!));
+            if (firstRender || UserInformationDto.Username == "Username is loading..")
+            {
+                var userInfo = await ProfilePageVm.GetUserInfo(_profileUserId);
+                if (userInfo != null)
+                {
+                    UserInformationDto.Username = userInfo.Username;
+                    UserInformationDto.Description = userInfo.Description;
+                    UserInformationDto.ProfilePic = userInfo.ProfilePic;
+                    UserInformationDto.FriendsAmount = userInfo.FriendsAmount;
+                    UserInformationDto.SpacesAmount = userInfo.SpacesAmount;
+                    StateHasChanged();
+                }
+            }
+        }
+        else
+        {
+            _invalidIdFlag = true;
+        }
+    }
+}

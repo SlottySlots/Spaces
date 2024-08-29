@@ -58,4 +58,12 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
 
         return await ExecuteQuery(querry);
     }
+
+    public async Task<List<FollowerUserRelationDao>> GetFollowsOfUserById(Guid userId)
+    {
+        var listOfFollowerDao = BaseQuerry
+            .Filter("userIsFollowing", Constants.Operator.Equals, userId.ToString());
+
+        return await ExecuteQuery(listOfFollowerDao);
+    }
 }

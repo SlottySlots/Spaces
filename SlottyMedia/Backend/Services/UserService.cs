@@ -189,6 +189,21 @@ public class UserService : IUserService
         }
     }
 
+    public async Task<bool> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn)
+    {
+        var listOfFollowsOfUser = await _followerUserRelationRepository.GetFollowsOfUserById(userIdLoggedIn);
+        var userFollowed = await _userRepository.GetElementByField("userID", userIdToCheck.ToString());
+        foreach (var relationDao in listOfFollowsOfUser)
+        {
+            if (relationDao.FollowedUser == userFollowed)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /// <inheritdoc />
     public async Task<ProfilePicDto> GetProfilePic(Guid userId)
     {

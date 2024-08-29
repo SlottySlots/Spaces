@@ -231,7 +231,30 @@ The UserDto object to be updated.
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 A task that represents the asynchronous operation. The task result contains the updated UserDto object.
 
+### **UserFollowRelation(Guid, Guid)**
+
+Checks whether a user follows another user based on their ids
+
+```csharp
+Task<bool> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn)
+```
+
+#### Parameters
+
+`userIdToCheck` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+UserId to check
+
+`userIdLoggedIn` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+UserId that may follow the one to check
+
+#### Returns
+
+[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Boolean representing the state
+
 ### **GetUserDaoById(Guid)**
+
+Gets a user dao based on the user id
 
 ```csharp
 Task<UserDao> GetUserDaoById(Guid userId)
@@ -240,7 +263,9 @@ Task<UserDao> GetUserDaoById(Guid userId)
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+Id to retrieve
 
 #### Returns
 
 [Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns a user dao

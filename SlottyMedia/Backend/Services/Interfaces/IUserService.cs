@@ -99,6 +99,29 @@ public interface IUserService
     /// <param name="user">The UserDto object to be updated.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the updated UserDto object.</returns>
     public Task UpdateUser(UserDto user);
+    
+    /// <summary>
+    /// Checks whether a user follows another user based on their ids
+    /// </summary>
+    /// <param name="userIdToCheck">
+    /// UserId to check
+    /// </param>
+    /// <param name="userIdLoggedIn">
+    /// UserId that may follow the one to check
+    /// </param>
+    /// <returns>
+    /// Boolean representing the state
+    /// </returns>
+    public Task<bool> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn);
 
+    /// <summary>
+    /// Gets a user dao based on the user id
+    /// </summary>
+    /// <param name="userId">
+    /// Id to retrieve
+    /// </param>
+    /// <returns>
+    /// Returns a user dao
+    /// </returns>
     public Task<UserDao> GetUserDaoById(Guid userId);
 }
