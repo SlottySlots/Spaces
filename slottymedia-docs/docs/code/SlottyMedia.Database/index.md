@@ -76,6 +76,12 @@
 
 [PostRepository](./slottymedia.database.repository.postrepo.postrepository.md)
 
+## SlottyMedia.Database.Repository.RoleRepo
+
+[IRoleRepository](./slottymedia.database.repository.rolerepo.irolerepository.md)
+
+[RoleRepository](./slottymedia.database.repository.rolerepo.rolerepository.md)
+
 ## SlottyMedia.Database.Repository.SearchRepo
 
 [ForumSearchRepository](./slottymedia.database.repository.searchrepo.forumsearchrepository.md)

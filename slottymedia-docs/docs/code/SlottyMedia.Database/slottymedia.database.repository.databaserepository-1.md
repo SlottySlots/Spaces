@@ -92,7 +92,7 @@ Task&lt;List&lt;T&gt;&gt;<br>
 ### **AddElement(T)**
 
 ```csharp
-public Task AddElement(T entity)
+public Task<T> AddElement(T entity)
 ```
 
 #### Parameters
@@ -101,7 +101,7 @@ public Task AddElement(T entity)
 
 #### Returns
 
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+Task&lt;T&gt;<br>
 
 ### **UpdateElement(T)**
 

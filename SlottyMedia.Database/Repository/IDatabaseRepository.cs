@@ -35,7 +35,7 @@ public interface IDatabaseRepository<T> where T : BaseModel, new()
     /// <returns>A task that represents the asynchronous operation. The task result contains the created entity.</returns>
     /// <exception cref="DatabaseIudActionException">Thrown when an error occurs while inserting the entity.</exception>
     /// <exception cref="Exception">Thrown when an unexpected error occurs.</exception>
-    public Task AddElement(T element);
+    public Task<T> AddElement(T element);
 
     /// <summary>
     ///     Updates an existing element.

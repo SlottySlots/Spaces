@@ -117,7 +117,9 @@ try
         {
             logger.LogInfo("Starting to seed the database");
             var seeder = scope.ServiceProvider.GetRequiredService<Client>();
-            Seeding seeding = new(seeder);
+            var daoHelper = scope.ServiceProvider.GetRequiredService<DaoHelper>();
+            var databaseRepositroyHelper = scope.ServiceProvider.GetRequiredService<DatabaseRepositroyHelper>();
+            Seeding seeding = new(seeder, daoHelper, databaseRepositroyHelper);
             await seeding.Seed();
         }
         catch (Exception e)

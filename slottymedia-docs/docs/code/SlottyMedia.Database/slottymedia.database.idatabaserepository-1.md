@@ -67,7 +67,7 @@ Thrown when an unexpected error occurs.
 Creates a new element.
 
 ```csharp
-Task AddElement(T element)
+Task<T> AddElement(T element)
 ```
 
 #### Parameters
@@ -77,7 +77,7 @@ The entity to create.
 
 #### Returns
 
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+Task&lt;T&gt;<br>
 A task that represents the asynchronous operation. The task result contains the created entity.
 
 #### Exceptions

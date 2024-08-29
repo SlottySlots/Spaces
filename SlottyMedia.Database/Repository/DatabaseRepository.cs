@@ -105,17 +105,19 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     }
 
     /// <inheritdoc />
-    public virtual async Task AddElement(T entity)
+    public virtual async Task<T> AddElement(T entity)
     {
         try
         {
             var result = await Supabase.From<T>().Insert(entity);
             if (!result.ResponseMessage!.IsSuccessStatusCode)
                 throw new DatabaseIudActionException("An error occurred while inserting the entity.");
+            return result.Model!;
         }
         catch (Exception e)
         {
             DatabaseRepositroyHelper.HandleException(e, "inserting");
+            return null;
         }
     }
 
