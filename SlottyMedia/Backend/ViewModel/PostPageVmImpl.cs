@@ -32,7 +32,7 @@ public class PostPageVmImpl : IPostPageVm
     public PostDto? Post { get; private set; }
 
     /// <inheritdoc />
-    public List<CommentDto> Comments { get; } = [];
+    public List<CommentDto> Comments { get; private set; } = [];
     
     /// <inheritdoc />
     public async Task LoadPage(Guid postId)
@@ -40,6 +40,7 @@ public class PostPageVmImpl : IPostPageVm
         _logger.LogInfo($"Loading page for post wih ID {postId}");
         IsLoadingPage = true;
         _currentCommentPage = 0;
+        Comments = [];
         Post = await _postService.GetPostById(postId);
         if (Post is null)
             _logger.LogWarn($"Attempting to load page for a nonexistent post ID: {postId}");
