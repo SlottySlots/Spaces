@@ -31,6 +31,12 @@ public interface IPostService
     /// <param name="pageSize">The number of posts per page (default is 10)</param>
     /// <returns></returns>
     public Task<List<PostDto>> GetAllPosts(int page, int pageSize = 10);
+    
+    /// <summary>
+    ///     Counts all existing posts.
+    /// </summary>
+    /// <returns>The total number of existing posts</returns>
+    public Task<int> CountAllPosts();
 
     /// <summary>
     ///     Attempts to fetch a post by ID. Returns null if such a post could not be found.
