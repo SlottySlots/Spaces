@@ -48,6 +48,14 @@ public class PostRepository : DatabaseRepository<PostsDao>, IPostRepository
     }
 
     /// <inheritdoc />
+    public async Task<int> CountAllPosts()
+    {
+        return await Supabase
+            .From<PostsDao>()
+            .Count(Constants.CountType.Exact);
+    }
+
+    /// <inheritdoc />
     public async Task<List<PostsDao>> GetPostsByUserId(Guid userId, int page, int pageSize)
     {
         var query = BaseSelectQuery()

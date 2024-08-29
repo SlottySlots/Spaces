@@ -23,6 +23,12 @@ public interface IPostRepository : IDatabaseRepository<PostsDao>
     public Task<List<PostsDao>> GetAllElements(int page, int pageSize);
 
     /// <summary>
+    ///     Counts all existing posts.
+    /// </summary>
+    /// <returns>The total number of existing posts</returns>
+    public Task<int> CountAllPosts();
+
+    /// <summary>
     ///     Gets posts by a specific user with pagination.
     /// </summary>
     /// <param name="userId">The unique identifier of the user.</param>
