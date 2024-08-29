@@ -119,7 +119,7 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
         }
 
         // if no errors occurred: redirect to index page
-        _navigationManager.NavigateTo("/");
+        _navigationManager.NavigateTo("/", true);
     }
 
     private void _resetErrorMessages()
