@@ -1,7 +1,9 @@
 ﻿using Bogus;
+using Microsoft.Extensions.Logging;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Helper;
+using SlottyMedia.Database.Repository;
 using SlottyMedia.Database.Repository.CommentRepo;
 using SlottyMedia.Database.Repository.FollowerUserRelatioRepo;
 using SlottyMedia.Database.Repository.ForumRepo;
@@ -11,6 +13,7 @@ using SlottyMedia.Database.Repository.UserLikePostRelationRepo;
 using SlottyMedia.Database.Repository.UserRepo;
 using SlottyMedia.LoggingProvider;
 using Supabase;
+using Supabase.Postgrest.Models;
 
 namespace SlottyMedia.DatabaseSeeding;
 
@@ -45,50 +48,117 @@ public class Seeding
         Login login = new();
         await login.LoginUser(_client);
 
-        if (await CheckIfSeedingIsNeeded())
-        {
             await CheckIfRoleExisits();
-            Logger.LogDebug("Seeding is Needed.");
 
             var countUser = 20;
             var rules = new Rules();
+            
+            var userIds = new List<Guid>();
 
-            var userFaker = rules.UserRules();
-            var userIds = await GenerateUsers(userFaker, countUser);
+            if (await CheckIfSeedingIsNeeded<UserDao>(countUser))
+            {
+                Logger.LogInfo("Database needs seeding with random user data.");
+                var userFaker = rules.UserRules();
+                userIds = await GenerateUsers(userFaker, countUser);
+            }
+            else
+            {
+                Logger.LogInfo("Database already seeded with random user data.");
+            }
 
-            var forumFaker = rules.ForumRules(userIds);
-            var forumIds = await GenerateForums(forumFaker, countUser * 2);
+            var forumIds = new List<Guid>();
+            
+            if (await CheckIfSeedingIsNeeded<ForumDao>(countUser * 2))
+            {
+                Logger.LogInfo("Database needs seeding with random forum data.");
+                var forumFaker = rules.ForumRules(userIds);
+                forumIds = await GenerateForums(forumFaker, countUser * 2);   
+            }
+            else
+            {
+                Logger.LogInfo("Database already seeded with random forum data.");
+            }
 
-            var postFaker = rules.PostRules(userIds, forumIds);
-            var postIds = await GeneratePosts(postFaker, countUser * 4);
+            
+            var postIds = new List<Guid>();
+            if (await CheckIfSeedingIsNeeded<PostsDao>(countUser * 4))
+            {
+                Logger.LogInfo("Database needs seeding with random post data.");
+                var postFaker = rules.PostRules(userIds, forumIds);
+                postIds = await GeneratePosts(postFaker, countUser * 4);
+            }
+            else
+            {
+                Logger.LogInfo("Database already seeded with random post data.");
+            }
 
-            var commentFaker = rules.CommentRules(userIds, postIds);
-            await GenereateComments(commentFaker, countUser * 6);
+            if (await CheckIfSeedingIsNeeded<CommentDao>(countUser *6))
+            {
+                Logger.LogInfo("Database needs seeding with random comment data.");
+                var commentFaker = rules.CommentRules(userIds, postIds);
+                await GenereateComments(commentFaker, countUser * 6);
+            }
+            else
+            {
+                Logger.LogInfo("Database already seeded with random comment data.");
+            }
 
-            var followerUserRelationFaker = rules.FollowerUserRelationRules(userIds);
-            await GenerateFollowerUserRelation(followerUserRelationFaker, userIds.Count * (userIds.Count - 1));
+            if (await CheckIfSeedingIsNeeded<FollowerUserRelationDao>(userIds.Count * (userIds.Count - 1)))
+            {
+                Logger.LogInfo("Database needs seeding with random follower user relation data.");
+                var followerUserRelationFaker = rules.FollowerUserRelationRules(userIds);
+                await GenerateFollowerUserRelation(followerUserRelationFaker, userIds.Count * (userIds.Count - 1));   
+            }
+            else
+            {
+                Logger.LogInfo("Database already seeded with random follower user relation data.");
+            }
 
-            var userLikePostRelationFaker = rules.UserLikePostRelationRules(userIds, postIds);
-            await GenerateUserLikePostRelation(userLikePostRelationFaker, userIds.Count * postIds.Count / 2);
 
-            Logger.LogDebug("Database seeded with random data.");
-        }
-        else
-        {
-            Logger.LogDebug("Seeding is not needed.");
-        }
+            if (await CheckIfSeedingIsNeeded<UserLikePostRelationDao>(userIds.Count * postIds.Count / 2))
+            {
+                Logger.LogInfo("Database needs seeding with random user like post relation data.");
+                var userLikePostRelationFaker = rules.UserLikePostRelationRules(userIds, postIds);
+                await GenerateUserLikePostRelation(userLikePostRelationFaker, userIds.Count * postIds.Count / 2);
+            }
+            else
+            {
+                Logger.LogInfo("Database already seeded with random user like post relation data.");
+            }
 
         await login.LogoutUser(_client);
     }
 
-    private async Task<bool> CheckIfSeedingIsNeeded()
+    private DatabaseRepository<T> GetDatabaseRepository<T>() where T : BaseModel, new()
     {
-        var userRepository = new UserRepository(_client, _daoHelper, _databaseRepositroyHelper);
+        switch (typeof(T))
+        {
+            case Type t when t == typeof(UserDao):
+                return new UserRepository(_client, _daoHelper, _databaseRepositroyHelper) as DatabaseRepository<T>;
+            case Type t when t == typeof(ForumDao):
+                return new ForumRepository(_client, _daoHelper, _databaseRepositroyHelper) as DatabaseRepository<T>;
+            case Type t when t == typeof(PostsDao):
+                return new PostRepository(_client, _daoHelper, _databaseRepositroyHelper) as DatabaseRepository<T>;
+            case Type t when t == typeof(CommentDao):
+                return new CommentRepository(_client, _daoHelper, _databaseRepositroyHelper) as DatabaseRepository<T>;
+            case Type t when t == typeof(FollowerUserRelationDao):
+                return new FollowerUserRelationRepository(_client, _daoHelper, _databaseRepositroyHelper) as DatabaseRepository<T>;
+            case Type t when t == typeof(UserLikePostRelationDao):
+                return new UserLikePostRelationRepostitory(_client, _daoHelper, _databaseRepositroyHelper) as DatabaseRepository<T>;
+            default:
+                return null;
+            
+        }
+    }
+    
+    private async Task<bool> CheckIfSeedingIsNeeded<T>(int amount) where T : BaseModel, new()
+    {
+        var repository = GetDatabaseRepository<T>();
         try
         {
             Logger.LogInfo("Checking if seeding is needed.");
-            var result = await userRepository.GetAllElements();
-            if (result.Count < 10)
+            var result = await repository.GetAllElements();
+            if (result.Count < amount)
                 return true;
             return false;
         }
