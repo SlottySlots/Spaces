@@ -107,6 +107,25 @@ public class CommentService : ICommentService
     }
 
     /// <inheritdoc />
+    public async Task<int> CountCommentsInPost(Guid postId)
+    {
+        try
+        {
+            return await _commentRepository.CountCommentsInPost(postId);
+        }
+        catch (DatabaseIudActionException ex)
+        {
+            // Handle specific database insert/update/delete action exceptions.
+            throw new CommentIudException($"An error occurred while counting comments in post with ID '{postId.ToString()}': {ex.Message}", ex);
+        }
+        catch (Exception ex)
+        {
+            // Handle any other exceptions.
+            throw new CommentGeneralException($"An error occurred while counting comments in post with ID '{postId.ToString()}': {ex.Message}", ex);
+        }
+    }
+
+    /// <inheritdoc />
     public async Task<List<CommentDto>> GetCommentsInPost(Guid postId, int page, int pageSize = 10)
     {
         try
