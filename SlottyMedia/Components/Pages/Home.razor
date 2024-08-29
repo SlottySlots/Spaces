@@ -1,19 +1,24 @@
 ﻿@page "/"
+@using SlottyMedia.Backend.Services.Interfaces
 @using SlottyMedia.Backend.ViewModel.Interfaces
 @inject IHomePageVm ViewModel
+@inject IAuthService AuthService
 
 
 <PageTitle>Slotty Media | Home</PageTitle>
 
 @foreach (var post in ViewModel!.Posts)
 {
-    <Post Dto="post"/>
+    <Post Dto="post" CurrentUserId=@_currentUserId/>
 }
 
 @code
 {
+    private Guid _currentUserId;
     protected override async Task OnInitializedAsync()
     {
+        var _currentSession = AuthService.GetCurrentSession();
+        _currentUserId = Guid.Parse(_currentSession!.User!.Id!);
         await ViewModel.FetchPosts();
     }
 }

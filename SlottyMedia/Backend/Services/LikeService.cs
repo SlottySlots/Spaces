@@ -58,7 +58,7 @@ public class LikeService : ILikeService
     {
         try
         {
-            var like = new UserLikePostRelationDao(userId, postId);
+            var like = await _likeRepository.GetLikeByUserIdAndPostId(userId, postId);
             await _likeRepository.DeleteElement(like);
             return true;
         }
