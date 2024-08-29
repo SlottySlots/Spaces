@@ -51,6 +51,19 @@ The size of the page.
 [Task&lt;List&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of elements.
 
+### **CountAllPosts()**
+
+Counts all existing posts.
+
+```csharp
+Task<int> CountAllPosts()
+```
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+The total number of existing posts
+
 ### **GetPostsByUserId(Guid, Int32, Int32)**
 
 Gets posts by a specific user with pagination.

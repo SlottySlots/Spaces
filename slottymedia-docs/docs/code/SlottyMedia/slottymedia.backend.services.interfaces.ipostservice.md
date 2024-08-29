@@ -67,6 +67,19 @@ The number of posts per page (default is 10)
 
 [Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
+### **CountAllPosts()**
+
+Counts all existing posts.
+
+```csharp
+Task<int> CountAllPosts()
+```
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+The total number of existing posts
+
 ### **GetPostById(Guid)**
 
 Attempts to fetch a post by ID. Returns null if such a post could not be found.

@@ -34,6 +34,20 @@ The database repository helper instance.
 
 ## Methods
 
+### **CountCommentsInPost(Guid)**
+
+```csharp
+public Task<int> CountCommentsInPost(Guid postId)
+```
+
+#### Parameters
+
+`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
 ### **GetCommentsInPost(Guid, Int32, Int32)**
 
 ```csharp

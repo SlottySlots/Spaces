@@ -44,12 +44,22 @@ public PostDto Post { get; private set; }
 ### **Comments**
 
 ```csharp
-public List<CommentDto> Comments { get; }
+public List<CommentDto> Comments { get; private set; }
 ```
 
 #### Property Value
 
 [List&lt;CommentDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
+
+### **TotalNumberOfComments**
+
+```csharp
+public int TotalNumberOfComments { get; private set; }
+```
+
+#### Property Value
+
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ## Constructors
 
