@@ -3,6 +3,7 @@
 
 @inject IUserService UserService;
 @inject ILikeService LikeService;
+@inject ICommentService CommentService;
 
 @if (!_isLoading)
 {
@@ -42,7 +43,7 @@
         <div class="col-span-9 flex gap-12 select-none">
 
             <!-- comments -->
-            <div @onclick="OnPostClick" class="flex gap-3 items-center">
+            <div @onclick="OnPostClick" class="flex gap-3 items-center cursor-pointer">
 
                 <!-- icon -->
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,7 +54,7 @@
 
                 <!-- number of comments -->
                 <span class="text-cadet-gray">
-                    7.4K
+                    @_commentCount
                 </span>
 
             </div>
@@ -102,6 +103,7 @@
     public EventCallback OnPostClick { get; set; }
 
     private bool _isLoading = true;
+    private int _commentCount;
     private int _likeCount;
     private bool _initLiked;
     
@@ -114,6 +116,7 @@
         //TODO: This should be changed soon!
         await SetLikeCountState(); 
         _owner = await UserService.GetUserDtoById(Dto!.UserId);
+        _commentCount = await CommentService.CountCommentsInPost(Dto.PostId);
         _isLoading = false;
     }
 
