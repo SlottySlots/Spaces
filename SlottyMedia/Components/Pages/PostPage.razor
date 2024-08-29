@@ -1,0 +1,40 @@
+@page "/post/{PostId:guid}"
+@using SlottyMedia.Backend.ViewModel.Interfaces
+
+@inject IPostPageVm ViewModel
+
+
+<PageTitle>Slotty Media | Post</PageTitle>
+
+
+@if (ViewModel.IsLoadingPage)
+{
+    <span>loading...</span>
+}
+else if (ViewModel.Post is null)
+{
+    <span>post not found...</span>
+}
+else
+{
+    <Post Dto="ViewModel.Post"/>
+    <div class="w-full p-5 flex flex-col gap-3">
+        @foreach (var comment in ViewModel.Comments)
+        {
+            <Comment Dto="comment"/>
+        }
+    </div>
+}
+
+
+@code {
+    [Parameter]
+    public Guid? PostId { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (PostId is not null)
+            await ViewModel.LoadPage(PostId.Value);
+    }
+
+}
