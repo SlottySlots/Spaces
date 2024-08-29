@@ -36,6 +36,7 @@ public class CommentRepository : DatabaseRepository<CommentDao>, ICommentReposit
         var query = await Supabase
             .From<CommentDao>()
             .Filter(comment => comment.PostId!, Constants.Operator.Equals, postId.ToString())
+            .Order(comment => comment.CreatedAt, Constants.Ordering.Descending)
             .Range((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
             .Get();
         return query.Models;
