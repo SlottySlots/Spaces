@@ -1,4 +1,5 @@
-﻿using SlottyMedia.Database.Daos;
+﻿using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 
 namespace SlottyMedia.Backend.Services.Interfaces;
@@ -33,4 +34,14 @@ public interface ICommentService
     /// <returns>Returns a Task representing the asynchronous operation.</returns>
     /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while deleting the comment.</exception>
     Task DeleteComment(CommentDao comment);
+
+    /// <summary>
+    ///     Fetches all comments in the given post. Utilizes pagination in order to limit
+    ///     the total number of queried posts: Only posts on the given page will be fetched.
+    /// </summary>
+    /// <param name="postId">The post whose comments should be fetched</param>
+    /// <param name="page">The page to fetch (one-based)</param>
+    /// <param name="pageSize">The size of each page (default is 10)</param>
+    /// <returns>A list containing the queried posts</returns>
+    Task<List<CommentDto>> GetCommentsInPost(Guid postId, int page, int pageSize = 10);
 }
