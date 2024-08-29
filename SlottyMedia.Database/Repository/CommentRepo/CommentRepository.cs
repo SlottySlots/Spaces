@@ -22,6 +22,15 @@ public class CommentRepository : DatabaseRepository<CommentDao>, ICommentReposit
     }
 
     /// <inheritdoc />
+    public async Task<int> CountCommentsInPost(Guid postId)
+    {
+        return await Supabase
+            .From<CommentDao>()
+            .Filter(comment => comment.PostId!, Constants.Operator.Equals, postId.ToString())
+            .Count(Constants.CountType.Exact);
+    }
+
+    /// <inheritdoc />
     public async Task<List<CommentDao>> GetCommentsInPost(Guid postId, int page, int pageSize = 10)
     {
         var query = await Supabase
