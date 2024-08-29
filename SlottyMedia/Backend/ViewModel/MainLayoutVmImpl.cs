@@ -1,7 +1,6 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
-using SlottyMedia.Database;
 using SlottyMedia.LoggingProvider;
 using Supabase.Gotrue;
 
@@ -24,7 +23,7 @@ public class MainLayoutVmImpl : IMainLayoutVm
 
     private readonly IUserService _userService;
 
-    public MainLayoutVmImpl(IAuthService authService,  IUserService userService)
+    public MainLayoutVmImpl(IAuthService authService, IUserService userService)
     {
         _authService = authService;
         _userService = userService;

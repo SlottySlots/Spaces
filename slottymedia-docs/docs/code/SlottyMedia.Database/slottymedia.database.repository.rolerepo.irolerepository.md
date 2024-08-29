@@ -30,24 +30,6 @@ The name of the role.
 [Task&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains the role ID.
 
-### **AddElement(RoleDao)**
-
-Adds a new RoleDao element to the repository.
-
-```csharp
-Task<RoleDao> AddElement(RoleDao element)
-```
-
-#### Parameters
-
-`element` [RoleDao](./slottymedia.database.daos.roledao.md)<br>
-The RoleDao element to add.
-
-#### Returns
-
-[Task&lt;RoleDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains the added RoleDao element.
-
 ### **UpdateElement(RoleDao)**
 
 Updates an existing RoleDao element in the repository.

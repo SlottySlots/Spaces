@@ -38,6 +38,8 @@ public void TearDown()
 
 ### **InsertPost_ShouldReturnTrue_WhenPostIsInsertedSuccessfully()**
 
+Tests that InsertPost returns true when a post is inserted successfully.
+
 ```csharp
 public Task InsertPost_ShouldReturnTrue_WhenPostIsInsertedSuccessfully()
 ```
@@ -48,17 +50,23 @@ public Task InsertPost_ShouldReturnTrue_WhenPostIsInsertedSuccessfully()
 
 ### **InsertPost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()**
 
+Tests that InsertPost throws PostIudException when DatabaseIudActionException is thrown.
+
 ```csharp
 public void InsertPost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()
 ```
 
 ### **InsertPost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
 
+Tests that InsertPost throws PostGeneralException when GeneralDatabaseException is thrown.
+
 ```csharp
 public void InsertPost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
 ```
 
 ### **DeletePost_ShouldReturnTrue_WhenPostIsDeletedSuccessfully()**
+
+Tests that DeletePost returns true when a post is deleted successfully.
 
 ```csharp
 public Task DeletePost_ShouldReturnTrue_WhenPostIsDeletedSuccessfully()
@@ -70,17 +78,23 @@ public Task DeletePost_ShouldReturnTrue_WhenPostIsDeletedSuccessfully()
 
 ### **DeletePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()**
 
+Tests that DeletePost throws PostIudException when DatabaseIudActionException is thrown.
+
 ```csharp
 public void DeletePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()
 ```
 
 ### **DeletePost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
 
+Tests that DeletePost throws PostGeneralException when GeneralDatabaseException is thrown.
+
 ```csharp
 public void DeletePost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
 ```
 
 ### **GetPostsForUser_ShouldReturnPosts_WhenPostsAreFound()**
+
+Tests that GetPostsForUser returns posts when posts are found.
 
 ```csharp
 public Task GetPostsForUser_ShouldReturnPosts_WhenPostsAreFound()
@@ -92,11 +106,15 @@ public Task GetPostsForUser_ShouldReturnPosts_WhenPostsAreFound()
 
 ### **GetPostsForUser_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()**
 
+Tests that GetPostsForUser throws PostNotFoundException when DatabaseMissingItemException is thrown.
+
 ```csharp
 public void GetPostsForUser_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
 ```
 
 ### **GetPostsForUser_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
+
+Tests that GetPostsForUser throws PostGeneralException when GeneralDatabaseException is thrown.
 
 ```csharp
 public void GetPostsForUser_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()

@@ -19,6 +19,8 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     /// </summary>
     private readonly DaoHelper _daoHelper;
 
+    protected readonly IPostgrestTable<T> BaseQuerry;
+
     /// <summary>
     ///     This field is used to access the DatabaseRepositroyHelper class.
     /// </summary>
@@ -28,8 +30,6 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     ///     This field is used to access the Supabase client.
     /// </summary>
     protected readonly Client Supabase;
-
-    protected readonly IPostgrestTable<T> BaseQuerry;
 
 
     /// <summary>
@@ -211,17 +211,17 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
             return null;
         }
     }
-    
+
     /// <summary>
-    /// This method applies pagination to a query.
+    ///     This method applies pagination to a query.
     /// </summary>
     /// <param name="query"></param>
     /// <param name="page"></param>
     /// <param name="pageSize"></param>
     protected IPostgrestTable<T> ApplyPagination(IPostgrestTable<T> query, int page, int pageSize)
     {
-        int start = (page - 1) * pageSize;
-        int end = start + pageSize;
-     return   query.Range(start, end);
+        var start = (page - 1) * pageSize;
+        var end = start + pageSize;
+        return query.Range(start, end);
     }
 }

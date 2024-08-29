@@ -116,7 +116,8 @@ public class ForumService : IForumService
     {
         try
         {
-            Logger.LogDebug($"Fetching all forums containing the substring '{name}' (page {page} with size {pageSize})");
+            Logger.LogDebug(
+                $"Fetching all forums containing the substring '{name}' (page {page} with size {pageSize})");
             var forums = await _searchService.SearchByTopic(name, page, pageSize);
 
             return forums.Forums;
@@ -127,13 +128,15 @@ public class ForumService : IForumService
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new ForumGeneralException($"An error occurred while fetching forums containing the substring '{name}'", ex);
+            throw new ForumGeneralException(
+                $"An error occurred while fetching forums containing the substring '{name}'", ex);
         }
         catch (Exception ex)
         {
-            throw new ForumGeneralException($"An unexpected error occurred while fetching forums containing the substring '{name}'", ex);
+            throw new ForumGeneralException(
+                $"An unexpected error occurred while fetching forums containing the substring '{name}'", ex);
         }
-        
+
         //TODO use searchservice for this type of stuff
 
         // var query = await _supabase
@@ -144,8 +147,6 @@ public class ForumService : IForumService
         // return query.Models
         //     .Select(forum => new ForumDto().Mapper(forum))
         //     .ToList();
-
-
     }
 
 

@@ -1,5 +1,4 @@
 ﻿using SlottyMedia.Database.Exceptions;
-using Supabase.Postgrest.Interfaces;
 
 namespace SlottyMedia.Database.Helper;
 

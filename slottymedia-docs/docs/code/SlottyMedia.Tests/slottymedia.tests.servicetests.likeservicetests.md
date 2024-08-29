@@ -38,6 +38,8 @@ public void TearDown()
 
 ### **InsertLike_ShouldReturnTrue_WhenLikeIsInsertedSuccessfully()**
 
+Tests that a like is inserted successfully.
+
 ```csharp
 public Task InsertLike_ShouldReturnTrue_WhenLikeIsInsertedSuccessfully()
 ```
@@ -48,17 +50,23 @@ public Task InsertLike_ShouldReturnTrue_WhenLikeIsInsertedSuccessfully()
 
 ### **InsertLike_ShouldThrowLikeIudException_WhenDatabaseIudActionExceptionIsThrown()**
 
+Tests that a LikeIudException is thrown when a DatabaseIudActionException is thrown.
+
 ```csharp
 public void InsertLike_ShouldThrowLikeIudException_WhenDatabaseIudActionExceptionIsThrown()
 ```
 
 ### **InsertLike_ShouldThrowLikeGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
 
+Tests that a LikeGeneralException is thrown when a GeneralDatabaseException is thrown.
+
 ```csharp
 public void InsertLike_ShouldThrowLikeGeneralException_WhenGeneralDatabaseExceptionIsThrown()
 ```
 
 ### **DeleteLike_ShouldReturnTrue_WhenLikeIsDeletedSuccessfully()**
+
+Tests that a like is deleted successfully.
 
 ```csharp
 public Task DeleteLike_ShouldReturnTrue_WhenLikeIsDeletedSuccessfully()
@@ -70,17 +78,23 @@ public Task DeleteLike_ShouldReturnTrue_WhenLikeIsDeletedSuccessfully()
 
 ### **DeleteLike_ShouldThrowLikeIudException_WhenDatabaseIudActionExceptionIsThrown()**
 
+Tests that a LikeIudException is thrown when a DatabaseIudActionException is thrown.
+
 ```csharp
 public void DeleteLike_ShouldThrowLikeIudException_WhenDatabaseIudActionExceptionIsThrown()
 ```
 
 ### **DeleteLike_ShouldThrowLikeGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
 
+Tests that a LikeGeneralException is thrown when a GeneralDatabaseException is thrown.
+
 ```csharp
 public void DeleteLike_ShouldThrowLikeGeneralException_WhenGeneralDatabaseExceptionIsThrown()
 ```
 
 ### **GetLikesForPost_ShouldReturnUserIds_WhenLikesAreFound()**
+
+Tests that user IDs are returned when likes are found for a post.
 
 ```csharp
 public Task GetLikesForPost_ShouldReturnUserIds_WhenLikesAreFound()
@@ -92,11 +106,15 @@ public Task GetLikesForPost_ShouldReturnUserIds_WhenLikesAreFound()
 
 ### **GetLikesForPost_ShouldThrowLikeNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()**
 
+Tests that a LikeNotFoundException is thrown when a DatabaseMissingItemException is thrown.
+
 ```csharp
 public void GetLikesForPost_ShouldThrowLikeNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
 ```
 
 ### **GetLikesForPost_ShouldThrowLikeGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
+
+Tests that a LikeGeneralException is thrown when a GeneralDatabaseException is thrown.
 
 ```csharp
 public void GetLikesForPost_ShouldThrowLikeGeneralException_WhenGeneralDatabaseExceptionIsThrown()

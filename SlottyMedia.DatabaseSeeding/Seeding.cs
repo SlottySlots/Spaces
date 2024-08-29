@@ -1,5 +1,4 @@
 ﻿using Bogus;
-using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Helper;
@@ -22,15 +21,15 @@ public class Seeding
 {
     private static readonly Logging<Seeding> Logger = new();
     private readonly Client _client;
-    private DaoHelper _daoHelper;
-    private DatabaseRepositroyHelper _databaseRepositroyHelper;
+    private readonly DaoHelper _daoHelper;
+    private readonly DatabaseRepositroyHelper _databaseRepositroyHelper;
 
-/// <summary>
-/// This is the constructor for the Seeding class.
-/// </summary>
-/// <param name="client"></param>
-/// <param name="daoHelper"></param>
-/// <param name="databaseRepositroyHelper"></param>
+    /// <summary>
+    ///     This is the constructor for the Seeding class.
+    /// </summary>
+    /// <param name="client"></param>
+    /// <param name="daoHelper"></param>
+    /// <param name="databaseRepositroyHelper"></param>
     public Seeding(Client client, DaoHelper daoHelper, DatabaseRepositroyHelper databaseRepositroyHelper)
     {
         _client = client;
@@ -137,7 +136,7 @@ public class Seeding
             var forumIds = new List<Guid>();
             for (var i = 0; i < forums.Count; i++)
             {
-                var forum =await forumRepository.AddElement(forums[i]);
+                var forum = await forumRepository.AddElement(forums[i]);
                 forumIds.Add(forum.ForumId ?? Guid.Empty);
                 Logger.LogInfo("Forum seeded: " + forum.ForumTopic);
             }

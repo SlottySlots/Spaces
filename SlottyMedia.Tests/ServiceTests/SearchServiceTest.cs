@@ -1,13 +1,10 @@
-using System.Linq.Expressions;
 using Moq;
 using SlottyMedia.Backend.Exceptions.Services.SearchExceptions;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Repository.SearchRepo;
-using Supabase.Postgrest;
 
 namespace SlottyMedia.Tests.ServiceTests;
 
@@ -110,7 +107,8 @@ public class SearchServiceTests
     }
 
     /// <summary>
-    ///     Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when a general database exception is thrown.
+    ///     Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when a general database exception
+    ///     is thrown.
     /// </summary>
     [Test]
     public void SearchByUsernameOrTopic_ShouldThrowException_WhenDatabaseThrowsException()
@@ -130,7 +128,8 @@ public class SearchServiceTests
     }
 
     /// <summary>
-    ///     Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when DatabaseMissingItemException is thrown.
+    ///     Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when DatabaseMissingItemException
+    ///     is thrown.
     /// </summary>
     [Test]
     public void SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatabaseMissingItemExceptionIsThrown()
@@ -150,7 +149,8 @@ public class SearchServiceTests
     }
 
     /// <summary>
-    ///     Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when GeneralDatabaseException is thrown.
+    ///     Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when GeneralDatabaseException is
+    ///     thrown.
     /// </summary>
     [Test]
     public void SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatabaseExceptionIsThrown()

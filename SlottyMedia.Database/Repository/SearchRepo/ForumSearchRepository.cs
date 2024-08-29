@@ -33,7 +33,7 @@ public class ForumSearchRepository : DatabaseRepository<ForumDao>, IForumSearchR
         var query = BaseQuerry
             .Select(x => new object[] { x.ForumTopic! })
             .Filter("forumTopic", Constants.Operator.ILike, $"%{topic}%");
-        
+
         return await ExecuteQuery(ApplyPagination(query, page, pageSize));
     }
 }

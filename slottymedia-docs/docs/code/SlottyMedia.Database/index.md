@@ -2,10 +2,6 @@
 
 ## SlottyMedia.Database
 
-[DatabaseActions](./slottymedia.database.databaseactions.md)
-
-[IDatabaseActions](./slottymedia.database.idatabaseactions.md)
-
 [IDatabaseRepository&lt;T&gt;](./slottymedia.database.idatabaserepository-1.md)
 
 [InitializeSupabaseClient](./slottymedia.database.initializesupabaseclient.md)

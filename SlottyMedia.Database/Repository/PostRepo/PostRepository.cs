@@ -38,10 +38,6 @@ public class PostRepository : DatabaseRepository<PostsDao>, IPostRepository
             return 0;
         }
     }
-    
-    private IPostgrestTable<PostsDao> BaseSelectQuery() => BaseQuerry
-        .Select(x => new object[] { x.PostId!, x.Content!, x.CreatedAt, x.UserId!, x.ForumId! })
-        .Order("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last);
 
     /// <inheritdoc />
     public async Task<List<PostsDao>> GetAllElements(int page, int pageSize)
@@ -77,5 +73,12 @@ public class PostRepository : DatabaseRepository<PostsDao>, IPostRepository
             .Filter("associated_forumID", Constants.Operator.Equals, forumId.ToString());
 
         return await ExecuteQuery(ApplyPagination(query, page, pageSize));
+    }
+
+    private IPostgrestTable<PostsDao> BaseSelectQuery()
+    {
+        return BaseQuerry
+            .Select(x => new object[] { x.PostId!, x.Content!, x.CreatedAt, x.UserId!, x.ForumId! })
+            .Order("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last);
     }
 }

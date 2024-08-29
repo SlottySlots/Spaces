@@ -13,6 +13,7 @@ using SlottyMedia.Database.Helper;
 using SlottyMedia.Database.Repository.FollowerUserRelatioRepo;
 using SlottyMedia.Database.Repository.ForumRepo;
 using SlottyMedia.Database.Repository.PostRepo;
+using SlottyMedia.Database.Repository.RoleRepo;
 using SlottyMedia.Database.Repository.SearchRepo;
 using SlottyMedia.Database.Repository.UserLikePostRelationRepo;
 using SlottyMedia.Database.Repository.UserRepo;
@@ -45,10 +46,6 @@ try
     builder.Services.AddSingleton(_ =>
         InitializeSupabaseClient.GetSupabaseClient());
 
-    // Database
-    logger.LogInfo("Adding Database to the container");
-    builder.Services.AddSingleton<IDatabaseActions, DatabaseActions>();
-
     //Helpers
     logger.LogInfo("Adding Helpers to the container");
     builder.Services.AddSingleton<DaoHelper>();
@@ -64,6 +61,7 @@ try
     builder.Services.AddSingleton<IUserLikePostRelationRepostitory, UserLikePostRelationRepostitory>();
     builder.Services.AddSingleton<IUserSeachRepository, UserSearchRepository>();
     builder.Services.AddSingleton<IForumSearchRepository, ForumSearchRepository>();
+    builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
 
 
     // Daos

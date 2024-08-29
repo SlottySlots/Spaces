@@ -4,6 +4,7 @@ using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
 using SlottyMedia.Database;
+using SlottyMedia.Database.Repository.RoleRepo;
 using Client = Supabase.Client;
 
 namespace SlottyMedia.Tests.Viewmodel.auth;
@@ -22,11 +23,10 @@ public class SignUpFormVmImplTest
     {
         _client = InitializeSupabaseClient.GetSupabaseClient();
         _cookieServiceMock = new Mock<ICookieService>();
-        _dbActionsMock = new Mock<IDatabaseActions>();
-        var postService = new Mock<IPostService>();
         _userServiceMock = new Mock<IUserService>();
+        _roleRepositoryMock = new Mock<IRoleRepository>();
         _signUpServiceMock = new Mock<SignupServiceImpl>(_client, _userServiceMock.Object, _cookieServiceMock.Object,
-            _dbActionsMock.Object);
+            _roleRepositoryMock.Object);
 
         _service = new SignupFormVmImpl(_signUpServiceMock.Object);
     }
@@ -39,14 +39,14 @@ public class SignUpFormVmImplTest
     {
         _cookieServiceMock.Reset();
         _userServiceMock.Reset();
-        _dbActionsMock.Reset();
+        _roleRepositoryMock.Reset();
         _signUpServiceMock.Reset();
     }
 
     private SignupFormVmImpl _service;
     private Client _client;
     private Mock<IUserService> _userServiceMock;
-    private Mock<IDatabaseActions> _dbActionsMock;
+    private Mock<IRoleRepository> _roleRepositoryMock;
     private Mock<ICookieService> _cookieServiceMock;
     private Mock<SignupServiceImpl> _signUpServiceMock;
 

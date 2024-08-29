@@ -7,7 +7,7 @@ using Client = Supabase.Client;
 namespace SlottyMedia.Database.Repository.RoleRepo;
 
 /// <summary>
-/// This class is used to manage roles in the database.
+///     This class is used to manage roles in the database.
 /// </summary>
 public class RoleRepository : DatabaseRepository<RoleDao>, IRoleRepository
 {
@@ -26,7 +26,7 @@ public class RoleRepository : DatabaseRepository<RoleDao>, IRoleRepository
     public async Task<Guid> GetRoleIdByName(string roleName)
     {
         var query = BaseQuerry
-            .Filter("role_name", Constants.Operator.Equals, roleName)
+            .Filter("role", Constants.Operator.Equals, roleName)
             .Select(x => new object[] { x.RoleId! });
 
         var result = await ExecuteSingleQuery(query);

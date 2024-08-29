@@ -4,7 +4,6 @@ using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Repository.FollowerUserRelatioRepo;
@@ -27,7 +26,8 @@ public class UserServiceTests
         _mockUserRepository = new Mock<IUserRepository>();
         _mockPostService = new Mock<IPostService>();
         _mockFollowerUserRelationRepository = new Mock<IFollowerUserRelationRepository>();
-        _userService = new UserService(_mockUserRepository.Object, _mockPostService.Object, _mockFollowerUserRelationRepository.Object);
+        _userService = new UserService(_mockUserRepository.Object, _mockPostService.Object,
+            _mockFollowerUserRelationRepository.Object);
     }
 
     /// <summary>
@@ -193,7 +193,8 @@ public class UserServiceTests
     {
         var userId = Guid.NewGuid();
 
-        _mockUserRepository.Setup(x => x.GetElementById(It.IsAny<Guid>(), It.IsAny<Expression<Func<UserDao, object[]>>>()))
+        _mockUserRepository.Setup(x =>
+                x.GetElementById(It.IsAny<Guid>(), It.IsAny<Expression<Func<UserDao, object[]>>>()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
         Assert.ThrowsAsync<UserNotFoundException>(
@@ -208,7 +209,8 @@ public class UserServiceTests
     {
         var userId = Guid.NewGuid();
 
-        _mockUserRepository.Setup(x => x.GetElementById(It.IsAny<Guid>(), It.IsAny<Expression<Func<UserDao, object[]>>>()))
+        _mockUserRepository.Setup(x =>
+                x.GetElementById(It.IsAny<Guid>(), It.IsAny<Expression<Func<UserDao, object[]>>>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<UserGeneralException>(

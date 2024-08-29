@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Tests.ServiceTests
 
+Unit tests for the ForumService class.
+
 ```csharp
 public class ForumServiceTests
 ```
@@ -20,17 +22,23 @@ public ForumServiceTests()
 
 ### **Setup()**
 
+Sets up the test environment before each test.
+
 ```csharp
 public void Setup()
 ```
 
 ### **TearDown()**
 
+Cleans up the test environment after each test.
+
 ```csharp
 public void TearDown()
 ```
 
 ### **InsertForum_ShouldInsertForum_WhenForumIsValid()**
+
+Tests that a forum is inserted when the forum is valid.
 
 ```csharp
 public Task InsertForum_ShouldInsertForum_WhenForumIsValid()
@@ -42,17 +50,23 @@ public Task InsertForum_ShouldInsertForum_WhenForumIsValid()
 
 ### **InsertForum_ShouldThrowForumIudException_WhenDatabaseIudActionExceptionIsThrown()**
 
+Tests that a ForumIudException is thrown when a DatabaseIudActionException is thrown.
+
 ```csharp
 public void InsertForum_ShouldThrowForumIudException_WhenDatabaseIudActionExceptionIsThrown()
 ```
 
 ### **InsertForum_ShouldThrowForumGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
 
+Tests that a ForumGeneralException is thrown when a GeneralDatabaseException is thrown.
+
 ```csharp
 public void InsertForum_ShouldThrowForumGeneralException_WhenGeneralDatabaseExceptionIsThrown()
 ```
 
 ### **DeleteForum_ShouldDeleteForum_WhenForumIsValid()**
+
+Tests that a forum is deleted when the forum is valid.
 
 ```csharp
 public Task DeleteForum_ShouldDeleteForum_WhenForumIsValid()
@@ -64,17 +78,23 @@ public Task DeleteForum_ShouldDeleteForum_WhenForumIsValid()
 
 ### **DeleteForum_ShouldThrowForumIudException_WhenDatabaseIudActionExceptionIsThrown()**
 
+Tests that a ForumIudException is thrown when a DatabaseIudActionException is thrown.
+
 ```csharp
 public void DeleteForum_ShouldThrowForumIudException_WhenDatabaseIudActionExceptionIsThrown()
 ```
 
 ### **DeleteForum_ShouldThrowForumGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
 
+Tests that a ForumGeneralException is thrown when a GeneralDatabaseException is thrown.
+
 ```csharp
 public void DeleteForum_ShouldThrowForumGeneralException_WhenGeneralDatabaseExceptionIsThrown()
 ```
 
 ### **GetForumByName_ShouldReturnForum_WhenForumExists()**
+
+Tests that a forum is returned when the forum exists.
 
 ```csharp
 public Task GetForumByName_ShouldReturnForum_WhenForumExists()
@@ -86,11 +106,15 @@ public Task GetForumByName_ShouldReturnForum_WhenForumExists()
 
 ### **GetForumByName_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()**
 
+Tests that a ForumNotFoundException is thrown when a DatabaseMissingItemException is thrown.
+
 ```csharp
 public void GetForumByName_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()
 ```
 
 ### **GetForumsByNameContaining_ShouldReturnForums_WhenForumsExist()**
+
+Tests that forums are returned when forums exist.
 
 ```csharp
 public Task GetForumsByNameContaining_ShouldReturnForums_WhenForumsExist()
@@ -102,11 +126,15 @@ public Task GetForumsByNameContaining_ShouldReturnForums_WhenForumsExist()
 
 ### **GetForumsByNameContaining_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()**
 
+Tests that a ForumNotFoundException is thrown when a DatabaseMissingItemException is thrown.
+
 ```csharp
 public void GetForumsByNameContaining_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()
 ```
 
 ### **GetForums_ShouldReturnAllForums_WhenForumsExist()**
+
+Tests that all forums are returned when forums exist.
 
 ```csharp
 public Task GetForums_ShouldReturnAllForums_WhenForumsExist()
@@ -118,11 +146,15 @@ public Task GetForums_ShouldReturnAllForums_WhenForumsExist()
 
 ### **GetForums_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()**
 
+Tests that a ForumNotFoundException is thrown when a DatabaseMissingItemException is thrown.
+
 ```csharp
 public void GetForums_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()
 ```
 
 ### **DetermineRecentSpaces_ShouldReturnRecentForums_WhenForumsExist()**
+
+Tests that recent forums are returned when forums exist.
 
 ```csharp
 public Task DetermineRecentSpaces_ShouldReturnRecentForums_WhenForumsExist()
@@ -134,11 +166,15 @@ public Task DetermineRecentSpaces_ShouldReturnRecentForums_WhenForumsExist()
 
 ### **DetermineRecentSpaces_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()**
 
+Tests that a ForumNotFoundException is thrown when a DatabaseMissingItemException is thrown.
+
 ```csharp
 public void DetermineRecentSpaces_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()
 ```
 
 ### **GetTopForums_ShouldReturnTopForums_WhenForumsExist()**
+
+Tests that top forums are returned when forums exist.
 
 ```csharp
 public Task GetTopForums_ShouldReturnTopForums_WhenForumsExist()
@@ -149,6 +185,8 @@ public Task GetTopForums_ShouldReturnTopForums_WhenForumsExist()
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **GetTopForums_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()**
+
+Tests that a ForumNotFoundException is thrown when a DatabaseMissingItemException is thrown.
 
 ```csharp
 public void GetTopForums_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()
