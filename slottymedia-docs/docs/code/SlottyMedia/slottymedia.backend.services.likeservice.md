@@ -13,17 +13,17 @@ Implements [ILikeService](./slottymedia.backend.services.interfaces.ilikeservice
 
 ## Constructors
 
-### **LikeService(IDatabaseActions)**
+### **LikeService(IUserLikePostRelationRepostitory)**
 
 The constructor for the LikeService.
 
 ```csharp
-public LikeService(IDatabaseActions databaseActions)
+public LikeService(IUserLikePostRelationRepostitory likeRepository)
 ```
 
 #### Parameters
 
-`databaseActions` IDatabaseActions<br>
+`likeRepository` IUserLikePostRelationRepostitory<br>
 
 ## Methods
 

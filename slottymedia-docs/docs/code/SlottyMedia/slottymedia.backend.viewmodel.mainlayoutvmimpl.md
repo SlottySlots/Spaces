@@ -13,17 +13,15 @@ Implements [IMainLayoutVm](./slottymedia.backend.viewmodel.interfaces.imainlayou
 
 ## Constructors
 
-### **MainLayoutVmImpl(IAuthService, IDatabaseActions, IUserService)**
+### **MainLayoutVmImpl(IAuthService, IUserService)**
 
 ```csharp
-public MainLayoutVmImpl(IAuthService authService, IDatabaseActions databaseActions, IUserService userService)
+public MainLayoutVmImpl(IAuthService authService, IUserService userService)
 ```
 
 #### Parameters
 
 `authService` [IAuthService](./slottymedia.backend.services.interfaces.iauthservice.md)<br>
-
-`databaseActions` IDatabaseActions<br>
 
 `userService` [IUserService](./slottymedia.backend.services.interfaces.iuserservice.md)<br>
 

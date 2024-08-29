@@ -12,17 +12,21 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Constructors
 
-### **Seeding(Client)**
+### **Seeding(Client, DaoHelper, DatabaseRepositroyHelper)**
 
-The constructor with parameters.
+This is the constructor for the Seeding class.
 
 ```csharp
-public Seeding(Client client)
+public Seeding(Client client, DaoHelper daoHelper, DatabaseRepositroyHelper databaseRepositroyHelper)
 ```
 
 #### Parameters
 
 `client` Client<br>
+
+`daoHelper` DaoHelper<br>
+
+`databaseRepositroyHelper` DatabaseRepositroyHelper<br>
 
 ## Methods
 

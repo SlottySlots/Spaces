@@ -42,8 +42,8 @@ public class TopForumDao : BaseModel
     /// <summary>
     ///     The Count of Posts in the Forum.
     /// </summary>
-    [Column("post_cunt")]
-    public int? PostCount { get; set; }
+    [Column]
+    public int? post_count { get; set; }
 
     /// <summary>
     ///     The ToString method returns a string representation of the object.
@@ -51,6 +51,6 @@ public class TopForumDao : BaseModel
     /// <returns></returns>
     public override string ToString()
     {
-        return $"ForumId: {ForumId}, PostCount{PostCount}, ForumTopic: {ForumTopic}";
+        return $"ForumId: {ForumId}, PostCount{post_count}, ForumTopic: {ForumTopic}";
     }
 }

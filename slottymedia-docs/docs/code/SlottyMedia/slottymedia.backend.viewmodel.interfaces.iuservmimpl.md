@@ -33,7 +33,7 @@ A task that represents the asynchronous operation. The task result contains the 
 Updates the given UserDto object in the database and returns the updated object.
 
 ```csharp
-Task<UserDto> UpdateUser(UserDto user)
+Task UpdateUser(UserDto user)
 ```
 
 #### Parameters
@@ -43,5 +43,5 @@ The UserDto object to be updated.
 
 #### Returns
 
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 A task that represents the asynchronous operation. The task result contains the updated UserDto object.

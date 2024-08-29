@@ -1,10 +1,10 @@
 using Moq;
-using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Repository.UserRepo;
 using Supabase.Gotrue;
 using Client = Supabase.Client;
 
@@ -25,10 +25,10 @@ public class MainLayoutVmImplTest
         _client = InitializeSupabaseClient.GetSupabaseClient();
         _cookieServiceMock = new Mock<ICookieService>();
         _authService = new Mock<AuthService>(_client, _cookieServiceMock.Object);
-        _dbActions = new Mock<DatabaseActions>(_client);
+        _mockUserRepository = new Mock<IUserRepository>();
         var postServide = new Mock<IPostService>();
         _userService = new Mock<IUserService>();
-        _vm = new MainLayoutVmImpl(_authService.Object, _dbActions.Object, _userService.Object);
+        _vm = new MainLayoutVmImpl(_authService.Object, _userService.Object);
     }
 
     /// <summary>
@@ -38,14 +38,14 @@ public class MainLayoutVmImplTest
     public void TearDown()
     {
         _authService.Reset();
-        _dbActions.Reset();
+        _mockUserRepository.Reset();
         _cookieServiceMock.Reset();
     }
 
     private Client _client;
     private Mock<AuthService> _authService;
     private Mock<ICookieService> _cookieServiceMock;
-    private Mock<DatabaseActions> _dbActions;
+    private Mock<IUserRepository> _mockUserRepository;
     private MainLayoutVmImpl _vm;
     private Mock<IUserService> _userService;
 
@@ -93,7 +93,7 @@ public class MainLayoutVmImplTest
     {
         _authService.Setup(service => service.GetCurrentSession())
             .Returns(new Session { User = new User { Email = "test@test.de", Id = Guid.NewGuid().ToString() } });
-        _userService.Setup(service => service.GetUserBy(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>()))
+        _userService.Setup(service => service.GetUserDaoById(It.IsAny<Guid>()))
             .ReturnsAsync(new UserDao());
 
         Assert.ThatAsync(async () => await _vm.SetUserInfo(), Is.Null);
@@ -108,13 +108,13 @@ public class MainLayoutVmImplTest
     public void SetUserInfo_ReturnsUserInfoDto()
     {
         _authService.Setup(service => service.GetCurrentSession())
-            .Returns(new Session { User = new User { Email = "test@test.de", Id = Guid.NewGuid().ToString()} });
+            .Returns(new Session { User = new User { Email = "test@test.de", Id = Guid.NewGuid().ToString() } });
         var userDao = new UserDao
         {
             UserId = Guid.NewGuid(), UserName = "Test", Description = "TestDesc", Email = "test@test.de",
             ProfilePic = "123"
         };
-        _userService.Setup(service => service.GetUserBy(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>()))
+        _userService.Setup(service => service.GetUserDaoById(It.IsAny<Guid>()))
             .ReturnsAsync(userDao);
         Assert.MultipleAsync(async () =>
             {
@@ -152,8 +152,8 @@ public class MainLayoutVmImplTest
         var session = new Session { User = new User { Email = "test@test.de", Id = new Guid().ToString() } };
         _authService.Setup(service => service.GetCurrentSession()).Returns(session);
         var user = new UserDao { ProfilePic = "123" };
-        _userService.Setup(service => service.UpdateUser(It.IsAny<UserDao>())).ReturnsAsync(new UserDto().Mapper(user));
-        _userService.Setup(service => service.GetUserBy(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>()))
+        _userService.Setup(service => service.UpdateUser(It.IsAny<UserDao>()));
+        _userService.Setup(service => service.GetUserDaoById(It.IsAny<Guid>()))
             .ReturnsAsync(user);
 
         // Act
@@ -162,7 +162,7 @@ public class MainLayoutVmImplTest
         // Assert
         Assert.That(result, Is.EqualTo("123"));
         _authService.VerifyAll();
-        _dbActions.VerifyAll();
+        _mockUserRepository.VerifyAll();
         _userService.Verify(service => service.UpdateUser(It.Is<UserDao>(u => u.ProfilePic == "123")), Times.Once);
     }
 }

@@ -36,24 +36,24 @@ The teardown method that is called after each test.
 public void TearDown()
 ```
 
-### **SearchByUsernameOrTopic_ShouldReturnUserIds_WhenUsersFound()**
+### **SearchByUsername_ShouldReturnUserIds_WhenUsersFound()**
 
-Tests if SearchByUsernameOrTopic method returns user IDs when users are found.
+Tests if SearchByUsername method returns user IDs when users are found.
 
 ```csharp
-public Task SearchByUsernameOrTopic_ShouldReturnUserIds_WhenUsersFound()
+public Task SearchByUsername_ShouldReturnUserIds_WhenUsersFound()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **SearchByUsernameOrTopic_ShouldReturnTopicIds_WhenTopicsFound()**
+### **SearchByTopic_ShouldReturnTopicIds_WhenTopicsFound()**
 
-Tests if SearchByUsernameOrTopic method returns topic IDs when topics are found.
+Tests if SearchByTopic method returns topic IDs when topics are found.
 
 ```csharp
-public Task SearchByUsernameOrTopic_ShouldReturnTopicIds_WhenTopicsFound()
+public Task SearchByTopic_ShouldReturnTopicIds_WhenTopicsFound()
 ```
 
 #### Returns
@@ -62,7 +62,7 @@ public Task SearchByUsernameOrTopic_ShouldReturnTopicIds_WhenTopicsFound()
 
 ### **SearchByUsernameOrTopic_ShouldReturnEmptyList_WhenNoResultsFound()**
 
-Tests if SearchByUsernameOrTopic method returns an empty list when no results are found.
+Tests if SearchByUsername and SearchByTopic methods return an empty list when no results are found.
 
 ```csharp
 public Task SearchByUsernameOrTopic_ShouldReturnEmptyList_WhenNoResultsFound()
@@ -74,7 +74,7 @@ public Task SearchByUsernameOrTopic_ShouldReturnEmptyList_WhenNoResultsFound()
 
 ### **SearchByUsernameOrTopic_ShouldThrowException_WhenDatabaseThrowsException()**
 
-Tests if SearchByUsernameOrTopic method throws SearchGeneralExceptions when a general database exception is thrown.
+Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when a general database exception is thrown.
 
 ```csharp
 public void SearchByUsernameOrTopic_ShouldThrowException_WhenDatabaseThrowsException()
@@ -82,7 +82,7 @@ public void SearchByUsernameOrTopic_ShouldThrowException_WhenDatabaseThrowsExcep
 
 ### **SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatabaseMissingItemExceptionIsThrown()**
 
-Tests if SearchByUsernameOrTopic method throws SearchGeneralExceptions when DatabaseMissingItemException is thrown.
+Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when DatabaseMissingItemException is thrown.
 
 ```csharp
 public void SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatabaseMissingItemExceptionIsThrown()
@@ -90,7 +90,7 @@ public void SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatab
 
 ### **SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatabaseExceptionIsThrown()**
 
-Tests if SearchByUsernameOrTopic method throws SearchGeneralExceptions when GeneralDatabaseException is thrown.
+Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when GeneralDatabaseException is thrown.
 
 ```csharp
 public void SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatabaseExceptionIsThrown()

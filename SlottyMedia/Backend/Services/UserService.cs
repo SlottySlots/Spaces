@@ -1,10 +1,10 @@
 using SlottyMedia.Backend.Dtos;
-using SlottyMedia.Backend.Exceptions.Services.PostExceptions;
 using SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Database.Repository.FollowerUserRelatioRepo;
+using SlottyMedia.Database.Repository.UserRepo;
 using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.Services;
@@ -15,23 +15,26 @@ namespace SlottyMedia.Backend.Services;
 public class UserService : IUserService
 {
     private static readonly Logging<UserService> Logger = new();
-    private readonly IDatabaseActions _databaseActions;
+    private readonly IFollowerUserRelationRepository _followerUserRelationRepository;
     private readonly IPostService _postService;
+    private readonly IUserRepository _userRepository;
 
     /// <summary>
     ///     This constructor creates a new UserService object.
     /// </summary>
     /// <param name="databaseActions">This parameter is used to interact with the database</param>
     /// <param name="postService">This parameter is used to interact with the post service</param>
-    public UserService(IDatabaseActions databaseActions, IPostService postService)
+    public UserService(IUserRepository userRepository, IPostService postService,
+        IFollowerUserRelationRepository followerUserRelationRepository)
     {
         Logger.LogInfo("Creating a new UserService object");
-        _databaseActions = databaseActions;
+        _userRepository = userRepository;
         _postService = postService;
+        _followerUserRelationRepository = followerUserRelationRepository;
     }
 
     /// <inheritdoc />
-    public async Task<UserDto> CreateUser(string userId, string username, string email, Guid roleId,
+    public async Task CreateUser(string userId, string username, string email, Guid roleId,
         string? description = null,
         string? profilePicture = null)
     {
@@ -48,8 +51,8 @@ public class UserService : IUserService
         try
         {
             Logger.LogInfo($"Creating a new user {user}");
-            var result = await _databaseActions.Insert(user);
-            return new UserDto().Mapper(result);
+
+            await _userRepository.AddElement(user);
         }
         catch (DatabaseIudActionException ex)
         {
@@ -70,13 +73,13 @@ public class UserService : IUserService
     }
 
     /// <inheritdoc />
-    public async Task<bool> DeleteUser(UserDto user)
+    public async Task DeleteUser(UserDto user)
     {
         try
         {
             var userDao = user.Mapper();
             Logger.LogInfo($"Deleting a user {userDao}");
-            return await _databaseActions.Delete(userDao);
+            await _userRepository.DeleteElement(userDao);
         }
         catch (DatabaseIudActionException ex)
         {
@@ -93,12 +96,12 @@ public class UserService : IUserService
     }
 
     /// <inheritdoc />
-    public async Task<UserDto> GetUserById(Guid userId)
+    public async Task<UserDto> GetUserDtoById(Guid userId)
     {
         try
         {
             Logger.LogInfo($"Fetching user with ID {userId}");
-            var user = await _databaseActions.GetEntityByField<UserDao>("userID", userId.ToString());
+            var user = await _userRepository.GetElementById(userId);
             return new UserDto().Mapper(user);
         }
         catch (DatabaseMissingItemException ex)
@@ -121,8 +124,12 @@ public class UserService : IUserService
         try
         {
             Logger.LogInfo($"Fetching user with username {username}");
-            var result = await _databaseActions.CheckIfEntityExists<UserDao>("userName", username);
-            return result;
+            await _userRepository.GetUserByUsername(username);
+            return true;
+        }
+        catch (DatabaseMissingItemException)
+        {
+            return false;
         }
         catch (GeneralDatabaseException ex)
         {
@@ -137,13 +144,12 @@ public class UserService : IUserService
     }
 
     /// <inheritdoc />
-    public async Task<UserDto> UpdateUser(UserDao user)
+    public async Task UpdateUser(UserDao user)
     {
         try
         {
             Logger.LogInfo($"Updating user {user}");
-            var result = await _databaseActions.Update(user);
-            return new UserDto().Mapper(result);
+            await _userRepository.UpdateElement(user);
         }
         catch (DatabaseIudActionException ex)
         {
@@ -160,15 +166,14 @@ public class UserService : IUserService
     }
 
     /// <inheritdoc />
-    public async Task<UserDto> UpdateUser(UserDto user)
+    public async Task UpdateUser(UserDto user)
     {
         try
         {
-            var userDao = await _databaseActions.GetEntityByField<UserDao>("userID", user.UserId.ToString());
+            var userDao = await _userRepository.GetElementById(user.UserId);
             userDao.Description = user.Description;
             Logger.LogInfo($"Updating user {user}");
-            var result = await _databaseActions.Update(userDao);
-            return new UserDto().Mapper(result);
+            await _userRepository.UpdateElement(userDao);
         }
         catch (DatabaseIudActionException ex)
         {
@@ -181,61 +186,6 @@ public class UserService : IUserService
         catch (Exception ex)
         {
             throw new UserGeneralException($"An error occurred while updating the user. User {user}", ex);
-        }
-    }
-
-    /// <inheritdoc />
-    public async Task<UserDao> GetUserBy(Guid? userID = null, string? username = null, string? email = null)
-    {
-        try
-        {
-            Logger.LogInfo("Starting GetUser method to retrieve user by ID, username, or email.");
-
-            UserDao user = null;
-
-            if (userID is not null)
-            {
-                Logger.LogInfo($"Attempting to retrieve user by ID: {userID}");
-                user = await GetUserDaoById(userID.Value);
-            }
-            else if (username is not null)
-            {
-                Logger.LogInfo($"Attempting to retrieve user by username: {username}");
-                user = await _databaseActions.GetEntityByField<UserDao>("userName", username);
-            }
-            else if (email is not null)
-            {
-                Logger.LogInfo($"Attempting to retrieve user by email: {email}");
-                user = await _databaseActions.GetEntityByField<UserDao>("email", email);
-            }
-
-            if (user != null)
-                Logger.LogInfo($"Successfully retrieved user: {user}");
-            else
-                Logger.LogWarn("No user found with the provided criteria.");
-
-            return user;
-        }
-        catch (DatabaseMissingItemException ex)
-        {
-            if (userID is not null)
-                throw new UserNotFoundException($"User with the given ID was not found. ID: {userID}", ex);
-            if (username is not null)
-                throw new UserNotFoundException($"User with the given username was not found. Username: {username}",
-                    ex);
-            if (email is not null)
-                throw new UserNotFoundException($"User with the given email was not found. Email: {email}", ex);
-            throw new UserNotFoundException("User not found.", ex);
-        }
-        catch (GeneralDatabaseException ex)
-        {
-            if (userID is not null)
-                throw new UserGeneralException($"An error occurred while fetching the user. ID: {userID}", ex);
-            if (username is not null)
-                throw new UserGeneralException($"An error occurred while fetching the user. Username: {username}", ex);
-            if (email is not null)
-                throw new UserGeneralException($"An error occurred while fetching the user. Email: {email}", ex);
-            throw new UserGeneralException("An error occurred while fetching the user.", ex);
         }
     }
 
@@ -268,8 +218,8 @@ public class UserService : IUserService
         try
         {
             Logger.LogInfo($"Fetching user with ID {userId} and recent forums {recentForums}");
-            var result = await _databaseActions.GetEntitieWithSelectorById<UserDao>(
-                x => new object[] { x.UserId!, x.UserName!, x.Description!, x.CreatedAt }, "userID", userId.ToString());
+            var result = await _userRepository.GetElementById(userId,
+                x => new object[] { x.UserId!, x.UserName!, x.Description!, x.CreatedAt });
             var user = new UserDto().Mapper(result);
 
             Logger.LogInfo($"Fetching recent forums for user with ID {userId}");
@@ -297,8 +247,7 @@ public class UserService : IUserService
         try
         {
             Logger.LogInfo($"Fetching friends for user with ID {userId}");
-            var friends = await _databaseActions.GetEntitiesWithSelectorById<FollowerUserRelationDao>(
-                x => new object[] { x.FollowedUserId! }, "followerUserID", userId.ToString());
+            var friends = await _followerUserRelationRepository.GetFriends(userId);
             var friendList = new FriendsOfUserDto
             {
                 UserId = userId,
@@ -327,14 +276,14 @@ public class UserService : IUserService
         }
     }
 
+    //TODO move to right service
     /// <inheritdoc />
     public async Task<int> GetCountOfUserFriends(Guid userId)
     {
         try
         {
             Logger.LogInfo($"Fetching friends count for user with ID {userId}");
-            var friends =
-                await _databaseActions.GetCountByField<FollowerUserRelationDao>("userIsFollowed", userId.ToString());
+            var friends = await _followerUserRelationRepository.GetCountOfUserFriends(userId);
             return friends;
         }
         catch (GeneralDatabaseException ex)
@@ -358,25 +307,18 @@ public class UserService : IUserService
     /// </returns>
     public async Task<int> GetCountOfUserSpaces(Guid userId)
     {
-        try
-        {
-            //TODO: Currently not working
-            var spaces = await _postService.GetForumCountByUserId(userId);
-            return spaces;
-        }
-        catch (PostGeneralException)
-        {
-            throw;
-        }
+        //TODO: Currently not working
+        var spaces = await _postService.GetForumCountByUserId(userId);
+        return spaces;
     }
 
     /// <inheritdoc />
-    private async Task<UserDao> GetUserDaoById(Guid userId)
+    public async Task<UserDao> GetUserDaoById(Guid userId)
     {
         try
         {
             Logger.LogInfo($"Fetching user with ID {userId}");
-            var user = await _databaseActions.GetEntityByField<UserDao>("userID", userId.ToString());
+            var user = await _userRepository.GetElementById(userId);
             return user;
         }
         catch (DatabaseMissingItemException ex)

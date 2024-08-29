@@ -1,7 +1,6 @@
 using SlottyMedia.Backend.Exceptions.signup;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Database;
-using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Repository.RoleRepo;
 using SlottyMedia.LoggingProvider;
 using Supabase.Gotrue;
 using Client = Supabase.Client;
@@ -15,7 +14,7 @@ public class SignupServiceImpl : ISignupService
 {
     private static readonly Logging<SignupServiceImpl> Logger = new();
     private readonly ICookieService _cookieService;
-    private readonly IDatabaseActions _databaseActions;
+    private readonly IRoleRepository _roleRepository;
     private readonly Client _supabaseClient;
     private readonly IUserService _userService;
 
@@ -31,13 +30,16 @@ public class SignupServiceImpl : ISignupService
     /// <param name="cookieService">
     ///     Cookie Service used to set cookies on client side
     /// </param>
+    /// <param name="roleRepository">
+    ///     Role Repository used to retrieve roles
+    /// </param>
     public SignupServiceImpl(Client supabaseClient, IUserService userService, ICookieService cookieService,
-        IDatabaseActions databaseActions)
+        IRoleRepository roleRepository)
     {
         _supabaseClient = supabaseClient;
         _userService = userService;
         _cookieService = cookieService;
-        _databaseActions = databaseActions;
+        _roleRepository = roleRepository;
     }
 
     /// <summary>
@@ -72,10 +74,10 @@ public class SignupServiceImpl : ISignupService
         if (session == null)
             throw new InvalidOperationException(
                 "An unknown error occured in the Supabase client while attempting to perform a signup.");
-        var userRole = await _databaseActions.GetEntityByField<RoleDao>("role", "User");
-        var roleId = userRole.RoleId.HasValue
-            ? userRole.RoleId.Value
-            : throw new NullReferenceException("RoleId not found!");
+
+        //TODO catch excception if role does not exist
+        var roleId = await _roleRepository.GetRoleIdByName("User");
+
         await _userService.CreateUser(session.User!.Id!, username, session.User.Email!, roleId,
             "Hey I'm a new user. Mhhm should I add a description?");
 

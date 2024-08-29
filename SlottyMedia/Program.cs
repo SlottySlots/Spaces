@@ -9,9 +9,18 @@ using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Components;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Helper;
+using SlottyMedia.Database.Repository.FollowerUserRelatioRepo;
+using SlottyMedia.Database.Repository.ForumRepo;
+using SlottyMedia.Database.Repository.PostRepo;
+using SlottyMedia.Database.Repository.RoleRepo;
+using SlottyMedia.Database.Repository.SearchRepo;
+using SlottyMedia.Database.Repository.UserLikePostRelationRepo;
+using SlottyMedia.Database.Repository.UserRepo;
 using SlottyMedia.DatabaseSeeding;
 using SlottyMedia.LoggingProvider;
 using Supabase;
+
 
 // Early init of NLog to allow startup and exception logging, before host is built
 Logging<Program> logger = new();
@@ -37,9 +46,23 @@ try
     builder.Services.AddSingleton(_ =>
         InitializeSupabaseClient.GetSupabaseClient());
 
-    // Database
-    logger.LogInfo("Adding Database to the container");
-    builder.Services.AddSingleton<IDatabaseActions, DatabaseActions>();
+    //Helpers
+    logger.LogInfo("Adding Helpers to the container");
+    builder.Services.AddSingleton<DaoHelper>();
+    builder.Services.AddSingleton<DatabaseRepositroyHelper>();
+
+    // Repositories
+    logger.LogInfo("Adding Repositories to the container");
+    builder.Services.AddSingleton<IUserRepository, UserRepository>();
+    builder.Services.AddSingleton<IPostRepository, PostRepository>();
+    builder.Services.AddSingleton<IForumRepository, ForumRepository>();
+    builder.Services.AddSingleton<ITopForumRepository, TopForumRepository>();
+    builder.Services.AddSingleton<IFollowerUserRelationRepository, FollowerUserRelationRepository>();
+    builder.Services.AddSingleton<IUserLikePostRelationRepostitory, UserLikePostRelationRepostitory>();
+    builder.Services.AddSingleton<IUserSeachRepository, UserSearchRepository>();
+    builder.Services.AddSingleton<IForumSearchRepository, ForumSearchRepository>();
+    builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
+
 
     // Daos
     logger.LogInfo("Adding Daos to the container");
@@ -81,7 +104,7 @@ try
     builder.Services.AddScoped<IHomePageVm, HomePageVmImpl>();
     builder.Services.AddScoped<IAuthVmImpl, AuthVmImpl>();
     builder.Services.AddScoped<IUserVmImpl, UserVmImpl>();
-    
+
 
     var app = builder.Build();
 
@@ -92,7 +115,9 @@ try
         {
             logger.LogInfo("Starting to seed the database");
             var seeder = scope.ServiceProvider.GetRequiredService<Client>();
-            Seeding seeding = new(seeder);
+            var daoHelper = scope.ServiceProvider.GetRequiredService<DaoHelper>();
+            var databaseRepositroyHelper = scope.ServiceProvider.GetRequiredService<DatabaseRepositroyHelper>();
+            Seeding seeding = new(seeder, daoHelper, databaseRepositroyHelper);
             await seeding.Seed();
         }
         catch (Exception e)

@@ -51,7 +51,7 @@ public class UserLikePostRelationDao : BaseModel
     /// <summary>
     ///     The Date and Time the User_Like_Post_Relation was created.
     /// </summary>
-    [Column("created_at")]
+    [Column("created_at", ignoreOnInsert: true, ignoreOnUpdate: true)]
     public DateTime CreatedAt { get; set; }
 
     /// <summary>

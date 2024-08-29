@@ -1,7 +1,14 @@
 ﻿using Bogus;
-using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Database.Helper;
+using SlottyMedia.Database.Repository.CommentRepo;
+using SlottyMedia.Database.Repository.FollowerUserRelatioRepo;
+using SlottyMedia.Database.Repository.ForumRepo;
+using SlottyMedia.Database.Repository.PostRepo;
+using SlottyMedia.Database.Repository.RoleRepo;
+using SlottyMedia.Database.Repository.UserLikePostRelationRepo;
+using SlottyMedia.Database.Repository.UserRepo;
 using SlottyMedia.LoggingProvider;
 using Supabase;
 
@@ -14,15 +21,20 @@ public class Seeding
 {
     private static readonly Logging<Seeding> Logger = new();
     private readonly Client _client;
-    private IDatabaseActions _databaseActions;
+    private readonly DaoHelper _daoHelper;
+    private readonly DatabaseRepositroyHelper _databaseRepositroyHelper;
 
     /// <summary>
-    ///     The constructor with parameters.
+    ///     This is the constructor for the Seeding class.
     /// </summary>
     /// <param name="client"></param>
-    public Seeding(Client client)
+    /// <param name="daoHelper"></param>
+    /// <param name="databaseRepositroyHelper"></param>
+    public Seeding(Client client, DaoHelper daoHelper, DatabaseRepositroyHelper databaseRepositroyHelper)
     {
         _client = client;
+        _daoHelper = daoHelper;
+        _databaseRepositroyHelper = databaseRepositroyHelper;
     }
 
     /// <summary>
@@ -32,7 +44,6 @@ public class Seeding
     {
         Login login = new();
         await login.LoginUser(_client);
-        _databaseActions = new DatabaseActions(_client);
 
         if (await CheckIfSeedingIsNeeded())
         {
@@ -72,10 +83,11 @@ public class Seeding
 
     private async Task<bool> CheckIfSeedingIsNeeded()
     {
+        var userRepository = new UserRepository(_client, _daoHelper, _databaseRepositroyHelper);
         try
         {
             Logger.LogInfo("Checking if seeding is needed.");
-            var result = await _databaseActions.GetEntities<UserDao>();
+            var result = await userRepository.GetAllElements();
             if (result.Count < 10)
                 return true;
             return false;
@@ -89,6 +101,7 @@ public class Seeding
 
     private async Task<List<Guid>> GenerateUsers(Faker<UserDao> userFaker, int amount)
     {
+        var userRepository = new UserRepository(_client, _daoHelper, _databaseRepositroyHelper);
         try
         {
             // Generate and insert users
@@ -97,7 +110,7 @@ public class Seeding
             var userIds = new List<Guid>();
             for (var i = 0; i < users.Count; i++)
             {
-                var user = await _databaseActions.Insert(users[i]);
+                var user = await userRepository.AddElement(users[i]);
                 userIds.Add(user.UserId ?? Guid.Empty);
                 Logger.LogInfo("User seeded: " + user.UserName);
             }
@@ -114,6 +127,7 @@ public class Seeding
 
     private async Task<List<Guid>> GenerateForums(Faker<ForumDao> forumFaker, int amount)
     {
+        var forumRepository = new ForumRepository(_client, _daoHelper, _databaseRepositroyHelper);
         try
         {
             // Generate and insert forums
@@ -122,7 +136,7 @@ public class Seeding
             var forumIds = new List<Guid>();
             for (var i = 0; i < forums.Count; i++)
             {
-                var forum = await _databaseActions.Insert(forums[i]);
+                var forum = await forumRepository.AddElement(forums[i]);
                 forumIds.Add(forum.ForumId ?? Guid.Empty);
                 Logger.LogInfo("Forum seeded: " + forum.ForumTopic);
             }
@@ -139,6 +153,7 @@ public class Seeding
 
     private async Task<List<Guid>> GeneratePosts(Faker<PostsDao> postFaker, int amount)
     {
+        var postRepository = new PostRepository(_client, _daoHelper, _databaseRepositroyHelper);
         try
         {
             // Generate and insert posts
@@ -147,7 +162,7 @@ public class Seeding
             var postIds = new List<Guid>();
             for (var i = 0; i < posts.Count; i++)
             {
-                var post = await _databaseActions.Insert(posts[i]);
+                var post = await postRepository.AddElement(posts[i]);
                 postIds.Add(post.PostId ?? Guid.Empty);
                 Logger.LogInfo("Post seeded: " + post.Headline);
             }
@@ -164,6 +179,7 @@ public class Seeding
 
     private async Task GenereateComments(Faker<CommentDao> commentFaker, int amount)
     {
+        var commentRepository = new CommentRepository(_client, _daoHelper, _databaseRepositroyHelper);
         try
         {
             // Generate and insert comments
@@ -171,7 +187,7 @@ public class Seeding
             var comments = commentFaker.Generate(amount);
             for (var i = 0; i < comments.Count; i++)
             {
-                var comment = await _databaseActions.Insert(comments[i]);
+                var comment = await commentRepository.AddElement(comments[i]);
                 Logger.LogInfo("Comment seeded: " + comment.Content);
             }
 
@@ -187,6 +203,8 @@ public class Seeding
     private async Task GenerateFollowerUserRelation(Faker<FollowerUserRelationDao> followerUserRelationFaker,
         int amount)
     {
+        var followerUserRelationRepository = new FollowerUserRelationRepository(_client, _daoHelper,
+            _databaseRepositroyHelper);
         try
         {
             // Generate and insert follower user relations
@@ -194,7 +212,7 @@ public class Seeding
             var followerUserRelations = followerUserRelationFaker.Generate(amount);
             for (var i = 0; i < followerUserRelations.Count; i++)
             {
-                var followerUserRelation = await _databaseActions.Insert(followerUserRelations[i]);
+                var followerUserRelation = await followerUserRelationRepository.AddElement(followerUserRelations[i]);
                 Logger.LogInfo("FollowerUserRelation seeded. Follower: " + followerUserRelation.FollowerUserId +
                                " Followed: " + followerUserRelation.FollowedUserId);
             }
@@ -211,6 +229,8 @@ public class Seeding
     private async Task GenerateUserLikePostRelation(Faker<UserLikePostRelationDao> userLikePostRelationFaker,
         int amount)
     {
+        var userLikePostRelationRepository = new UserLikePostRelationRepostitory(_client, _daoHelper,
+            _databaseRepositroyHelper);
         try
         {
             // Generate and insert user like post relations
@@ -218,7 +238,7 @@ public class Seeding
             var userLikePostRelations = userLikePostRelationFaker.Generate(amount);
             for (var i = 0; i < userLikePostRelations.Count; i++)
             {
-                var userLikePostRelation = await _databaseActions.Insert(userLikePostRelations[i]);
+                var userLikePostRelation = await userLikePostRelationRepository.AddElement(userLikePostRelations[i]);
                 Logger.LogDebug("UserLikePostRelation seeded. User: " + userLikePostRelation.UserId + " Post: " +
                                 userLikePostRelation.PostId);
             }
@@ -234,11 +254,12 @@ public class Seeding
 
     private async Task CheckIfRoleExisits()
     {
+        var roleRepository = new RoleRepository(_client, _daoHelper, _databaseRepositroyHelper);
         var roleId = "c0589855-a81c-451d-8587-3061926a1f3a";
         Logger.LogInfo("Checking if role exists.");
         try
         {
-            var result = await _databaseActions.GetEntityByField<RoleDao>("roleID", roleId);
+            var result = await roleRepository.GetElementById(Guid.Parse(roleId));
             Logger.LogInfo("Role exists.");
         }
         catch (DatabaseMissingItemException)
@@ -251,7 +272,7 @@ public class Seeding
                 Description = "User"
             };
 
-            await _databaseActions.Insert(role);
+            await roleRepository.AddElement(role);
             Logger.LogInfo("Role seeded.");
         }
         catch (GeneralDatabaseException ex)

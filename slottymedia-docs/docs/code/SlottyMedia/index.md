@@ -38,6 +38,8 @@
 
 ## SlottyMedia.Backend.Exceptions.Services.LikeExceptions
 
+[ForumNotFoundException](./slottymedia.backend.exceptions.services.likeexceptions.forumnotfoundexception.md)
+
 [LikeGeneralException](./slottymedia.backend.exceptions.services.likeexceptions.likegeneralexception.md)
 
 [LikeIudException](./slottymedia.backend.exceptions.services.likeexceptions.likeiudexception.md)

@@ -82,7 +82,7 @@ public class UserDao : BaseModel
     /// <summary>
     ///     The Date and Time the User was created.
     /// </summary>
-    [Column("created_at")]
+    [Column("created_at", ignoreOnInsert: true, ignoreOnUpdate: true)]
     public DateTime CreatedAt { get; set; }
 
     /// <summary>

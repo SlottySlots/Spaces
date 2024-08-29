@@ -62,7 +62,7 @@ public class FollowerUserRelationDao : BaseModel
     /// <summary>
     ///     The Date and Time the Follower_User_Relation was created.
     /// </summary>
-    [Column("created_at")]
+    [Column("created_at", ignoreOnInsert: true, ignoreOnUpdate: true)]
     public DateTime CreatedAt { get; set; }
 
     /// <summary>

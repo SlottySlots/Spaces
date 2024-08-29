@@ -61,7 +61,7 @@ public class UserDto
             UserId = UserId,
             UserName = Username,
             Description = Description,
-            CreatedAt = CreatedAt,
+            CreatedAt = CreatedAt
         };
     }
 

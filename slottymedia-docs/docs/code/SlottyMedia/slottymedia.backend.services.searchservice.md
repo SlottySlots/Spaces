@@ -13,30 +13,53 @@ Implements [ISearchService](./slottymedia.backend.services.interfaces.isearchser
 
 ## Constructors
 
-### **SearchService(IDatabaseActions)**
+### **SearchService(IUserSeachRepository, IForumSearchRepository)**
 
 Constructor to initialize the database actions dependency.
 
 ```csharp
-public SearchService(IDatabaseActions databaseActions)
+public SearchService(IUserSeachRepository userSeachRepository, IForumSearchRepository forumSearchRepository)
 ```
 
 #### Parameters
 
-`databaseActions` IDatabaseActions<br>
-The database actions dependency.
+`userSeachRepository` IUserSeachRepository<br>
+
+`forumSearchRepository` IForumSearchRepository<br>
 
 ## Methods
 
-### **SearchByUsernameOrTopic(String)**
+### **SearchByUsername(String, Int32, Int32)**
 
 ```csharp
-public Task<SearchDto> SearchByUsernameOrTopic(string searchTerm)
+public Task<SearchDto> SearchByUsername(string searchTerm, int page, int pagesize)
 ```
 
 #### Parameters
 
 `searchTerm` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+`pagesize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+#### Returns
+
+[Task&lt;SearchDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **SearchByTopic(String, Int32, Int32)**
+
+```csharp
+public Task<SearchDto> SearchByTopic(string searchTerm, int page, int pagesize)
+```
+
+#### Parameters
+
+`searchTerm` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+`pagesize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 #### Returns
 

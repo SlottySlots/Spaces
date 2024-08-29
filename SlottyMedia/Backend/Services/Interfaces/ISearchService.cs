@@ -7,10 +7,7 @@ namespace SlottyMedia.Backend.Services.Interfaces;
 /// </summary>
 public interface ISearchService
 {
-    /// <summary>
-    ///     This method searches for a user by username or topic.
-    /// </summary>
-    /// <param name="searchTerm"></param>
-    /// <returns></returns>
-    public Task<SearchDto> SearchByUsernameOrTopic(string searchTerm);
+    public Task<SearchDto> SearchByUsername(string searchTerm, int page, int pagesize);
+
+    public Task<SearchDto> SearchByTopic(string searchTerm, int page, int pagesize);
 }

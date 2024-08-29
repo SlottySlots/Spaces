@@ -1,7 +1,6 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
-using SlottyMedia.Database;
 using SlottyMedia.LoggingProvider;
 using Supabase.Gotrue;
 
@@ -18,21 +17,15 @@ public class MainLayoutVmImpl : IMainLayoutVm
     private readonly IAuthService _authService;
 
     /// <summary>
-    ///     DatabaseActions used to perform crud operations such as updating the description
-    /// </summary>
-    private readonly IDatabaseActions _databaseActions;
-
-    /// <summary>
     ///     Logger used to log restores sessions.
     /// </summary>
     private readonly Logging<MainLayoutVmImpl> _logger = new();
 
     private readonly IUserService _userService;
 
-    public MainLayoutVmImpl(IAuthService authService, IDatabaseActions databaseActions, IUserService userService)
+    public MainLayoutVmImpl(IAuthService authService, IUserService userService)
     {
         _authService = authService;
-        _databaseActions = databaseActions;
         _userService = userService;
     }
 
@@ -66,7 +59,7 @@ public class MainLayoutVmImpl : IMainLayoutVm
             if (currentSession != null)
             {
                 var userId = Guid.Parse(currentSession.User!.Id!);
-                var userDao = await _userService.GetUserBy(userId);
+                var userDao = await _userService.GetUserDaoById(userId);
                 var amountOfFriends = await _userService.GetCountOfUserFriends(userId);
                 var amountOfSpaces = await _userService.GetCountOfUserSpaces(userId);
                 if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
@@ -115,7 +108,7 @@ public class MainLayoutVmImpl : IMainLayoutVm
         if (currentUserId != null)
             try
             {
-                var currentUser = await _userService.GetUserBy(Guid.Parse(currentUserId));
+                var currentUser = await _userService.GetUserDaoById(Guid.Parse(currentUserId));
                 currentUser.ProfilePic = base64Encoding;
                 await _userService.UpdateUser(currentUser);
                 return base64Encoding;

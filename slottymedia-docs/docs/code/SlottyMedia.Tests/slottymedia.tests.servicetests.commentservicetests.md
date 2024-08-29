@@ -22,7 +22,7 @@ public CommentServiceTests()
 
 ### **Setup()**
 
-Sets up the test environment before each test.
+Initializes the mock objects and the CommentService instance before each test.
 
 ```csharp
 public void Setup()
@@ -30,18 +30,18 @@ public void Setup()
 
 ### **TearDown()**
 
-Cleans up the test environment after each test.
+Resets the mock objects after each test.
 
 ```csharp
 public void TearDown()
 ```
 
-### **InsertComment_ShouldReturnComment_WhenCommentIsInserted()**
+### **InsertComment_ShouldInsertComment_WhenCommentIsValid()**
 
-Tests that InsertComment returns the correct comment when the comment is successfully inserted.
+Tests that InsertComment method inserts a comment when the comment is valid.
 
 ```csharp
-public Task InsertComment_ShouldReturnComment_WhenCommentIsInserted()
+public Task InsertComment_ShouldInsertComment_WhenCommentIsValid()
 ```
 
 #### Returns
@@ -50,7 +50,7 @@ public Task InsertComment_ShouldReturnComment_WhenCommentIsInserted()
 
 ### **InsertComment_ShouldThrowCommentIudException_WhenDatabaseIudActionExceptionIsThrown()**
 
-Tests that InsertComment throws CommentIudException when a DatabaseIudActionException is thrown.
+Tests that InsertComment method throws CommentIudException when DatabaseIudActionException is thrown.
 
 ```csharp
 public void InsertComment_ShouldThrowCommentIudException_WhenDatabaseIudActionExceptionIsThrown()
@@ -58,18 +58,18 @@ public void InsertComment_ShouldThrowCommentIudException_WhenDatabaseIudActionEx
 
 ### **InsertComment_ShouldThrowCommentGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
 
-Tests that InsertComment throws CommentGeneralException when a GeneralDatabaseException is thrown.
+Tests that InsertComment method throws CommentGeneralException when GeneralDatabaseException is thrown.
 
 ```csharp
 public void InsertComment_ShouldThrowCommentGeneralException_WhenGeneralDatabaseExceptionIsThrown()
 ```
 
-### **UpdateComment_ShouldReturnComment_WhenCommentIsUpdated()**
+### **UpdateComment_ShouldUpdateComment_WhenCommentIsValid()**
 
-Tests that UpdateComment returns the correct comment when the comment is successfully updated.
+Tests that UpdateComment method updates a comment when the comment is valid.
 
 ```csharp
-public Task UpdateComment_ShouldReturnComment_WhenCommentIsUpdated()
+public Task UpdateComment_ShouldUpdateComment_WhenCommentIsValid()
 ```
 
 #### Returns
@@ -78,7 +78,7 @@ public Task UpdateComment_ShouldReturnComment_WhenCommentIsUpdated()
 
 ### **UpdateComment_ShouldThrowCommentIudException_WhenDatabaseIudActionExceptionIsThrown()**
 
-Tests that UpdateComment throws CommentIudException when a DatabaseIudActionException is thrown.
+Tests that UpdateComment method throws CommentIudException when DatabaseIudActionException is thrown.
 
 ```csharp
 public void UpdateComment_ShouldThrowCommentIudException_WhenDatabaseIudActionExceptionIsThrown()
@@ -86,18 +86,18 @@ public void UpdateComment_ShouldThrowCommentIudException_WhenDatabaseIudActionEx
 
 ### **UpdateComment_ShouldThrowCommentGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
 
-Tests that UpdateComment throws CommentGeneralException when a GeneralDatabaseException is thrown.
+Tests that UpdateComment method throws CommentGeneralException when GeneralDatabaseException is thrown.
 
 ```csharp
 public void UpdateComment_ShouldThrowCommentGeneralException_WhenGeneralDatabaseExceptionIsThrown()
 ```
 
-### **DeleteComment_ShouldReturnTrue_WhenCommentIsDeleted()**
+### **DeleteComment_ShouldDeleteComment_WhenCommentIsValid()**
 
-Tests that DeleteComment returns true when the comment is successfully deleted.
+Tests that DeleteComment method deletes a comment when the comment is valid.
 
 ```csharp
-public Task DeleteComment_ShouldReturnTrue_WhenCommentIsDeleted()
+public Task DeleteComment_ShouldDeleteComment_WhenCommentIsValid()
 ```
 
 #### Returns
@@ -106,7 +106,7 @@ public Task DeleteComment_ShouldReturnTrue_WhenCommentIsDeleted()
 
 ### **DeleteComment_ShouldThrowCommentIudException_WhenDatabaseIudActionExceptionIsThrown()**
 
-Tests that DeleteComment throws CommentIudException when a DatabaseIudActionException is thrown.
+Tests that DeleteComment method throws CommentIudException when DatabaseIudActionException is thrown.
 
 ```csharp
 public void DeleteComment_ShouldThrowCommentIudException_WhenDatabaseIudActionExceptionIsThrown()
@@ -114,7 +114,7 @@ public void DeleteComment_ShouldThrowCommentIudException_WhenDatabaseIudActionEx
 
 ### **DeleteComment_ShouldThrowCommentGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
 
-Tests that DeleteComment throws CommentGeneralException when a GeneralDatabaseException is thrown.
+Tests that DeleteComment method throws CommentGeneralException when GeneralDatabaseException is thrown.
 
 ```csharp
 public void DeleteComment_ShouldThrowCommentGeneralException_WhenGeneralDatabaseExceptionIsThrown()

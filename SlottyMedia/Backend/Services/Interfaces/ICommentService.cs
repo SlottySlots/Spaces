@@ -1,4 +1,4 @@
-﻿using SlottyMedia.Backend.Dtos;
+﻿using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 
 namespace SlottyMedia.Backend.Services.Interfaces;
@@ -16,7 +16,7 @@ public interface ICommentService
     /// <param name="content">The content of the comment.</param>
     /// <returns>Returns the inserted CommentDto object.</returns>
     /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while inserting the comment.</exception>
-    Task<CommentDto> InsertComment(Guid creatorUserId, Guid postId, string content);
+    Task InsertComment(Guid creatorUserId, Guid postId, string content);
 
     /// <summary>
     ///     Updates an existing comment in the database.
@@ -24,7 +24,7 @@ public interface ICommentService
     /// <param name="comment">The CommentDto object containing the updated comment details.</param>
     /// <returns>Returns the updated CommentDto object.</returns>
     /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while updating the comment.</exception>
-    Task<CommentDto> UpdateComment(CommentDto comment);
+    Task UpdateComment(CommentDao comment);
 
     /// <summary>
     ///     Deletes a comment from the database.
@@ -32,5 +32,5 @@ public interface ICommentService
     /// <param name="comment">The CommentDto object containing the comment details.</param>
     /// <returns>Returns a Task representing the asynchronous operation.</returns>
     /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while deleting the comment.</exception>
-    Task DeleteComment(CommentDto comment);
+    Task DeleteComment(CommentDao comment);
 }

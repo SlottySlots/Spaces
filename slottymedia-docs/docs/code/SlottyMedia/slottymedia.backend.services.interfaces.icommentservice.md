@@ -15,7 +15,7 @@ public interface ICommentService
 Inserts a new comment into the database.
 
 ```csharp
-Task<CommentDto> InsertComment(Guid creatorUserId, Guid postId, string content)
+Task InsertComment(Guid creatorUserId, Guid postId, string content)
 ```
 
 #### Parameters
@@ -31,7 +31,7 @@ The content of the comment.
 
 #### Returns
 
-[Task&lt;CommentDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 Returns the inserted CommentDto object.
 
 #### Exceptions
@@ -39,22 +39,22 @@ Returns the inserted CommentDto object.
 T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
 Throws an exception if an error occurs while inserting the comment.
 
-### **UpdateComment(CommentDto)**
+### **UpdateComment(CommentDao)**
 
 Updates an existing comment in the database.
 
 ```csharp
-Task<CommentDto> UpdateComment(CommentDto comment)
+Task UpdateComment(CommentDao comment)
 ```
 
 #### Parameters
 
-`comment` [CommentDto](./slottymedia.backend.dtos.commentdto.md)<br>
+`comment` CommentDao<br>
 The CommentDto object containing the updated comment details.
 
 #### Returns
 
-[Task&lt;CommentDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 Returns the updated CommentDto object.
 
 #### Exceptions
@@ -62,17 +62,17 @@ Returns the updated CommentDto object.
 T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
 Throws an exception if an error occurs while updating the comment.
 
-### **DeleteComment(CommentDto)**
+### **DeleteComment(CommentDao)**
 
 Deletes a comment from the database.
 
 ```csharp
-Task DeleteComment(CommentDto comment)
+Task DeleteComment(CommentDao comment)
 ```
 
 #### Parameters
 
-`comment` [CommentDto](./slottymedia.backend.dtos.commentdto.md)<br>
+`comment` CommentDao<br>
 The CommentDto object containing the comment details.
 
 #### Returns

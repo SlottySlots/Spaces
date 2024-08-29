@@ -16,7 +16,7 @@ public interface IForumService
     /// <param name="forumTopic">The Topic from the Forum</param>
     /// <returns>Returns the inserted ForumDto object.</returns>
     /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while inserting the forum.</exception>
-    Task<ForumDto> InsertForum(Guid creatorUserId, string forumTopic);
+    Task InsertForum(Guid creatorUserId, string forumTopic);
 
     /// <summary>
     ///     Deletes a forum from the database based on the given forum ID.
@@ -34,8 +34,8 @@ public interface IForumService
     Task<ForumDto> GetForumByName(string forumName);
 
     /// <summary>
-    /// Fetches all forums by name where the name contains the given substring.
-    /// Fetches only a specified number of forums on the specified page.
+    ///     Fetches all forums by name where the name contains the given substring.
+    ///     Fetches only a specified number of forums on the specified page.
     /// </summary>
     /// <param name="name">The substring that should be contained by the forums' name</param>
     /// <param name="page">The page to fetch (one-based)</param>

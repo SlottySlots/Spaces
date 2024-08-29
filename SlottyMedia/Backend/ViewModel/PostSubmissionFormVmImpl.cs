@@ -10,11 +10,11 @@ namespace SlottyMedia.Backend.ViewModel;
 public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
 {
     private static readonly Logging<PostSubmissionFormVmImpl> Logger = new();
-    
+
     private readonly IAuthService _authService;
-    private readonly IPostService _postService;
     private readonly IForumService _forumService;
     private readonly NavigationManager _navigationManager;
+    private readonly IPostService _postService;
 
     public PostSubmissionFormVmImpl(
         IAuthService authService,
@@ -98,6 +98,7 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
             TextErrorMessage = "Must provide some text in order to submit post";
             return;
         }
+
         if (SpaceName.IsNullOrEmpty())
         {
             SpaceErrorMessage = "Must provide a space for the post";

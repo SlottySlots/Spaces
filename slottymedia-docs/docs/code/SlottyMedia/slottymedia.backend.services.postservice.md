@@ -11,37 +11,36 @@ Implements [IPostService](./slottymedia.backend.services.interfaces.ipostservice
 
 ## Properties
 
-### **DatabaseActions**
+### **PostRepository**
 
 ```csharp
-public IDatabaseActions DatabaseActions { get; set; }
+public IPostRepository PostRepository { get; set; }
 ```
 
 #### Property Value
 
-IDatabaseActions<br>
+IPostRepository<br>
 
 ## Constructors
 
-### **PostService(IDatabaseActions)**
+### **PostService(IPostRepository)**
 
 Initializes a new instance of the [PostService](./slottymedia.backend.services.postservice.md) class.
 
 ```csharp
-public PostService(IDatabaseActions databaseActions)
+public PostService(IPostRepository postRepository)
 ```
 
 #### Parameters
 
-`databaseActions` IDatabaseActions<br>
-The database actions interface.
+`postRepository` IPostRepository<br>
 
 ## Methods
 
 ### **InsertPost(String, Guid, Guid)**
 
 ```csharp
-public Task<PostDto> InsertPost(string content, Guid creatorUserId, Guid forumId)
+public Task InsertPost(string content, Guid creatorUserId, Guid forumId)
 ```
 
 #### Parameters
@@ -54,35 +53,35 @@ public Task<PostDto> InsertPost(string content, Guid creatorUserId, Guid forumId
 
 #### Returns
 
-[Task&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **UpdatePost(PostDto)**
+### **UpdatePost(PostsDao)**
 
 ```csharp
-public Task<PostDto> UpdatePost(PostDto post)
+public Task UpdatePost(PostsDao post)
 ```
 
 #### Parameters
 
-`post` [PostDto](./slottymedia.backend.dtos.postdto.md)<br>
+`post` PostsDao<br>
 
 #### Returns
 
-[Task&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **DeletePost(PostDto)**
+### **DeletePost(PostsDao)**
 
 ```csharp
-public Task<bool> DeletePost(PostDto post)
+public Task DeletePost(PostsDao post)
 ```
 
 #### Parameters
 
-`post` [PostDto](./slottymedia.backend.dtos.postdto.md)<br>
+`post` PostsDao<br>
 
 #### Returns
 
-[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **GetPostsFromForum(Guid, Int32, Int32)**
 
@@ -125,23 +124,6 @@ public Task<int> GetForumCountByUserId(Guid userId)
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-
-#### Returns
-
-[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-
-### **GetPostCountByForumId(Guid)**
-
-Retrieves the total number of posts associated with a specific forum by its ID.
-
-```csharp
-public Task<int> GetPostCountByForumId(Guid forumId)
-```
-
-#### Parameters
-
-`forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The unique identifier of the forum.
 
 #### Returns
 

@@ -27,7 +27,7 @@ public class UserVmImpl : IUserVmImpl
     {
         try
         {
-            var result = await _userService.GetUserById(userId);
+            var result = await _userService.GetUserDtoById(userId);
             return result;
         }
         catch (Exception e)
@@ -38,17 +38,15 @@ public class UserVmImpl : IUserVmImpl
     }
 
     /// <inheritdoc />
-    public async Task<UserDto> UpdateUser(UserDto user)
+    public async Task UpdateUser(UserDto user)
     {
         try
         {
-            var result = await _userService.UpdateUser(user);
-            return result;
+            await _userService.UpdateUser(user);
         }
         catch (Exception e)
         {
             Logger.LogError($"Error while updating user. Error: {e.Message}");
-            throw;
         }
     }
 }

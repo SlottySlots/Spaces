@@ -10,26 +10,6 @@
 
 [SignUpServiceTest](./slottymedia.tests.auth.signupservicetest.md)
 
-## SlottyMedia.Tests.DatabaseTests
-
-[BaseDatabaseTestClass](./slottymedia.tests.databasetests.basedatabasetestclass.md)
-
-[DatabaseActionTests](./slottymedia.tests.databasetests.databaseactiontests.md)
-
-[InitializeModels](./slottymedia.tests.databasetests.initializemodels.md)
-
-## SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests
-
-[CommentDaoTest](./slottymedia.tests.databasetests.databasemodelstests.commentdaotest.md)
-
-[FollowerUserRelationDaoTest](./slottymedia.tests.databasetests.databasemodelstests.followeruserrelationdaotest.md)
-
-[ForumDaoTest](./slottymedia.tests.databasetests.databasemodelstests.forumdaotest.md)
-
-[PostDtoTest](./slottymedia.tests.databasetests.databasemodelstests.postdtotest.md)
-
-[UserLikePostRelationDaoTest](./slottymedia.tests.databasetests.databasemodelstests.userlikepostrelationdaotest.md)
-
 ## SlottyMedia.Tests.ServiceTests
 
 [CommentServiceTests](./slottymedia.tests.servicetests.commentservicetests.md)

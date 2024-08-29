@@ -11,22 +11,22 @@ Implements [ICommentService](./slottymedia.backend.services.interfaces.icomments
 
 ## Constructors
 
-### **CommentService(IDatabaseActions)**
+### **CommentService(ICommentRepository)**
 
 ```csharp
-public CommentService(IDatabaseActions databaseActions)
+public CommentService(ICommentRepository commentRepository)
 ```
 
 #### Parameters
 
-`databaseActions` IDatabaseActions<br>
+`commentRepository` ICommentRepository<br>
 
 ## Methods
 
 ### **InsertComment(Guid, Guid, String)**
 
 ```csharp
-public Task<CommentDto> InsertComment(Guid creatorUserId, Guid postId, string content)
+public Task InsertComment(Guid creatorUserId, Guid postId, string content)
 ```
 
 #### Parameters
@@ -39,31 +39,31 @@ public Task<CommentDto> InsertComment(Guid creatorUserId, Guid postId, string co
 
 #### Returns
 
-[Task&lt;CommentDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **UpdateComment(CommentDto)**
+### **UpdateComment(CommentDao)**
 
 ```csharp
-public Task<CommentDto> UpdateComment(CommentDto comment)
+public Task UpdateComment(CommentDao comment)
 ```
 
 #### Parameters
 
-`comment` [CommentDto](./slottymedia.backend.dtos.commentdto.md)<br>
+`comment` CommentDao<br>
 
 #### Returns
 
-[Task&lt;CommentDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **DeleteComment(CommentDto)**
+### **DeleteComment(CommentDao)**
 
 ```csharp
-public Task DeleteComment(CommentDto comment)
+public Task DeleteComment(CommentDao comment)
 ```
 
 #### Parameters
 
-`comment` [CommentDto](./slottymedia.backend.dtos.commentdto.md)<br>
+`comment` CommentDao<br>
 
 #### Returns
 
