@@ -223,10 +223,11 @@
             @if (AuthService.IsAuthenticated())
             {
                 <PostSubmissionForm/>
+                <!-- the body (e.g. posts) -->
+                @Body
             }
 
-            <!-- the body (e.g. posts) -->
-            @Body
+            
 
         </div>
 

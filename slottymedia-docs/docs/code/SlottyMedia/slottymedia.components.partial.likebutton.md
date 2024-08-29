@@ -41,12 +41,12 @@ An event that is triggered when this button is clicked. The callback's parameter
  is a boolean that represents the button's new state.
 
 ```csharp
-public Nullable<EventCallback<bool>> OnClick { get; set; }
+public EventCallback<bool> OnClick { get; set; }
 ```
 
 #### Property Value
 
-[Nullable&lt;EventCallback&lt;Boolean&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+EventCallback&lt;Boolean&gt;<br>
 
 ## Constructors
 

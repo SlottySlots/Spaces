@@ -55,3 +55,19 @@ The unique identifier of the post.
 [Task&lt;List&lt;UserLikePostRelationDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of user like post
  relations.
+
+### **GetLikeByUserIdAndPostId(Guid, Guid)**
+
+```csharp
+public Task<UserLikePostRelationDao> GetLikeByUserIdAndPostId(Guid userId, Guid postId)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;UserLikePostRelationDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

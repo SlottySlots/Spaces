@@ -17,4 +17,6 @@ public interface IUserLikePostRelationRepostitory : IDatabaseRepository<UserLike
     ///     relations.
     /// </returns>
     public Task<List<UserLikePostRelationDao>> GetLikesForPost(Guid userId, Guid postId);
+
+    public Task<UserLikePostRelationDao> GetLikeByUserIdAndPostId(Guid userId, Guid postId);
 }

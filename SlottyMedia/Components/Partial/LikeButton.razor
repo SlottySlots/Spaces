@@ -20,12 +20,13 @@
     [Parameter]
     public bool? Initial { get; set; }
 
+    
     /// <summary>
     ///     An event that is triggered when this button is clicked. The callback's parameter
     ///     is a boolean that represents the button's new state.
     /// </summary>
     [Parameter]
-    public EventCallback<bool>? OnClick { get; set; }
+    public EventCallback<bool> OnClick { get; set; }
 
     /// The button's inner value
     bool _value = false;
@@ -40,9 +41,8 @@
 
     async Task ClickButton()
     {
+        await OnClick.InvokeAsync(_value);
         _value = !_value;
-        if (OnClick != null)
-            await OnClick.Value.InvokeAsync(_value);
     }
 
 }

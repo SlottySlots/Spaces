@@ -92,6 +92,7 @@ try
     builder.Services.AddScoped<ISignupService, SignupServiceImpl>();
     builder.Services.AddScoped<ISearchService, SearchService>();
     builder.Services.AddScoped<IForumService, ForumService>();
+    builder.Services.AddScoped<ILikeService, LikeService>();
 
     // Viewmodel
     logger.LogInfo("Adding Viewmodels to the container");

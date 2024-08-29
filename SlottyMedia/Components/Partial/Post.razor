@@ -1,7 +1,8 @@
 @using SlottyMedia.Backend.Dtos
-@using SlottyMedia.Backend.ViewModel.Interfaces
-@inject IUserVmImpl UserService;
+@using SlottyMedia.Backend.Services.Interfaces
 
+@inject IUserService UserService;
+@inject ILikeService LikeService;
 
 @if (!_isLoading)
 {
@@ -59,9 +60,9 @@
 
             <!-- like button -->
             <div class="flex gap-3 items-center">
-                <LikeButton/>
+                <LikeButton Initial="@_initLiked" OnClick="LikeClick"/>
                 <span class="text-cadet-gray">
-                    3.2K
+                    @_likeCount
                 </span>
             </div>
 
@@ -69,6 +70,7 @@
 
     </div>
 }
+
 
 
 @if (_isLoading)
@@ -84,16 +86,49 @@
     /// The post to be rendered.
     [Parameter]
     public PostDto? Dto { get; set; }
+    
+    ///<summary>
+    ///The current logged in user id to propagate towards like component
+    /// </summary>
+    [Parameter]
+    public Guid CurrentUserId { get; set; }
 
-    bool _isLoading = true;
-
+    private bool _isLoading = true;
+    private int _likeCount;
+    private bool _initLiked;
+    
     UserDto? _owner;
 
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()
     {
         _isLoading = true;
-        _owner = await UserService.GetUserById(Dto!.UserId);
+        //TODO: This should be changed soon!
+        await SetLikeCountState(); 
+        _owner = await UserService.GetUserDtoById(Dto!.UserId);
         _isLoading = false;
+    }
+
+    public async Task SetLikeCountState()
+    {
+        var likeList = await LikeService.GetLikesForPost(Dto!.PostId);
+        _likeCount = likeList.Count;
+        _initLiked = likeList.Contains(CurrentUserId); 
+    }
+
+    public async void LikeClick(bool wasUnliked)
+    {
+        if (wasUnliked)
+        {
+            await LikeService.DeleteLike(CurrentUserId, Dto!.PostId);
+        }
+        else
+        {
+            await LikeService.InsertLike(CurrentUserId, Dto!.PostId);
+            
+        }
+
+        await SetLikeCountState();
+        StateHasChanged();
     }
 }

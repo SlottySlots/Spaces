@@ -21,6 +21,18 @@ public PostDto Dto { get; set; }
 
 [PostDto](./slottymedia.backend.dtos.postdto.md)<br>
 
+### **CurrentUserId**
+
+The current logged in user id to propagate towards like component
+
+```csharp
+public Guid CurrentUserId { get; set; }
+```
+
+#### Property Value
+
+[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
 ## Constructors
 
 ### **Post()**
@@ -50,3 +62,23 @@ protected Task OnParametersSetAsync()
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **SetLikeCountState()**
+
+```csharp
+public Task SetLikeCountState()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **LikeClick(Boolean)**
+
+```csharp
+public void LikeClick(bool wasUnliked)
+```
+
+#### Parameters
+
+`wasUnliked` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
