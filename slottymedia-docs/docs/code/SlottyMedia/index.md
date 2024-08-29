@@ -120,6 +120,8 @@
 
 [MainLayoutVmImpl](./slottymedia.backend.viewmodel.mainlayoutvmimpl.md)
 
+[PostPageVmImpl](./slottymedia.backend.viewmodel.postpagevmimpl.md)
+
 [PostSubmissionFormVmImpl](./slottymedia.backend.viewmodel.postsubmissionformvmimpl.md)
 
 [SignInFormVmImpl](./slottymedia.backend.viewmodel.signinformvmimpl.md)
@@ -139,6 +141,8 @@
 [IHomePageVm](./slottymedia.backend.viewmodel.interfaces.ihomepagevm.md)
 
 [IMainLayoutVm](./slottymedia.backend.viewmodel.interfaces.imainlayoutvm.md)
+
+[IPostPageVm](./slottymedia.backend.viewmodel.interfaces.ipostpagevm.md)
 
 [IPostSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.ipostsubmissionformvm.md)
 
@@ -172,6 +176,8 @@
 
 [Login](./slottymedia.components.pages.login.md)
 
+[PostPage](./slottymedia.components.pages.postpage.md)
+
 [Register](./slottymedia.components.pages.register.md)
 
 [Spaces](./slottymedia.components.pages.spaces.md)
@@ -183,6 +189,8 @@
 [Card](./slottymedia.components.partial.card.md)
 
 [Checkbox](./slottymedia.components.partial.checkbox.md)
+
+[Comment](./slottymedia.components.partial.comment.md)
 
 [DescriptionContainer](./slottymedia.components.partial.descriptioncontainer.md)
 

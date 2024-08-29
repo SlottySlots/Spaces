@@ -84,3 +84,21 @@ Returns a Task representing the asynchronous operation.
 
 T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
 Throws an exception if an error occurs while deleting the comment.
+
+### **GetCommentsInPost(Guid, Int32, Int32)**
+
+```csharp
+Task<List<CommentDto>> GetCommentsInPost(Guid postId, int page, int pageSize)
+```
+
+#### Parameters
+
+`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+#### Returns
+
+[Task&lt;List&lt;CommentDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

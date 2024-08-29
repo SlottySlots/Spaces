@@ -33,6 +33,20 @@ public Guid CurrentUserId { get; set; }
 
 [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
+### **OnPostClick**
+
+This event is triggered when either the post's text or the post's comment button is clicked.
+ This event will be used to navigate to the post's dedicated page from the home page (i.e. `/post/{ID}`).
+ On the post's dedicated page this event will not trigger any behaviour.
+
+```csharp
+public EventCallback OnPostClick { get; set; }
+```
+
+#### Property Value
+
+EventCallback<br>
+
 ## Constructors
 
 ### **Post()**
