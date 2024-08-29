@@ -18,10 +18,16 @@ else if (ViewModel.Post is null)
 else
 {
     <Post Dto="ViewModel.Post"/>
-    <div class="w-full p-5 flex flex-col gap-3">
+    <div class="w-full p-5 flex flex-col items-center gap-3">
         @foreach (var comment in ViewModel.Comments)
         {
             <Comment Dto="comment"/>
+        }
+        @if (ViewModel.Comments.Count < ViewModel.TotalNumberOfComments)
+        {
+            <button @onclick="ViewModel.LoadMoreComments" class="w-1/2 p-3 bg-raisin-black text-white border-none rounded-[12px]">
+                Load more comments
+            </button>
         }
     </div>
 }

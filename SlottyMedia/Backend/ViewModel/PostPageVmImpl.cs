@@ -33,7 +33,10 @@ public class PostPageVmImpl : IPostPageVm
 
     /// <inheritdoc />
     public List<CommentDto> Comments { get; private set; } = [];
-    
+
+    /// <inheritdoc />
+    public int TotalNumberOfComments { get; private set; }
+
     /// <inheritdoc />
     public async Task LoadPage(Guid postId)
     {
@@ -43,15 +46,22 @@ public class PostPageVmImpl : IPostPageVm
         Comments = [];
         Post = await _postService.GetPostById(postId);
         if (Post is null)
+        {
             _logger.LogWarn($"Attempting to load page for a nonexistent post ID: {postId}");
+        }
         else
+        {
+            TotalNumberOfComments = await _commentService.CountCommentsInPost(Post.PostId);
             await LoadMoreComments();
+        }
         IsLoadingPage = false;
     }
 
     /// <inheritdoc />
     public async Task LoadMoreComments()
     {
+        if (IsLoadingComments)
+            return;
         if (Post is null)
         {
             _logger.LogWarn($"Attempted to load comments for nonexistent post");

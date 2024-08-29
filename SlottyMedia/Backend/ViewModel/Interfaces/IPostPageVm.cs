@@ -21,6 +21,9 @@ public interface IPostPageVm
     /// <summary>The comments that belong to the post</summary>
     List<CommentDto> Comments { get; }
     
+    /// <summary>Indicates the total number of comments in the showcased post</summary>
+    int TotalNumberOfComments { get; }
+    
     /// <summary>
     ///     Attempts to load the given post. If no such post exists, then <see cref="Post"/> will be <c>null</c>.
     ///     Otherwise, it will be a <see cref="PostDto"/> that corresponds to the requested post.
