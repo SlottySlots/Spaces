@@ -36,9 +36,9 @@
 
 [ForumIudException](./slottymedia.backend.exceptions.services.forumexceptions.forumiudexception.md)
 
-## SlottyMedia.Backend.Exceptions.Services.LikeExceptions
+[ForumNotFoundException](./slottymedia.backend.exceptions.services.forumexceptions.forumnotfoundexception.md)
 
-[ForumNotFoundException](./slottymedia.backend.exceptions.services.likeexceptions.forumnotfoundexception.md)
+## SlottyMedia.Backend.Exceptions.Services.LikeExceptions
 
 [LikeGeneralException](./slottymedia.backend.exceptions.services.likeexceptions.likegeneralexception.md)
 

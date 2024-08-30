@@ -5,41 +5,41 @@ namespace SlottyMedia.Backend.ViewModel.Interfaces;
 public interface IProfilePageVm
 {
     /// <summary>
-    /// Gets UserInformationDto based on provided userId
+    ///     Gets UserInformationDto based on provided userId
     /// </summary>
     /// <param name="userId">
-    /// UserId to look up in db
+    ///     UserId to look up in db
     /// </param>
     /// <returns>
-    /// UserInformationDto?
+    ///     UserInformationDto?
     /// </returns>
     public Task<UserInformationDto?> GetUserInfo(Guid userId);
 
     /// <summary>
-    /// Checks whether a user follows another user based on their ids
+    ///     Checks whether a user follows another user based on their ids
     /// </summary>
     /// <param name="userIdToCheck">
-    /// UserId to check
+    ///     UserId to check
     /// </param>
     /// <param name="userIdLoggedIn">
-    /// UserId that may follow the one to check
+    ///     UserId that may follow the one to check
     /// </param>
     /// <returns>
-    /// Boolean representing the state. Returns null if to check id is same as the logged in.
+    ///     Boolean representing the state. Returns null if to check id is same as the logged in.
     /// </returns>
     public Task<bool?> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn);
-    
+
     /// <summary>
-    /// Method used to follow a user by id
+    ///     Method used to follow a user by id
     /// </summary>
     /// <param name="userIdFollows">
-    /// The user that tries to follow another
+    ///     The user that tries to follow another
     /// </param>
     /// <param name="userIdToFollow">
-    /// The user that the user tries to follow
+    ///     The user that the user tries to follow
     /// </param>
     /// <returns>
-    /// Task
+    ///     Task
     /// </returns>
     public Task FollowUserById(Guid userIdFollows, Guid userIdToFollow);
 }

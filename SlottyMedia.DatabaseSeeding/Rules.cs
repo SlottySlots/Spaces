@@ -1,4 +1,3 @@
-using System.Text;
 using Bogus;
 using SlottyMedia.Database.Daos;
 
@@ -32,6 +31,7 @@ public class Rules
                 {
                     userId = f.Random.Guid();
                 } while (existingUserIds.Contains(userId));
+
                 existingUserIds.Add(userId);
                 return userId;
             })
@@ -43,6 +43,7 @@ public class Rules
                 {
                     userName = f.Internet.UserName();
                 } while (existingUserNames.Contains(userName));
+
                 existingUserNames.Add(userName);
                 return userName;
             })
@@ -54,13 +55,13 @@ public class Rules
                 switch (rand)
                 {
                     case 1:
-                        url= f.DiceBear().Lorelei("png",seed:f.Random.Guid().ToString(), size: 256);
+                        url = f.DiceBear().Lorelei("png", f.Random.Guid().ToString(), 256);
                         break;
                     case 2:
-                        url = f.DiceBear().Adventurer("png",seed:f.Random.Guid().ToString(), size: 256);
+                        url = f.DiceBear().Adventurer("png", f.Random.Guid().ToString(), 256);
                         break;
                     case 3:
-                        url = f.DiceBear().Bottts("png", seed:f.Random.Guid().ToString(), size: 256);
+                        url = f.DiceBear().Bottts("png", f.Random.Guid().ToString(), 256);
                         break;
                 }
 
@@ -74,6 +75,7 @@ public class Rules
                 {
                     email = f.Internet.Email();
                 } while (existingEmails.Contains(email));
+
                 existingEmails.Add(email);
                 return email;
             });
@@ -93,24 +95,28 @@ public class Rules
     {
         var existingForumIds = new HashSet<Guid>();
         var existingForumTopics = new HashSet<string>();
-    
+
         var forumFaker = new Faker<ForumDao>()
-            .RuleFor(f => f.ForumId, f =>            {
+            .RuleFor(f => f.ForumId, f =>
+            {
                 Guid forumId;
                 do
                 {
                     forumId = f.Random.Guid();
                 } while (existingForumIds.Contains(forumId));
+
                 existingForumIds.Add(forumId);
                 return forumId;
             })
             .RuleFor(f => f.CreatorUserId, f => userIds[f.Random.Int(0, userIds.Count - 1)])
-            .RuleFor(f => f.ForumTopic, f =>  {
+            .RuleFor(f => f.ForumTopic, f =>
+            {
                 string forumTopic;
                 do
                 {
                     forumTopic = f.Internet.DomainWord();
                 } while (existingForumTopics.Contains(forumTopic));
+
                 existingForumTopics.Add(forumTopic);
                 return forumTopic;
             })
@@ -134,12 +140,14 @@ public class Rules
     {
         var existingPostIds = new HashSet<Guid>();
         var postFaker = new Faker<PostsDao>()
-            .RuleFor(p => p.PostId, f => {
+            .RuleFor(p => p.PostId, f =>
+            {
                 Guid postId;
                 do
                 {
                     postId = f.Random.Guid();
                 } while (existingPostIds.Contains(postId));
+
                 existingPostIds.Add(postId);
                 return postId;
             })
@@ -167,12 +175,14 @@ public class Rules
         var existingCommentIds = new HashSet<Guid>();
 
         var commentFaker = new Faker<CommentDao>()
-            .RuleFor(c => c.CommentId, f => {
+            .RuleFor(c => c.CommentId, f =>
+            {
                 Guid commentId;
                 do
                 {
                     commentId = f.Random.Guid();
                 } while (existingCommentIds.Contains(commentId));
+
                 existingCommentIds.Add(commentId);
                 return commentId;
             })
@@ -201,12 +211,14 @@ public class Rules
         var exisitingFollowerUserRelationId = new HashSet<Guid>();
         var existingRelations = new HashSet<(Guid, Guid)>();
         var followerUserRelationFaker = new Faker<FollowerUserRelationDao>()
-            .RuleFor(f => f.FollowerUserRelationId, f => {
+            .RuleFor(f => f.FollowerUserRelationId, f =>
+            {
                 Guid followerUserRelationId;
                 do
                 {
                     followerUserRelationId = f.Random.Guid();
                 } while (exisitingFollowerUserRelationId.Contains(followerUserRelationId));
+
                 exisitingFollowerUserRelationId.Add(followerUserRelationId);
                 return followerUserRelationId;
             })
@@ -248,12 +260,14 @@ public class Rules
         var existingUserLikePostRelationIds = new HashSet<Guid>();
         var existingRelations = new HashSet<(Guid, Guid)>();
         var userLikePostRelationFaker = new Faker<UserLikePostRelationDao>()
-            .RuleFor(ul => ul.UserLikePostRelationId, f => {
+            .RuleFor(ul => ul.UserLikePostRelationId, f =>
+            {
                 Guid userLikePostRelationIds;
                 do
                 {
                     userLikePostRelationIds = f.Random.Guid();
                 } while (existingUserLikePostRelationIds.Contains(userLikePostRelationIds));
+
                 existingUserLikePostRelationIds.Add(userLikePostRelationIds);
                 return userLikePostRelationIds;
             })

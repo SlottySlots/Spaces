@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Database.Repository.FollowerUserRelatioRepo
 Interface for the Follower User Relation Repository.
 
 ```csharp
-public interface IFollowerUserRelationRepository : SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.FollowerUserRelationDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+public interface IFollowerUserRelationRepository : SlottyMedia.Database.Repository.IDatabaseRepository`1[[SlottyMedia.Database.Daos.FollowerUserRelationDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
 ```
 
-Implements [IDatabaseRepository&lt;FollowerUserRelationDao&gt;](./slottymedia.database.idatabaserepository-1.md)
+Implements [IDatabaseRepository&lt;FollowerUserRelationDao&gt;](./slottymedia.database.repository.idatabaserepository-1.md)
 
 ## Methods
 

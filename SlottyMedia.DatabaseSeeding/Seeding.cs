@@ -1,5 +1,4 @@
 ﻿using Bogus;
-using Microsoft.Extensions.Logging;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Helper;
@@ -48,83 +47,83 @@ public class Seeding
         Login login = new();
         await login.LoginUser(_client);
 
-            await CheckIfRoleExisits();
+        await CheckIfRoleExisits();
 
-            var countUser = 20;
-            var rules = new Rules();
-            
-            var userIds = new List<Guid>();
+        var countUser = 20;
+        var rules = new Rules();
 
-            if (await CheckIfSeedingIsNeeded<UserDao>(countUser))
-            {
-                Logger.LogInfo("Database needs seeding with random user data.");
-                var userFaker = rules.UserRules();
-                userIds = await GenerateUsers(userFaker, countUser);
-            }
-            else
-            {
-                Logger.LogInfo("Database already seeded with random user data.");
-            }
+        var userIds = new List<Guid>();
 
-            var forumIds = new List<Guid>();
-            
-            if (await CheckIfSeedingIsNeeded<ForumDao>(countUser * 2))
-            {
-                Logger.LogInfo("Database needs seeding with random forum data.");
-                var forumFaker = rules.ForumRules(userIds);
-                forumIds = await GenerateForums(forumFaker, countUser * 2);   
-            }
-            else
-            {
-                Logger.LogInfo("Database already seeded with random forum data.");
-            }
+        if (await CheckIfSeedingIsNeeded<UserDao>(countUser))
+        {
+            Logger.LogInfo("Database needs seeding with random user data.");
+            var userFaker = rules.UserRules();
+            userIds = await GenerateUsers(userFaker, countUser);
+        }
+        else
+        {
+            Logger.LogInfo("Database already seeded with random user data.");
+        }
 
-            
-            var postIds = new List<Guid>();
-            if (await CheckIfSeedingIsNeeded<PostsDao>(countUser * 4))
-            {
-                Logger.LogInfo("Database needs seeding with random post data.");
-                var postFaker = rules.PostRules(userIds, forumIds);
-                postIds = await GeneratePosts(postFaker, countUser * 4);
-            }
-            else
-            {
-                Logger.LogInfo("Database already seeded with random post data.");
-            }
+        var forumIds = new List<Guid>();
 
-            if (await CheckIfSeedingIsNeeded<CommentDao>(countUser *6))
-            {
-                Logger.LogInfo("Database needs seeding with random comment data.");
-                var commentFaker = rules.CommentRules(userIds, postIds);
-                await GenereateComments(commentFaker, countUser * 6);
-            }
-            else
-            {
-                Logger.LogInfo("Database already seeded with random comment data.");
-            }
-
-            if (await CheckIfSeedingIsNeeded<FollowerUserRelationDao>(userIds.Count * (userIds.Count - 1)))
-            {
-                Logger.LogInfo("Database needs seeding with random follower user relation data.");
-                var followerUserRelationFaker = rules.FollowerUserRelationRules(userIds);
-                await GenerateFollowerUserRelation(followerUserRelationFaker, userIds.Count * (userIds.Count - 1));   
-            }
-            else
-            {
-                Logger.LogInfo("Database already seeded with random follower user relation data.");
-            }
+        if (await CheckIfSeedingIsNeeded<ForumDao>(countUser * 2))
+        {
+            Logger.LogInfo("Database needs seeding with random forum data.");
+            var forumFaker = rules.ForumRules(userIds);
+            forumIds = await GenerateForums(forumFaker, countUser * 2);
+        }
+        else
+        {
+            Logger.LogInfo("Database already seeded with random forum data.");
+        }
 
 
-            if (await CheckIfSeedingIsNeeded<UserLikePostRelationDao>(userIds.Count * postIds.Count / 2))
-            {
-                Logger.LogInfo("Database needs seeding with random user like post relation data.");
-                var userLikePostRelationFaker = rules.UserLikePostRelationRules(userIds, postIds);
-                await GenerateUserLikePostRelation(userLikePostRelationFaker, userIds.Count * postIds.Count / 2);
-            }
-            else
-            {
-                Logger.LogInfo("Database already seeded with random user like post relation data.");
-            }
+        var postIds = new List<Guid>();
+        if (await CheckIfSeedingIsNeeded<PostsDao>(countUser * 4))
+        {
+            Logger.LogInfo("Database needs seeding with random post data.");
+            var postFaker = rules.PostRules(userIds, forumIds);
+            postIds = await GeneratePosts(postFaker, countUser * 4);
+        }
+        else
+        {
+            Logger.LogInfo("Database already seeded with random post data.");
+        }
+
+        if (await CheckIfSeedingIsNeeded<CommentDao>(countUser * 6))
+        {
+            Logger.LogInfo("Database needs seeding with random comment data.");
+            var commentFaker = rules.CommentRules(userIds, postIds);
+            await GenereateComments(commentFaker, countUser * 6);
+        }
+        else
+        {
+            Logger.LogInfo("Database already seeded with random comment data.");
+        }
+
+        if (await CheckIfSeedingIsNeeded<FollowerUserRelationDao>(userIds.Count * (userIds.Count - 1)))
+        {
+            Logger.LogInfo("Database needs seeding with random follower user relation data.");
+            var followerUserRelationFaker = rules.FollowerUserRelationRules(userIds);
+            await GenerateFollowerUserRelation(followerUserRelationFaker, userIds.Count * (userIds.Count - 1));
+        }
+        else
+        {
+            Logger.LogInfo("Database already seeded with random follower user relation data.");
+        }
+
+
+        if (await CheckIfSeedingIsNeeded<UserLikePostRelationDao>(userIds.Count * postIds.Count / 2))
+        {
+            Logger.LogInfo("Database needs seeding with random user like post relation data.");
+            var userLikePostRelationFaker = rules.UserLikePostRelationRules(userIds, postIds);
+            await GenerateUserLikePostRelation(userLikePostRelationFaker, userIds.Count * postIds.Count / 2);
+        }
+        else
+        {
+            Logger.LogInfo("Database already seeded with random user like post relation data.");
+        }
 
         await login.LogoutUser(_client);
     }
@@ -142,15 +141,16 @@ public class Seeding
             case Type t when t == typeof(CommentDao):
                 return new CommentRepository(_client, _daoHelper, _databaseRepositroyHelper) as DatabaseRepository<T>;
             case Type t when t == typeof(FollowerUserRelationDao):
-                return new FollowerUserRelationRepository(_client, _daoHelper, _databaseRepositroyHelper) as DatabaseRepository<T>;
+                return new FollowerUserRelationRepository(_client, _daoHelper, _databaseRepositroyHelper) as
+                    DatabaseRepository<T>;
             case Type t when t == typeof(UserLikePostRelationDao):
-                return new UserLikePostRelationRepostitory(_client, _daoHelper, _databaseRepositroyHelper) as DatabaseRepository<T>;
+                return new UserLikePostRelationRepostitory(_client, _daoHelper, _databaseRepositroyHelper) as
+                    DatabaseRepository<T>;
             default:
                 return null;
-            
         }
     }
-    
+
     private async Task<bool> CheckIfSeedingIsNeeded<T>(int amount) where T : BaseModel, new()
     {
         var repository = GetDatabaseRepository<T>();
@@ -180,9 +180,9 @@ public class Seeding
             var userIds = new List<Guid>();
             for (var i = 0; i < users.Count; i++)
             {
-               var result = await ImageDownloader.DownloadAndEncodeImage(users[i].ProfilePic);
+                var result = await ImageDownloader.DownloadAndEncodeImage(users[i].ProfilePic);
                 users[i].ProfilePic = result;
-                
+
                 var user = await userRepository.AddElement(users[i]);
                 userIds.Add(user.UserId ?? Guid.Empty);
                 Logger.LogInfo("User seeded: " + user.UserName);

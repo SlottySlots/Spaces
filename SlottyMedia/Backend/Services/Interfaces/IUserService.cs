@@ -99,43 +99,43 @@ public interface IUserService
     /// <param name="user">The UserDto object to be updated.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the updated UserDto object.</returns>
     public Task UpdateUser(UserDto user);
-    
+
     /// <summary>
-    /// Checks whether a user follows another user based on their ids
+    ///     Checks whether a user follows another user based on their ids
     /// </summary>
     /// <param name="userIdToCheck">
-    /// UserId to check
+    ///     UserId to check
     /// </param>
     /// <param name="userIdLoggedIn">
-    /// UserId that may follow the one to check
+    ///     UserId that may follow the one to check
     /// </param>
     /// <returns>
-    /// Boolean representing the state
+    ///     Boolean representing the state
     /// </returns>
     public Task<bool> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn);
 
     /// <summary>
-    /// Gets a user dao based on the user id
+    ///     Gets a user dao based on the user id
     /// </summary>
     /// <param name="userId">
-    /// Id to retrieve
+    ///     Id to retrieve
     /// </param>
     /// <returns>
-    /// Returns a user dao
+    ///     Returns a user dao
     /// </returns>
     public Task<UserDao> GetUserDaoById(Guid userId);
-    
+
     /// <summary>
-    /// Method used to follow a user by id
+    ///     Method used to follow a user by id
     /// </summary>
     /// <param name="userIdFollows">
-    /// The user that tries to follow another
+    ///     The user that tries to follow another
     /// </param>
     /// <param name="userIdToFollow">
-    /// The user that the user tries to follow
+    ///     The user that the user tries to follow
     /// </param>
     /// <returns>
-    /// Task
+    ///     Task
     /// </returns>
     public Task FollowUserById(Guid userIdFollows, Guid userIdToFollow);
 }

@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Database.Repository.RoleRepo
 Interface for Role Repository, extending the IDatabaseRepository for RoleDao.
 
 ```csharp
-public interface IRoleRepository : SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.RoleDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+public interface IRoleRepository : SlottyMedia.Database.Repository.IDatabaseRepository`1[[SlottyMedia.Database.Daos.RoleDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
 ```
 
-Implements [IDatabaseRepository&lt;RoleDao&gt;](./slottymedia.database.idatabaserepository-1.md)
+Implements [IDatabaseRepository&lt;RoleDao&gt;](./slottymedia.database.repository.idatabaserepository-1.md)
 
 ## Methods
 

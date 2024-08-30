@@ -22,17 +22,16 @@ public interface IFollowerUserRelationRepository : IDatabaseRepository<FollowerU
     public Task<List<FollowerUserRelationDao>> GetFriends(Guid userId);
 
     /// <summary>
-    /// Gets a list of FollowerUserRelationDaos by userId
+    ///     Gets a list of FollowerUserRelationDaos by userId
     /// </summary>
     /// <param name="userId">
-    /// UserId to retrieve its follows
+    ///     UserId to retrieve its follows
     /// </param>
     /// <returns>
-    /// List of FollowerUserRelationDaos matching the userid
+    ///     List of FollowerUserRelationDaos matching the userid
     /// </returns>
     public Task<List<FollowerUserRelationDao>> GetFollowsOfUserById(Guid userId);
 
 
     public Task<FollowerUserRelationDao> CheckIfUserIsFollowed(Guid userId, Guid followedUserId);
-
 }

@@ -5,11 +5,11 @@ Namespace: SlottyMedia.Database.Repository.ForumRepo
 Repository class for managing top forums in the database.
 
 ```csharp
-public class TopForumRepository : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.TopForumDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.TopForumDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], ITopForumRepository
+public class TopForumRepository : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.TopForumDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.Repository.IDatabaseRepository`1[[SlottyMedia.Database.Daos.TopForumDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], ITopForumRepository
 ```
 
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [DatabaseRepository&lt;TopForumDao&gt;](./slottymedia.database.repository.databaserepository-1.md) → [TopForumRepository](./slottymedia.database.repository.forumrepo.topforumrepository.md)<br>
-Implements [IDatabaseRepository&lt;TopForumDao&gt;](./slottymedia.database.idatabaserepository-1.md), [ITopForumRepository](./slottymedia.database.repository.forumrepo.itopforumrepository.md)
+Implements [IDatabaseRepository&lt;TopForumDao&gt;](./slottymedia.database.repository.idatabaserepository-1.md), [ITopForumRepository](./slottymedia.database.repository.forumrepo.itopforumrepository.md)
 
 ## Constructors
 
