@@ -90,7 +90,7 @@ public class PostsDao : BaseModel
     ///     The Date and Time the Post was created.
     /// </summary>
     [Column("created_at", ignoreOnInsert: true, ignoreOnUpdate: true)]
-    public DateTime CreatedAt { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
 
     /// <summary>
     ///     The ToString method returns a string representation of the object.

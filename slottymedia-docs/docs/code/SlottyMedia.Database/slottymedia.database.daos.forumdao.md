@@ -65,12 +65,12 @@ public string ForumTopic { get; set; }
 Created Date and Time of the Forum.
 
 ```csharp
-public DateTime CreatedAt { get; set; }
+public DateTimeOffset CreatedAt { get; set; }
 ```
 
 #### Property Value
 
-[DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)<br>
+[DateTimeOffset](https://docs.microsoft.com/en-us/dotnet/api/system.datetimeoffset)<br>
 
 ### **BaseUrl**
 

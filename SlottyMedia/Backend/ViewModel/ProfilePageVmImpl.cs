@@ -38,7 +38,7 @@ public class ProfilePageVmImpl : IProfilePageVm
                 ProfilePic = userDao.ProfilePic,
                 FriendsAmount = amountOfFriends,
                 SpacesAmount = amountOfSpaces,
-                CreatedAt = userDao.CreatedAt!
+                CreatedAt = userDao.CreatedAt.LocalDateTime
             };
             return userInformationDto;
         }
