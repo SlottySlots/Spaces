@@ -28,7 +28,7 @@
     @if (_followsUserRetrieved != null)
     {
         <div class="w-1/4">
-            <HotButton Type="submit" Class="w-full">
+            <HotButton OnClick="FollowButtonClicked" Type="button" Class="w-full">
                 @if (_followsUserRetrieved == true)
                 {
                     <p>Unfollow</p>
@@ -90,5 +90,12 @@
         {
             _invalidIdFlag = true;
         }
+    }
+
+    public async void FollowButtonClicked()
+    {
+        await ProfilePageVm.FollowUserById(Guid.Parse(_currentSession!.User!.Id!), _profileUserId);
+        _followsUserRetrieved = !_followsUserRetrieved;
+        StateHasChanged();
     }
 }

@@ -65,3 +65,24 @@ UserId to retrieve its follows
 
 [Task&lt;List&lt;FollowerUserRelationDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 List of FollowerUserRelationDaos matching the userid
+
+### **FollowUserByDao(UserDao, UserDao)**
+
+Method used to follow a user by dao
+
+```csharp
+Task FollowUserByDao(UserDao userFollows, UserDao userToFollow)
+```
+
+#### Parameters
+
+`userFollows` [UserDao](./slottymedia.database.daos.userdao.md)<br>
+The user that tries to follow another
+
+`userToFollow` [UserDao](./slottymedia.database.daos.userdao.md)<br>
+The user that the user tries to follow
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+Task

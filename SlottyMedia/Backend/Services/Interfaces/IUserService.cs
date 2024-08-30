@@ -124,4 +124,18 @@ public interface IUserService
     /// Returns a user dao
     /// </returns>
     public Task<UserDao> GetUserDaoById(Guid userId);
+    
+    /// <summary>
+    /// Method used to follow a user by id
+    /// </summary>
+    /// <param name="userIdFollows">
+    /// The user that tries to follow another
+    /// </param>
+    /// <param name="userIdToFollow">
+    /// The user that the user tries to follow
+    /// </param>
+    /// <returns>
+    /// Task
+    /// </returns>
+    public Task FollowUserById(Guid userIdFollows, Guid userIdToFollow);
 }

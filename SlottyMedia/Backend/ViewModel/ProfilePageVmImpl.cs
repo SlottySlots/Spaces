@@ -55,4 +55,9 @@ public class ProfilePageVmImpl : IProfilePageVm
         }
         return null;
     }
+
+    public async Task FollowUserById(Guid userIdFollows, Guid userIdToFollow)
+    {
+        await _userService.FollowUserById(userIdFollows, userIdToFollow);
+    }
 }

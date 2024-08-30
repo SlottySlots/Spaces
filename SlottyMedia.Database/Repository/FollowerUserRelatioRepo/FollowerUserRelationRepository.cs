@@ -66,4 +66,15 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
 
         return await ExecuteQuery(listOfFollowerDao);
     }
+
+    public async Task FollowUserByDao(UserDao userFollows, UserDao userToFollow)
+    {
+        var userFollowRelationDao = new FollowerUserRelationDao();
+        userFollowRelationDao.FollowerUser = userFollows;
+        userFollowRelationDao.FollowerUserId = userFollows.UserId;
+        userFollowRelationDao.FollowedUser = userToFollow;
+        userFollowRelationDao.FollowedUserId = userToFollow.UserId;
+        
+        await AddElement(userFollowRelationDao);
+    }
 }

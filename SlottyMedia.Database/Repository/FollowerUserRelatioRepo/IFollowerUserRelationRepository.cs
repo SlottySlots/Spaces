@@ -31,4 +31,18 @@ public interface IFollowerUserRelationRepository : IDatabaseRepository<FollowerU
     /// List of FollowerUserRelationDaos matching the userid
     /// </returns>
     public Task<List<FollowerUserRelationDao>> GetFollowsOfUserById(Guid userId);
+
+    /// <summary>
+    /// Method used to follow a user by dao
+    /// </summary>
+    /// <param name="userFollows">
+    /// The user that tries to follow another
+    /// </param>
+    /// <param name="userToFollow">
+    /// The user that the user tries to follow
+    /// </param>
+    /// <returns>
+    /// Task
+    /// </returns>
+    public Task FollowUserByDao(UserDao userFollows, UserDao userToFollow);
 }

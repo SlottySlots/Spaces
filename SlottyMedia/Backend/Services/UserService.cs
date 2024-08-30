@@ -345,4 +345,11 @@ public class UserService : IUserService
             throw new UserGeneralException($"An error occurred while fetching the user. ID: {userId}", ex);
         }
     }
+
+    public async Task FollowUserById(Guid userIdFollows, Guid userIdToFollow)
+    {
+        var userFollows = await GetUserDaoById(userIdFollows);
+        var userToFollow = await GetUserDaoById(userIdToFollow);
+        await _followerUserRelationRepository.FollowUserByDao(userFollows, userToFollow);
+    }
 }

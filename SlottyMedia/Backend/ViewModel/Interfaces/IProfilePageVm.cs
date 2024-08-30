@@ -28,4 +28,18 @@ public interface IProfilePageVm
     /// Boolean representing the state. Returns null if to check id is same as the logged in.
     /// </returns>
     public Task<bool?> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn);
+    
+    /// <summary>
+    /// Method used to follow a user by id
+    /// </summary>
+    /// <param name="userIdFollows">
+    /// The user that tries to follow another
+    /// </param>
+    /// <param name="userIdToFollow">
+    /// The user that the user tries to follow
+    /// </param>
+    /// <returns>
+    /// Task
+    /// </returns>
+    public Task FollowUserById(Guid userIdFollows, Guid userIdToFollow);
 }

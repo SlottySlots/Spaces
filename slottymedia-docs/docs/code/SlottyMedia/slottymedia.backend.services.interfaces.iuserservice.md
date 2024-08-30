@@ -269,3 +269,24 @@ Id to retrieve
 
 [Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns a user dao
+
+### **FollowUserById(Guid, Guid)**
+
+Method used to follow a user by id
+
+```csharp
+Task FollowUserById(Guid userIdFollows, Guid userIdToFollow)
+```
+
+#### Parameters
+
+`userIdFollows` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The user that tries to follow another
+
+`userIdToFollow` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The user that the user tries to follow
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+Task

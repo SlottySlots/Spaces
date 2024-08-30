@@ -83,3 +83,19 @@ public Task<List<FollowerUserRelationDao>> GetFollowsOfUserById(Guid userId)
 #### Returns
 
 [Task&lt;List&lt;FollowerUserRelationDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **FollowUserByDao(UserDao, UserDao)**
+
+```csharp
+public Task FollowUserByDao(UserDao userFollows, UserDao userToFollow)
+```
+
+#### Parameters
+
+`userFollows` [UserDao](./slottymedia.database.daos.userdao.md)<br>
+
+`userToFollow` [UserDao](./slottymedia.database.daos.userdao.md)<br>
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>

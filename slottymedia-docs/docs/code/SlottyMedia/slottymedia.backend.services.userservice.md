@@ -231,3 +231,19 @@ public Task<UserDao> GetUserDaoById(Guid userId)
 #### Returns
 
 [Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **FollowUserById(Guid, Guid)**
+
+```csharp
+public Task FollowUserById(Guid userIdFollows, Guid userIdToFollow)
+```
+
+#### Parameters
+
+`userIdFollows` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`userIdToFollow` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
