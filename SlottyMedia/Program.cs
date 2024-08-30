@@ -109,6 +109,7 @@ try
     builder.Services.AddScoped<IAuthVmImpl, AuthVmImpl>();
     builder.Services.AddScoped<IUserVmImpl, UserVmImpl>();
     builder.Services.AddScoped<IPostPageVm, PostPageVmImpl>();
+    builder.Services.AddScoped<ICommentSubmissionFormVm, CommentSubmissionFormVmImpl>();
 
 
     var app = builder.Build();

@@ -1,0 +1,66 @@
+@using SlottyMedia.Backend.ViewModel.Interfaces
+
+
+<div class="w-full px-5 py-3 grid grid-cols-10 gap-4 border-y border-athens-gray">
+
+    <!-- profile picture -->
+    <div class="w-[50px] h-[50px] rounded-full border border-athens-gray">
+        <svg width="100%" height="100%" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+            <g>
+                <path d="m 8 1 c -1.65625 0 -3 1.34375 -3 3 s 1.34375 3 3 3 s 3 -1.34375 3 -3 s -1.34375 -3 -3 -3 z m -1.5 7 c -2.492188 0 -4.5 2.007812 -4.5 4.5 v 0.5 c 0 1.109375 0.890625 2 2 2 h 8 c 1.109375 0 2 -0.890625 2 -2 v -0.5 c 0 -2.492188 -2.007812 -4.5 -4.5 -4.5 z m 0 0" fill="#2e3436"></path>
+            </g>
+        </svg>
+    </div>
+
+    <!-- the form -->
+    <form class="col-span-9" @onsubmit="() => ViewModel!.SubmitForm(PostId!.Value)">
+
+        <!-- the text -->
+        <InputArea
+            @bind-Value="ViewModel!.Text"
+            Id="submit-comment-textarea"
+            Name="submit-comment-textarea"
+            Placeholder="Reply to this post"
+            Class="w-full bg-transparent text-black"/>
+
+        <!-- text error message -->
+        @if (ViewModel!.TextErrorMessage is not null)
+        {
+            <span class="text-sm text-crayola-orange">
+                @ViewModel.TextErrorMessage
+            </span>
+        }
+
+        <!-- any other internal errors -->
+        @if (ViewModel.ServerErrorMessage is not null)
+        {
+            <span class="text-sm text-crayola-orange">
+                @ViewModel.ServerErrorMessage
+            </span>
+        }
+
+        <!-- bottom section -->
+        <div class="w-full h-[50px] flex justify-end items-center">
+
+            <!-- submission button -->
+            <HotButton Type="submit" Class="w-[115px]">
+                Reply
+            </HotButton>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+@code {
+    /// <summary>The ID of the post to submit a comment for</summary>
+    [Parameter]
+    public Guid? PostId { get; set; }
+
+    /// <summary>The ViewModel for this component</summary>
+    [Inject]
+    [SupplyParameterFromForm]
+    public ICommentSubmissionFormVm? ViewModel { get; set; }
+}
