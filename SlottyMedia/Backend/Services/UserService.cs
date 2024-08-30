@@ -191,17 +191,26 @@ public class UserService : IUserService
 
     public async Task<bool> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn)
     {
-        var listOfFollowsOfUser = await _followerUserRelationRepository.GetFollowsOfUserById(userIdLoggedIn);
-        var userFollowed = await _userRepository.GetElementByField("userID", userIdToCheck.ToString());
-        foreach (var relationDao in listOfFollowsOfUser)
+        try
         {
-            if (relationDao.FollowedUser == userFollowed)
-            {
-                return true;
-            }
-        }
+            await _followerUserRelationRepository.CheckIfUserIsFollowed(userIdToCheck, userIdLoggedIn);
 
-        return false;
+            return true;
+        }
+        catch (DatabaseMissingItemException)
+        {
+            return false;
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            Logger.LogError(ex, "There was an error trying to check if the follower user is followed.");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "There was an error trying to check if the follower user is followed.");
+            return false;
+        }
     }
 
     /// <inheritdoc />
@@ -348,8 +357,11 @@ public class UserService : IUserService
 
     public async Task FollowUserById(Guid userIdFollows, Guid userIdToFollow)
     {
-        var userFollows = await GetUserDaoById(userIdFollows);
-        var userToFollow = await GetUserDaoById(userIdToFollow);
-        await _followerUserRelationRepository.FollowUserByDao(userFollows, userToFollow);
+        var userFollows = new FollowerUserRelationDao
+        {
+            FollowerUserId = userIdFollows,
+            FollowedUserId = userIdToFollow
+        };
+        await _followerUserRelationRepository.AddElement(userFollows);
     }
 }

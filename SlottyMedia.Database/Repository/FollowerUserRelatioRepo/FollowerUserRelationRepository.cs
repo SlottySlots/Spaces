@@ -66,15 +66,13 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
 
         return await ExecuteQuery(listOfFollowerDao);
     }
-
-    public async Task FollowUserByDao(UserDao userFollows, UserDao userToFollow)
+    
+    public async Task<FollowerUserRelationDao> CheckIfUserIsFollowed(Guid userId, Guid followedUserId)
     {
-        var userFollowRelationDao = new FollowerUserRelationDao();
-        userFollowRelationDao.FollowerUser = userFollows;
-        userFollowRelationDao.FollowerUserId = userFollows.UserId;
-        userFollowRelationDao.FollowedUser = userToFollow;
-        userFollowRelationDao.FollowedUserId = userToFollow.UserId;
+        var querry = BaseQuerry
+            .Filter("userIsFollowed", Constants.Operator.Equals, userId.ToString())
+            .Filter("userIsFollowing", Constants.Operator.Equals, followedUserId);
+        return await ExecuteSingleQuery(querry);
         
-        await AddElement(userFollowRelationDao);
     }
 }
