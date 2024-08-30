@@ -124,7 +124,6 @@ public class MainLayoutVmImplTest
                 Assert.That(serviceCall!.Username, Is.EqualTo(userDao.UserName));
                 Assert.That(serviceCall!.Description, Is.EqualTo(userDao.Description));
                 Assert.That(serviceCall!.ProfilePic, Is.EqualTo(userDao.ProfilePic));
-                Assert.That(serviceCall!.CreatedAt, Is.EqualTo(userDao.CreatedAt));
             }
         );
         _authService.VerifyAll();

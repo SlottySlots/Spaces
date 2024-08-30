@@ -1,3 +1,4 @@
+using System.Text;
 using Bogus;
 using SlottyMedia.Database.Daos;
 
@@ -46,7 +47,25 @@ public class Rules
                 return userName;
             })
             .RuleFor(u => u.Description, f => f.WaffleTitle())
-            .RuleFor(u => u.ProfilePic, f => null)
+            .RuleFor(u => u.ProfilePic, f =>
+            {
+                var rand = f.Random.Int(1, 2);
+                var url = string.Empty;
+                switch (rand)
+                {
+                    case 1:
+                        url= f.DiceBear().Lorelei("png",seed:f.Random.Guid().ToString(), size: 256);
+                        break;
+                    case 2:
+                        url = f.DiceBear().Adventurer("png",seed:f.Random.Guid().ToString(), size: 256);
+                        break;
+                    case 3:
+                        url = f.DiceBear().Bottts("png", seed:f.Random.Guid().ToString(), size: 256);
+                        break;
+                }
+
+                return url;
+            })
             .RuleFor(u => u.CreatedAt, f => f.Date.Past())
             .RuleFor(u => u.Email, f =>
             {
