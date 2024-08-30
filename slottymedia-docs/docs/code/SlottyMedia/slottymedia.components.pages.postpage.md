@@ -21,6 +21,16 @@ public Nullable<Guid> PostId { get; set; }
 
 [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
+### **ViewModel**
+
+```csharp
+public IPostPageVm ViewModel { get; set; }
+```
+
+#### Property Value
+
+[IPostPageVm](./slottymedia.backend.viewmodel.interfaces.ipostpagevm.md)<br>
+
 ## Constructors
 
 ### **PostPage()**
