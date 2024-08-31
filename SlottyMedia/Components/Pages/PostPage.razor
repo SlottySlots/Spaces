@@ -19,7 +19,7 @@ else if (ViewModel.Post is null)
 else
 {
     <!-- the post -->
-    <Post Dto="ViewModel.Post"/>
+    <Post Dto="ViewModel.Post" CurrentUserId="_currentUserId"/>
     
     <!-- comment section -->
     <div class="w-full pb-5 flex flex-col items-center gap-3">
@@ -59,6 +59,16 @@ else
     [Inject]
     [SupplyParameterFromForm]
     public IPostPageVm? ViewModel { get; set; }
+
+    Guid _currentUserId;
+
+    /// <inheritdoc />
+    protected override Task OnInitializedAsync()
+    {
+        var currentSession = AuthService.GetCurrentSession();
+        _currentUserId = Guid.Parse(currentSession!.User!.Id!);
+        return Task.CompletedTask;
+    }
 
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()
