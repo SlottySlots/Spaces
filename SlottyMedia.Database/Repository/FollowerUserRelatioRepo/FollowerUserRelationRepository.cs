@@ -71,8 +71,7 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
     {
         var querry = BaseQuerry
             .Filter("userIsFollowed", Constants.Operator.Equals, userId.ToString())
-            .Filter("userIsFollowing", Constants.Operator.Equals, followedUserId);
+            .Filter("userIsFollowing", Constants.Operator.Equals, followedUserId.ToString());
         return await ExecuteSingleQuery(querry);
-        
     }
 }

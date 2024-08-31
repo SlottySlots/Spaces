@@ -8,12 +8,14 @@ namespace SlottyMedia.Backend.ViewModel;
 public class ProfilePageVmImpl : IProfilePageVm
 {
     private readonly IUserService _userService;
+    private readonly IPostService _postService;
     private readonly Logging<MainLayoutVmImpl> _logger = new();
 
 
-    public ProfilePageVmImpl(IUserService userService)
+    public ProfilePageVmImpl(IUserService userService, IPostService postService)
     {
         _userService = userService;
+        _postService = postService;
     }
 
 
@@ -59,5 +61,16 @@ public class ProfilePageVmImpl : IProfilePageVm
     public async Task FollowUserById(Guid userIdFollows, Guid userIdToFollow)
     {
         await _userService.FollowUserById(userIdFollows, userIdToFollow);
+    }
+
+    public async Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow)
+    {
+        await _userService.UnfollowUserById(userIdFollows, userIdToUnfollow);
+    }
+
+    public async Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet)
+    {
+        var posts = await _postService.GetPostsByUserId(userId, startOfSet, endOfSet);
+        return posts;
     }
 }

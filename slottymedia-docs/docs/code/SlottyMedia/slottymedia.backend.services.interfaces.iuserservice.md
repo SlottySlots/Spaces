@@ -290,3 +290,24 @@ The user that the user tries to follow
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 Task
+
+### **UnfollowUserById(Guid, Guid)**
+
+Method used to unfollow a user by id
+
+```csharp
+Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow)
+```
+
+#### Parameters
+
+`userIdFollows` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The user that tries to unfollow another
+
+`userIdToUnfollow` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The user that the user tries to unfollow
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+Task

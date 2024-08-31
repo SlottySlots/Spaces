@@ -138,4 +138,18 @@ public interface IUserService
     /// Task
     /// </returns>
     public Task FollowUserById(Guid userIdFollows, Guid userIdToFollow);
+    
+    /// <summary>
+    /// Method used to unfollow a user by id
+    /// </summary>
+    /// <param name="userIdFollows">
+    /// The user that tries to unfollow another
+    /// </param>
+    /// <param name="userIdToUnfollow">
+    /// The user that the user tries to unfollow
+    /// </param>
+    /// <returns>
+    /// Task
+    /// </returns>
+    public Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow);
 }

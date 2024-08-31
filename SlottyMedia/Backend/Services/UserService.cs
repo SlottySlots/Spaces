@@ -194,7 +194,6 @@ public class UserService : IUserService
         try
         {
             await _followerUserRelationRepository.CheckIfUserIsFollowed(userIdToCheck, userIdLoggedIn);
-
             return true;
         }
         catch (DatabaseMissingItemException)
@@ -363,5 +362,15 @@ public class UserService : IUserService
             FollowedUserId = userIdToFollow
         };
         await _followerUserRelationRepository.AddElement(userFollows);
+    }
+
+    //This is not working!
+    public async Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow)
+    {
+        var userFollowDao = new FollowerUserRelationDao{
+            FollowerUserId = userIdFollows,
+            FollowedUserId = userIdToUnfollow
+        };
+        await _followerUserRelationRepository.DeleteElement(userFollowDao);
     }
 }

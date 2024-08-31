@@ -247,3 +247,19 @@ public Task FollowUserById(Guid userIdFollows, Guid userIdToFollow)
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **UnfollowUserById(Guid, Guid)**
+
+```csharp
+public Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow)
+```
+
+#### Parameters
+
+`userIdFollows` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`userIdToUnfollow` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
