@@ -35,9 +35,9 @@ public Guid CurrentUserId { get; set; }
 
 ### **OnPostClick**
 
-This event is triggered when either the post's text or the post's comment button is clicked.
+This event is triggered when the post's comment button is clicked.
  This event will be used to navigate to the post's dedicated page from the home page (i.e. `/post/{ID}`).
- On the post's dedicated page this event will not trigger any behaviour.
+ On the post's dedicated page this event should be left unset.
 
 ```csharp
 public EventCallback OnPostClick { get; set; }

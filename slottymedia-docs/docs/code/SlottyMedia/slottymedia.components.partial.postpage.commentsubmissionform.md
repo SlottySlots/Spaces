@@ -13,6 +13,8 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **PostId**
 
+The ID of the post to submit a comment for
+
 ```csharp
 public Nullable<Guid> PostId { get; set; }
 ```
@@ -22,6 +24,8 @@ public Nullable<Guid> PostId { get; set; }
 [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
 ### **ViewModel**
+
+The ViewModel for this component
 
 ```csharp
 public ICommentSubmissionFormVm ViewModel { get; set; }

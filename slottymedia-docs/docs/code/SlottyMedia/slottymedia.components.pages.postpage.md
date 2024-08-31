@@ -13,6 +13,8 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **PostId**
 
+The ID of the post to showcase
+
 ```csharp
 public Nullable<Guid> PostId { get; set; }
 ```
@@ -22,6 +24,8 @@ public Nullable<Guid> PostId { get; set; }
 [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
 ### **ViewModel**
+
+The ViewModel for this component
 
 ```csharp
 public IPostPageVm ViewModel { get; set; }
@@ -50,6 +54,16 @@ protected void BuildRenderTree(RenderTreeBuilder __builder)
 #### Parameters
 
 `__builder` RenderTreeBuilder<br>
+
+### **OnInitializedAsync()**
+
+```csharp
+protected Task OnInitializedAsync()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **OnParametersSetAsync()**
 

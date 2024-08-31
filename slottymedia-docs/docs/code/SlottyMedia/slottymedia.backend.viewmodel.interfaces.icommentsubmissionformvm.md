@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Backend.ViewModel.Interfaces
 
+This ViewModel represents the state of the [CommentSubmissionForm](./slottymedia.components.partial.postpage.commentsubmissionform.md) component.
+
 ```csharp
 public interface ICommentSubmissionFormVm
 ```
