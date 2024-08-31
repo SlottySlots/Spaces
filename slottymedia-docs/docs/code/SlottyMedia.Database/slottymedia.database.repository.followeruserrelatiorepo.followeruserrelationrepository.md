@@ -70,20 +70,6 @@ The ID of the user.
 [Task&lt;List&lt;FollowerUserRelationDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of follower-user relations.
 
-### **GetFollowsOfUserById(Guid)**
-
-```csharp
-public Task<List<FollowerUserRelationDao>> GetFollowsOfUserById(Guid userId)
-```
-
-#### Parameters
-
-`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-
-#### Returns
-
-[Task&lt;List&lt;FollowerUserRelationDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-
 ### **CheckIfUserIsFollowed(Guid, Guid)**
 
 ```csharp

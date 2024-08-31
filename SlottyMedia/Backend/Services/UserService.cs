@@ -363,14 +363,25 @@ public class UserService : IUserService
         };
         await _followerUserRelationRepository.AddElement(userFollows);
     }
-
-    //This is not working!
+    
     public async Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow)
     {
-        var userFollowDao = new FollowerUserRelationDao{
-            FollowerUserId = userIdFollows,
-            FollowedUserId = userIdToUnfollow
-        };
-        await _followerUserRelationRepository.DeleteElement(userFollowDao);
+        try
+        {
+            var userToDelete = await _followerUserRelationRepository.CheckIfUserIsFollowed(userIdToUnfollow, userIdFollows);
+            await _followerUserRelationRepository.DeleteElement(userToDelete);
+        }
+        catch (DatabaseIudActionException ex)
+        {
+            throw new UserIudException($"An error occurred while unfollowing the user. UserIdFollows: {userIdFollows}, UserIdToUnfollow: {userIdToUnfollow}", ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new UserGeneralException($"An error occurred while unfollowing the user. UserIdFollows: {userIdFollows}, UserIdToUnfollow: {userIdToUnfollow}", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new UserGeneralException($"An error occurred while unfollowing the user. UserIdFollows: {userIdFollows}, UserIdToUnfollow: {userIdToUnfollow}", ex);
+        }
     }
 }

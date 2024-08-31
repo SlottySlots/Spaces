@@ -33,7 +33,7 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
         try
         {
             var result = await BaseQuerry
-                .Filter("userIsFollowed", Constants.Operator.Equals, userId.ToString())
+                .Filter(friends => friends.FollowedUserId!, Constants.Operator.Equals, userId.ToString())
                 .Count(Constants.CountType.Exact);
 
             return result;
@@ -53,25 +53,17 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
     public async Task<List<FollowerUserRelationDao>> GetFriends(Guid userId)
     {
         var querry = BaseQuerry
-            .Filter("followerUserID", Constants.Operator.Equals, userId.ToString())
+            .Filter(friend => friend.FollowedUserId!, Constants.Operator.Equals, userId.ToString())
             .Select(x => new object[] { x.FollowedUserId! });
 
         return await ExecuteQuery(querry);
-    }
-
-    public async Task<List<FollowerUserRelationDao>> GetFollowsOfUserById(Guid userId)
-    {
-        var listOfFollowerDao = BaseQuerry
-            .Filter("userIsFollowing", Constants.Operator.Equals, userId.ToString());
-
-        return await ExecuteQuery(listOfFollowerDao);
     }
     
     public async Task<FollowerUserRelationDao> CheckIfUserIsFollowed(Guid userId, Guid followedUserId)
     {
         var querry = BaseQuerry
-            .Filter("userIsFollowed", Constants.Operator.Equals, userId.ToString())
-            .Filter("userIsFollowing", Constants.Operator.Equals, followedUserId.ToString());
+            .Filter(friend => friend.FollowedUserId!, Constants.Operator.Equals, userId.ToString())
+            .Filter(friend => friend.FollowerUserId!, Constants.Operator.Equals, followedUserId.ToString());
         return await ExecuteSingleQuery(querry);
     }
 }
