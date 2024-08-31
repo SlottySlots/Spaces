@@ -86,7 +86,7 @@ public class CommentDto
         CreatorUserId = comment.CreatorUserId;
         PostId = comment.PostId ?? Guid.Empty;
         Content = comment.Content ?? string.Empty;
-        CreatedAt = comment.CreatedAt;
+        CreatedAt = comment.CreatedAt.LocalDateTime;
 
         return this;
     }

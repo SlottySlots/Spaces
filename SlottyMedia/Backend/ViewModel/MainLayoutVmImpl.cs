@@ -77,7 +77,7 @@ public class MainLayoutVmImpl : IMainLayoutVm
                         ProfilePic = userDao.ProfilePic,
                         FriendsAmount = amountOfFriends,
                         SpacesAmount = amountOfSpaces,
-                        CreatedAt = userDao.CreatedAt!
+                        CreatedAt = userDao.CreatedAt.LocalDateTime!
                     };
                     return userInformationDto;
                 }

@@ -66,7 +66,7 @@ public class ForumDto
         {
             ForumId = forumDao.ForumId ?? Guid.Empty,
             Topic = forumDao.ForumTopic ?? string.Empty,
-            CreatedAt = forumDao.CreatedAt
+            CreatedAt = forumDao.CreatedAt.LocalDateTime
         };
     }
 

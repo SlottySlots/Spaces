@@ -76,7 +76,7 @@ public class UserDto
         UserId = user.UserId ?? Guid.Empty;
         Username = user.UserName ?? string.Empty;
         Description = user.Description ?? string.Empty;
-        CreatedAt = user.CreatedAt;
+        CreatedAt = user.CreatedAt.LocalDateTime;
         return this;
     }
 
@@ -176,7 +176,7 @@ public class UserInformationDto
         Username = user.UserName ?? string.Empty;
         Description = user.Description ?? string.Empty;
         ProfilePic = user.ProfilePic;
-        CreatedAt = user.CreatedAt;
+        CreatedAt = user.CreatedAt.LocalDateTime;
         return this;
     }
 }
