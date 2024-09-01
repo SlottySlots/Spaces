@@ -89,7 +89,7 @@ public class UserInformationDto
         Username = user.UserName ?? string.Empty;
         Description = user.Description ?? string.Empty;
         ProfilePic = user.ProfilePic;
-        CreatedAt = user.CreatedAt;
+        CreatedAt = user.CreatedAt.LocalDateTime;
         return this;
     }
 }

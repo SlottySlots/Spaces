@@ -15,17 +15,18 @@ public class SearchService : ISearchService
 {
     private static readonly Logging<SearchService> Logger = new();
     private readonly IForumSearchRepository _forumSearchRepository;
-    private readonly IUserSeachRepository _userSeachRepository;
+    private readonly IUserSeachRepository _userSearchRepository;
 
 
     /// <summary>
     ///     Constructor to initialize the database actions dependency.
     /// </summary>
-    /// <param name="databaseActions">The database actions dependency.</param>
-    public SearchService(IUserSeachRepository userSeachRepository, IForumSearchRepository forumSearchRepository)
+    /// <param name="userSearchRepository">Repo used to retrieve search results.</param>
+    /// <param name="forumSearchRepository">Repo used to retrieve search results specific to a forum</param>
+    public SearchService(IUserSeachRepository userSearchRepository, IForumSearchRepository forumSearchRepository)
     {
         Logger.LogInfo("SearchService initialized");
-        _userSeachRepository = userSeachRepository;
+        _userSearchRepository = userSearchRepository;
         _forumSearchRepository = forumSearchRepository;
     }
 
@@ -40,7 +41,7 @@ public class SearchService : ISearchService
                 return new SearchDto();
             if (searchTerm[0] == '@') searchTerm = searchTerm.Substring(1);
 
-            var userResults = await _userSeachRepository.GetUsersByUserName(searchTerm, page, pagesize);
+            var userResults = await _userSearchRepository.GetUsersByUserName(searchTerm, page, pagesize);
 
             if (userResults is null || !userResults.Any())
                 userResults = new List<UserDao>();

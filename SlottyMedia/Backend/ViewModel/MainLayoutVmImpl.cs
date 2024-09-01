@@ -23,6 +23,11 @@ public class MainLayoutVmImpl : IMainLayoutVm
 
     private readonly IUserService _userService;
 
+    /// <summary>
+    ///     Ctor used for dep inject
+    /// </summary>
+    /// <param name="authService"></param>
+    /// <param name="userService"></param>
     public MainLayoutVmImpl(IAuthService authService, IUserService userService)
     {
         _authService = authService;
@@ -77,7 +82,7 @@ public class MainLayoutVmImpl : IMainLayoutVm
                         ProfilePic = userDao.ProfilePic,
                         FriendsAmount = amountOfFriends,
                         SpacesAmount = amountOfSpaces,
-                        CreatedAt = userDao.CreatedAt!
+                        CreatedAt = userDao.CreatedAt.LocalDateTime!
                     };
                     return userInformationDto;
                 }

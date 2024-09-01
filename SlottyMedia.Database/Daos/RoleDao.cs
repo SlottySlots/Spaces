@@ -31,5 +31,5 @@ public class RoleDao : BaseModel
     ///     The Date and Time the Role was created.
     /// </summary>
     [Column("created_at", ignoreOnInsert: true, ignoreOnUpdate: true)]
-    public DateTime CreatedAt { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
 }

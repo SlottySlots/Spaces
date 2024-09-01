@@ -26,7 +26,7 @@ public class RoleRepository : DatabaseRepository<RoleDao>, IRoleRepository
     public async Task<Guid> GetRoleIdByName(string roleName)
     {
         var query = BaseQuerry
-            .Filter("role", Constants.Operator.Equals, roleName)
+            .Filter(role => role.RoleName!, Constants.Operator.Equals, roleName)
             .Select(x => new object[] { x.RoleId! });
 
         var result = await ExecuteSingleQuery(query);

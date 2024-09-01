@@ -113,12 +113,12 @@ public string Content { get; set; }
 The Date and Time the Comment was created.
 
 ```csharp
-public DateTime CreatedAt { get; set; }
+public DateTimeOffset CreatedAt { get; set; }
 ```
 
 #### Property Value
 
-[DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)<br>
+[DateTimeOffset](https://docs.microsoft.com/en-us/dotnet/api/system.datetimeoffset)<br>
 
 ### **BaseUrl**
 

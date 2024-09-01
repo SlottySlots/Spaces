@@ -24,11 +24,13 @@ public UserService(IUserRepository userRepository, IPostService postService, IFo
 #### Parameters
 
 `userRepository` IUserRepository<br>
+Repository used to fetch user table
 
 `postService` [IPostService](./slottymedia.backend.services.interfaces.ipostservice.md)<br>
 This parameter is used to interact with the post service
 
 `followerUserRelationRepository` IFollowerUserRelationRepository<br>
+Repository used to fetch follower user relations
 
 ## Methods
 
@@ -202,8 +204,6 @@ public Task<int> GetCountOfUserFriends(Guid userId)
 
 ### **GetCountOfUserSpaces(Guid)**
 
-Gets all spaces a user has wrote in
-
 ```csharp
 public Task<int> GetCountOfUserSpaces(Guid userId)
 ```
@@ -211,12 +211,10 @@ public Task<int> GetCountOfUserSpaces(Guid userId)
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-User from which it should be retrieved
 
 #### Returns
 
 [Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns the amount of spaces as task
 
 ### **GetUserDaoById(Guid)**
 
@@ -243,6 +241,22 @@ public Task FollowUserById(Guid userIdFollows, Guid userIdToFollow)
 `userIdFollows` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 `userIdToFollow` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **UnfollowUserById(Guid, Guid)**
+
+```csharp
+public Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow)
+```
+
+#### Parameters
+
+`userIdFollows` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`userIdToUnfollow` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 #### Returns
 

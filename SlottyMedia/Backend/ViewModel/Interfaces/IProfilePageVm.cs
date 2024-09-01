@@ -2,6 +2,9 @@ using SlottyMedia.Backend.Dtos;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 
+/// <summary>
+///     Interface used for profilepage viewmodel
+/// </summary>
 public interface IProfilePageVm
 {
     /// <summary>
@@ -42,4 +45,35 @@ public interface IProfilePageVm
     ///     Task
     /// </returns>
     public Task FollowUserById(Guid userIdFollows, Guid userIdToFollow);
+
+    /// <summary>
+    ///     Method used to unfollow a user by id
+    /// </summary>
+    /// <param name="userIdFollows">
+    ///     The user that tries to unfollow another
+    /// </param>
+    /// <param name="userIdToUnfollow">
+    ///     The user that the user tries to unfollow
+    /// </param>
+    /// <returns>
+    ///     Task
+    /// </returns>
+    public Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow);
+
+    /// <summary>
+    ///     Gets posts of a user by their id and enables slicing via offsets
+    /// </summary>
+    /// <param name="userId">
+    ///     User that the posts belong to
+    /// </param>
+    /// <param name="startOfSet">
+    ///     Startindex of the posts sorted by date
+    /// </param>
+    /// <param name="endOfSet">
+    ///     Endindex of the posts sorted by data
+    /// </param>
+    /// <returns>
+    ///     List of PostDtos
+    /// </returns>
+    public Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet);
 }

@@ -50,6 +50,8 @@ public DateTime CreatedAt { get; set; }
 
 ### **PostCount**
 
+Amount of posts the forum has
+
 ```csharp
 public int PostCount { get; set; }
 ```

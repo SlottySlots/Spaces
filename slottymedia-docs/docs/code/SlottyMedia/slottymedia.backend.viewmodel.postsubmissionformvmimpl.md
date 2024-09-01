@@ -85,6 +85,8 @@ public string ServerErrorMessage { get; set; }
 
 ### **PostSubmissionFormVmImpl(IAuthService, IPostService, IForumService, NavigationManager)**
 
+Ctor used for dep inject
+
 ```csharp
 public PostSubmissionFormVmImpl(IAuthService authService, IPostService postService, IForumService forumService, NavigationManager navigationManager)
 ```

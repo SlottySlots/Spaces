@@ -35,6 +35,9 @@ public class ForumDto
     /// </summary>
     public DateTime CreatedAt { get; set; }
 
+    /// <summary>
+    ///     Amount of posts the forum has
+    /// </summary>
     public int PostCount { get; set; }
 
     /// <summary>
@@ -66,7 +69,7 @@ public class ForumDto
         {
             ForumId = forumDao.ForumId ?? Guid.Empty,
             Topic = forumDao.ForumTopic ?? string.Empty,
-            CreatedAt = forumDao.CreatedAt
+            CreatedAt = forumDao.CreatedAt.LocalDateTime
         };
     }
 

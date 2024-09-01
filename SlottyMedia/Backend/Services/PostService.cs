@@ -16,7 +16,6 @@ public class PostService : IPostService
     /// <summary>
     ///     Initializes a new instance of the <see cref="PostService" /> class.
     /// </summary>
-    /// <param name="databaseActions">The database actions interface.</param>
     public PostService(IPostRepository postRepository)
     {
         Logger.LogInfo("PostService initialized");
@@ -134,6 +133,7 @@ public class PostService : IPostService
         }
     }
 
+    /// <inheritdoc />
     public async Task<PostDto?> GetPostById(Guid postId)
     {
         try

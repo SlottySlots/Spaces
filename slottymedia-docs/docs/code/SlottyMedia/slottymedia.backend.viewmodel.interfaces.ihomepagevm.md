@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Backend.ViewModel.Interfaces
 
+Interface for homepage viewmodel
+
 ```csharp
 public interface IHomePageVm
 ```
@@ -9,6 +11,8 @@ public interface IHomePageVm
 ## Properties
 
 ### **Posts**
+
+Represents all posts shown on a homepage
 
 ```csharp
 public abstract List<PostDto> Posts { get; set; }
@@ -22,6 +26,8 @@ public abstract List<PostDto> Posts { get; set; }
 
 ### **FetchPosts()**
 
+Fetches all posts shown on the homepage of a user
+
 ```csharp
 Task FetchPosts()
 ```
@@ -29,3 +35,4 @@ Task FetchPosts()
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+Task

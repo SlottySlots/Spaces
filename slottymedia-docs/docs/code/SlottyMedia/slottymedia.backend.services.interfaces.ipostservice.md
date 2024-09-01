@@ -161,3 +161,27 @@ Task<int> GetForumCountByUserId(Guid userId)
 #### Returns
 
 [Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetPostsByUserId(Guid, Int32, Int32)**
+
+Gets posts of a user by their id and enables slicing via offsets
+
+```csharp
+Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+User that the posts belong to
+
+`startOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Startindex of the posts sorted by date
+
+`endOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Endindex of the posts sorted by data
+
+#### Returns
+
+[Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+List of PostDtos
