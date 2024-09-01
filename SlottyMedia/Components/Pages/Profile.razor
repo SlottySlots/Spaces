@@ -99,6 +99,7 @@
                 if (_postsOfUser.IsNullOrEmpty())
                 {
                     _postsOfUser = await ProfilePageVm.GetPostsByUserId(_profileUserId, 0, 10);
+                    StateHasChanged();
                 }
             }
         }
