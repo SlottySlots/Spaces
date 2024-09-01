@@ -5,11 +5,11 @@ Namespace: SlottyMedia.Backend.ViewModel
 This class implements the IAuthVmImpl interface
 
 ```csharp
-public class AuthVmImpl : SlottyMedia.Backend.ViewModel.Interfaces.IAuthVmImpl
+public class AuthVmImpl : SlottyMedia.Backend.ViewModel.Interfaces.IAuthVm
 ```
 
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [AuthVmImpl](./slottymedia.backend.viewmodel.authvmimpl.md)<br>
-Implements [IAuthVmImpl](./slottymedia.backend.viewmodel.interfaces.iauthvmimpl.md)
+Implements [IAuthVm](./slottymedia.backend.viewmodel.interfaces.iauthvm.md)
 
 ## Constructors
 

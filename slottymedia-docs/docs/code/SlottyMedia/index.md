@@ -130,11 +130,13 @@
 
 [SpacesVmImpl](./slottymedia.backend.viewmodel.spacesvmimpl.md)
 
-[UserVmImpl](./slottymedia.backend.viewmodel.uservmimpl.md)
+[SpaceVmImpl](./slottymedia.backend.viewmodel.spacevmimpl.md)
+
+[UserVm](./slottymedia.backend.viewmodel.uservm.md)
 
 ## SlottyMedia.Backend.ViewModel.Interfaces
 
-[IAuthVmImpl](./slottymedia.backend.viewmodel.interfaces.iauthvmimpl.md)
+[IAuthVm](./slottymedia.backend.viewmodel.interfaces.iauthvm.md)
 
 [IHomePageVm](./slottymedia.backend.viewmodel.interfaces.ihomepagevm.md)
 
@@ -150,7 +152,9 @@
 
 [ISpacesVm](./slottymedia.backend.viewmodel.interfaces.ispacesvm.md)
 
-[IUserVmImpl](./slottymedia.backend.viewmodel.interfaces.iuservmimpl.md)
+[ISpaceVm](./slottymedia.backend.viewmodel.interfaces.ispacevm.md)
+
+[IUserVm](./slottymedia.backend.viewmodel.interfaces.iuservm.md)
 
 ## SlottyMedia.Components
 
@@ -173,6 +177,8 @@
 [Login](./slottymedia.components.pages.login.md)
 
 [Register](./slottymedia.components.pages.register.md)
+
+[Space](./slottymedia.components.pages.space.md)
 
 [Spaces](./slottymedia.components.pages.spaces.md)
 

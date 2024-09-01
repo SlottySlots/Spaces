@@ -24,22 +24,22 @@ public string DescriptionText { get; set; }
 ### **UserService**
 
 ```csharp
-public IUserVmImpl UserService { get; private set; }
+public IUserVm UserService { get; private set; }
 ```
 
 #### Property Value
 
-[IUserVmImpl](./slottymedia.backend.viewmodel.interfaces.iuservmimpl.md)<br>
+[IUserVm](./slottymedia.backend.viewmodel.interfaces.iuservm.md)<br>
 
 ### **AuthService**
 
 ```csharp
-public IAuthVmImpl AuthService { get; set; }
+public IAuthVm AuthService { get; set; }
 ```
 
 #### Property Value
 
-[IAuthVmImpl](./slottymedia.backend.viewmodel.interfaces.iauthvmimpl.md)<br>
+[IAuthVm](./slottymedia.backend.viewmodel.interfaces.iauthvm.md)<br>
 
 ## Constructors
 

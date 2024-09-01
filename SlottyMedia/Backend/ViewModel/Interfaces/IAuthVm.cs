@@ -2,7 +2,7 @@
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 
-public interface IAuthVmImpl
+public interface IAuthVm
 {
     public Session? GetCurrentSession();
 }

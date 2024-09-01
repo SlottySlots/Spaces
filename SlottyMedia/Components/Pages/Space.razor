@@ -1,0 +1,101 @@
+﻿@page "/space"
+@using Microsoft.IdentityModel.Tokens
+@using SlottyMedia.Backend.Dtos
+@using SlottyMedia.Backend.Services.Interfaces
+@using SlottyMedia.Backend.ViewModel.Interfaces
+@inject NavigationManager NavigationManager
+@inject ISpaceVm SpaceVm
+
+@if (!_invalidSpaceFlag)
+{
+    <div class="flex border-b border-athens-gray py-4 w-full">
+        <div class="px-4 flex flex-col gap-3">
+            <h1 class="text-3xl font-medium w-1/4">
+                @SpaceDto.Topic
+            </h1> 
+        
+            <div class="flex w-1/2">
+                <h3 class="text-sm text-cadet-gray w-full">Posts: @SpaceDto.PostCount</h3>
+                <h3 class="text-sm text-cadet-gray w-full">Created at: @SpaceDto.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
+            </div>
+        </div>
+    </div>
+
+    @if (!_postsInSpace.IsNullOrEmpty())
+    {
+        @foreach (var post in _postsInSpace)
+        {
+            <Post Dto="post" CurrentUserId=@_currentUserId />
+        }
+    } 
+}
+else
+{
+    <p class="text-3xl font-medium text-center">Space not found!</p>
+}
+
+
+@code{
+    private Guid _spaceId;
+
+    private Guid _currentUserId;
+
+    private bool _invalidSpaceFlag;
+
+    private List<PostDto> _postsInSpace = new List<PostDto>();
+
+    public ForumDto SpaceDto { get; set; } = new()
+    {
+        Topic = "Topic is loading...",
+        CreatedAt = DateTime.MinValue,
+        PostCount = 0
+    };
+    
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        var uri = new Uri(NavigationManager.Uri);
+        var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);
+
+        // Retrieve query parameters
+        if (queryParams["id"] != null && !_invalidSpaceFlag)
+        {
+            try
+            {
+                _spaceId = Guid.Parse(queryParams["id"]!);
+            }
+            catch (Exception)
+            {
+                _invalidSpaceFlag = true;
+                StateHasChanged();
+                return;
+            }
+
+            if (firstRender || SpaceDto.Topic == "Topic is loading...")
+            {
+                var spaceInfo = await SpaceVm.GetSpaceInformation(queryParams["name"]!);
+                if (spaceInfo != null)
+                {
+                    SpaceDto.Topic = spaceInfo.Topic;
+                    SpaceDto.CreatedAt = spaceInfo.CreatedAt;
+                    SpaceDto.PostCount = spaceInfo.PostCount;
+                    StateHasChanged();
+                }
+                else
+                {
+                    _invalidSpaceFlag = true;
+                    StateHasChanged();
+                }
+
+                if (_postsInSpace.IsNullOrEmpty())
+                {
+                    _postsInSpace = await SpaceVm.GetPostsByForumId(_spaceId, 0, 10);
+                    StateHasChanged();
+                }
+            }
+        }
+        else
+        {
+            _invalidSpaceFlag = true;
+        }
+    }
+}

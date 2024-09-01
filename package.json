@@ -9,7 +9,7 @@
         "watch-dotnet": "dotnet watch run --project ./SlottyMedia/SlottyMedia.csproj",
         "build-tailwind": "npx tailwindcss -c ./SlottyMedia/tailwind.config.js -i ./SlottyMedia/wwwroot/app.css -o ./SlottyMedia/wwwroot/app.min.css",
         "watch-tailwind": "npx tailwindcss -c ./SlottyMedia/tailwind.config.js -i ./SlottyMedia/wwwroot/app.css -o ./SlottyMedia/wwwroot/app.min.css --watch",
-        "debug" : "concurrently \"npm:watch-tailwind\" \"npm:watch-dotnet\"",
+        "debug": "concurrently \"npm:watch-tailwind\" \"npm:watch-dotnet\"",
         "init": "pip install -r ./slottymedia-docs/requirements.txt && cd ./SlottyMedia && dotnet tool restore"
     },
     "keywords": [],
@@ -21,5 +21,9 @@
         "concurrently": "^8.2.2",
         "husky": "^9.0.11",
         "tailwindcss": "^3.4.6"
+    },
+    "dependencies": {
+        "debug": "^4.3.6",
+        "run": "^1.5.0"
     }
 }
