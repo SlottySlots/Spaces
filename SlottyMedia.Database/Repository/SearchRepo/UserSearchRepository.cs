@@ -32,7 +32,7 @@ public class UserSearchRepository : DatabaseRepository<UserDao>, IUserSeachRepos
     {
         var query = BaseQuerry
             .Select(x => new object[] { x.UserId!, x.UserName! })
-            .Filter("userName", Constants.Operator.ILike, $"%{userName}%");
+            .Filter(user => user.UserName!, Constants.Operator.ILike, $"%{userName}%");
 
         return await ExecuteQuery(ApplyPagination(query, page, pageSize));
     }

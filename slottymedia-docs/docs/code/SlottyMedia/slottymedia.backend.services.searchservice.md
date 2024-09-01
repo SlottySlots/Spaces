@@ -18,14 +18,16 @@ Implements [ISearchService](./slottymedia.backend.services.interfaces.isearchser
 Constructor to initialize the database actions dependency.
 
 ```csharp
-public SearchService(IUserSeachRepository userSeachRepository, IForumSearchRepository forumSearchRepository)
+public SearchService(IUserSeachRepository userSearchRepository, IForumSearchRepository forumSearchRepository)
 ```
 
 #### Parameters
 
-`userSeachRepository` IUserSeachRepository<br>
+`userSearchRepository` IUserSeachRepository<br>
+Repo used to retrieve search results.
 
 `forumSearchRepository` IForumSearchRepository<br>
+Repo used to retrieve search results specific to a forum
 
 ## Methods
 

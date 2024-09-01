@@ -22,8 +22,9 @@ public class UserService : IUserService
     /// <summary>
     ///     This constructor creates a new UserService object.
     /// </summary>
-    /// <param name="databaseActions">This parameter is used to interact with the database</param>
+    /// <param name="userRepository">Repository used to fetch user table</param>
     /// <param name="postService">This parameter is used to interact with the post service</param>
+    /// <param name="followerUserRelationRepository">Repository used to fetch follower user relations</param>
     public UserService(IUserRepository userRepository, IPostService postService,
         IFollowerUserRelationRepository followerUserRelationRepository)
     {
@@ -190,6 +191,30 @@ public class UserService : IUserService
     }
 
     /// <inheritdoc />
+    public async Task<bool> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn)
+    {
+        try
+        {
+            await _followerUserRelationRepository.CheckIfUserIsFollowed(userIdToCheck, userIdLoggedIn);
+            return true;
+        }
+        catch (DatabaseMissingItemException)
+        {
+            return false;
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            Logger.LogError(ex, "There was an error trying to check if the follower user is followed.");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "There was an error trying to check if the follower user is followed.");
+            return false;
+        }
+    }
+
+    /// <inheritdoc />
     public async Task<ProfilePicDto> GetProfilePic(Guid userId)
     {
         try
@@ -296,15 +321,7 @@ public class UserService : IUserService
         }
     }
 
-    /// <summary>
-    ///     Gets all spaces a user has wrote in
-    /// </summary>
-    /// <param name="userId">
-    ///     User from which it should be retrieved
-    /// </param>
-    /// <returns>
-    ///     Returns the amount of spaces as task
-    /// </returns>
+    /// <inheritdoc />
     public async Task<int> GetCountOfUserSpaces(Guid userId)
     {
         //TODO: Currently not working
@@ -328,6 +345,46 @@ public class UserService : IUserService
         catch (GeneralDatabaseException ex)
         {
             throw new UserGeneralException($"An error occurred while fetching the user. ID: {userId}", ex);
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task FollowUserById(Guid userIdFollows, Guid userIdToFollow)
+    {
+        var userFollows = new FollowerUserRelationDao
+        {
+            FollowerUserId = userIdFollows,
+            FollowedUserId = userIdToFollow
+        };
+        await _followerUserRelationRepository.AddElement(userFollows);
+    }
+
+    /// <inheritdoc />
+    public async Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow)
+    {
+        try
+        {
+            var userToDelete =
+                await _followerUserRelationRepository.CheckIfUserIsFollowed(userIdToUnfollow, userIdFollows);
+            await _followerUserRelationRepository.DeleteElement(userToDelete);
+        }
+        catch (DatabaseIudActionException ex)
+        {
+            throw new UserIudException(
+                $"An error occurred while unfollowing the user. UserIdFollows: {userIdFollows}, UserIdToUnfollow: {userIdToUnfollow}",
+                ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new UserGeneralException(
+                $"An error occurred while unfollowing the user. UserIdFollows: {userIdFollows}, UserIdToUnfollow: {userIdToUnfollow}",
+                ex);
+        }
+        catch (Exception ex)
+        {
+            throw new UserGeneralException(
+                $"An error occurred while unfollowing the user. UserIdFollows: {userIdFollows}, UserIdToUnfollow: {userIdToUnfollow}",
+                ex);
         }
     }
 }

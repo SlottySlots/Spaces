@@ -122,6 +122,8 @@
 
 [PostSubmissionFormVmImpl](./slottymedia.backend.viewmodel.postsubmissionformvmimpl.md)
 
+[ProfilePageVmImpl](./slottymedia.backend.viewmodel.profilepagevmimpl.md)
+
 [SignInFormVmImpl](./slottymedia.backend.viewmodel.signinformvmimpl.md)
 
 [SignupFormVmImpl](./slottymedia.backend.viewmodel.signupformvmimpl.md)
@@ -141,6 +143,8 @@
 [IMainLayoutVm](./slottymedia.backend.viewmodel.interfaces.imainlayoutvm.md)
 
 [IPostSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.ipostsubmissionformvm.md)
+
+[IProfilePageVm](./slottymedia.backend.viewmodel.interfaces.iprofilepagevm.md)
 
 [ISignInFormVm](./slottymedia.backend.viewmodel.interfaces.isigninformvm.md)
 
@@ -171,6 +175,8 @@
 [Home](./slottymedia.components.pages.home.md)
 
 [Login](./slottymedia.components.pages.login.md)
+
+[Profile](./slottymedia.components.pages.profile.md)
 
 [Register](./slottymedia.components.pages.register.md)
 

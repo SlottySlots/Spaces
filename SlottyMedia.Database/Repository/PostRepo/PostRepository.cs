@@ -51,7 +51,7 @@ public class PostRepository : DatabaseRepository<PostsDao>, IPostRepository
     public async Task<List<PostsDao>> GetPostsByUserId(Guid userId, int page, int pageSize)
     {
         var query = BaseSelectQuery()
-            .Filter("user_id", Constants.Operator.Equals, userId);
+            .Filter(posts => posts.UserId!, Constants.Operator.Equals, userId.ToString());
 
         return await ExecuteQuery(ApplyPagination(query, page, pageSize));
     }
@@ -60,8 +60,8 @@ public class PostRepository : DatabaseRepository<PostsDao>, IPostRepository
     public async Task<List<PostsDao>> GetPostsByUserIdByForumId(Guid userId, Guid forumId, int page, int pageSize)
     {
         var query = BaseSelectQuery()
-            .Filter("creator_userID", Constants.Operator.Equals, userId.ToString())
-            .Filter("associated_forumID", Constants.Operator.Equals, forumId.ToString());
+            .Filter(post => post.UserId!, Constants.Operator.Equals, userId.ToString())
+            .Filter(post => post.ForumId!, Constants.Operator.Equals, forumId.ToString());
 
         return await ExecuteQuery(ApplyPagination(query, page, pageSize));
     }
@@ -70,7 +70,7 @@ public class PostRepository : DatabaseRepository<PostsDao>, IPostRepository
     public async Task<List<PostsDao>> GetPostsByForumId(Guid forumId, int page, int pageSize)
     {
         var query = BaseSelectQuery()
-            .Filter("associated_forumID", Constants.Operator.Equals, forumId.ToString());
+            .Filter(post => post.ForumId!, Constants.Operator.Equals, forumId.ToString());
 
         return await ExecuteQuery(ApplyPagination(query, page, pageSize));
     }
@@ -79,6 +79,6 @@ public class PostRepository : DatabaseRepository<PostsDao>, IPostRepository
     {
         return BaseQuerry
             .Select(x => new object[] { x.PostId!, x.Content!, x.CreatedAt, x.UserId!, x.ForumId! })
-            .Order("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last);
+            .Order(post => post.CreatedAt, Constants.Ordering.Descending, Constants.NullPosition.Last);
     }
 }

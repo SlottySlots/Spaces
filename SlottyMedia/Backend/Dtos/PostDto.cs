@@ -97,7 +97,7 @@ public class PostDto
         PostId = post.PostId ?? Guid.Empty;
         Content = post.Content ?? string.Empty;
         Forum = post.Forum != null ? new ForumDto().Mapper(post.Forum) : new ForumDto();
-        CreatedAt = post.CreatedAt;
+        CreatedAt = post.CreatedAt.LocalDateTime;
         //Comments = post.Comments?.Select(c => new CommentDto().Mapper(c)).ToList() ?? new List<CommentDto>();
         //TODO Add Comment Mapping
         UserId = post.UserId ?? Guid.Empty;

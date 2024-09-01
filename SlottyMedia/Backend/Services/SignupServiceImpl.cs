@@ -66,6 +66,7 @@ public class SignupServiceImpl : ISignupService
 
         Logger.LogDebug($"Signing up user with username: {username}, email: {email}");
         var session = await _supabaseClient.Auth.SignUp(email, password);
+        //This is not needed?
         session = await _supabaseClient.Auth.SignIn(email, password);
 
         // TODO Check if email already exists, it is unclear how supabase responds in that case!
@@ -84,8 +85,8 @@ public class SignupServiceImpl : ISignupService
 
         // save cookies
         Logger.LogDebug("Setting cookies for user.");
-        await _cookieService.SetCookie("supabase.auth.token", session.AccessToken, 7);
-        await _cookieService.SetCookie("supabase.auth.refreshToken", session.RefreshToken, 7);
+        await _cookieService.SetCookie("supabase.auth.token", session!.AccessToken!, 7);
+        await _cookieService.SetCookie("supabase.auth.refreshToken", session!.RefreshToken!, 7);
 
         return session;
     }
