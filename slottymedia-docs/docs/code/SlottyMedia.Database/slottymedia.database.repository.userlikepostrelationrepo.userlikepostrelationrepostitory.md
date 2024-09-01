@@ -5,11 +5,11 @@ Namespace: SlottyMedia.Database.Repository.UserLikePostRelationRepo
 Repository class for managing user like post relations in the database.
 
 ```csharp
-public class UserLikePostRelationRepostitory : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.UserLikePostRelationDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.UserLikePostRelationDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], IUserLikePostRelationRepostitory
+public class UserLikePostRelationRepostitory : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.UserLikePostRelationDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.Repository.IDatabaseRepository`1[[SlottyMedia.Database.Daos.UserLikePostRelationDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], IUserLikePostRelationRepostitory
 ```
 
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [DatabaseRepository&lt;UserLikePostRelationDao&gt;](./slottymedia.database.repository.databaserepository-1.md) → [UserLikePostRelationRepostitory](./slottymedia.database.repository.userlikepostrelationrepo.userlikepostrelationrepostitory.md)<br>
-Implements [IDatabaseRepository&lt;UserLikePostRelationDao&gt;](./slottymedia.database.idatabaserepository-1.md), [IUserLikePostRelationRepostitory](./slottymedia.database.repository.userlikepostrelationrepo.iuserlikepostrelationrepostitory.md)
+Implements [IDatabaseRepository&lt;UserLikePostRelationDao&gt;](./slottymedia.database.repository.idatabaserepository-1.md), [IUserLikePostRelationRepostitory](./slottymedia.database.repository.userlikepostrelationrepo.iuserlikepostrelationrepostitory.md)
 
 ## Constructors
 

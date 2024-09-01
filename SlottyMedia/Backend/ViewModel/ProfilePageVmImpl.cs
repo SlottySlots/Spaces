@@ -10,9 +10,9 @@ namespace SlottyMedia.Backend.ViewModel;
 /// </summary>
 public class ProfilePageVmImpl : IProfilePageVm
 {
+    private readonly IUserService _userService;
     private readonly Logging<MainLayoutVmImpl> _logger = new();
     private readonly IPostService _postService;
-    private readonly IUserService _userService;
 
     /// <summary>
     ///     Ctor for dep inject
@@ -35,6 +35,7 @@ public class ProfilePageVmImpl : IProfilePageVm
     /// </returns>
     public async Task<UserInformationDto?> GetUserInfo(Guid userId)
     {
+
         var userDao = await _userService.GetUserDaoById(userId);
         var amountOfFriends = await _userService.GetCountOfUserFriends(userId);
         var amountOfSpaces = await _userService.GetCountOfUserSpaces(userId);
@@ -77,7 +78,10 @@ public class ProfilePageVmImpl : IProfilePageVm
     public async Task<bool?> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn)
     {
         if (userIdToCheck != userIdLoggedIn)
+        {
             return await _userService.UserFollowRelation(userIdToCheck, userIdLoggedIn);
+ 
+        }
         return null;
     }
 

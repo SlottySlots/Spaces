@@ -5,11 +5,11 @@ Namespace: SlottyMedia.Database.Repository.PostRepo
 Repository class for managing posts in the database.
 
 ```csharp
-public class PostRepository : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.PostsDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.PostsDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], IPostRepository
+public class PostRepository : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.PostsDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.Repository.IDatabaseRepository`1[[SlottyMedia.Database.Daos.PostsDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], IPostRepository
 ```
 
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [DatabaseRepository&lt;PostsDao&gt;](./slottymedia.database.repository.databaserepository-1.md) → [PostRepository](./slottymedia.database.repository.postrepo.postrepository.md)<br>
-Implements [IDatabaseRepository&lt;PostsDao&gt;](./slottymedia.database.idatabaserepository-1.md), [IPostRepository](./slottymedia.database.repository.postrepo.ipostrepository.md)
+Implements [IDatabaseRepository&lt;PostsDao&gt;](./slottymedia.database.repository.idatabaserepository-1.md), [IPostRepository](./slottymedia.database.repository.postrepo.ipostrepository.md)
 
 ## Constructors
 

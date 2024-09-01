@@ -3,7 +3,7 @@ using SlottyMedia.Database.Exceptions;
 using Supabase.Postgrest.Interfaces;
 using Supabase.Postgrest.Models;
 
-namespace SlottyMedia.Database;
+namespace SlottyMedia.Database.Repository;
 
 /// <summary>
 ///     This interface defines the contract for a generic database repository.

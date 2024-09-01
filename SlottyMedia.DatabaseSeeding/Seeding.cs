@@ -180,6 +180,9 @@ public class Seeding
             var userIds = new List<Guid>();
             for (var i = 0; i < users.Count; i++)
             {
+                var result = await ImageDownloader.DownloadAndEncodeImage(users[i].ProfilePic);
+                users[i].ProfilePic = result;
+
                 var user = await userRepository.AddElement(users[i]);
                 userIds.Add(user.UserId ?? Guid.Empty);
                 Logger.LogInfo("User seeded: " + user.UserName);

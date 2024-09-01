@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Database.Repository.UserLikePostRelationRepo
 Interface for the User Like Post Relation Repository.
 
 ```csharp
-public interface IUserLikePostRelationRepostitory : SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.UserLikePostRelationDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+public interface IUserLikePostRelationRepostitory : SlottyMedia.Database.Repository.IDatabaseRepository`1[[SlottyMedia.Database.Daos.UserLikePostRelationDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
 ```
 
-Implements [IDatabaseRepository&lt;UserLikePostRelationDao&gt;](./slottymedia.database.idatabaserepository-1.md)
+Implements [IDatabaseRepository&lt;UserLikePostRelationDao&gt;](./slottymedia.database.repository.idatabaserepository-1.md)
 
 ## Methods
 

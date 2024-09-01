@@ -5,7 +5,7 @@ Namespace: SlottyMedia.Database.Repository
 This interface provides the basic CRUD operations for a database repository.
 
 ```csharp
-public abstract class DatabaseRepository<T> : 
+public abstract class DatabaseRepository<T> : IDatabaseRepository`1
 ```
 
 #### Type Parameters

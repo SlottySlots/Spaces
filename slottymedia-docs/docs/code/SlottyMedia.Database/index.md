@@ -2,8 +2,6 @@
 
 ## SlottyMedia.Database
 
-[IDatabaseRepository&lt;T&gt;](./slottymedia.database.idatabaserepository-1.md)
-
 [InitializeSupabaseClient](./slottymedia.database.initializesupabaseclient.md)
 
 ## SlottyMedia.Database.Daos
@@ -43,6 +41,8 @@
 ## SlottyMedia.Database.Repository
 
 [DatabaseRepository&lt;T&gt;](./slottymedia.database.repository.databaserepository-1.md)
+
+[IDatabaseRepository&lt;T&gt;](./slottymedia.database.repository.idatabaserepository-1.md)
 
 ## SlottyMedia.Database.Repository.CommentRepo
 

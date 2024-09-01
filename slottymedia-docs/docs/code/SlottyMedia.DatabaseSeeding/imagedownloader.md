@@ -1,6 +1,6 @@
 # ImageDownloader
 
-Namespace: SlottyMedia.DatabaseSeeding
+Namespace:
 
 This class is used to download and encode images.
 
@@ -8,7 +8,7 @@ This class is used to download and encode images.
 public class ImageDownloader
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ImageDownloader](./slottymedia.databaseseeding.imagedownloader.md)
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ImageDownloader](./imagedownloader.md)
 
 ## Constructors
 
@@ -22,8 +22,6 @@ public ImageDownloader()
 
 ### **DownloadAndEncodeImage(String)**
 
-This method downloads an image from a URL and encodes it to a base64 string.
-
 ```csharp
 internal static Task<string> DownloadAndEncodeImage(string imageUrl)
 ```
@@ -31,7 +29,6 @@ internal static Task<string> DownloadAndEncodeImage(string imageUrl)
 #### Parameters
 
 `imageUrl` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The URL where the img is placed
 
 #### Returns
 

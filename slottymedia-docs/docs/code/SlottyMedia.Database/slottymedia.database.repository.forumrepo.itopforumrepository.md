@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Database.Repository.ForumRepo
 Interface for the Top Forum Repository.
 
 ```csharp
-public interface ITopForumRepository : SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.TopForumDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+public interface ITopForumRepository : SlottyMedia.Database.Repository.IDatabaseRepository`1[[SlottyMedia.Database.Daos.TopForumDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
 ```
 
-Implements [IDatabaseRepository&lt;TopForumDao&gt;](./slottymedia.database.idatabaserepository-1.md)
+Implements [IDatabaseRepository&lt;TopForumDao&gt;](./slottymedia.database.repository.idatabaserepository-1.md)
 
 ## Methods
 
