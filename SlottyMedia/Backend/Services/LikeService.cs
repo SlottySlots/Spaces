@@ -62,6 +62,11 @@ public class LikeService : ILikeService
             await _likeRepository.DeleteElement(like);
             return true;
         }
+        catch (DatabaseMissingItemException ex)
+        {
+            throw new LikeNotFoundException(
+                $"An error occurred while deleting the like. Parameters: UserID {userId}, PostID {postId}", ex);
+        }
         catch (DatabaseIudActionException ex)
         {
             throw new LikeIudException(

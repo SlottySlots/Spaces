@@ -17,7 +17,7 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
     private readonly IPostService _postService;
 
     /// <summary>
-    /// Ctor used for dep inject
+    ///     Ctor used for dep inject
     /// </summary>
     /// <param name="authService"></param>
     /// <param name="postService"></param>

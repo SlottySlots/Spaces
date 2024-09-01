@@ -13,7 +13,7 @@ public interface IRoleRepository : IDatabaseRepository<RoleDao>
     /// <param name="roleName">The name of the role.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the role ID.</returns>
     public Task<Guid> GetRoleIdByName(string roleName);
-    
+
     /// <summary>
     ///     Updates an existing RoleDao element in the repository.
     /// </summary>

@@ -132,6 +132,7 @@ public class PostService : IPostService
                 ex);
         }
     }
+
     /// <inheritdoc />
     public async Task<PostDto?> GetPostById(Guid postId)
     {

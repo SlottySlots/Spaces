@@ -189,6 +189,7 @@ public class UserService : IUserService
             throw new UserGeneralException($"An error occurred while updating the user. User {user}", ex);
         }
     }
+
     /// <inheritdoc />
     public async Task<bool> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn)
     {
@@ -346,6 +347,7 @@ public class UserService : IUserService
             throw new UserGeneralException($"An error occurred while fetching the user. ID: {userId}", ex);
         }
     }
+
     /// <inheritdoc />
     public async Task FollowUserById(Guid userIdFollows, Guid userIdToFollow)
     {
@@ -356,25 +358,33 @@ public class UserService : IUserService
         };
         await _followerUserRelationRepository.AddElement(userFollows);
     }
+
     /// <inheritdoc />
     public async Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow)
     {
         try
         {
-            var userToDelete = await _followerUserRelationRepository.CheckIfUserIsFollowed(userIdToUnfollow, userIdFollows);
+            var userToDelete =
+                await _followerUserRelationRepository.CheckIfUserIsFollowed(userIdToUnfollow, userIdFollows);
             await _followerUserRelationRepository.DeleteElement(userToDelete);
         }
         catch (DatabaseIudActionException ex)
         {
-            throw new UserIudException($"An error occurred while unfollowing the user. UserIdFollows: {userIdFollows}, UserIdToUnfollow: {userIdToUnfollow}", ex);
+            throw new UserIudException(
+                $"An error occurred while unfollowing the user. UserIdFollows: {userIdFollows}, UserIdToUnfollow: {userIdToUnfollow}",
+                ex);
         }
         catch (GeneralDatabaseException ex)
         {
-            throw new UserGeneralException($"An error occurred while unfollowing the user. UserIdFollows: {userIdFollows}, UserIdToUnfollow: {userIdToUnfollow}", ex);
+            throw new UserGeneralException(
+                $"An error occurred while unfollowing the user. UserIdFollows: {userIdFollows}, UserIdToUnfollow: {userIdToUnfollow}",
+                ex);
         }
         catch (Exception ex)
         {
-            throw new UserGeneralException($"An error occurred while unfollowing the user. UserIdFollows: {userIdFollows}, UserIdToUnfollow: {userIdToUnfollow}", ex);
+            throw new UserGeneralException(
+                $"An error occurred while unfollowing the user. UserIdFollows: {userIdFollows}, UserIdToUnfollow: {userIdToUnfollow}",
+                ex);
         }
     }
 }

@@ -17,15 +17,18 @@
 
 
 @code {
+
     /// <summary>
-    /// RenderFragment to render a pictogram into the avatar when a action should be done on clicking an avatar.
-    /// </summary> 
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+    ///     RenderFragment to render a pictogram into the avatar when a action should be done on clicking an avatar.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
 
     private string? _base64Png;
 
     /// <summary>
-    /// Sets a Base64Png. Gets the currently set base64png variable if set. If not set it gets the path of the standard profile picture.
+    ///     Sets a Base64Png. Gets the currently set base64png variable if set. If not set it gets the path of the standard
+    ///     profile picture.
     /// </summary>
     [Parameter]
     public string Base64Png
@@ -34,15 +37,17 @@
         set => _base64Png = value;
     }
 
-    ///<summary>
-    /// Flag to mark the avatar as changeable. Hence the onclick event will open a file dialog.
-    /// </summary>
-    [Parameter] public bool OpensFileDialog { get; set; }
-    
     /// <summary>
-    /// Callback triggered whenever a User selects a new file. It invokes the image as base64 encoded string
+    ///     Flag to mark the avatar as changeable. Hence the onclick event will open a file dialog.
     /// </summary>
-    [Parameter] public EventCallback<string> Base64Callback { get; set; }
+    [Parameter]
+    public bool OpensFileDialog { get; set; }
+
+    /// <summary>
+    ///     Callback triggered whenever a User selects a new file. It invokes the image as base64 encoded string
+    /// </summary>
+    [Parameter]
+    public EventCallback<string> Base64Callback { get; set; }
 
     private async void OpenFileDialog()
     {

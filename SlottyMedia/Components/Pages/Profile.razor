@@ -1,4 +1,5 @@
 @page "/profile"
+@using System.Web
 @using Microsoft.IdentityModel.Tokens
 @using SlottyMedia.Backend.Dtos
 @using SlottyMedia.Backend.Services.Interfaces
@@ -13,14 +14,14 @@
         <div class="px-4">
             <Avatar Base64PNG="@UserInformationDto.ProfilePic"></Avatar>
         </div>
-    
+
         <div class="px-4 flex flex-col gap-3">
             <h1 class="text-3xl font-medium w-1/4">
                 @UserInformationDto.Username
-            </h1> 
-        
+            </h1>
+
             <p class="text-lg">@UserInformationDto.Description</p>
-        
+
             <div class="flex w-1/2">
                 <h3 class="text-sm text-cadet-gray w-full">Friends: @UserInformationDto.FriendsAmount</h3>
                 <h3 class="text-sm text-cadet-gray w-full">Spaces: @UserInformationDto.SpacesAmount</h3>
@@ -39,8 +40,8 @@
                     {
                         <p>Follow</p>
                     }
-                </HotButton> 
-            </div> 
+                </HotButton>
+            </div>
         }
     </div>
 
@@ -50,7 +51,7 @@
         {
             <Post Dto="post" CurrentUserId=@(Guid.Parse(_currentSession!.User!.Id!))/>
         }
-    } 
+    }
 }
 else
 {
@@ -64,24 +65,23 @@ else
     private Session? _currentSession;
 
     private bool? _followsUserRetrieved;
-    
+
     private bool _invalidIdFlag;
 
-    private List<PostDto> _postsOfUser = new List<PostDto>();
-    
-    
-    
+    private List<PostDto> _postsOfUser = new();
+
+
     public UserInformationDto UserInformationDto { get; set; } = new()
     {
         Username = "Username is loading..",
         Description = "Description is loading..",
         ProfilePic = null
     };
-    
+
     protected override async void OnAfterRender(bool firstRender)
     {
         var uri = new Uri(NavigationManager.Uri);
-        var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        var queryParams = HttpUtility.ParseQueryString(uri.Query);
         _currentSession = AuthService.GetCurrentSession();
 
         // Retrieve query parameters
@@ -90,7 +90,6 @@ else
             try
             {
                 _profileUserId = Guid.Parse(queryParams["id"]!);
-
             }
             catch (Exception)
             {
@@ -98,6 +97,7 @@ else
                 StateHasChanged();
                 return;
             }
+
             _followsUserRetrieved = await ProfilePageVm.UserFollowRelation(_profileUserId, Guid.Parse(_currentSession!.User!.Id!));
             if (firstRender || UserInformationDto.Username == "Username is loading..")
             {
@@ -140,9 +140,10 @@ else
         else
         {
             await ProfilePageVm.FollowUserById(Guid.Parse(_currentSession!.User!.Id!), _profileUserId);
-
         }
+
         _followsUserRetrieved = !_followsUserRetrieved;
         StateHasChanged();
     }
+
 }

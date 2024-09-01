@@ -1,6 +1,5 @@
 @using SlottyMedia.Backend.Dtos
 @using SlottyMedia.Backend.Services.Interfaces
-
 @inject IUserService UserService;
 @inject ILikeService LikeService;
 
@@ -72,7 +71,6 @@
 }
 
 
-
 @if (_isLoading)
 {
     <div>
@@ -86,9 +84,9 @@
     /// The post to be rendered.
     [Parameter]
     public PostDto? Dto { get; set; }
-    
-    ///<summary>
-    ///The current logged in user id to propagate towards like component
+
+    /// <summary>
+    ///     The current logged in user id to propagate towards like component
     /// </summary>
     [Parameter]
     public Guid CurrentUserId { get; set; }
@@ -96,7 +94,7 @@
     private bool _isLoading = true;
     private int _likeCount;
     private bool _initLiked;
-    
+
     UserDto? _owner;
 
     /// <inheritdoc />
@@ -104,7 +102,7 @@
     {
         _isLoading = true;
         //TODO: This should be changed soon!
-        await SetLikeCountState(); 
+        await SetLikeCountState();
         _owner = await UserService.GetUserDtoById(Dto!.UserId);
         _isLoading = false;
     }
@@ -113,7 +111,7 @@
     {
         var likeList = await LikeService.GetLikesForPost(Dto!.PostId);
         _likeCount = likeList.Count;
-        _initLiked = likeList.Contains(CurrentUserId); 
+        _initLiked = likeList.Contains(CurrentUserId);
     }
 
     public async void LikeClick(bool wasUnliked)
@@ -125,7 +123,6 @@
         else
         {
             await LikeService.InsertLike(CurrentUserId, Dto!.PostId);
-            
         }
 
         await SetLikeCountState();

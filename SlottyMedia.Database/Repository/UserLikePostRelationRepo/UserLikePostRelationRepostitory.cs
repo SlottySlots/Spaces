@@ -44,7 +44,7 @@ public class UserLikePostRelationRepostitory : DatabaseRepository<UserLikePostRe
     {
         var userLikeDao = BaseQuerry
             .Filter(post => post.PostId!, Constants.Operator.Equals, postId.ToString())
-            .Filter(post => post.PostId!, Constants.Operator.Equals, userId.ToString());
+            .Filter(post => post.UserId!, Constants.Operator.Equals, userId.ToString());
         return await ExecuteSingleQuery(userLikeDao);
     }
 }

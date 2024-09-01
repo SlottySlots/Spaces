@@ -74,20 +74,19 @@ public interface IPostService
     public Task<int> GetForumCountByUserId(Guid userId);
 
     /// <summary>
-    /// Gets posts of a user by their id and enables slicing via offsets
+    ///     Gets posts of a user by their id and enables slicing via offsets
     /// </summary>
     /// <param name="userId">
-    /// User that the posts belong to
+    ///     User that the posts belong to
     /// </param>
     /// <param name="startOfSet">
-    /// Startindex of the posts sorted by date
+    ///     Startindex of the posts sorted by date
     /// </param>
     /// <param name="endOfSet">
-    /// Endindex of the posts sorted by data
+    ///     Endindex of the posts sorted by data
     /// </param>
     /// <returns>
-    /// List of PostDtos
+    ///     List of PostDtos
     /// </returns>
     public Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet);
-
 }

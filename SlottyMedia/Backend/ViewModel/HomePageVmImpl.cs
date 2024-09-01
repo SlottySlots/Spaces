@@ -8,15 +8,18 @@ namespace SlottyMedia.Backend.ViewModel;
 public class HomePageVmImpl : IHomePageVm
 {
     private readonly IPostService _postService;
-    ///<summary>
-    /// Ctor used for dep inject
+
+    /// <summary>
+    ///     Ctor used for dep inject
     /// </summary>
     public HomePageVmImpl(IPostService postService)
     {
         _postService = postService;
     }
+
     /// <inheritdoc />
     public List<PostDto> Posts { get; set; } = new();
+
     /// <inheritdoc />
     public async Task FetchPosts()
     {
