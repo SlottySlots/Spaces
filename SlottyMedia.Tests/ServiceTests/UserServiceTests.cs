@@ -70,7 +70,7 @@ public class UserServiceTests
     [Test]
     public void DeleteUser_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()
     {
-        var user = new UserDto { UserId = Guid.NewGuid(), CreatedAt = DateTime.Now};
+        var user = new UserDto { UserId = Guid.NewGuid(), CreatedAt = DateTime.Now };
 
         _mockUserRepository.Setup(x => x.DeleteElement(It.IsAny<UserDao>()))
             .ThrowsAsync(new DatabaseIudActionException());

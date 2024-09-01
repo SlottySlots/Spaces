@@ -106,6 +106,7 @@ try
     builder.Services.AddScoped<IHomePageVm, HomePageVmImpl>();
     builder.Services.AddScoped<IAuthVmImpl, AuthVmImpl>();
     builder.Services.AddScoped<IUserVmImpl, UserVmImpl>();
+    builder.Services.AddScoped<ISearchVm, SearchImpl>();
 
 
     var app = builder.Build();
