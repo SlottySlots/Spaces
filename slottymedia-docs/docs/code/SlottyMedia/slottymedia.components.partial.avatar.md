@@ -25,7 +25,8 @@ RenderFragment<br>
 
 ### **Base64Png**
 
-Sets a Base64Png. Gets the currently set base64png variable if set. If not set it gets the path of the standard profile picture.
+Sets a Base64Png. Gets the currently set base64png variable if set. If not set it gets the path of the standard
+ profile picture.
 
 ```csharp
 public string Base64Png { private get; set; }
