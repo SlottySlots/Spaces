@@ -26,8 +26,9 @@ namespace SlottyMedia.Backend.ViewModel.Interfaces
         /// </summary>
         /// <param name="name">The name of the space to load information for.</param>
         public Task LoadSpaceDetails(string name);
-        
-        
+        string Topic { get; }
+        int PostCount { get; }
+        DateTime CreatedAt { get; }
         /// <summary>
         /// Gets forums of a user by their id and enables slicing via offsets
         /// </summary>

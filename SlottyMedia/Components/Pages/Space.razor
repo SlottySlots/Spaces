@@ -11,16 +11,15 @@
     <div class="flex border-b border-athens-gray py-4 w-full">
         <div class="px-4 flex flex-col gap-3">
             <h1 class="text-3xl font-medium w-1/4">
-                @SpaceDto.Topic
-            </h1> 
-        
-            <div class="flex w-1/2">
-                <h3 class="text-sm text-cadet-gray w-full">Posts: @SpaceDto.PostCount</h3>
-                <h3 class="text-sm text-cadet-gray w-full">Created at: @SpaceDto.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
-            </div>
-        </div>
+               @SpaceVm.Topic
+            </h1>
     </div>
-
+    </div> 
+    
+    <div class="flex w-1/2">
+        <h3 class="text-sm text-cadet-gray w-full">Activity: @SpaceVm.PostCount</h3>
+        <h3 class="text-sm text-cadet-gray w-full">Created at: @SpaceVm.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
+    </div>
     @if (!_postsInSpace.IsNullOrEmpty())
     {
         @foreach (var post in _postsInSpace)
@@ -50,7 +49,7 @@ else
         CreatedAt = DateTime.MinValue,
         PostCount = 0
     };
-    
+
     protected override async void OnAfterRender(bool firstRender)
     {
         var uri = new Uri(NavigationManager.Uri);
@@ -98,4 +97,7 @@ else
             _invalidSpaceFlag = true;
         }
     }
+
 }
+}
+  

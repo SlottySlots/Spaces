@@ -8,6 +8,38 @@ This ViewModel represents the state of the Space Page.
 public interface ISpaceVm
 ```
 
+## Properties
+
+### **Topic**
+
+```csharp
+public abstract string Topic { get; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+### **PostCount**
+
+```csharp
+public abstract int PostCount { get; }
+```
+
+#### Property Value
+
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+### **CreatedAt**
+
+```csharp
+public abstract DateTime CreatedAt { get; }
+```
+
+#### Property Value
+
+[DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)<br>
+
 ## Methods
 
 ### **GetSpaceInformation(String)**
