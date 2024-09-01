@@ -31,20 +31,28 @@ public class SearchImpl : ISearchVm
     /// <inheritdoc />
     public async Task GetSearchResults(ChangeEventArgs e, EventCallback<string?> promptValueChanged)
     {
-        if (e.Value is not null)
+        try
         {
-            var newValue = e.Value.ToString();
-            SearchPrompt = newValue;
-            await promptValueChanged.InvokeAsync(newValue);
-
-            if (newValue is not null)
+            if (e.Value is not null)
             {
-                if (newValue.StartsWith("#"))
-                    SearchResults = await _searchService.SearchByTopic(newValue, 1, 10);
-                else if (newValue.StartsWith("@"))
-                    SearchResults = await _searchService.SearchByUsername(newValue, 1, 10);
+                var newValue = e.Value.ToString();
+                SearchPrompt = newValue;
+                await promptValueChanged.InvokeAsync(newValue);
+
+                if (newValue is not null)
+                {
+                    if (newValue.StartsWith("#"))
+                        SearchResults = await _searchService.SearchByTopic(newValue, 1, 10);
+                    else if (newValue.StartsWith("@"))
+                        SearchResults = await _searchService.SearchByUsername(newValue, 1, 10);
+                }
             }
         }
+        catch (Exception exception)
+        {
+            //TODO Implement error handling
+        }
+        
     }
 
     ///inheritdoc />
