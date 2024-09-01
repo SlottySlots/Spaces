@@ -25,6 +25,8 @@ public List<PostDto> Posts { get; set; }
 
 ### **HomePageVmImpl(IPostService)**
 
+Ctor used for dep inject
+
 ```csharp
 public HomePageVmImpl(IPostService postService)
 ```

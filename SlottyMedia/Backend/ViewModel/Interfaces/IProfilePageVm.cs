@@ -2,6 +2,9 @@ using SlottyMedia.Backend.Dtos;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 
+/// <summary>
+/// Interface used for profilepage viewmodel
+/// </summary>
 public interface IProfilePageVm
 {
     /// <summary>

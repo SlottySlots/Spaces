@@ -22,7 +22,11 @@ public class MainLayoutVmImpl : IMainLayoutVm
     private readonly Logging<MainLayoutVmImpl> _logger = new();
 
     private readonly IUserService _userService;
-
+    /// <summary>
+    /// Ctor used for dep inject
+    /// </summary>
+    /// <param name="authService"></param>
+    /// <param name="userService"></param>
     public MainLayoutVmImpl(IAuthService authService, IUserService userService)
     {
         _authService = authService;

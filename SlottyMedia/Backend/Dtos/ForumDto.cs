@@ -35,6 +35,9 @@ public class ForumDto
     /// </summary>
     public DateTime CreatedAt { get; set; }
 
+    /// <summary>
+    /// Amount of posts the forum has
+    /// </summary>
     public int PostCount { get; set; }
 
     /// <summary>

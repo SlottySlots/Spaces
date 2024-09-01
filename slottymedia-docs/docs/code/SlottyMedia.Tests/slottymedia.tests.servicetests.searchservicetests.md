@@ -74,7 +74,8 @@ public Task SearchByUsernameOrTopic_ShouldReturnEmptyList_WhenNoResultsFound()
 
 ### **SearchByUsernameOrTopic_ShouldThrowException_WhenDatabaseThrowsException()**
 
-Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when a general database exception is thrown.
+Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when a general database exception
+ is thrown.
 
 ```csharp
 public void SearchByUsernameOrTopic_ShouldThrowException_WhenDatabaseThrowsException()
@@ -82,7 +83,8 @@ public void SearchByUsernameOrTopic_ShouldThrowException_WhenDatabaseThrowsExcep
 
 ### **SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatabaseMissingItemExceptionIsThrown()**
 
-Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when DatabaseMissingItemException is thrown.
+Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when DatabaseMissingItemException
+ is thrown.
 
 ```csharp
 public void SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatabaseMissingItemExceptionIsThrown()
@@ -90,7 +92,8 @@ public void SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatab
 
 ### **SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatabaseExceptionIsThrown()**
 
-Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when GeneralDatabaseException is thrown.
+Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when GeneralDatabaseException is
+ thrown.
 
 ```csharp
 public void SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatabaseExceptionIsThrown()

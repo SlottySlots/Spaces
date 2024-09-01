@@ -22,8 +22,9 @@ public class UserService : IUserService
     /// <summary>
     ///     This constructor creates a new UserService object.
     /// </summary>
-    /// <param name="databaseActions">This parameter is used to interact with the database</param>
+    /// <param name="userRepository">Repository used to fetch user table</param>
     /// <param name="postService">This parameter is used to interact with the post service</param>
+    /// <param name="followerUserRelationRepository">Repository used to fetch follower user relations</param>
     public UserService(IUserRepository userRepository, IPostService postService,
         IFollowerUserRelationRepository followerUserRelationRepository)
     {
@@ -188,7 +189,7 @@ public class UserService : IUserService
             throw new UserGeneralException($"An error occurred while updating the user. User {user}", ex);
         }
     }
-
+    /// <inheritdoc />
     public async Task<bool> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn)
     {
         try
@@ -319,15 +320,7 @@ public class UserService : IUserService
         }
     }
 
-    /// <summary>
-    ///     Gets all spaces a user has wrote in
-    /// </summary>
-    /// <param name="userId">
-    ///     User from which it should be retrieved
-    /// </param>
-    /// <returns>
-    ///     Returns the amount of spaces as task
-    /// </returns>
+    /// <inheritdoc />
     public async Task<int> GetCountOfUserSpaces(Guid userId)
     {
         //TODO: Currently not working
@@ -353,7 +346,7 @@ public class UserService : IUserService
             throw new UserGeneralException($"An error occurred while fetching the user. ID: {userId}", ex);
         }
     }
-
+    /// <inheritdoc />
     public async Task FollowUserById(Guid userIdFollows, Guid userIdToFollow)
     {
         var userFollows = new FollowerUserRelationDao
@@ -363,7 +356,7 @@ public class UserService : IUserService
         };
         await _followerUserRelationRepository.AddElement(userFollows);
     }
-    
+    /// <inheritdoc />
     public async Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow)
     {
         try

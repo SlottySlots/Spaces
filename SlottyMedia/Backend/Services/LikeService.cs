@@ -19,7 +19,7 @@ public class LikeService : ILikeService
     /// <summary>
     ///     The constructor for the LikeService.
     /// </summary>
-    /// <param name="databaseActions"></param>
+    /// <param name="likeRepository"></param>
     public LikeService(IUserLikePostRelationRepostitory likeRepository)
     {
         Logger.LogInfo("LikeService initialized");
