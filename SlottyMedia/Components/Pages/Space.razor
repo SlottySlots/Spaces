@@ -5,62 +5,46 @@
 @using SlottyMedia.Backend.ViewModel.Interfaces
 @inject NavigationManager NavigationManager
 @inject ISpaceVm SpaceVm
+@inject IAuthService AuthService
+<PageTitle>Slotty Media | Space</PageTitle>
 
-@if (!_invalidSpaceFlag)
+@if (isLoading)
 {
-    <div class="flex border-b border-athens-gray py-4 w-full">
-        <div class="px-4 flex flex-col gap-3">
-            <h1 class="text-3xl font-medium w-1/4">
-               @SpaceVm.Topic
-            </h1>
-    </div>
-    </div> 
-    
-    <div class="flex w-1/2">
-        <h3 class="text-sm text-cadet-gray w-full">Activity: @SpaceVm.PostCount</h3>
-        <h3 class="text-sm text-cadet-gray w-full">Created at: @SpaceVm.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
-    </div>
-    @if (!_postsInSpace.IsNullOrEmpty())
-    {
-        @foreach (var post in _postsInSpace)
-        {
-            <Post Dto="post" CurrentUserId=@_currentUserId />
-        }
-    } 
+<p>Loading space details...</p>
+}
+else if (_invalidSpaceFlag)
+{
+<p>Space not found!</p>
 }
 else
 {
-    <p class="text-3xl font-medium text-center">Space not found!</p>
+<div class="space-details">
+    <h1 class="text-3xl font-bold">@SpaceVm.Topic</h1>
+    <p class="text-sm text-gray-500">Created at: @SpaceVm.CreatedAt.ToString("dd-MMMM-yyyy")</p>
+    <p class="text-sm text-gray-500">Posts: @SpaceVm.PostCount</p>
+    
+   
+</div>
 }
 
+@code {
+    private bool isLoading = true;
+    private bool _invalidSpaceFlag = false;
+    private Guid _forumId;
+    private List<PostDto> posts = new List<PostDto>();
 
-@code{
-    private Guid _spaceId;
-
-    private Guid _currentUserId;
-
-    private bool _invalidSpaceFlag;
-
-    private List<PostDto> _postsInSpace = new List<PostDto>();
-
-    public ForumDto SpaceDto { get; set; } = new()
-    {
-        Topic = "Topic is loading...",
-        CreatedAt = DateTime.MinValue,
-        PostCount = 0
-    };
-
-    protected override async void OnAfterRender(bool firstRender)
+    protected override async Task OnInitializedAsync()
     {
         var uri = new Uri(NavigationManager.Uri);
         var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        var spaceName = queryParams["name"];
 
-        // Retrieve query parameters
+// Retrieve query parameters
         if (queryParams["id"] != null && !_invalidSpaceFlag)
         {
             try
             {
-                _spaceId = Guid.Parse(queryParams["id"]!);
+                _forumId = Guid.Parse(queryParams["id"]!);
             }
             catch (Exception)
             {
@@ -69,35 +53,37 @@ else
                 return;
             }
 
-            if (firstRender || SpaceDto.Topic == "Topic is loading...")
-            {
-                var spaceInfo = await SpaceVm.GetSpaceInformation(queryParams["name"]!);
-                if (spaceInfo != null)
-                {
-                    SpaceDto.Topic = spaceInfo.Topic;
-                    SpaceDto.CreatedAt = spaceInfo.CreatedAt;
-                    SpaceDto.PostCount = spaceInfo.PostCount;
-                    StateHasChanged();
-                }
-                else
-                {
-                    _invalidSpaceFlag = true;
-                    StateHasChanged();
-                }
 
-                if (_postsInSpace.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(spaceName))
+            {
+                try
                 {
-                    _postsInSpace = await SpaceVm.GetPostsByForumId(_spaceId, 0, 10);
-                    StateHasChanged();
+                    await SpaceVm.LoadSpaceDetails(spaceName);
+                    if (SpaceVm.Topic != null)
+                    {
+                        posts = await SpaceVm.GetPostsByForumId(_forumId, 0, 10); // Lädt die ersten 10 Posts
+                    }
+                    else
+                    {
+                        _invalidSpaceFlag = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    _invalidSpaceFlag = true;
+                }
+                finally
+                {
+                    isLoading = false;
                 }
             }
-        }
-        else
-        {
-            _invalidSpaceFlag = true;
+            else
+            {
+                _invalidSpaceFlag = true;
+                isLoading = false;
+            }
         }
     }
 
 }
-}
-  
