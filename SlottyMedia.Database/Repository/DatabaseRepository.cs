@@ -20,7 +20,7 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     private readonly DaoHelper _daoHelper;
 
     /// <summary>
-    ///     This field is used to access the BaseQuerry class. It is basicly Supabase.From<T>().
+    ///     This field is used to access the BaseQuerry class. It is basicly Supabase.From<T>().</T>
     /// </summary>
     protected readonly IPostgrestTable<T> BaseQuerry;
 

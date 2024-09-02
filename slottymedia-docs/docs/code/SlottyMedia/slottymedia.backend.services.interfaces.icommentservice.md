@@ -36,8 +36,11 @@ Returns the inserted CommentDto object.
 
 #### Exceptions
 
-T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
-Throws an exception if an error occurs while inserting the comment.
+[CommentIudException](./slottymedia.backend.exceptions.services.commentexceptions.commentiudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
+
+[CommentGeneralException](./slottymedia.backend.exceptions.services.commentexceptions.commentgeneralexception.md)<br>
+Thrown when a general error occurs.
 
 ### **UpdateComment(CommentDao)**
 
@@ -59,8 +62,11 @@ Returns the updated CommentDto object.
 
 #### Exceptions
 
-T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
-Throws an exception if an error occurs while updating the comment.
+[CommentIudException](./slottymedia.backend.exceptions.services.commentexceptions.commentiudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
+
+[CommentGeneralException](./slottymedia.backend.exceptions.services.commentexceptions.commentgeneralexception.md)<br>
+Thrown when a general error occurs.
 
 ### **DeleteComment(CommentDao)**
 
@@ -82,5 +88,8 @@ Returns a Task representing the asynchronous operation.
 
 #### Exceptions
 
-T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
-Throws an exception if an error occurs while deleting the comment.
+[CommentIudException](./slottymedia.backend.exceptions.services.commentexceptions.commentiudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
+
+[CommentGeneralException](./slottymedia.backend.exceptions.services.commentexceptions.commentgeneralexception.md)<br>
+Thrown when a general error occurs.

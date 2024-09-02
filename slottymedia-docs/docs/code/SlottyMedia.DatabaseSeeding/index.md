@@ -1,11 +1,5 @@
 # SlottyMedia.DatabaseSeeding
 
-## SlottyMedia.Database.Exceptions
-
-[DatabaseSeedingRepositoryCreationFailed](./slottymedia.database.exceptions.databaseseedingrepositorycreationfailed.md)
-
-[DatabaseSeedingUserDosentContainProfilePic](./slottymedia.database.exceptions.databaseseedinguserdosentcontainprofilepic.md)
-
 ## SlottyMedia.DatabaseSeeding
 
 [ImageDownloader](./slottymedia.databaseseeding.imagedownloader.md)
@@ -15,3 +9,9 @@
 [Rules](./slottymedia.databaseseeding.rules.md)
 
 [Seeding](./slottymedia.databaseseeding.seeding.md)
+
+## SlottyMedia.DatabaseSeeding.Exceptions
+
+[DatabaseSeedingRepositoryCreationFailed](./slottymedia.databaseseeding.exceptions.databaseseedingrepositorycreationfailed.md)
+
+[DatabaseSeedingUserDosentContainProfilePic](./slottymedia.databaseseeding.exceptions.databaseseedinguserdosentcontainprofilepic.md)

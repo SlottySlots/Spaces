@@ -50,10 +50,10 @@ public Task Seed()
 T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
 Thrown when an unexpected error occurs.
 
-[DatabaseSeedingRepositoryCreationFailed](./slottymedia.database.exceptions.databaseseedingrepositorycreationfailed.md)<br>
+[DatabaseSeedingRepositoryCreationFailed](./slottymedia.databaseseeding.exceptions.databaseseedingrepositorycreationfailed.md)<br>
 Thrown when repository creation fails.
 
-[DatabaseSeedingUserDosentContainProfilePic](./slottymedia.database.exceptions.databaseseedinguserdosentcontainprofilepic.md)<br>
+[DatabaseSeedingUserDosentContainProfilePic](./slottymedia.databaseseeding.exceptions.databaseseedinguserdosentcontainprofilepic.md)<br>
 Thrown when a user does not contain a profile pic.
 
 T:SlottyMedia.Database.Exceptions.DatabaseIudActionException<br>

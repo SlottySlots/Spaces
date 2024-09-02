@@ -33,8 +33,11 @@ Returns the inserted ForumDto object.
 
 #### Exceptions
 
-T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
-Throws an exception if an error occurs while inserting the forum.
+[ForumIudException](./slottymedia.backend.exceptions.services.forumexceptions.forumiudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
+
+[ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)<br>
+Thrown when a general error occurs.
 
 ### **DeleteForum(ForumDto)**
 
@@ -56,8 +59,11 @@ Returns a Task representing the asynchronous operation.
 
 #### Exceptions
 
-T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
-Throws an exception if an error occurs while deleting the forum.
+[ForumIudException](./slottymedia.backend.exceptions.services.forumexceptions.forumiudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
+
+[ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)<br>
+Thrown when a general error occurs.
 
 ### **GetForumByName(String)**
 
@@ -76,6 +82,14 @@ The forum's name.
 
 [Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 The requested forum
+
+#### Exceptions
+
+[ForumNotFoundException](./slottymedia.backend.exceptions.services.forumexceptions.forumnotfoundexception.md)<br>
+Thrown when the forum is not found.
+
+[ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)<br>
+Thrown when a general error occurs.
 
 ### **GetForumsByNameContaining(String, Int32, Int32)**
 
@@ -102,6 +116,14 @@ The size of each page (default is 10)
 [Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 All forums where the name of each forum contains the given substring
 
+#### Exceptions
+
+[ForumNotFoundException](./slottymedia.backend.exceptions.services.forumexceptions.forumnotfoundexception.md)<br>
+Thrown when the forums are not found.
+
+[ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)<br>
+Thrown when a general error occurs.
+
 ### **GetForums()**
 
 Retrieves a list of all forums.
@@ -114,6 +136,14 @@ Task<List<ForumDto>> GetForums()
 
 [Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of ForumDto objects.
+
+#### Exceptions
+
+[ForumNotFoundException](./slottymedia.backend.exceptions.services.forumexceptions.forumnotfoundexception.md)<br>
+Thrown when the forums are not found.
+
+[ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)<br>
+Thrown when a general error occurs.
 
 ### **DetermineRecentSpaces()**
 
@@ -129,6 +159,14 @@ Task<List<ForumDto>> DetermineRecentSpaces()
 A task that represents the asynchronous operation. The task result contains a list of the 3 most recent
  ForumDto objects.
 
+#### Exceptions
+
+[ForumNotFoundException](./slottymedia.backend.exceptions.services.forumexceptions.forumnotfoundexception.md)<br>
+Thrown when the forums are not found.
+
+[ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)<br>
+Thrown when a general error occurs.
+
 ### **GetTopForums()**
 
 Retrieves the top forums.
@@ -142,3 +180,11 @@ Task<List<ForumDto>> GetTopForums()
 [Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of ForumDto objects
  representing the top forums.
+
+#### Exceptions
+
+[ForumNotFoundException](./slottymedia.backend.exceptions.services.forumexceptions.forumnotfoundexception.md)<br>
+Thrown when the forums are not found.
+
+[ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)<br>
+Thrown when a general error occurs.

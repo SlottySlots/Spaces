@@ -122,16 +122,12 @@ public Task HandleSpacePromptChange(ChangeEventArgs e, EventCallback<string> pro
 ### **HandleSpaceSelection(String)**
 
 ```csharp
-public Task HandleSpaceSelection(string spaceName)
+public void HandleSpaceSelection(string spaceName)
 ```
 
 #### Parameters
 
 `spaceName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **HandleSpaceDeselection()**
 

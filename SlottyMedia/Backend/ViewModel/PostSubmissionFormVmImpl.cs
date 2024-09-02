@@ -71,7 +71,7 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
     }
 
     /// <inheritdoc />
-    public async Task HandleSpaceSelection(string spaceName)
+    public void HandleSpaceSelection(string spaceName)
     {
         SpaceName = spaceName;
         SpacePrompt = null;
