@@ -31,6 +31,7 @@ public class SearchImpl : ISearchVm
     /// <inheritdoc />
     public async Task GetSearchResults(ChangeEventArgs e, EventCallback<string?> promptValueChanged)
     {
+        SearchResults = new SearchDto();
         try
         {
             if (e.Value is not null)
