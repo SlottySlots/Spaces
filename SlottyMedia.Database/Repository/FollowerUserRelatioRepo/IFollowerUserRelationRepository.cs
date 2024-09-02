@@ -26,7 +26,7 @@ public interface IFollowerUserRelationRepository : IDatabaseRepository<FollowerU
     /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public Task<List<FollowerUserRelationDao>> GetFriends(Guid userId);
 
-    
+
     /// <summary>
     ///     Checks if a user is followed by another user.
     /// </summary>

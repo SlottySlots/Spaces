@@ -23,7 +23,7 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
     {
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public async Task<int> GetCountOfUserFriends(Guid userId)
     {
         try
@@ -41,7 +41,7 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
         }
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public async Task<List<FollowerUserRelationDao>> GetFriends(Guid userId)
     {
         var querry = BaseQuerry
@@ -51,7 +51,7 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
         return await ExecuteQuery(querry);
     }
 
-/// <inheritdoc/>
+    /// <inheritdoc />
     public async Task<FollowerUserRelationDao> CheckIfUserIsFollowed(Guid userId, Guid followedUserId)
     {
         var querry = BaseQuerry

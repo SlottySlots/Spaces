@@ -38,7 +38,7 @@ public class TopForumRepository : DatabaseRepository<TopForumDao>, ITopForumRepo
         throw new DatabaseMissingItemException("No recent spaces found.");
     }
 
-/// <inheritdoc />
+    /// <inheritdoc />
     public async Task<List<TopForumDao>> GetTopForums()
     {
         var result = await base.ExecuteFunction("get_top_forums");

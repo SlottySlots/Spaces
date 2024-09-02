@@ -1,6 +1,5 @@
 ﻿using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.ForumExceptions;
-using SlottyMedia.Database.Exceptions;
 
 namespace SlottyMedia.Backend.Services.Interfaces;
 

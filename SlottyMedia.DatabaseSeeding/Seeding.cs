@@ -10,6 +10,7 @@ using SlottyMedia.Database.Repository.PostRepo;
 using SlottyMedia.Database.Repository.RoleRepo;
 using SlottyMedia.Database.Repository.UserLikePostRelationRepo;
 using SlottyMedia.Database.Repository.UserRepo;
+using SlottyMedia.DatabaseSeeding.Exceptions;
 using SlottyMedia.LoggingProvider;
 using Supabase;
 using Supabase.Postgrest.Models;
@@ -171,7 +172,7 @@ public class Seeding
     {
         var repository = GetDatabaseRepository<T>();
         if (repository == null)
-           throw new DatabaseSeedingRepositoryCreationFailed("Repository creation failed");
+            throw new DatabaseSeedingRepositoryCreationFailed("Repository creation failed");
         try
         {
             Logger.LogInfo("Checking if seeding is needed.");
@@ -206,7 +207,6 @@ public class Seeding
             var users = userFaker.Generate(amount);
             var userIds = new List<Guid>();
             for (var i = 0; i < users.Count; i++)
-            {
                 if (users[i].ProfilePic == null)
                 {
                     throw new DatabaseSeedingUserDosentContainProfilePic("User does not contain a profile pic.");
@@ -220,7 +220,6 @@ public class Seeding
                     userIds.Add(user.UserId ?? Guid.Empty);
                     Logger.LogInfo("User seeded: " + user.UserName);
                 }
-            }
 
             Logger.LogInfo("Database seeded with random user data.");
             return userIds;

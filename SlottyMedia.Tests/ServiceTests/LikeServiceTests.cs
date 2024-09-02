@@ -134,7 +134,7 @@ public class LikeServiceTests
         var postId = Guid.NewGuid();
         var userId = Guid.NewGuid();
         var likes = new List<UserLikePostRelationDao> { new(userId, postId) };
-        _mockLikeRepository.Setup(x => x.GetLikesForPost(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(likes);
+        _mockLikeRepository.Setup(x => x.GetLikesForPost(It.IsAny<Guid>())).ReturnsAsync(likes);
 
         var result = await _likeService.GetLikesForPost(postId);
 
@@ -150,7 +150,7 @@ public class LikeServiceTests
     public void GetLikesForPost_ShouldThrowLikeNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
     {
         var postId = Guid.NewGuid();
-        _mockLikeRepository.Setup(x => x.GetLikesForPost(It.IsAny<Guid>(), It.IsAny<Guid>()))
+        _mockLikeRepository.Setup(x => x.GetLikesForPost(It.IsAny<Guid>()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
         Assert.ThrowsAsync<LikeNotFoundException>(async () => await _likeService.GetLikesForPost(postId));
@@ -163,7 +163,7 @@ public class LikeServiceTests
     public void GetLikesForPost_ShouldThrowLikeGeneralException_WhenGeneralDatabaseExceptionIsThrown()
     {
         var postId = Guid.NewGuid();
-        _mockLikeRepository.Setup(x => x.GetLikesForPost(It.IsAny<Guid>(), It.IsAny<Guid>()))
+        _mockLikeRepository.Setup(x => x.GetLikesForPost(It.IsAny<Guid>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<LikeGeneralException>(async () => await _likeService.GetLikesForPost(postId));

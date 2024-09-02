@@ -1,7 +1,6 @@
 ﻿using Moq;
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.ForumExceptions;
-using SlottyMedia.Backend.Exceptions.Services.LikeExceptions;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database.Daos;
@@ -98,7 +97,7 @@ public class ForumServiceTests
     [Test]
     public async Task DeleteForum_ShouldDeleteForum_WhenForumIsValid()
     {
-        var forum = new ForumDto { ForumId = Guid.NewGuid(), Topic = "Test Forum", CreatedAt = DateTime.Now};
+        var forum = new ForumDto { ForumId = Guid.NewGuid(), Topic = "Test Forum", CreatedAt = DateTime.Now };
 
         _mockForumRepository.Setup(x => x.DeleteElement(It.IsAny<ForumDao>())).Returns(Task.CompletedTask);
 
@@ -113,7 +112,7 @@ public class ForumServiceTests
     [Test]
     public void DeleteForum_ShouldThrowForumIudException_WhenDatabaseIudActionExceptionIsThrown()
     {
-        var forum = new ForumDto { ForumId = Guid.NewGuid(), Topic = "Test Forum", CreatedAt = DateTime.Now};
+        var forum = new ForumDto { ForumId = Guid.NewGuid(), Topic = "Test Forum", CreatedAt = DateTime.Now };
 
         _mockForumRepository.Setup(x => x.DeleteElement(It.IsAny<ForumDao>()))
             .ThrowsAsync(new DatabaseIudActionException());

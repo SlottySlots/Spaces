@@ -1,6 +1,6 @@
 using SlottyMedia.LoggingProvider;
 
-namespace SlottyMedia.Database.Exceptions;
+namespace SlottyMedia.DatabaseSeeding.Exceptions;
 
 /// <summary>
 ///     This exception is thrown when an IUD action fails. I stands for Insert, U for Update and D for Delete.
@@ -28,7 +28,8 @@ public class DatabaseSeedingUserDosentContainProfilePic : BaseException<Database
     /// </summary>
     /// <param name="propertyName"></param>
     /// <param name="message"></param>
-    public DatabaseSeedingUserDosentContainProfilePic(string propertyName, string message) : base($"{propertyName}: {message}")
+    public DatabaseSeedingUserDosentContainProfilePic(string propertyName, string message) : base(
+        $"{propertyName}: {message}")
     {
     }
 
@@ -37,7 +38,8 @@ public class DatabaseSeedingUserDosentContainProfilePic : BaseException<Database
     /// </summary>
     /// <param name="message"></param>
     /// <param name="innerException"></param>
-    public DatabaseSeedingUserDosentContainProfilePic(string message, Exception innerException) : base(message, innerException)
+    public DatabaseSeedingUserDosentContainProfilePic(string message, Exception innerException) : base(message,
+        innerException)
     {
     }
 }

@@ -70,7 +70,10 @@ public interface IPostService
     ///     Deletes a post from the database.
     /// </summary>
     /// <param name="post">The post to delete.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result indicates whether the deletion was successful.</returns>
+    /// <returns>
+    ///     A task that represents the asynchronous operation. The task result indicates whether the deletion was
+    ///     successful.
+    /// </returns>
     /// <exception cref="PostIudException">Thrown when an error occurs during Insert, Update, or Delete operations.</exception>
     /// <exception cref="PostGeneralException">Thrown when a general error occurs.</exception>
     Task DeletePost(PostsDao post);
