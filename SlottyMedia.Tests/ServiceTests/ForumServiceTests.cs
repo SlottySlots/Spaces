@@ -15,11 +15,6 @@ namespace SlottyMedia.Tests.ServiceTests;
 [TestFixture]
 public class ForumServiceTests
 {
-    private Mock<IForumRepository> _mockForumRepository;
-    private Mock<ITopForumRepository> _mockTopForumRepository;
-    private Mock<ISearchService> _mockSearchService;
-    private ForumService _forumService;
-
     /// <summary>
     ///     Sets up the test environment before each test.
     /// </summary>
@@ -43,6 +38,11 @@ public class ForumServiceTests
         _mockTopForumRepository.Reset();
         _mockSearchService.Reset();
     }
+
+    private Mock<IForumRepository> _mockForumRepository;
+    private Mock<ITopForumRepository> _mockTopForumRepository;
+    private Mock<ISearchService> _mockSearchService;
+    private ForumService _forumService;
 
     /// <summary>
     ///     Tests that a forum is inserted when the forum is valid.
@@ -301,7 +301,8 @@ public class ForumServiceTests
 
         _mockForumRepository.Setup(x => x.AddElement(It.IsAny<ForumDao>())).ThrowsAsync(new Exception());
 
-        Assert.ThrowsAsync<ForumGeneralException>(async () => await _forumService.InsertForum(creatorUserId, forumTopic));
+        Assert.ThrowsAsync<ForumGeneralException>(
+            async () => await _forumService.InsertForum(creatorUserId, forumTopic));
     }
 
     /// <summary>
@@ -340,7 +341,8 @@ public class ForumServiceTests
 
         _mockSearchService.Setup(x => x.SearchByTopic(forumName, 1, 10)).ThrowsAsync(new Exception());
 
-        Assert.ThrowsAsync<ForumGeneralException>(async () => await _forumService.GetForumsByNameContaining(forumName, 1));
+        Assert.ThrowsAsync<ForumGeneralException>(async () =>
+            await _forumService.GetForumsByNameContaining(forumName, 1));
     }
 
     /// <summary>

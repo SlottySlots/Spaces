@@ -208,7 +208,14 @@ public class PostServiceTests
     public async Task GetPostsFromForum_ShouldReturnPosts_WhenPostsAreFound()
     {
         var userId = Guid.NewGuid();
-        var posts = new List<PostsDao> { new() { PostId = Guid.NewGuid(), Content = "Test content", UserId = userId, Forum = new ForumDao(Guid.NewGuid(), "Test content")} };
+        var posts = new List<PostsDao>
+        {
+            new()
+            {
+                PostId = Guid.NewGuid(), Content = "Test content", UserId = userId,
+                Forum = new ForumDao(Guid.NewGuid(), "Test content")
+            }
+        };
         _mockPostRepository.Setup(x => x.GetPostsByForumId(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>()))
             .ReturnsAsync(posts);
 
@@ -452,6 +459,4 @@ public class PostServiceTests
 
         Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetPostsByForumId(forumId, 1, 10));
     }
-    
-    
 }
