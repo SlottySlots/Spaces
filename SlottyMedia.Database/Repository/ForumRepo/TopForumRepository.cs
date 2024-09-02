@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Helper;
 using Client = Supabase.Client;
 
@@ -28,8 +30,20 @@ public class TopForumRepository : DatabaseRepository<TopForumDao>, ITopForumRepo
     public async Task<List<TopForumDao>> DetermineRecentSpaces()
     {
         var result = await base.ExecuteFunction("determine_recent_spaces");
-        var forums = JsonConvert.DeserializeObject<List<TopForumDao>>(result.ToString());
-        return forums;
+        if (result.ToString() is not null && !result.ToString().IsNullOrEmpty())
+        {
+            var forums = JsonConvert.DeserializeObject<List<TopForumDao>>(result.ToString()!);
+            if (forums is null)
+            {
+                throw new DatabaseJsonConvertFailed("Failed to convert the result to a list of top forums.");
+            }
+            return forums;
+        }
+        else
+        {
+            throw new DatabaseMissingItemException("No recent spaces found.");
+        }
+
     }
 
     /// <summary>
@@ -39,7 +53,18 @@ public class TopForumRepository : DatabaseRepository<TopForumDao>, ITopForumRepo
     public async Task<List<TopForumDao>> GetTopForums()
     {
         var result = await base.ExecuteFunction("get_top_forums");
-        var forums = JsonConvert.DeserializeObject<List<TopForumDao>>(result.ToString());
-        return forums;
+        if (result.ToString() is not null && !result.ToString().IsNullOrEmpty())
+        {
+            var forums = JsonConvert.DeserializeObject<List<TopForumDao>>(result.ToString()!);
+            if (forums is null)
+            {
+                throw new DatabaseJsonConvertFailed("Failed to convert the result to a list of top forums.");
+            }
+            return forums;
+        }
+        else
+        {
+            throw new DatabaseMissingItemException("No top forums found.");
+        }
     }
 }

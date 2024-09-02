@@ -19,6 +19,9 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     /// </summary>
     private readonly DaoHelper _daoHelper;
 
+    /// <summary>
+    /// This field is used to access the BaseQuerry class. It is basicly Supabase.From<T>().
+    /// </summary>
     protected readonly IPostgrestTable<T> BaseQuerry;
 
     /// <summary>
@@ -65,7 +68,7 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         catch (Exception ex)
         {
             DatabaseRepositroyHelper.HandleException(ex, "retrieving Multiple");
-            return null;
+            return null!;
         }
     }
 
@@ -117,7 +120,7 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         catch (Exception e)
         {
             DatabaseRepositroyHelper.HandleException(e, "inserting");
-            return null;
+            return null!;
         }
     }
 
@@ -170,7 +173,7 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         catch (Exception ex)
         {
             DatabaseRepositroyHelper.HandleException(ex, "retrieving Single");
-            return null;
+            return null!;
         }
     }
 
@@ -189,7 +192,7 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         catch (Exception e)
         {
             DatabaseRepositroyHelper.HandleException(e, "executing function");
-            return null;
+            return null!;
         }
     }
 
@@ -208,7 +211,7 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         catch (Exception e)
         {
             DatabaseRepositroyHelper.HandleException(e, "executing function");
-            return null;
+            return null!;
         }
     }
 

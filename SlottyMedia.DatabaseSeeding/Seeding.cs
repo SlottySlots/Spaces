@@ -128,32 +128,31 @@ public class Seeding
         await login.LogoutUser(_client);
     }
 
-    private DatabaseRepository<T> GetDatabaseRepository<T>() where T : BaseModel, new()
+    private DatabaseRepository<T>? GetDatabaseRepository<T>() where T : BaseModel, new()
     {
-        switch (typeof(T))
+        return typeof(T) switch
         {
-            case Type t when t == typeof(UserDao):
-                return new UserRepository(_client, _daoHelper, _databaseRepositroyHelper) as DatabaseRepository<T>;
-            case Type t when t == typeof(ForumDao):
-                return new ForumRepository(_client, _daoHelper, _databaseRepositroyHelper) as DatabaseRepository<T>;
-            case Type t when t == typeof(PostsDao):
-                return new PostRepository(_client, _daoHelper, _databaseRepositroyHelper) as DatabaseRepository<T>;
-            case Type t when t == typeof(CommentDao):
-                return new CommentRepository(_client, _daoHelper, _databaseRepositroyHelper) as DatabaseRepository<T>;
-            case Type t when t == typeof(FollowerUserRelationDao):
-                return new FollowerUserRelationRepository(_client, _daoHelper, _databaseRepositroyHelper) as
-                    DatabaseRepository<T>;
-            case Type t when t == typeof(UserLikePostRelationDao):
-                return new UserLikePostRelationRepostitory(_client, _daoHelper, _databaseRepositroyHelper) as
-                    DatabaseRepository<T>;
-            default:
-                return null;
-        }
+            var t when t == typeof(UserDao) => new UserRepository(_client, _daoHelper, _databaseRepositroyHelper) as
+                DatabaseRepository<T>,
+            var t when t == typeof(ForumDao) => new ForumRepository(_client, _daoHelper, _databaseRepositroyHelper) as
+                DatabaseRepository<T>,
+            var t when t == typeof(PostsDao) => new PostRepository(_client, _daoHelper, _databaseRepositroyHelper) as
+                DatabaseRepository<T>,
+            var t when t == typeof(CommentDao) => new CommentRepository(_client, _daoHelper, _databaseRepositroyHelper)
+                as DatabaseRepository<T>,
+            var t when t == typeof(FollowerUserRelationDao) => new FollowerUserRelationRepository(_client, _daoHelper,
+                _databaseRepositroyHelper) as DatabaseRepository<T>,
+            var t when t == typeof(UserLikePostRelationDao) => new UserLikePostRelationRepostitory(_client, _daoHelper,
+                _databaseRepositroyHelper) as DatabaseRepository<T>,
+            _ => null
+        };
     }
 
     private async Task<bool> CheckIfSeedingIsNeeded<T>(int amount) where T : BaseModel, new()
     {
         var repository = GetDatabaseRepository<T>();
+        if (repository == null)
+           throw new DatabaseSeedingRepositoryCreationFailed("Repository creation failed");
         try
         {
             Logger.LogInfo("Checking if seeding is needed.");
@@ -180,12 +179,19 @@ public class Seeding
             var userIds = new List<Guid>();
             for (var i = 0; i < users.Count; i++)
             {
-                var result = await ImageDownloader.DownloadAndEncodeImage(users[i].ProfilePic);
-                users[i].ProfilePic = result;
+                if (users[i].ProfilePic == null)
+                {
+                    throw new DatabaseSeedingUserDosentContainProfilePic("User does not contain a profile pic.");
+                }
+                else
+                {
+                    var result = await ImageDownloader.DownloadAndEncodeImage(users[i].ProfilePic!);
+                    users[i].ProfilePic = result;
 
-                var user = await userRepository.AddElement(users[i]);
-                userIds.Add(user.UserId ?? Guid.Empty);
-                Logger.LogInfo("User seeded: " + user.UserName);
+                    var user = await userRepository.AddElement(users[i]);
+                    userIds.Add(user.UserId ?? Guid.Empty);
+                    Logger.LogInfo("User seeded: " + user.UserName);
+                }
             }
 
             Logger.LogInfo("Database seeded with random user data.");

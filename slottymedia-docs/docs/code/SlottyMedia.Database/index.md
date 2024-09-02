@@ -26,6 +26,8 @@
 
 [DatabaseIudActionException](./slottymedia.database.exceptions.databaseiudactionexception.md)
 
+[DatabaseJsonConvertFailed](./slottymedia.database.exceptions.databasejsonconvertfailed.md)
+
 [DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)
 
 [GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)

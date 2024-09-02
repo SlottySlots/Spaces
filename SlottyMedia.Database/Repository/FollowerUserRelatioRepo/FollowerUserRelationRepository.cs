@@ -59,6 +59,7 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
         return await ExecuteQuery(querry);
     }
 
+    
     public async Task<FollowerUserRelationDao> CheckIfUserIsFollowed(Guid userId, Guid followedUserId)
     {
         var querry = BaseQuerry
