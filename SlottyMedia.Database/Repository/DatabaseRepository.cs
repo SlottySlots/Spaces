@@ -20,7 +20,7 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     private readonly DaoHelper _daoHelper;
 
     /// <summary>
-    /// This field is used to access the BaseQuerry class. It is basicly Supabase.From<T>().
+    ///     This field is used to access the BaseQuerry class. It is basicly Supabase.From<T>().
     /// </summary>
     protected readonly IPostgrestTable<T> BaseQuerry;
 
@@ -48,28 +48,6 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         _daoHelper = daoHelper;
         DatabaseRepositroyHelper = databaseRepositroyHelper;
         BaseQuerry = Supabase.From<T>();
-    }
-
-    /// <summary>
-    ///     This method executes a query and returns the result.
-    /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    public async Task<List<T>> ExecuteQuery(IPostgrestTable<T> query)
-    {
-        try
-        {
-            var response = await query.Get();
-
-            response.ResponseMessage?.EnsureSuccessStatusCode();
-
-            return response.Models;
-        }
-        catch (Exception ex)
-        {
-            DatabaseRepositroyHelper.HandleException(ex, "retrieving Multiple");
-            return null!;
-        }
     }
 
     /// <inheritdoc />
@@ -155,11 +133,36 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     }
 
     /// <summary>
-    ///     This method executes a single query and returns the result.
+    ///     Executes a query on the specified table.
     /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    /// <exception cref="DatabaseMissingItemException"></exception>
+    /// <param name="query">The query to execute.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a list of entities.</returns>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
+    protected async Task<List<T>> ExecuteQuery(IPostgrestTable<T> query)
+    {
+        try
+        {
+            var response = await query.Get();
+
+            response.ResponseMessage?.EnsureSuccessStatusCode();
+
+            return response.Models;
+        }
+        catch (Exception ex)
+        {
+            DatabaseRepositroyHelper.HandleException(ex, "retrieving Multiple");
+            return null!;
+        }
+    }
+
+
+    /// <summary>
+    ///     Executes a single query on the specified table.
+    /// </summary>
+    /// <param name="query">The query to execute.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a single entity.</returns>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public async Task<T> ExecuteSingleQuery(IPostgrestTable<T> query)
     {
         try
@@ -177,8 +180,14 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         }
     }
 
-    /// <inheritdoc />
-    public virtual async Task<object> ExecuteFunction(string nameOfFunction)
+    /// <summary>
+    ///     Executes a function on the database.
+    /// </summary>
+    /// <param name="nameOfFunction">The name of the function to execute.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the result of the function.</returns>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the items could not be retrieved from the database.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
+    protected virtual async Task<object> ExecuteFunction(string nameOfFunction)
     {
         try
         {
@@ -196,8 +205,15 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         }
     }
 
-    /// <inheritdoc />
-    public virtual async Task<object> ExecuteFunction(string nameOfFunction, Dictionary<string, object> parameters)
+    /// <summary>
+    ///     Executes a function on the database with parameters.
+    /// </summary>
+    /// <param name="nameOfFunction">The name of the function to execute.</param>
+    /// <param name="parameters">The parameters to pass to the function.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the result of the function.</returns>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the items could not be retrieved from the database.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
+    protected virtual async Task<object> ExecuteFunction(string nameOfFunction, Dictionary<string, object> parameters)
     {
         try
         {
