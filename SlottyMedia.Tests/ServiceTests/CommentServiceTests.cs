@@ -172,4 +172,49 @@ public class CommentServiceTests
 
         Assert.ThrowsAsync<CommentGeneralException>(async () => await _commentService.DeleteComment(comment));
     }
+    
+    /// <summary>
+///     Tests that InsertComment method throws CommentGeneralException when a general exception is thrown.
+/// </summary>
+[Test]
+public void InsertComment_ShouldThrowCommentGeneralException_WhenExceptionIsThrown()
+{
+    var creatorUserId = Guid.NewGuid();
+    var postId = Guid.NewGuid();
+    var content = "Test Content";
+
+    _mockICommentRepository.Setup(x => x.AddElement(It.IsAny<CommentDao>()))
+        .ThrowsAsync(new Exception());
+
+    Assert.ThrowsAsync<CommentGeneralException>(async () =>
+        await _commentService.InsertComment(creatorUserId, postId, content));
+}
+
+/// <summary>
+///     Tests that UpdateComment method throws CommentGeneralException when a general exception is thrown.
+/// </summary>
+[Test]
+public void UpdateComment_ShouldThrowCommentGeneralException_WhenExceptionIsThrown()
+{
+    var comment = new CommentDao { CommentId = Guid.NewGuid(), Content = "Updated Content" };
+
+    _mockICommentRepository.Setup(x => x.UpdateElement(It.IsAny<CommentDao>()))
+        .ThrowsAsync(new Exception());
+
+    Assert.ThrowsAsync<CommentGeneralException>(async () => await _commentService.UpdateComment(comment));
+}
+
+/// <summary>
+///     Tests that DeleteComment method throws CommentGeneralException when a general exception is thrown.
+/// </summary>
+[Test]
+public void DeleteComment_ShouldThrowCommentGeneralException_WhenExceptionIsThrown()
+{
+    var comment = new CommentDao { CommentId = Guid.NewGuid(), Content = "Test Content" };
+
+    _mockICommentRepository.Setup(x => x.DeleteElement(It.IsAny<CommentDao>()))
+        .ThrowsAsync(new Exception());
+
+    Assert.ThrowsAsync<CommentGeneralException>(async () => await _commentService.DeleteComment(comment));
+}
 }

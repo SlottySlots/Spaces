@@ -168,4 +168,59 @@ public class LikeServiceTests
 
         Assert.ThrowsAsync<LikeGeneralException>(async () => await _likeService.GetLikesForPost(postId));
     }
+
+    /// <summary>
+    ///     Tests that a LikeGeneralException is thrown when a general exception is thrown in InsertLike.
+    /// </summary>
+    [Test]
+    public void InsertLike_ShouldThrowLikeGeneralException_WhenGeneralExceptionIsThrown()
+    {
+        var userId = Guid.NewGuid();
+        var postId = Guid.NewGuid();
+        _mockLikeRepository.Setup(x => x.AddElement(It.IsAny<UserLikePostRelationDao>()))
+            .ThrowsAsync(new Exception());
+
+        Assert.ThrowsAsync<LikeGeneralException>(async () => await _likeService.InsertLike(userId, postId));
+    }
+
+    /// <summary>
+    ///     Tests that a LikeNotFoundException is thrown when a DatabaseMissingItemException is thrown in DeleteLike.
+    /// </summary>
+    [Test]
+    public void DeleteLike_ShouldThrowLikeNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
+    {
+        var userId = Guid.NewGuid();
+        var postId = Guid.NewGuid();
+        _mockLikeRepository.Setup(x => x.GetLikeByUserIdAndPostId(It.IsAny<Guid>(), It.IsAny<Guid>()))
+            .ThrowsAsync(new DatabaseMissingItemException());
+
+        Assert.ThrowsAsync<LikeNotFoundException>(async () => await _likeService.DeleteLike(userId, postId));
+    }
+
+    /// <summary>
+    ///     Tests that a LikeGeneralException is thrown when a general exception is thrown in DeleteLike.
+    /// </summary>
+    [Test]
+    public void DeleteLike_ShouldThrowLikeGeneralException_WhenGeneralExceptionIsThrown()
+    {
+        var userId = Guid.NewGuid();
+        var postId = Guid.NewGuid();
+        _mockLikeRepository.Setup(x => x.GetLikeByUserIdAndPostId(It.IsAny<Guid>(), It.IsAny<Guid>()))
+            .ThrowsAsync(new Exception());
+
+        Assert.ThrowsAsync<LikeGeneralException>(async () => await _likeService.DeleteLike(userId, postId));
+    }
+
+    /// <summary>
+    ///     Tests that a LikeGeneralException is thrown when a general exception is thrown in GetLikesForPost.
+    /// </summary>
+    [Test]
+    public void GetLikesForPost_ShouldThrowLikeGeneralException_WhenGeneralExceptionIsThrown()
+    {
+        var postId = Guid.NewGuid();
+        _mockLikeRepository.Setup(x => x.GetLikesForPost(It.IsAny<Guid>()))
+            .ThrowsAsync(new Exception());
+
+        Assert.ThrowsAsync<LikeGeneralException>(async () => await _likeService.GetLikesForPost(postId));
+    }
 }
