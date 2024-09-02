@@ -35,3 +35,11 @@ The size of the page.
 
 [Task&lt;List&lt;ForumDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of forums.
+
+#### Exceptions
+
+[DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)<br>
+Thrown when the entity is not found in the database.
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when an unexpected error occurs.

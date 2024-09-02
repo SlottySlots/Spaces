@@ -41,12 +41,12 @@ Thrown when the entity is not found in the database.
 [TableHasNoPrimaryKeyException](./slottymedia.database.exceptions.tablehasnoprimarykeyexception.md)<br>
 Thrown when the table has no primary key.
 
-[Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
 Thrown when an unexpected error occurs.
 
 ### **GetAllElements()**
 
-Retrieves all elements.
+Retrieves all elements from the table.
 
 ```csharp
 Task<List<T>> GetAllElements()
@@ -59,7 +59,7 @@ A task that represents the asynchronous operation. The task result contains a co
 
 #### Exceptions
 
-[Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
 Thrown when an unexpected error occurs.
 
 ### **AddElement(T)**
@@ -85,7 +85,7 @@ A task that represents the asynchronous operation. The task result contains the 
 [DatabaseIudActionException](./slottymedia.database.exceptions.databaseiudactionexception.md)<br>
 Thrown when an error occurs while inserting the entity.
 
-[Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
 Thrown when an unexpected error occurs.
 
 ### **UpdateElement(T)**
@@ -111,7 +111,7 @@ A task that represents the asynchronous operation. The task result contains the 
 [DatabaseIudActionException](./slottymedia.database.exceptions.databaseiudactionexception.md)<br>
 Thrown when an error occurs while updating the entity.
 
-[Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
 Thrown when an unexpected error occurs.
 
 ### **DeleteElement(T)**
@@ -137,7 +137,7 @@ A task that represents the asynchronous operation.
 [DatabaseIudActionException](./slottymedia.database.exceptions.databaseiudactionexception.md)<br>
 Thrown when an error occurs while deleting the entity.
 
-[Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
 Thrown when an unexpected error occurs.
 
 ### **GetElementByField(String, String)**
@@ -161,6 +161,14 @@ The value of the field.
 Task&lt;T&gt;<br>
 A task that represents the asynchronous operation. The task result contains the entity.
 
+#### Exceptions
+
+[DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)<br>
+Thrown when the entity is not found in the database.
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when an unexpected error occurs.
+
 ### **GetElementById(Guid, Expression&lt;Func&lt;T, Object[]&gt;&gt;)**
 
 Retrieves an element by its unique identifier with a specific selector.
@@ -182,20 +190,10 @@ The selector expression.
 Task&lt;T&gt;<br>
 A task that represents the asynchronous operation. The task result contains the entity.
 
-### **ExecuteQuery(IPostgrestTable&lt;T&gt;)**
+#### Exceptions
 
-Executes a query on the specified table.
+[DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)<br>
+Thrown when the entity is not found in the database.
 
-```csharp
-Task<List<T>> ExecuteQuery(IPostgrestTable<T> query)
-```
-
-#### Parameters
-
-`query` IPostgrestTable&lt;T&gt;<br>
-The query to execute.
-
-#### Returns
-
-Task&lt;List&lt;T&gt;&gt;<br>
-A task that represents the asynchronous operation. The task result contains a list of entities.
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when an unexpected error occurs.
