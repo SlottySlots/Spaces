@@ -18,8 +18,8 @@ else if (SpacesVm.Forums.Any())
     <ul>
         @foreach (var forum in SpacesVm.Forums)
         {
-            <li>
-                <NavLink href=@($"/space?name={Uri.EscapeDataString(forum.Topic)}") class="card-link">
+            <li> 
+                <NavLink href=@($"/space?id={forum.ForumId}") class="card-link">
                     <Card class="min-h-[150px] mt-20 mx-7 flex flex-col items-center">
                         <h3 class="font-semibold text-lg">
                             @forum.Topic

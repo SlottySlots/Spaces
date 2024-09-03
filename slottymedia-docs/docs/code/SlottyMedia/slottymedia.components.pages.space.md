@@ -9,18 +9,6 @@ public class Space : Microsoft.AspNetCore.Components.ComponentBase, Microsoft.As
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → ComponentBase → [Space](./slottymedia.components.pages.space.md)<br>
 Implements IComponent, IHandleEvent, IHandleAfterRender
 
-## Properties
-
-### **SpaceDto**
-
-```csharp
-public ForumDto SpaceDto { get; set; }
-```
-
-#### Property Value
-
-[ForumDto](./slottymedia.backend.dtos.forumdto.md)<br>
-
 ## Constructors
 
 ### **Space()**
@@ -41,12 +29,12 @@ protected void BuildRenderTree(RenderTreeBuilder __builder)
 
 `__builder` RenderTreeBuilder<br>
 
-### **OnAfterRender(Boolean)**
+### **OnInitializedAsync()**
 
 ```csharp
-protected void OnAfterRender(bool firstRender)
+protected Task OnInitializedAsync()
 ```
 
-#### Parameters
+#### Returns
 
-`firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>

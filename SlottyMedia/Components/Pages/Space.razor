@@ -6,13 +6,13 @@
 @inject NavigationManager NavigationManager
 @inject ISpaceVm SpaceVm
 @inject IAuthService AuthService
-<PageTitle>Slotty Media | Space</PageTitle>
+<PageTitle>Slotty Media | @SpaceVm.Topic</PageTitle>
 
 @if (isLoading)
 {
 <p>Loading space details...</p>
 }
-else if (_invalidSpaceFlag)
+else if (!_invalidSpaceFlag)
 {
 <p>Space not found!</p>
 }
@@ -39,7 +39,6 @@ else
         var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);
         var spaceName = queryParams["name"];
 
-// Retrieve query parameters
         if (queryParams["id"] != null && !_invalidSpaceFlag)
         {
             try
