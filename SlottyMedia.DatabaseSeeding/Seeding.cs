@@ -101,7 +101,7 @@ public class Seeding
         {
             Logger.LogInfo("Database needs seeding with random comment data.");
             var commentFaker = rules.CommentRules(userIds, postIds);
-            await GenereateComments(commentFaker, countUser * 6);
+            await GenereateComments(commentFaker, postIds.Count * 6);
         }
         else
         {
