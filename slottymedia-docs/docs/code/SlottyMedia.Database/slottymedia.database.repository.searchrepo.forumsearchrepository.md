@@ -36,8 +36,6 @@ The database repository helper instance.
 
 ### **GetForumsByTopic(String, Int32, Int32)**
 
-Retrieves forums by their topic with pagination.
-
 ```csharp
 public Task<List<ForumDao>> GetForumsByTopic(string topic, int page, int pageSize)
 ```
@@ -45,15 +43,11 @@ public Task<List<ForumDao>> GetForumsByTopic(string topic, int page, int pageSiz
 #### Parameters
 
 `topic` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The topic to search for.
 
 `page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The page number for pagination.
 
 `pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The number of items per page.
 
 #### Returns
 
 [Task&lt;List&lt;ForumDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains a list of forums.

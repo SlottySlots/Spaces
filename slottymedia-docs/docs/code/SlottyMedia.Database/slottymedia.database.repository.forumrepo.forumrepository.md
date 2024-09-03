@@ -36,8 +36,6 @@ The database repository helper instance.
 
 ### **GetElementById(String)**
 
-Retrieves a forum element by its topic name.
-
 ```csharp
 public Task<ForumDao> GetElementById(string forumName)
 ```
@@ -45,9 +43,7 @@ public Task<ForumDao> GetElementById(string forumName)
 #### Parameters
 
 `forumName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The name of the forum topic.
 
 #### Returns
 
 [Task&lt;ForumDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains the forum data access object.

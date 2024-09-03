@@ -1,6 +1,5 @@
 ﻿using System.Linq.Expressions;
 using SlottyMedia.Database.Exceptions;
-using Supabase.Postgrest.Interfaces;
 using Supabase.Postgrest.Models;
 
 namespace SlottyMedia.Database.Repository;
@@ -18,14 +17,14 @@ public interface IDatabaseRepository<T> where T : BaseModel, new()
     /// <returns>A task that represents the asynchronous operation. The task result contains the entity.</returns>
     /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
     /// <exception cref="TableHasNoPrimaryKeyException">Thrown when the table has no primary key.</exception>
-    /// <exception cref="Exception">Thrown when an unexpected error occurs.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public Task<T> GetElementById(Guid entityId);
 
     /// <summary>
-    ///     Retrieves all elements.
+    ///     Retrieves all elements from the table.
     /// </summary>
     /// <returns>A task that represents the asynchronous operation. The task result contains a collection of all entities.</returns>
-    /// <exception cref="Exception">Thrown when an unexpected error occurs.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public Task<List<T>> GetAllElements();
 
     /// <summary>
@@ -34,7 +33,7 @@ public interface IDatabaseRepository<T> where T : BaseModel, new()
     /// <param name="element">The entity to create.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the created entity.</returns>
     /// <exception cref="DatabaseIudActionException">Thrown when an error occurs while inserting the entity.</exception>
-    /// <exception cref="Exception">Thrown when an unexpected error occurs.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public Task<T> AddElement(T element);
 
     /// <summary>
@@ -43,7 +42,7 @@ public interface IDatabaseRepository<T> where T : BaseModel, new()
     /// <param name="element">The entity to update.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the updated entity.</returns>
     /// <exception cref="DatabaseIudActionException">Thrown when an error occurs while updating the entity.</exception>
-    /// <exception cref="Exception">Thrown when an unexpected error occurs.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public Task UpdateElement(T element);
 
     /// <summary>
@@ -52,7 +51,7 @@ public interface IDatabaseRepository<T> where T : BaseModel, new()
     /// <param name="entity">The entity to delete.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
     /// <exception cref="DatabaseIudActionException">Thrown when an error occurs while deleting the entity.</exception>
-    /// <exception cref="Exception">Thrown when an unexpected error occurs.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public Task DeleteElement(T entity);
 
     /// <summary>
@@ -61,6 +60,8 @@ public interface IDatabaseRepository<T> where T : BaseModel, new()
     /// <param name="fieldName">The name of the field.</param>
     /// <param name="fieldValue">The value of the field.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the entity.</returns>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public Task<T> GetElementByField(string fieldName, string fieldValue);
 
     /// <summary>
@@ -69,12 +70,7 @@ public interface IDatabaseRepository<T> where T : BaseModel, new()
     /// <param name="entityId">The unique identifier of the entity.</param>
     /// <param name="selector">The selector expression.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the entity.</returns>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public Task<T> GetElementById(Guid entityId, Expression<Func<T, object[]>> selector);
-
-    /// <summary>
-    ///     Executes a query on the specified table.
-    /// </summary>
-    /// <param name="query">The query to execute.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of entities.</returns>
-    protected Task<List<T>> ExecuteQuery(IPostgrestTable<T> query);
 }

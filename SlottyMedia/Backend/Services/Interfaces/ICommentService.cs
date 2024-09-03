@@ -1,5 +1,5 @@
-﻿using SlottyMedia.Database.Daos;
-using SlottyMedia.Database.Exceptions;
+﻿using SlottyMedia.Backend.Exceptions.Services.CommentExceptions;
+using SlottyMedia.Database.Daos;
 
 namespace SlottyMedia.Backend.Services.Interfaces;
 
@@ -15,7 +15,8 @@ public interface ICommentService
     /// <param name="postId">The ID of the post to which the comment belongs.</param>
     /// <param name="content">The content of the comment.</param>
     /// <returns>Returns the inserted CommentDto object.</returns>
-    /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while inserting the comment.</exception>
+    /// <exception cref="CommentIudException">Thrown when an error occurs during Insert, Update, or Delete operations.</exception>
+    /// <exception cref="CommentGeneralException">Thrown when a general error occurs.</exception>
     Task InsertComment(Guid creatorUserId, Guid postId, string content);
 
     /// <summary>
@@ -23,7 +24,8 @@ public interface ICommentService
     /// </summary>
     /// <param name="comment">The CommentDto object containing the updated comment details.</param>
     /// <returns>Returns the updated CommentDto object.</returns>
-    /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while updating the comment.</exception>
+    /// <exception cref="CommentIudException">Thrown when an error occurs during Insert, Update, or Delete operations.</exception>
+    /// <exception cref="CommentGeneralException">Thrown when a general error occurs.</exception>
     Task UpdateComment(CommentDao comment);
 
     /// <summary>
@@ -31,6 +33,7 @@ public interface ICommentService
     /// </summary>
     /// <param name="comment">The CommentDto object containing the comment details.</param>
     /// <returns>Returns a Task representing the asynchronous operation.</returns>
-    /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while deleting the comment.</exception>
+    /// <exception cref="CommentIudException">Thrown when an error occurs during Insert, Update, or Delete operations.</exception>
+    /// <exception cref="CommentGeneralException">Thrown when a general error occurs.</exception>
     Task DeleteComment(CommentDao comment);
 }

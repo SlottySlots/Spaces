@@ -51,6 +51,14 @@ The size of the page.
 [Task&lt;List&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of elements.
 
+#### Exceptions
+
+[DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)<br>
+Thrown when the entity is not found in the database.
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when an unexpected error occurs.
+
 ### **GetPostsByUserId(Guid, Int32, Int32)**
 
 Gets posts by a specific user with pagination.
@@ -74,6 +82,14 @@ The size of the page.
 
 [Task&lt;List&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of posts.
+
+#### Exceptions
+
+[DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)<br>
+Thrown when the entity is not found in the database.
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when an unexpected error occurs.
 
 ### **GetPostsByUserIdByForumId(Guid, Guid, Int32, Int32)**
 
@@ -102,6 +118,14 @@ The size of the page.
 [Task&lt;List&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of posts.
 
+#### Exceptions
+
+[DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)<br>
+Thrown when the entity is not found in the database.
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when an unexpected error occurs.
+
 ### **GetPostsByForumId(Guid, Int32, Int32)**
 
 Gets posts by a specific forum with pagination.
@@ -125,3 +149,11 @@ The size of the page.
 
 [Task&lt;List&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of posts.
+
+#### Exceptions
+
+[DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)<br>
+Thrown when the entity is not found in the database.
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when an unexpected error occurs.

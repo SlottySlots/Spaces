@@ -36,8 +36,6 @@ The database repository helper instance.
 
 ### **GetUsersByUserName(String, Int32, Int32)**
 
-Retrieves users by their username with pagination.
-
 ```csharp
 public Task<List<UserDao>> GetUsersByUserName(string userName, int page, int pageSize)
 ```
@@ -45,15 +43,11 @@ public Task<List<UserDao>> GetUsersByUserName(string userName, int page, int pag
 #### Parameters
 
 `userName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The username to search for.
 
 `page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The page number for pagination.
 
 `pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The number of items per page.
 
 #### Returns
 
 [Task&lt;List&lt;UserDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains a list of users.

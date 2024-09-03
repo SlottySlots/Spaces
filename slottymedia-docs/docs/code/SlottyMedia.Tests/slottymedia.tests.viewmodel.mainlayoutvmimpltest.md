@@ -95,3 +95,27 @@ public Task PersistsUserAvatarInDb()
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **RestoreSessionOnInit_LogsMessageOnNoSession()**
+
+Tests that RestoreSessionOnInit logs a message when no session is restored.
+
+```csharp
+public void RestoreSessionOnInit_LogsMessageOnNoSession()
+```
+
+### **SetUserInfo_LogsErrorOnException()**
+
+Tests that SetUserInfo logs an error when an exception is thrown.
+
+```csharp
+public void SetUserInfo_LogsErrorOnException()
+```
+
+### **SetUserInfo_SetsCorrectFriendsAndSpaces()**
+
+Tests that SetUserInfo sets the correct number of friends and spaces.
+
+```csharp
+public void SetUserInfo_SetsCorrectFriendsAndSpaces()
+```

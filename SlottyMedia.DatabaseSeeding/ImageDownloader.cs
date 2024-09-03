@@ -31,7 +31,7 @@ public class ImageDownloader
         catch (Exception e)
         {
             Logger.LogError(e, "Error while downloading and encoding image");
-            return null;
+            return string.Empty;
         }
     }
 }

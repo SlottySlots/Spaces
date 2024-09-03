@@ -351,12 +351,33 @@ public class UserService : IUserService
     /// <inheritdoc />
     public async Task FollowUserById(Guid userIdFollows, Guid userIdToFollow)
     {
-        var userFollows = new FollowerUserRelationDao
+        try
         {
-            FollowerUserId = userIdFollows,
-            FollowedUserId = userIdToFollow
-        };
-        await _followerUserRelationRepository.AddElement(userFollows);
+            var userFollows = new FollowerUserRelationDao
+            {
+                FollowerUserId = userIdFollows,
+                FollowedUserId = userIdToFollow
+            };
+            await _followerUserRelationRepository.AddElement(userFollows);
+        }
+        catch (DatabaseIudActionException ex)
+        {
+            throw new UserIudException(
+                $"An error occurred while following the user. UserIdFollows: {userIdFollows}, UserIdToFollow: {userIdToFollow}",
+                ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new UserGeneralException(
+                $"An error occurred while following the user. UserIdFollows: {userIdFollows}, UserIdToFollow: {userIdToFollow}",
+                ex);
+        }
+        catch (Exception ex)
+        {
+            throw new UserGeneralException(
+                $"An error occurred while following the user. UserIdFollows: {userIdFollows}, UserIdToFollow: {userIdToFollow}",
+                ex);
+        }
     }
 
     /// <inheritdoc />

@@ -36,8 +36,6 @@ The database repository helper instance.
 
 ### **DetermineRecentSpaces()**
 
-Determines the most recent spaces.
-
 ```csharp
 public Task<List<TopForumDao>> DetermineRecentSpaces()
 ```
@@ -45,11 +43,8 @@ public Task<List<TopForumDao>> DetermineRecentSpaces()
 #### Returns
 
 [Task&lt;List&lt;TopForumDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains a list of recent top forums.
 
 ### **GetTopForums()**
-
-Retrieves the top forums.
 
 ```csharp
 public Task<List<TopForumDao>> GetTopForums()
@@ -58,4 +53,3 @@ public Task<List<TopForumDao>> GetTopForums()
 #### Returns
 
 [Task&lt;List&lt;TopForumDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains a list of top forums.

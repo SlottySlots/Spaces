@@ -36,8 +36,6 @@ The database repository helper instance.
 
 ### **GetCountOfUserFriends(Guid)**
 
-Gets the count of friends for a specific user.
-
 ```csharp
 public Task<int> GetCountOfUserFriends(Guid userId)
 ```
@@ -45,16 +43,12 @@ public Task<int> GetCountOfUserFriends(Guid userId)
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The ID of the user.
 
 #### Returns
 
 [Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains the count of friends.
 
 ### **GetFriends(Guid)**
-
-Retrieves the list of friends for a specific user.
 
 ```csharp
 public Task<List<FollowerUserRelationDao>> GetFriends(Guid userId)
@@ -63,12 +57,10 @@ public Task<List<FollowerUserRelationDao>> GetFriends(Guid userId)
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The ID of the user.
 
 #### Returns
 
 [Task&lt;List&lt;FollowerUserRelationDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains a list of follower-user relations.
 
 ### **CheckIfUserIsFollowed(Guid, Guid)**
 

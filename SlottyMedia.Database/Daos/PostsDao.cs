@@ -81,12 +81,6 @@ public class PostsDao : BaseModel
     public string? Content { get; set; }
 
     /// <summary>
-    ///     The Comments of the Post. This is a Reference to the Comment Table. It is a Foreign Key. Be aware, that this
-    /// </summary>
-    // [Reference(typeof(CommentDao), ReferenceAttribute.JoinType.Left, true, "corresponding_PostID")]
-    // public List<CommentDao?>? Comments { get; set; }
-
-    /// <summary>
     ///     The Date and Time the Post was created.
     /// </summary>
     [Column("created_at", ignoreOnInsert: true, ignoreOnUpdate: true)]

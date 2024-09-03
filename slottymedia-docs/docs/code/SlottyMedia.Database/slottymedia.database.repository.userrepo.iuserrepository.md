@@ -30,6 +30,14 @@ The username of the user.
 [Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains the user.
 
+#### Exceptions
+
+[DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)<br>
+Thrown when the entity is not found in the database.
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when an unexpected error occurs.
+
 ### **GetUserByEmail(String)**
 
 Gets a user by their email.
@@ -47,3 +55,11 @@ The email of the user.
 
 [Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains the user.
+
+#### Exceptions
+
+[DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)<br>
+Thrown when the entity is not found in the database.
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when an unexpected error occurs.

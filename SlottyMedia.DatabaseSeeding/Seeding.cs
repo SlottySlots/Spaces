@@ -10,6 +10,7 @@ using SlottyMedia.Database.Repository.PostRepo;
 using SlottyMedia.Database.Repository.RoleRepo;
 using SlottyMedia.Database.Repository.UserLikePostRelationRepo;
 using SlottyMedia.Database.Repository.UserRepo;
+using SlottyMedia.DatabaseSeeding.Exceptions;
 using SlottyMedia.LoggingProvider;
 using Supabase;
 using Supabase.Postgrest.Models;
@@ -29,9 +30,9 @@ public class Seeding
     /// <summary>
     ///     This is the constructor for the Seeding class.
     /// </summary>
-    /// <param name="client"></param>
-    /// <param name="daoHelper"></param>
-    /// <param name="databaseRepositroyHelper"></param>
+    /// <param name="client">The Supabase client.</param>
+    /// <param name="daoHelper">The DAO helper instance.</param>
+    /// <param name="databaseRepositroyHelper">The database repository helper instance.</param>
     public Seeding(Client client, DaoHelper daoHelper, DatabaseRepositroyHelper databaseRepositroyHelper)
     {
         _client = client;
@@ -42,6 +43,11 @@ public class Seeding
     /// <summary>
     ///     This method seeds the database with random data.
     /// </summary>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
+    /// <exception cref="DatabaseSeedingRepositoryCreationFailed">Thrown when repository creation fails.</exception>
+    /// <exception cref="DatabaseSeedingUserDosentContainProfilePic">Thrown when a user does not contain a profile pic.</exception>
+    /// <exception cref="DatabaseIudActionException">Thrown when an error occurs while deleting the entity.</exception>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
     public async Task Seed()
     {
         Login login = new();
@@ -128,32 +134,45 @@ public class Seeding
         await login.LogoutUser(_client);
     }
 
-    private DatabaseRepository<T> GetDatabaseRepository<T>() where T : BaseModel, new()
+    /// <summary>
+    ///     Gets the appropriate database repository for the given type.
+    /// </summary>
+    /// <typeparam name="T">The type of the DAO.</typeparam>
+    /// <returns>The database repository for the given type.</returns>
+    private DatabaseRepository<T>? GetDatabaseRepository<T>() where T : BaseModel, new()
     {
-        switch (typeof(T))
+        return typeof(T) switch
         {
-            case Type t when t == typeof(UserDao):
-                return new UserRepository(_client, _daoHelper, _databaseRepositroyHelper) as DatabaseRepository<T>;
-            case Type t when t == typeof(ForumDao):
-                return new ForumRepository(_client, _daoHelper, _databaseRepositroyHelper) as DatabaseRepository<T>;
-            case Type t when t == typeof(PostsDao):
-                return new PostRepository(_client, _daoHelper, _databaseRepositroyHelper) as DatabaseRepository<T>;
-            case Type t when t == typeof(CommentDao):
-                return new CommentRepository(_client, _daoHelper, _databaseRepositroyHelper) as DatabaseRepository<T>;
-            case Type t when t == typeof(FollowerUserRelationDao):
-                return new FollowerUserRelationRepository(_client, _daoHelper, _databaseRepositroyHelper) as
-                    DatabaseRepository<T>;
-            case Type t when t == typeof(UserLikePostRelationDao):
-                return new UserLikePostRelationRepostitory(_client, _daoHelper, _databaseRepositroyHelper) as
-                    DatabaseRepository<T>;
-            default:
-                return null;
-        }
+            var t when t == typeof(UserDao) => new UserRepository(_client, _daoHelper, _databaseRepositroyHelper) as
+                DatabaseRepository<T>,
+            var t when t == typeof(ForumDao) => new ForumRepository(_client, _daoHelper, _databaseRepositroyHelper) as
+                DatabaseRepository<T>,
+            var t when t == typeof(PostsDao) => new PostRepository(_client, _daoHelper, _databaseRepositroyHelper) as
+                DatabaseRepository<T>,
+            var t when t == typeof(CommentDao) => new CommentRepository(_client, _daoHelper, _databaseRepositroyHelper)
+                as DatabaseRepository<T>,
+            var t when t == typeof(FollowerUserRelationDao) => new FollowerUserRelationRepository(_client, _daoHelper,
+                _databaseRepositroyHelper) as DatabaseRepository<T>,
+            var t when t == typeof(UserLikePostRelationDao) => new UserLikePostRelationRepostitory(_client, _daoHelper,
+                _databaseRepositroyHelper) as DatabaseRepository<T>,
+            _ => null
+        };
     }
 
+    /// <summary>
+    ///     Checks if seeding is needed for the given type and amount.
+    /// </summary>
+    /// <typeparam name="T">The type of the DAO.</typeparam>
+    /// <param name="amount">The amount of elements to check for.</param>
+    /// <returns>True if seeding is needed, otherwise false.</returns>
+    /// <exception cref="DatabaseSeedingRepositoryCreationFailed">Thrown when repository creation fails.</exception>
+    /// <exception cref="DatabaseIudActionException">Thrown when an error occurs while deleting the entity.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     private async Task<bool> CheckIfSeedingIsNeeded<T>(int amount) where T : BaseModel, new()
     {
         var repository = GetDatabaseRepository<T>();
+        if (repository == null)
+            throw new DatabaseSeedingRepositoryCreationFailed("Repository creation failed");
         try
         {
             Logger.LogInfo("Checking if seeding is needed.");
@@ -169,6 +188,15 @@ public class Seeding
         }
     }
 
+    /// <summary>
+    ///     Generates and inserts random users into the database.
+    /// </summary>
+    /// <param name="userFaker">The Faker instance for generating users.</param>
+    /// <param name="amount">The amount of users to generate.</param>
+    /// <returns>A list of generated user IDs.</returns>
+    /// <exception cref="DatabaseSeedingUserDosentContainProfilePic">Thrown when a user does not contain a profile pic.</exception>
+    /// <exception cref="DatabaseIudActionException">Thrown when an error occurs while deleting the entity.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     private async Task<List<Guid>> GenerateUsers(Faker<UserDao> userFaker, int amount)
     {
         var userRepository = new UserRepository(_client, _daoHelper, _databaseRepositroyHelper);
@@ -179,14 +207,19 @@ public class Seeding
             var users = userFaker.Generate(amount);
             var userIds = new List<Guid>();
             for (var i = 0; i < users.Count; i++)
-            {
-                var result = await ImageDownloader.DownloadAndEncodeImage(users[i].ProfilePic);
-                users[i].ProfilePic = result;
+                if (users[i].ProfilePic == null)
+                {
+                    throw new DatabaseSeedingUserDosentContainProfilePic("User does not contain a profile pic.");
+                }
+                else
+                {
+                    var result = await ImageDownloader.DownloadAndEncodeImage(users[i].ProfilePic!);
+                    users[i].ProfilePic = result;
 
-                var user = await userRepository.AddElement(users[i]);
-                userIds.Add(user.UserId ?? Guid.Empty);
-                Logger.LogInfo("User seeded: " + user.UserName);
-            }
+                    var user = await userRepository.AddElement(users[i]);
+                    userIds.Add(user.UserId ?? Guid.Empty);
+                    Logger.LogInfo("User seeded: " + user.UserName);
+                }
 
             Logger.LogInfo("Database seeded with random user data.");
             return userIds;
@@ -198,6 +231,14 @@ public class Seeding
         }
     }
 
+    /// <summary>
+    ///     Generates and inserts random forums into the database.
+    /// </summary>
+    /// <param name="forumFaker">The Faker instance for generating forums.</param>
+    /// <param name="amount">The amount of forums to generate.</param>
+    /// <returns>A list of generated forum IDs.</returns>
+    /// <exception cref="DatabaseIudActionException">Thrown when an error occurs while deleting the entity.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     private async Task<List<Guid>> GenerateForums(Faker<ForumDao> forumFaker, int amount)
     {
         var forumRepository = new ForumRepository(_client, _daoHelper, _databaseRepositroyHelper);
@@ -224,6 +265,14 @@ public class Seeding
         }
     }
 
+    /// <summary>
+    ///     Generates and inserts random posts into the database.
+    /// </summary>
+    /// <param name="postFaker">The Faker instance for generating posts.</param>
+    /// <param name="amount">The amount of posts to generate.</param>
+    /// <returns>A list of generated post IDs.</returns>
+    /// <exception cref="DatabaseIudActionException">Thrown when an error occurs while deleting the entity.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     private async Task<List<Guid>> GeneratePosts(Faker<PostsDao> postFaker, int amount)
     {
         var postRepository = new PostRepository(_client, _daoHelper, _databaseRepositroyHelper);
@@ -250,6 +299,13 @@ public class Seeding
         }
     }
 
+    /// <summary>
+    ///     Generates and inserts random comments into the database.
+    /// </summary>
+    /// <param name="commentFaker">The Faker instance for generating comments.</param>
+    /// <param name="amount">The amount of comments to generate.</param>
+    /// <exception cref="DatabaseIudActionException">Thrown when an error occurs while deleting the entity.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     private async Task GenereateComments(Faker<CommentDao> commentFaker, int amount)
     {
         var commentRepository = new CommentRepository(_client, _daoHelper, _databaseRepositroyHelper);
@@ -273,6 +329,13 @@ public class Seeding
         }
     }
 
+    /// <summary>
+    ///     Generates and inserts random follower user relations into the database.
+    /// </summary>
+    /// <param name="followerUserRelationFaker">The Faker instance for generating follower user relations.</param>
+    /// <param name="amount">The amount of follower user relations to generate.</param>
+    /// <exception cref="DatabaseIudActionException">Thrown when an error occurs while deleting the entity.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     private async Task GenerateFollowerUserRelation(Faker<FollowerUserRelationDao> followerUserRelationFaker,
         int amount)
     {
@@ -299,6 +362,13 @@ public class Seeding
         }
     }
 
+    /// <summary>
+    ///     Generates and inserts random user like post relations into the database.
+    /// </summary>
+    /// <param name="userLikePostRelationFaker">The Faker instance for generating user like post relations.</param>
+    /// <param name="amount">The amount of user like post relations to generate.</param>
+    /// <exception cref="DatabaseIudActionException">Thrown when an error occurs while deleting the entity.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     private async Task GenerateUserLikePostRelation(Faker<UserLikePostRelationDao> userLikePostRelationFaker,
         int amount)
     {
@@ -325,6 +395,10 @@ public class Seeding
         }
     }
 
+    /// <summary>
+    ///     Checks if a specific role exists in the database.
+    /// </summary>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     private async Task CheckIfRoleExisits()
     {
         var roleRepository = new RoleRepository(_client, _daoHelper, _databaseRepositroyHelper);

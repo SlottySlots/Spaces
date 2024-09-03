@@ -34,27 +34,19 @@ The database repository helper instance.
 
 ## Methods
 
-### **GetLikesForPost(Guid, Guid)**
-
-Gets the likes for a specific post by a specific user.
+### **GetLikesForPost(Guid)**
 
 ```csharp
-public Task<List<UserLikePostRelationDao>> GetLikesForPost(Guid userId, Guid postId)
+public Task<List<UserLikePostRelationDao>> GetLikesForPost(Guid postId)
 ```
 
 #### Parameters
 
-`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The unique identifier of the user.
-
 `postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The unique identifier of the post.
 
 #### Returns
 
 [Task&lt;List&lt;UserLikePostRelationDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains a list of user like post
- relations.
 
 ### **GetLikeByUserIdAndPostId(Guid, Guid)**
 

@@ -1,4 +1,5 @@
 ﻿using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Exceptions;
 
 namespace SlottyMedia.Database.Repository.PostRepo;
 
@@ -20,6 +21,8 @@ public interface IPostRepository : IDatabaseRepository<PostsDao>
     /// <param name="page">The page number.</param>
     /// <param name="pageSize">The size of the page.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of elements.</returns>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public Task<List<PostsDao>> GetAllElements(int page, int pageSize);
 
     /// <summary>
@@ -29,6 +32,8 @@ public interface IPostRepository : IDatabaseRepository<PostsDao>
     /// <param name="page">The page number.</param>
     /// <param name="pageSize">The size of the page.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of posts.</returns>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public Task<List<PostsDao>> GetPostsByUserId(Guid userId, int page, int pageSize);
 
     /// <summary>
@@ -39,6 +44,8 @@ public interface IPostRepository : IDatabaseRepository<PostsDao>
     /// <param name="page">The page number.</param>
     /// <param name="pageSize">The size of the page.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of posts.</returns>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public Task<List<PostsDao>> GetPostsByUserIdByForumId(Guid userId, Guid forumId, int page, int pageSize);
 
     /// <summary>
@@ -48,5 +55,7 @@ public interface IPostRepository : IDatabaseRepository<PostsDao>
     /// <param name="page">The page number.</param>
     /// <param name="pageSize">The size of the page.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of posts.</returns>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public Task<List<PostsDao>> GetPostsByForumId(Guid forumId, int page, int pageSize);
 }

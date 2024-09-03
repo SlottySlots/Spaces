@@ -23,11 +23,7 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
     {
     }
 
-    /// <summary>
-    ///     Gets the count of friends for a specific user.
-    /// </summary>
-    /// <param name="userId">The ID of the user.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the count of friends.</returns>
+    /// <inheritdoc />
     public async Task<int> GetCountOfUserFriends(Guid userId)
     {
         try
@@ -45,11 +41,7 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
         }
     }
 
-    /// <summary>
-    ///     Retrieves the list of friends for a specific user.
-    /// </summary>
-    /// <param name="userId">The ID of the user.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of follower-user relations.</returns>
+    /// <inheritdoc />
     public async Task<List<FollowerUserRelationDao>> GetFriends(Guid userId)
     {
         var querry = BaseQuerry
@@ -59,6 +51,7 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
         return await ExecuteQuery(querry);
     }
 
+    /// <inheritdoc />
     public async Task<FollowerUserRelationDao> CheckIfUserIsFollowed(Guid userId, Guid followedUserId)
     {
         var querry = BaseQuerry
