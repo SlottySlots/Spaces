@@ -20,6 +20,9 @@ public class SignInFormVmImpl : ISignInFormVm
     /// </summary>
     private readonly IAuthService _authService;
 
+    /// <summary>
+    ///     NavigationManager used to reload the site / navigate
+    /// </summary>
     private readonly NavigationManager _navigationManager;
 
 
@@ -29,6 +32,9 @@ public class SignInFormVmImpl : ISignInFormVm
     /// <param name="authService">
     ///     AuthService about to being injected
     /// </param>
+    /// <param name="navigationManager">
+    ///     NavigationManager used to reload the page.
+    /// </param>
     public SignInFormVmImpl(IAuthService authService, NavigationManager navigationManager)
     {
         Logger.LogInfo("SignInFormVm initialized");
@@ -36,16 +42,34 @@ public class SignInFormVmImpl : ISignInFormVm
         _navigationManager = navigationManager;
     }
 
+    /// <summary>
+    ///     Email a user used to sign in
+    /// </summary>
     public string? Email { get; set; }
 
+    /// <summary>
+    ///     Error message shown when a error with the email occurs
+    /// </summary>
     public string? EmailErrorMessage { get; set; }
 
+    /// <summary>
+    ///     Password used by a user
+    /// </summary>
     public string? Password { get; set; }
 
+    /// <summary>
+    ///     Error message shown when a error with the password occurs
+    /// </summary>
     public string? PasswordErrorMessage { get; set; }
 
+    /// <summary>
+    ///     Error message for internal server errors
+    /// </summary>
     public string? ServerErrorMessage { get; set; }
 
+    /// <summary>
+    ///     Event setting the session for a user. This is triggered whenever the form is submitted
+    /// </summary>
     public async Task SubmitSignInForm()
     {
         Logger.LogDebug("SubmitSignInForm called");
@@ -97,6 +121,7 @@ public class SignInFormVmImpl : ISignInFormVm
         _navigationManager.NavigateTo("/");
     }
 
+    /// <inheritdoc />
     private void _resetErrorMessages()
     {
         EmailErrorMessage = null;

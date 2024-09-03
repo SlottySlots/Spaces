@@ -2,7 +2,7 @@
 
 Namespace: SlottyMedia.Backend.ViewModel.Interfaces
 
-This ViewModel represents the state of the [Home](./slottymedia.components.pages.home.md) page.
+Interface for homepage viewmodel
 
 ```csharp
 public interface IHomePageVm
@@ -10,77 +10,29 @@ public interface IHomePageVm
 
 ## Properties
 
-### **IsLoadingPage**
-
-Indicates whether the page is loading (for the first time)
-
-```csharp
-public abstract bool IsLoadingPage { get; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-### **IsLoadingPosts**
-
-Indicates whether more posts are currently being loaded
-
-```csharp
-public abstract bool IsLoadingPosts { get; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
 ### **Posts**
 
-The posts that will be showcased
+Represents all posts shown on a homepage
 
 ```csharp
-public abstract List<PostDto> Posts { get; }
+public abstract List<PostDto> Posts { get; set; }
 ```
 
 #### Property Value
 
 [List&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
 
-### **TotalNumberOfPosts**
-
-The total number of existing posts. Used to enable the user to load more posts on demand.
-
-```csharp
-public abstract int TotalNumberOfPosts { get; }
-```
-
-#### Property Value
-
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
 ## Methods
 
-### **Initialize()**
+### **FetchPosts()**
 
-Initializes this ViewModel, which counts the total number of existing posts and loads the first few
- posts into the view.
+Fetches all posts shown on the homepage of a user
 
 ```csharp
-Task Initialize()
+Task FetchPosts()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
-### **LoadMorePosts()**
-
-Loads more posts to the view. Does nothing if all posts have already been fetched.
-
-```csharp
-Task LoadMorePosts()
-```
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+Task

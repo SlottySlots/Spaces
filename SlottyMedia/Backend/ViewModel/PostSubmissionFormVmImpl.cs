@@ -16,6 +16,13 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
     private readonly NavigationManager _navigationManager;
     private readonly IPostService _postService;
 
+    /// <summary>
+    ///     Ctor used for dep inject
+    /// </summary>
+    /// <param name="authService"></param>
+    /// <param name="postService"></param>
+    /// <param name="forumService"></param>
+    /// <param name="navigationManager"></param>
     public PostSubmissionFormVmImpl(
         IAuthService authService,
         IPostService postService,
@@ -64,7 +71,7 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
     }
 
     /// <inheritdoc />
-    public async Task HandleSpaceSelection(string spaceName)
+    public void HandleSpaceSelection(string spaceName)
     {
         SpaceName = spaceName;
         SpacePrompt = null;

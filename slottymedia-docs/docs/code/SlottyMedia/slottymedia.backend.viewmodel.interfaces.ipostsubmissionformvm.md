@@ -127,17 +127,13 @@ Handles an event that is triggered when the user selects a space from the list o
  actually exists!
 
 ```csharp
-Task HandleSpaceSelection(string spaceName)
+void HandleSpaceSelection(string spaceName)
 ```
 
 #### Parameters
 
 `spaceName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The name of the selected space (without hashtag!)
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **HandleSpaceDeselection()**
 

@@ -19,7 +19,7 @@ public class LikeService : ILikeService
     /// <summary>
     ///     The constructor for the LikeService.
     /// </summary>
-    /// <param name="databaseActions"></param>
+    /// <param name="likeRepository"></param>
     public LikeService(IUserLikePostRelationRepostitory likeRepository)
     {
         Logger.LogInfo("LikeService initialized");
@@ -62,6 +62,11 @@ public class LikeService : ILikeService
             await _likeRepository.DeleteElement(like);
             return true;
         }
+        catch (DatabaseMissingItemException ex)
+        {
+            throw new LikeNotFoundException(
+                $"An error occurred while deleting the like. Parameters: UserID {userId}, PostID {postId}", ex);
+        }
         catch (DatabaseIudActionException ex)
         {
             throw new LikeIudException(
@@ -84,7 +89,7 @@ public class LikeService : ILikeService
     {
         try
         {
-            var likes = await _likeRepository.GetLikesForPost(Guid.Empty, postId
+            var likes = await _likeRepository.GetLikesForPost(postId
             );
             var userIds = new List<Guid>();
             foreach (var like in likes)

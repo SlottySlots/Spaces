@@ -1,4 +1,5 @@
 ﻿using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Exceptions;
 
 namespace SlottyMedia.Database.Repository.ForumRepo;
 
@@ -12,5 +13,7 @@ public interface IForumRepository : IDatabaseRepository<ForumDao>
     /// </summary>
     /// <param name="forumName">The name of the forum.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the forum element.</returns>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public Task<ForumDao> GetElementById(string forumName);
 }

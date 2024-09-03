@@ -15,6 +15,8 @@ Implements [ISignInFormVm](./slottymedia.backend.viewmodel.interfaces.isigninfor
 
 ### **Email**
 
+Email a user used to sign in
+
 ```csharp
 public string Email { get; set; }
 ```
@@ -24,6 +26,8 @@ public string Email { get; set; }
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **EmailErrorMessage**
+
+Error message shown when a error with the email occurs
 
 ```csharp
 public string EmailErrorMessage { get; set; }
@@ -35,6 +39,8 @@ public string EmailErrorMessage { get; set; }
 
 ### **Password**
 
+Password used by a user
+
 ```csharp
 public string Password { get; set; }
 ```
@@ -45,6 +51,8 @@ public string Password { get; set; }
 
 ### **PasswordErrorMessage**
 
+Error message shown when a error with the password occurs
+
 ```csharp
 public string PasswordErrorMessage { get; set; }
 ```
@@ -54,6 +62,8 @@ public string PasswordErrorMessage { get; set; }
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **ServerErrorMessage**
+
+Error message for internal server errors
 
 ```csharp
 public string ServerErrorMessage { get; set; }
@@ -79,10 +89,13 @@ public SignInFormVmImpl(IAuthService authService, NavigationManager navigationMa
 AuthService about to being injected
 
 `navigationManager` NavigationManager<br>
+NavigationManager used to reload the page.
 
 ## Methods
 
 ### **SubmitSignInForm()**
+
+Event setting the session for a user. This is triggered whenever the form is submitted
 
 ```csharp
 public Task SubmitSignInForm()

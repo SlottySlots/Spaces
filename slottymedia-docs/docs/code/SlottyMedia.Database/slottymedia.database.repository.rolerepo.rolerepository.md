@@ -5,11 +5,11 @@ Namespace: SlottyMedia.Database.Repository.RoleRepo
 This class is used to manage roles in the database.
 
 ```csharp
-public class RoleRepository : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.RoleDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.RoleDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], IRoleRepository
+public class RoleRepository : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.RoleDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.Repository.IDatabaseRepository`1[[SlottyMedia.Database.Daos.RoleDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], IRoleRepository
 ```
 
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [DatabaseRepository&lt;RoleDao&gt;](./slottymedia.database.repository.databaserepository-1.md) → [RoleRepository](./slottymedia.database.repository.rolerepo.rolerepository.md)<br>
-Implements [IDatabaseRepository&lt;RoleDao&gt;](./slottymedia.database.idatabaserepository-1.md), [IRoleRepository](./slottymedia.database.repository.rolerepo.irolerepository.md)
+Implements [IDatabaseRepository&lt;RoleDao&gt;](./slottymedia.database.repository.idatabaserepository-1.md), [IRoleRepository](./slottymedia.database.repository.rolerepo.irolerepository.md)
 
 ## Constructors
 

@@ -21,18 +21,12 @@ public class UserSearchRepository : DatabaseRepository<UserDao>, IUserSeachRepos
     {
     }
 
-    /// <summary>
-    ///     Retrieves users by their username with pagination.
-    /// </summary>
-    /// <param name="userName">The username to search for.</param>
-    /// <param name="page">The page number for pagination.</param>
-    /// <param name="pageSize">The number of items per page.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of users.</returns>
+    /// <inheritdoc />
     public async Task<List<UserDao>> GetUsersByUserName(string userName, int page, int pageSize)
     {
         var query = BaseQuerry
             .Select(x => new object[] { x.UserId!, x.UserName! })
-            .Filter("userName", Constants.Operator.ILike, $"%{userName}%");
+            .Filter(user => user.UserName!, Constants.Operator.ILike, $"%{userName}%");
 
         return await ExecuteQuery(ApplyPagination(query, page, pageSize));
     }

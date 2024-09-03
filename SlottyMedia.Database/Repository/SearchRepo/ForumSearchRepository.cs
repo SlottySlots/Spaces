@@ -21,18 +21,12 @@ public class ForumSearchRepository : DatabaseRepository<ForumDao>, IForumSearchR
     {
     }
 
-    /// <summary>
-    ///     Retrieves forums by their topic with pagination.
-    /// </summary>
-    /// <param name="topic">The topic to search for.</param>
-    /// <param name="page">The page number for pagination.</param>
-    /// <param name="pageSize">The number of items per page.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of forums.</returns>
+    /// <inheritdoc />
     public async Task<List<ForumDao>> GetForumsByTopic(string topic, int page, int pageSize)
     {
         var query = BaseQuerry
             .Select(x => new object[] { x.ForumTopic! })
-            .Filter("forumTopic", Constants.Operator.ILike, $"%{topic}%");
+            .Filter(forum => forum.ForumTopic!, Constants.Operator.ILike, $"%{topic}%");
 
         return await ExecuteQuery(ApplyPagination(query, page, pageSize));
     }

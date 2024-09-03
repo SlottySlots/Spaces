@@ -20,11 +20,7 @@ public class ForumRepository : DatabaseRepository<ForumDao>, IForumRepository
     {
     }
 
-    /// <summary>
-    ///     Retrieves a forum element by its topic name.
-    /// </summary>
-    /// <param name="forumName">The name of the forum topic.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the forum data access object.</returns>
+    /// <inheritdoc />
     public async Task<ForumDao> GetElementById(string forumName)
     {
         return await base.GetElementByField("forumTopic", forumName);

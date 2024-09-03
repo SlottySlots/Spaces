@@ -74,7 +74,8 @@ public Task SearchByUsernameOrTopic_ShouldReturnEmptyList_WhenNoResultsFound()
 
 ### **SearchByUsernameOrTopic_ShouldThrowException_WhenDatabaseThrowsException()**
 
-Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when a general database exception is thrown.
+Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when a general database exception
+ is thrown.
 
 ```csharp
 public void SearchByUsernameOrTopic_ShouldThrowException_WhenDatabaseThrowsException()
@@ -82,7 +83,8 @@ public void SearchByUsernameOrTopic_ShouldThrowException_WhenDatabaseThrowsExcep
 
 ### **SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatabaseMissingItemExceptionIsThrown()**
 
-Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when DatabaseMissingItemException is thrown.
+Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when DatabaseMissingItemException
+ is thrown.
 
 ```csharp
 public void SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatabaseMissingItemExceptionIsThrown()
@@ -90,8 +92,57 @@ public void SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatab
 
 ### **SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatabaseExceptionIsThrown()**
 
-Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when GeneralDatabaseException is thrown.
+Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralExceptions when GeneralDatabaseException is
+ thrown.
 
 ```csharp
 public void SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatabaseExceptionIsThrown()
 ```
+
+### **SearchByUsername_ShouldReturnEmptyList_WhenSearchTermIsEmpty()**
+
+Tests if SearchByUsername and SearchByTopic methods return an empty list when the search term is empty.
+
+```csharp
+public Task SearchByUsername_ShouldReturnEmptyList_WhenSearchTermIsEmpty()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **SearchByTopic_ShouldReturnEmptyList_WhenSearchTermIsEmpty()**
+
+Tests if SearchByUsername and SearchByTopic methods return an empty list when the search term is empty.
+
+```csharp
+public Task SearchByTopic_ShouldReturnEmptyList_WhenSearchTermIsEmpty()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **SearchByUsername_ShouldHandleSpecialCharacters()**
+
+Tests if SearchByUsername and SearchByTopic methods return an empty list when the search term is null.
+
+```csharp
+public Task SearchByUsername_ShouldHandleSpecialCharacters()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **SearchByTopic_ShouldHandleSpecialCharacters()**
+
+Tests if SearchByUsername and SearchByTopic methods return an empty list when the search term is null.
+
+```csharp
+public Task SearchByTopic_ShouldHandleSpecialCharacters()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>

@@ -16,7 +16,7 @@ public class ForumDao : BaseModel
     {
         CreatorUserId = Guid.Empty;
         ForumTopic = string.Empty;
-        CreatedAt = DateTime.MinValue;
+        CreatedAt = DateTimeOffset.MinValue;
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class ForumDao : BaseModel
     ///     Created Date and Time of the Forum.
     /// </summary>
     [Column("created_at", ignoreOnInsert: true, ignoreOnUpdate: true)]
-    public DateTime CreatedAt { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
 
     /// <summary>
     ///     The ToString method returns a string representation of the object.

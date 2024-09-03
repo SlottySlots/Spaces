@@ -22,29 +22,22 @@ public class UserLikePostRelationRepostitory : DatabaseRepository<UserLikePostRe
     {
     }
 
-    /// <summary>
-    ///     Gets the likes for a specific post by a specific user.
-    /// </summary>
-    /// <param name="userId">The unique identifier of the user.</param>
-    /// <param name="postId">The unique identifier of the post.</param>
-    /// <returns>
-    ///     A task that represents the asynchronous operation. The task result contains a list of user like post
-    ///     relations.
-    /// </returns>
-    public async Task<List<UserLikePostRelationDao>> GetLikesForPost(Guid userId, Guid postId)
+    /// <inheritdoc />
+    public async Task<List<UserLikePostRelationDao>> GetLikesForPost(Guid postId)
     {
         var likes = BaseQuerry
-            .Filter("postID", Constants.Operator.Equals, postId.ToString())
+            .Filter(posts => posts.PostId!, Constants.Operator.Equals, postId.ToString())
             .Select(x => new object[] { x.UserId! });
         return
             await ExecuteQuery(likes);
     }
 
+    /// <inheritdoc />
     public async Task<UserLikePostRelationDao> GetLikeByUserIdAndPostId(Guid userId, Guid postId)
     {
         var userLikeDao = BaseQuerry
-            .Filter("postID", Constants.Operator.Equals, postId.ToString())
-            .Filter("userID", Constants.Operator.Equals, userId.ToString());
+            .Filter(post => post.PostId!, Constants.Operator.Equals, postId.ToString())
+            .Filter(post => post.UserId!, Constants.Operator.Equals, userId.ToString());
         return await ExecuteSingleQuery(userLikeDao);
     }
 }

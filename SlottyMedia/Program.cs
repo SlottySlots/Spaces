@@ -96,6 +96,7 @@ try
     builder.Services.AddScoped<IForumService, ForumService>();
     builder.Services.AddScoped<ILikeService, LikeService>();
     builder.Services.AddScoped<ICommentService, CommentService>();
+    builder.Services.AddScoped<IProfilePageVm, ProfilePageVmImpl>();
 
     // Viewmodel
     logger.LogInfo("Adding Viewmodels to the container");

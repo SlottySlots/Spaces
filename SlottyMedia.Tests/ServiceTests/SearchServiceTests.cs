@@ -168,4 +168,73 @@ public class SearchServiceTests
         Assert.ThrowsAsync<SearchGeneralExceptions>(
             async () => await _searchService.SearchByTopic(searchTerm, 1, 10));
     }
+
+    /// <summary>
+    ///     Tests if SearchByUsername and SearchByTopic methods return an empty list when the search term is empty.
+    /// </summary>
+    [Test]
+    public async Task SearchByUsername_ShouldReturnEmptyList_WhenSearchTermIsEmpty()
+    {
+        var searchTerm = string.Empty;
+
+        var result = await _searchService.SearchByUsername(searchTerm, 1, 10);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Users, Is.Empty);
+    }
+
+    /// <summary>
+    ///     Tests if SearchByUsername and SearchByTopic methods return an empty list when the search term is empty.
+    /// </summary>
+    [Test]
+    public async Task SearchByTopic_ShouldReturnEmptyList_WhenSearchTermIsEmpty()
+    {
+        var searchTerm = string.Empty;
+
+        var result = await _searchService.SearchByTopic(searchTerm, 1, 10);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Forums, Is.Empty);
+    }
+
+
+    /// <summary>
+    ///     Tests if SearchByUsername and SearchByTopic methods return an empty list when the search term is null.
+    /// </summary>
+    [Test]
+    public async Task SearchByUsername_ShouldHandleSpecialCharacters()
+    {
+        var searchTerm = "@testUser";
+        var userResults = new List<UserDao> { new() { UserId = Guid.NewGuid() } };
+
+        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+            .ReturnsAsync(userResults);
+
+        var result = await _searchService.SearchByUsername(searchTerm, 1, 10);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Users.Count, Is.EqualTo(1));
+        Assert.That(result.Users[0].UserId, Is.EqualTo(userResults[0].UserId));
+        _mockUserSearchRepository.VerifyAll();
+    }
+
+    /// <summary>
+    ///     Tests if SearchByUsername and SearchByTopic methods return an empty list when the search term is null.
+    /// </summary>
+    [Test]
+    public async Task SearchByTopic_ShouldHandleSpecialCharacters()
+    {
+        var searchTerm = "#testTopic";
+        var topicResults = new List<ForumDao> { new() { ForumId = Guid.NewGuid() } };
+
+        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+            .ReturnsAsync(topicResults);
+
+        var result = await _searchService.SearchByTopic(searchTerm, 1, 10);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Forums.Count, Is.EqualTo(1));
+        Assert.That(result.Forums[0].ForumId, Is.EqualTo(topicResults[0].ForumId));
+        _mockForumSearchRepository.VerifyAll();
+    }
 }
