@@ -6,29 +6,28 @@
 @inject NavigationManager NavigationManager
 @inject ISpaceVm SpaceVm
 @inject IAuthService AuthService
+
 <PageTitle>Slotty Media | @SpaceVm.Topic</PageTitle>
 
-@if (isLoading)
+@if (_isLoading)
 {
 <p>Loading space details...</p>
 }
-else if (!_invalidSpaceFlag)
+else if (_invalidSpaceFlag)
 {
 <p>Space not found!</p>
 }
 else
 {
 <div class="space-details">
-    <h1 class="text-3xl font-bold">@SpaceVm.Topic</h1>
-    <p class="text-sm text-gray-500">Created at: @SpaceVm.CreatedAt.ToString("dd-MMMM-yyyy")</p>
-    <p class="text-sm text-gray-500">Posts: @SpaceVm.PostCount</p>
-    
-   
+    <h3 class="text-sm font-medium text-center text-cadet-gray w-fit">@SpaceVm.Topic</h3>
+    <h3 class="text-sm font-medium text-center text-cadet-gray w-fit">Created at: @SpaceVm.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
+    <h3 class="text-sm font-medium text-center text-cadet-gray w-fit">Posts: @SpaceVm.PostCount</h3>
 </div>
 }
 
 @code {
-    private bool isLoading = true;
+    private bool _isLoading = true;
     private bool _invalidSpaceFlag = false;
     private Guid _forumId;
     private List<PostDto> posts = new List<PostDto>();
@@ -74,13 +73,13 @@ else
                 }
                 finally
                 {
-                    isLoading = false;
+                    _isLoading = false;
                 }
             }
             else
             {
                 _invalidSpaceFlag = true;
-                isLoading = false;
+                _isLoading = false;
             }
         }
     }
