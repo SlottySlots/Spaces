@@ -6,6 +6,8 @@ namespace SlottyMedia.Database.Pagination;
 /// <inheritdoc />
 public class PageImpl<T> : IPage<T>
 {
+    private readonly Func<int, Task<IPage<T>>> _callback;
+    
     /// <inheritdoc />
     public List<T> Content { get; }
     
@@ -17,12 +19,6 @@ public class PageImpl<T> : IPage<T>
     
     /// <inheritdoc />
     public int TotalPages { get; }
-    
-    /// <inheritdoc />
-    public bool HasNext => PageNumber < TotalPages - 1;
-    
-    /// <inheritdoc />
-    public bool HasPrevious => PageNumber != 0;
 
     /// <summary>
     ///     Creates a page.
@@ -31,14 +27,22 @@ public class PageImpl<T> : IPage<T>
     /// <param name="pageNumber">The number of this page</param>
     /// <param name="pageSize">The size of each page</param>
     /// <param name="totalPages">The number of total pages</param>
-    public PageImpl(List<T> content, int pageNumber, int pageSize, int totalPages)
+    /// <param name="callback">A calback that is used to fetch a page with a specific number</param>
+    public PageImpl(List<T> content, int pageNumber, int pageSize, int totalPages, Func<int, Task<IPage<T>>> callback)
     {
         Content = content;
         PageNumber = pageNumber;
         PageSize = pageSize;
         TotalPages = totalPages;
+        _callback = callback;
     }
-    
+
+    /// <inheritdoc />
+    public Task<IPage<T>> Fetch(int pageNumber)
+    {
+        return _callback(pageNumber);
+    }
+
     IEnumerator IEnumerable.GetEnumerator()
     {
         return Content.GetEnumerator();

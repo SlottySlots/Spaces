@@ -23,19 +23,50 @@ public interface IPage<T> : IEnumerable<T>
     ///     The total number of pages. This number is at least <c>0</c>.
     /// </summary>
     int TotalPages { get; }
-    
+
     /// <summary>
     ///     Whether there is a page that comes after this page.
     /// </summary>
-    bool HasNext { get; }
+    bool HasNext => PageNumber < TotalPages - 1;
     
     /// <summary>
     ///     Whether there is a page that comes before this page.
     /// </summary>
-    bool HasPrevious { get; }
+    bool HasPrevious => PageNumber > 0;
     
     /// <summary>
     ///     This page's elements as a list.
     /// </summary>
     List<T> Content { get; }
+    
+    /// <summary>
+    ///     Fetches a matching page with the specified page number.
+    /// </summary>
+    /// <param name="pageNumber">The number of the page to fetch</param>
+    /// <returns>The requested page</returns>
+    Task<IPage<T>> Fetch(int pageNumber);
+
+    /// <summary>
+    ///     Fetches the next page. Returns this page instead if no such page exists.
+    ///     Consider checking <see cref="HasNext"/> before invoking this method.
+    /// </summary>
+    /// <returns>The next page</returns>
+    async Task<IPage<T>> FetchNext()
+    {
+        if (HasNext)
+            return await Fetch(PageNumber + 1);
+        return this;
+    }
+
+    /// <summary>
+    ///     Fetches the previous page. Returns this page instead if no such page exists.
+    ///     Consider checking <see cref="HasPrevious"/> before invoking this method.
+    /// </summary>
+    /// <returns>The previous page</returns>
+    async Task<IPage<T>> FetchPrevious()
+    {
+        if (HasPrevious)
+            return await Fetch(PageNumber - 1);
+        return this;
+    }
 }
