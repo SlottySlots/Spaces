@@ -86,6 +86,19 @@ Thrown when the posts are not found.
 [PostGeneralException](./slottymedia.backend.exceptions.services.postexceptions.postgeneralexception.md)<br>
 Thrown when a general error occurs.
 
+### **CountAllPosts()**
+
+Counts all existing posts.
+
+```csharp
+Task<int> CountAllPosts()
+```
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+The total number of existing posts
+
 ### **GetPostById(Guid)**
 
 Attempts to fetch a post by ID. Returns null if such a post could not be found.

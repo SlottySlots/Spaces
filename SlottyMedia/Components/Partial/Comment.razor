@@ -1,0 +1,42 @@
+@using SlottyMedia.Backend.Dtos
+@using SlottyMedia.Backend.Services.Interfaces
+@inject IUserService UserService
+
+
+@if (!_isLoading)
+{
+    <div class="w-full p-3 bg-white-100 rounded-[24px]">
+
+        <!-- username & time posted -->
+        <div class="flex flex-col justify-between">
+            <h3 class="text-xl font-semibold">
+                @(_owner!.Username)
+            </h3>
+            <h3 class="text-sm font-medium text-cadet-gray">
+                @(Dto!.CreatedAt.ToShortTimeString())
+            </h3>
+        </div>
+        
+        <!-- comment text -->
+        <div>
+            @(Dto!.Content)
+        </div>
+
+    </div>
+}
+
+
+@code {
+    [Parameter]
+    public CommentDto? Dto { get; set; }
+
+    private bool _isLoading = true;
+    private UserDto? _owner;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _isLoading = true;
+        _owner = await UserService.GetUserDtoById(Dto!.CreatorUserId!.Value);
+        _isLoading = false;
+    }
+}

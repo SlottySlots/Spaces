@@ -1,0 +1,80 @@
+@page "/post/{PostId:guid}"
+@using SlottyMedia.Backend.Services.Interfaces
+@using SlottyMedia.Backend.ViewModel.Interfaces
+@using SlottyMedia.Components.Partial.PostPage
+@inject IAuthService AuthService
+
+
+<PageTitle>Slotty Media | Post</PageTitle>
+
+
+@if (ViewModel!.IsLoadingPage)
+{
+    <span>loading...</span>
+}
+else if (ViewModel.Post is null)
+{
+    <span>post not found...</span>
+}
+else
+{
+    <!-- the post -->
+    <Post Dto="ViewModel.Post" CurrentUserId="_currentUserId"/>
+    
+    <!-- comment section -->
+    <div class="w-full pb-5 flex flex-col items-center gap-3">
+        
+        <!-- comment submission form (if user is logged in) -->
+        @if (AuthService.IsAuthenticated())
+        {
+            <CommentSubmissionForm PostId="@PostId" />
+        }
+        
+        <!-- all comments that were loaded -->
+        @foreach (var comment in ViewModel.Comments)
+        {
+            <div class="w-full px-5">
+                <Comment Dto="comment"/>
+            </div>
+        }
+        
+        <!-- button to load more comments (if available) -->
+        @if (ViewModel.Comments.Count < ViewModel.TotalNumberOfComments)
+        {
+            <button @onclick="ViewModel.LoadMoreComments" class="w-1/2 p-3 bg-raisin-black text-white border-none rounded-[12px]">
+                Load more comments
+            </button>
+        }
+        
+    </div>
+}
+
+
+@code {
+    /// <summary>The ID of the post to showcase</summary>
+    [Parameter]
+    public Guid? PostId { get; set; }
+
+    /// <summary>The ViewModel for this component</summary>
+    [Inject]
+    [SupplyParameterFromForm]
+    public IPostPageVm? ViewModel { get; set; }
+
+    Guid _currentUserId;
+
+    /// <inheritdoc />
+    protected override Task OnInitializedAsync()
+    {
+        var currentSession = AuthService.GetCurrentSession();
+        _currentUserId = Guid.Parse(currentSession!.User!.Id!);
+        return Task.CompletedTask;
+    }
+
+    /// <inheritdoc />
+    protected override async Task OnParametersSetAsync()
+    {
+        if (PostId is not null)
+            await ViewModel!.LoadPage(PostId.Value);
+    }
+
+}

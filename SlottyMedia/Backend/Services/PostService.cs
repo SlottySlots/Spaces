@@ -199,6 +199,21 @@ public class PostService : IPostService
     }
 
     /// <inheritdoc />
+    public async Task<int> CountAllPosts()
+    {
+        try
+        {
+            Logger.LogDebug("Counting all posts in the database!");
+            return await PostRepository.CountAllPosts();
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError($"An error occurred while counting all posts: {ex.Message}");
+            throw new PostGeneralException("An error occurred while counting all posts.", ex);
+        }
+    }
+
+    /// <inheritdoc />
     public async Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet)
     {
         try

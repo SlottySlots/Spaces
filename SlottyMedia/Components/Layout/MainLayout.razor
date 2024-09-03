@@ -254,11 +254,6 @@
             <!-- if user is logged in: show post submission form -->
             @if (AuthService.IsAuthenticated())
             {
-                @if (new Uri(NavigationManager.Uri).AbsolutePath == "/")
-                {
-                    <PostSubmissionForm/>
-                }
-
                 <!-- the body (e.g. posts) -->
                 @Body
             }
