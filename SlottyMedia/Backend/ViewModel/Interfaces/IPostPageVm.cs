@@ -32,5 +32,5 @@ public interface IPostPageVm
     /// <summary>
     ///     Attempts to load more comments than were already showcased. Does nothing if no further comments exist.
     /// </summary>
-    Task LoadPage(int pageNumber);
+    Task LoadCommentsPage(int pageNumber);
 }

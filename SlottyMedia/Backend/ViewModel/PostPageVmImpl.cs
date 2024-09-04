@@ -46,13 +46,13 @@ public class PostPageVmImpl : IPostPageVm
         }
         else
         {
-            await LoadPage(0);
+            await LoadCommentsPage(0);
         }
         IsLoadingPage = false;
     }
 
     /// <inheritdoc />
-    public async Task LoadPage(int pageNumber)
+    public async Task LoadCommentsPage(int pageNumber)
     {
         if (IsLoadingComments)
             return;
@@ -63,8 +63,8 @@ public class PostPageVmImpl : IPostPageVm
         }
         _logger.LogInfo($"Loading comments for post with ID {Post?.PostId}");
         IsLoadingComments = true;
-        var results = await _commentService.GetCommentsInPost(Post!.PostId, PageRequest.Of(pageNumber, 5));
-        _logger.LogInfo($"Fetched {results.Count()} comments for post with ID {Post!.PostId}");
+        Comments = await _commentService.GetCommentsInPost(Post!.PostId, PageRequest.Of(pageNumber, 5));
+        _logger.LogInfo($"Fetched {Comments.Count()} comments for post with ID {Post!.PostId}");
         IsLoadingComments = false;
     }
 }
