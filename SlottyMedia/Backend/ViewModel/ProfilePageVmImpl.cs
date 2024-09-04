@@ -35,30 +35,7 @@ public class ProfilePageVmImpl : IProfilePageVm
     /// </returns>
     public async Task<UserInformationDto?> GetUserInfo(Guid userId)
     {
-        var userDao = await _userService.GetUserDaoById(userId);
-        var amountOfFriends = await _userService.GetCountOfUserFriends(userId);
-        var amountOfSpaces = await _userService.GetCountOfUserSpaces(userId);
-        if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
-        {
-            _logger.LogError(
-                $"User with id {userId} was not found in db while retrieval on profile page");
-        }
-        else
-        {
-            var userInformationDto = new UserInformationDto
-            {
-                UserId = userDao.UserId!,
-                Username = userDao.UserName!,
-                Description = userDao.Description!,
-                ProfilePic = userDao.ProfilePic,
-                FriendsAmount = amountOfFriends,
-                SpacesAmount = amountOfSpaces,
-                CreatedAt = userDao.CreatedAt.LocalDateTime
-            };
-            return userInformationDto;
-        }
-
-        return null;
+       return await _userService.GetUserInfo(userId);
     }
 
 
