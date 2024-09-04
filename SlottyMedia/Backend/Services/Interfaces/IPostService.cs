@@ -1,7 +1,7 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.PostExceptions;
 using SlottyMedia.Database.Daos;
-using SlottyMedia.Database.Repository.PostRepo;
+using SlottyMedia.Database.Pagination;
 
 namespace SlottyMedia.Backend.Services.Interfaces;
 
@@ -11,31 +11,14 @@ namespace SlottyMedia.Backend.Services.Interfaces;
 public interface IPostService
 {
     /// <summary>
-    ///     DatabaseActions property.
-    /// </summary>
-    public IPostRepository PostRepository { get; set; }
-
-    /// <summary>
-    ///     Retrieves a list of post titles from a forum for a given user, limited by the specified number.
-    /// </summary>
-    /// <param name="userId">The ID of the user.</param>
-    /// <param name="startOfSet">The start index of the set.</param>
-    /// <param name="endOfSet">The end index of the set.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of post titles.</returns>
-    /// <exception cref="PostNotFoundException">Thrown when the posts are not found.</exception>
-    /// <exception cref="PostGeneralException">Thrown when a general error occurs.</exception>
-    public Task<List<string>> GetPostsFromForum(Guid userId, int startOfSet, int endOfSet);
-
-    /// <summary>
     ///     Fetches all posts sorted by date in descending order. Fetches only a specified number of posts
     ///     on the specified page.
     /// </summary>
-    /// <param name="page">The page to fetch (one-based).</param>
-    /// <param name="pageSize">The number of posts per page (default is 10).</param>
+    /// <param name="pageRequest">The page request</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of PostDto objects.</returns>
     /// <exception cref="PostNotFoundException">Thrown when the posts are not found.</exception>
     /// <exception cref="PostGeneralException">Thrown when a general error occurs.</exception>
-    public Task<List<PostDto>> GetAllPosts(int page, int pageSize = 10);
+    public Task<IPage<PostDto>> GetAllPosts(PageRequest pageRequest);
     
     /// <summary>
     ///     Counts all existing posts.
@@ -96,10 +79,9 @@ public interface IPostService
     ///     Gets posts of a user by their id and enables slicing via offsets.
     /// </summary>
     /// <param name="userId">The ID of the user that the posts belong to.</param>
-    /// <param name="startOfSet">The start index of the posts sorted by date.</param>
-    /// <param name="endOfSet">The end index of the posts sorted by date.</param>
+    /// <param name="pageRequest">The page request</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of PostDto objects.</returns>
     /// <exception cref="PostNotFoundException">Thrown when the posts are not found.</exception>
     /// <exception cref="PostGeneralException">Thrown when a general error occurs.</exception>
-    public Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet);
+    public Task<IPage<PostDto>> GetPostsByUserId(Guid userId, PageRequest pageRequest);
 }

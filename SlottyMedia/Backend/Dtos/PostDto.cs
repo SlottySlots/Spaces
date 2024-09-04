@@ -71,7 +71,7 @@ public class PostDto
     /// <returns></returns>
     public PostsDao Mapper()
     {
-        Logger.LogInfo($"Mapping PostDto to PostDao. Post: {this}");
+        Logger.LogTrace($"Mapping PostDto to PostDao. Post: {this}");
 
         var postDao = new PostsDao
         {
@@ -92,7 +92,7 @@ public class PostDto
     /// <returns></returns>
     public PostDto Mapper(PostsDao post)
     {
-        Logger.LogInfo($"Mapping PostDao to PostDto. Post: {post}");
+        Logger.LogTrace($"Mapping PostDao to PostDto. Post: {post}");
 
         PostId = post.PostId ?? Guid.Empty;
         Content = post.Content ?? string.Empty;

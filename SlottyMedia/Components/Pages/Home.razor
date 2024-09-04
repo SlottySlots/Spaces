@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using SlottyMedia.Backend.Dtos
 @using SlottyMedia.Backend.Services.Interfaces
 @using SlottyMedia.Backend.ViewModel.Interfaces
 @inject IHomePageVm ViewModel
@@ -16,17 +17,12 @@
 
 
 <div class="w-full pb-5 flex flex-col items-center">
-    @foreach (var post in ViewModel!.Posts)
-    {
-        <Post Dto="post" CurrentUserId=@_currentUserId OnPostClick="() => _navigateToPostPage(post.PostId)"/>
-    }
-    
-    @if (ViewModel.Posts.Count < ViewModel.TotalNumberOfPosts)
-    {
-        <button @onclick="ViewModel.LoadMorePosts" class="w-1/2 my-3 p-3 bg-raisin-black text-white border-none rounded-[12px]">
-            Load more posts
-        </button>
-    }
+    <Pagination Page="ViewModel!.Page" OnPageFetch="ViewModel!.LoadPage">
+        @foreach (var post in ViewModel!.Page)
+        {
+            <Post Dto="post" CurrentUserId=@_currentUserId OnPostClick="() => _navigateToPostPage(post.PostId)"/>
+        }
+    </Pagination>
 </div>
 
 

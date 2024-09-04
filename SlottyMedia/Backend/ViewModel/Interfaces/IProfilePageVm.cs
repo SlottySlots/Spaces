@@ -1,4 +1,5 @@
 using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Database.Pagination;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 
@@ -75,5 +76,5 @@ public interface IProfilePageVm
     /// <returns>
     ///     List of PostDtos
     /// </returns>
-    public Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet);
+    public Task<List<PostDto>> GetPostsByUserId(Guid userId, PageRequest pageRequest);
 }

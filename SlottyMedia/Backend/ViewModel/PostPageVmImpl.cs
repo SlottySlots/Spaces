@@ -1,6 +1,7 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
+using SlottyMedia.Database.Pagination;
 using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
@@ -13,7 +14,6 @@ public class PostPageVmImpl : IPostPageVm
     
     private readonly IPostService _postService;
     private readonly ICommentService _commentService;
-    private int _currentCommentPage;
 
     /// <summary>Instantiates this VM</summary>
     public PostPageVmImpl(IPostService postService, ICommentService commentService)
@@ -32,18 +32,13 @@ public class PostPageVmImpl : IPostPageVm
     public PostDto? Post { get; private set; }
 
     /// <inheritdoc />
-    public List<CommentDto> Comments { get; private set; } = [];
+    public IPage<CommentDto> Comments { get; private set; } = PageImpl<CommentDto>.Empty();
 
     /// <inheritdoc />
-    public int TotalNumberOfComments { get; private set; }
-
-    /// <inheritdoc />
-    public async Task LoadPage(Guid postId)
+    public async Task Initialize(Guid postId)
     {
         _logger.LogInfo($"Loading page for post wih ID {postId}");
         IsLoadingPage = true;
-        _currentCommentPage = 0;
-        Comments = [];
         Post = await _postService.GetPostById(postId);
         if (Post is null)
         {
@@ -51,14 +46,13 @@ public class PostPageVmImpl : IPostPageVm
         }
         else
         {
-            TotalNumberOfComments = await _commentService.CountCommentsInPost(Post.PostId);
-            await LoadMoreComments();
+            await LoadPage(0);
         }
         IsLoadingPage = false;
     }
 
     /// <inheritdoc />
-    public async Task LoadMoreComments()
+    public async Task LoadPage(int pageNumber)
     {
         if (IsLoadingComments)
             return;
@@ -67,13 +61,10 @@ public class PostPageVmImpl : IPostPageVm
             _logger.LogWarn($"Attempted to load comments for nonexistent post");
             return;
         }
-        _logger.LogInfo($"Loading comments for post with ID {Post?.PostId} (already fetched {5 * _currentCommentPage} comments)");
+        _logger.LogInfo($"Loading comments for post with ID {Post?.PostId}");
         IsLoadingComments = true;
-        _currentCommentPage++;
-        var results = await _commentService.GetCommentsInPost(Post!.PostId, _currentCommentPage, 5);
-        _logger.LogInfo($"Fetched {results.Count} additional comments for post with ID {Post!.PostId}");
-        foreach (var comment in results)
-            Comments.Add(comment);
+        var results = await _commentService.GetCommentsInPost(Post!.PostId, PageRequest.Of(pageNumber, 5));
+        _logger.LogInfo($"Fetched {results.Count()} comments for post with ID {Post!.PostId}");
         IsLoadingComments = false;
     }
 }

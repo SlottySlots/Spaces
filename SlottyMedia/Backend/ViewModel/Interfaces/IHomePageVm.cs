@@ -1,5 +1,6 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Components.Pages;
+using SlottyMedia.Database.Pagination;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 
@@ -12,14 +13,8 @@ public interface IHomePageVm
     /// <summary>Indicates whether the page is loading (for the first time)</summary>
     bool IsLoadingPage { get; }
     
-    /// <summary>Indicates whether more posts are currently being loaded</summary>
-    bool IsLoadingPosts { get; }
-    
     /// <summary>The posts that will be showcased</summary>
-    List<PostDto> Posts { get; }
-    
-    /// <summary>The total number of existing posts. Used to enable the user to load more posts on demand.</summary>
-    int TotalNumberOfPosts { get; }
+    IPage<PostDto> Page { get; }
 
     /// <summary>
     ///     Initializes this ViewModel, which counts the total number of existing posts and loads the first few
@@ -30,5 +25,5 @@ public interface IHomePageVm
     /// <summary>
     ///     Loads more posts to the view. Does nothing if all posts have already been fetched.
     /// </summary>
-    Task LoadMorePosts();
+    Task LoadPage(int pageNumber);
 }

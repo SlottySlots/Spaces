@@ -1,5 +1,6 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Components.Pages;
+using SlottyMedia.Database.Pagination;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 
@@ -19,20 +20,17 @@ public interface IPostPageVm
     PostDto? Post { get; }
     
     /// <summary>The comments that belong to the post</summary>
-    List<CommentDto> Comments { get; }
-    
-    /// <summary>Indicates the total number of comments in the showcased post</summary>
-    int TotalNumberOfComments { get; }
+    IPage<CommentDto> Comments { get; }
     
     /// <summary>
     ///     Attempts to load the given post. If no such post exists, then <see cref="Post"/> will be <c>null</c>.
     ///     Otherwise, it will be a <see cref="PostDto"/> that corresponds to the requested post.
     /// </summary>
     /// <param name="postId">The ID of the post to showcase</param>
-    Task LoadPage(Guid postId);
+    Task Initialize(Guid postId);
 
     /// <summary>
     ///     Attempts to load more comments than were already showcased. Does nothing if no further comments exist.
     /// </summary>
-    Task LoadMoreComments();
+    Task LoadPage(int pageNumber);
 }

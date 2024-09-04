@@ -21,8 +21,8 @@ public class ForumRepository : DatabaseRepository<ForumDao>, IForumRepository
     }
 
     /// <inheritdoc />
-    public async Task<ForumDao> GetElementById(string forumName)
+    public Task<ForumDao> GetForumByName(string name)
     {
-        return await base.GetElementByField("forumTopic", forumName);
+        return base.GetElementByField("forumTopic", name);
     }
 }

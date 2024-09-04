@@ -1,5 +1,7 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.SearchExceptions;
+using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Pagination;
 
 namespace SlottyMedia.Backend.Services.Interfaces;
 
@@ -14,17 +16,12 @@ public interface ISearchService
     /// <param name="searchTerm">
     ///     Search Term used for wildcard selection
     /// </param>
-    /// <param name="page">
-    ///     Current page retrieved (interval times page)
-    /// </param>
-    /// <param name="pagesize">
-    ///     Size of interval
-    /// </param>
+    /// <param name="pageRequest">The page request</param>
     /// <returns>
     ///     SearchDto
     /// </returns>
     /// <exception cref="SearchGeneralExceptions">Thrown when a general error occurs during the search.</exception>
-    Task<SearchDto> SearchByUsername(string searchTerm, int page, int pagesize);
+    Task<IPage<UserDto>> SearchByUsernameContaining(string searchTerm, PageRequest pageRequest);
 
     /// <summary>
     ///     Search function to retrieve forums by topic.
@@ -32,15 +29,10 @@ public interface ISearchService
     /// <param name="searchTerm">
     ///     Search Term used for wildcard search
     /// </param>
-    /// <param name="page">
-    ///     Current page retrieved (interval times page)
-    /// </param>
-    /// <param name="pagesize">
-    ///     Size of interval
-    /// </param>
+    /// <param name="pageRequest">The page request</param>
     /// <returns>
     ///     SearchDto
     /// </returns>
     /// <exception cref="SearchGeneralExceptions">Thrown when a general error occurs during the search.</exception>
-    Task<SearchDto> SearchByTopic(string searchTerm, int page, int pagesize);
+    Task<IPage<ForumDto>> SearchByForumTopicContaining(string searchTerm, PageRequest pageRequest);
 }
