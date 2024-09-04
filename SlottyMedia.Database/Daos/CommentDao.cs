@@ -51,11 +51,11 @@ public class CommentDao : BaseModel
     [Reference(typeof(CommentDao), ReferenceAttribute.JoinType.Left, true, "parent_commentID")]
     public List<CommentDao?> ParentComment { get; set; }
 
-    /// <summary>
-    ///     The User who created the Comment. This is a Reference to the User Table. It is a Foreign Key.
-    /// </summary>
-    [Reference(typeof(UserDao), ReferenceAttribute.JoinType.Inner, true, "userID")]
-    public UserDao? CreatorUser { get; set; }
+    // /// <summary>
+    // ///     The User who created the Comment. This is a Reference to the User Table. It is a Foreign Key.
+    // /// </summary>
+    // [Reference(typeof(UserDao), ReferenceAttribute.JoinType.Inner, true, "userID")]
+    // public UserDao? CreatorUser { get; set; }
 
     /// <summary>
     ///     The ID of the User who created the Comment. This is a Foreign Key to the User Table.
@@ -63,11 +63,11 @@ public class CommentDao : BaseModel
     [Column("creator_UserID")]
     public Guid? CreatorUserId { get; set; }
 
-    /// <summary>
-    ///     The Post the Comment is related to. This is a Reference to the Post Table. It is a Foreign Key.
-    /// </summary>
-    [Reference(typeof(PostsDao), ReferenceAttribute.JoinType.Inner, true, "postID")]
-    public PostsDao? Post { get; set; }
+    // /// <summary>
+    // ///     The Post the Comment is related to. This is a Reference to the Post Table. It is a Foreign Key.
+    // /// </summary>
+    // [Reference(typeof(PostsDao), ReferenceAttribute.JoinType.Inner, true, "postID")]
+    // public PostsDao? Post { get; set; }
 
     /// <summary>
     ///     The ID of the Post the Comment is related to. This is a Foreign Key to the Post Table.

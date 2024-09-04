@@ -413,7 +413,9 @@ public class UserService : IUserService
     /// <inheritdoc />
     public async Task<UserInformationDto?> GetUserInfo(Guid userId)
     {
-        var userDao = await GetUserDaoById(userId);
+        try
+        {
+ var userDao = await GetUserDaoById(userId);
         var amountOfFriends = await GetCountOfUserFriends(userId);
         var amountOfSpaces = await GetCountOfUserSpaces(userId);
         if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
@@ -434,6 +436,21 @@ public class UserService : IUserService
                 CreatedAt = userDao.CreatedAt.LocalDateTime!
             };
             return userInformationDto;
+        }
+
+        
+        }
+        catch (UserNotFoundException ex)
+        {
+            Logger.LogError(ex, $"User with id {userId} not found");
+        }
+        catch (UserGeneralException ex)
+        {
+            Logger.LogError(ex, $"An error occurred while fetching UserInformation with id {userId}");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, $"An error occurred while fetching UserInformation with id {userId}");
         }
 
         return null;
