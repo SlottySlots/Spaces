@@ -1,4 +1,5 @@
-﻿using SlottyMedia.Database.Daos;
+﻿using Microsoft.IdentityModel.Tokens;
+using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Helper;
 using SlottyMedia.Database.Pagination;
 using Supabase.Postgrest;
@@ -25,6 +26,9 @@ public class UserSearchRepository : DatabaseRepository<UserDao>, IUserSeachRepos
     /// <inheritdoc />
     public async Task<IPage<UserDao>> GetUsersByUserName(string userName, PageRequest pageRequest)
     {
+        if (userName.IsNullOrEmpty())
+            return PageImpl<UserDao>.Empty();
+        
         return await ApplyPagination(
             () => Supabase
                 .From<UserDao>()

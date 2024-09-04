@@ -4,7 +4,9 @@ using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Database.Pagination;
 using SlottyMedia.Database.Repository.SearchRepo;
+using SlottyMedia.Tests.TestImpl;
 
 namespace SlottyMedia.Tests.ServiceTests;
 
@@ -43,19 +45,19 @@ public class SearchServiceTests
     ///     Tests if SearchByUsername method returns user IDs when users are found.
     /// </summary>
     [Test]
-    public async Task SearchByUsername_ShouldReturnUserIds_WhenUsersFound()
+    public async Task SearchByUsernameContaining_ShouldReturnUserIds_WhenUsersFound()
     {
         var searchTerm = "testUser";
         var userResults = new List<UserDao> { new() { UserId = Guid.NewGuid() } };
 
-        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
-            .ReturnsAsync(userResults);
+        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<PageRequest>()))
+            .ReturnsAsync(new PageTestImpl<UserDao>(userResults, 0, 10, 1));
 
-        var result = await _searchService.SearchByUsername(searchTerm, 1, 10);
+        var result = await _searchService.SearchByUsernameContaining(searchTerm, PageRequest.OfSize(10));
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Users.Count, Is.EqualTo(1));
-        Assert.That(result.Users[0].UserId, Is.EqualTo(userResults[0].UserId));
+        Assert.That(result.Count, Is.EqualTo(1));
+        Assert.That(result.Content[0].UserId, Is.EqualTo(userResults[0].UserId));
         _mockUserSearchRepository.VerifyAll();
     }
 
@@ -68,14 +70,14 @@ public class SearchServiceTests
         var searchTerm = "testTopic";
         var topicResults = new List<ForumDao> { new() { ForumId = Guid.NewGuid() } };
 
-        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
-            .ReturnsAsync(topicResults);
+        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<PageRequest>()))
+            .ReturnsAsync(new PageTestImpl<ForumDao>(topicResults, 0, 10, 1));
 
-        var result = await _searchService.SearchByTopic(searchTerm, 1, 10);
+        var result = await _searchService.SearchByForumTopicContaining(searchTerm, PageRequest.OfSize(10));
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Forums.Count, Is.EqualTo(1));
-        Assert.That(result.Forums[0].ForumId, Is.EqualTo(topicResults[0].ForumId));
+        Assert.That(result.Count, Is.EqualTo(1));
+        Assert.That(result.Content[0].ForumId, Is.EqualTo(topicResults[0].ForumId));
         _mockForumSearchRepository.VerifyAll();
     }
 
@@ -89,19 +91,19 @@ public class SearchServiceTests
         var emptyUserResults = new List<UserDao>();
         var emptyForumResults = new List<ForumDao>();
 
-        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
-            .ReturnsAsync(emptyUserResults);
+        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<PageRequest>()))
+            .ReturnsAsync(new PageTestImpl<UserDao>(emptyUserResults, 0, 10, 1));
 
-        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
-            .ReturnsAsync(emptyForumResults);
+        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<PageRequest>()))
+            .ReturnsAsync(new PageTestImpl<ForumDao>(emptyForumResults, 0, 10, 1));
 
-        var userResult = await _searchService.SearchByUsername(searchTerm, 1, 10);
-        var topicResult = await _searchService.SearchByTopic(searchTerm, 1, 10);
+        var userResult = await _searchService.SearchByUsernameContaining(searchTerm, PageRequest.OfSize(10));
+        var topicResult = await _searchService.SearchByForumTopicContaining(searchTerm, PageRequest.OfSize(10));
 
         Assert.That(userResult, Is.Not.Null);
-        Assert.That(userResult.Users, Is.Empty);
+        Assert.That(userResult.Content, Is.Empty);
         Assert.That(topicResult, Is.Not.Null);
-        Assert.That(topicResult.Forums, Is.Empty);
+        Assert.That(topicResult.Content, Is.Empty);
         _mockUserSearchRepository.VerifyAll();
         _mockForumSearchRepository.VerifyAll();
     }
@@ -115,16 +117,16 @@ public class SearchServiceTests
     {
         var searchTerm = "testUser";
 
-        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new Exception("Database error"));
 
-        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new Exception("Database error"));
 
         Assert.ThrowsAsync<SearchGeneralExceptions>(
-            async () => await _searchService.SearchByUsername(searchTerm, 1, 10));
+            async () => await _searchService.SearchByUsernameContaining(searchTerm, PageRequest.OfSize(10)));
         Assert.ThrowsAsync<SearchGeneralExceptions>(
-            async () => await _searchService.SearchByTopic(searchTerm, 1, 10));
+            async () => await _searchService.SearchByForumTopicContaining(searchTerm, PageRequest.OfSize(10)));
     }
 
     /// <summary>
@@ -136,16 +138,16 @@ public class SearchServiceTests
     {
         var searchTerm = "testUser";
 
-        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
-        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
         Assert.ThrowsAsync<SearchGeneralExceptions>(
-            async () => await _searchService.SearchByUsername(searchTerm, 1, 10));
+            async () => await _searchService.SearchByUsernameContaining(searchTerm, PageRequest.OfSize(10)));
         Assert.ThrowsAsync<SearchGeneralExceptions>(
-            async () => await _searchService.SearchByTopic(searchTerm, 1, 10));
+            async () => await _searchService.SearchByForumTopicContaining(searchTerm, PageRequest.OfSize(10)));
     }
 
     /// <summary>
@@ -157,44 +159,52 @@ public class SearchServiceTests
     {
         var searchTerm = "testUser";
 
-        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
-        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<SearchGeneralExceptions>(
-            async () => await _searchService.SearchByUsername(searchTerm, 1, 10));
+            async () => await _searchService.SearchByUsernameContaining(searchTerm, PageRequest.OfSize(10)));
         Assert.ThrowsAsync<SearchGeneralExceptions>(
-            async () => await _searchService.SearchByTopic(searchTerm, 1, 10));
+            async () => await _searchService.SearchByForumTopicContaining(searchTerm, PageRequest.OfSize(10)));
     }
 
     /// <summary>
     ///     Tests if SearchByUsername and SearchByTopic methods return an empty list when the search term is empty.
     /// </summary>
     [Test]
-    public async Task SearchByUsername_ShouldReturnEmptyList_WhenSearchTermIsEmpty()
+    public async Task SearchByUsernameContaining_ShouldReturnEmptyList_WhenSearchTermIsEmpty()
     {
         var searchTerm = string.Empty;
+        
+        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<PageRequest>()))
+            .ReturnsAsync(new PageTestImpl<UserDao>([], 0, 10, 1));
 
-        var result = await _searchService.SearchByUsername(searchTerm, 1, 10);
+        var result = await _searchService.SearchByUsernameContaining(searchTerm, PageRequest.OfSize(10));
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Users, Is.Empty);
+        Assert.That(result.Content, Is.Empty);
+        _mockUserSearchRepository.VerifyAll();
     }
 
     /// <summary>
     ///     Tests if SearchByUsername and SearchByTopic methods return an empty list when the search term is empty.
     /// </summary>
     [Test]
-    public async Task SearchByTopic_ShouldReturnEmptyList_WhenSearchTermIsEmpty()
+    public async Task SearchByTopicContaining_ShouldReturnEmptyList_WhenSearchTermIsEmpty()
     {
         var searchTerm = string.Empty;
+        
+        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<PageRequest>()))
+            .ReturnsAsync(new PageTestImpl<ForumDao>([], 0, 10, 1));
 
-        var result = await _searchService.SearchByTopic(searchTerm, 1, 10);
+        var result = await _searchService.SearchByForumTopicContaining(searchTerm, PageRequest.OfSize(10));
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Forums, Is.Empty);
+        Assert.That(result.Content, Is.Empty);
+        _mockForumSearchRepository.VerifyAll();
     }
 
 
@@ -207,14 +217,14 @@ public class SearchServiceTests
         var searchTerm = "@testUser";
         var userResults = new List<UserDao> { new() { UserId = Guid.NewGuid() } };
 
-        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
-            .ReturnsAsync(userResults);
+        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<PageRequest>()))
+            .ReturnsAsync(new PageTestImpl<UserDao>(userResults, 0, 10, 1));
 
-        var result = await _searchService.SearchByUsername(searchTerm, 1, 10);
+        var result = await _searchService.SearchByUsernameContaining(searchTerm, PageRequest.OfSize(10));
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Users.Count, Is.EqualTo(1));
-        Assert.That(result.Users[0].UserId, Is.EqualTo(userResults[0].UserId));
+        Assert.That(result.Count, Is.EqualTo(1));
+        Assert.That(result.Content[0].UserId, Is.EqualTo(userResults[0].UserId));
         _mockUserSearchRepository.VerifyAll();
     }
 
@@ -227,14 +237,14 @@ public class SearchServiceTests
         var searchTerm = "#testTopic";
         var topicResults = new List<ForumDao> { new() { ForumId = Guid.NewGuid() } };
 
-        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
-            .ReturnsAsync(topicResults);
+        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<PageRequest>()))
+            .ReturnsAsync(new PageTestImpl<ForumDao>(topicResults, 0, 10, 1));
 
-        var result = await _searchService.SearchByTopic(searchTerm, 1, 10);
+        var result = await _searchService.SearchByForumTopicContaining(searchTerm, PageRequest.OfSize(10));
 
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Forums.Count, Is.EqualTo(1));
-        Assert.That(result.Forums[0].ForumId, Is.EqualTo(topicResults[0].ForumId));
+        Assert.That(result.Count, Is.EqualTo(1));
+        Assert.That(result.Content[0].ForumId, Is.EqualTo(topicResults[0].ForumId));
         _mockForumSearchRepository.VerifyAll();
     }
 }

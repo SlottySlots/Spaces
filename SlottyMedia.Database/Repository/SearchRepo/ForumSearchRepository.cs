@@ -1,4 +1,5 @@
-﻿using SlottyMedia.Database.Daos;
+﻿using Microsoft.IdentityModel.Tokens;
+using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Helper;
 using SlottyMedia.Database.Pagination;
 using Supabase.Postgrest;
@@ -25,6 +26,9 @@ public class ForumSearchRepository : DatabaseRepository<ForumDao>, IForumSearchR
     /// <inheritdoc />
     public async Task<IPage<ForumDao>> GetForumsByTopic(string topic, PageRequest pageRequest)
     {
+        if (topic.IsNullOrEmpty())
+            return PageImpl<ForumDao>.Empty();
+        
         return await ApplyPagination(
             () => Supabase
                 .From<ForumDao>()

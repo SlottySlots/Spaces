@@ -143,7 +143,7 @@ public class ForumServiceTests
         var forumName = "Test Forum";
         var forumDao = new ForumDao { ForumId = Guid.NewGuid(), ForumTopic = forumName };
 
-        _mockForumRepository.Setup(x => x.GetElementById(forumName)).ReturnsAsync(forumDao);
+        _mockForumRepository.Setup(x => x.GetForumByName(forumName)).ReturnsAsync(forumDao);
 
         var result = await _forumService.GetForumByName(forumName);
 
@@ -158,76 +158,9 @@ public class ForumServiceTests
     {
         var forumName = "Test Forum";
 
-        _mockForumRepository.Setup(x => x.GetElementById(forumName)).ThrowsAsync(new DatabaseMissingItemException());
+        _mockForumRepository.Setup(x => x.GetForumByName(forumName)).ThrowsAsync(new DatabaseMissingItemException());
 
         Assert.ThrowsAsync<ForumNotFoundException>(async () => await _forumService.GetForumByName(forumName));
-    }
-
-    /// <summary>
-    ///     Tests that forums are returned when forums exist.
-    /// </summary>
-    [Test]
-    public async Task GetForumsByNameContaining_ShouldReturnForums_WhenForumsExist()
-    {
-        var forumName = "Test";
-        var forumDaos = new List<ForumDao>
-        {
-            new() { ForumId = Guid.NewGuid(), ForumTopic = "Test Forum 1" },
-            new() { ForumId = Guid.NewGuid(), ForumTopic = "Test Forum 2" }
-        };
-        var forumDtos = forumDaos.Select(f => new ForumDto().Mapper(f)).ToList();
-
-        _mockSearchService.Setup(x => x.SearchByTopic(forumName, 1, 10))
-            .ReturnsAsync(new SearchDto { Forums = forumDtos });
-
-        var result = await _forumService.GetForumsByNameContaining(forumName, 1);
-
-        Assert.That(result.Count, Is.EqualTo(2));
-    }
-
-    /// <summary>
-    ///     Tests that a ForumNotFoundException is thrown when a DatabaseMissingItemException is thrown.
-    /// </summary>
-    [Test]
-    public void GetForumsByNameContaining_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()
-    {
-        var forumName = "Test";
-
-        _mockSearchService.Setup(x => x.SearchByTopic(forumName, 1, 10))
-            .ThrowsAsync(new DatabaseMissingItemException());
-
-        Assert.ThrowsAsync<ForumNotFoundException>(async () =>
-            await _forumService.GetForumsByNameContaining(forumName, 1));
-    }
-
-    /// <summary>
-    ///     Tests that all forums are returned when forums exist.
-    /// </summary>
-    [Test]
-    public async Task GetForums_ShouldReturnAllForums_WhenForumsExist()
-    {
-        var forumDaos = new List<ForumDao>
-        {
-            new() { ForumId = Guid.NewGuid(), ForumTopic = "Test Forum 1" },
-            new() { ForumId = Guid.NewGuid(), ForumTopic = "Test Forum 2" }
-        };
-
-        _mockForumRepository.Setup(x => x.GetAllElements()).ReturnsAsync(forumDaos);
-
-        var result = await _forumService.GetForums();
-
-        Assert.That(result.Count, Is.EqualTo(2));
-    }
-
-    /// <summary>
-    ///     Tests that a ForumNotFoundException is thrown when a DatabaseMissingItemException is thrown.
-    /// </summary>
-    [Test]
-    public void GetForums_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()
-    {
-        _mockForumRepository.Setup(x => x.GetAllElements()).ThrowsAsync(new DatabaseMissingItemException());
-
-        Assert.ThrowsAsync<ForumNotFoundException>(async () => await _forumService.GetForums());
     }
 
     /// <summary>
@@ -326,34 +259,9 @@ public class ForumServiceTests
     {
         var forumName = "Test Forum";
 
-        _mockForumRepository.Setup(x => x.GetElementById(forumName)).ThrowsAsync(new Exception());
+        _mockForumRepository.Setup(x => x.GetForumByName(forumName)).ThrowsAsync(new Exception());
 
         Assert.ThrowsAsync<ForumGeneralException>(async () => await _forumService.GetForumByName(forumName));
-    }
-
-    /// <summary>
-    ///     Tests that a ForumGeneralException is thrown when a general exception is thrown during forum search by name.
-    /// </summary>
-    [Test]
-    public void GetForumsByNameContaining_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()
-    {
-        var forumName = "Test";
-
-        _mockSearchService.Setup(x => x.SearchByTopic(forumName, 1, 10)).ThrowsAsync(new Exception());
-
-        Assert.ThrowsAsync<ForumGeneralException>(async () =>
-            await _forumService.GetForumsByNameContaining(forumName, 1));
-    }
-
-    /// <summary>
-    ///     Tests that a ForumGeneralException is thrown when a general exception is thrown during retrieval of all forums.
-    /// </summary>
-    [Test]
-    public void GetForums_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()
-    {
-        _mockForumRepository.Setup(x => x.GetAllElements()).ThrowsAsync(new Exception());
-
-        Assert.ThrowsAsync<ForumGeneralException>(async () => await _forumService.GetForums());
     }
 
     /// <summary>
