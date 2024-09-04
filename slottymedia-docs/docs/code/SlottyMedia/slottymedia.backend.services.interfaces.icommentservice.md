@@ -93,3 +93,43 @@ Thrown when an error occurs during Insert, Update, or Delete operations.
 
 [CommentGeneralException](./slottymedia.backend.exceptions.services.commentexceptions.commentgeneralexception.md)<br>
 Thrown when a general error occurs.
+
+### **CountCommentsInPost(Guid)**
+
+Counts the total number of comments in the given post.
+
+```csharp
+Task<int> CountCommentsInPost(Guid postId)
+```
+
+#### Parameters
+
+`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The post to query
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+The total number of comments
+
+### **GetCommentsInPost(Guid, PageRequest)**
+
+Fetches all comments in the given post. Utilizes pagination in order to limit
+ the total number of queried posts: Only posts on the given page will be fetched.
+
+```csharp
+Task<IPage<CommentDto>> GetCommentsInPost(Guid postId, PageRequest pageRequest)
+```
+
+#### Parameters
+
+`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The post whose comments should be fetched
+
+`pageRequest` PageRequest<br>
+The page request
+
+#### Returns
+
+[Task&lt;IPage&lt;CommentDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A list containing the queried posts

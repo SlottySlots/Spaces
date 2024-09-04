@@ -108,12 +108,12 @@ User that will be unfollowed
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **GetPostsByUserId(Guid, Int32, Int32)**
+### **GetPostsByUserId(Guid, PageRequest)**
 
 Gets post by another user by id
 
 ```csharp
-public Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet)
+public Task<List<PostDto>> GetPostsByUserId(Guid userId, PageRequest pageRequest)
 ```
 
 #### Parameters
@@ -121,11 +121,7 @@ public Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int end
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 User the posts belongs to
 
-`startOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Starting index on which the follows are retrieved (they are sorted by date)
-
-`endOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Ending index used to slice the posts in a specific intervall
+`pageRequest` PageRequest<br>
 
 #### Returns
 

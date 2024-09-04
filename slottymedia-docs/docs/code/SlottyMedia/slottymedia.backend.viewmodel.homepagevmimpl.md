@@ -11,21 +11,31 @@ Implements [IHomePageVm](./slottymedia.backend.viewmodel.interfaces.ihomepagevm.
 
 ## Properties
 
-### **Posts**
+### **IsLoadingPage**
 
 ```csharp
-public List<PostDto> Posts { get; set; }
+public bool IsLoadingPage { get; private set; }
 ```
 
 #### Property Value
 
-[List&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### **Page**
+
+```csharp
+public IPage<PostDto> Page { get; private set; }
+```
+
+#### Property Value
+
+IPage&lt;PostDto&gt;<br>
 
 ## Constructors
 
 ### **HomePageVmImpl(IPostService)**
 
-Ctor used for dep inject
+Instantiates this class
 
 ```csharp
 public HomePageVmImpl(IPostService postService)
@@ -37,11 +47,25 @@ public HomePageVmImpl(IPostService postService)
 
 ## Methods
 
-### **FetchPosts()**
+### **Initialize()**
 
 ```csharp
-public Task FetchPosts()
+public Task Initialize()
 ```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **LoadPage(Int32)**
+
+```csharp
+public Task LoadPage(int pageNumber)
+```
+
+#### Parameters
+
+`pageNumber` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 #### Returns
 

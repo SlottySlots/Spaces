@@ -34,15 +34,15 @@ The database repository helper instance.
 
 ## Methods
 
-### **GetElementById(String)**
+### **GetForumByName(String)**
 
 ```csharp
-public Task<ForumDao> GetElementById(string forumName)
+public Task<ForumDao> GetForumByName(string name)
 ```
 
 #### Parameters
 
-`forumName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+`name` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 #### Returns
 
