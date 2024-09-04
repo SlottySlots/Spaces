@@ -177,4 +177,15 @@ public interface IUserService
     /// <exception cref="UserIudException">Thrown when an error occurs during Insert, Update, or Delete operations.</exception>
     /// <exception cref="UserGeneralException">Thrown when a general error occurs.</exception>
     Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow);
+
+    /// <summary>
+    ///     This sets a dto holding information about the current user in order to show the current users infos in the profile
+    ///     card
+    /// </summary>
+    /// <param name="userId">User from which the dto should be retrieved</param>
+    /// <returns>
+    ///     Returns a task of type UserInformationDto. The dto is used to update the state in the view.
+    /// </returns>
+    public Task<UserInformationDto?> GetUserInfo(Guid userId);
+
 }

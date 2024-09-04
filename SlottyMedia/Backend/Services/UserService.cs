@@ -18,6 +18,7 @@ public class UserService : IUserService
     private readonly IFollowerUserRelationRepository _followerUserRelationRepository;
     private readonly IPostService _postService;
     private readonly IUserRepository _userRepository;
+    private readonly IAuthService _authService;
 
     /// <summary>
     ///     This constructor creates a new UserService object.
@@ -407,5 +408,34 @@ public class UserService : IUserService
                 $"An error occurred while unfollowing the user. UserIdFollows: {userIdFollows}, UserIdToUnfollow: {userIdToUnfollow}",
                 ex);
         }
+    }
+
+    /// <inheritdoc />
+    public async Task<UserInformationDto?> GetUserInfo(Guid userId)
+    {
+        var userDao = await GetUserDaoById(userId);
+        var amountOfFriends = await GetCountOfUserFriends(userId);
+        var amountOfSpaces = await GetCountOfUserSpaces(userId);
+        if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
+        {
+            Logger.LogError(
+                $"User with id {userId.ToString()} retrieved corrupt User entry from database!");
+        }
+        else
+        {
+            var userInformationDto = new UserInformationDto
+            {
+                UserId = userDao.UserId!,
+                Username = userDao.UserName!,
+                Description = userDao.Description!,
+                ProfilePic = userDao.ProfilePic,
+                FriendsAmount = amountOfFriends,
+                SpacesAmount = amountOfSpaces,
+                CreatedAt = userDao.CreatedAt.LocalDateTime!
+            };
+            return userInformationDto;
+        }
+
+        return null;
     }
 }
