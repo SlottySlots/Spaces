@@ -25,7 +25,7 @@ else
 @code {
     [Parameter] public string? DescriptionText { get; set; }
     [Inject] public IUserVmImpl UserService { get; private set; }
-    [Inject] public IAuthVmImpl AuthService { get; set; }
+    [Inject] public IAuthVm AuthService { get; set; }
 
     private bool ShowDescriptionText = true;
 

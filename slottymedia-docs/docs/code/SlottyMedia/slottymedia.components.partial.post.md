@@ -57,6 +57,16 @@ public UserInformationDto UserInformationDto { get; set; }
 
 [UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
 
+### **PostVm**
+
+```csharp
+public IPostVm PostVm { get; set; }
+```
+
+#### Property Value
+
+[IPostVm](./slottymedia.backend.viewmodel.interfaces.ipostvm.md)<br>
+
 ## Constructors
 
 ### **Post()**

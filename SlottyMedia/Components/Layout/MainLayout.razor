@@ -1,7 +1,6 @@
 ﻿@using SlottyMedia.Backend.Dtos
 @using SlottyMedia.Backend.Services.Interfaces
 @using SlottyMedia.Backend.ViewModel.Interfaces
-@using SlottyMedia.LoggingProvider
 @inherits LayoutComponentBase
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
@@ -312,8 +311,6 @@
     /// </summary>
     [Inject]
     public IMainLayoutVm? MainLayoutVm { get; set; }
-
-    private readonly Logging<MainLayout> _logger = new();
 
     public UserInformationDto UserInformationDto { get; set; } = new()
     {

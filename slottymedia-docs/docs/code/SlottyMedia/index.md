@@ -114,7 +114,7 @@
 
 ## SlottyMedia.Backend.ViewModel
 
-[AuthVmImpl](./slottymedia.backend.viewmodel.authvmimpl.md)
+[AuthVm](./slottymedia.backend.viewmodel.authvm.md)
 
 [CommentSubmissionFormVmImpl](./slottymedia.backend.viewmodel.commentsubmissionformvmimpl.md)
 
@@ -125,6 +125,8 @@
 [PostPageVmImpl](./slottymedia.backend.viewmodel.postpagevmimpl.md)
 
 [PostSubmissionFormVmImpl](./slottymedia.backend.viewmodel.postsubmissionformvmimpl.md)
+
+[PostVmImpl](./slottymedia.backend.viewmodel.postvmimpl.md)
 
 [ProfilePageVmImpl](./slottymedia.backend.viewmodel.profilepagevmimpl.md)
 
@@ -140,7 +142,7 @@
 
 ## SlottyMedia.Backend.ViewModel.Interfaces
 
-[IAuthVmImpl](./slottymedia.backend.viewmodel.interfaces.iauthvmimpl.md)
+[IAuthVm](./slottymedia.backend.viewmodel.interfaces.iauthvm.md)
 
 [ICommentSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.icommentsubmissionformvm.md)
 
@@ -151,6 +153,8 @@
 [IPostPageVm](./slottymedia.backend.viewmodel.interfaces.ipostpagevm.md)
 
 [IPostSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.ipostsubmissionformvm.md)
+
+[IPostVm](./slottymedia.backend.viewmodel.interfaces.ipostvm.md)
 
 [IProfilePageVm](./slottymedia.backend.viewmodel.interfaces.iprofilepagevm.md)
 

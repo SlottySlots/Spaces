@@ -107,10 +107,11 @@ try
     builder.Services.AddScoped<ISpacesCardVm, SpacesCardVmImpl>();
     builder.Services.AddScoped<IPostSubmissionFormVm, PostSubmissionFormVmImpl>();
     builder.Services.AddScoped<IHomePageVm, HomePageVmImpl>();
-    builder.Services.AddScoped<IAuthVmImpl, AuthVmImpl>();
+    builder.Services.AddScoped<IAuthVm, AuthVm>();
     builder.Services.AddScoped<IUserVmImpl, UserVmImpl>();
     builder.Services.AddScoped<IPostPageVm, PostPageVmImpl>();
     builder.Services.AddScoped<ICommentSubmissionFormVm, CommentSubmissionFormVmImpl>();
+    builder.Services.AddScoped<IPostVm, PostVmImpl>();
 
 
     var app = builder.Build();
