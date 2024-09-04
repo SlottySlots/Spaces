@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Backend.ViewModel.Interfaces
 
+The interface for post view model implementation.
+
 ```csharp
 public interface IPostVm
 ```

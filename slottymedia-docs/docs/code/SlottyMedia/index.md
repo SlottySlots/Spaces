@@ -138,7 +138,7 @@
 
 [SpacesVmImpl](./slottymedia.backend.viewmodel.spacesvmimpl.md)
 
-[UserVmImpl](./slottymedia.backend.viewmodel.uservmimpl.md)
+[UserVm](./slottymedia.backend.viewmodel.uservm.md)
 
 ## SlottyMedia.Backend.ViewModel.Interfaces
 
@@ -166,7 +166,7 @@
 
 [ISpacesVm](./slottymedia.backend.viewmodel.interfaces.ispacesvm.md)
 
-[IUserVmImpl](./slottymedia.backend.viewmodel.interfaces.iuservmimpl.md)
+[IUserVm](./slottymedia.backend.viewmodel.interfaces.iuservm.md)
 
 ## SlottyMedia.Components
 

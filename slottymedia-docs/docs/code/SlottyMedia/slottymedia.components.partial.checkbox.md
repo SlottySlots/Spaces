@@ -13,6 +13,8 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **Id**
 
+The checkboxes ID
+
 ```csharp
 public string Id { get; set; }
 ```
@@ -22,6 +24,8 @@ public string Id { get; set; }
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **Label**
+
+The checkboxes label
 
 ```csharp
 public string Label { get; set; }

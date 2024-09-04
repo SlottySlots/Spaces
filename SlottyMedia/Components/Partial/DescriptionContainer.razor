@@ -1,5 +1,6 @@
 @using SlottyMedia.Backend.ViewModel.Interfaces
-@if (ShowDescriptionText)
+
+@if (_showDescriptionText)
 {
     <h3 class="text-sm font-medium text-center text-cadet-gray w-fit" @onclick="SubmitDescriptionText">
         @DescriptionText
@@ -21,37 +22,60 @@ else
     </InputField>
 }
 
-
 @code {
+    /// <summary>
+    /// The description text to be displayed or edited.
+    /// </summary>
     [Parameter] public string? DescriptionText { get; set; }
-    [Inject] public IUserVm UserService { get; private set; }
-    [Inject] public IAuthVm AuthService { get; set; }
 
-    private bool ShowDescriptionText = true;
+    /// <summary>
+    /// Service for user-related operations.
+    /// </summary>
+    [Inject] public IUserVm? UserVm { get; private set; }
 
+    /// <summary>
+    /// Service for authentication-related operations.
+    /// </summary>
+    [Inject] public IAuthVm? AuthVm { get; set; }
+
+    /// <summary>
+    /// Flag to determine whether to show the description text or the input field.
+    /// </summary>
+    private bool _showDescriptionText = true;
+
+    /// <summary>
+    /// Submits the description text. If the user is authenticated and the description text is valid,
+    /// it updates the user's description.
+    /// </summary>
     private async void SubmitDescriptionText()
     {
-        var idOfUser = AuthService.GetCurrentSession()?.User!.Id;
-        if (idOfUser != null)
+        if (AuthVm is null || UserVm is null)
         {
-            ShowDescriptionText = !ShowDescriptionText;
-            var userDao = await UserService.GetUserById(Guid.Parse(idOfUser));
+            return;
+        }
+
+        var idOfUser = AuthVm.GetCurrentUserId();
+        if (idOfUser != Guid.Empty)
+        {
+            _showDescriptionText = !_showDescriptionText;
+            var userDao = await UserVm.GetUserById(idOfUser);
             if (DescriptionText != userDao.Description)
             {
                 if (DescriptionText is not null && DescriptionText.Length < 200)
                 {
-                    //TODO: Show error message and prevent submission
+                    // TODO: Show error message and prevent submission
                     userDao.Description = DescriptionText;
-                    await UserService.UpdateUser(userDao);
+                    await UserVm.UpdateUser(userDao);
                 }
             }
         }
     }
 
-
+    /// <summary>
+    /// Handles the enter key click event to submit the description text.
+    /// </summary>
     private void HandleEnterClick()
     {
         SubmitDescriptionText();
     }
-
 }

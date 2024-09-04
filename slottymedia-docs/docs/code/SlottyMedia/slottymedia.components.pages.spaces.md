@@ -31,6 +31,8 @@ protected void BuildRenderTree(RenderTreeBuilder __builder)
 
 ### **OnInitializedAsync()**
 
+This method is called when the page is initialized.
+
 ```csharp
 protected Task OnInitializedAsync()
 ```

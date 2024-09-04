@@ -1,6 +1,6 @@
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime JsRuntime
 
-<div class="@Size "@onmouseenter="MouseOver" @onmouseleave="MouseLeave" @onclick="OpenFileDialog">
+<div class="@Size " @onmouseenter="MouseOver" @onmouseleave="MouseLeave" @onclick="OpenFileDialog">
     @if (!_mouseOverAvatar)
     {
         <img class="h-full w-full rounded-full" src=@Base64Png alt="Profile Picture">
@@ -64,7 +64,7 @@
     private async void OpenFileDialog()
     {
         if (OpensFileDialog)
-            await JSRuntime.InvokeVoidAsync("OpenFileDialog", "fileInput");
+            await JsRuntime.InvokeVoidAsync("OpenFileDialog", "fileInput");
     }
 
     private async Task OnFileSelected(InputFileChangeEventArgs e)

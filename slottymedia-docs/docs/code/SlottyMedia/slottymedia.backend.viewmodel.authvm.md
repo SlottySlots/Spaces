@@ -36,3 +36,23 @@ public Session GetCurrentSession()
 #### Returns
 
 Session<br>
+
+### **GetCurrentUserId()**
+
+```csharp
+public Guid GetCurrentUserId()
+```
+
+#### Returns
+
+[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+### **IsAuthenticated()**
+
+```csharp
+public bool IsAuthenticated()
+```
+
+#### Returns
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>

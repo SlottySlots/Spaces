@@ -30,7 +30,7 @@ public class AuthVm : IAuthVm
     public Guid GetCurrentUserId()
     {
         var currentSession = GetCurrentSession();
-        return Guid.Parse(currentSession?.User.Id);
+        return Guid.Parse(currentSession?.User!.Id!);
     }
     
     /// <inheritdoc />

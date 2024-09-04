@@ -89,6 +89,8 @@ protected Task OnInitializedAsync()
 
 ### **OnAfterRender(Boolean)**
 
+Refreshes the user information
+
 ```csharp
 protected void OnAfterRender(bool firstRender)
 ```

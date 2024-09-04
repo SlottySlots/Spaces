@@ -119,10 +119,20 @@
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()
     {
+        if( PostVm is null)
+        {
+            return;
+        }
+        
         _isLoading = true;
         //TODO: This should be changed soon!
         await SetLikeCountState();
-        _commentCount = await PostVm.GetCommentsCount(Dto.PostId);
+
+        if (Dto is not null)
+        {
+            _commentCount = await PostVm.GetCommentsCount(Dto.PostId);
+        }
+
     }
 
     /// <inheritdoc />
@@ -135,12 +145,9 @@
         if ((firstRender || UserInformationDto.Username == "Username is loading..") && Dto != null)
         {
             var userInfo = await PostVm.GetUserInformation(Dto!.UserId);
-            if (userInfo != null)
-            {
-                UserInformationDto = userInfo;
-                _isLoading = false;
-                StateHasChanged();
-            }
+            UserInformationDto = userInfo;
+            _isLoading = false;
+            StateHasChanged();
         }
     }
 

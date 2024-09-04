@@ -13,6 +13,8 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **Dto**
 
+The post to be rendered.
+
 ```csharp
 public PostDto Dto { get; set; }
 ```
@@ -23,7 +25,7 @@ public PostDto Dto { get; set; }
 
 ### **CurrentUserId**
 
-The current logged in user id to propagate towards like component
+The current logged in user id to propagate towards like component.
 
 ```csharp
 public Guid CurrentUserId { get; set; }
@@ -49,6 +51,8 @@ EventCallback<br>
 
 ### **UserInformationDto**
 
+The user information DTO containing username, description, and profile picture.
+
 ```csharp
 public UserInformationDto UserInformationDto { get; set; }
 ```
@@ -58,6 +62,8 @@ public UserInformationDto UserInformationDto { get; set; }
 [UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
 
 ### **PostVm**
+
+Injected instance of the IPostVm interface.
 
 ```csharp
 public IPostVm PostVm { get; set; }
@@ -109,6 +115,8 @@ protected void OnAfterRender(bool firstRender)
 
 ### **SetLikeCountState()**
 
+Sets the like count state by retrieving the list of likes for the post.
+
 ```csharp
 public Task SetLikeCountState()
 ```
@@ -119,6 +127,8 @@ public Task SetLikeCountState()
 
 ### **LikeClick(Boolean)**
 
+Handles the click event on the like button, adding or removing a like based on the current state.
+
 ```csharp
 public void LikeClick(bool wasUnliked)
 ```
@@ -126,3 +136,4 @@ public void LikeClick(bool wasUnliked)
 #### Parameters
 
 `wasUnliked` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Indicates whether the post was unliked.

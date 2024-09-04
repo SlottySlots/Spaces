@@ -13,6 +13,8 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **ViewModel**
 
+The ViewModel for this component
+
 ```csharp
 public IPostSubmissionFormVm ViewModel { get; set; }
 ```

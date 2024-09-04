@@ -13,6 +13,8 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **Dto**
 
+The comment data transfer object to be rendered.
+
 ```csharp
 public CommentDto Dto { get; set; }
 ```
@@ -42,6 +44,9 @@ protected void BuildRenderTree(RenderTreeBuilder __builder)
 `__builder` RenderTreeBuilder<br>
 
 ### **OnParametersSetAsync()**
+
+Called when the component's parameters are set.
+ Retrieves the user information for the comment's creator.
 
 ```csharp
 protected Task OnParametersSetAsync()
