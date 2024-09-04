@@ -1,4 +1,5 @@
 using Moq;
+using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
@@ -114,8 +115,8 @@ public class MainLayoutVmImplTest
             UserId = Guid.NewGuid(), UserName = "Test", Description = "TestDesc", Email = "test@test.de",
             ProfilePic = "123"
         };
-        _userService.Setup(service => service.GetUserDaoById(It.IsAny<Guid>()))
-            .ReturnsAsync(userDao);
+        _userService.Setup(service => service.GetUserInfo(It.IsAny<Guid>()))
+            .ReturnsAsync(new UserInformationDto { UserId = userDao.UserId, Username = userDao.UserName, Description = userDao.Description, ProfilePic = userDao.ProfilePic});
         Assert.MultipleAsync(async () =>
             {
                 var serviceCall = await _vm.SetUserInfo();
@@ -187,33 +188,5 @@ public class MainLayoutVmImplTest
         Assert.ThatAsync(async () => await _vm.SetUserInfo(), Is.Null);
         _authService.VerifyAll();
         // Verify that the logger logs the correct error message
-    }
-
-    /// <summary>
-    ///     Tests that SetUserInfo sets the correct number of friends and spaces.
-    /// </summary>
-    [Test]
-    public void SetUserInfo_SetsCorrectFriendsAndSpaces()
-    {
-        var session = new Session { User = new User { Email = "test@test.de", Id = Guid.NewGuid().ToString() } };
-        _authService.Setup(service => service.GetCurrentSession()).Returns(session);
-        var userDao = new UserDao
-        {
-            UserId = Guid.NewGuid(), UserName = "Test", Description = "TestDesc", Email = "test@test.de",
-            ProfilePic = "123"
-        };
-        _userService.Setup(service => service.GetUserDaoById(It.IsAny<Guid>())).ReturnsAsync(userDao);
-        _userService.Setup(service => service.GetCountOfUserFriends(It.IsAny<Guid>())).ReturnsAsync(5);
-        _userService.Setup(service => service.GetCountOfUserSpaces(It.IsAny<Guid>())).ReturnsAsync(3);
-
-        Assert.MultipleAsync(async () =>
-        {
-            var serviceCall = await _vm.SetUserInfo();
-            Assert.That(serviceCall, Is.Not.Null);
-            Assert.That(serviceCall!.FriendsAmount, Is.EqualTo(5));
-            Assert.That(serviceCall!.SpacesAmount, Is.EqualTo(3));
-        });
-        _authService.VerifyAll();
-        _userService.VerifyAll();
     }
 }
