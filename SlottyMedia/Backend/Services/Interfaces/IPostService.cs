@@ -84,4 +84,6 @@ public interface IPostService
     /// <exception cref="PostNotFoundException">Thrown when the posts are not found.</exception>
     /// <exception cref="PostGeneralException">Thrown when a general error occurs.</exception>
     public Task<IPage<PostDto>> GetPostsByUserId(Guid userId, PageRequest pageRequest);
+
+    public Task<IPage<PostDto>> GetPostsByForumId(Guid forumId, PageRequest pageRequest);
 }

@@ -204,4 +204,33 @@ public class PostService : IPostService
                 ex);
         }
     }
+
+    /// <inheritdoc />
+    public async Task<IPage<PostDto>> GetPostsByForumId(Guid forumId, PageRequest pageRequest)
+    {
+        try
+        {
+            Logger.LogInfo($"Fetching posts for the forum with ID: {forumId}");
+            var posts = await _postRepository.GetPostsByForumId(forumId, pageRequest);
+            return posts.Map(dao => new PostDto().Mapper(dao));
+        }
+        catch (DatabaseMissingItemException ex)
+        {
+            throw new PostNotFoundException(
+                $"Posts for the given user ID were not found. UserID {forumId}",
+                ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new PostGeneralException(
+                $"A database error occurred while fetching the posts. UserID {forumId}",
+                ex);
+        }
+        catch (Exception ex)
+        {
+            throw new PostGeneralException(
+                $"An error occurred while fetching the posts. UserID {forumId}",
+                ex);
+        }
+    }
 }
