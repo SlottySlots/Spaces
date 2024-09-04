@@ -38,6 +38,14 @@ public interface IPage<T> : IEnumerable<T>
     ///     This page's elements as a list.
     /// </summary>
     List<T> Content { get; }
+
+    /// <summary>
+    ///     Maps the content of this page using the supplied function.
+    /// </summary>
+    /// <param name="function">The function that maps all contents of this page</param>
+    /// <typeparam name="TMapped">The type of the resulting page's contents</typeparam>
+    /// <returns>The mapped page</returns>
+    IPage<TMapped> Map<TMapped>(Func<T, TMapped> function);
     
     /// <summary>
     ///     Fetches a matching page with the specified page number.

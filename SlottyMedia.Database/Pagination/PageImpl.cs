@@ -37,6 +37,39 @@ public class PageImpl<T> : IPage<T>
         _callback = callback;
     }
 
+    /// <summary>Used to build an empty page</summary>
+    private PageImpl(List<T> content, int pageNumber, int pageSize, int totalPages)
+    {
+        Content = content;
+        PageNumber = pageNumber;
+        PageSize = pageSize;
+        TotalPages = totalPages;
+        // this should never be used!
+        _callback = _ => throw new InvalidOperationException("Cannot invoke fetch on the empty page!");
+    }
+
+    /// <summary>
+    ///     Builds an empty page with no content. Throws an <see cref="InvalidOperationException"/> when
+    ///     attempting to fetch another page.
+    /// </summary>
+    /// <returns>The empty page</returns>
+    public static IPage<T> Empty()
+    {
+        return new PageImpl<T>([], 0, 0, 0);
+    }
+
+    /// <inheritdoc />
+    public IPage<TMapped> Map<TMapped>(Func<T, TMapped> function)
+    {
+        var newContent = Content.Select(function).ToList();
+        return new PageImpl<TMapped>(
+            newContent,
+            PageNumber,
+            PageSize,
+            TotalPages,
+            async n => (await Fetch(n)).Map(function));
+    }
+
     /// <inheritdoc />
     public Task<IPage<T>> Fetch(int pageNumber)
     {
