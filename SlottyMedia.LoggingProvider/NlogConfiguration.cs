@@ -47,7 +47,8 @@ public static class NlogConfiguration
         };
         var logconsole = new ColoredConsoleTarget("console")
         {
-            Layout = @"${date:format=HH\:mm\:ss} [${level}] ${logger} ${message}",
+            Layout = @"${date:format=HH\:mm\:ss} [${level}] ${logger} ${message} 
+                        ${exception: format=Tostring, Data:maxInnerExceptionLevel=10}",
             UseDefaultRowHighlightingRules = false,
             EnableAnsiOutput = true
         };

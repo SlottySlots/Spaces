@@ -61,16 +61,13 @@ public class MainLayoutVmImpl : IMainLayoutVm
         try
         {
             var currentSession = _authService.GetCurrentSession();
-            if (currentSession != null)
-            {
-                return await _userService.GetUserInfo(Guid.Parse(currentSession!.User!.Id!));
-
-            }
+            if (currentSession != null) return await _userService.GetUserInfo(Guid.Parse(currentSession!.User!.Id!));
         }
         catch (Exception e)
         {
             _logger.LogError(e.Message);
         }
+
         return null;
     }
 

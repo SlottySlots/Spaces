@@ -4,7 +4,6 @@ using SlottyMedia.Backend.ViewModel.Interfaces;
 
 namespace SlottyMedia.Backend.ViewModel;
 
-
 /// <inheritdoc />
 public class HomePageVmImpl : IHomePageVm
 {

@@ -187,5 +187,4 @@ public interface IUserService
     ///     Returns a task of type UserInformationDto. The dto is used to update the state in the view.
     /// </returns>
     public Task<UserInformationDto?> GetUserInfo(Guid userId);
-
 }

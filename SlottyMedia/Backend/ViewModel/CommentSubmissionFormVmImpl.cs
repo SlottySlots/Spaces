@@ -5,7 +5,6 @@ using SlottyMedia.Backend.ViewModel.Interfaces;
 
 namespace SlottyMedia.Backend.ViewModel;
 
-
 /// <inheritdoc />
 public class CommentSubmissionFormVmImpl : ICommentSubmissionFormVm
 {
@@ -14,7 +13,8 @@ public class CommentSubmissionFormVmImpl : ICommentSubmissionFormVm
     private readonly NavigationManager _navigationManager;
 
     /// <summary>Instantiates this class</summary>
-    public CommentSubmissionFormVmImpl(IAuthService authService, ICommentService commentService, NavigationManager navigationManager)
+    public CommentSubmissionFormVmImpl(IAuthService authService, ICommentService commentService,
+        NavigationManager navigationManager)
     {
         _authService = authService;
         _commentService = commentService;
@@ -23,13 +23,13 @@ public class CommentSubmissionFormVmImpl : ICommentSubmissionFormVm
 
     /// <inheritdoc />
     public string? Text { get; set; }
-    
+
     /// <inheritdoc />
     public string? TextErrorMessage { get; private set; }
-    
+
     /// <inheritdoc />
     public string? ServerErrorMessage { get; private set; }
-    
+
     /// <inheritdoc />
     public async Task SubmitForm(Guid postId)
     {
@@ -68,7 +68,7 @@ public class CommentSubmissionFormVmImpl : ICommentSubmissionFormVm
         // if no errors occurred: reload page
         _navigationManager.Refresh(true);
     }
-    
+
     private void _resetErrorMessages()
     {
         TextErrorMessage = null;

@@ -20,16 +20,16 @@ else
 {
     <!-- the post -->
     <Post Dto="ViewModel.Post" CurrentUserId="_currentUserId"/>
-    
+
     <!-- comment section -->
     <div class="w-full pb-5 flex flex-col items-center gap-3">
-        
+
         <!-- comment submission form (if user is logged in) -->
         @if (AuthService.IsAuthenticated())
         {
-            <CommentSubmissionForm PostId="@PostId" />
+            <CommentSubmissionForm PostId="@PostId"/>
         }
-        
+
         <!-- all comments that were loaded -->
         @foreach (var comment in ViewModel.Comments)
         {
@@ -37,7 +37,7 @@ else
                 <Comment Dto="comment"/>
             </div>
         }
-        
+
         <!-- button to load more comments (if available) -->
         @if (ViewModel.Comments.Count < ViewModel.TotalNumberOfComments)
         {
@@ -45,12 +45,13 @@ else
                 Load more comments
             </button>
         }
-        
+
     </div>
 }
 
 
 @code {
+
     /// <summary>The ID of the post to showcase</summary>
     [Parameter]
     public Guid? PostId { get; set; }

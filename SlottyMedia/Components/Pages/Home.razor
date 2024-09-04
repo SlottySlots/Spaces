@@ -20,7 +20,7 @@
     {
         <Post Dto="post" CurrentUserId=@_currentUserId OnPostClick="() => _navigateToPostPage(post.PostId)"/>
     }
-    
+
     @if (ViewModel.Posts.Count < ViewModel.TotalNumberOfPosts)
     {
         <button @onclick="ViewModel.LoadMorePosts" class="w-1/2 my-3 p-3 bg-raisin-black text-white border-none rounded-[12px]">
@@ -41,5 +41,8 @@
         await ViewModel.Initialize();
     }
 
-    private void _navigateToPostPage(Guid postId) => NavigationManager.NavigateTo($"/post/{postId}");
+    private void _navigateToPostPage(Guid postId)
+    {
+        NavigationManager.NavigateTo($"/post/{postId}");
+    }
 }

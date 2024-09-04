@@ -11,7 +11,7 @@
 
         <!-- profile picture -->
         <div @onclick="OnClickAvatar">
-            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic"  Size="50"></Avatar>
+            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Size="50"></Avatar>
         </div>
 
         <!-- username & time posted -->
@@ -88,7 +88,7 @@
     /// </summary>
     [Parameter]
     public Guid CurrentUserId { get; set; }
-    
+
     /// <summary>
     ///     This event is triggered when the post's comment button is clicked.
     ///     This event will be used to navigate to the post's dedicated page from the home page (i.e. <c>/post/{ID}</c>).
@@ -120,7 +120,7 @@
         _owner = await UserService.GetUserDtoById(Dto!.UserId);
         _commentCount = await CommentService.CountCommentsInPost(Dto.PostId);
     }
-    
+
     protected override async void OnAfterRender(bool firstRender)
     {
         if ((firstRender || UserInformationDto.Username == "Username is loading..") && Dto != null)

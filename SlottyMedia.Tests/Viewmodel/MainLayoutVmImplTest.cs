@@ -116,7 +116,11 @@ public class MainLayoutVmImplTest
             ProfilePic = "123"
         };
         _userService.Setup(service => service.GetUserInfo(It.IsAny<Guid>()))
-            .ReturnsAsync(new UserInformationDto { UserId = userDao.UserId, Username = userDao.UserName, Description = userDao.Description, ProfilePic = userDao.ProfilePic});
+            .ReturnsAsync(new UserInformationDto
+            {
+                UserId = userDao.UserId, Username = userDao.UserName, Description = userDao.Description,
+                ProfilePic = userDao.ProfilePic
+            });
         Assert.MultipleAsync(async () =>
             {
                 var serviceCall = await _vm.SetUserInfo();

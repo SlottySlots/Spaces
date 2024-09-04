@@ -16,7 +16,7 @@
                 @(Dto!.CreatedAt.ToShortTimeString())
             </h3>
         </div>
-        
+
         <!-- comment text -->
         <div>
             @(Dto!.Content)
@@ -27,8 +27,7 @@
 
 
 @code {
-    [Parameter]
-    public CommentDto? Dto { get; set; }
+    [Parameter] public CommentDto? Dto { get; set; }
 
     private bool _isLoading = true;
     private UserDto? _owner;
@@ -39,4 +38,5 @@
         _owner = await UserService.GetUserDtoById(Dto!.CreatorUserId!.Value);
         _isLoading = false;
     }
+
 }

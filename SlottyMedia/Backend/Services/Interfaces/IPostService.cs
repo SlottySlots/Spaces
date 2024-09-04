@@ -36,7 +36,7 @@ public interface IPostService
     /// <exception cref="PostNotFoundException">Thrown when the posts are not found.</exception>
     /// <exception cref="PostGeneralException">Thrown when a general error occurs.</exception>
     public Task<List<PostDto>> GetAllPosts(int page, int pageSize = 10);
-    
+
     /// <summary>
     ///     Counts all existing posts.
     /// </summary>

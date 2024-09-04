@@ -15,10 +15,10 @@ namespace SlottyMedia.Backend.Services;
 public class UserService : IUserService
 {
     private static readonly Logging<UserService> Logger = new();
+    private readonly IAuthService _authService;
     private readonly IFollowerUserRelationRepository _followerUserRelationRepository;
     private readonly IPostService _postService;
     private readonly IUserRepository _userRepository;
-    private readonly IAuthService _authService;
 
     /// <summary>
     ///     This constructor creates a new UserService object.

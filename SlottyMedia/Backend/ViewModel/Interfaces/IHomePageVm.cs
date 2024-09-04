@@ -3,21 +3,20 @@ using SlottyMedia.Components.Pages;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 
-
 /// <summary>
-///     This ViewModel represents the state of the <see cref="Home"/> page.
+///     This ViewModel represents the state of the <see cref="Home" /> page.
 /// </summary>
 public interface IHomePageVm
 {
     /// <summary>Indicates whether the page is loading (for the first time)</summary>
     bool IsLoadingPage { get; }
-    
+
     /// <summary>Indicates whether more posts are currently being loaded</summary>
     bool IsLoadingPosts { get; }
-    
+
     /// <summary>The posts that will be showcased</summary>
     List<PostDto> Posts { get; }
-    
+
     /// <summary>The total number of existing posts. Used to enable the user to load more posts on demand.</summary>
     int TotalNumberOfPosts { get; }
 
