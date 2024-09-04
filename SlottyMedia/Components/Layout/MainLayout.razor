@@ -335,6 +335,10 @@
         await MainLayoutVm!.RestoreSessionOnInit();
     }
 
+    /// <summary>
+    ///    Refreshes the user information
+    /// </summary>
+    /// <param name="firstRender"></param>
     protected override async void OnAfterRender(bool firstRender)
     {
         if (firstRender || UserInformationDto.Username == "Username is loading..")
@@ -342,11 +346,7 @@
             var userInfo = await MainLayoutVm!.SetUserInfo();
             if (userInfo != null)
             {
-                UserInformationDto.Username = userInfo.Username;
-                UserInformationDto.Description = userInfo.Description;
-                UserInformationDto.ProfilePic = userInfo.ProfilePic;
-                UserInformationDto.FriendsAmount = userInfo.FriendsAmount;
-                UserInformationDto.SpacesAmount = userInfo.SpacesAmount;
+                UserInformationDto = userInfo;
                 StateHasChanged();
             }
         }

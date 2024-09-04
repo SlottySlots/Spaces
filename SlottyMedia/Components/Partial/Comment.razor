@@ -1,7 +1,8 @@
 @using SlottyMedia.Backend.Dtos
 @using SlottyMedia.Backend.Services.Interfaces
-@inject IUserService UserService
-
+@using SlottyMedia.Backend.ViewModel
+@using SlottyMedia.Backend.ViewModel.Interfaces
+@inject IUserVm UserVm
 
 @if (!_isLoading)
 {
@@ -25,18 +26,23 @@
     </div>
 }
 
-
 @code {
+    /// <summary>
+    /// The comment data transfer object to be rendered.
+    /// </summary>
     [Parameter] public CommentDto? Dto { get; set; }
 
     private bool _isLoading = true;
     private UserDto? _owner;
 
+    /// <summary>
+    /// Called when the component's parameters are set.
+    /// Retrieves the user information for the comment's creator.
+    /// </summary>
     protected override async Task OnParametersSetAsync()
     {
         _isLoading = true;
-        _owner = await UserService.GetUserDtoById(Dto!.CreatorUserId!.Value);
+        _owner = await UserVm.GetUserById(Dto!.CreatorUserId!.Value);
         _isLoading = false;
     }
-
 }

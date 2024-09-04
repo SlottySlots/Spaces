@@ -108,7 +108,7 @@ try
     builder.Services.AddScoped<IPostSubmissionFormVm, PostSubmissionFormVmImpl>();
     builder.Services.AddScoped<IHomePageVm, HomePageVmImpl>();
     builder.Services.AddScoped<IAuthVm, AuthVm>();
-    builder.Services.AddScoped<IUserVmImpl, UserVmImpl>();
+    builder.Services.AddScoped<IUserVm, UserVm>();
     builder.Services.AddScoped<IPostPageVm, PostPageVmImpl>();
     builder.Services.AddScoped<ICommentSubmissionFormVm, CommentSubmissionFormVmImpl>();
     builder.Services.AddScoped<IPostVm, PostVmImpl>();

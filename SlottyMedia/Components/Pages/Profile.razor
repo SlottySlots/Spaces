@@ -2,12 +2,10 @@
 @using System.Web
 @using Microsoft.IdentityModel.Tokens
 @using SlottyMedia.Backend.Dtos
-@using SlottyMedia.Backend.Services.Interfaces
 @using SlottyMedia.Backend.ViewModel.Interfaces
-@using Supabase.Gotrue
 @inject NavigationManager NavigationManager
 @inject IProfilePageVm ProfilePageVm
-@inject IAuthService AuthService
+@inject IAuthVm AuthService
 @if (!_invalidIdFlag)
 {
     <div class="flex border-b border-athens-gray py-4 w-full">
@@ -45,11 +43,11 @@
         }
     </div>
 
-    @if (!_postsOfUser.IsNullOrEmpty() && _currentSession != null)
+    @if (!_postsOfUser.IsNullOrEmpty() && _currentUserId != null)
     {
         @foreach (var post in _postsOfUser)
         {
-            <Post Dto="post" CurrentUserId=@(Guid.Parse(_currentSession!.User!.Id!))/>
+            <Post Dto="post" CurrentUserId=@(_currentUserId)/>
         }
     }
 }
@@ -62,7 +60,7 @@ else
 @code{
     private Guid _profileUserId;
 
-    private Session? _currentSession;
+    private Guid _currentUserId;
 
     private bool? _followsUserRetrieved;
 
@@ -82,7 +80,7 @@ else
     {
         var uri = new Uri(NavigationManager.Uri);
         var queryParams = HttpUtility.ParseQueryString(uri.Query);
-        _currentSession = AuthService.GetCurrentSession();
+        _currentUserId = AuthService.GetCurrentUserId();
 
         // Retrieve query parameters
         if (queryParams["id"] != null && !_invalidIdFlag)
@@ -98,18 +96,13 @@ else
                 return;
             }
 
-            _followsUserRetrieved = await ProfilePageVm.UserFollowRelation(_profileUserId, Guid.Parse(_currentSession!.User!.Id!));
+            _followsUserRetrieved = await ProfilePageVm.UserFollowRelation(_profileUserId, _currentUserId);
             if (firstRender || UserInformationDto.Username == "Username is loading..")
             {
                 var userInfo = await ProfilePageVm.GetUserInfo(_profileUserId);
                 if (userInfo != null)
                 {
-                    UserInformationDto.Username = userInfo.Username;
-                    UserInformationDto.Description = userInfo.Description;
-                    UserInformationDto.ProfilePic = userInfo.ProfilePic;
-                    UserInformationDto.FriendsAmount = userInfo.FriendsAmount;
-                    UserInformationDto.SpacesAmount = userInfo.SpacesAmount;
-                    UserInformationDto.CreatedAt = userInfo.CreatedAt;
+                    UserInformationDto = userInfo;
                     StateHasChanged();
                 }
                 else
@@ -135,11 +128,11 @@ else
     {
         if (_followsUserRetrieved != null && _followsUserRetrieved == true)
         {
-            await ProfilePageVm.UnfollowUserById(Guid.Parse(_currentSession!.User!.Id!), _profileUserId);
+            await ProfilePageVm.UnfollowUserById(_currentUserId, _profileUserId);
         }
         else
         {
-            await ProfilePageVm.FollowUserById(Guid.Parse(_currentSession!.User!.Id!), _profileUserId);
+            await ProfilePageVm.FollowUserById(_currentUserId, _profileUserId);
         }
 
         _followsUserRetrieved = !_followsUserRetrieved;

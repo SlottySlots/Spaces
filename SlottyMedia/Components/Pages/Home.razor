@@ -2,7 +2,7 @@
 @using SlottyMedia.Backend.Services.Interfaces
 @using SlottyMedia.Backend.ViewModel.Interfaces
 @inject IHomePageVm ViewModel
-@inject IAuthService AuthService
+@inject IAuthVm AuthService
 @inject NavigationManager NavigationManager
 
 
@@ -36,8 +36,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var _currentSession = AuthService.GetCurrentSession();
-        _currentUserId = Guid.Parse(_currentSession!.User!.Id!);
+        var currentSession = AuthService.GetCurrentSession();
+        _currentUserId = Guid.Parse(currentSession!.User!.Id!);
         await ViewModel.Initialize();
     }
 

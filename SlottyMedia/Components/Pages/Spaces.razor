@@ -7,7 +7,7 @@
 <PageTitle>Slotty Media | Spaces</PageTitle>
 
 <!-- Display loading indicator -->
-@if (isLoading)
+@if (_isLoading)
 {
     <p>Loading...</p>
 }
@@ -30,12 +30,15 @@ else
 }
 
 @code {
-    private bool isLoading;
+    private bool _isLoading;
     private static readonly Logging<Spaces> Logger = new();
 
+    /// <summary>
+    /// This method is called when the page is initialized.
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
-        isLoading = true; // Set loading state
+        _isLoading = true; // Set loading state
         try
         {
             await SpacesVm.LoadForums(); // Load forums automatically when the page is initialized
@@ -47,7 +50,7 @@ else
         }
         finally
         {
-            isLoading = false; // Unset loading state
+            _isLoading = false; // Unset loading state
         }
     }
 
