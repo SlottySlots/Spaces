@@ -1,5 +1,7 @@
-﻿using SlottyMedia.Database.Daos;
+﻿using Microsoft.IdentityModel.Tokens;
+using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Helper;
+using SlottyMedia.Database.Pagination;
 using Supabase.Postgrest;
 using Client = Supabase.Client;
 
@@ -22,12 +24,16 @@ public class UserSearchRepository : DatabaseRepository<UserDao>, IUserSeachRepos
     }
 
     /// <inheritdoc />
-    public async Task<List<UserDao>> GetUsersByUserName(string userName, int page, int pageSize)
+    public async Task<IPage<UserDao>> GetUsersByUserName(string userName, PageRequest pageRequest)
     {
-        var query = BaseQuerry
-            .Select(x => new object[] { x.UserId!, x.UserName! })
-            .Filter(user => user.UserName!, Constants.Operator.ILike, $"%{userName}%");
-
-        return await ExecuteQuery(ApplyPagination(query, page, pageSize));
+        if (userName.IsNullOrEmpty())
+            return PageImpl<UserDao>.Empty();
+        
+        return await ApplyPagination(
+            () => Supabase
+                .From<UserDao>()
+                .Select(x => new object[] { x.UserId!, x.UserName! })
+                .Filter(user => user.UserName!, Constants.Operator.ILike, $"%{userName}%"),
+            pageRequest);
     }
 }

@@ -91,59 +91,19 @@ Thrown when the forum is not found.
 [ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)<br>
 Thrown when a general error occurs.
 
-### **GetForumsByNameContaining(String, Int32, Int32)**
-
-Fetches all forums by name where the name contains the given substring.
- Fetches only a specified number of forums on the specified page.
+### **GetAllForums(PageRequest)**
 
 ```csharp
-Task<List<ForumDto>> GetForumsByNameContaining(string name, int page, int pageSize)
+Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest)
 ```
 
 #### Parameters
 
-`name` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The substring that should be contained by the forums' name
-
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The page to fetch (one-based)
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The size of each page (default is 10)
+`pageRequest` PageRequest<br>
 
 #### Returns
 
-[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-All forums where the name of each forum contains the given substring
-
-#### Exceptions
-
-[ForumNotFoundException](./slottymedia.backend.exceptions.services.forumexceptions.forumnotfoundexception.md)<br>
-Thrown when the forums are not found.
-
-[ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)<br>
-Thrown when a general error occurs.
-
-### **GetForums()**
-
-Retrieves a list of all forums.
-
-```csharp
-Task<List<ForumDto>> GetForums()
-```
-
-#### Returns
-
-[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains a list of ForumDto objects.
-
-#### Exceptions
-
-[ForumNotFoundException](./slottymedia.backend.exceptions.services.forumexceptions.forumnotfoundexception.md)<br>
-Thrown when the forums are not found.
-
-[ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)<br>
-Thrown when a general error occurs.
+[Task&lt;IPage&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **DetermineRecentSpaces()**
 

@@ -3,6 +3,7 @@ using SlottyMedia.Backend.Exceptions.Services.CommentExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Database.Pagination;
 using SlottyMedia.Database.Repository.CommentRepo;
 using SlottyMedia.LoggingProvider;
 
@@ -128,12 +129,12 @@ public class CommentService : ICommentService
     }
 
     /// <inheritdoc />
-    public async Task<List<CommentDto>> GetCommentsInPost(Guid postId, int page, int pageSize = 10)
+    public async Task<IPage<CommentDto>> GetCommentsInPost(Guid postId, PageRequest pageRequest)
     {
         try
         {
-            var comments = await _commentRepository.GetCommentsInPost(postId, page, pageSize);
-            return comments.Select(dao => new CommentDto().Mapper(dao)).ToList();
+            var comments = await _commentRepository.GetCommentsInPost(postId, pageRequest);
+            return comments.Map(dao => new CommentDto().Mapper(dao));
         }
         catch (DatabaseIudActionException ex)
         {

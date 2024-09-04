@@ -28,34 +28,34 @@ Sets up the test environment before each test.
 public void Setup()
 ```
 
-### **LoadForums_LoadsForumsSuccessfully()**
+### **LoadForums_ValidResponse_UpdatesForumsList()**
 
-Tests that the LoadForums method loads forums successfully.
+Verifies that LoadForums updates the forums list with a valid response.
 
 ```csharp
-public Task LoadForums_LoadsForumsSuccessfully()
+public Task LoadForums_ValidResponse_UpdatesForumsList()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **LoadForums_HandlesException()**
+### **LoadForums_ExceptionThrown_LogsError()**
 
-Tests that the LoadForums method handles exceptions correctly.
+Verifies that LoadForums logs an error and returns an empty list when an exception is thrown.
 
 ```csharp
-public Task LoadForums_HandlesException()
+public Task LoadForums_ExceptionThrown_LogsError()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **Constructor_ThrowsArgumentNullException_WhenForumServiceIsNull()**
+### **Constructor_NullForumService_ThrowsArgumentNullException()**
 
-Tests that the constructor throws an ArgumentNullException when the forum service is null.
+Verifies that the constructor throws an ArgumentNullException when the forum service is null.
 
 ```csharp
-public void Constructor_ThrowsArgumentNullException_WhenForumServiceIsNull()
+public void Constructor_NullForumService_ThrowsArgumentNullException()
 ```

@@ -44,22 +44,12 @@ public PostDto Post { get; private set; }
 ### **Comments**
 
 ```csharp
-public List<CommentDto> Comments { get; private set; }
+public IPage<CommentDto> Comments { get; private set; }
 ```
 
 #### Property Value
 
-[List&lt;CommentDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
-
-### **TotalNumberOfComments**
-
-```csharp
-public int TotalNumberOfComments { get; private set; }
-```
-
-#### Property Value
-
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+IPage&lt;CommentDto&gt;<br>
 
 ## Constructors
 
@@ -79,10 +69,10 @@ public PostPageVmImpl(IPostService postService, ICommentService commentService)
 
 ## Methods
 
-### **LoadPage(Guid)**
+### **Initialize(Guid)**
 
 ```csharp
-public Task LoadPage(Guid postId)
+public Task Initialize(Guid postId)
 ```
 
 #### Parameters
@@ -93,11 +83,15 @@ public Task LoadPage(Guid postId)
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **LoadMoreComments()**
+### **LoadCommentsPage(Int32)**
 
 ```csharp
-public Task LoadMoreComments()
+public Task LoadCommentsPage(int pageNumber)
 ```
+
+#### Parameters
+
+`pageNumber` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 #### Returns
 

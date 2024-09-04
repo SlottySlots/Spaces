@@ -69,16 +69,6 @@ public interface IUserService
     Task<ProfilePicDto> GetProfilePic(Guid userId);
 
     /// <summary>
-    ///     This method returns a UserDto object from the database based on the given userId.
-    /// </summary>
-    /// <param name="userId">The Id of the user</param>
-    /// <param name="limit">The maximum number of recent forums to retrieve</param>
-    /// <returns>Returns the UserDto object</returns>
-    /// <exception cref="UserNotFoundException">Thrown when the user is not found.</exception>
-    /// <exception cref="UserGeneralException">Thrown when a general error occurs.</exception>
-    Task<UserDto> GetUser(Guid userId, int limit = 5);
-
-    /// <summary>
     ///     This method returns a list of friends for the given user.
     /// </summary>
     /// <param name="userId">The ID of the user</param>

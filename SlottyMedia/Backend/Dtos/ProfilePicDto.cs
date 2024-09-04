@@ -35,7 +35,7 @@ public class ProfilePicDto
     /// <returns></returns>
     public UserDao Mapper()
     {
-        Logger.LogInfo($"Mapping ProfilePicDto to UserDao. ProfilePicDto: {this}");
+        Logger.LogTrace($"Mapping ProfilePicDto to UserDao. ProfilePicDto: {this}");
 
         return new UserDao
         {
@@ -51,7 +51,7 @@ public class ProfilePicDto
     /// <returns></returns>
     public ProfilePicDto Mapper(UserDao userDao)
     {
-        Logger.LogInfo($"Mapping UserDao to ProfilePicDto. UserDao: {userDao}");
+        Logger.LogTrace($"Mapping UserDao to ProfilePicDto. UserDao: {userDao}");
 
         return new ProfilePicDto
         {

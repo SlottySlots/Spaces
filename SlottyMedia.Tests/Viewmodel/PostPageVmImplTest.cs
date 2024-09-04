@@ -2,6 +2,7 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
+using SlottyMedia.Database.Pagination;
 
 namespace SlottyMedia.Tests.Viewmodel;
 
@@ -27,68 +28,86 @@ public class PostPageVmImplTests
     }
 
     /// <summary>
-    /// Tests that LoadPage method sets the Post and Comments properties.
+    /// Tests that Initialize method sets the Post and loads the first page of comments.
     /// </summary>
     [Test]
-    public async Task LoadPage_SetsPostAndComments()
+    public async Task Initialize_SetsPostAndLoadsFirstCommentsPage()
     {
         var postId = Guid.NewGuid();
         var post = new PostDto { PostId = postId };
-        var comments = new List<CommentDto> { new CommentDto(), new CommentDto() };
+        var comments = new PageImpl<CommentDto>(
+            new List<CommentDto> { new CommentDto() },
+            0, // PageNumber
+            5, // PageSize
+            1, // TotalPages
+            pageNumber => Task.FromResult<IPage<CommentDto>>(null) // Callback
+        );
         _mockPostService.Setup(s => s.GetPostById(postId)).ReturnsAsync(post);
-        _mockCommentService.Setup(s => s.CountCommentsInPost(postId)).ReturnsAsync(2);
-        _mockCommentService.Setup(s => s.GetCommentsInPost(postId, 1, 5)).ReturnsAsync(comments);
+        _mockCommentService.Setup(s => s.GetCommentsInPost(postId, It.IsAny<PageRequest>())).ReturnsAsync(comments);
 
-        await _postPageVmImpl.LoadPage(postId);
+        await _postPageVmImpl.Initialize(postId);
 
+        Assert.That(_postPageVmImpl.IsLoadingPage, Is.False);
         Assert.That(_postPageVmImpl.Post, Is.EqualTo(post));
-        Assert.That(_postPageVmImpl.Comments, Is.EqualTo(comments));
-        Assert.That(_postPageVmImpl.TotalNumberOfComments, Is.EqualTo(2));
+        Assert.That(_postPageVmImpl.Comments.Content.Count, Is.EqualTo(1));
     }
 
     /// <summary>
-    /// Tests that LoadPage method sets the Post property to null when the post is not found.
+    /// Tests that Initialize method sets the Post property to null when the post is not found.
     /// </summary>
     [Test]
-    public async Task LoadPage_SetsPostToNullWhenPostNotFound()
+    public async Task Initialize_SetsPostToNullWhenPostNotFound()
     {
         var postId = Guid.NewGuid();
         _mockPostService.Setup(s => s.GetPostById(postId)).ReturnsAsync((PostDto?)null);
 
-        await _postPageVmImpl.LoadPage(postId);
+        await _postPageVmImpl.Initialize(postId);
 
+        Assert.That(_postPageVmImpl.IsLoadingPage, Is.False);
         Assert.That(_postPageVmImpl.Post, Is.Null);
     }
 
     /// <summary>
-    /// Tests that LoadMoreComments method adds comments to the Comments list.
+    /// Tests that LoadCommentsPage method adds comments to the Comments list.
     /// </summary>
     [Test]
-    public async Task LoadMoreComments_AddsCommentsToList()
+    public async Task LoadCommentsPage_AddsCommentsToList()
     {
         var postId = Guid.NewGuid();
         var post = new PostDto { PostId = postId };
-        var comments = new List<CommentDto> { new CommentDto(), new CommentDto() };
+        var comments = new PageImpl<CommentDto>(
+            new List<CommentDto> { new CommentDto() },
+            0, // PageNumber
+            5, // PageSize
+            1, // TotalPages
+            pageNumber => Task.FromResult<IPage<CommentDto>>(null) // Callback
+        );
         _mockPostService.Setup(s => s.GetPostById(postId)).ReturnsAsync(post);
-        _mockCommentService.Setup(s => s.GetCommentsInPost(postId, 1, 5)).ReturnsAsync(comments);
-        await _postPageVmImpl.LoadPage(postId);
+        _mockCommentService.Setup(s => s.GetCommentsInPost(postId, It.IsAny<PageRequest>())).ReturnsAsync(comments);
+        await _postPageVmImpl.Initialize(postId);
 
-        var moreComments = new List<CommentDto> { new CommentDto() };
-        _mockCommentService.Setup(s => s.GetCommentsInPost(postId, 2, 5)).ReturnsAsync(moreComments);
+        var moreComments = new PageImpl<CommentDto>(
+            new List<CommentDto> { new CommentDto() },
+            1, // PageNumber
+            5, // PageSize
+            1, // TotalPages
+            pageNumber => Task.FromResult<IPage<CommentDto>>(null) // Callback
+        );
+        _mockCommentService.Setup(s => s.GetCommentsInPost(postId, It.IsAny<PageRequest>())).ReturnsAsync(moreComments);
 
-        await _postPageVmImpl.LoadMoreComments();
+        await _postPageVmImpl.LoadCommentsPage(1);
 
-        Assert.That(_postPageVmImpl.Comments.Count, Is.EqualTo(3));
+        Assert.That(_postPageVmImpl.Comments.Content.Count, Is.EqualTo(1));
     }
 
     /// <summary>
-    /// Tests that LoadMoreComments method does not load comments when the Post property is null.
+    /// Tests that LoadCommentsPage method does not load comments when the Post property is null.
     /// </summary>
     [Test]
-    public async Task LoadMoreComments_DoesNotLoadWhenPostIsNull()
+    public async Task LoadCommentsPage_DoesNotLoadWhenPostIsNull()
     {
-        await _postPageVmImpl.LoadMoreComments();
+        await _postPageVmImpl.LoadCommentsPage(1);
 
-        _mockCommentService.Verify(s => s.GetCommentsInPost(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+        _mockCommentService.Verify(s => s.GetCommentsInPost(It.IsAny<Guid>(), It.IsAny<PageRequest>()), Times.Never);
     }
 }

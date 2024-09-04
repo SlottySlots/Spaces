@@ -62,6 +62,30 @@ A task that represents the asynchronous operation. The task result contains a co
 [GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
 Thrown when an unexpected error occurs.
 
+### **GetAllElements(PageRequest)**
+
+Retrieves all elements from the table. Fetches only a specified number of elements
+ at the specified page.
+
+```csharp
+Task<IPage<T>> GetAllElements(PageRequest pageRequest)
+```
+
+#### Parameters
+
+`pageRequest` [PageRequest](./slottymedia.database.pagination.pagerequest.md)<br>
+The page request
+
+#### Returns
+
+Task&lt;IPage&lt;T&gt;&gt;<br>
+A task that represents the asynchronous operation. The task result contains a collection of all entities.
+
+#### Exceptions
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when an unexpected error occurs.
+
 ### **AddElement(T)**
 
 Creates a new element.

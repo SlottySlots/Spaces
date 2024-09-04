@@ -1,5 +1,6 @@
 ﻿using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Helper;
+using SlottyMedia.Database.Pagination;
 using Supabase.Postgrest;
 using Client = Supabase.Client;
 
@@ -31,14 +32,13 @@ public class CommentRepository : DatabaseRepository<CommentDao>, ICommentReposit
     }
 
     /// <inheritdoc />
-    public async Task<List<CommentDao>> GetCommentsInPost(Guid postId, int page, int pageSize = 10)
+    public async Task<IPage<CommentDao>> GetCommentsInPost(Guid postId, PageRequest pageRequest)
     {
-        var query = await Supabase
-            .From<CommentDao>()
-            .Filter(comment => comment.PostId!, Constants.Operator.Equals, postId.ToString())
-            .Order(comment => comment.CreatedAt, Constants.Ordering.Descending)
-            .Range((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
-            .Get();
-        return query.Models;
+        return await ApplyPagination(
+            () => Supabase
+                .From<CommentDao>()
+                .Filter(comment => comment.PostId!, Constants.Operator.Equals, postId.ToString())
+                .Order(comment => comment.CreatedAt, Constants.Ordering.Descending),
+            pageRequest);
     }
 }

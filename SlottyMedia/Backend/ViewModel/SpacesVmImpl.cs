@@ -1,6 +1,7 @@
 ﻿using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
+using SlottyMedia.Database.Pagination;
 using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
@@ -26,8 +27,8 @@ public class SpacesVmImpl : ISpacesVm
     {
         try
         {
-            Forums.Clear();
-            Forums = await _forumService.GetForums();
+            var page = await _forumService.GetAllForums(PageRequest.OfSize(10));
+            Forums = page.Content;
         }
         catch (Exception ex)
         {

@@ -1,6 +1,7 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
+using SlottyMedia.Database.Pagination;
 using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
@@ -102,9 +103,9 @@ public class ProfilePageVmImpl : IProfilePageVm
     /// <returns>
     ///     List of PostDtos
     /// </returns>
-    public async Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet)
+    public async Task<List<PostDto>> GetPostsByUserId(Guid userId, PageRequest pageRequest)
     {
-        var posts = await _postService.GetPostsByUserId(userId, startOfSet, endOfSet);
-        return posts;
+        var posts = await _postService.GetPostsByUserId(userId, pageRequest);
+        return posts.Content;
     }
 }

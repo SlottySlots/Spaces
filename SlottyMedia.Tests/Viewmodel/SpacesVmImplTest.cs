@@ -2,6 +2,7 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
+using SlottyMedia.Database.Pagination;
 
 namespace SlottyMedia.Tests.Viewmodel;
 
@@ -24,13 +25,14 @@ public class SpacesVmImplTest
     }
 
     /// <summary>
-    ///     Tests that the LoadForums method loads forums successfully.
+    ///     Verifies that LoadForums updates the forums list with a valid response.
     /// </summary>
     [Test]
-    public async Task LoadForums_LoadsForumsSuccessfully()
+    public async Task LoadForums_ValidResponse_UpdatesForumsList()
     {
-        var forums = new List<ForumDto> { new() { ForumId = Guid.NewGuid(), Topic = "Test Forum" } };
-        _forumServiceMock.Setup(service => service.GetForums()).ReturnsAsync(forums);
+        var forums = new List<ForumDto> { new() { Topic = "Test Forum" } };
+        var page = new PageImpl<ForumDto>(forums, 1, 10, 1, null);
+        _forumServiceMock.Setup(f => f.GetAllForums(It.IsAny<PageRequest>())).ReturnsAsync(page);
 
         await _spacesVm.LoadForums();
 
@@ -38,12 +40,14 @@ public class SpacesVmImplTest
     }
 
     /// <summary>
-    ///     Tests that the LoadForums method handles exceptions correctly.
+    ///     Verifies that LoadForums logs an error and returns an empty list when an exception is thrown.
     /// </summary>
     [Test]
-    public async Task LoadForums_HandlesException()
+    public async Task LoadForums_ExceptionThrown_LogsError()
     {
-        _forumServiceMock.Setup(service => service.GetForums()).ThrowsAsync(new Exception("Service error"));
+        var exceptionMessage = "Service error";
+        _forumServiceMock.Setup(f => f.GetAllForums(It.IsAny<PageRequest>()))
+            .ThrowsAsync(new Exception(exceptionMessage));
 
         await _spacesVm.LoadForums();
 
@@ -51,11 +55,11 @@ public class SpacesVmImplTest
     }
 
     /// <summary>
-    ///     Tests that the constructor throws an ArgumentNullException when the forum service is null.
+    ///     Verifies that the constructor throws an ArgumentNullException when the forum service is null.
     /// </summary>
     [Test]
-    public void Constructor_ThrowsArgumentNullException_WhenForumServiceIsNull()
+    public void Constructor_NullForumService_ThrowsArgumentNullException()
     {
-        Assert.That(() => new SpacesVmImpl(null), Throws.ArgumentNullException);
+        Assert.Throws<ArgumentNullException>(() => new SpacesVmImpl(null));
     }
 }

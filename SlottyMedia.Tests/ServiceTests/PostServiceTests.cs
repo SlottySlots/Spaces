@@ -3,7 +3,9 @@ using SlottyMedia.Backend.Exceptions.Services.PostExceptions;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Database.Pagination;
 using SlottyMedia.Database.Repository.PostRepo;
+using SlottyMedia.Tests.TestImpl;
 
 namespace SlottyMedia.Tests.ServiceTests;
 
@@ -125,14 +127,14 @@ public class PostServiceTests
     {
         var userId = Guid.NewGuid();
         var posts = new List<PostsDao> { new() { PostId = Guid.NewGuid(), Content = "Test content", UserId = userId } };
-        _mockPostRepository.Setup(x => x.GetPostsByUserId(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>()))
-            .ReturnsAsync(posts);
+        _mockPostRepository.Setup(x => x.GetPostsByUserId(It.IsAny<Guid>(), It.IsAny<PageRequest>()))
+            .ReturnsAsync(new PageTestImpl<PostsDao>(posts, 0, 10, 1));
 
-        var result = await _postService.GetPostsByUserId(userId, 1, 10);
+        var result = await _postService.GetPostsByUserId(userId, PageRequest.OfSize(10));
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Count, Is.EqualTo(1));
-        Assert.That(result[0].Content, Is.EqualTo("Test content"));
+        Assert.That(result.Content[0].Content, Is.EqualTo("Test content"));
     }
 
     /// <summary>
@@ -142,10 +144,10 @@ public class PostServiceTests
     public void GetPostsForUser_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
-        _mockPostRepository.Setup(x => x.GetPostsByUserId(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockPostRepository.Setup(x => x.GetPostsByUserId(It.IsAny<Guid>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
-        Assert.ThrowsAsync<PostNotFoundException>(async () => await _postService.GetPostsByUserId(userId, 1, 10));
+        Assert.ThrowsAsync<PostNotFoundException>(async () => await _postService.GetPostsByUserId(userId, PageRequest.OfSize(10)));
     }
 
     /// <summary>
@@ -155,10 +157,10 @@ public class PostServiceTests
     public void GetPostsForUser_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
-        _mockPostRepository.Setup(x => x.GetPostsByUserId(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockPostRepository.Setup(x => x.GetPostsByUserId(It.IsAny<Guid>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
-        Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetPostsByUserId(userId, 1, 10));
+        Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetPostsByUserId(userId, PageRequest.OfSize(10)));
     }
 
     /// <summary>
@@ -216,14 +218,14 @@ public class PostServiceTests
                 Forum = new ForumDao(Guid.NewGuid(), "Test content")
             }
         };
-        _mockPostRepository.Setup(x => x.GetPostsByForumId(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>()))
-            .ReturnsAsync(posts);
+        _mockPostRepository.Setup(x => x.GetPostsByForumId(It.IsAny<Guid>(), It.IsAny<PageRequest>()))
+            .ReturnsAsync(new PageTestImpl<PostsDao>(posts, 0, 10, 1));
 
-        var result = await _postService.GetPostsFromForum(userId, 1, 10);
+        var result = await _postService.GetPostsByForumId(Guid.NewGuid(), PageRequest.OfSize(10));
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Count, Is.EqualTo(1));
-        Assert.That(result[0], Is.EqualTo("Test content"));
+        Assert.That(result.Content[0].Content, Is.EqualTo("Test content"));
     }
 
     /// <summary>
@@ -233,10 +235,10 @@ public class PostServiceTests
     public void GetPostsFromForum_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
-        _mockPostRepository.Setup(x => x.GetPostsByForumId(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockPostRepository.Setup(x => x.GetPostsByForumId(It.IsAny<Guid>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
-        Assert.ThrowsAsync<PostNotFoundException>(async () => await _postService.GetPostsFromForum(userId, 1, 10));
+        Assert.ThrowsAsync<PostNotFoundException>(async () => await _postService.GetPostsByForumId(userId, PageRequest.OfSize(10)));
     }
 
     /// <summary>
@@ -246,10 +248,10 @@ public class PostServiceTests
     public void GetPostsFromForum_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
-        _mockPostRepository.Setup(x => x.GetPostsByForumId(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockPostRepository.Setup(x => x.GetPostsByForumId(It.IsAny<Guid>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
-        Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetPostsFromForum(userId, 1, 10));
+        Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetPostsByForumId(userId, PageRequest.OfSize(10)));
     }
 
     /// <summary>
@@ -329,13 +331,15 @@ public class PostServiceTests
     public async Task GetAllPosts_ShouldReturnPosts_WhenPostsAreFound()
     {
         var posts = new List<PostsDao> { new() { PostId = Guid.NewGuid(), Content = "Test content" } };
-        _mockPostRepository.Setup(x => x.GetAllElements(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(posts);
+        _mockPostRepository
+            .Setup(x => x.GetAllElements(It.IsAny<PageRequest>()))
+            .ReturnsAsync(new PageTestImpl<PostsDao>(posts, 0, 10, 1));
 
-        var result = await _postService.GetAllPosts(1);
+        var result = await _postService.GetAllPosts(PageRequest.OfSize(10));
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Count, Is.EqualTo(1));
-        Assert.That(result[0].Content, Is.EqualTo("Test content"));
+        Assert.That(result.Content[0].Content, Is.EqualTo("Test content"));
     }
 
     /// <summary>
@@ -344,10 +348,10 @@ public class PostServiceTests
     [Test]
     public void GetAllPosts_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
     {
-        _mockPostRepository.Setup(x => x.GetAllElements(It.IsAny<int>(), It.IsAny<int>()))
+        _mockPostRepository.Setup(x => x.GetAllElements(It.IsAny<PageRequest>()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
-        Assert.ThrowsAsync<PostNotFoundException>(async () => await _postService.GetAllPosts(1));
+        Assert.ThrowsAsync<PostNotFoundException>(async () => await _postService.GetAllPosts(PageRequest.OfSize(10)));
     }
 
     /// <summary>
@@ -356,63 +360,10 @@ public class PostServiceTests
     [Test]
     public void GetAllPosts_ShouldThrowPostGeneralException_WhenGeneralExceptionIsThrown()
     {
-        _mockPostRepository.Setup(x => x.GetAllElements(It.IsAny<int>(), It.IsAny<int>()))
+        _mockPostRepository.Setup(x => x.GetAllElements(It.IsAny<PageRequest>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
-        Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetAllPosts(1));
-    }
-
-    /// <summary>
-    ///     Tests that GetPostsByUserIdByForumId returns posts when posts are found.
-    /// </summary>
-    [Test]
-    public async Task GetPostsByUserIdByForumId_ShouldReturnPosts_WhenPostsAreFound()
-    {
-        var userId = Guid.NewGuid();
-        var forumId = Guid.NewGuid();
-        var posts = new List<PostsDao>
-            { new() { PostId = Guid.NewGuid(), Content = "Test content", UserId = userId, ForumId = forumId } };
-        _mockPostRepository.Setup(x =>
-                x.GetPostsByUserIdByForumId(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>()))
-            .ReturnsAsync(posts);
-
-        var result = await _postService.GetPostsByUserIdByForumId(userId, 1, 10, forumId);
-
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.Count, Is.EqualTo(1));
-        Assert.That(result[0].Content, Is.EqualTo("Test content"));
-    }
-
-    /// <summary>
-    ///     Tests that GetPostsByUserIdByForumId throws PostNotFoundException when DatabaseMissingItemException is thrown.
-    /// </summary>
-    [Test]
-    public void GetPostsByUserIdByForumId_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
-    {
-        var userId = Guid.NewGuid();
-        var forumId = Guid.NewGuid();
-        _mockPostRepository.Setup(x =>
-                x.GetPostsByUserIdByForumId(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>()))
-            .ThrowsAsync(new DatabaseMissingItemException());
-
-        Assert.ThrowsAsync<PostNotFoundException>(async () =>
-            await _postService.GetPostsByUserIdByForumId(userId, 1, 10, forumId));
-    }
-
-    /// <summary>
-    ///     Tests that GetPostsByUserIdByForumId throws PostGeneralException when GeneralDatabaseException is thrown.
-    /// </summary>
-    [Test]
-    public void GetPostsByUserIdByForumId_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
-    {
-        var userId = Guid.NewGuid();
-        var forumId = Guid.NewGuid();
-        _mockPostRepository.Setup(x =>
-                x.GetPostsByUserIdByForumId(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>()))
-            .ThrowsAsync(new GeneralDatabaseException());
-
-        Assert.ThrowsAsync<PostGeneralException>(async () =>
-            await _postService.GetPostsByUserIdByForumId(userId, 1, 10, forumId));
+        Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetAllPosts(PageRequest.OfSize(10)));
     }
 
     /// <summary>
@@ -424,14 +375,15 @@ public class PostServiceTests
         var forumId = Guid.NewGuid();
         var posts = new List<PostsDao>
             { new() { PostId = Guid.NewGuid(), Content = "Test content", ForumId = forumId } };
-        _mockPostRepository.Setup(x => x.GetPostsByForumId(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>()))
-            .ReturnsAsync(posts);
+        _mockPostRepository
+            .Setup(x => x.GetPostsByForumId(It.IsAny<Guid>(), It.IsAny<PageRequest>()))
+            .ReturnsAsync(new PageTestImpl<PostsDao>(posts, 0, 10, 1));
 
-        var result = await _postService.GetPostsByForumId(forumId, 1, 10);
+        var result = await _postService.GetPostsByForumId(forumId, PageRequest.OfSize(10));
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Count, Is.EqualTo(1));
-        Assert.That(result[0].Content, Is.EqualTo("Test content"));
+        Assert.That(result.Content[0].Content, Is.EqualTo("Test content"));
     }
 
     /// <summary>
@@ -441,10 +393,10 @@ public class PostServiceTests
     public void GetPostsByForumId_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
     {
         var forumId = Guid.NewGuid();
-        _mockPostRepository.Setup(x => x.GetPostsByForumId(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockPostRepository.Setup(x => x.GetPostsByForumId(It.IsAny<Guid>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
-        Assert.ThrowsAsync<PostNotFoundException>(async () => await _postService.GetPostsByForumId(forumId, 1, 10));
+        Assert.ThrowsAsync<PostNotFoundException>(async () => await _postService.GetPostsByForumId(forumId, PageRequest.OfSize(10)));
     }
 
     /// <summary>
@@ -454,9 +406,9 @@ public class PostServiceTests
     public void GetPostsByForumId_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
     {
         var forumId = Guid.NewGuid();
-        _mockPostRepository.Setup(x => x.GetPostsByForumId(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockPostRepository.Setup(x => x.GetPostsByForumId(It.IsAny<Guid>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
-        Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetPostsByForumId(forumId, 1, 10));
+        Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetPostsByForumId(forumId, PageRequest.OfSize(10)));
     }
 }

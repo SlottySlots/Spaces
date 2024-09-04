@@ -3,6 +3,8 @@
 @using Microsoft.IdentityModel.Tokens
 @using SlottyMedia.Backend.Dtos
 @using SlottyMedia.Backend.ViewModel.Interfaces
+@using SlottyMedia.Database.Pagination
+@using Supabase.Gotrue
 @inject NavigationManager NavigationManager
 @inject IProfilePageVm ProfilePageVm
 @inject IAuthVm AuthService
@@ -113,7 +115,7 @@ else
 
                 if (_postsOfUser.IsNullOrEmpty())
                 {
-                    _postsOfUser = await ProfilePageVm.GetPostsByUserId(_profileUserId, 0, 10);
+                    _postsOfUser = await ProfilePageVm.GetPostsByUserId(_profileUserId, PageRequest.OfSize(10));
                     StateHasChanged();
                 }
             }

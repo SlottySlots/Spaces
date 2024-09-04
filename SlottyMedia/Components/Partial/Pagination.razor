@@ -1,0 +1,46 @@
+@using SlottyMedia.Database.Pagination
+@typeparam T
+
+
+<div class=@("flex flex-col gap-3 " + Class)>
+    
+    <!-- the (paginated) list -->
+    <div class="w-full flex flex-col gap-3">
+        @ChildContent
+    </div>
+    
+    <!-- the pagination index -->
+    <div class="w-full flex justify-center gap-1">
+        @for (var i = 0; i < Page!.TotalPages; i++)
+        {
+            var pageNumber = i;
+            <button
+                type="button"
+                @onclick="async () => await OnPageFetch.InvokeAsync(pageNumber)"
+                class=@("w-[40px] h-[40px] p-2 rounded-[12px] text-white text-center " + ComputeButtonClass(pageNumber))>
+                @(pageNumber + 1)
+            </button>
+        }
+    </div>
+    
+</div>
+
+
+@code {
+    [Parameter]
+    public IPage<T>? Page { get; set; }
+    
+    [Parameter]
+    public EventCallback<int> OnPageFetch { get; set; }
+    
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+    
+    [Parameter]
+    public string? Class { get; set; }
+
+    string ComputeButtonClass(int pageNumber)
+    {
+        return pageNumber == Page!.PageNumber ? "bg-raisin-black" : "bg-raisin-black-900";
+    }
+}

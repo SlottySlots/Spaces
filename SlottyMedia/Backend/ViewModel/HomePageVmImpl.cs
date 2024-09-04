@@ -1,15 +1,17 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
+using SlottyMedia.Database.Pagination;
+using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
 
 /// <inheritdoc />
 public class HomePageVmImpl : IHomePageVm
 {
+    private static readonly Logging<HomePageVmImpl> Logger = new();
+    
     private readonly IPostService _postService;
-
-    private int _currentPostPage;
 
     /// <summary>Instantiates this class</summary>
     public HomePageVmImpl(IPostService postService)
@@ -21,33 +23,20 @@ public class HomePageVmImpl : IHomePageVm
     public bool IsLoadingPage { get; private set; }
 
     /// <inheritdoc />
-    public bool IsLoadingPosts { get; private set; }
-
-    /// <inheritdoc />
-    public List<PostDto> Posts { get; private set; } = [];
-
-    /// <inheritdoc />
-    public int TotalNumberOfPosts { get; private set; }
+    public IPage<PostDto> Page { get; private set; } = PageImpl<PostDto>.Empty();
 
     /// <inheritdoc />
     public async Task Initialize()
     {
-        IsLoadingPage = true;
-        Posts = [];
-        _currentPostPage = 0;
-        TotalNumberOfPosts = await _postService.CountAllPosts();
-        IsLoadingPage = false;
-        await LoadMorePosts();
+        await LoadPage(0);
     }
 
     /// <inheritdoc />
-    public async Task LoadMorePosts()
+    public async Task LoadPage(int pageNumber)
     {
-        IsLoadingPosts = true;
-        _currentPostPage++;
-        var results = await _postService.GetAllPosts(_currentPostPage);
-        foreach (var post in results)
-            Posts.Add(post);
+        Logger.LogInfo($"Home page: Loading posts on page {pageNumber}");
+        IsLoadingPage = true;
+        Page = await _postService.GetAllPosts(PageRequest.Of(pageNumber, 10));
         IsLoadingPage = false;
     }
 }

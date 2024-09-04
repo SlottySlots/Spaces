@@ -1,153 +1,148 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Moq;
+using NUnit.Framework;
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
+using SlottyMedia.Database.Pagination;
 using Supabase.Gotrue;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace SlottyMedia.Tests.Viewmodel;
-
-/// <summary>
-/// Unit tests for the PostSubmissionFormVmImpl class.
-/// </summary>
-[TestFixture]
-public class PostSubmissionFormVmImplTests
+namespace SlottyMedia.Tests.Viewmodel
 {
-    private Mock<IAuthService> _mockAuthService;
-    private Mock<IForumService> _mockForumService;
-    private Mock<IPostService> _mockPostService;
-    private Mock<NavigationManager> _mockNavigationManager;
-    private PostSubmissionFormVmImpl _postSubmissionFormVmImpl;
-
     /// <summary>
-    /// Sets up the test environment by initializing mocks and the PostSubmissionFormVmImpl instance.
+    /// Unit tests for the PostSubmissionFormVmImpl class.
     /// </summary>
-    [SetUp]
-    public void SetUp()
+    [TestFixture]
+    public class PostSubmissionFormVmImplTests
     {
-        _mockAuthService = new Mock<IAuthService>();
-        _mockForumService = new Mock<IForumService>();
-        _mockPostService = new Mock<IPostService>();
-        _mockNavigationManager = new Mock<NavigationManager>();
-        _postSubmissionFormVmImpl = new PostSubmissionFormVmImpl(
-            _mockAuthService.Object,
-            _mockPostService.Object,
-            _mockForumService.Object,
-            _mockNavigationManager.Object);
-    }
+        private Mock<IAuthService> _mockAuthService;
+        private Mock<IForumService> _mockForumService;
+        private Mock<IPostService> _mockPostService;
+        private Mock<ISearchService> _mockSearchService;
+        private Mock<NavigationManager> _mockNavigationManager;
+        private PostSubmissionFormVmImpl _postSubmissionFormVmImpl;
 
-    /// <summary>
-    /// Tests that HandleSpacePromptChange method updates SpacePrompt and SearchedSpaces properties.
-    /// </summary>
-    [Test]
-    public async Task HandleSpacePromptChange_UpdatesSpacePromptAndSearchedSpaces()
-    {
-        var changeEventArgs = new ChangeEventArgs { Value = "test" };
-        var expectedSpaces = new List<ForumDto> { new ForumDto { Topic = "test space" } };
-        _mockForumService.Setup(s => s.GetForumsByNameContaining("test", 1, 10)).ReturnsAsync(expectedSpaces);
+        /// <summary>
+        /// Sets up the test environment by initializing mocks and the PostSubmissionFormVmImpl instance.
+        /// </summary>
+        [SetUp]
+        public void SetUp()
+        {
+            _mockAuthService = new Mock<IAuthService>();
+            _mockForumService = new Mock<IForumService>();
+            _mockPostService = new Mock<IPostService>();
+            _mockSearchService = new Mock<ISearchService>();
+            _mockNavigationManager = new Mock<NavigationManager>();
+            _postSubmissionFormVmImpl = new PostSubmissionFormVmImpl(
+                _mockAuthService.Object,
+                _mockPostService.Object,
+                _mockForumService.Object,
+                _mockSearchService.Object,
+                _mockNavigationManager.Object);
+        }
 
-        await _postSubmissionFormVmImpl.HandleSpacePromptChange(changeEventArgs, new EventCallback<string?>());
+        /// <summary>
+        /// Tests that HandleSpacePromptChange updates the searched spaces when a valid prompt is provided.
+        /// </summary>
+        [Test]
+        public async Task HandleSpacePromptChange_ValidPrompt_UpdatesSearchedSpaces()
+        {
+            var changeEventArgs = new ChangeEventArgs { Value = "test" };
+            var forums = new List<ForumDto> { new ForumDto { Topic = "test space" } };
+            var searchResults = new PageImpl<ForumDto>(forums, 1, 10, 1, null);
+            _mockSearchService.Setup(s => s.SearchByForumTopicContaining("test", It.IsAny<PageRequest>())).ReturnsAsync(searchResults);
 
-        Assert.That(_postSubmissionFormVmImpl.SpacePrompt, Is.EqualTo("test"));
-        Assert.That(_postSubmissionFormVmImpl.SearchedSpaces, Is.EqualTo(expectedSpaces.Select(s => s.Topic).ToList()));
-    }
+            await _postSubmissionFormVmImpl.HandleSpacePromptChange(changeEventArgs, EventCallback.Factory.Create(this, (Func<string?, Task>)(value => Task.CompletedTask)));
 
-    /// <summary>
-    /// Tests that HandleSpaceSelection method updates SpaceName and clears SpacePrompt.
-    /// </summary>
-    [Test]
-    public void HandleSpaceSelection_UpdatesSpaceNameAndClearsSpacePrompt()
-    {
-        _postSubmissionFormVmImpl.HandleSpaceSelection("selected space");
+            Assert.That(_postSubmissionFormVmImpl.SpacePrompt, Is.EqualTo("test"));
+            Assert.That(_postSubmissionFormVmImpl.SearchedSpaces, Has.Count.EqualTo(1));
+            Assert.That(_postSubmissionFormVmImpl.SearchedSpaces[0], Is.EqualTo("test space"));
+        }
 
-        Assert.That(_postSubmissionFormVmImpl.SpaceName, Is.EqualTo("selected space"));
-        Assert.That(_postSubmissionFormVmImpl.SpacePrompt, Is.Null);
-    }
+        /// <summary>
+        /// Tests that HandleSpaceSelection updates the space name when a valid space name is provided.
+        /// </summary>
+        [Test]
+        public void HandleSpaceSelection_ValidSpaceName_UpdatesSpaceName()
+        {
+            _postSubmissionFormVmImpl.HandleSpaceSelection("test space");
 
-    /// <summary>
-    /// Tests that HandleSpaceDeselection method clears SpaceName.
-    /// </summary>
-    [Test]
-    public void HandleSpaceDeselection_ClearsSpaceName()
-    {
-        _postSubmissionFormVmImpl.SpaceName = "space to deselect";
+            Assert.That(_postSubmissionFormVmImpl.SpaceName, Is.EqualTo("test space"));
+            Assert.That(_postSubmissionFormVmImpl.SpacePrompt, Is.Null);
+        }
 
-        _postSubmissionFormVmImpl.HandleSpaceDeselection();
+        /// <summary>
+        /// Tests that HandleSpaceDeselection clears the space name.
+        /// </summary>
+        [Test]
+        public void HandleSpaceDeselection_ClearsSpaceName()
+        {
+            _postSubmissionFormVmImpl.SpaceName = "test space";
 
-        Assert.That(_postSubmissionFormVmImpl.SpaceName, Is.Null);
-    }
+            _postSubmissionFormVmImpl.HandleSpaceDeselection();
 
-    /// <summary>
-    /// Tests that SubmitForm method displays an error when the user is not authenticated.
-    /// </summary>
-    [Test]
-    public async Task SubmitForm_DisplaysErrorWhenUserNotAuthenticated()
-    {
-        _mockAuthService.Setup(s => s.IsAuthenticated()).Returns(false);
+            Assert.That(_postSubmissionFormVmImpl.SpaceName, Is.Null);
+        }
 
-        await _postSubmissionFormVmImpl.SubmitForm();
+        /// <summary>
+        /// Tests that SubmitForm sets the server error message when the user is unauthenticated.
+        /// </summary>
+        [Test]
+        public async Task SubmitForm_UnauthenticatedUser_SetsServerErrorMessage()
+        {
+            _mockAuthService.Setup(a => a.IsAuthenticated()).Returns(false);
 
-        Assert.That(_postSubmissionFormVmImpl.ServerErrorMessage, Is.EqualTo("You need to log in to submit a post"));
-    }
+            await _postSubmissionFormVmImpl.SubmitForm();
 
-    /// <summary>
-    /// Tests that SubmitForm method displays an error when the text is empty.
-    /// </summary>
-    [Test]
-    public async Task SubmitForm_DisplaysErrorWhenTextIsEmpty()
-    {
-        _mockAuthService.Setup(s => s.IsAuthenticated()).Returns(true);
-        _postSubmissionFormVmImpl.Text = null;
+            Assert.That(_postSubmissionFormVmImpl.ServerErrorMessage, Is.EqualTo("You need to log in to submit a post"));
+        }
 
-        await _postSubmissionFormVmImpl.SubmitForm();
+        /// <summary>
+        /// Tests that SubmitForm sets the text error message when the text is empty.
+        /// </summary>
+        [Test]
+        public async Task SubmitForm_EmptyText_SetsTextErrorMessage()
+        {
+            _postSubmissionFormVmImpl.Text = null;
+            _mockAuthService.Setup(a => a.IsAuthenticated()).Returns(true);
 
-        Assert.That(_postSubmissionFormVmImpl.TextErrorMessage, Is.EqualTo("Must provide some text in order to submit post"));
-    }
+            await _postSubmissionFormVmImpl.SubmitForm();
 
-    /// <summary>
-    /// Tests that SubmitForm method displays an error when the space name is empty.
-    /// </summary>
-    [Test]
-    public async Task SubmitForm_DisplaysErrorWhenSpaceNameIsEmpty()
-    {
-        _mockAuthService.Setup(s => s.IsAuthenticated()).Returns(true);
-        _postSubmissionFormVmImpl.Text = "Some text";
-        _postSubmissionFormVmImpl.SpaceName = null;
+            Assert.That(_postSubmissionFormVmImpl.TextErrorMessage, Is.EqualTo("Must provide some text in order to submit post"));
+        }
 
-        await _postSubmissionFormVmImpl.SubmitForm();
+        /// <summary>
+        /// Tests that SubmitForm sets the space error message when the space name is empty.
+        /// </summary>
+        [Test]
+        public async Task SubmitForm_EmptySpaceName_SetsSpaceErrorMessage()
+        {
+            _postSubmissionFormVmImpl.Text = "test text";
+            _postSubmissionFormVmImpl.SpaceName = null;
+            _mockAuthService.Setup(a => a.IsAuthenticated()).Returns(true);
 
-        Assert.That(_postSubmissionFormVmImpl.SpaceErrorMessage, Is.EqualTo("Must provide a space for the post"));
-    }
+            await _postSubmissionFormVmImpl.SubmitForm();
 
-    /// <summary>
-    /// Tests that SubmitForm method redirects to the index page on success.
-    /// </summary>
-    [Test]
-    public async Task SubmitForm_RedirectsToIndexPageOnSuccess()
-    {
-        _mockAuthService.Setup(s => s.IsAuthenticated()).Returns(true);
-        _mockAuthService.Setup(s => s.GetCurrentSession()).Returns(new Session { User = new User { Id = "user-id" } });
-        _mockForumService.Setup(s => s.GetForumByName(It.IsAny<string>())).ReturnsAsync(new ForumDto { ForumId = Guid.NewGuid() });
-        _postSubmissionFormVmImpl.Text = "Some text";
-        _postSubmissionFormVmImpl.SpaceName = "Some space";
+            Assert.That(_postSubmissionFormVmImpl.SpaceErrorMessage, Is.EqualTo("Must provide a space for the post"));
+        }
 
-        await _postSubmissionFormVmImpl.SubmitForm(); 
-    }
+        /// <summary>
+        /// Tests that SubmitForm displays a server error message when an exception occurs.
+        /// </summary>
+        [Test]
+        public async Task SubmitForm_DisplaysServerErrorWhenExceptionOccurs()
+        {
+            _postSubmissionFormVmImpl.Text = "test text";
+            _postSubmissionFormVmImpl.SpaceName = "test space";
+            _mockAuthService.Setup(a => a.IsAuthenticated()).Returns(true);
+            _mockForumService.Setup(f => f.GetForumByName("test space")).ThrowsAsync(new Exception());
 
-    /// <summary>
-    /// Tests that SubmitForm method displays a server error message on exception.
-    /// </summary>
-    [Test]
-    public async Task SubmitForm_DisplaysServerErrorMessageOnException()
-    {
-        _mockAuthService.Setup(s => s.IsAuthenticated()).Returns(true);
-        _mockAuthService.Setup(s => s.GetCurrentSession()).Returns(new Session { User = new User { Id = "user-id" } });
-        _mockForumService.Setup(s => s.GetForumByName(It.IsAny<string>())).ThrowsAsync(new Exception());
-        _postSubmissionFormVmImpl.Text = "Some text";
-        _postSubmissionFormVmImpl.SpaceName = "Some space";
+            await _postSubmissionFormVmImpl.SubmitForm();
 
-        await _postSubmissionFormVmImpl.SubmitForm();
-
-        Assert.That(_postSubmissionFormVmImpl.ServerErrorMessage, Is.EqualTo("An unknown error occurred. Try again later."));
+            Assert.That(_postSubmissionFormVmImpl.ServerErrorMessage, Is.EqualTo("An unknown error occurred. Try again later."));
+        }
     }
 }

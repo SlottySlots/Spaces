@@ -1,18 +1,19 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
+using SlottyMedia.Database.Pagination;
 using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
 
+
 /// <inheritdoc />
 public class PostPageVmImpl : IPostPageVm
 {
-    private static readonly Logging<PostPageVmImpl> _logger = new();
-    private readonly ICommentService _commentService;
-
+    private static Logging<PostPageVmImpl> _logger = new();
+    
     private readonly IPostService _postService;
-    private int _currentCommentPage;
+    private readonly ICommentService _commentService;
 
     /// <summary>Instantiates this VM</summary>
     public PostPageVmImpl(IPostService postService, ICommentService commentService)
@@ -23,7 +24,7 @@ public class PostPageVmImpl : IPostPageVm
 
     /// <inheritdoc />
     public bool IsLoadingPage { get; private set; }
-
+    
     /// <inheritdoc />
     public bool IsLoadingComments { get; private set; }
 
@@ -31,18 +32,13 @@ public class PostPageVmImpl : IPostPageVm
     public PostDto? Post { get; private set; }
 
     /// <inheritdoc />
-    public List<CommentDto> Comments { get; private set; } = [];
+    public IPage<CommentDto> Comments { get; private set; } = PageImpl<CommentDto>.Empty();
 
     /// <inheritdoc />
-    public int TotalNumberOfComments { get; private set; }
-
-    /// <inheritdoc />
-    public async Task LoadPage(Guid postId)
+    public async Task Initialize(Guid postId)
     {
         _logger.LogInfo($"Loading page for post wih ID {postId}");
         IsLoadingPage = true;
-        _currentCommentPage = 0;
-        Comments = [];
         Post = await _postService.GetPostById(postId);
         if (Post is null)
         {
@@ -50,32 +46,25 @@ public class PostPageVmImpl : IPostPageVm
         }
         else
         {
-            TotalNumberOfComments = await _commentService.CountCommentsInPost(Post.PostId);
-            await LoadMoreComments();
+            await LoadCommentsPage(0);
         }
-
         IsLoadingPage = false;
     }
 
     /// <inheritdoc />
-    public async Task LoadMoreComments()
+    public async Task LoadCommentsPage(int pageNumber)
     {
         if (IsLoadingComments)
             return;
         if (Post is null)
         {
-            _logger.LogWarn("Attempted to load comments for nonexistent post");
+            _logger.LogWarn($"Attempted to load comments for nonexistent post");
             return;
         }
-
-        _logger.LogInfo(
-            $"Loading comments for post with ID {Post?.PostId} (already fetched {5 * _currentCommentPage} comments)");
+        _logger.LogInfo($"Loading comments for post with ID {Post?.PostId}");
         IsLoadingComments = true;
-        _currentCommentPage++;
-        var results = await _commentService.GetCommentsInPost(Post!.PostId, _currentCommentPage, 5);
-        _logger.LogInfo($"Fetched {results.Count} additional comments for post with ID {Post!.PostId}");
-        foreach (var comment in results)
-            Comments.Add(comment);
+        Comments = await _commentService.GetCommentsInPost(Post!.PostId, PageRequest.Of(pageNumber, 5));
+        _logger.LogInfo($"Fetched {Comments.Count()} comments for post with ID {Post!.PostId}");
         IsLoadingComments = false;
     }
 }

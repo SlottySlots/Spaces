@@ -12,12 +12,12 @@ Implements [IDatabaseRepository&lt;UserDao&gt;](./slottymedia.database.repositor
 
 ## Methods
 
-### **GetUsersByUserName(String, Int32, Int32)**
+### **GetUsersByUserName(String, PageRequest)**
 
 Gets users by their username with pagination.
 
 ```csharp
-Task<List<UserDao>> GetUsersByUserName(string userName, int page, int pageSize)
+Task<IPage<UserDao>> GetUsersByUserName(string userName, PageRequest pageRequest)
 ```
 
 #### Parameters
@@ -25,15 +25,12 @@ Task<List<UserDao>> GetUsersByUserName(string userName, int page, int pageSize)
 `userName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The username to search for.
 
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The page number.
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The size of the page.
+`pageRequest` [PageRequest](./slottymedia.database.pagination.pagerequest.md)<br>
+The page request
 
 #### Returns
 
-[Task&lt;List&lt;UserDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;UserDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of users.
 
 #### Exceptions

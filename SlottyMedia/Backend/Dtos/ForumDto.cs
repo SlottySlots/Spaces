@@ -46,7 +46,7 @@ public class ForumDto
     /// <returns></returns>
     public ForumDao Mapper()
     {
-        Logger.LogInfo($"Mapping ForumDto to ForumDao. ForumDto: {this}");
+        Logger.LogTrace($"Mapping ForumDto to ForumDao. ForumDto: {this}");
 
         return new ForumDao
         {
@@ -63,7 +63,7 @@ public class ForumDto
     /// <returns></returns>
     public ForumDto Mapper(ForumDao forumDao)
     {
-        Logger.LogInfo($"Mapping ForumDao to ForumDto. ForumDao: {forumDao}");
+        Logger.LogTrace($"Mapping ForumDao to ForumDto. ForumDao: {forumDao}");
 
         return new ForumDto
         {
@@ -80,7 +80,7 @@ public class ForumDto
     /// <returns></returns>
     public ForumDto Mapper(TopForumDao forumDao)
     {
-        Logger.LogInfo($"Mapping ForumDao to ForumDto. ForumDao: {forumDao}");
+        Logger.LogTrace($"Mapping ForumDao to ForumDto. ForumDao: {forumDao}");
 
         return new ForumDto
         {

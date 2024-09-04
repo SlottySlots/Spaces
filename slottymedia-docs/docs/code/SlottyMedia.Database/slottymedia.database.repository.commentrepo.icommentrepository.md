@@ -30,13 +30,13 @@ The post to query
 [Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 The total number of comments
 
-### **GetCommentsInPost(Guid, Int32, Int32)**
+### **GetCommentsInPost(Guid, PageRequest)**
 
 Fetches all comments in the given post. Utilizes pagination in order to limit
  the total number of queried posts: Only posts on the given page will be fetched.
 
 ```csharp
-Task<List<CommentDao>> GetCommentsInPost(Guid postId, int page, int pageSize)
+Task<IPage<CommentDao>> GetCommentsInPost(Guid postId, PageRequest pageRequest)
 ```
 
 #### Parameters
@@ -44,13 +44,10 @@ Task<List<CommentDao>> GetCommentsInPost(Guid postId, int page, int pageSize)
 `postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 The post whose comments should be fetched
 
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The page to fetch (one-based)
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The size of each page (default is 10)
+`pageRequest` [PageRequest](./slottymedia.database.pagination.pagerequest.md)<br>
+The page request
 
 #### Returns
 
-[Task&lt;List&lt;CommentDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;CommentDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A list containing the queried posts

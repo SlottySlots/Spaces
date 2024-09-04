@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.IdentityModel.Tokens;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
+using SlottyMedia.Database.Pagination;
 using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
@@ -13,25 +14,24 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
 
     private readonly IAuthService _authService;
     private readonly IForumService _forumService;
-    private readonly NavigationManager _navigationManager;
     private readonly IPostService _postService;
+    private readonly ISearchService _searchService;
+    private readonly NavigationManager _navigationManager;
 
     /// <summary>
     ///     Ctor used for dep inject
     /// </summary>
-    /// <param name="authService"></param>
-    /// <param name="postService"></param>
-    /// <param name="forumService"></param>
-    /// <param name="navigationManager"></param>
     public PostSubmissionFormVmImpl(
         IAuthService authService,
         IPostService postService,
         IForumService forumService,
+        ISearchService searchService,
         NavigationManager navigationManager)
     {
         _authService = authService;
         _postService = postService;
         _forumService = forumService;
+        _searchService = searchService;
         _navigationManager = navigationManager;
     }
 
@@ -65,7 +65,8 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
             var newValue = e.Value.ToString();
             SpacePrompt = newValue;
             await promptValueChanged.InvokeAsync(newValue);
-            var searchResults = await _forumService.GetForumsByNameContaining(newValue ?? "", 1);
+            var searchResults = await _searchService
+                .SearchByForumTopicContaining(newValue ?? "", PageRequest.OfSize(10));
             SearchedSpaces = searchResults.Select(space => space.Topic).ToList();
         }
     }

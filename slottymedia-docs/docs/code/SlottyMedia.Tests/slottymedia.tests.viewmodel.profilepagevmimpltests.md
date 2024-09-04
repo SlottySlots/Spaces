@@ -29,106 +29,98 @@ Sets up the test environment before each test.
 public void SetUp()
 ```
 
-### **GetUserInfo_ShouldReturnUserInformationDto_WhenUserExists()**
+### **GetUserInfo_ValidUserId_ReturnsUserInformation()**
 
-Tests that GetUserInfo returns a UserInformationDto when the user exists.
+Verifies that GetUserInfo returns user information for a valid user ID.
 
 ```csharp
-public Task GetUserInfo_ShouldReturnUserInformationDto_WhenUserExists()
+public Task GetUserInfo_ValidUserId_ReturnsUserInformation()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-A task representing the asynchronous operation.
 
-### **GetUserInfo_ShouldReturnNull_WhenUserDoesNotExist()**
+### **GetUserInfo_InvalidUserId_ReturnsNull()**
 
-Tests that GetUserInfo returns null when the user does not exist.
+Verifies that GetUserInfo returns null for an invalid user ID.
 
 ```csharp
-public Task GetUserInfo_ShouldReturnNull_WhenUserDoesNotExist()
+public Task GetUserInfo_InvalidUserId_ReturnsNull()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-A task representing the asynchronous operation.
 
-### **UserFollowRelation_ShouldReturnTrue_WhenUserFollowsAnother()**
+### **UserFollowRelation_DifferentUserIds_ReturnsFollowRelation()**
 
-Tests that UserFollowRelation returns true when a user follows another user.
+Verifies that UserFollowRelation returns true for different user IDs.
 
 ```csharp
-public Task UserFollowRelation_ShouldReturnTrue_WhenUserFollowsAnother()
+public Task UserFollowRelation_DifferentUserIds_ReturnsFollowRelation()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-A task representing the asynchronous operation.
 
-### **UserFollowRelation_ShouldReturnFalse_WhenUserDoesNotFollowAnother()**
+### **UserFollowRelation_SameUserIds_ReturnsNull()**
 
-Tests that UserFollowRelation returns false when a user does not follow another user.
+Verifies that UserFollowRelation returns null for the same user IDs.
 
 ```csharp
-public Task UserFollowRelation_ShouldReturnFalse_WhenUserDoesNotFollowAnother()
+public Task UserFollowRelation_SameUserIds_ReturnsNull()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-A task representing the asynchronous operation.
 
-### **UserFollowRelation_ShouldReturnNull_WhenUserIdsAreSame()**
+### **FollowUserById_ValidUserIds_CallsFollowUserById()**
 
-Tests that UserFollowRelation returns null when the user IDs are the same.
+Verifies that FollowUserById calls the FollowUserById method of the user service with valid user IDs.
 
 ```csharp
-public Task UserFollowRelation_ShouldReturnNull_WhenUserIdsAreSame()
+public Task FollowUserById_ValidUserIds_CallsFollowUserById()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-A task representing the asynchronous operation.
 
-### **FollowUserById_ShouldCallFollowUserByIdOnUserService()**
+### **UnfollowUserById_ValidUserIds_CallsUnfollowUserById()**
 
-Tests that FollowUserById calls FollowUserById on the user service.
+Verifies that UnfollowUserById calls the UnfollowUserById method of the user service with valid user IDs.
 
 ```csharp
-public Task FollowUserById_ShouldCallFollowUserByIdOnUserService()
+public Task UnfollowUserById_ValidUserIds_CallsUnfollowUserById()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-A task representing the asynchronous operation.
 
-### **UnfollowUserById_ShouldCallUnfollowUserByIdOnUserService()**
+### **GetPostsByUserId_ValidUserId_ReturnsPosts()**
 
-Tests that UnfollowUserById calls UnfollowUserById on the user service.
+Verifies that GetPostsByUserId returns posts for a valid user ID.
 
 ```csharp
-public Task UnfollowUserById_ShouldCallUnfollowUserByIdOnUserService()
+public Task GetPostsByUserId_ValidUserId_ReturnsPosts()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-A task representing the asynchronous operation.
 
-### **GetPostsByUserId_ShouldReturnListOfPostDtos()**
+### **GetPostsByUserId_InvalidUserId_ReturnsEmptyList()**
 
-Tests that GetPostsByUserId returns a list of PostDto.
+Verifies that GetPostsByUserId returns an empty list for an invalid user ID.
 
 ```csharp
-public Task GetPostsByUserId_ShouldReturnListOfPostDtos()
+public Task GetPostsByUserId_InvalidUserId_ReturnsEmptyList()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-A task representing the asynchronous operation.

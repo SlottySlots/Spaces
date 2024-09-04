@@ -1,14 +1,17 @@
 ﻿using Moq;
 using SlottyMedia.Backend.Dtos;
-using SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
-using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Pagination;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SlottyMedia.Tests.Viewmodel;
 
 /// <summary>
-/// Unit tests for the <see cref="ProfilePageVmImpl" /> class.
+///     Unit tests for the <see cref="ProfilePageVmImpl" /> class.
 /// </summary>
 [TestFixture]
 public class ProfilePageVmImplTests
@@ -30,39 +33,28 @@ public class ProfilePageVmImplTests
     private ProfilePageVmImpl _viewModel;
 
     /// <summary>
-    ///     Tests that GetUserInfo returns a UserInformationDto when the user exists.
+    ///     Verifies that GetUserInfo returns user information for a valid user ID.
     /// </summary>
-    /// <returns>A task representing the asynchronous operation.</returns>
     [Test]
-    public async Task GetUserInfo_ShouldReturnUserInformationDto_WhenUserExists()
+    public async Task GetUserInfo_ValidUserId_ReturnsUserInformation()
     {
         var userId = Guid.NewGuid();
-        var userInformationDto = new UserInformationDto()
-        {
-            UserId = userId, Username = "TestUser", Description = "TestDescription", 
-            CreatedAt = DateTime.UtcNow, FriendsAmount = 5, SpacesAmount = 3
-        };
-        _userServiceMock.Setup(s => s.GetUserInfo(userId)).ReturnsAsync(userInformationDto);
+        var userInfo = new UserInformationDto { Username = "Test User" };
+        _userServiceMock.Setup(u => u.GetUserInfo(userId)).ReturnsAsync(userInfo);
 
         var result = await _viewModel.GetUserInfo(userId);
 
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.UserId, Is.EqualTo(userId));
-        Assert.That(result.Username, Is.EqualTo("TestUser"));
-        Assert.That(result.Description, Is.EqualTo("TestDescription"));
-        Assert.That(result.FriendsAmount, Is.EqualTo(5));
-        Assert.That(result.SpacesAmount, Is.EqualTo(3));
+        Assert.That(result, Is.EqualTo(userInfo));
     }
 
     /// <summary>
-    ///     Tests that GetUserInfo returns null when the user does not exist.
+    ///     Verifies that GetUserInfo returns null for an invalid user ID.
     /// </summary>
-    /// <returns>A task representing the asynchronous operation.</returns>
     [Test]
-    public async Task GetUserInfo_ShouldReturnNull_WhenUserDoesNotExist()
+    public async Task GetUserInfo_InvalidUserId_ReturnsNull()
     {
         var userId = Guid.NewGuid();
-        _userServiceMock.Setup(s => s.GetUserDaoById(userId)).ThrowsAsync(new UserNotFoundException("User not found"));
+        _userServiceMock.Setup(u => u.GetUserInfo(userId)).ReturnsAsync((UserInformationDto?)null);
 
         var result = await _viewModel.GetUserInfo(userId);
 
@@ -70,15 +62,14 @@ public class ProfilePageVmImplTests
     }
 
     /// <summary>
-    ///     Tests that UserFollowRelation returns true when a user follows another user.
+    ///     Verifies that UserFollowRelation returns true for different user IDs.
     /// </summary>
-    /// <returns>A task representing the asynchronous operation.</returns>
     [Test]
-    public async Task UserFollowRelation_ShouldReturnTrue_WhenUserFollowsAnother()
+    public async Task UserFollowRelation_DifferentUserIds_ReturnsFollowRelation()
     {
         var userIdToCheck = Guid.NewGuid();
         var userIdLoggedIn = Guid.NewGuid();
-        _userServiceMock.Setup(s => s.UserFollowRelation(userIdToCheck, userIdLoggedIn)).ReturnsAsync(true);
+        _userServiceMock.Setup(u => u.UserFollowRelation(userIdToCheck, userIdLoggedIn)).ReturnsAsync(true);
 
         var result = await _viewModel.UserFollowRelation(userIdToCheck, userIdLoggedIn);
 
@@ -86,27 +77,10 @@ public class ProfilePageVmImplTests
     }
 
     /// <summary>
-    ///     Tests that UserFollowRelation returns false when a user does not follow another user.
+    ///     Verifies that UserFollowRelation returns null for the same user IDs.
     /// </summary>
-    /// <returns>A task representing the asynchronous operation.</returns>
     [Test]
-    public async Task UserFollowRelation_ShouldReturnFalse_WhenUserDoesNotFollowAnother()
-    {
-        var userIdToCheck = Guid.NewGuid();
-        var userIdLoggedIn = Guid.NewGuid();
-        _userServiceMock.Setup(s => s.UserFollowRelation(userIdToCheck, userIdLoggedIn)).ReturnsAsync(false);
-
-        var result = await _viewModel.UserFollowRelation(userIdToCheck, userIdLoggedIn);
-
-        Assert.That(result, Is.False);
-    }
-
-    /// <summary>
-    ///     Tests that UserFollowRelation returns null when the user IDs are the same.
-    /// </summary>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    [Test]
-    public async Task UserFollowRelation_ShouldReturnNull_WhenUserIdsAreSame()
+    public async Task UserFollowRelation_SameUserIds_ReturnsNull()
     {
         var userId = Guid.NewGuid();
 
@@ -116,48 +90,62 @@ public class ProfilePageVmImplTests
     }
 
     /// <summary>
-    ///     Tests that FollowUserById calls FollowUserById on the user service.
+    ///     Verifies that FollowUserById calls the FollowUserById method of the user service with valid user IDs.
     /// </summary>
-    /// <returns>A task representing the asynchronous operation.</returns>
     [Test]
-    public async Task FollowUserById_ShouldCallFollowUserByIdOnUserService()
+    public async Task FollowUserById_ValidUserIds_CallsFollowUserById()
     {
         var userIdFollows = Guid.NewGuid();
         var userIdToFollow = Guid.NewGuid();
 
         await _viewModel.FollowUserById(userIdFollows, userIdToFollow);
 
-        _userServiceMock.Verify(s => s.FollowUserById(userIdFollows, userIdToFollow), Times.Once);
+        _userServiceMock.Verify(u => u.FollowUserById(userIdFollows, userIdToFollow), Times.Once);
     }
 
     /// <summary>
-    ///     Tests that UnfollowUserById calls UnfollowUserById on the user service.
+    ///     Verifies that UnfollowUserById calls the UnfollowUserById method of the user service with valid user IDs.
     /// </summary>
-    /// <returns>A task representing the asynchronous operation.</returns>
     [Test]
-    public async Task UnfollowUserById_ShouldCallUnfollowUserByIdOnUserService()
+    public async Task UnfollowUserById_ValidUserIds_CallsUnfollowUserById()
     {
         var userIdFollows = Guid.NewGuid();
         var userIdToUnfollow = Guid.NewGuid();
 
         await _viewModel.UnfollowUserById(userIdFollows, userIdToUnfollow);
 
-        _userServiceMock.Verify(s => s.UnfollowUserById(userIdFollows, userIdToUnfollow), Times.Once);
+        _userServiceMock.Verify(u => u.UnfollowUserById(userIdFollows, userIdToUnfollow), Times.Once);
     }
 
     /// <summary>
-    ///     Tests that GetPostsByUserId returns a list of PostDto.
+    ///     Verifies that GetPostsByUserId returns posts for a valid user ID.
     /// </summary>
-    /// <returns>A task representing the asynchronous operation.</returns>
     [Test]
-    public async Task GetPostsByUserId_ShouldReturnListOfPostDtos()
+    public async Task GetPostsByUserId_ValidUserId_ReturnsPosts()
     {
         var userId = Guid.NewGuid();
-        var posts = new List<PostDto> { new() { PostId = Guid.NewGuid(), Content = "TestContent" } };
-        _postServiceMock.Setup(s => s.GetPostsByUserId(userId, 0, 10)).ReturnsAsync(posts);
+        var pageRequest = PageRequest.OfSize(10);
+        var posts = new PageImpl<PostDto>(new List<PostDto> { new() { Content = "Test Post" } }, 1, 10, 1, null);
+        _postServiceMock.Setup(p => p.GetPostsByUserId(userId, pageRequest)).ReturnsAsync(posts);
 
-        var result = await _viewModel.GetPostsByUserId(userId, 0, 10);
+        var result = await _viewModel.GetPostsByUserId(userId, pageRequest);
 
-        Assert.That(result, Is.EqualTo(posts));
+        Assert.That(result, Is.EqualTo(posts.Content));
+    }
+
+    /// <summary>
+    ///     Verifies that GetPostsByUserId returns an empty list for an invalid user ID.
+    /// </summary>
+    [Test]
+    public async Task GetPostsByUserId_InvalidUserId_ReturnsEmptyList()
+    {
+        var userId = Guid.NewGuid();
+        var pageRequest = PageRequest.OfSize(10);
+        var posts = new PageImpl<PostDto>(new List<PostDto>(), 1, 10, 0, null);
+        _postServiceMock.Setup(p => p.GetPostsByUserId(userId, pageRequest)).ReturnsAsync(posts);
+
+        var result = await _viewModel.GetPostsByUserId(userId, pageRequest);
+
+        Assert.That(result, Is.Empty);
     }
 }

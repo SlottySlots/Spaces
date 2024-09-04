@@ -1,6 +1,8 @@
 ﻿using System.Linq.Expressions;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Helper;
+using SlottyMedia.Database.Pagination;
+using SlottyMedia.LoggingProvider;
 using Supabase.Postgrest;
 using Supabase.Postgrest.Interfaces;
 using Supabase.Postgrest.Models;
@@ -14,15 +16,12 @@ namespace SlottyMedia.Database.Repository;
 /// <typeparam name="T"></typeparam>
 public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : BaseModel, new()
 {
+    private static Logging<DatabaseRepository<T>> _logger = new();
+    
     /// <summary>
     ///     This field is used to access the _daoHelper class.
     /// </summary>
     private readonly DaoHelper _daoHelper;
-
-    /// <summary>
-    ///     This field is used to access the BaseQuerry class. It is basicly Supabase.From<T>().</T>
-    /// </summary>
-    protected readonly IPostgrestTable<T> BaseQuerry;
 
     /// <summary>
     ///     This field is used to access the DatabaseRepositroyHelper class.
@@ -47,7 +46,6 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         Supabase = supabase;
         _daoHelper = daoHelper;
         DatabaseRepositroyHelper = databaseRepositroyHelper;
-        BaseQuerry = Supabase.From<T>();
     }
 
     /// <inheritdoc />
@@ -83,6 +81,12 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     public virtual async Task<List<T>> GetAllElements()
     {
         return await ExecuteQuery(Supabase.From<T>());
+    }
+
+    /// <inheritdoc />
+    public virtual Task<IPage<T>> GetAllElements(PageRequest pageRequest)
+    {
+        return ApplyPagination(() => Supabase.From<T>(), pageRequest);
     }
 
     /// <inheritdoc />
@@ -234,13 +238,28 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     /// <summary>
     ///     This method applies pagination to a query.
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="page"></param>
-    /// <param name="pageSize"></param>
-    protected IPostgrestTable<T> ApplyPagination(IPostgrestTable<T> query, int page, int pageSize)
+    /// <param name="queryBuilder">
+    ///     A function that builds the needed query. This function needs to return a different
+    ///     object on each invocation, otherwise the pagination will break!
+    /// </param>
+    /// <param name="pageRequest">The page request</param>
+    /// <param name="totalElements">The total number of queried elements</param>
+    /// <returns>The <see cref="IPage{T}"/> that corresponds to the given request</returns>
+    protected async Task<IPage<T>> ApplyPagination(Func<IPostgrestTable<T>> queryBuilder, PageRequest pageRequest)
     {
-        var start = (page - 1) * pageSize;
-        var end = start + pageSize;
-        return query.Range(start, end);
+        var start = pageRequest.PageNumber * pageRequest.PageSize;
+        var end = start + pageRequest.PageSize - 1;
+        
+        _logger.LogDebug($"Paginating query: Fetching entries {start}-{end}");
+
+        var totalElements = await queryBuilder().Count(Constants.CountType.Exact);
+        var content = await ExecuteQuery(queryBuilder().Range(start, end));
+        
+        return new PageImpl<T>(
+            content,
+            pageRequest.PageNumber,
+            pageRequest.PageSize,
+            (int) Math.Ceiling((double) totalElements / pageRequest.PageSize),
+            pageNumber => ApplyPagination(queryBuilder, PageRequest.Of(pageNumber, pageRequest.PageSize)));
     }
 }

@@ -2,12 +2,10 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
+using SlottyMedia.Database.Pagination;
 
 namespace SlottyMedia.Tests.Viewmodel;
 
-/// <summary>
-/// Unit tests for the HomePageVmImpl class.
-/// </summary>
 [TestFixture]
 public class HomePageVmImplTests
 {
@@ -15,7 +13,7 @@ public class HomePageVmImplTests
     private HomePageVmImpl _homePageVmImpl;
 
     /// <summary>
-    /// Sets up the test environment by initializing mocks and the HomePageVmImpl instance.
+    /// Sets up the test environment by initializing mocks and the system under test.
     /// </summary>
     [SetUp]
     public void SetUp()
@@ -25,18 +23,67 @@ public class HomePageVmImplTests
     }
 
     /// <summary>
-    /// Tests that Initialize method sets initial values and loads posts.
+    /// Tests that the Initialize method sets initial values and loads the first page.
     /// </summary>
     [Test]
-    public async Task Initialize_SetsInitialValuesAndLoadsPosts()
+    public async Task Initialize_SetsInitialValuesAndLoadsFirstPage()
     {
-        _mockPostService.Setup(s => s.CountAllPosts()).ReturnsAsync(10);
-        _mockPostService.Setup(s => s.GetAllPosts(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(new List<PostDto> { new PostDto() });
+        var page = new PageImpl<PostDto>(
+            new List<PostDto> { new PostDto() },
+            0, // PageNumber
+            10, // PageSize
+            1, // TotalPages
+            pageNumber => Task.FromResult<IPage<PostDto>>(null) // Callback
+        );
+        _mockPostService.Setup(s => s.GetAllPosts(It.IsAny<PageRequest>())).ReturnsAsync(page);
 
         await _homePageVmImpl.Initialize();
 
         Assert.That(_homePageVmImpl.IsLoadingPage, Is.False);
-        Assert.That(_homePageVmImpl.TotalNumberOfPosts, Is.EqualTo(10));
-        Assert.That(_homePageVmImpl.Posts.Count, Is.EqualTo(1));
+        Assert.That(_homePageVmImpl.Page.Content.Count, Is.EqualTo(1));
+    }
+
+    /// <summary>
+    /// Tests that the LoadPage method sets the loading state and loads the specified page.
+    /// </summary>
+    [Test]
+    public async Task LoadPage_SetsLoadingStateAndLoadsSpecifiedPage()
+    {
+        var pageNumber = 1;
+        var page = new PageImpl<PostDto>(
+            new List<PostDto> { new PostDto() },
+            pageNumber, // PageNumber
+            10, // PageSize
+            2, // TotalPages
+            pageNumber => Task.FromResult<IPage<PostDto>>(null) // Callback
+        );
+        _mockPostService.Setup(s => s.GetAllPosts(It.IsAny<PageRequest>())).ReturnsAsync(page);
+
+        await _homePageVmImpl.LoadPage(pageNumber);
+
+        Assert.That(_homePageVmImpl.IsLoadingPage, Is.False);
+        Assert.That(_homePageVmImpl.Page.Content.Count, Is.EqualTo(1));
+    }
+
+    /// <summary>
+    /// Tests that the LoadPage method handles an empty page correctly.
+    /// </summary>
+    [Test]
+    public async Task LoadPage_HandlesEmptyPage()
+    {
+        var pageNumber = 1;
+        var page = new PageImpl<PostDto>(
+            new List<PostDto>(),
+            pageNumber, // PageNumber
+            10, // PageSize
+            2, // TotalPages
+            pageNumber => Task.FromResult<IPage<PostDto>>(null) // Callback
+        );
+        _mockPostService.Setup(s => s.GetAllPosts(It.IsAny<PageRequest>())).ReturnsAsync(page);
+
+        await _homePageVmImpl.LoadPage(pageNumber);
+
+        Assert.That(_homePageVmImpl.IsLoadingPage, Is.False);
+        Assert.That(_homePageVmImpl.Page.Content.Count, Is.EqualTo(0));
     }
 }
