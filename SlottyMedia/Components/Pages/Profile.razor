@@ -71,12 +71,7 @@ else
     private List<PostDto> _postsOfUser = new();
 
 
-    public UserInformationDto UserInformationDto { get; set; } = new()
-    {
-        Username = "Username is loading..",
-        Description = "Description is loading..",
-        ProfilePic = null
-    };
+    public UserInformationDto UserInformationDto { get; set; } = new(true);
 
     protected override async void OnAfterRender(bool firstRender)
     {

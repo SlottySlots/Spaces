@@ -62,7 +62,7 @@ public class PostVmImpl : IPostVm
     {
         try
         {
-            return await _userService.GetUserInfo(userId) ?? new UserInformationDto();
+            return await _userService.GetUserInfo(userId, false, false) ?? new UserInformationDto();
         }
         catch (Exception e)
         {

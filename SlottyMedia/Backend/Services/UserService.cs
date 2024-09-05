@@ -381,13 +381,23 @@ public class UserService : IUserService
     }
 
     /// <inheritdoc />
-    public async Task<UserInformationDto?> GetUserInfo(Guid userId)
+    public async Task<UserInformationDto?> GetUserInfo(Guid userId, bool fetchFriends = true, bool fetchSpaces = true)
     {
         try
         {
             var userDao = await GetUserDaoById(userId);
-            var amountOfFriends = await GetCountOfUserFriends(userId);
-            var amountOfSpaces = await GetCountOfUserSpaces(userId);
+            int amountOfFriends = 0;
+            int amountOfSpaces = 0;
+            if (fetchSpaces)
+            {
+                amountOfSpaces = await GetCountOfUserSpaces(userId);
+            }
+
+            if (fetchFriends)
+            {
+                amountOfFriends = await GetCountOfUserFriends(userId);
+            }
+            
             if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
             {
                 Logger.LogError(

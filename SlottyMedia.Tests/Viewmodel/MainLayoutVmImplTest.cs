@@ -115,7 +115,7 @@ public class MainLayoutVmImplTest
             UserId = Guid.NewGuid(), UserName = "Test", Description = "TestDesc", Email = "test@test.de",
             ProfilePic = "123"
         };
-        _userService.Setup(service => service.GetUserInfo(It.IsAny<Guid>()))
+        _userService.Setup(service => service.GetUserInfo(It.IsAny<Guid>(), It.IsAny<bool>(), It.IsAny<bool>()))
             .ReturnsAsync(new UserInformationDto
             {
                 UserId = userDao.UserId, Username = userDao.UserName, Description = userDao.Description,

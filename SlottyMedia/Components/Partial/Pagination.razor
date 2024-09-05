@@ -27,15 +27,27 @@
 
 
 @code {
+    /// <summary>
+    /// The paginated list to display.
+    /// </summary>
     [Parameter]
     public IPage<T>? Page { get; set; }
     
+    /// <summary>
+    /// The event that is triggered when a page is fetched.
+    /// </summary>
     [Parameter]
     public EventCallback<int> OnPageFetch { get; set; }
     
+    /// <summary>
+    /// The content to display in the paginated list.
+    /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
     
+    /// <summary>
+    /// The additional CSS classes to apply to the outer div.
+    /// </summary>
     [Parameter]
     public string? Class { get; set; }
 

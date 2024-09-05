@@ -104,12 +104,7 @@
     /// <summary>
     /// The user information DTO containing username, description, and profile picture.
     /// </summary>
-    public UserInformationDto UserInformationDto { get; set; } = new()
-    {
-        Username = "Username is loading..",
-        Description = "Description is loading..",
-        ProfilePic = null
-    };
+    public UserInformationDto UserInformationDto { get; set; } = new(true);
 
     /// <summary>
     /// Injected instance of the IPostVm interface.

@@ -312,12 +312,8 @@
     [Inject]
     public IMainLayoutVm? MainLayoutVm { get; set; }
 
-    public UserInformationDto UserInformationDto { get; set; } = new()
-    {
-        Username = "Username is loading..",
-        Description = "Description is loading..",
-        ProfilePic = null
-    };
+    public UserInformationDto UserInformationDto { get; set; } = new(true);
+
 
     private async void PersistAvatarInDb(string base64Encoding)
     {

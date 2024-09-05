@@ -40,7 +40,7 @@ public class ProfilePageVmImplTests
     {
         var userId = Guid.NewGuid();
         var userInfo = new UserInformationDto { Username = "Test User" };
-        _userServiceMock.Setup(u => u.GetUserInfo(userId)).ReturnsAsync(userInfo);
+        _userServiceMock.Setup(u => u.GetUserInfo(userId, true, true)).ReturnsAsync(userInfo);
 
         var result = await _viewModel.GetUserInfo(userId);
 
@@ -54,7 +54,7 @@ public class ProfilePageVmImplTests
     public async Task GetUserInfo_InvalidUserId_ReturnsNull()
     {
         var userId = Guid.NewGuid();
-        _userServiceMock.Setup(u => u.GetUserInfo(userId)).ReturnsAsync((UserInformationDto?)null);
+        _userServiceMock.Setup(u => u.GetUserInfo(userId, true, true)).ReturnsAsync((UserInformationDto?)null);
 
         var result = await _viewModel.GetUserInfo(userId);
 
