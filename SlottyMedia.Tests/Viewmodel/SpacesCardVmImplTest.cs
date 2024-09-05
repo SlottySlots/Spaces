@@ -19,12 +19,10 @@ public class SpacesCardVmImplTests
     public void SetUp()
     {
         _forumServiceMock = new Mock<IForumService>();
-        _postServiceMock = new Mock<IPostService>();
-        _viewModel = new SpacesCardVmImpl(_forumServiceMock.Object, _postServiceMock.Object);
+        _viewModel = new SpacesCardVmImpl(_forumServiceMock.Object);
     }
 
     private Mock<IForumService> _forumServiceMock;
-    private Mock<IPostService> _postServiceMock;
     private SpacesCardVmImpl _viewModel;
 
     /// <summary>

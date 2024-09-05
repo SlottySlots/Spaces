@@ -23,9 +23,7 @@ public class ForumServiceTests
     {
         _mockForumRepository = new Mock<IForumRepository>();
         _mockTopForumRepository = new Mock<ITopForumRepository>();
-        _mockSearchService = new Mock<ISearchService>();
-        _forumService = new ForumService(_mockForumRepository.Object, _mockTopForumRepository.Object,
-            _mockSearchService.Object);
+        _forumService = new ForumService(_mockForumRepository.Object, _mockTopForumRepository.Object);
     }
 
     /// <summary>
@@ -36,12 +34,10 @@ public class ForumServiceTests
     {
         _mockForumRepository.Reset();
         _mockTopForumRepository.Reset();
-        _mockSearchService.Reset();
     }
 
     private Mock<IForumRepository> _mockForumRepository;
     private Mock<ITopForumRepository> _mockTopForumRepository;
-    private Mock<ISearchService> _mockSearchService;
     private ForumService _forumService;
 
     /// <summary>

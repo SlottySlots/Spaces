@@ -98,18 +98,15 @@ The default constructor.
 public TopForumDao()
 ```
 
-### **TopForumDao(Guid, String)**
+### **TopForumDao(String)**
 
 The constructor with parameters.
 
 ```csharp
-public TopForumDao(Guid creatorUserId, string forumTopic)
+public TopForumDao(string forumTopic)
 ```
 
 #### Parameters
-
-`creatorUserId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The Id of the User who created the Forum
 
 `forumTopic` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The Topic of the Forum

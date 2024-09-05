@@ -66,7 +66,7 @@ namespace SlottyMedia.Tests.Viewmodel
         {
             var userId = Guid.NewGuid();
             var expectedUserInfo = new UserInformationDto { UserId = userId };
-            _mockUserService.Setup(s => s.GetUserInfo(userId, true, true)).ReturnsAsync(expectedUserInfo);
+            _mockUserService.Setup(s => s.GetUserInfo(userId, false, false)).ReturnsAsync(expectedUserInfo);
 
             var result = await _postVmImpl.GetUserInformation(userId);
 

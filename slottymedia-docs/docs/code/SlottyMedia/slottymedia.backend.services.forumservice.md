@@ -11,10 +11,10 @@ Implements [IForumService](./slottymedia.backend.services.interfaces.iforumservi
 
 ## Constructors
 
-### **ForumService(IForumRepository, ITopForumRepository, ISearchService)**
+### **ForumService(IForumRepository, ITopForumRepository)**
 
 ```csharp
-public ForumService(IForumRepository forumRepository, ITopForumRepository topForumRepository, ISearchService searchService)
+public ForumService(IForumRepository forumRepository, ITopForumRepository topForumRepository)
 ```
 
 #### Parameters
@@ -22,8 +22,6 @@ public ForumService(IForumRepository forumRepository, ITopForumRepository topFor
 `forumRepository` IForumRepository<br>
 
 `topForumRepository` ITopForumRepository<br>
-
-`searchService` [ISearchService](./slottymedia.backend.services.interfaces.isearchservice.md)<br>
 
 ## Methods
 

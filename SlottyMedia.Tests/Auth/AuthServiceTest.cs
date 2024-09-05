@@ -31,10 +31,6 @@ public class AuthServiceTest
     [SetUp]
     public void Setup()
     {
-        var testUuid = Guid.NewGuid();
-
-        _userName = testUuid.ToString();
-        _email = testUuid + "@unittest.de";
     }
 
     /// <summary>
