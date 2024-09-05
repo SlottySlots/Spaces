@@ -14,9 +14,9 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
 
     private readonly IAuthService _authService;
     private readonly IForumService _forumService;
+    private readonly NavigationManager _navigationManager;
     private readonly IPostService _postService;
     private readonly ISearchService _searchService;
-    private readonly NavigationManager _navigationManager;
 
     /// <summary>
     ///     Ctor used for dep inject

@@ -3,15 +3,25 @@ using SlottyMedia.Database.Pagination;
 
 namespace SlottyMedia.Tests.TestImpl;
 
-
 /// <summary>
-///     This class is a test implementation of <see cref="IPage{T}"/>.
+///     This class is a test implementation of <see cref="IPage{T}" />.
 ///     It allows to set all fields of a page and does not provide
 ///     any actual functionalities. Use for mocking purposes only!
 /// </summary>
 /// <typeparam name="T">The type of the page's content</typeparam>
 public class PageTestImpl<T> : IPage<T>
 {
+    /// <summary>
+    ///     Initializes a new page with the given members.
+    /// </summary>
+    public PageTestImpl(List<T> content, int pageNumber, int pageSize, int totalPages)
+    {
+        PageNumber = pageNumber;
+        PageSize = pageSize;
+        TotalPages = totalPages;
+        Content = content;
+    }
+
     IEnumerator IEnumerable.GetEnumerator()
     {
         return Content.GetEnumerator();
@@ -25,26 +35,15 @@ public class PageTestImpl<T> : IPage<T>
 
     /// <inheritdoc />
     public int PageNumber { get; }
-    
+
     /// <inheritdoc />
     public int PageSize { get; }
-    
+
     /// <inheritdoc />
     public int TotalPages { get; }
-    
+
     /// <inheritdoc />
     public List<T> Content { get; }
-
-    /// <summary>
-    ///     Initializes a new page with the given members.
-    /// </summary>
-    public PageTestImpl(List<T> content, int pageNumber, int pageSize, int totalPages)
-    {
-        PageNumber = pageNumber;
-        PageSize = pageSize;
-        TotalPages = totalPages;
-        Content = content;
-    }
 
     /// <inheritdoc />
     public IPage<TMapped> Map<TMapped>(Func<T, TMapped> function)

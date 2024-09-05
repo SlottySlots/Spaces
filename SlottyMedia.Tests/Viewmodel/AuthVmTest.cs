@@ -6,16 +6,13 @@ using Supabase.Gotrue;
 namespace SlottyMedia.Tests.Viewmodel;
 
 /// <summary>
-/// Unit tests for the AuthVm class.
+///     Unit tests for the AuthVm class.
 /// </summary>
 [TestFixture]
 public class AuthVmTests
 {
-    private Mock<IAuthService> _mockAuthService;
-    private AuthVm _authVm;
-
     /// <summary>
-    /// Sets up the test environment by initializing mocks and the AuthVm instance.
+    ///     Sets up the test environment by initializing mocks and the AuthVm instance.
     /// </summary>
     [SetUp]
     public void SetUp()
@@ -24,8 +21,11 @@ public class AuthVmTests
         _authVm = new AuthVm(_mockAuthService.Object);
     }
 
+    private Mock<IAuthService> _mockAuthService;
+    private AuthVm _authVm;
+
     /// <summary>
-    /// Tests that GetCurrentSession method returns the current session.
+    ///     Tests that GetCurrentSession method returns the current session.
     /// </summary>
     [Test]
     public void GetCurrentSession_ReturnsCurrentSession()
@@ -39,7 +39,7 @@ public class AuthVmTests
     }
 
     /// <summary>
-    /// Tests that GetCurrentUserId method returns the user ID when a session exists.
+    ///     Tests that GetCurrentUserId method returns the user ID when a session exists.
     /// </summary>
     [Test]
     public void GetCurrentUserId_ReturnsUserIdWhenSessionExists()
@@ -53,7 +53,7 @@ public class AuthVmTests
     }
 
     /// <summary>
-    /// Tests that GetCurrentUserId method throws an exception when the session is null.
+    ///     Tests that GetCurrentUserId method throws an exception when the session is null.
     /// </summary>
     [Test]
     public void GetCurrentUserId_ThrowsExceptionWhenSessionIsNull()
@@ -64,7 +64,7 @@ public class AuthVmTests
     }
 
     /// <summary>
-    /// Tests that IsAuthenticated method returns true when the user is authenticated.
+    ///     Tests that IsAuthenticated method returns true when the user is authenticated.
     /// </summary>
     [Test]
     public void IsAuthenticated_ReturnsTrueWhenAuthenticated()
@@ -77,7 +77,7 @@ public class AuthVmTests
     }
 
     /// <summary>
-    /// Tests that IsAuthenticated method returns false when the user is not authenticated.
+    ///     Tests that IsAuthenticated method returns false when the user is not authenticated.
     /// </summary>
     [Test]
     public void IsAuthenticated_ReturnsFalseWhenNotAuthenticated()

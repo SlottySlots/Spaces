@@ -27,6 +27,7 @@ public class UserInformationDto
             Description = string.Empty;
             ProfilePic = null;
         }
+
         UserId = Guid.Empty;
         CreatedAt = DateTime.MinValue;
     }

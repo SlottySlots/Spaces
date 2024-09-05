@@ -9,11 +9,8 @@ namespace SlottyMedia.Tests.Viewmodel;
 [TestFixture]
 public class HomePageVmImplTests
 {
-    private Mock<IPostService> _mockPostService;
-    private HomePageVmImpl _homePageVmImpl;
-
     /// <summary>
-    /// Sets up the test environment by initializing mocks and the system under test.
+    ///     Sets up the test environment by initializing mocks and the system under test.
     /// </summary>
     [SetUp]
     public void SetUp()
@@ -22,14 +19,17 @@ public class HomePageVmImplTests
         _homePageVmImpl = new HomePageVmImpl(_mockPostService.Object);
     }
 
+    private Mock<IPostService> _mockPostService;
+    private HomePageVmImpl _homePageVmImpl;
+
     /// <summary>
-    /// Tests that the Initialize method sets initial values and loads the first page.
+    ///     Tests that the Initialize method sets initial values and loads the first page.
     /// </summary>
     [Test]
     public async Task Initialize_SetsInitialValuesAndLoadsFirstPage()
     {
         var page = new PageImpl<PostDto>(
-            new List<PostDto> { new PostDto() },
+            new List<PostDto> { new() },
             0, // PageNumber
             10, // PageSize
             1, // TotalPages
@@ -44,14 +44,14 @@ public class HomePageVmImplTests
     }
 
     /// <summary>
-    /// Tests that the LoadPage method sets the loading state and loads the specified page.
+    ///     Tests that the LoadPage method sets the loading state and loads the specified page.
     /// </summary>
     [Test]
     public async Task LoadPage_SetsLoadingStateAndLoadsSpecifiedPage()
     {
         var pageNumber = 1;
         var page = new PageImpl<PostDto>(
-            new List<PostDto> { new PostDto() },
+            new List<PostDto> { new() },
             pageNumber, // PageNumber
             10, // PageSize
             2, // TotalPages
@@ -66,7 +66,7 @@ public class HomePageVmImplTests
     }
 
     /// <summary>
-    /// Tests that the LoadPage method handles an empty page correctly.
+    ///     Tests that the LoadPage method handles an empty page correctly.
     /// </summary>
     [Test]
     public async Task LoadPage_HandlesEmptyPage()

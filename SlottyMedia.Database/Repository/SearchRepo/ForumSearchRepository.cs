@@ -28,7 +28,7 @@ public class ForumSearchRepository : DatabaseRepository<ForumDao>, IForumSearchR
     {
         if (topic.IsNullOrEmpty())
             return PageImpl<ForumDao>.Empty();
-        
+
         return await ApplyPagination(
             () => Supabase
                 .From<ForumDao>()

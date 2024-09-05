@@ -34,7 +34,7 @@ public class ProfilePageVmImpl : IProfilePageVm
     /// </returns>
     public async Task<UserInformationDto?> GetUserInfo(Guid userId)
     {
-       return await _userService.GetUserInfo(userId);
+        return await _userService.GetUserInfo(userId);
     }
 
 

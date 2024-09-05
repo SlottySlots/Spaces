@@ -6,7 +6,7 @@ using SlottyMedia.LoggingProvider;
 namespace SlottyMedia.Backend.ViewModel;
 
 /// <summary>
-/// ViewModel for Post
+///     ViewModel for Post
 /// </summary>
 public class PostVmImpl : IPostVm
 {
@@ -16,7 +16,7 @@ public class PostVmImpl : IPostVm
     private readonly IUserService _userService;
 
     /// <summary>
-    /// The constructor for PostVmImpl
+    ///     The constructor for PostVmImpl
     /// </summary>
     /// <param name="userService"></param>
     /// <param name="likeService"></param>

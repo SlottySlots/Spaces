@@ -26,19 +26,11 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
     /// <inheritdoc />
     public async Task<int> GetCountOfUserFriends(Guid userId)
     {
-        try
-        {
-            var query = Supabase
-                .From<FollowerUserRelationDao>()
-                .Filter(friends => friends.FollowedUserId!, Constants.Operator.Equals, userId.ToString());
+        var query = Supabase
+            .From<FollowerUserRelationDao>()
+            .Filter(friends => friends.FollowedUserId!, Constants.Operator.Equals, userId.ToString());
 
-            return await ExecuteCountQuery(query, Constants.CountType.Exact);
-        }
-        catch (Exception ex)
-        {
-            DatabaseRepositroyHelper.HandleException(ex, "FollowerUserRelationRepository.GetCountOfUserFriends");
-            return 0;
-        }
+        return await ExecuteCountQuery(query, Constants.CountType.Exact);
     }
 
     /// <inheritdoc />

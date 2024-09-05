@@ -28,7 +28,7 @@ public class UserSearchRepository : DatabaseRepository<UserDao>, IUserSeachRepos
     {
         if (userName.IsNullOrEmpty())
             return PageImpl<UserDao>.Empty();
-        
+
         return await ApplyPagination(
             () => Supabase
                 .From<UserDao>()

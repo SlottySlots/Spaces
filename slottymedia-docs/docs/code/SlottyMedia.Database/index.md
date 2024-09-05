@@ -30,6 +30,8 @@
 
 [DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)
 
+[DatabasePaginationFailedException](./slottymedia.database.exceptions.databasepaginationfailedexception.md)
+
 [GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)
 
 [TableHasNoPrimaryKeyException](./slottymedia.database.exceptions.tablehasnoprimarykeyexception.md)

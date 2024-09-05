@@ -9,9 +9,9 @@
     <!-- profile picture -->
     @if (!_isLoading)
     {
-    <div @onclick="OnClickAvatar">
-        <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Size="50"></Avatar>
-    </div>
+        <div @onclick="OnClickAvatar">
+            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Size="50"></Avatar>
+        </div>
     }
 
     <!-- the form -->
@@ -66,7 +66,7 @@
     [Inject]
     [SupplyParameterFromForm]
     public ICommentSubmissionFormVm? ViewModel { get; set; }
-    
+
     public UserInformationDto UserInformationDto { get; set; } = new()
     {
         Username = "Username is loading..",
@@ -75,10 +75,10 @@
     };
 
     private bool _isLoading = true;
-    
+
     protected override async void OnAfterRender(bool firstRender)
     {
-        if ((firstRender || UserInformationDto.Username == "Username is loading.."))
+        if (firstRender || UserInformationDto.Username == "Username is loading..")
         {
             var userInfo = await UserService.GetUserInfo(Guid.Parse(AuthService!.GetCurrentSession()!.User!.Id!));
             if (userInfo != null)

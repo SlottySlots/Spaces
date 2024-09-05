@@ -25,14 +25,14 @@ public class AuthVm : IAuthVm
     {
         return _authService.GetCurrentSession();
     }
-    
+
     /// <inheritdoc />
     public Guid GetCurrentUserId()
     {
         var currentSession = GetCurrentSession();
         return Guid.Parse(currentSession?.User!.Id!);
     }
-    
+
     /// <inheritdoc />
     public bool IsAuthenticated()
     {

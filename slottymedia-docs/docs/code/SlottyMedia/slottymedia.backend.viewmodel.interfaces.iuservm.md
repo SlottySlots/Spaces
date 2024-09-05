@@ -62,4 +62,5 @@ The unique identifier of the user.
 #### Returns
 
 [Task&lt;UserInformationDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains the user information data transfer object.
+A task that represents the asynchronous operation. The task result contains the user information data transfer
+ object.

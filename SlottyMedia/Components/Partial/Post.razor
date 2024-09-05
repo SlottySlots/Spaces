@@ -14,7 +14,7 @@
         <!-- username & time posted -->
         <div class="col-span-9 flex flex-col justify-between">
             <h3 class="text-xl font-semibold">
-                @(@UserInformationDto.Username)
+                @(UserInformationDto.Username)
             </h3>
             <h3 class="text-sm font-medium text-cadet-gray">
                 @(Dto!.CreatedAt.ToShortTimeString())
@@ -77,21 +77,21 @@
 @code
 {
     /// <summary>
-    /// The post to be rendered.
+    ///     The post to be rendered.
     /// </summary>
     [Parameter]
     public PostDto? Dto { get; set; }
 
     /// <summary>
-    /// The current logged in user id to propagate towards like component.
+    ///     The current logged in user id to propagate towards like component.
     /// </summary>
     [Parameter]
     public Guid CurrentUserId { get; set; }
 
     /// <summary>
-    /// This event is triggered when the post's comment button is clicked.
-    /// This event will be used to navigate to the post's dedicated page from the home page (i.e. <c>/post/{ID}</c>).
-    /// On the post's dedicated page this event should be left unset.
+    ///     This event is triggered when the post's comment button is clicked.
+    ///     This event will be used to navigate to the post's dedicated page from the home page (i.e. <c>/post/{ID}</c>).
+    ///     On the post's dedicated page this event should be left unset.
     /// </summary>
     [Parameter]
     public EventCallback OnPostClick { get; set; }
@@ -102,23 +102,24 @@
     private bool _initLiked;
 
     /// <summary>
-    /// The user information DTO containing username, description, and profile picture.
+    ///     The user information DTO containing username, description, and profile picture.
     /// </summary>
     public UserInformationDto UserInformationDto { get; set; } = new(true);
 
     /// <summary>
-    /// Injected instance of the IPostVm interface.
+    ///     Injected instance of the IPostVm interface.
     /// </summary>
-    [Inject] public IPostVm? PostVm { get; set; }
+    [Inject]
+    public IPostVm? PostVm { get; set; }
 
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()
     {
-        if( PostVm is null)
+        if (PostVm is null)
         {
             return;
         }
-        
+
         _isLoading = true;
         //TODO: This should be changed soon!
         await SetLikeCountState();
@@ -128,16 +129,16 @@
             _commentCount = await PostVm.GetCommentsCount(Dto.PostId);
             _isLoading = false;
         }
-
     }
 
     /// <inheritdoc />
     protected override async void OnAfterRender(bool firstRender)
     {
-        if( PostVm is null)
+        if (PostVm is null)
         {
             return;
         }
+
         if ((firstRender || UserInformationDto.Username == "Username is loading..") && Dto != null)
         {
             var userInfo = await PostVm.GetUserInformation(Dto!.UserId);
@@ -148,7 +149,7 @@
     }
 
     /// <summary>
-    /// Handles the click event on the avatar, navigating to the user's profile page.
+    ///     Handles the click event on the avatar, navigating to the user's profile page.
     /// </summary>
     private void OnClickAvatar()
     {
@@ -156,7 +157,7 @@
     }
 
     /// <summary>
-    /// Sets the like count state by retrieving the list of likes for the post.
+    ///     Sets the like count state by retrieving the list of likes for the post.
     /// </summary>
     public async Task SetLikeCountState()
     {
@@ -176,11 +177,10 @@
             _likeCount = 0;
             _initLiked = false;
         }
-
     }
 
     /// <summary>
-    /// Handles the click event on the like button, adding or removing a like based on the current state.
+    ///     Handles the click event on the like button, adding or removing a like based on the current state.
     /// </summary>
     /// <param name="wasUnliked">Indicates whether the post was unliked.</param>
     public async void LikeClick(bool wasUnliked)
@@ -189,7 +189,7 @@
         {
             return;
         }
-        
+
         if (wasUnliked)
         {
             await PostVm.RemoveLike(CurrentUserId, Dto!.PostId);

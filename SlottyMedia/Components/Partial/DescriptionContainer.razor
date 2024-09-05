@@ -1,5 +1,4 @@
 @using SlottyMedia.Backend.ViewModel.Interfaces
-
 @if (_showDescriptionText)
 {
     <h3 class="text-sm font-medium text-center text-cadet-gray w-fit" @onclick="SubmitDescriptionText">
@@ -23,29 +22,33 @@ else
 }
 
 @code {
-    /// <summary>
-    /// The description text to be displayed or edited.
-    /// </summary>
-    [Parameter] public string? DescriptionText { get; set; }
 
     /// <summary>
-    /// Service for user-related operations.
+    ///     The description text to be displayed or edited.
     /// </summary>
-    [Inject] public IUserVm? UserVm { get; private set; }
+    [Parameter]
+    public string? DescriptionText { get; set; }
 
     /// <summary>
-    /// Service for authentication-related operations.
+    ///     Service for user-related operations.
     /// </summary>
-    [Inject] public IAuthVm? AuthVm { get; set; }
+    [Inject]
+    public IUserVm? UserVm { get; private set; }
 
     /// <summary>
-    /// Flag to determine whether to show the description text or the input field.
+    ///     Service for authentication-related operations.
+    /// </summary>
+    [Inject]
+    public IAuthVm? AuthVm { get; set; }
+
+    /// <summary>
+    ///     Flag to determine whether to show the description text or the input field.
     /// </summary>
     private bool _showDescriptionText = true;
 
     /// <summary>
-    /// Submits the description text. If the user is authenticated and the description text is valid,
-    /// it updates the user's description.
+    ///     Submits the description text. If the user is authenticated and the description text is valid,
+    ///     it updates the user's description.
     /// </summary>
     private async void SubmitDescriptionText()
     {
@@ -72,10 +75,11 @@ else
     }
 
     /// <summary>
-    /// Handles the enter key click event to submit the description text.
+    ///     Handles the enter key click event to submit the description text.
     /// </summary>
     private void HandleEnterClick()
     {
         SubmitDescriptionText();
     }
+
 }

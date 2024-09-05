@@ -4,15 +4,14 @@ using SlottyMedia.Database.Pagination;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 
-
 /// <summary>
-///     This ViewModel represents the state of the <see cref="Home"/> page.
+///     This ViewModel represents the state of the <see cref="Home" /> page.
 /// </summary>
 public interface IHomePageVm
 {
     /// <summary>Indicates whether the page is loading (for the first time)</summary>
     bool IsLoadingPage { get; }
-    
+
     /// <summary>The posts that will be showcased</summary>
     IPage<PostDto> Page { get; }
 

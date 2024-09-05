@@ -2,7 +2,6 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.ForumExceptions;
 using SlottyMedia.Backend.Services;
-using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Repository.ForumRepo;

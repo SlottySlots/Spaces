@@ -11,8 +11,8 @@
         <div @onclick="OnClickAvatar">
             <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Size="50"></Avatar>
         </div>
-        
-        
+
+
         <!-- username & time posted -->
         <div class="flex flex-col justify-between">
             <h3 class="text-xl font-semibold">
@@ -32,17 +32,19 @@
 }
 
 @code {
+
     /// <summary>
-    /// The comment data transfer object to be rendered.
+    ///     The comment data transfer object to be rendered.
     /// </summary>
-    [Parameter] public CommentDto? Dto { get; set; }
+    [Parameter]
+    public CommentDto? Dto { get; set; }
 
     private bool _isLoading = true;
     private UserDto? _owner;
 
     /// <summary>
-    /// Called when the component's parameters are set.
-    /// Retrieves the user information for the comment's creator.
+    ///     Called when the component's parameters are set.
+    ///     Retrieves the user information for the comment's creator.
     /// </summary>
     protected override async Task OnParametersSetAsync()
     {
@@ -52,12 +54,12 @@
     }
 
     /// <summary>
-    /// The user information data transfer object to be rendered.
+    ///     The user information data transfer object to be rendered.
     /// </summary>
     public UserInformationDto UserInformationDto { get; set; } = new(true);
 
     /// <summary>
-    /// This method is called after the component has been rendered.
+    ///     This method is called after the component has been rendered.
     /// </summary>
     /// <param name="firstRender"></param>
     protected override async void OnAfterRender(bool firstRender)
@@ -73,7 +75,7 @@
             }
         }
     }
-    
+
     private void OnClickAvatar()
     {
         NavigationManager.NavigateTo($"/profile?id={UserInformationDto.UserId.ToString()}");

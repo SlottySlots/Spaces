@@ -49,7 +49,7 @@ public class UserVm : IUserVm
             Logger.LogError($"Error while updating user. Error: {e.Message}");
         }
     }
-    
+
     /// <inheritdoc />
     public async Task<UserInformationDto?> GetUserInformation(Guid userId)
     {

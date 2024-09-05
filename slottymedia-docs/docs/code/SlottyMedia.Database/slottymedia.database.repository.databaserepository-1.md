@@ -282,3 +282,8 @@ The page request
 
 Task&lt;IPage&lt;T&gt;&gt;<br>
 The [IPage&lt;T&gt;](./slottymedia.database.pagination.ipage-1.md) that corresponds to the given request
+
+#### Exceptions
+
+[DatabasePaginationFailedException](./slottymedia.database.exceptions.databasepaginationfailedexception.md)<br>
+This exception will be thrown, when an error occurs during the Process of Applying the Pagination

@@ -29,7 +29,7 @@ public class CommentRepository : DatabaseRepository<CommentDao>, ICommentReposit
             .From<CommentDao>()
             .Filter(comment => comment.PostId!, Constants.Operator.Equals, postId.ToString());
 
-            return await ExecuteCountQuery(query, Constants.CountType.Exact);
+        return await ExecuteCountQuery(query, Constants.CountType.Exact);
     }
 
     /// <inheritdoc />

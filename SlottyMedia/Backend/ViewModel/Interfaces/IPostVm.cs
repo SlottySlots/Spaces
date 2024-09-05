@@ -3,7 +3,7 @@
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 
 /// <summary>
-/// The interface for post view model implementation.
+///     The interface for post view model implementation.
 /// </summary>
 public interface IPostVm
 {

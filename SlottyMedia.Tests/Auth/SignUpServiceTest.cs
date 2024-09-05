@@ -98,7 +98,7 @@ public class SignUpServiceTest
         roleDao.RoleId = Guid.NewGuid();
         roleDao.RoleName = "user";
         roleDao.Description = "user";
-        
+
         _userServiceMock.Setup(userService => userService.CreateUser(It.IsAny<string>(), It.IsAny<string>(),
             It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>()));
         _userServiceMock.Setup(x => x.CheckIfUserExistsByUserName(It.IsAny<string>())).ReturnsAsync(false);

@@ -386,18 +386,12 @@ public class UserService : IUserService
         try
         {
             var userDao = await GetUserDaoById(userId);
-            int amountOfFriends = 0;
-            int amountOfSpaces = 0;
-            if (fetchSpaces)
-            {
-                amountOfSpaces = await GetCountOfUserSpaces(userId);
-            }
+            var amountOfFriends = 0;
+            var amountOfSpaces = 0;
+            if (fetchSpaces) amountOfSpaces = await GetCountOfUserSpaces(userId);
 
-            if (fetchFriends)
-            {
-                amountOfFriends = await GetCountOfUserFriends(userId);
-            }
-            
+            if (fetchFriends) amountOfFriends = await GetCountOfUserFriends(userId);
+
             if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
             {
                 Logger.LogError(

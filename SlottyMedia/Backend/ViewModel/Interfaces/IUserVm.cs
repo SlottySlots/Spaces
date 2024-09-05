@@ -25,7 +25,9 @@ public interface IUserVm
     ///     Asynchronously retrieves user information by their unique identifier.
     /// </summary>
     /// <param name="userId">The unique identifier of the user.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the user information data transfer object.</returns>
+    /// <returns>
+    ///     A task that represents the asynchronous operation. The task result contains the user information data transfer
+    ///     object.
+    /// </returns>
     public Task<UserInformationDto?> GetUserInformation(Guid userId);
-
 }

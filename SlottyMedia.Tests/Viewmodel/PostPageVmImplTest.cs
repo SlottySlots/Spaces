@@ -7,17 +7,13 @@ using SlottyMedia.Database.Pagination;
 namespace SlottyMedia.Tests.Viewmodel;
 
 /// <summary>
-/// Unit tests for the PostPageVmImpl class.
+///     Unit tests for the PostPageVmImpl class.
 /// </summary>
 [TestFixture]
 public class PostPageVmImplTests
 {
-    private Mock<IPostService> _mockPostService;
-    private Mock<ICommentService> _mockCommentService;
-    private PostPageVmImpl _postPageVmImpl;
-
     /// <summary>
-    /// Sets up the test environment by initializing mocks and the PostPageVmImpl instance.
+    ///     Sets up the test environment by initializing mocks and the PostPageVmImpl instance.
     /// </summary>
     [SetUp]
     public void SetUp()
@@ -27,8 +23,12 @@ public class PostPageVmImplTests
         _postPageVmImpl = new PostPageVmImpl(_mockPostService.Object, _mockCommentService.Object);
     }
 
+    private Mock<IPostService> _mockPostService;
+    private Mock<ICommentService> _mockCommentService;
+    private PostPageVmImpl _postPageVmImpl;
+
     /// <summary>
-    /// Tests that Initialize method sets the Post and loads the first page of comments.
+    ///     Tests that Initialize method sets the Post and loads the first page of comments.
     /// </summary>
     [Test]
     public async Task Initialize_SetsPostAndLoadsFirstCommentsPage()
@@ -36,7 +36,7 @@ public class PostPageVmImplTests
         var postId = Guid.NewGuid();
         var post = new PostDto { PostId = postId };
         var comments = new PageImpl<CommentDto>(
-            new List<CommentDto> { new CommentDto() },
+            new List<CommentDto> { new() },
             0, // PageNumber
             5, // PageSize
             1, // TotalPages
@@ -53,7 +53,7 @@ public class PostPageVmImplTests
     }
 
     /// <summary>
-    /// Tests that Initialize method sets the Post property to null when the post is not found.
+    ///     Tests that Initialize method sets the Post property to null when the post is not found.
     /// </summary>
     [Test]
     public async Task Initialize_SetsPostToNullWhenPostNotFound()
@@ -68,7 +68,7 @@ public class PostPageVmImplTests
     }
 
     /// <summary>
-    /// Tests that LoadCommentsPage method adds comments to the Comments list.
+    ///     Tests that LoadCommentsPage method adds comments to the Comments list.
     /// </summary>
     [Test]
     public async Task LoadCommentsPage_AddsCommentsToList()
@@ -76,7 +76,7 @@ public class PostPageVmImplTests
         var postId = Guid.NewGuid();
         var post = new PostDto { PostId = postId };
         var comments = new PageImpl<CommentDto>(
-            new List<CommentDto> { new CommentDto() },
+            new List<CommentDto> { new() },
             0, // PageNumber
             5, // PageSize
             1, // TotalPages
@@ -87,7 +87,7 @@ public class PostPageVmImplTests
         await _postPageVmImpl.Initialize(postId);
 
         var moreComments = new PageImpl<CommentDto>(
-            new List<CommentDto> { new CommentDto() },
+            new List<CommentDto> { new() },
             1, // PageNumber
             5, // PageSize
             1, // TotalPages
@@ -101,7 +101,7 @@ public class PostPageVmImplTests
     }
 
     /// <summary>
-    /// Tests that LoadCommentsPage method does not load comments when the Post property is null.
+    ///     Tests that LoadCommentsPage method does not load comments when the Post property is null.
     /// </summary>
     [Test]
     public async Task LoadCommentsPage_DoesNotLoadWhenPostIsNull()

@@ -2,23 +2,10 @@ using System.Collections;
 
 namespace SlottyMedia.Database.Pagination;
 
-
 /// <inheritdoc />
 public class PageImpl<T> : IPage<T>
 {
     private readonly Func<int, Task<IPage<T>>> _callback;
-    
-    /// <inheritdoc />
-    public List<T> Content { get; }
-    
-    /// <inheritdoc />
-    public int PageNumber { get; }
-    
-    /// <inheritdoc />
-    public int PageSize { get; }
-    
-    /// <inheritdoc />
-    public int TotalPages { get; }
 
     /// <summary>
     ///     Creates a page.
@@ -48,15 +35,17 @@ public class PageImpl<T> : IPage<T>
         _callback = _ => throw new InvalidOperationException("Cannot invoke fetch on the empty page!");
     }
 
-    /// <summary>
-    ///     Builds an empty page with no content. Throws an <see cref="InvalidOperationException"/> when
-    ///     attempting to fetch another page.
-    /// </summary>
-    /// <returns>The empty page</returns>
-    public static IPage<T> Empty()
-    {
-        return new PageImpl<T>([], 0, 0, 0);
-    }
+    /// <inheritdoc />
+    public List<T> Content { get; }
+
+    /// <inheritdoc />
+    public int PageNumber { get; }
+
+    /// <inheritdoc />
+    public int PageSize { get; }
+
+    /// <inheritdoc />
+    public int TotalPages { get; }
 
     /// <inheritdoc />
     public IPage<TMapped> Map<TMapped>(Func<T, TMapped> function)
@@ -85,5 +74,15 @@ public class PageImpl<T> : IPage<T>
     public IEnumerator<T> GetEnumerator()
     {
         return Content.GetEnumerator();
+    }
+
+    /// <summary>
+    ///     Builds an empty page with no content. Throws an <see cref="InvalidOperationException" /> when
+    ///     attempting to fetch another page.
+    /// </summary>
+    /// <returns>The empty page</returns>
+    public static IPage<T> Empty()
+    {
+        return new PageImpl<T>([], 0, 0, 0);
     }
 }
