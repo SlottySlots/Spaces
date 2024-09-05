@@ -9,7 +9,6 @@ using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.Services;
 
-
 /// <inheritdoc />
 public class ForumService : IForumService
 {

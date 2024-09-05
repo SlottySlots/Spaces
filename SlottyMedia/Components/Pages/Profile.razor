@@ -1,5 +1,4 @@
 @page "/profile/{UserId:guid}"
-
 @using SlottyMedia.Backend.ViewModel.Interfaces
 
 @inject IProfilePageVm ProfilePageVm
@@ -60,8 +59,7 @@ else
 
 
 @code{
-    [Parameter]
-    public Guid UserId { get; set; }
+    [Parameter] public Guid UserId { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -81,4 +79,5 @@ else
             await ProfilePageVm.FollowThisUser();
         NavigationManager.Refresh(true);
     }
+
 }

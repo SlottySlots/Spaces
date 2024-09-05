@@ -2,7 +2,7 @@
 
 
 <div @onclick="OpenFileDialog" class=@("relative w-[80px] h-[80px] cursor-pointer " + Class)>
-    
+
     <!-- the white mask on hover -->
     <div class="absolute top-0 left-0 w-full h-full bg-white opacity-0 hover:opacity-50 duration-300 z-10">
         @ChildContent
@@ -10,7 +10,7 @@
 
     <!-- the image -->
     <img class="h-full w-full rounded-full" src="@Base64Png" alt="Profile Picture">
-    
+
 </div>
 
 <!-- the (hidden) image upload -->
@@ -24,7 +24,7 @@
     /// </summary>
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
-    
+
     /// <summary>Additional CSS classes to add to the avatar's container</summary>
     [Parameter]
     public string? Class { get; set; }
@@ -73,4 +73,5 @@
             await Base64Callback.InvokeAsync(base64String);
         }
     }
+
 }

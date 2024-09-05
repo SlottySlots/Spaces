@@ -11,10 +11,10 @@ namespace SlottyMedia.Backend.ViewModel;
 /// </summary>
 public class ProfilePageVmImpl : IProfilePageVm
 {
+    private readonly IAuthService _authService;
     private readonly Logging<MainLayoutVmImpl> _logger = new();
     private readonly IPostService _postService;
     private readonly IUserService _userService;
-    private readonly IAuthService _authService;
 
     /// <summary>
     ///     Ctor for dep inject
@@ -28,22 +28,22 @@ public class ProfilePageVmImpl : IProfilePageVm
 
     /// <inheritdoc />
     public bool IsLoadingPage { get; private set; }
-    
+
     /// <inheritdoc />
     public bool IsLoadingPosts { get; private set; }
 
     /// <inheritdoc />
     public bool IsUserFollowed { get; private set; }
-    
+
     /// <inheritdoc />
     public Guid? AuthPrincipalId { get; private set; }
-    
+
     /// <inheritdoc />
     public UserInformationDto? UserInfo { get; private set; }
 
     /// <inheritdoc />
     public IPage<PostDto> Posts { get; private set; } = PageImpl<PostDto>.Empty();
-    
+
     /// <inheritdoc />
     public async Task Initialize(Guid userId)
     {
@@ -93,7 +93,7 @@ public class ProfilePageVmImpl : IProfilePageVm
             _logger.LogInfo($"Successfully un-followed user '{UserInfo!.Username}'");
         }
     }
-    
+
     private async Task _loadUserInfo(Guid userId)
     {
         _logger.LogDebug($"Profile Page: Fetching user information for user with ID '{userId}'");
@@ -120,6 +120,7 @@ public class ProfilePageVmImpl : IProfilePageVm
             IsUserFollowed = false;
             return;
         }
+
         IsUserFollowed = await _userService.UserFollowRelation(UserInfo!.UserId!.Value, AuthPrincipalId!.Value);
     }
 }

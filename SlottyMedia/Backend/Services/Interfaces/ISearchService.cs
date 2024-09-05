@@ -1,6 +1,5 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.SearchExceptions;
-using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Pagination;
 
 namespace SlottyMedia.Backend.Services.Interfaces;

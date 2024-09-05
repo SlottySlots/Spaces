@@ -81,7 +81,7 @@ public class PostRepository : DatabaseRepository<PostsDao>, IPostRepository
     public async Task<IPage<PostsDao>> GetPostsByUserIdByForumId(Guid userId, Guid forumId, PageRequest pageRequest)
     {
         return await ApplyPagination(
-            () =>BaseSelectQuery()
+            () => BaseSelectQuery()
                 .Filter(post => post.UserId!, Constants.Operator.Equals, userId.ToString())
                 .Filter(post => post.ForumId!, Constants.Operator.Equals, forumId.ToString()),
             pageRequest);

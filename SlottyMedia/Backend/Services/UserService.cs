@@ -386,30 +386,28 @@ public class UserService : IUserService
     {
         try
         {
- var userDao = await GetUserDaoById(userId);
-        var amountOfFriends = await GetCountOfUserFriends(userId);
-        var amountOfSpaces = await GetCountOfUserSpaces(userId);
-        if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
-        {
-            Logger.LogError(
-                $"User with id {userId.ToString()} retrieved corrupt User entry from database!");
-        }
-        else
-        {
-            var userInformationDto = new UserInformationDto
+            var userDao = await GetUserDaoById(userId);
+            var amountOfFriends = await GetCountOfUserFriends(userId);
+            var amountOfSpaces = await GetCountOfUserSpaces(userId);
+            if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
             {
-                UserId = userDao.UserId!,
-                Username = userDao.UserName!,
-                Description = userDao.Description!,
-                ProfilePic = userDao.ProfilePic,
-                FriendsAmount = amountOfFriends,
-                SpacesAmount = amountOfSpaces,
-                CreatedAt = userDao.CreatedAt.LocalDateTime!
-            };
-            return userInformationDto;
-        }
-
-        
+                Logger.LogError(
+                    $"User with id {userId.ToString()} retrieved corrupt User entry from database!");
+            }
+            else
+            {
+                var userInformationDto = new UserInformationDto
+                {
+                    UserId = userDao.UserId!,
+                    Username = userDao.UserName!,
+                    Description = userDao.Description!,
+                    ProfilePic = userDao.ProfilePic,
+                    FriendsAmount = amountOfFriends,
+                    SpacesAmount = amountOfSpaces,
+                    CreatedAt = userDao.CreatedAt.LocalDateTime!
+                };
+                return userInformationDto;
+            }
         }
         catch (UserNotFoundException ex)
         {

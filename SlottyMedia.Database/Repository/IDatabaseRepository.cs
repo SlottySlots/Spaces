@@ -27,7 +27,7 @@ public interface IDatabaseRepository<T> where T : BaseModel, new()
     /// <returns>A task that represents the asynchronous operation. The task result contains a collection of all entities.</returns>
     /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public Task<List<T>> GetAllElements();
-    
+
     /// <summary>
     ///     Retrieves all elements from the table. Fetches only a specified number of elements
     ///     at the specified page.

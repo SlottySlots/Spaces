@@ -5,7 +5,7 @@ using SlottyMedia.Database.Pagination;
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 
 /// <summary>
-///     This ViewModel represents the <see cref="Profile"/> page.
+///     This ViewModel represents the <see cref="Profile" /> page.
 /// </summary>
 public interface IProfilePageVm
 {
@@ -13,27 +13,27 @@ public interface IProfilePageVm
     ///     Whether the whole page is being loaded
     /// </summary>
     public bool IsLoadingPage { get; }
-    
+
     /// <summary>
     ///     Whether the posts on the page are being loaded
     /// </summary>
     public bool IsLoadingPosts { get; }
-    
+
     /// <summary>
     ///     Whether the authentication principal is following the user whose profile is being visited
     /// </summary>
     public bool IsUserFollowed { get; }
-    
+
     /// <summary>
     ///     The authentication principal's user ID (i.e. the user that's logged in)
     /// </summary>
     public Guid? AuthPrincipalId { get; }
-    
+
     /// <summary>
     ///     Information about the user whose profile is being visited
     /// </summary>
     public UserInformationDto? UserInfo { get; }
-    
+
     /// <summary>
     ///     The posts that are currently being rendered
     /// </summary>
@@ -41,7 +41,7 @@ public interface IProfilePageVm
 
     /// <summary>
     ///     Initialized the page's state. This fetches all user-related information and loads
-    ///     the first posts for the visited user. Also initializes the <see cref="AuthPrincipalId"/>
+    ///     the first posts for the visited user. Also initializes the <see cref="AuthPrincipalId" />
     ///     if one is present.
     /// </summary>
     /// <param name="userId">The ID of the user whose profile should be visited</param>
@@ -60,7 +60,7 @@ public interface IProfilePageVm
     public Task UnfollowThisUser();
 
     /// <summary>
-    ///     Loads more <see cref="Posts"/> for the visited profile by changing the current
+    ///     Loads more <see cref="Posts" /> for the visited profile by changing the current
     ///     page (as in pagination).
     /// </summary>
     /// <param name="pageNumber">The page number</param>

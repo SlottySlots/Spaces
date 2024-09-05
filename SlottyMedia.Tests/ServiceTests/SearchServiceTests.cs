@@ -178,7 +178,7 @@ public class SearchServiceTests
     public async Task SearchByUsernameContaining_ShouldReturnEmptyList_WhenSearchTermIsEmpty()
     {
         var searchTerm = string.Empty;
-        
+
         _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<PageRequest>()))
             .ReturnsAsync(new PageTestImpl<UserDao>([], 0, 10, 1));
 
@@ -196,7 +196,7 @@ public class SearchServiceTests
     public async Task SearchByTopicContaining_ShouldReturnEmptyList_WhenSearchTermIsEmpty()
     {
         var searchTerm = string.Empty;
-        
+
         _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<PageRequest>()))
             .ReturnsAsync(new PageTestImpl<ForumDao>([], 0, 10, 1));
 

@@ -144,7 +144,8 @@ public class PostService : IPostService
     {
         try
         {
-            Logger.LogInfo($"Fetching all posts on page {pageRequest.PageNumber} with page size {pageRequest.PageSize}");
+            Logger.LogInfo(
+                $"Fetching all posts on page {pageRequest.PageNumber} with page size {pageRequest.PageSize}");
             var posts = await _postRepository.GetAllElements(pageRequest);
             Logger.LogInfo($"Fetched page {posts.PageNumber}, which contains {posts.Count()} posts");
             return posts.Map(dao => new PostDto().Mapper(dao));

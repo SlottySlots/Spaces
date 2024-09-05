@@ -16,8 +16,8 @@ namespace SlottyMedia.Database.Repository;
 /// <typeparam name="T"></typeparam>
 public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : BaseModel, new()
 {
-    private static Logging<DatabaseRepository<T>> _logger = new();
-    
+    private static readonly Logging<DatabaseRepository<T>> _logger = new();
+
     /// <summary>
     ///     This field is used to access the _daoHelper class.
     /// </summary>
@@ -244,22 +244,22 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     /// </param>
     /// <param name="pageRequest">The page request</param>
     /// <param name="totalElements">The total number of queried elements</param>
-    /// <returns>The <see cref="IPage{T}"/> that corresponds to the given request</returns>
+    /// <returns>The <see cref="IPage{T}" /> that corresponds to the given request</returns>
     protected async Task<IPage<T>> ApplyPagination(Func<IPostgrestTable<T>> queryBuilder, PageRequest pageRequest)
     {
         var start = pageRequest.PageNumber * pageRequest.PageSize;
         var end = start + pageRequest.PageSize - 1;
-        
+
         _logger.LogDebug($"Paginating query: Fetching entries {start}-{end}");
 
         var totalElements = await queryBuilder().Count(Constants.CountType.Exact);
         var content = await ExecuteQuery(queryBuilder().Range(start, end));
-        
+
         return new PageImpl<T>(
             content,
             pageRequest.PageNumber,
             pageRequest.PageSize,
-            (int) Math.Ceiling((double) totalElements / pageRequest.PageSize),
+            (int)Math.Ceiling((double)totalElements / pageRequest.PageSize),
             pageNumber => ApplyPagination(queryBuilder, PageRequest.Of(pageNumber, pageRequest.PageSize)));
     }
 }

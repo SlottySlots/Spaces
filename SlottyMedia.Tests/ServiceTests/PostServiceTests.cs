@@ -147,7 +147,8 @@ public class PostServiceTests
         _mockPostRepository.Setup(x => x.GetPostsByUserId(It.IsAny<Guid>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
-        Assert.ThrowsAsync<PostNotFoundException>(async () => await _postService.GetPostsByUserId(userId, PageRequest.OfSize(10)));
+        Assert.ThrowsAsync<PostNotFoundException>(async () =>
+            await _postService.GetPostsByUserId(userId, PageRequest.OfSize(10)));
     }
 
     /// <summary>
@@ -160,7 +161,8 @@ public class PostServiceTests
         _mockPostRepository.Setup(x => x.GetPostsByUserId(It.IsAny<Guid>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
-        Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetPostsByUserId(userId, PageRequest.OfSize(10)));
+        Assert.ThrowsAsync<PostGeneralException>(async () =>
+            await _postService.GetPostsByUserId(userId, PageRequest.OfSize(10)));
     }
 
     /// <summary>
@@ -238,7 +240,8 @@ public class PostServiceTests
         _mockPostRepository.Setup(x => x.GetPostsByForumId(It.IsAny<Guid>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
-        Assert.ThrowsAsync<PostNotFoundException>(async () => await _postService.GetPostsByForumId(userId, PageRequest.OfSize(10)));
+        Assert.ThrowsAsync<PostNotFoundException>(async () =>
+            await _postService.GetPostsByForumId(userId, PageRequest.OfSize(10)));
     }
 
     /// <summary>
@@ -251,7 +254,8 @@ public class PostServiceTests
         _mockPostRepository.Setup(x => x.GetPostsByForumId(It.IsAny<Guid>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
-        Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetPostsByForumId(userId, PageRequest.OfSize(10)));
+        Assert.ThrowsAsync<PostGeneralException>(async () =>
+            await _postService.GetPostsByForumId(userId, PageRequest.OfSize(10)));
     }
 
     /// <summary>
@@ -396,7 +400,8 @@ public class PostServiceTests
         _mockPostRepository.Setup(x => x.GetPostsByForumId(It.IsAny<Guid>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
-        Assert.ThrowsAsync<PostNotFoundException>(async () => await _postService.GetPostsByForumId(forumId, PageRequest.OfSize(10)));
+        Assert.ThrowsAsync<PostNotFoundException>(async () =>
+            await _postService.GetPostsByForumId(forumId, PageRequest.OfSize(10)));
     }
 
     /// <summary>
@@ -409,6 +414,7 @@ public class PostServiceTests
         _mockPostRepository.Setup(x => x.GetPostsByForumId(It.IsAny<Guid>(), It.IsAny<PageRequest>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
-        Assert.ThrowsAsync<PostGeneralException>(async () => await _postService.GetPostsByForumId(forumId, PageRequest.OfSize(10)));
+        Assert.ThrowsAsync<PostGeneralException>(async () =>
+            await _postService.GetPostsByForumId(forumId, PageRequest.OfSize(10)));
     }
 }

@@ -10,7 +10,7 @@ namespace SlottyMedia.Backend.ViewModel;
 public class HomePageVmImpl : IHomePageVm
 {
     private static readonly Logging<HomePageVmImpl> Logger = new();
-    
+
     private readonly IPostService _postService;
 
     /// <summary>Instantiates this class</summary>

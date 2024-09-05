@@ -1,8 +1,7 @@
 namespace SlottyMedia.Database.Pagination;
 
-
 /// <summary>
-///     This class represents a request for a <see cref="IPage{T}"/>. It specifies
+///     This class represents a request for a <see cref="IPage{T}" />. It specifies
 ///     the page's size and the current page number. The page is then intended to be
 ///     fetched server-side using this object.
 /// </summary>
