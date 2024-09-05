@@ -22,8 +22,7 @@
     {
         @if (MainLayoutVm.SearchResults.Forums.Count > 0)
         {
-            <Card Class="absolute left-0 top-0 translate-y-[40px] p-4 flex flex-col gap-3 w-[800px] z-50">
-
+            <Card Class="absolute left-0 top-full mt-1 p-4 flex flex-col gap-3 w-[400px] z-10">
                 @foreach (var forum in MainLayoutVm.SearchResults.Forums)
                 {
                     <Tag OnClick="() => NavigateToSpacesPage(forum.Topic)">
@@ -34,8 +33,7 @@
         }
         else if (MainLayoutVm.SearchResults.Users.Count > 0)
         {
-            <Card Class="absolute left-0 top-0 translate-y-[40px] p-4 flex flex-col gap-3 w-[400px] z-50">
-
+            <Card Class="absolute left-0 top-full mt-1 p-4 flex flex-col gap-3 w-[400px] z-10">
                 @foreach (var user in MainLayoutVm.SearchResults.Users)
                 {
                     <Tag OnClick="() => NavigateToUsersPage(user.UserId)">

@@ -74,7 +74,7 @@
                 <!-- the tooltip -->
                 @if (!ViewModel.SpacePrompt.IsNullOrEmpty())
                 {
-                    <Card Class="absolute left-0 top-0 translate-y-[40px] p-4 flex flex-col gap-3">
+                    <Card Class="absolute left-0 top-full mt-1 p-4 flex flex-col gap-3">
                         @foreach (var spaceName in ViewModel.SearchedSpaces)
                         {
                             <Tag OnClick="() => _selectSpace(spaceName)">
