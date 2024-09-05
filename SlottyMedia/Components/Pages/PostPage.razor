@@ -31,7 +31,7 @@ else
         }
         
         <!-- all comments that were loaded -->
-        <Pagination Page="ViewModel!.Comments" OnPageFetch="ViewModel!.LoadCommentsPage">
+        <Pagination Page="ViewModel!.Comments" OnPageFetch="ViewModel!.LoadCommentsPage" Class="w-full">
             @foreach (var comment in ViewModel.Comments)
             {
                 <div class="w-full px-5">
