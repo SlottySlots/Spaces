@@ -3,6 +3,7 @@
 @inject IUserService UserService;
 @inject ILikeService LikeService;
 @inject ICommentService CommentService;
+@inject NavigationManager NavigationManager
 
 @if (!_isLoading)
 {
@@ -18,7 +19,7 @@
         </div>
 
         <!-- username & time posted -->
-        <div class="col-span-9 flex flex-col justify-between">
+        <div class="col-span-9 flex flex-col justify-between cursor-pointer" @onclick="() => _navigateToProfile(_owner!.UserId)">
             <h3 class="text-xl font-semibold">
                 @(_owner!.Username)
             </h3>
@@ -116,6 +117,11 @@
         _owner = await UserService.GetUserDtoById(Dto!.UserId);
         _commentCount = await CommentService.CountCommentsInPost(Dto.PostId);
         _isLoading = false;
+    }
+
+    private void _navigateToProfile(Guid userId)
+    {
+        NavigationManager.NavigateTo($"/profile/{userId}");
     }
 
     public async Task SetLikeCountState()
