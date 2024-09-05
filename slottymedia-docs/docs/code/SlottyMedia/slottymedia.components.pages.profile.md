@@ -11,15 +11,15 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ## Properties
 
-### **UserInformationDto**
+### **UserId**
 
 ```csharp
-public UserInformationDto UserInformationDto { get; set; }
+public Guid UserId { get; set; }
 ```
 
 #### Property Value
 
-[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 ## Constructors
 
@@ -41,18 +41,12 @@ protected void BuildRenderTree(RenderTreeBuilder __builder)
 
 `__builder` RenderTreeBuilder<br>
 
-### **OnAfterRender(Boolean)**
+### **OnParametersSetAsync()**
 
 ```csharp
-protected void OnAfterRender(bool firstRender)
+protected Task OnParametersSetAsync()
 ```
 
-#### Parameters
+#### Returns
 
-`firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-### **FollowButtonClicked()**
-
-```csharp
-public void FollowButtonClicked()
-```
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>

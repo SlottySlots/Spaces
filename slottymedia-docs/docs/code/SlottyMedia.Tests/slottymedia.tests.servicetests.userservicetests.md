@@ -112,14 +112,6 @@ Tests if GetProfilePic method throws UserGeneralException when GeneralDatabaseEx
 public void GetProfilePic_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
 ```
 
-### **GetUser_ShouldThrowUserNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()**
-
-Tests if GetUser method throws UserNotFoundException when DatabaseMissingItemException is thrown.
-
-```csharp
-public void GetUser_ShouldThrowUserNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
-```
-
 ### **GetUser_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()**
 
 Tests if GetUser method throws UserGeneralException when GeneralDatabaseException is thrown.
