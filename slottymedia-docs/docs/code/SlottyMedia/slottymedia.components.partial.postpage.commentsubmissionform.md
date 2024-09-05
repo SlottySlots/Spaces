@@ -35,6 +35,16 @@ public ICommentSubmissionFormVm ViewModel { get; set; }
 
 [ICommentSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.icommentsubmissionformvm.md)<br>
 
+### **UserInformationDto**
+
+```csharp
+public UserInformationDto UserInformationDto { get; set; }
+```
+
+#### Property Value
+
+[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+
 ## Constructors
 
 ### **CommentSubmissionForm()**
@@ -54,3 +64,13 @@ protected void BuildRenderTree(RenderTreeBuilder __builder)
 #### Parameters
 
 `__builder` RenderTreeBuilder<br>
+
+### **OnAfterRender(Boolean)**
+
+```csharp
+protected void OnAfterRender(bool firstRender)
+```
+
+#### Parameters
+
+`firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>

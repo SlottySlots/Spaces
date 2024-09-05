@@ -15,6 +15,7 @@ namespace SlottyMedia.Backend.Services;
 public class UserService : IUserService
 {
     private static readonly Logging<UserService> Logger = new();
+    private readonly IAuthService _authService;
     private readonly IFollowerUserRelationRepository _followerUserRelationRepository;
     private readonly IPostService _postService;
     private readonly IUserRepository _userRepository;
@@ -407,5 +408,51 @@ public class UserService : IUserService
                 $"An error occurred while unfollowing the user. UserIdFollows: {userIdFollows}, UserIdToUnfollow: {userIdToUnfollow}",
                 ex);
         }
+    }
+
+    /// <inheritdoc />
+    public async Task<UserInformationDto?> GetUserInfo(Guid userId)
+    {
+        try
+        {
+ var userDao = await GetUserDaoById(userId);
+        var amountOfFriends = await GetCountOfUserFriends(userId);
+        var amountOfSpaces = await GetCountOfUserSpaces(userId);
+        if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
+        {
+            Logger.LogError(
+                $"User with id {userId.ToString()} retrieved corrupt User entry from database!");
+        }
+        else
+        {
+            var userInformationDto = new UserInformationDto
+            {
+                UserId = userDao.UserId!,
+                Username = userDao.UserName!,
+                Description = userDao.Description!,
+                ProfilePic = userDao.ProfilePic,
+                FriendsAmount = amountOfFriends,
+                SpacesAmount = amountOfSpaces,
+                CreatedAt = userDao.CreatedAt.LocalDateTime!
+            };
+            return userInformationDto;
+        }
+
+        
+        }
+        catch (UserNotFoundException ex)
+        {
+            Logger.LogError(ex, $"User with id {userId} not found");
+        }
+        catch (UserGeneralException ex)
+        {
+            Logger.LogError(ex, $"An error occurred while fetching UserInformation with id {userId}");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, $"An error occurred while fetching UserInformation with id {userId}");
+        }
+
+        return null;
     }
 }

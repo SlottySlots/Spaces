@@ -3,18 +3,15 @@
 @inject IUserService UserService;
 @inject ILikeService LikeService;
 @inject ICommentService CommentService;
+@inject NavigationManager NavigationManager;
 
 @if (!_isLoading)
 {
     <div class="w-full p-5 grid grid-cols-10 gap-4">
 
         <!-- profile picture -->
-        <div class="w-[50px] h-[50px] rounded-full border border-athens-gray">
-            <svg width="100%" height="100%" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#000000">
-                <g>
-                    <path d="m 8 1 c -1.65625 0 -3 1.34375 -3 3 s 1.34375 3 3 3 s 3 -1.34375 3 -3 s -1.34375 -3 -3 -3 z m -1.5 7 c -2.492188 0 -4.5 2.007812 -4.5 4.5 v 0.5 c 0 1.109375 0.890625 2 2 2 h 8 c 1.109375 0 2 -0.890625 2 -2 v -0.5 c 0 -2.492188 -2.007812 -4.5 -4.5 -4.5 z m 0 0" fill="#2e3436"></path>
-                </g>
-            </svg>
+        <div @onclick="OnClickAvatar">
+            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Size="50"></Avatar>
         </div>
 
         <!-- username & time posted -->
@@ -91,7 +88,7 @@
     /// </summary>
     [Parameter]
     public Guid CurrentUserId { get; set; }
-    
+
     /// <summary>
     ///     This event is triggered when the post's comment button is clicked.
     ///     This event will be used to navigate to the post's dedicated page from the home page (i.e. <c>/post/{ID}</c>).
@@ -107,6 +104,13 @@
 
     UserDto? _owner;
 
+    public UserInformationDto UserInformationDto { get; set; } = new()
+    {
+        Username = "Username is loading..",
+        Description = "Description is loading..",
+        ProfilePic = null
+    };
+
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()
     {
@@ -115,7 +119,30 @@
         await SetLikeCountState();
         _owner = await UserService.GetUserDtoById(Dto!.UserId);
         _commentCount = await CommentService.CountCommentsInPost(Dto.PostId);
-        _isLoading = false;
+    }
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if ((firstRender || UserInformationDto.Username == "Username is loading..") && Dto != null)
+        {
+            var userInfo = await UserService.GetUserInfo(Dto!.UserId);
+            if (userInfo != null)
+            {
+                UserInformationDto.Username = userInfo.Username;
+                UserInformationDto.UserId = userInfo.UserId;
+                UserInformationDto.Description = userInfo.Description;
+                UserInformationDto.ProfilePic = userInfo.ProfilePic;
+                UserInformationDto.FriendsAmount = userInfo.FriendsAmount;
+                UserInformationDto.SpacesAmount = userInfo.SpacesAmount;
+                _isLoading = false;
+                StateHasChanged();
+            }
+        }
+    }
+
+    private void OnClickAvatar()
+    {
+        NavigationManager.NavigateTo($"/profile?id={UserInformationDto.UserId.ToString()}");
     }
 
     public async Task SetLikeCountState()

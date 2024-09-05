@@ -5,14 +5,13 @@ using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
 
-
 /// <inheritdoc />
 public class PostPageVmImpl : IPostPageVm
 {
-    private static Logging<PostPageVmImpl> _logger = new();
-    
-    private readonly IPostService _postService;
+    private static readonly Logging<PostPageVmImpl> _logger = new();
     private readonly ICommentService _commentService;
+
+    private readonly IPostService _postService;
     private int _currentCommentPage;
 
     /// <summary>Instantiates this VM</summary>
@@ -24,7 +23,7 @@ public class PostPageVmImpl : IPostPageVm
 
     /// <inheritdoc />
     public bool IsLoadingPage { get; private set; }
-    
+
     /// <inheritdoc />
     public bool IsLoadingComments { get; private set; }
 
@@ -54,6 +53,7 @@ public class PostPageVmImpl : IPostPageVm
             TotalNumberOfComments = await _commentService.CountCommentsInPost(Post.PostId);
             await LoadMoreComments();
         }
+
         IsLoadingPage = false;
     }
 
@@ -64,10 +64,12 @@ public class PostPageVmImpl : IPostPageVm
             return;
         if (Post is null)
         {
-            _logger.LogWarn($"Attempted to load comments for nonexistent post");
+            _logger.LogWarn("Attempted to load comments for nonexistent post");
             return;
         }
-        _logger.LogInfo($"Loading comments for post with ID {Post?.PostId} (already fetched {5 * _currentCommentPage} comments)");
+
+        _logger.LogInfo(
+            $"Loading comments for post with ID {Post?.PostId} (already fetched {5 * _currentCommentPage} comments)");
         IsLoadingComments = true;
         _currentCommentPage++;
         var results = await _commentService.GetCommentsInPost(Post!.PostId, _currentCommentPage, 5);

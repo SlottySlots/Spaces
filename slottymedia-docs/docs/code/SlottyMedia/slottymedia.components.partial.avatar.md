@@ -60,6 +60,18 @@ public EventCallback<string> Base64Callback { get; set; }
 
 EventCallback&lt;String&gt;<br>
 
+### **Size**
+
+Sets the size of the avatar
+
+```csharp
+public string Size { get; set; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
 ## Constructors
 
 ### **Avatar()**

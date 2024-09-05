@@ -47,6 +47,16 @@ public EventCallback OnPostClick { get; set; }
 
 EventCallback<br>
 
+### **UserInformationDto**
+
+```csharp
+public UserInformationDto UserInformationDto { get; set; }
+```
+
+#### Property Value
+
+[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+
 ## Constructors
 
 ### **Post()**
@@ -76,6 +86,16 @@ protected Task OnParametersSetAsync()
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **OnAfterRender(Boolean)**
+
+```csharp
+protected void OnAfterRender(bool firstRender)
+```
+
+#### Parameters
+
+`firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **SetLikeCountState()**
 

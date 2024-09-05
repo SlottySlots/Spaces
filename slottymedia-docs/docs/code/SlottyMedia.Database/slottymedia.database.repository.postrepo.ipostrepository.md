@@ -59,6 +59,19 @@ Thrown when the entity is not found in the database.
 [GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
 Thrown when an unexpected error occurs.
 
+### **CountAllPosts()**
+
+Counts all existing posts.
+
+```csharp
+Task<int> CountAllPosts()
+```
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+The total number of existing posts
+
 ### **GetPostsByUserId(Guid, Int32, Int32)**
 
 Gets posts by a specific user with pagination.
