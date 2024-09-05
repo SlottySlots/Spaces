@@ -21,15 +21,35 @@ public bool IsLoadingPage { get; private set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **Page**
+### **IsLoadingPosts**
 
 ```csharp
-public IPage<PostDto> Page { get; private set; }
+public bool IsLoadingPosts { get; private set; }
 ```
 
 #### Property Value
 
-IPage&lt;PostDto&gt;<br>
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### **Posts**
+
+```csharp
+public List<PostDto> Posts { get; private set; }
+```
+
+#### Property Value
+
+[List&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
+
+### **TotalNumberOfPosts**
+
+```csharp
+public int TotalNumberOfPosts { get; private set; }
+```
+
+#### Property Value
+
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ## Constructors
 
@@ -57,15 +77,11 @@ public Task Initialize()
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **LoadPage(Int32)**
+### **LoadMorePosts()**
 
 ```csharp
-public Task LoadPage(int pageNumber)
+public Task LoadMorePosts()
 ```
-
-#### Parameters
-
-`pageNumber` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 #### Returns
 

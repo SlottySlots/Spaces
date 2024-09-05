@@ -37,5 +37,8 @@
         await ViewModel.Initialize();
     }
 
-    private void _navigateToPostPage(Guid postId) => NavigationManager.NavigateTo($"/post/{postId}");
+    private void _navigateToPostPage(Guid postId)
+    {
+        NavigationManager.NavigateTo($"/post/{postId}");
+    }
 }

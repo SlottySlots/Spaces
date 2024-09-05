@@ -6,7 +6,6 @@ using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
 
-
 /// <inheritdoc />
 public class HomePageVmImpl : IHomePageVm
 {

@@ -385,3 +385,22 @@ Thrown when an error occurs during Insert, Update, or Delete operations.
 
 [UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
 Thrown when a general error occurs.
+
+### **GetUserInfo(Guid)**
+
+This sets a dto holding information about the current user in order to show the current users infos in the profile
+ card
+
+```csharp
+Task<UserInformationDto> GetUserInfo(Guid userId)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+User from which the dto should be retrieved
+
+#### Returns
+
+[Task&lt;UserInformationDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns a task of type UserInformationDto. The dto is used to update the state in the view.

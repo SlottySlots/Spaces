@@ -20,16 +20,16 @@ else
 {
     <!-- the post -->
     <Post Dto="ViewModel.Post" CurrentUserId="_currentUserId"/>
-    
+
     <!-- comment section -->
     <div class="w-full pb-5 flex flex-col items-center gap-3">
-        
+
         <!-- comment submission form (if user is logged in) -->
         @if (AuthService.IsAuthenticated())
         {
-            <CommentSubmissionForm PostId="@PostId" />
+            <CommentSubmissionForm PostId="@PostId"/>
         }
-        
+
         <!-- all comments that were loaded -->
         <Pagination Page="ViewModel!.Comments" OnPageFetch="ViewModel!.LoadCommentsPage" Class="w-full">
             @foreach (var comment in ViewModel.Comments)

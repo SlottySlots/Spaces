@@ -24,19 +24,6 @@ public Nullable<Guid> PostId { get; set; }
 
 [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
-### **User**
-
-The User who created the Post. This is a Reference to the User Table. It is a Foreign Key. Be aware, that this
- Field will not be filled when you insert the Post into the Database.
-
-```csharp
-public UserDao User { get; set; }
-```
-
-#### Property Value
-
-[UserDao](./slottymedia.database.daos.userdao.md)<br>
-
 ### **UserId**
 
 The ID of the User who created the Post. This is a Foreign Key to the User Table.

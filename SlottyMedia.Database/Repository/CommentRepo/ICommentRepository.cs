@@ -14,7 +14,7 @@ public interface ICommentRepository : IDatabaseRepository<CommentDao>
     /// <param name="postId">The post to query</param>
     /// <returns>The total number of comments</returns>
     Task<int> CountCommentsInPost(Guid postId);
-    
+
     /// <summary>
     ///     Fetches all comments in the given post. Utilizes pagination in order to limit
     ///     the total number of queried posts: Only posts on the given page will be fetched.

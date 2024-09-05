@@ -1,12 +1,20 @@
 @using SlottyMedia.Backend.Dtos
 @using SlottyMedia.Backend.Services.Interfaces
-@inject IUserService UserService
+@inject IUserService UserService;
+@inject ILikeService LikeService;
+@inject ICommentService CommentService;
+@inject NavigationManager NavigationManager;
 
 
 @if (!_isLoading)
 {
-    <div class="w-full p-3 bg-white-100 rounded-[24px]">
-
+    <div class="w-full p-3 bg-white-100 rounded-[24px] flex flex-row gap-3">
+        <!-- profile picture -->
+        <div @onclick="OnClickAvatar">
+            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Size="50"></Avatar>
+        </div>
+        
+        
         <!-- username & time posted -->
         <div class="flex flex-col justify-between">
             <h3 class="text-xl font-semibold">
@@ -37,6 +45,41 @@
     {
         _isLoading = true;
         _owner = await UserService.GetUserDtoById(Dto!.CreatorUserId!.Value);
-        _isLoading = false;
+        if (_owner == null && _owner?.UserId != null)
+        {
+            _isLoading = false;
+        }
     }
+    
+    public UserInformationDto UserInformationDto { get; set; } = new()
+    {
+        Username = "Username is loading..",
+        Description = "Description is loading..",
+        ProfilePic = null
+    };
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (_isLoading)
+        {
+            var userInfo = await UserService.GetUserInfo((Guid)Dto!.CreatorUserId!);
+            if (userInfo != null)
+            {
+                UserInformationDto.Username = userInfo.Username;
+                UserInformationDto.UserId = userInfo.UserId;
+                UserInformationDto.Description = userInfo.Description;
+                UserInformationDto.ProfilePic = userInfo.ProfilePic;
+                UserInformationDto.FriendsAmount = userInfo.FriendsAmount;
+                UserInformationDto.SpacesAmount = userInfo.SpacesAmount;
+                _isLoading = false;
+                StateHasChanged();
+            }
+        }
+    }
+    
+    private void OnClickAvatar()
+    {
+        NavigationManager.NavigateTo($"/profile?id={UserInformationDto.UserId.ToString()}");
+    }
+
 }

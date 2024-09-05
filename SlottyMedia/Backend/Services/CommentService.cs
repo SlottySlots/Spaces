@@ -117,12 +117,14 @@ public class CommentService : ICommentService
         catch (DatabaseIudActionException ex)
         {
             // Handle specific database insert/update/delete action exceptions.
-            throw new CommentIudException($"An error occurred while counting comments in post with ID '{postId.ToString()}': {ex.Message}", ex);
+            throw new CommentIudException(
+                $"An error occurred while counting comments in post with ID '{postId.ToString()}': {ex.Message}", ex);
         }
         catch (Exception ex)
         {
             // Handle any other exceptions.
-            throw new CommentGeneralException($"An error occurred while counting comments in post with ID '{postId.ToString()}': {ex.Message}", ex);
+            throw new CommentGeneralException(
+                $"An error occurred while counting comments in post with ID '{postId.ToString()}': {ex.Message}", ex);
         }
     }
 
@@ -137,12 +139,14 @@ public class CommentService : ICommentService
         catch (DatabaseIudActionException ex)
         {
             // Handle specific database insert/update/delete action exceptions.
-            throw new CommentIudException($"An error occurred while fetching comments from post with ID '{postId.ToString()}': {ex.Message}", ex);
+            throw new CommentIudException(
+                $"An error occurred while fetching comments from post with ID '{postId.ToString()}': {ex.Message}", ex);
         }
         catch (Exception ex)
         {
             // Handle any other exceptions.
-            throw new CommentGeneralException($"An error occurred while fetching comments from post with ID '{postId.ToString()}': {ex.Message}", ex);
+            throw new CommentGeneralException(
+                $"An error occurred while fetching comments from post with ID '{postId.ToString()}': {ex.Message}", ex);
         }
     }
 }

@@ -41,12 +41,12 @@ public class PostsDao : BaseModel
     [PrimaryKey("postID")]
     public Guid? PostId { get; set; }
 
-    /// <summary>
-    ///     The User who created the Post. This is a Reference to the User Table. It is a Foreign Key. Be aware, that this
-    ///     Field will not be filled when you insert the Post into the Database.
-    /// </summary>
-    [Reference(typeof(UserDao), true, true, "userID")]
-    public UserDao? User { get; set; }
+    // /// <summary>
+    // ///     The User who created the Post. This is a Reference to the User Table. It is a Foreign Key. Be aware, that this
+    // ///     Field will not be filled when you insert the Post into the Database.
+    // /// </summary>
+    // [Reference(typeof(UserDao), true, true, "userID")]
+    // public UserDao? User { get; set; }
 
     /// <summary>
     ///     The ID of the User who created the Post. This is a Foreign Key to the User Table.

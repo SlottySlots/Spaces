@@ -22,17 +22,41 @@ public abstract bool IsLoadingPage { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **Page**
+### **IsLoadingPosts**
 
-The posts that will be showcased
+Indicates whether more posts are currently being loaded
 
 ```csharp
-public abstract IPage<PostDto> Page { get; }
+public abstract bool IsLoadingPosts { get; }
 ```
 
 #### Property Value
 
-IPage&lt;PostDto&gt;<br>
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### **Posts**
+
+The posts that will be showcased
+
+```csharp
+public abstract List<PostDto> Posts { get; }
+```
+
+#### Property Value
+
+[List&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
+
+### **TotalNumberOfPosts**
+
+The total number of existing posts. Used to enable the user to load more posts on demand.
+
+```csharp
+public abstract int TotalNumberOfPosts { get; }
+```
+
+#### Property Value
+
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ## Methods
 
@@ -49,17 +73,13 @@ Task Initialize()
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **LoadPage(Int32)**
+### **LoadMorePosts()**
 
 Loads more posts to the view. Does nothing if all posts have already been fetched.
 
 ```csharp
-Task LoadPage(int pageNumber)
+Task LoadMorePosts()
 ```
-
-#### Parameters
-
-`pageNumber` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 #### Returns
 

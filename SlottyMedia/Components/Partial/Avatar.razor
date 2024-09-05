@@ -1,13 +1,13 @@
 @inject IJSRuntime JSRuntime
 
-<div class="h-[80px] w-[80px]" @onmouseenter="MouseOver" @onmouseleave="MouseLeave" @onclick="OpenFileDialog">
+<div class=@Size @onmouseenter="MouseOver" @onmouseleave="MouseLeave" @onclick="OpenFileDialog">
     @if (!_mouseOverAvatar)
     {
         <img class="h-full w-full rounded-full" src=@Base64Png alt="Profile Picture">
     }
     else
     {
-        <div class="relative opacity-50 h-[80px] w-[80px]">
+        <div class="relative opacity-50 @Size">
             <img class="h-full w-full rounded-full" src="@Base64Png" alt="Profile Picture">
             @ChildContent
         </div>
@@ -48,6 +48,18 @@
     /// </summary>
     [Parameter]
     public EventCallback<string> Base64Callback { get; set; }
+
+    private string _size = "80";
+
+    /// <summary>
+    ///     Sets the size of the avatar
+    /// </summary>
+    [Parameter]
+    public string Size
+    {
+        get => $"h-[{_size}px] w-[{_size}px]";
+        set => _size = value;
+    }
 
     private async void OpenFileDialog()
     {
