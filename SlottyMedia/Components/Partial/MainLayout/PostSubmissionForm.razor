@@ -2,9 +2,9 @@
 @using SlottyMedia.Backend.Dtos
 @using SlottyMedia.Backend.Services.Interfaces
 @using SlottyMedia.Backend.ViewModel.Interfaces
-@inject IUserService UserService
 @inject NavigationManager NavigationManager
-@inject IAuthService AuthService
+@inject IAuthVm AuthVm
+@inject IUserVm UserVm
 <div class="w-full px-5 pt-5 grid grid-cols-10 gap-4 border-b border-athens-gray">
 
     <!-- profile picture -->
@@ -123,29 +123,17 @@
     [Parameter]
     public EventCallback<string?> ValueChanged { get; set; }
 
-    public UserInformationDto UserInformationDto { get; set; } = new()
-    {
-        Username = "Username is loading..",
-        Description = "Description is loading..",
-        ProfilePic = null
-    };
-
+    public UserInformationDto UserInformationDto { get; set; } = new(true);
     private bool _isLoading = true;
 
     protected override async void OnAfterRender(bool firstRender)
     {
-        //TODO ANpassen!!
         if (firstRender || UserInformationDto.Username == "Username is loading..")
         {
-            var userInfo = await UserService.GetUserInfo(Guid.Parse(AuthService!.GetCurrentSession()!.User!.Id!));
+            var userInfo = await UserVm.GetUserInformation(AuthVm.GetCurrentUserId());
             if (userInfo != null)
             {
-                UserInformationDto.Username = userInfo.Username;
-                UserInformationDto.UserId = userInfo.UserId;
-                UserInformationDto.Description = userInfo.Description;
-                UserInformationDto.ProfilePic = userInfo.ProfilePic;
-                UserInformationDto.FriendsAmount = userInfo.FriendsAmount;
-                UserInformationDto.SpacesAmount = userInfo.SpacesAmount;
+                UserInformationDto = userInfo;
                 _isLoading = false;
                 StateHasChanged();
             }

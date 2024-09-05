@@ -294,8 +294,7 @@ public class UserService : IUserService
 
     /// <inheritdoc />
     public async Task<int> GetCountOfUserSpaces(Guid userId)
-    {
-        //TODO: Currently not working
+    { 
         var spaces = await _postService.GetForumCountByUserId(userId);
         return spaces;
     }
