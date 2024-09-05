@@ -97,20 +97,7 @@ public class ProfilePageVmImpl : IProfilePageVm
     private async Task _loadUserInfo(Guid userId)
     {
         _logger.LogDebug($"Profile Page: Fetching user information for user with ID '{userId}'");
-        var userDao = await _userService.GetUserDaoById(userId);
-        var amountOfFriends = await _userService.GetCountOfUserFriends(userId);
-        var amountOfSpaces = await _userService.GetCountOfUserSpaces(userId);
-        _logger.LogDebug($"Profile Page: Successfully fetched all user information for user with ID '{userId}'");
-        UserInfo = new UserInformationDto
-        {
-            UserId = userDao.UserId!,
-            Username = userDao.UserName!,
-            Description = userDao.Description!,
-            ProfilePic = userDao.ProfilePic,
-            FriendsAmount = amountOfFriends,
-            SpacesAmount = amountOfSpaces,
-            CreatedAt = userDao.CreatedAt.LocalDateTime
-        };
+        UserInfo = await _userService.GetUserInfo(userId, true, true);
     }
 
     private async Task _loadIsUserFollowed()
