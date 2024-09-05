@@ -29,96 +29,48 @@ Sets up the test environment before each test.
 public void SetUp()
 ```
 
-### **GetUserInfo_ValidUserId_ReturnsUserInformation()**
+### **Initialize_LoadsUserInfoAndPosts()**
 
-Verifies that GetUserInfo returns user information for a valid user ID.
+Tests that the Initialize method loads user information and posts correctly.
 
 ```csharp
-public Task GetUserInfo_ValidUserId_ReturnsUserInformation()
+public Task Initialize_LoadsUserInfoAndPosts()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **GetUserInfo_InvalidUserId_ReturnsNull()**
+### **LoadPosts_LoadsPostsForUser()**
 
-Verifies that GetUserInfo returns null for an invalid user ID.
+Tests that the LoadPosts method loads posts for the user correctly.
 
 ```csharp
-public Task GetUserInfo_InvalidUserId_ReturnsNull()
+public Task LoadPosts_LoadsPostsForUser()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **UserFollowRelation_DifferentUserIds_ReturnsFollowRelation()**
+### **FollowThisUser_FollowsUser()**
 
-Verifies that UserFollowRelation returns true for different user IDs.
+Tests that the FollowThisUser method follows the user correctly.
 
 ```csharp
-public Task UserFollowRelation_DifferentUserIds_ReturnsFollowRelation()
+public Task FollowThisUser_FollowsUser()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **UserFollowRelation_SameUserIds_ReturnsNull()**
+### **UnfollowThisUser_UnfollowsUser()**
 
-Verifies that UserFollowRelation returns null for the same user IDs.
-
-```csharp
-public Task UserFollowRelation_SameUserIds_ReturnsNull()
-```
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
-### **FollowUserById_ValidUserIds_CallsFollowUserById()**
-
-Verifies that FollowUserById calls the FollowUserById method of the user service with valid user IDs.
+Tests that the UnfollowThisUser method unfollows the user correctly.
 
 ```csharp
-public Task FollowUserById_ValidUserIds_CallsFollowUserById()
-```
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
-### **UnfollowUserById_ValidUserIds_CallsUnfollowUserById()**
-
-Verifies that UnfollowUserById calls the UnfollowUserById method of the user service with valid user IDs.
-
-```csharp
-public Task UnfollowUserById_ValidUserIds_CallsUnfollowUserById()
-```
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
-### **GetPostsByUserId_ValidUserId_ReturnsPosts()**
-
-Verifies that GetPostsByUserId returns posts for a valid user ID.
-
-```csharp
-public Task GetPostsByUserId_ValidUserId_ReturnsPosts()
-```
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
-### **GetPostsByUserId_InvalidUserId_ReturnsEmptyList()**
-
-Verifies that GetPostsByUserId returns an empty list for an invalid user ID.
-
-```csharp
-public Task GetPostsByUserId_InvalidUserId_ReturnsEmptyList()
+public Task UnfollowThisUser_UnfollowsUser()
 ```
 
 #### Returns

@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Tests.Viewmodel
 
+Tests for the HomePageVmImpl class.
+
 ```csharp
 public class HomePageVmImplTests
 ```

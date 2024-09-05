@@ -47,7 +47,7 @@ public class PostSubmissionFormVmImplTests
     {
         var changeEventArgs = new ChangeEventArgs { Value = "test" };
         var forums = new List<ForumDto> { new() { Topic = "test space" } };
-        var searchResults = new PageImpl<ForumDto>(forums, 1, 10, 1, null);
+        var searchResults = new PageImpl<ForumDto>(forums, 1, 10, 1, null!);
         _mockSearchService.Setup(s => s.SearchByForumTopicContaining("test", It.IsAny<PageRequest>()))
             .ReturnsAsync(searchResults);
 

@@ -6,6 +6,9 @@ using SlottyMedia.Database.Pagination;
 
 namespace SlottyMedia.Tests.Viewmodel;
 
+/// <summary>
+/// Tests for the HomePageVmImpl class.
+/// </summary>
 [TestFixture]
 public class HomePageVmImplTests
 {
@@ -33,7 +36,7 @@ public class HomePageVmImplTests
             0, // PageNumber
             10, // PageSize
             1, // TotalPages
-            pageNumber => Task.FromResult<IPage<PostDto>>(null) // Callback
+            pageNumber => Task.FromResult<IPage<PostDto>>(null!) // Callback
         );
         _mockPostService.Setup(s => s.GetAllPosts(It.IsAny<PageRequest>())).ReturnsAsync(page);
 
@@ -55,7 +58,7 @@ public class HomePageVmImplTests
             pageNumber, // PageNumber
             10, // PageSize
             2, // TotalPages
-            pageNumber => Task.FromResult<IPage<PostDto>>(null) // Callback
+            pageNumber => Task.FromResult<IPage<PostDto>>(null!) // Callback
         );
         _mockPostService.Setup(s => s.GetAllPosts(It.IsAny<PageRequest>())).ReturnsAsync(page);
 
@@ -77,7 +80,7 @@ public class HomePageVmImplTests
             pageNumber, // PageNumber
             10, // PageSize
             2, // TotalPages
-            pageNumber => Task.FromResult<IPage<PostDto>>(null) // Callback
+            pageNumber => Task.FromResult<IPage<PostDto>>(null!) // Callback
         );
         _mockPostService.Setup(s => s.GetAllPosts(It.IsAny<PageRequest>())).ReturnsAsync(page);
 

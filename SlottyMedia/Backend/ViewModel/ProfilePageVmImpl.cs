@@ -50,7 +50,7 @@ public class ProfilePageVmImpl : IProfilePageVm
         IsLoadingPage = true;
         _logger.LogInfo("Profile Page: Loading necessary user-related information...");
         var authPrincipalIdStr = _authService.GetCurrentSession()?.User?.Id;
-        AuthPrincipalId = authPrincipalIdStr is null ? null : new Guid(authPrincipalIdStr);
+        AuthPrincipalId = authPrincipalIdStr is null ? null : Guid.Parse(authPrincipalIdStr);
         await _loadUserInfo(userId);
         await _loadIsUserFollowed();
         _logger.LogInfo("Profile Page: Successfully loaded all user-related information");
@@ -89,7 +89,7 @@ public class ProfilePageVmImpl : IProfilePageVm
         {
             _logger.LogInfo($"Attempting to un-follow user '{UserInfo!.Username}'...");
             await _userService.UnfollowUserById(AuthPrincipalId.Value, UserInfo.UserId.Value);
-            IsUserFollowed = true;
+            IsUserFollowed = false;
             _logger.LogInfo($"Successfully un-followed user '{UserInfo!.Username}'");
         }
     }

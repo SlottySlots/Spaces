@@ -31,7 +31,7 @@ public class SpacesVmImplTest
     public async Task LoadForums_ValidResponse_UpdatesForumsList()
     {
         var forums = new List<ForumDto> { new() { Topic = "Test Forum" } };
-        var page = new PageImpl<ForumDto>(forums, 1, 10, 1, null);
+        var page = new PageImpl<ForumDto>(forums, 1, 10, 1, null!);
         _forumServiceMock.Setup(f => f.GetAllForums(It.IsAny<PageRequest>())).ReturnsAsync(page);
 
         await _spacesVm.LoadForums();
@@ -60,6 +60,6 @@ public class SpacesVmImplTest
     [Test]
     public void Constructor_NullForumService_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => new SpacesVmImpl(null));
+        Assert.Throws<ArgumentNullException>(() => new SpacesVmImpl(null!));
     }
 }

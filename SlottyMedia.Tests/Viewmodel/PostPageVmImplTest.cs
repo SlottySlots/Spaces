@@ -40,7 +40,7 @@ public class PostPageVmImplTests
             0, // PageNumber
             5, // PageSize
             1, // TotalPages
-            pageNumber => Task.FromResult<IPage<CommentDto>>(null) // Callback
+            pageNumber => Task.FromResult<IPage<CommentDto>>(null!) // Callback
         );
         _mockPostService.Setup(s => s.GetPostById(postId)).ReturnsAsync(post);
         _mockCommentService.Setup(s => s.GetCommentsInPost(postId, It.IsAny<PageRequest>())).ReturnsAsync(comments);
@@ -80,7 +80,7 @@ public class PostPageVmImplTests
             0, // PageNumber
             5, // PageSize
             1, // TotalPages
-            pageNumber => Task.FromResult<IPage<CommentDto>>(null) // Callback
+            pageNumber => Task.FromResult<IPage<CommentDto>>(null!) // Callback
         );
         _mockPostService.Setup(s => s.GetPostById(postId)).ReturnsAsync(post);
         _mockCommentService.Setup(s => s.GetCommentsInPost(postId, It.IsAny<PageRequest>())).ReturnsAsync(comments);
@@ -91,7 +91,7 @@ public class PostPageVmImplTests
             1, // PageNumber
             5, // PageSize
             1, // TotalPages
-            pageNumber => Task.FromResult<IPage<CommentDto>>(null) // Callback
+            pageNumber => Task.FromResult<IPage<CommentDto>>(null!) // Callback
         );
         _mockCommentService.Setup(s => s.GetCommentsInPost(postId, It.IsAny<PageRequest>())).ReturnsAsync(moreComments);
 

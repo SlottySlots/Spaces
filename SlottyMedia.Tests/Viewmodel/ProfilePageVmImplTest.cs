@@ -3,145 +3,150 @@ using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
 using SlottyMedia.Database.Pagination;
+using NUnit.Framework;
+using SlottyMedia.Database.Daos;
+using Supabase.Gotrue;
 
-namespace SlottyMedia.Tests.Viewmodel;
-
-/// <summary>
-///     Unit tests for the <see cref="ProfilePageVmImpl" /> class.
-/// </summary>
-[TestFixture]
-public class ProfilePageVmImplTests
+namespace SlottyMedia.Tests.Viewmodel
 {
     /// <summary>
-    ///     Sets up the test environment before each test.
-    ///     Initializes the mocks and the view model instance.
+    ///     Unit tests for the <see cref="ProfilePageVmImpl" /> class.
     /// </summary>
-    [SetUp]
-    public void SetUp()
+    [TestFixture]
+    public class ProfilePageVmImplTests
     {
-        _userServiceMock = new Mock<IUserService>();
-        _postServiceMock = new Mock<IPostService>();
-        _viewModel = new ProfilePageVmImpl(_userServiceMock.Object, _postServiceMock.Object);
-    }
+        private Mock<IUserService> _userServiceMock;
+        private Mock<IPostService> _postServiceMock;
+        private Mock<IAuthService> _authServiceMock;
+        private ProfilePageVmImpl _viewModel;
 
-    private Mock<IUserService> _userServiceMock;
-    private Mock<IPostService> _postServiceMock;
-    private ProfilePageVmImpl _viewModel;
+        /// <summary>
+        ///     Sets up the test environment before each test.
+        ///     Initializes the mocks and the view model instance.
+        /// </summary>
+        [SetUp]
+        public void SetUp()
+        {
+            _userServiceMock = new Mock<IUserService>();
+            _postServiceMock = new Mock<IPostService>();
+            _authServiceMock = new Mock<IAuthService>();
+            _viewModel = new ProfilePageVmImpl(_userServiceMock.Object, _postServiceMock.Object, _authServiceMock.Object);
+        }
 
-    /// <summary>
-    ///     Verifies that GetUserInfo returns user information for a valid user ID.
-    /// </summary>
-    [Test]
-    public async Task GetUserInfo_ValidUserId_ReturnsUserInformation()
-    {
-        var userId = Guid.NewGuid();
-        var userInfo = new UserInformationDto { Username = "Test User" };
-        _userServiceMock.Setup(u => u.GetUserInfo(userId, true, true)).ReturnsAsync(userInfo);
+        /// <summary>
+        ///     Tests that the Initialize method loads user information and posts correctly.
+        /// </summary>
+        [Test]
+        public async Task Initialize_LoadsUserInfoAndPosts()
+        {
+            // Arrange
+            var userId = Guid.NewGuid();
+            var authServiceMock = new Mock<IAuthService>();
+            var postServiceMock = new Mock<IPostService>();
+            var userServiceMock = new Mock<IUserService>();
+            var viewModel = new ProfilePageVmImpl(userServiceMock.Object, postServiceMock.Object, authServiceMock.Object);
 
-        var result = await _viewModel.GetUserInfo(userId);
+            authServiceMock.Setup(a => a.GetCurrentSession()).Returns(new Session { User = new User { Id = userId.ToString() } });
+            userServiceMock.Setup(u => u.GetUserDaoById(It.IsAny<Guid>())).ReturnsAsync(new UserDao { UserId = userId, UserName = "testuser" });
+            userServiceMock.Setup(u => u.GetCountOfUserFriends(It.IsAny<Guid>())).ReturnsAsync(5);
+            userServiceMock.Setup(u => u.GetCountOfUserSpaces(It.IsAny<Guid>())).ReturnsAsync(3);
+            postServiceMock.Setup(p => p.GetPostsByUserId(It.IsAny<Guid>(), It.IsAny<PageRequest>())).ReturnsAsync(PageImpl<PostDto>.Empty());
 
-        Assert.That(result, Is.EqualTo(userInfo));
-    }
+            // Act
+            await viewModel.Initialize(userId);
 
-    /// <summary>
-    ///     Verifies that GetUserInfo returns null for an invalid user ID.
-    /// </summary>
-    [Test]
-    public async Task GetUserInfo_InvalidUserId_ReturnsNull()
-    {
-        var userId = Guid.NewGuid();
-        _userServiceMock.Setup(u => u.GetUserInfo(userId, true, true)).ReturnsAsync((UserInformationDto?)null);
+            // Assert
+            Assert.That(viewModel.IsLoadingPage, Is.False);
+            Assert.That(viewModel.UserInfo, Is.Not.Null);
+            Assert.That(viewModel.UserInfo.UserId, Is.EqualTo(userId));
+            Assert.That(viewModel.UserInfo.Username, Is.EqualTo("testuser"));
+            Assert.That(viewModel.UserInfo.FriendsAmount, Is.EqualTo(5));
+            Assert.That(viewModel.UserInfo.SpacesAmount, Is.EqualTo(3));
+            Assert.That(viewModel.Posts, Is.Not.Null);
+        }
 
-        var result = await _viewModel.GetUserInfo(userId);
+        /// <summary>
+        ///     Tests that the LoadPosts method loads posts for the user correctly.
+        /// </summary>
+        [Test]
+        public async Task LoadPosts_LoadsPostsForUser()
+        {
+            // Arrange
+            var userId = Guid.NewGuid();
+            var postServiceMock = new Mock<IPostService>();
+            var userServiceMock = new Mock<IUserService>();
+            var authServiceMock = new Mock<IAuthService>();
+            var viewModel = new ProfilePageVmImpl(userServiceMock.Object, postServiceMock.Object, authServiceMock.Object);
 
-        Assert.That(result, Is.Null);
-    }
+            userServiceMock.Setup(u => u.GetUserDaoById(It.IsAny<Guid>())).ReturnsAsync(new UserDao { UserId = userId, UserName = "testuser" });
+            postServiceMock.Setup(p => p.GetPostsByUserId(It.IsAny<Guid>(), It.IsAny<PageRequest>())).ReturnsAsync(PageImpl<PostDto>.Empty());
 
-    /// <summary>
-    ///     Verifies that UserFollowRelation returns true for different user IDs.
-    /// </summary>
-    [Test]
-    public async Task UserFollowRelation_DifferentUserIds_ReturnsFollowRelation()
-    {
-        var userIdToCheck = Guid.NewGuid();
-        var userIdLoggedIn = Guid.NewGuid();
-        _userServiceMock.Setup(u => u.UserFollowRelation(userIdToCheck, userIdLoggedIn)).ReturnsAsync(true);
+            await viewModel.Initialize(userId);
 
-        var result = await _viewModel.UserFollowRelation(userIdToCheck, userIdLoggedIn);
+            // Act
+            await viewModel.LoadPosts(1);
 
-        Assert.That(result, Is.True);
-    }
+            // Assert
+            Assert.That(viewModel.IsLoadingPosts, Is.False);
+            Assert.That(viewModel.Posts, Is.Not.Null);
+        }
 
-    /// <summary>
-    ///     Verifies that UserFollowRelation returns null for the same user IDs.
-    /// </summary>
-    [Test]
-    public async Task UserFollowRelation_SameUserIds_ReturnsNull()
-    {
-        var userId = Guid.NewGuid();
+        /// <summary>
+        ///     Tests that the FollowThisUser method follows the user correctly.
+        /// </summary>
+        [Test]
+        public async Task FollowThisUser_FollowsUser()
+        {
+            // Arrange
+            var userId = Guid.NewGuid();
+            var authServiceMock = new Mock<IAuthService>();
+            var postServiceMock = new Mock<IPostService>();
+            var userServiceMock = new Mock<IUserService>();
+            var viewModel = new ProfilePageVmImpl(userServiceMock.Object, postServiceMock.Object, authServiceMock.Object);
 
-        var result = await _viewModel.UserFollowRelation(userId, userId);
+            authServiceMock.Setup(a => a.GetCurrentSession()).Returns(new Session { User = new User { Id = userId.ToString() } });
+            userServiceMock.Setup(u => u.FollowUserById(It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(Task.CompletedTask);
+            userServiceMock.Setup(u => u.GetUserDaoById(It.IsAny<Guid>())).ReturnsAsync(new UserDao { UserId = userId, UserName = "testuser" });
+            postServiceMock.Setup(p => p.GetPostsByUserId(It.IsAny<Guid>(), It.IsAny<PageRequest>())).ReturnsAsync(PageImpl<PostDto>.Empty());
 
-        Assert.That(result, Is.Null);
-    }
+            await viewModel.Initialize(userId);
 
-    /// <summary>
-    ///     Verifies that FollowUserById calls the FollowUserById method of the user service with valid user IDs.
-    /// </summary>
-    [Test]
-    public async Task FollowUserById_ValidUserIds_CallsFollowUserById()
-    {
-        var userIdFollows = Guid.NewGuid();
-        var userIdToFollow = Guid.NewGuid();
+            // Act
+            await viewModel.FollowThisUser();
 
-        await _viewModel.FollowUserById(userIdFollows, userIdToFollow);
+            // Assert
+            Assert.That(viewModel.IsUserFollowed, Is.True);
+        }
 
-        _userServiceMock.Verify(u => u.FollowUserById(userIdFollows, userIdToFollow), Times.Once);
-    }
+        /// <summary>
+        ///     Tests that the UnfollowThisUser method unfollows the user correctly.
+        /// </summary>
+        [Test]
+        public async Task UnfollowThisUser_UnfollowsUser()
+        {
+            // Arrange
+            var userId = Guid.NewGuid();
+            var authServiceMock = new Mock<IAuthService>();
+            var postServiceMock = new Mock<IPostService>();
+            var userServiceMock = new Mock<IUserService>();
+            var viewModel = new ProfilePageVmImpl(userServiceMock.Object, postServiceMock.Object, authServiceMock.Object);
 
-    /// <summary>
-    ///     Verifies that UnfollowUserById calls the UnfollowUserById method of the user service with valid user IDs.
-    /// </summary>
-    [Test]
-    public async Task UnfollowUserById_ValidUserIds_CallsUnfollowUserById()
-    {
-        var userIdFollows = Guid.NewGuid();
-        var userIdToUnfollow = Guid.NewGuid();
+            authServiceMock.Setup(a => a.GetCurrentSession()).Returns(new Session { User = new User { Id = userId.ToString() } });
+            userServiceMock.Setup(u => u.UnfollowUserById(It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(Task.CompletedTask);
+            userServiceMock.Setup(u => u.GetUserDaoById(It.IsAny<Guid>())).ReturnsAsync(new UserDao { UserId = userId, UserName = "testuser" });
+            userServiceMock.Setup(u => u.FollowUserById(It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(Task.CompletedTask);
+            postServiceMock.Setup(p => p.GetPostsByUserId(It.IsAny<Guid>(), It.IsAny<PageRequest>())).ReturnsAsync(PageImpl<PostDto>.Empty());
 
-        await _viewModel.UnfollowUserById(userIdFollows, userIdToUnfollow);
+            await viewModel.Initialize(userId);
+            await viewModel.FollowThisUser();
 
-        _userServiceMock.Verify(u => u.UnfollowUserById(userIdFollows, userIdToUnfollow), Times.Once);
-    }
+            Assert.That(viewModel.IsUserFollowed, Is.True);
+            
+            // Act
+            await viewModel.UnfollowThisUser();
 
-    /// <summary>
-    ///     Verifies that GetPostsByUserId returns posts for a valid user ID.
-    /// </summary>
-    [Test]
-    public async Task GetPostsByUserId_ValidUserId_ReturnsPosts()
-    {
-        var userId = Guid.NewGuid();
-        var pageRequest = PageRequest.OfSize(10);
-        var posts = new PageImpl<PostDto>(new List<PostDto> { new() { Content = "Test Post" } }, 1, 10, 1, null);
-        _postServiceMock.Setup(p => p.GetPostsByUserId(userId, pageRequest)).ReturnsAsync(posts);
-
-        var result = await _viewModel.GetPostsByUserId(userId, pageRequest);
-
-        Assert.That(result, Is.EqualTo(posts.Content));
-    }
-
-    /// <summary>
-    ///     Verifies that GetPostsByUserId returns an empty list for an invalid user ID.
-    /// </summary>
-    [Test]
-    public async Task GetPostsByUserId_InvalidUserId_ReturnsEmptyList()
-    {
-        var userId = Guid.NewGuid();
-        var pageRequest = PageRequest.OfSize(10);
-        var posts = new PageImpl<PostDto>(new List<PostDto>(), 1, 10, 0, null);
-        _postServiceMock.Setup(p => p.GetPostsByUserId(userId, pageRequest)).ReturnsAsync(posts);
-
-        var result = await _viewModel.GetPostsByUserId(userId, pageRequest);
-
-        Assert.That(result, Is.Empty);
+            // Assert
+            Assert.That(viewModel.IsUserFollowed, Is.False);
+        }
     }
 }
