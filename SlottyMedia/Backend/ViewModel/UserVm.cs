@@ -49,4 +49,18 @@ public class UserVm : IUserVm
             Logger.LogError($"Error while updating user. Error: {e.Message}");
         }
     }
+    
+    /// <inheritdoc />
+    public async Task<UserInformationDto?> GetUserInformation(Guid userId)
+    {
+        try
+        {
+            return await _userService.GetUserInfo(userId, false, false);
+        }
+        catch (Exception e)
+        {
+            Logger.LogError(e, $"An error occurred while retrieving user information for userId {userId}");
+            return new UserInformationDto();
+        }
+    }
 }

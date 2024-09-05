@@ -20,4 +20,12 @@ public interface IUserVm
     /// <param name="user">The UserDto object to be updated.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the updated UserDto object.</returns>
     public Task UpdateUser(UserDto user);
+
+    /// <summary>
+    ///     Asynchronously retrieves user information by their unique identifier.
+    /// </summary>
+    /// <param name="userId">The unique identifier of the user.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the user information data transfer object.</returns>
+    public Task<UserInformationDto?> GetUserInformation(Guid userId);
+
 }

@@ -1,11 +1,18 @@
 @using SlottyMedia.Backend.Dtos
 @using SlottyMedia.Backend.ViewModel.Interfaces
 @inject IUserVm UserVm
+@inject NavigationManager NavigationManager;
+
 
 @if (!_isLoading)
 {
-    <div class="w-full p-3 bg-white-100 rounded-[24px]">
-
+    <div class="w-full p-3 bg-white-100 rounded-[24px] flex flex-row gap-3">
+        <!-- profile picture -->
+        <div @onclick="OnClickAvatar">
+            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Size="50"></Avatar>
+        </div>
+        
+        
         <!-- username & time posted -->
         <div class="flex flex-col justify-between">
             <h3 class="text-xl font-semibold">
@@ -14,11 +21,11 @@
             <h3 class="text-sm font-medium text-cadet-gray">
                 @(Dto!.CreatedAt.ToShortTimeString())
             </h3>
-        </div>
 
-        <!-- comment text -->
-        <div>
-            @(Dto!.Content)
+            <!-- comment text -->
+            <div>
+                @(Dto!.Content)
+            </div>
         </div>
 
     </div>
@@ -43,4 +50,33 @@
         _owner = await UserVm.GetUserById(Dto!.CreatorUserId!.Value);
         _isLoading = false;
     }
+
+    /// <summary>
+    /// The user information data transfer object to be rendered.
+    /// </summary>
+    public UserInformationDto UserInformationDto { get; set; } = new(true);
+
+    /// <summary>
+    /// This method is called after the component has been rendered.
+    /// </summary>
+    /// <param name="firstRender"></param>
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (_isLoading)
+        {
+            var userInfo = await UserVm.GetUserInformation((Guid)Dto!.CreatorUserId!);
+            if (userInfo != null)
+            {
+                UserInformationDto = userInfo;
+                _isLoading = false;
+                StateHasChanged();
+            }
+        }
+    }
+    
+    private void OnClickAvatar()
+    {
+        NavigationManager.NavigateTo($"/profile?id={UserInformationDto.UserId.ToString()}");
+    }
+
 }

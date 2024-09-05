@@ -1,15 +1,20 @@
 @using Microsoft.IdentityModel.Tokens
+@using SlottyMedia.Backend.Dtos
+@using SlottyMedia.Backend.Services.Interfaces
 @using SlottyMedia.Backend.ViewModel.Interfaces
+@inject IUserService UserService
+@inject NavigationManager NavigationManager
+@inject IAuthService AuthService
 <div class="w-full px-5 pt-5 grid grid-cols-10 gap-4 border-b border-athens-gray">
 
     <!-- profile picture -->
-    <div class="w-[50px] h-[50px] rounded-full border border-athens-gray">
-        <svg width="100%" height="100%" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#000000">
-            <g>
-                <path d="m 8 1 c -1.65625 0 -3 1.34375 -3 3 s 1.34375 3 3 3 s 3 -1.34375 3 -3 s -1.34375 -3 -3 -3 z m -1.5 7 c -2.492188 0 -4.5 2.007812 -4.5 4.5 v 0.5 c 0 1.109375 0.890625 2 2 2 h 8 c 1.109375 0 2 -0.890625 2 -2 v -0.5 c 0 -2.492188 -2.007812 -4.5 -4.5 -4.5 z m 0 0" fill="#2e3436"></path>
-            </g>
-        </svg>
-    </div>
+    @if (!_isLoading)
+    {
+        <div @onclick="OnClickAvatar">
+            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Size="50"></Avatar>
+        </div> 
+    }
+    
 
     <!-- the form -->
     <form class="col-span-9" @onsubmit="ViewModel!.SubmitForm">
@@ -114,7 +119,40 @@
     /// An event that is invoked whenever this input field's value changes
     [Parameter]
     public EventCallback<string?> ValueChanged { get; set; }
+    
+    public UserInformationDto UserInformationDto { get; set; } = new()
+    {
+        Username = "Username is loading..",
+        Description = "Description is loading..",
+        ProfilePic = null
+    };
 
+    private bool _isLoading = true;
+    
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if ((firstRender || UserInformationDto.Username == "Username is loading.."))
+        {
+            var userInfo = await UserService.GetUserInfo(Guid.Parse(AuthService!.GetCurrentSession()!.User!.Id!));
+            if (userInfo != null)
+            {
+                UserInformationDto.Username = userInfo.Username;
+                UserInformationDto.UserId = userInfo.UserId;
+                UserInformationDto.Description = userInfo.Description;
+                UserInformationDto.ProfilePic = userInfo.ProfilePic;
+                UserInformationDto.FriendsAmount = userInfo.FriendsAmount;
+                UserInformationDto.SpacesAmount = userInfo.SpacesAmount;
+                _isLoading = false;
+                StateHasChanged();
+            }
+        }
+    }
+
+    private void OnClickAvatar()
+    {
+        NavigationManager.NavigateTo($"/profile?id={UserInformationDto.UserId.ToString()}");
+    }
+    
     async Task _handleInput(ChangeEventArgs e)
     {
         await ViewModel!.HandleSpacePromptChange(e, ValueChanged);
