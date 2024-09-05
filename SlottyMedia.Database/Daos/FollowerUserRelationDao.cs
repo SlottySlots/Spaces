@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -7,6 +8,7 @@ namespace SlottyMedia.Database.Daos;
 ///     This class represents the Follower_User_Relation table in the database.
 /// </summary>
 [Table("Follower_User_Relation")]
+[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 public class FollowerUserRelationDao : BaseModel
 {
     /// <summary>
