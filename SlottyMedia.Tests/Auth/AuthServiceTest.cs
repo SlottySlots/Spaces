@@ -51,9 +51,6 @@ public class AuthServiceTest
     private Client _client;
     private Mock<ICookieService> _cookieServiceMock;
 
-    private string _userName;
-    private string _email;
-
     private Session? _session;
 
     /// <summary>

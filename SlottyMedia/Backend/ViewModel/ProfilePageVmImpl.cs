@@ -2,7 +2,6 @@ using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Database.Pagination;
-using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
 
