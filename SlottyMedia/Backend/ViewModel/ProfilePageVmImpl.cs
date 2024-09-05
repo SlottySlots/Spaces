@@ -97,7 +97,7 @@ public class ProfilePageVmImpl : IProfilePageVm
     private async Task _loadUserInfo(Guid userId)
     {
         _logger.LogDebug($"Profile Page: Fetching user information for user with ID '{userId}'");
-        UserInfo = await _userService.GetUserInfo(userId, true, true);
+        UserInfo = await _userService.GetUserInfo(userId);
     }
 
     private async Task _loadIsUserFollowed()

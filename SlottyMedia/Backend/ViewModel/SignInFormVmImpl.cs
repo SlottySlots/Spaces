@@ -120,8 +120,7 @@ public class SignInFormVmImpl : ISignInFormVm
         // if no errors occurred and user was signed in successfully: redirect to home page
         _navigationManager.NavigateTo("/");
     }
-
-    /// <inheritdoc />
+    
     private void _resetErrorMessages()
     {
         EmailErrorMessage = null;

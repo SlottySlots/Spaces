@@ -67,10 +67,14 @@
         if (file.ContentType.Contains("image"))
         {
             var buffer = new byte[file.Size];
-            await file.OpenReadStream().ReadAsync(buffer);
-            var base64String = Convert.ToBase64String(buffer);
-            Base64Png = base64String;
-            await Base64Callback.InvokeAsync(base64String);
+            var bytesRead = await file.OpenReadStream().ReadAsync(buffer);
+            if (bytesRead != 0)
+            {
+                var base64String = Convert.ToBase64String(buffer);
+                Base64Png = base64String;
+                await Base64Callback.InvokeAsync(base64String);   
+            }
+
         }
     }
 

@@ -65,7 +65,7 @@ public class FollowerUserRelationDao : BaseModel
     ///     The Date and Time the Follower_User_Relation was created.
     /// </summary>
     [Column("created_at", ignoreOnInsert: true, ignoreOnUpdate: true)]
-    public DateTimeOffset CreatedAt { get; set; }
+    public DateTimeOffset CreatedAt { get; }
 
     /// <summary>
     ///     The ToString method returns a string representation of the FollowerUserRelationDao object.
