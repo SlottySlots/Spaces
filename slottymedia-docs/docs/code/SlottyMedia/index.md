@@ -36,9 +36,9 @@
 
 [ForumIudException](./slottymedia.backend.exceptions.services.forumexceptions.forumiudexception.md)
 
-## SlottyMedia.Backend.Exceptions.Services.LikeExceptions
+[ForumNotFoundException](./slottymedia.backend.exceptions.services.forumexceptions.forumnotfoundexception.md)
 
-[ForumNotFoundException](./slottymedia.backend.exceptions.services.likeexceptions.forumnotfoundexception.md)
+## SlottyMedia.Backend.Exceptions.Services.LikeExceptions
 
 [LikeGeneralException](./slottymedia.backend.exceptions.services.likeexceptions.likegeneralexception.md)
 
@@ -116,9 +116,13 @@
 
 [AuthVmImpl](./slottymedia.backend.viewmodel.authvmimpl.md)
 
+[CommentSubmissionFormVmImpl](./slottymedia.backend.viewmodel.commentsubmissionformvmimpl.md)
+
 [HomePageVmImpl](./slottymedia.backend.viewmodel.homepagevmimpl.md)
 
 [MainLayoutVmImpl](./slottymedia.backend.viewmodel.mainlayoutvmimpl.md)
+
+[PostPageVmImpl](./slottymedia.backend.viewmodel.postpagevmimpl.md)
 
 [PostSubmissionFormVmImpl](./slottymedia.backend.viewmodel.postsubmissionformvmimpl.md)
 
@@ -140,9 +144,13 @@
 
 [IAuthVmImpl](./slottymedia.backend.viewmodel.interfaces.iauthvmimpl.md)
 
+[ICommentSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.icommentsubmissionformvm.md)
+
 [IHomePageVm](./slottymedia.backend.viewmodel.interfaces.ihomepagevm.md)
 
 [IMainLayoutVm](./slottymedia.backend.viewmodel.interfaces.imainlayoutvm.md)
+
+[IPostPageVm](./slottymedia.backend.viewmodel.interfaces.ipostpagevm.md)
 
 [IPostSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.ipostsubmissionformvm.md)
 
@@ -180,6 +188,8 @@
 
 [Login](./slottymedia.components.pages.login.md)
 
+[PostPage](./slottymedia.components.pages.postpage.md)
+
 [Profile](./slottymedia.components.pages.profile.md)
 
 [Register](./slottymedia.components.pages.register.md)
@@ -193,6 +203,8 @@
 [Card](./slottymedia.components.partial.card.md)
 
 [Checkbox](./slottymedia.components.partial.checkbox.md)
+
+[Comment](./slottymedia.components.partial.comment.md)
 
 [DescriptionContainer](./slottymedia.components.partial.descriptioncontainer.md)
 
@@ -221,3 +233,7 @@
 [SpacesCard](./slottymedia.components.partial.mainlayout.spacescard.md)
 
 [SpacesCardNoAccount](./slottymedia.components.partial.mainlayout.spacescardnoaccount.md)
+
+## SlottyMedia.Components.Partial.PostPage
+
+[CommentSubmissionForm](./slottymedia.components.partial.postpage.commentsubmissionform.md)

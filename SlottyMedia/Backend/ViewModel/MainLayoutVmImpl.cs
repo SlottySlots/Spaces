@@ -62,40 +62,14 @@ public class MainLayoutVmImpl : IMainLayoutVm
         try
         {
             var currentSession = _authService.GetCurrentSession();
-            if (currentSession != null)
-            {
-                var userId = Guid.Parse(currentSession.User!.Id!);
-                var userDao = await _userService.GetUserDaoById(userId);
-                var amountOfFriends = await _userService.GetCountOfUserFriends(userId);
-                var amountOfSpaces = await _userService.GetCountOfUserSpaces(userId);
-                if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
-                {
-                    _logger.LogError(
-                        $"User with mail {currentSession.User.Email} retrieved corrupt User entry from database!");
-                }
-                else
-                {
-                    var userInformationDto = new UserInformationDto
-                    {
-                        UserId = userDao.UserId!,
-                        Username = userDao.UserName!,
-                        Description = userDao.Description!,
-                        ProfilePic = userDao.ProfilePic,
-                        FriendsAmount = amountOfFriends,
-                        SpacesAmount = amountOfSpaces,
-                        CreatedAt = userDao.CreatedAt.LocalDateTime!
-                    };
-                    return userInformationDto;
-                }
-            }
-
-            return null;
+            if (currentSession != null) return await _userService.GetUserInfo(Guid.Parse(currentSession!.User!.Id!));
         }
         catch (Exception e)
         {
             _logger.LogError(e.Message);
-            return null;
         }
+
+        return null;
     }
 
     /// <summary>

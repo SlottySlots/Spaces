@@ -89,7 +89,7 @@ public class LikeService : ILikeService
     {
         try
         {
-            var likes = await _likeRepository.GetLikesForPost(Guid.Empty, postId
+            var likes = await _likeRepository.GetLikesForPost(postId
             );
             var userIds = new List<Guid>();
             foreach (var like in likes)

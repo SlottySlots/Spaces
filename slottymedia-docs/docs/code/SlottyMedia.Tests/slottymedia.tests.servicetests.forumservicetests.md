@@ -191,3 +191,59 @@ Tests that a ForumNotFoundException is thrown when a DatabaseMissingItemExceptio
 ```csharp
 public void GetTopForums_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()
 ```
+
+### **InsertForum_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()**
+
+Tests that a ForumGeneralException is thrown when a general exception is thrown during forum insertion.
+
+```csharp
+public void InsertForum_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()
+```
+
+### **DeleteForum_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()**
+
+Tests that a ForumGeneralException is thrown when a general exception is thrown during forum deletion.
+
+```csharp
+public void DeleteForum_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()
+```
+
+### **GetForumByName_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()**
+
+Tests that a ForumGeneralException is thrown when a general exception is thrown during forum retrieval by name.
+
+```csharp
+public void GetForumByName_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()
+```
+
+### **GetForumsByNameContaining_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()**
+
+Tests that a ForumGeneralException is thrown when a general exception is thrown during forum search by name.
+
+```csharp
+public void GetForumsByNameContaining_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()
+```
+
+### **GetForums_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()**
+
+Tests that a ForumGeneralException is thrown when a general exception is thrown during retrieval of all forums.
+
+```csharp
+public void GetForums_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()
+```
+
+### **DetermineRecentSpaces_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()**
+
+Tests that a ForumGeneralException is thrown when a general exception is thrown during retrieval of recent forums.
+
+```csharp
+public void DetermineRecentSpaces_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()
+```
+
+### **GetTopForums_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()**
+
+Tests that a ForumGeneralException is thrown when a general exception is thrown during retrieval of top forums.
+
+```csharp
+public void GetTopForums_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()
+```

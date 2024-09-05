@@ -48,7 +48,25 @@ public class Rules
                 return userName;
             })
             .RuleFor(u => u.Description, f => f.WaffleTitle())
-            .RuleFor(u => u.ProfilePic, f => null)
+            .RuleFor(u => u.ProfilePic, f =>
+            {
+                var rand = f.Random.Int(1, 2);
+                var url = string.Empty;
+                switch (rand)
+                {
+                    case 1:
+                        url = f.DiceBear().Lorelei("png", f.Random.Guid().ToString(), 256);
+                        break;
+                    case 2:
+                        url = f.DiceBear().Adventurer("png", f.Random.Guid().ToString(), 256);
+                        break;
+                    case 3:
+                        url = f.DiceBear().Bottts("png", f.Random.Guid().ToString(), 256);
+                        break;
+                }
+
+                return url;
+            })
             .RuleFor(u => u.CreatedAt, f => f.Date.Past())
             .RuleFor(u => u.Email, f =>
             {
@@ -169,7 +187,7 @@ public class Rules
                 return commentId;
             })
             .RuleFor(c => c.CreatorUserId, f => userIds[f.Random.Int(0, userIds.Count - 1)])
-            .RuleFor(c => c.PostId, f => postIds[f.Random.Int(0, userIds.Count - 1)])
+            .RuleFor(c => c.PostId, f => postIds[f.Random.Int(0, postIds.Count - 1)])
             .RuleFor(c => c.Content, f => f.Lorem.Paragraph())
             .RuleFor(c => c.CreatedAt, f => f.Date.Past());
         return commentFaker;

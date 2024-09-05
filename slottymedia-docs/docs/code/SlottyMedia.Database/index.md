@@ -2,8 +2,6 @@
 
 ## SlottyMedia.Database
 
-[IDatabaseRepository&lt;T&gt;](./slottymedia.database.idatabaserepository-1.md)
-
 [InitializeSupabaseClient](./slottymedia.database.initializesupabaseclient.md)
 
 ## SlottyMedia.Database.Daos
@@ -28,6 +26,8 @@
 
 [DatabaseIudActionException](./slottymedia.database.exceptions.databaseiudactionexception.md)
 
+[DatabaseJsonConvertFailed](./slottymedia.database.exceptions.databasejsonconvertfailed.md)
+
 [DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)
 
 [GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)
@@ -43,6 +43,8 @@
 ## SlottyMedia.Database.Repository
 
 [DatabaseRepository&lt;T&gt;](./slottymedia.database.repository.databaserepository-1.md)
+
+[IDatabaseRepository&lt;T&gt;](./slottymedia.database.repository.idatabaserepository-1.md)
 
 ## SlottyMedia.Database.Repository.CommentRepo
 

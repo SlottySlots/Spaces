@@ -1,4 +1,5 @@
 ﻿using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Exceptions;
 
 namespace SlottyMedia.Database.Repository.SearchRepo;
 
@@ -14,5 +15,7 @@ public interface IUserSeachRepository : IDatabaseRepository<UserDao>
     /// <param name="page">The page number.</param>
     /// <param name="pageSize">The size of the page.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of users.</returns>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public Task<List<UserDao>> GetUsersByUserName(string userName, int page, int pageSize);
 }

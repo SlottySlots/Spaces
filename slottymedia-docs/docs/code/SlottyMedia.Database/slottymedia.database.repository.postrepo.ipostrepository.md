@@ -5,10 +5,10 @@ Namespace: SlottyMedia.Database.Repository.PostRepo
 Interface for the Post Repository.
 
 ```csharp
-public interface IPostRepository : SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.PostsDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+public interface IPostRepository : SlottyMedia.Database.Repository.IDatabaseRepository`1[[SlottyMedia.Database.Daos.PostsDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
 ```
 
-Implements [IDatabaseRepository&lt;PostsDao&gt;](./slottymedia.database.idatabaserepository-1.md)
+Implements [IDatabaseRepository&lt;PostsDao&gt;](./slottymedia.database.repository.idatabaserepository-1.md)
 
 ## Methods
 
@@ -51,6 +51,27 @@ The size of the page.
 [Task&lt;List&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of elements.
 
+#### Exceptions
+
+[DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)<br>
+Thrown when the entity is not found in the database.
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when an unexpected error occurs.
+
+### **CountAllPosts()**
+
+Counts all existing posts.
+
+```csharp
+Task<int> CountAllPosts()
+```
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+The total number of existing posts
+
 ### **GetPostsByUserId(Guid, Int32, Int32)**
 
 Gets posts by a specific user with pagination.
@@ -74,6 +95,14 @@ The size of the page.
 
 [Task&lt;List&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of posts.
+
+#### Exceptions
+
+[DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)<br>
+Thrown when the entity is not found in the database.
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when an unexpected error occurs.
 
 ### **GetPostsByUserIdByForumId(Guid, Guid, Int32, Int32)**
 
@@ -102,6 +131,14 @@ The size of the page.
 [Task&lt;List&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of posts.
 
+#### Exceptions
+
+[DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)<br>
+Thrown when the entity is not found in the database.
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when an unexpected error occurs.
+
 ### **GetPostsByForumId(Guid, Int32, Int32)**
 
 Gets posts by a specific forum with pagination.
@@ -125,3 +162,11 @@ The size of the page.
 
 [Task&lt;List&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of posts.
+
+#### Exceptions
+
+[DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)<br>
+Thrown when the entity is not found in the database.
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when an unexpected error occurs.

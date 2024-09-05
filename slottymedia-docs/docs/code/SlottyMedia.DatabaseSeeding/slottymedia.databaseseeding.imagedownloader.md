@@ -25,7 +25,7 @@ public ImageDownloader()
 This method downloads an image from a URL and encodes it to a base64 string.
 
 ```csharp
-public static Task<string> DownloadAndEncodeImage(string imageUrl)
+internal static Task<string> DownloadAndEncodeImage(string imageUrl)
 ```
 
 #### Parameters

@@ -3,14 +3,32 @@
 @using SlottyMedia.Backend.ViewModel.Interfaces
 @inject IHomePageVm ViewModel
 @inject IAuthService AuthService
+@inject NavigationManager NavigationManager
 
 
 <PageTitle>Slotty Media | Home</PageTitle>
 
-@foreach (var post in ViewModel!.Posts)
+
+@if (AuthService.IsAuthenticated())
 {
-    <Post Dto="post" CurrentUserId=@_currentUserId/>
+    <PostSubmissionForm/>
 }
+
+
+<div class="w-full pb-5 flex flex-col items-center">
+    @foreach (var post in ViewModel!.Posts)
+    {
+        <Post Dto="post" CurrentUserId=@_currentUserId OnPostClick="() => _navigateToPostPage(post.PostId)"/>
+    }
+
+    @if (ViewModel.Posts.Count < ViewModel.TotalNumberOfPosts)
+    {
+        <button @onclick="ViewModel.LoadMorePosts" class="w-1/2 my-3 p-3 bg-raisin-black text-white border-none rounded-[12px]">
+            Load more posts
+        </button>
+    }
+</div>
+
 
 @code
 {
@@ -20,6 +38,11 @@
     {
         var _currentSession = AuthService.GetCurrentSession();
         _currentUserId = Guid.Parse(_currentSession!.User!.Id!);
-        await ViewModel.FetchPosts();
+        await ViewModel.Initialize();
+    }
+
+    private void _navigateToPostPage(Guid postId)
+    {
+        NavigationManager.NavigateTo($"/post/{postId}");
     }
 }

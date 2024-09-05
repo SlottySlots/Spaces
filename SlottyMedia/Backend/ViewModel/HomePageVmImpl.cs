@@ -9,21 +9,45 @@ public class HomePageVmImpl : IHomePageVm
 {
     private readonly IPostService _postService;
 
-    /// <summary>
-    ///     Ctor used for dep inject
-    /// </summary>
+    private int _currentPostPage;
+
+    /// <summary>Instantiates this class</summary>
     public HomePageVmImpl(IPostService postService)
     {
         _postService = postService;
     }
 
     /// <inheritdoc />
-    public List<PostDto> Posts { get; set; } = new();
+    public bool IsLoadingPage { get; private set; }
 
     /// <inheritdoc />
-    public async Task FetchPosts()
+    public bool IsLoadingPosts { get; private set; }
+
+    /// <inheritdoc />
+    public List<PostDto> Posts { get; private set; } = [];
+
+    /// <inheritdoc />
+    public int TotalNumberOfPosts { get; private set; }
+
+    /// <inheritdoc />
+    public async Task Initialize()
     {
-        Posts.Clear();
-        Posts = await _postService.GetAllPosts(1);
+        IsLoadingPage = true;
+        Posts = [];
+        _currentPostPage = 0;
+        TotalNumberOfPosts = await _postService.CountAllPosts();
+        IsLoadingPage = false;
+        await LoadMorePosts();
+    }
+
+    /// <inheritdoc />
+    public async Task LoadMorePosts()
+    {
+        IsLoadingPosts = true;
+        _currentPostPage++;
+        var results = await _postService.GetAllPosts(_currentPostPage);
+        foreach (var post in results)
+            Posts.Add(post);
+        IsLoadingPage = false;
     }
 }

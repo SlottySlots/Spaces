@@ -45,7 +45,7 @@ public interface IPostSubmissionFormVm
     ///     actually exists!
     /// </summary>
     /// <param name="spaceName">The name of the selected space (without hashtag!)</param>
-    Task HandleSpaceSelection(string spaceName);
+    void HandleSpaceSelection(string spaceName);
 
     /// <summary>
     ///     Handles an event that is triggered when the currently selected space is deselected.

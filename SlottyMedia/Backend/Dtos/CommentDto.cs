@@ -82,7 +82,7 @@ public class CommentDto
             $"Mapping CommentDao to CommentDto. Parameters: CommentID = {CommentId}, CreatorUserId = {CreatorUserId}, PostId = {PostId}, Content = {Content}, CreatedAt = {CreatedAt}");
 
         CommentId = comment.CommentId ?? Guid.Empty;
-        ParentComment = comment.ParentComment.Select(pc => new CommentDto().Mapper(pc)).ToList();
+        ParentComment = comment.ParentComment.Select(pc => new CommentDto().Mapper(pc!)).ToList();
         CreatorUserId = comment.CreatorUserId;
         PostId = comment.PostId ?? Guid.Empty;
         Content = comment.Content ?? string.Empty;

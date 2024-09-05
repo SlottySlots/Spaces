@@ -24,19 +24,24 @@ Task<SearchDto> SearchByUsername(string searchTerm, int page, int pagesize)
 Search Term used for wildcard selection
 
 `page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Current page retrieved (intervall times page)
+Current page retrieved (interval times page)
 
 `pagesize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Size of intervall
+Size of interval
 
 #### Returns
 
 [Task&lt;SearchDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 SearchDto
 
+#### Exceptions
+
+[SearchGeneralExceptions](./slottymedia.backend.exceptions.services.searchexceptions.searchgeneralexceptions.md)<br>
+Thrown when a general error occurs during the search.
+
 ### **SearchByTopic(String, Int32, Int32)**
 
-Search function to retrieve forums by topic
+Search function to retrieve forums by topic.
 
 ```csharp
 Task<SearchDto> SearchByTopic(string searchTerm, int page, int pagesize)
@@ -45,15 +50,20 @@ Task<SearchDto> SearchByTopic(string searchTerm, int page, int pagesize)
 #### Parameters
 
 `searchTerm` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-SearchTerm used for wildcard search
+Search Term used for wildcard search
 
 `page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Current page retrieved (intervall times page)
+Current page retrieved (interval times page)
 
 `pagesize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Size of intervall
+Size of interval
 
 #### Returns
 
 [Task&lt;SearchDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 SearchDto
+
+#### Exceptions
+
+[SearchGeneralExceptions](./slottymedia.backend.exceptions.services.searchexceptions.searchgeneralexceptions.md)<br>
+Thrown when a general error occurs during the search.

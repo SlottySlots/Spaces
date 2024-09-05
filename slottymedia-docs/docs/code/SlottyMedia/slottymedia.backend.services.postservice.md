@@ -145,6 +145,16 @@ public Task<List<PostDto>> GetAllPosts(int page, int pageSize)
 
 [Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
+### **CountAllPosts()**
+
+```csharp
+public Task<int> CountAllPosts()
+```
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
 ### **GetPostsByUserId(Guid, Int32, Int32)**
 
 ```csharp

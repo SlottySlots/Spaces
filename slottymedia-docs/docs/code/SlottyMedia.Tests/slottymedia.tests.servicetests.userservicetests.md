@@ -171,3 +171,59 @@ public Task GetCountOfUserSpaces()
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **FollowUserById_ShouldFollowUser()**
+
+Tests if FollowUserById method successfully follows a user.
+
+```csharp
+public Task FollowUserById_ShouldFollowUser()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **FollowUserById_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()**
+
+Tests if FollowUserById method throws UserIudException when DatabaseIudActionException is thrown.
+
+```csharp
+public void FollowUserById_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()
+```
+
+### **FollowUserById_ShouldThrowUserGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
+
+Tests if FollowUserById method throws UserGeneralException when GeneralDatabaseException is thrown.
+
+```csharp
+public void FollowUserById_ShouldThrowUserGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+```
+
+### **UnfollowUserById_ShouldUnfollowUser()**
+
+Tests if UnfollowUserById method successfully unfollows a user.
+
+```csharp
+public Task UnfollowUserById_ShouldUnfollowUser()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **UnfollowUserById_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()**
+
+Tests if UnfollowUserById method throws UserIudException when DatabaseIudActionException is thrown.
+
+```csharp
+public void UnfollowUserById_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()
+```
+
+### **UnfollowUserById_ShouldThrowUserGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
+
+Tests if UnfollowUserById method throws UserGeneralException when GeneralDatabaseException is thrown.
+
+```csharp
+public void UnfollowUserById_ShouldThrowUserGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+```
