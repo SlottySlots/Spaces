@@ -11,7 +11,7 @@
 
         <!-- profile picture -->
         <div @onclick="OnClickAvatar">
-            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Size="50"></Avatar>
+            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
         </div>
 
         <!-- username & time posted -->
@@ -142,7 +142,7 @@
 
     private void OnClickAvatar()
     {
-        NavigationManager.NavigateTo($"/profile?id={UserInformationDto.UserId.ToString()}");
+        NavigationManager.NavigateTo($"/profile/{UserInformationDto.UserId.ToString()}");
     }
 
     private void _navigateToProfile(Guid userId)
