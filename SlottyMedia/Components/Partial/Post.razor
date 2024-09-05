@@ -126,6 +126,7 @@
         if (Dto is not null)
         {
             _commentCount = await PostVm.GetCommentsCount(Dto.PostId);
+            _isLoading = false;
         }
 
     }
