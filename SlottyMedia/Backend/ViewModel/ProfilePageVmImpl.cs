@@ -2,6 +2,7 @@ using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Database.Pagination;
+using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
 
@@ -10,100 +11,116 @@ namespace SlottyMedia.Backend.ViewModel;
 /// </summary>
 public class ProfilePageVmImpl : IProfilePageVm
 {
+    private readonly IAuthService _authService;
+    private readonly Logging<MainLayoutVmImpl> _logger = new();
     private readonly IPostService _postService;
     private readonly IUserService _userService;
 
     /// <summary>
     ///     Ctor for dep inject
     /// </summary>
-    public ProfilePageVmImpl(IUserService userService, IPostService postService)
+    public ProfilePageVmImpl(IUserService userService, IPostService postService, IAuthService authService)
     {
         _userService = userService;
         _postService = postService;
+        _authService = authService;
     }
 
+    /// <inheritdoc />
+    public bool IsLoadingPage { get; private set; }
 
-    /// <summary>
-    ///     Gets common user information by id such as name, description, picture, ..
-    /// </summary>
-    /// <param name="userId">
-    ///     User Id to retrieve information from
-    /// </param>
-    /// <returns>
-    ///     UserInformationDto. Can be null when no information could be retrieved e.g. when user doesn't exist
-    /// </returns>
-    public async Task<UserInformationDto?> GetUserInfo(Guid userId)
+    /// <inheritdoc />
+    public bool IsLoadingPosts { get; private set; }
+
+    /// <inheritdoc />
+    public bool IsUserFollowed { get; private set; }
+
+    /// <inheritdoc />
+    public Guid? AuthPrincipalId { get; private set; }
+
+    /// <inheritdoc />
+    public UserInformationDto? UserInfo { get; private set; }
+
+    /// <inheritdoc />
+    public IPage<PostDto> Posts { get; private set; } = PageImpl<PostDto>.Empty();
+
+    /// <inheritdoc />
+    public async Task Initialize(Guid userId)
     {
-        return await _userService.GetUserInfo(userId);
+        IsLoadingPage = true;
+        _logger.LogInfo("Profile Page: Loading necessary user-related information...");
+        var authPrincipalIdStr = _authService.GetCurrentSession()?.User?.Id;
+        AuthPrincipalId = authPrincipalIdStr is null ? null : new Guid(authPrincipalIdStr);
+        await _loadUserInfo(userId);
+        await _loadIsUserFollowed();
+        _logger.LogInfo("Profile Page: Successfully loaded all user-related information");
+        IsLoadingPage = false;
+        await LoadPosts(0);
     }
 
-
-    /// <summary>
-    ///     Checks the follow relation of two users
-    /// </summary>
-    /// <param name="userIdToCheck">
-    ///     User that may be followed by the userIdLoggedIn
-    /// </param>
-    /// <param name="userIdLoggedIn">
-    ///     User that may have followed the another
-    /// </param>
-    /// <returns>
-    ///     Bool. Can be null whenever the ids are the same. Hence indicating a wrong usage.
-    /// </returns>
-    public async Task<bool?> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn)
+    /// <inheritdoc />
+    public async Task LoadPosts(int pageNumber)
     {
-        if (userIdToCheck != userIdLoggedIn)
-            return await _userService.UserFollowRelation(userIdToCheck, userIdLoggedIn);
-        return null;
+        IsLoadingPosts = true;
+        _logger.LogInfo($"Profile Page: Loading posts for user '{UserInfo!.Username}'. Loading page {pageNumber}...");
+        Posts = await _postService.GetPostsByUserId(
+            UserInfo.UserId!.Value,
+            PageRequest.Of(pageNumber, 10));
+        _logger.LogInfo($"Profile Page: Successfully loaded page {pageNumber}, which contains {Posts.Count()} posts");
+        IsLoadingPosts = false;
     }
 
-    /// <summary>
-    ///     Follows a user by its ids
-    /// </summary>
-    /// <param name="userIdFollows">
-    ///     User that tries to follow
-    /// </param>
-    /// <param name="userIdToFollow">
-    ///     User that will be followed by another
-    /// </param>
-    public async Task FollowUserById(Guid userIdFollows, Guid userIdToFollow)
+    /// <inheritdoc />
+    public async Task FollowThisUser()
     {
-        await _userService.FollowUserById(userIdFollows, userIdToFollow);
+        if (AuthPrincipalId is not null && UserInfo!.UserId is not null)
+        {
+            _logger.LogInfo($"Attempting to follow user '{UserInfo!.Username}'...");
+            await _userService.FollowUserById(AuthPrincipalId.Value, UserInfo.UserId.Value);
+            IsUserFollowed = true;
+            _logger.LogInfo($"Successfully followed user '{UserInfo!.Username}'");
+        }
     }
 
-    /// <summary>
-    ///     Unfollows a user
-    /// </summary>
-    /// <param name="userIdFollows">
-    ///     User that follows another
-    /// </param>
-    /// <param name="userIdToUnfollow">
-    ///     User that will be unfollowed
-    /// </param>
-    public async Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow)
+    /// <inheritdoc />
+    public async Task UnfollowThisUser()
     {
-        await _userService.UnfollowUserById(userIdFollows, userIdToUnfollow);
+        if (AuthPrincipalId is not null && UserInfo!.UserId is not null)
+        {
+            _logger.LogInfo($"Attempting to un-follow user '{UserInfo!.Username}'...");
+            await _userService.UnfollowUserById(AuthPrincipalId.Value, UserInfo.UserId.Value);
+            IsUserFollowed = true;
+            _logger.LogInfo($"Successfully un-followed user '{UserInfo!.Username}'");
+        }
     }
 
-
-    /// <summary>
-    ///     Gets post by another user by id
-    /// </summary>
-    /// <param name="userId">
-    ///     User the posts belongs to
-    /// </param>
-    /// <param name="startOfSet">
-    ///     Starting index on which the follows are retrieved (they are sorted by date)
-    /// </param>
-    /// <param name="endOfSet">
-    ///     Ending index used to slice the posts in a specific intervall
-    /// </param>
-    /// <returns>
-    ///     List of PostDtos
-    /// </returns>
-    public async Task<List<PostDto>> GetPostsByUserId(Guid userId, PageRequest pageRequest)
+    private async Task _loadUserInfo(Guid userId)
     {
-        var posts = await _postService.GetPostsByUserId(userId, pageRequest);
-        return posts.Content;
+        _logger.LogDebug($"Profile Page: Fetching user information for user with ID '{userId}'");
+        var userDao = await _userService.GetUserDaoById(userId);
+        var amountOfFriends = await _userService.GetCountOfUserFriends(userId);
+        var amountOfSpaces = await _userService.GetCountOfUserSpaces(userId);
+        _logger.LogDebug($"Profile Page: Successfully fetched all user information for user with ID '{userId}'");
+        UserInfo = new UserInformationDto
+        {
+            UserId = userDao.UserId!,
+            Username = userDao.UserName!,
+            Description = userDao.Description!,
+            ProfilePic = userDao.ProfilePic,
+            FriendsAmount = amountOfFriends,
+            SpacesAmount = amountOfSpaces,
+            CreatedAt = userDao.CreatedAt.LocalDateTime
+        };
+    }
+
+    private async Task _loadIsUserFollowed()
+    {
+        if (AuthPrincipalId is null)
+        {
+            IsUserFollowed = false;
+            return;
+        }
+
+        IsUserFollowed = await _userService.UserFollowRelation(UserInfo!.UserId!.Value, AuthPrincipalId!.Value);
     }
 }

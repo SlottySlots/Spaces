@@ -363,7 +363,7 @@
 
     private void NavigateToProfilePage()
     {
-        NavigationManager.NavigateTo($"/profile?id={AuthService.GetCurrentSession()!.User!.Id!}");
+        NavigationManager.NavigateTo($"/profile/{AuthService.GetCurrentSession()!.User!.Id!}");
     }
 
     private void NavigateToRootPage()

@@ -11,7 +11,7 @@
     @if (!_isLoading)
     {
         <div @onclick="OnClickAvatar">
-            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Size="50"></Avatar>
+            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
         </div>
     }
 
@@ -134,6 +134,7 @@
 
     protected override async void OnAfterRender(bool firstRender)
     {
+        //TODO ANpassen!!
         if (firstRender || UserInformationDto.Username == "Username is loading..")
         {
             var userInfo = await UserService.GetUserInfo(Guid.Parse(AuthService!.GetCurrentSession()!.User!.Id!));

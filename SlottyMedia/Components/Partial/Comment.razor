@@ -9,7 +9,7 @@
     <div class="w-full p-3 bg-white-100 rounded-[24px] flex flex-row gap-3">
         <!-- profile picture -->
         <div @onclick="OnClickAvatar">
-            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Size="50"></Avatar>
+            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
         </div>
 
 
@@ -21,11 +21,11 @@
             <h3 class="text-sm font-medium text-cadet-gray">
                 @(Dto!.CreatedAt.ToShortTimeString())
             </h3>
+        </div>
 
-            <!-- comment text -->
-            <div>
-                @(Dto!.Content)
-            </div>
+        <!-- comment text -->
+        <div class="break-words">
+            @(Dto!.Content)
         </div>
 
     </div>
@@ -78,7 +78,7 @@
 
     private void OnClickAvatar()
     {
-        NavigationManager.NavigateTo($"/profile?id={UserInformationDto.UserId.ToString()}");
+        NavigationManager.NavigateTo($"/profile/{UserInformationDto.UserId.ToString()}");
     }
 
 }
