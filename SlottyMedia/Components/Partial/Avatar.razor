@@ -71,7 +71,7 @@
     {
         var file = e.File;
 
-        if (file != null)
+        if (file.ContentType.Contains("image"))
         {
             var buffer = new byte[file.Size];
             await file.OpenReadStream().ReadAsync(buffer);

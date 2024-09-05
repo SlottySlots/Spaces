@@ -1,5 +1,4 @@
 ﻿using SlottyMedia.Backend.Dtos;
-using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.LoggingProvider;

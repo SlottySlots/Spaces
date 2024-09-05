@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Moq;
-using NUnit.Framework;
+
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
 using SlottyMedia.Database.Pagination;
-using Supabase.Gotrue;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+
 
 namespace SlottyMedia.Tests.Viewmodel
 {

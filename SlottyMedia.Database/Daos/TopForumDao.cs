@@ -20,9 +20,8 @@ public class TopForumDao : BaseModel
     /// <summary>
     ///     The constructor with parameters.
     /// </summary>
-    /// <param name="creatorUserId">The Id of the User who created the Forum</param>
     /// <param name="forumTopic">The Topic of the Forum</param>
-    public TopForumDao(Guid creatorUserId, string forumTopic)
+    public TopForumDao(string forumTopic)
     {
         ForumTopic = forumTopic;
     }

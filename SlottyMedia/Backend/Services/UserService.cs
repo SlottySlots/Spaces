@@ -413,7 +413,7 @@ public class UserService : IUserService
                     ProfilePic = userDao.ProfilePic,
                     FriendsAmount = amountOfFriends,
                     SpacesAmount = amountOfSpaces,
-                    CreatedAt = userDao.CreatedAt.LocalDateTime!
+                    CreatedAt = userDao.CreatedAt.LocalDateTime
                 };
                 return userInformationDto;
             }

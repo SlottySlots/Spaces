@@ -4,7 +4,6 @@
 @using SlottyMedia.Backend.Dtos
 @using SlottyMedia.Backend.ViewModel.Interfaces
 @using SlottyMedia.Database.Pagination
-@using Supabase.Gotrue
 @inject NavigationManager NavigationManager
 @inject IProfilePageVm ProfilePageVm
 @inject IAuthVm AuthService
@@ -45,7 +44,7 @@
         }
     </div>
 
-    @if (!_postsOfUser.IsNullOrEmpty() && _currentUserId != null)
+    @if (!_postsOfUser.IsNullOrEmpty() && _currentUserId != Guid.Empty)
     {
         @foreach (var post in _postsOfUser)
         {

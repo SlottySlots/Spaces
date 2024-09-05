@@ -27,7 +27,6 @@ public class MainLayoutVmImplTest
         _cookieServiceMock = new Mock<ICookieService>();
         _authService = new Mock<AuthService>(_client, _cookieServiceMock.Object);
         _mockUserRepository = new Mock<IUserRepository>();
-        var postServide = new Mock<IPostService>();
         _userService = new Mock<IUserService>();
         _vm = new MainLayoutVmImpl(_authService.Object, _userService.Object);
     }
@@ -126,9 +125,9 @@ public class MainLayoutVmImplTest
                 var serviceCall = await _vm.SetUserInfo();
                 Assert.That(serviceCall, Is.Not.Null);
                 Assert.That(serviceCall!.UserId, Is.EqualTo(userDao.UserId));
-                Assert.That(serviceCall!.Username, Is.EqualTo(userDao.UserName));
-                Assert.That(serviceCall!.Description, Is.EqualTo(userDao.Description));
-                Assert.That(serviceCall!.ProfilePic, Is.EqualTo(userDao.ProfilePic));
+                Assert.That(serviceCall.Username, Is.EqualTo(userDao.UserName));
+                Assert.That(serviceCall.Description, Is.EqualTo(userDao.Description));
+                Assert.That(serviceCall.ProfilePic, Is.EqualTo(userDao.ProfilePic));
             }
         );
         _authService.VerifyAll();
