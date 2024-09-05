@@ -1,80 +1,68 @@
 using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Components.Pages;
 using SlottyMedia.Database.Pagination;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 
 /// <summary>
-///     Interface used for profilepage viewmodel
+///     This ViewModel represents the <see cref="Profile"/> page.
 /// </summary>
 public interface IProfilePageVm
 {
     /// <summary>
-    ///     Gets UserInformationDto based on provided userId
+    ///     Whether the whole page is being loaded
     /// </summary>
-    /// <param name="userId">
-    ///     UserId to look up in db
-    /// </param>
-    /// <returns>
-    ///     UserInformationDto?
-    /// </returns>
-    public Task<UserInformationDto?> GetUserInfo(Guid userId);
+    public bool IsLoadingPage { get; }
+    
+    /// <summary>
+    ///     Whether the posts on the page are being loaded
+    /// </summary>
+    public bool IsLoadingPosts { get; }
+    
+    /// <summary>
+    ///     Whether the authentication principal is following the user whose profile is being visited
+    /// </summary>
+    public bool IsUserFollowed { get; }
+    
+    /// <summary>
+    ///     The authentication principal's user ID (i.e. the user that's logged in)
+    /// </summary>
+    public Guid? AuthPrincipalId { get; }
+    
+    /// <summary>
+    ///     Information about the user whose profile is being visited
+    /// </summary>
+    public UserInformationDto? UserInfo { get; }
+    
+    /// <summary>
+    ///     The posts that are currently being rendered
+    /// </summary>
+    public IPage<PostDto> Posts { get; }
 
     /// <summary>
-    ///     Checks whether a user follows another user based on their ids
+    ///     Initialized the page's state. This fetches all user-related information and loads
+    ///     the first posts for the visited user. Also initializes the <see cref="AuthPrincipalId"/>
+    ///     if one is present.
     /// </summary>
-    /// <param name="userIdToCheck">
-    ///     UserId to check
-    /// </param>
-    /// <param name="userIdLoggedIn">
-    ///     UserId that may follow the one to check
-    /// </param>
-    /// <returns>
-    ///     Boolean representing the state. Returns null if to check id is same as the logged in.
-    /// </returns>
-    public Task<bool?> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn);
+    /// <param name="userId">The ID of the user whose profile should be visited</param>
+    public Task Initialize(Guid userId);
 
     /// <summary>
-    ///     Method used to follow a user by id
+    ///     Has the authentication principal follow the visited profile. Does
+    ///     nothing if no authentication principal is present.
     /// </summary>
-    /// <param name="userIdFollows">
-    ///     The user that tries to follow another
-    /// </param>
-    /// <param name="userIdToFollow">
-    ///     The user that the user tries to follow
-    /// </param>
-    /// <returns>
-    ///     Task
-    /// </returns>
-    public Task FollowUserById(Guid userIdFollows, Guid userIdToFollow);
+    public Task FollowThisUser();
 
     /// <summary>
-    ///     Method used to unfollow a user by id
+    ///     Has the authentication principal unfollow the visited profile. Does
+    ///     nothing if no authentication principal is present.
     /// </summary>
-    /// <param name="userIdFollows">
-    ///     The user that tries to unfollow another
-    /// </param>
-    /// <param name="userIdToUnfollow">
-    ///     The user that the user tries to unfollow
-    /// </param>
-    /// <returns>
-    ///     Task
-    /// </returns>
-    public Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow);
+    public Task UnfollowThisUser();
 
     /// <summary>
-    ///     Gets posts of a user by their id and enables slicing via offsets
+    ///     Loads more <see cref="Posts"/> for the visited profile by changing the current
+    ///     page (as in pagination).
     /// </summary>
-    /// <param name="userId">
-    ///     User that the posts belong to
-    /// </param>
-    /// <param name="startOfSet">
-    ///     Startindex of the posts sorted by date
-    /// </param>
-    /// <param name="endOfSet">
-    ///     Endindex of the posts sorted by data
-    /// </param>
-    /// <returns>
-    ///     List of PostDtos
-    /// </returns>
-    public Task<List<PostDto>> GetPostsByUserId(Guid userId, PageRequest pageRequest);
+    /// <param name="pageNumber">The page number</param>
+    public Task LoadPosts(int pageNumber);
 }
