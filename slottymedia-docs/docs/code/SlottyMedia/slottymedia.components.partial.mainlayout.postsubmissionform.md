@@ -25,6 +25,8 @@ public IPostSubmissionFormVm ViewModel { get; set; }
 
 ### **ValueChanged**
 
+An event that is invoked whenever this input field's value changes
+
 ```csharp
 public EventCallback<string> ValueChanged { get; set; }
 ```
@@ -34,6 +36,8 @@ public EventCallback<string> ValueChanged { get; set; }
 EventCallback&lt;String&gt;<br>
 
 ### **UserInformationDto**
+
+The user information data transfer object
 
 ```csharp
 public UserInformationDto UserInformationDto { get; set; }
@@ -65,6 +69,8 @@ protected void BuildRenderTree(RenderTreeBuilder __builder)
 
 ### **OnAfterRender(Boolean)**
 
+Called after the component has been rendered. Fetches user information if it is the first render.
+
 ```csharp
 protected void OnAfterRender(bool firstRender)
 ```
@@ -72,3 +78,4 @@ protected void OnAfterRender(bool firstRender)
 #### Parameters
 
 `firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Indicates whether this is the first render

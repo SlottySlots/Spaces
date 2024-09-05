@@ -13,7 +13,7 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **PostId**
 
-The ID of the post to submit a comment for
+The ID of the post to submit a comment for.
 
 ```csharp
 public Nullable<Guid> PostId { get; set; }
@@ -25,7 +25,7 @@ public Nullable<Guid> PostId { get; set; }
 
 ### **ViewModel**
 
-The ViewModel for this component
+The ViewModel for this component.
 
 ```csharp
 public ICommentSubmissionFormVm ViewModel { get; set; }
@@ -36,6 +36,8 @@ public ICommentSubmissionFormVm ViewModel { get; set; }
 [ICommentSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.icommentsubmissionformvm.md)<br>
 
 ### **UserInformationDto**
+
+The user information data transfer object.
 
 ```csharp
 public UserInformationDto UserInformationDto { get; set; }
@@ -67,6 +69,8 @@ protected void BuildRenderTree(RenderTreeBuilder __builder)
 
 ### **OnAfterRender(Boolean)**
 
+Called after the component has been rendered. Fetches user information if it is the first render.
+
 ```csharp
 protected void OnAfterRender(bool firstRender)
 ```
@@ -74,3 +78,4 @@ protected void OnAfterRender(bool firstRender)
 #### Parameters
 
 `firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Indicates whether this is the first render.

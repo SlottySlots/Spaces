@@ -37,6 +37,8 @@ public IMainLayoutVm MainLayoutVm { get; set; }
 
 ### **UserInformationDto**
 
+The user information to be displayed
+
 ```csharp
 public UserInformationDto UserInformationDto { get; set; }
 ```

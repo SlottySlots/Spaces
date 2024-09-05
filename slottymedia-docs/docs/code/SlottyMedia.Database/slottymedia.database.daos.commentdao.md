@@ -36,18 +36,6 @@ public Nullable<Guid> ParentCommentId { get; set; }
 
 [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
-### **ParentComment**
-
-The list of parent comments.
-
-```csharp
-public List<CommentDao> ParentComment { get; set; }
-```
-
-#### Property Value
-
-[List&lt;CommentDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
-
 ### **CreatorUserId**
 
 The ID of the User who created the Comment. This is a Foreign Key to the User Table.

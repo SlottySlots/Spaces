@@ -93,6 +93,8 @@ Thrown when a general error occurs.
 
 ### **GetAllForums(PageRequest)**
 
+Retrieves all forums with pagination.
+
 ```csharp
 Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest)
 ```
@@ -100,10 +102,12 @@ Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest)
 #### Parameters
 
 `pageRequest` PageRequest<br>
+The pagination request details.
 
 #### Returns
 
 [Task&lt;IPage&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A paginated list of forums.
 
 ### **DetermineRecentSpaces()**
 

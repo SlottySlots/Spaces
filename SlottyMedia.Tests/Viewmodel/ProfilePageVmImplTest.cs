@@ -46,10 +46,8 @@ namespace SlottyMedia.Tests.Viewmodel
             var viewModel = new ProfilePageVmImpl(userServiceMock.Object, postServiceMock.Object, authServiceMock.Object);
 
             authServiceMock.Setup(a => a.GetCurrentSession()).Returns(new Session { User = new User { Id = userId.ToString() } });
-            userServiceMock.Setup(u => u.GetUserDaoById(It.IsAny<Guid>())).ReturnsAsync(new UserDao { UserId = userId, UserName = "testuser" });
-            userServiceMock.Setup(u => u.GetCountOfUserFriends(It.IsAny<Guid>())).ReturnsAsync(5);
-            userServiceMock.Setup(u => u.GetCountOfUserSpaces(It.IsAny<Guid>())).ReturnsAsync(3);
             postServiceMock.Setup(p => p.GetPostsByUserId(It.IsAny<Guid>(), It.IsAny<PageRequest>())).ReturnsAsync(PageImpl<PostDto>.Empty());
+            userServiceMock.Setup(u => u.GetUserInfo(It.IsAny<Guid>(), It.IsAny<bool>(), It.IsAny<bool>())).ReturnsAsync(new UserInformationDto() { UserId = userId, Username = "testuser", FriendsAmount = 5, SpacesAmount = 3});
 
             // Act
             await viewModel.Initialize(userId);
@@ -79,6 +77,7 @@ namespace SlottyMedia.Tests.Viewmodel
 
             userServiceMock.Setup(u => u.GetUserDaoById(It.IsAny<Guid>())).ReturnsAsync(new UserDao { UserId = userId, UserName = "testuser" });
             postServiceMock.Setup(p => p.GetPostsByUserId(It.IsAny<Guid>(), It.IsAny<PageRequest>())).ReturnsAsync(PageImpl<PostDto>.Empty());
+            userServiceMock.Setup(u => u.GetUserInfo(It.IsAny<Guid>(), It.IsAny<bool>(), It.IsAny<bool>())).ReturnsAsync(new UserInformationDto() { UserId = userId, Username = "testuser", FriendsAmount = 5, SpacesAmount = 3});
 
             await viewModel.Initialize(userId);
 
@@ -107,6 +106,8 @@ namespace SlottyMedia.Tests.Viewmodel
             userServiceMock.Setup(u => u.FollowUserById(It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(Task.CompletedTask);
             userServiceMock.Setup(u => u.GetUserDaoById(It.IsAny<Guid>())).ReturnsAsync(new UserDao { UserId = userId, UserName = "testuser" });
             postServiceMock.Setup(p => p.GetPostsByUserId(It.IsAny<Guid>(), It.IsAny<PageRequest>())).ReturnsAsync(PageImpl<PostDto>.Empty());
+            userServiceMock.Setup(u => u.GetUserInfo(It.IsAny<Guid>(), It.IsAny<bool>(), It.IsAny<bool>())).ReturnsAsync(new UserInformationDto() { UserId = userId, Username = "testuser" });
+
 
             await viewModel.Initialize(userId);
 
@@ -135,6 +136,8 @@ namespace SlottyMedia.Tests.Viewmodel
             userServiceMock.Setup(u => u.GetUserDaoById(It.IsAny<Guid>())).ReturnsAsync(new UserDao { UserId = userId, UserName = "testuser" });
             userServiceMock.Setup(u => u.FollowUserById(It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(Task.CompletedTask);
             postServiceMock.Setup(p => p.GetPostsByUserId(It.IsAny<Guid>(), It.IsAny<PageRequest>())).ReturnsAsync(PageImpl<PostDto>.Empty());
+            userServiceMock.Setup(u => u.GetUserInfo(It.IsAny<Guid>(), It.IsAny<bool>(), It.IsAny<bool>())).ReturnsAsync(new UserInformationDto() { UserId = userId, Username = "testuser" });
+
 
             await viewModel.Initialize(userId);
             await viewModel.FollowThisUser();

@@ -192,6 +192,7 @@ public Task<int> ExecuteCountQuery(IPostgrestTable<T> query, CountType countType
 The query to execute.
 
 `countType` CountType<br>
+Determines how exact the Count will be
 
 #### Returns
 
