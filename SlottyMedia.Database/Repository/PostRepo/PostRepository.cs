@@ -63,9 +63,10 @@ public class PostRepository : DatabaseRepository<PostsDao>, IPostRepository
     /// <inheritdoc />
     public async Task<int> CountAllPosts()
     {
-        return await Supabase
-            .From<PostsDao>()
-            .Count(Constants.CountType.Exact);
+        var query = Supabase
+            .From<PostsDao>();
+        return await ExecuteCountQuery(query, Constants.CountType.Exact);
+
     }
 
     /// <inheritdoc />

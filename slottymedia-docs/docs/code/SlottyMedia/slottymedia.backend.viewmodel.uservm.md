@@ -55,3 +55,17 @@ public Task UpdateUser(UserDto user)
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **GetUserInformation(Guid)**
+
+```csharp
+public Task<UserInformationDto> GetUserInformation(Guid userId)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;UserInformationDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

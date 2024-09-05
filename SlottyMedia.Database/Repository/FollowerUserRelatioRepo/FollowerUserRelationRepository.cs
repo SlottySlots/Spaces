@@ -28,12 +28,11 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
     {
         try
         {
-            var result = await Supabase
+            var query = Supabase
                 .From<FollowerUserRelationDao>()
-                .Filter(friends => friends.FollowedUserId!, Constants.Operator.Equals, userId.ToString())
-                .Count(Constants.CountType.Exact);
+                .Filter(friends => friends.FollowedUserId!, Constants.Operator.Equals, userId.ToString());
 
-            return result;
+            return await ExecuteCountQuery(query, Constants.CountType.Exact);
         }
         catch (Exception ex)
         {

@@ -45,3 +45,21 @@ The UserDto object to be updated.
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 A task that represents the asynchronous operation. The task result contains the updated UserDto object.
+
+### **GetUserInformation(Guid)**
+
+Asynchronously retrieves user information by their unique identifier.
+
+```csharp
+Task<UserInformationDto> GetUserInformation(Guid userId)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The unique identifier of the user.
+
+#### Returns
+
+[Task&lt;UserInformationDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains the user information data transfer object.

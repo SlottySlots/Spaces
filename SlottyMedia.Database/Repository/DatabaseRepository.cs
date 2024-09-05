@@ -183,6 +183,28 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
             return null!;
         }
     }
+    
+    /// <summary>
+    ///     Executes a single query on the specified table.
+    /// </summary>
+    /// <param name="query">The query to execute.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a single entity.</returns>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
+    public async Task<int> ExecuteCountQuery(IPostgrestTable<T> query, Constants.CountType countType)
+    {
+        try
+        {
+            var response = await query.Count(countType);
+
+            return response;
+        }
+        catch (Exception ex)
+        {
+            DatabaseRepositroyHelper.HandleException(ex, "retrieving Count");
+            return 0;
+        }
+    }
 
     /// <summary>
     ///     Executes a function on the database.

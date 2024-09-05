@@ -25,10 +25,11 @@ public class CommentRepository : DatabaseRepository<CommentDao>, ICommentReposit
     /// <inheritdoc />
     public async Task<int> CountCommentsInPost(Guid postId)
     {
-        return await Supabase
+        var query = Supabase
             .From<CommentDao>()
-            .Filter(comment => comment.PostId!, Constants.Operator.Equals, postId.ToString())
-            .Count(Constants.CountType.Exact);
+            .Filter(comment => comment.PostId!, Constants.Operator.Equals, postId.ToString());
+
+            return await ExecuteCountQuery(query, Constants.CountType.Exact);
     }
 
     /// <inheritdoc />

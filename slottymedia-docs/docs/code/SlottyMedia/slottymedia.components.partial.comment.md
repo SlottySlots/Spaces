@@ -25,6 +25,8 @@ public CommentDto Dto { get; set; }
 
 ### **UserInformationDto**
 
+The user information data transfer object to be rendered.
+
 ```csharp
 public UserInformationDto UserInformationDto { get; set; }
 ```
@@ -67,6 +69,8 @@ protected Task OnParametersSetAsync()
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **OnAfterRender(Boolean)**
+
+This method is called after the component has been rendered.
 
 ```csharp
 protected void OnAfterRender(bool firstRender)
