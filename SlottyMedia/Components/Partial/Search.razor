@@ -20,7 +20,7 @@
 
     @if (!MainLayoutVm.SearchPrompt.IsNullOrEmpty() && MainLayoutVm.SearchResults != null)
     {
-        @if (MainLayoutVm.SearchResults.Forums.Count > 0)
+        @if (MainLayoutVm.SearchResults.Forums.Count > 0 && MainLayoutVm.SearchResults.Users.Count <0)
         {
             <Card Class="absolute left-0 top-full mt-1 p-4 flex flex-col gap-3 w-[400px] z-10">
                 @foreach (var forum in MainLayoutVm.SearchResults.Forums)
@@ -31,13 +31,32 @@
                 }
             </Card>
         }
-        else if (MainLayoutVm.SearchResults.Users.Count > 0)
+        else if (MainLayoutVm.SearchResults.Users.Count > 0 && MainLayoutVm.SearchResults.Forums.Count <0)
         {
             <Card Class="absolute left-0 top-full mt-1 p-4 flex flex-col gap-3 w-[400px] z-10">
                 @foreach (var user in MainLayoutVm.SearchResults.Users)
                 {
                     <Tag OnClick="() => NavigateToUsersPage(user.UserId)">
                         @@ @user.Username
+                    </Tag>
+                }
+            </Card>
+        }
+        else
+        {
+            <Card Class="absolute left-0 top-full mt-1 p-4 flex flex-col gap-3 w-[400px] z-10">
+                @for (var i = 0; i < 5 && i < MainLayoutVm.SearchResults.Users.Count; i++)
+                {
+                    var user = MainLayoutVm.SearchResults.Users[i];
+                    <Tag OnClick="() => NavigateToUsersPage(user.UserId)">
+                        @@ @user.Username
+                    </Tag>
+                }
+                @for (var i = 0; i < 5 && i < MainLayoutVm.SearchResults.Forums.Count; i++)
+                {
+                    var forum = MainLayoutVm.SearchResults.Forums[i];
+                    <Tag OnClick="() => NavigateToSpacesPage(forum.Topic)">
+                        # @forum.Topic
                     </Tag>
                 }
             </Card>
@@ -77,3 +96,4 @@
     }
 
 }
+

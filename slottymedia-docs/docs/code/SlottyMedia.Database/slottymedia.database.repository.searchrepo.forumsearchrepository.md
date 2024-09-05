@@ -34,19 +34,15 @@ The database repository helper instance.
 
 ## Methods
 
-### **GetForumsByTopic(String, Int32, Int32)**
+### **GetForumsByTopic(String)**
 
 ```csharp
-public Task<List<ForumDao>> GetForumsByTopic(string topic, int page, int pageSize)
+public Task<List<ForumDao>> GetForumsByTopic(string topic)
 ```
 
 #### Parameters
 
 `topic` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 #### Returns
 

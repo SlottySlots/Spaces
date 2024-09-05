@@ -1,4 +1,7 @@
-﻿using SlottyMedia.Database.Daos;
+﻿using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Helper;
 using Supabase.Postgrest;
 using Client = Supabase.Client;
@@ -22,12 +25,19 @@ public class UserSearchRepository : DatabaseRepository<UserDao>, IUserSeachRepos
     }
 
     /// <inheritdoc />
-    public async Task<List<UserDao>> GetUsersByUserName(string userName, int page, int pageSize)
+    public async Task<List<UserDao>> GetUsersByUserName(string userName)
     {
-        var query = BaseQuerry
-            .Select(x => new object[] { x.UserId!, x.UserName! })
-            .Filter(user => user.UserName!, Constants.Operator.ILike, $"%{userName}%");
+        var result =
+            await ExecuteFunction("search_user", new Dictionary<string, object>() { { "search_term", userName } });
 
-        return await ExecuteQuery(ApplyPagination(query, page, pageSize));
+        if (result.ToString() is not null && !result.ToString().IsNullOrEmpty())
+        {
+            var user = JsonConvert.DeserializeObject<List<UserDao>>(result.ToString()!);
+            if (user is null)
+                throw new DatabaseJsonConvertFailed("Failed to convert the result to a list of top forums.");
+            return user;
+        }
+        
+        return new List<UserDao>();
     }
 }

@@ -48,10 +48,10 @@ public class SearchServiceTests
         var searchTerm = "testUser";
         var userResults = new List<UserDao> { new() { UserId = Guid.NewGuid() } };
 
-        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>()))
             .ReturnsAsync(userResults);
 
-        var result = await _searchService.SearchByUsername(searchTerm, 1, 10);
+        var result = await _searchService.SearchByUsername(searchTerm);
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Users.Count, Is.EqualTo(1));
@@ -68,10 +68,10 @@ public class SearchServiceTests
         var searchTerm = "testTopic";
         var topicResults = new List<ForumDao> { new() { ForumId = Guid.NewGuid() } };
 
-        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>()))
             .ReturnsAsync(topicResults);
 
-        var result = await _searchService.SearchByTopic(searchTerm, 1, 10);
+        var result = await _searchService.SearchByTopic(searchTerm);
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Forums.Count, Is.EqualTo(1));
@@ -89,14 +89,14 @@ public class SearchServiceTests
         var emptyUserResults = new List<UserDao>();
         var emptyForumResults = new List<ForumDao>();
 
-        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>()))
             .ReturnsAsync(emptyUserResults);
 
-        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>()))
             .ReturnsAsync(emptyForumResults);
 
-        var userResult = await _searchService.SearchByUsername(searchTerm, 1, 10);
-        var topicResult = await _searchService.SearchByTopic(searchTerm, 1, 10);
+        var userResult = await _searchService.SearchByUsername(searchTerm);
+        var topicResult = await _searchService.SearchByTopic(searchTerm);
 
         Assert.That(userResult, Is.Not.Null);
         Assert.That(userResult.Users, Is.Empty);
@@ -115,16 +115,16 @@ public class SearchServiceTests
     {
         var searchTerm = "testUser";
 
-        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>()))
             .ThrowsAsync(new Exception("Database error"));
 
-        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>()))
             .ThrowsAsync(new Exception("Database error"));
 
         Assert.ThrowsAsync<SearchGeneralExceptions>(
-            async () => await _searchService.SearchByUsername(searchTerm, 1, 10));
+            async () => await _searchService.SearchByUsername(searchTerm));
         Assert.ThrowsAsync<SearchGeneralExceptions>(
-            async () => await _searchService.SearchByTopic(searchTerm, 1, 10));
+            async () => await _searchService.SearchByTopic(searchTerm));
     }
 
     /// <summary>
@@ -136,16 +136,16 @@ public class SearchServiceTests
     {
         var searchTerm = "testUser";
 
-        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
-        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
         Assert.ThrowsAsync<SearchGeneralExceptions>(
-            async () => await _searchService.SearchByUsername(searchTerm, 1, 10));
+            async () => await _searchService.SearchByUsername(searchTerm));
         Assert.ThrowsAsync<SearchGeneralExceptions>(
-            async () => await _searchService.SearchByTopic(searchTerm, 1, 10));
+            async () => await _searchService.SearchByTopic(searchTerm));
     }
 
     /// <summary>
@@ -157,16 +157,16 @@ public class SearchServiceTests
     {
         var searchTerm = "testUser";
 
-        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
-        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<SearchGeneralExceptions>(
-            async () => await _searchService.SearchByUsername(searchTerm, 1, 10));
+            async () => await _searchService.SearchByUsername(searchTerm));
         Assert.ThrowsAsync<SearchGeneralExceptions>(
-            async () => await _searchService.SearchByTopic(searchTerm, 1, 10));
+            async () => await _searchService.SearchByTopic(searchTerm));
     }
 
     /// <summary>
@@ -177,7 +177,7 @@ public class SearchServiceTests
     {
         var searchTerm = string.Empty;
 
-        var result = await _searchService.SearchByUsername(searchTerm, 1, 10);
+        var result = await _searchService.SearchByUsername(searchTerm);
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Users, Is.Empty);
@@ -191,7 +191,7 @@ public class SearchServiceTests
     {
         var searchTerm = string.Empty;
 
-        var result = await _searchService.SearchByTopic(searchTerm, 1, 10);
+        var result = await _searchService.SearchByTopic(searchTerm);
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Forums, Is.Empty);
@@ -207,10 +207,10 @@ public class SearchServiceTests
         var searchTerm = "@testUser";
         var userResults = new List<UserDao> { new() { UserId = Guid.NewGuid() } };
 
-        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockUserSearchRepository.Setup(x => x.GetUsersByUserName(It.IsAny<string>()))
             .ReturnsAsync(userResults);
 
-        var result = await _searchService.SearchByUsername(searchTerm, 1, 10);
+        var result = await _searchService.SearchByUsername(searchTerm);
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Users.Count, Is.EqualTo(1));
@@ -227,10 +227,10 @@ public class SearchServiceTests
         var searchTerm = "#testTopic";
         var topicResults = new List<ForumDao> { new() { ForumId = Guid.NewGuid() } };
 
-        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
+        _mockForumSearchRepository.Setup(x => x.GetForumsByTopic(It.IsAny<string>()))
             .ReturnsAsync(topicResults);
 
-        var result = await _searchService.SearchByTopic(searchTerm, 1, 10);
+        var result = await _searchService.SearchByTopic(searchTerm);
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Forums.Count, Is.EqualTo(1));

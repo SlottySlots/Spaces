@@ -31,7 +31,7 @@ public class SearchService : ISearchService
     }
 
     /// <inheritdoc />
-    public async Task<SearchDto> SearchByUsername(string searchTerm, int page, int pagesize)
+    public async Task<SearchDto> SearchByUsername(string searchTerm)
     {
         try
         {
@@ -39,12 +39,11 @@ public class SearchService : ISearchService
 
             if (searchTerm.Length == 0)
                 return new SearchDto();
-            if (searchTerm[0] == '@') searchTerm = searchTerm.Substring(1);
+            
+            var userResults = await _userSearchRepository.GetUsersByUserName(searchTerm);
 
-            var userResults = await _userSearchRepository.GetUsersByUserName(searchTerm, page, pagesize);
-
-            if (userResults is null || !userResults.Any())
-                userResults = new List<UserDao>();
+            if (!userResults.Any())
+                return new SearchDto();
 
             var searchResult = new SearchDto();
 
@@ -71,7 +70,7 @@ public class SearchService : ISearchService
     }
 
     /// <inheritdoc />
-    public async Task<SearchDto> SearchByTopic(string searchTerm, int page, int pagesize)
+    public async Task<SearchDto> SearchByTopic(string searchTerm)
     {
         try
         {
@@ -79,12 +78,11 @@ public class SearchService : ISearchService
 
             if (searchTerm.Length == 0)
                 return new SearchDto();
-            if (searchTerm[0] == '#') searchTerm = searchTerm.Substring(1);
 
-            var topicResults = await _forumSearchRepository.GetForumsByTopic(searchTerm, page, pagesize);
+            var topicResults = await _forumSearchRepository.GetForumsByTopic(searchTerm);
 
-            if (topicResults is null || !topicResults.Any())
-                topicResults = new List<ForumDao>();
+            if (!topicResults.Any())
+                return new SearchDto();
 
             var searchResult = new SearchDto();
 

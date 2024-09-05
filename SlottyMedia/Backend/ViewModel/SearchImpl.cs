@@ -43,9 +43,15 @@ public class SearchImpl : ISearchVm
                 if (newValue is not null)
                 {
                     if (newValue.StartsWith("#"))
-                        SearchResults = await _searchService.SearchByTopic(newValue, 1, 10);
+                        SearchResults = await _searchService.SearchByTopic(newValue);
                     else if (newValue.StartsWith("@"))
-                        SearchResults = await _searchService.SearchByUsername(newValue, 1, 10);
+                        SearchResults = await _searchService.SearchByUsername(newValue);
+                    else
+                    {
+                        SearchResults = await _searchService.SearchByUsername(newValue);
+                        var topicResults = await _searchService.SearchByTopic(newValue);
+                        SearchResults.Forums.AddRange(topicResults.Forums);
+                    }
                 }
             }
         }

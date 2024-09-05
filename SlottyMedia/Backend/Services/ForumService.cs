@@ -117,7 +117,7 @@ public class ForumService : IForumService
         {
             Logger.LogDebug(
                 $"Fetching all forums containing the substring '{name}' (page {page} with size {pageSize})");
-            var forums = await _searchService.SearchByTopic(name, page, pageSize);
+            var forums = await _searchService.SearchByTopic(name);
 
             return forums.Forums;
         }

@@ -17,5 +17,6 @@ public interface IUserSeachRepository : IDatabaseRepository<UserDao>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of users.</returns>
     /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
     /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
-    public Task<List<UserDao>> GetUsersByUserName(string userName, int page, int pageSize);
+    /// <exception cref="DatabaseJsonConvertFailed">Thrown when the Database Result was not able to be converted to a Class Dao</exception>
+    public Task<List<UserDao>> GetUsersByUserName(string userName);
 }

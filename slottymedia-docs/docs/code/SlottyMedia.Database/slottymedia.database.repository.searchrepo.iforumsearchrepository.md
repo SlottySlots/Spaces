@@ -12,24 +12,18 @@ Implements [IDatabaseRepository&lt;ForumDao&gt;](./slottymedia.database.reposito
 
 ## Methods
 
-### **GetForumsByTopic(String, Int32, Int32)**
+### **GetForumsByTopic(String)**
 
 Gets forums by a specific topic with pagination.
 
 ```csharp
-Task<List<ForumDao>> GetForumsByTopic(string topic, int page, int pageSize)
+Task<List<ForumDao>> GetForumsByTopic(string topic)
 ```
 
 #### Parameters
 
 `topic` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The topic to search for.
-
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The page number.
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The size of the page.
 
 #### Returns
 
@@ -43,3 +37,6 @@ Thrown when the entity is not found in the database.
 
 [GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
 Thrown when an unexpected error occurs.
+
+[DatabaseJsonConvertFailed](./slottymedia.database.exceptions.databasejsonconvertfailed.md)<br>
+Thrown when the Database Result was not able to be converted to a Class Dao

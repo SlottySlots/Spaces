@@ -177,7 +177,7 @@ public class ForumServiceTests
         };
         var forumDtos = forumDaos.Select(f => new ForumDto().Mapper(f)).ToList();
 
-        _mockSearchService.Setup(x => x.SearchByTopic(forumName, 1, 10))
+        _mockSearchService.Setup(x => x.SearchByTopic(forumName))
             .ReturnsAsync(new SearchDto { Forums = forumDtos });
 
         var result = await _forumService.GetForumsByNameContaining(forumName, 1);
@@ -193,7 +193,7 @@ public class ForumServiceTests
     {
         var forumName = "Test";
 
-        _mockSearchService.Setup(x => x.SearchByTopic(forumName, 1, 10))
+        _mockSearchService.Setup(x => x.SearchByTopic(forumName))
             .ThrowsAsync(new DatabaseMissingItemException());
 
         Assert.ThrowsAsync<ForumNotFoundException>(async () =>
@@ -339,7 +339,7 @@ public class ForumServiceTests
     {
         var forumName = "Test";
 
-        _mockSearchService.Setup(x => x.SearchByTopic(forumName, 1, 10)).ThrowsAsync(new Exception());
+        _mockSearchService.Setup(x => x.SearchByTopic(forumName)).ThrowsAsync(new Exception());
 
         Assert.ThrowsAsync<ForumGeneralException>(async () =>
             await _forumService.GetForumsByNameContaining(forumName, 1));

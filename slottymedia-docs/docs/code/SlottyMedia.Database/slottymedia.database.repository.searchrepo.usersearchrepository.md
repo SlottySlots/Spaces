@@ -34,19 +34,15 @@ The database repository helper instance.
 
 ## Methods
 
-### **GetUsersByUserName(String, Int32, Int32)**
+### **GetUsersByUserName(String)**
 
 ```csharp
-public Task<List<UserDao>> GetUsersByUserName(string userName, int page, int pageSize)
+public Task<List<UserDao>> GetUsersByUserName(string userName)
 ```
 
 #### Parameters
 
 `userName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 #### Returns
 

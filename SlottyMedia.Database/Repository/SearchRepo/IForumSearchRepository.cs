@@ -17,5 +17,6 @@ public interface IForumSearchRepository : IDatabaseRepository<ForumDao>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of forums.</returns>
     /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
     /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
-    public Task<List<ForumDao>> GetForumsByTopic(string topic, int page, int pageSize);
+    /// <exception cref="DatabaseJsonConvertFailed">Thrown when the Database Result was not able to be converted to a Class Dao</exception>
+    public Task<List<ForumDao>> GetForumsByTopic(string topic);
 }
