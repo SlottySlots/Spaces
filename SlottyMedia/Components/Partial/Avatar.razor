@@ -63,7 +63,7 @@
     private async Task OnFileSelected(InputFileChangeEventArgs e)
     {
         var file = e.File;
-        
+
         if (file.ContentType.Contains("image"))
         {
             var buffer = new byte[file.Size];
@@ -72,9 +72,8 @@
             {
                 var base64String = Convert.ToBase64String(buffer);
                 Base64Png = base64String;
-                await Base64Callback.InvokeAsync(base64String);   
+                await Base64Callback.InvokeAsync(base64String);
             }
-
         }
     }
 

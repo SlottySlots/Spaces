@@ -126,7 +126,7 @@ public class ForumService : IForumService
             Logger.LogError($"A general database error occurred: {ex.Message}");
             throw new ForumGeneralException("An error occurred while retrieving the forums.", ex);
         }
-        catch(DatabasePaginationFailedException ex)
+        catch (DatabasePaginationFailedException ex)
         {
             Logger.LogError($"An error occurred while paginating the forums: {ex.Message}");
             throw new ForumGeneralException("An error occurred while paginating the forums.", ex);

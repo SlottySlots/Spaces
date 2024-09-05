@@ -57,13 +57,15 @@ else
 }
 
 @code{
-    /// <summary>
-    /// The user id of the profile page
-    /// </summary>
-    [Parameter] public Guid UserId { get; set; }
 
     /// <summary>
-    /// Called when the component's parameters are set. Initializes the profile page view model with the user ID.
+    ///     The user id of the profile page
+    /// </summary>
+    [Parameter]
+    public Guid UserId { get; set; }
+
+    /// <summary>
+    ///     Called when the component's parameters are set. Initializes the profile page view model with the user ID.
     /// </summary>
     protected override async Task OnParametersSetAsync()
     {
@@ -71,7 +73,7 @@ else
     }
 
     /// <summary>
-    /// Navigates to the post page with the specified post ID.
+    ///     Navigates to the post page with the specified post ID.
     /// </summary>
     /// <param name="postId">The ID of the post to navigate to.</param>
     private void _navigateToPostPage(Guid postId)
@@ -80,7 +82,7 @@ else
     }
 
     /// <summary>
-    /// Handles the follow button click event. Follows or unfollows the user based on the current state.
+    ///     Handles the follow button click event. Follows or unfollows the user based on the current state.
     /// </summary>
     private async Task _handleFollowButtonClicked()
     {
@@ -90,4 +92,5 @@ else
             await ProfilePageVm.FollowThisUser();
         NavigationManager.Refresh(true);
     }
+
 }

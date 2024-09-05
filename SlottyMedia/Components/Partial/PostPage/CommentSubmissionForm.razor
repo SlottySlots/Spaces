@@ -58,30 +58,30 @@
 @code {
 
     /// <summary>
-    /// The ID of the post to submit a comment for.
+    ///     The ID of the post to submit a comment for.
     /// </summary>
     [Parameter]
     public Guid? PostId { get; set; }
 
     /// <summary>
-    /// The ViewModel for this component.
+    ///     The ViewModel for this component.
     /// </summary>
     [Inject]
     [SupplyParameterFromForm]
     public ICommentSubmissionFormVm? ViewModel { get; set; }
 
     /// <summary>
-    /// The user information data transfer object.
+    ///     The user information data transfer object.
     /// </summary>
     public UserInformationDto UserInformationDto { get; set; } = new(true);
 
     /// <summary>
-    /// Indicates whether the component is loading.
+    ///     Indicates whether the component is loading.
     /// </summary>
     private bool _isLoading = true;
 
     /// <summary>
-    /// Called after the component has been rendered. Fetches user information if it is the first render.
+    ///     Called after the component has been rendered. Fetches user information if it is the first render.
     /// </summary>
     /// <param name="firstRender">Indicates whether this is the first render.</param>
     protected override async void OnAfterRender(bool firstRender)
@@ -99,7 +99,7 @@
     }
 
     /// <summary>
-    /// Navigates to the user's profile page when the avatar is clicked.
+    ///     Navigates to the user's profile page when the avatar is clicked.
     /// </summary>
     private void OnClickAvatar()
     {

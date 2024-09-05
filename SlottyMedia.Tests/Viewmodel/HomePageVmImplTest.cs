@@ -7,7 +7,7 @@ using SlottyMedia.Database.Pagination;
 namespace SlottyMedia.Tests.Viewmodel;
 
 /// <summary>
-/// Tests for the HomePageVmImpl class.
+///     Tests for the HomePageVmImpl class.
 /// </summary>
 [TestFixture]
 public class HomePageVmImplTests

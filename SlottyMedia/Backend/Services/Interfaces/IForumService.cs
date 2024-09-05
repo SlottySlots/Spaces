@@ -37,7 +37,7 @@ public interface IForumService
     /// <exception cref="ForumGeneralException">Thrown when a general error occurs.</exception>
     Task<ForumDto> GetForumByName(string forumName);
 
-    
+
     /// <summary>
     ///     Retrieves all forums with pagination.
     /// </summary>

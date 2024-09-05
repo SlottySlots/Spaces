@@ -49,7 +49,7 @@ public class SearchService : ISearchService
             throw new SearchGeneralExceptions(
                 $"A database error occurred while searching for users or topics. Term {searchTerm}", ex);
         }
-        catch(DatabasePaginationFailedException ex)
+        catch (DatabasePaginationFailedException ex)
         {
             throw new SearchGeneralExceptions(
                 $"An error occurred during the Pagination for search results with term {searchTerm}", ex);
@@ -80,7 +80,7 @@ public class SearchService : ISearchService
             throw new SearchGeneralExceptions(
                 $"A database error occurred while searching for users or topics. Term {searchTerm}", ex);
         }
-        catch(DatabasePaginationFailedException ex)
+        catch (DatabasePaginationFailedException ex)
         {
             throw new SearchGeneralExceptions(
                 $"An error occurred during the Pagination for search results with term {searchTerm}", ex);

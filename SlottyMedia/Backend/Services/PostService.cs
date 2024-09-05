@@ -155,7 +155,7 @@ public class PostService : IPostService
             Logger.LogError($"No posts found: {ex.Message}");
             throw new PostNotFoundException("No posts found.", ex);
         }
-        catch(DatabasePaginationFailedException ex)
+        catch (DatabasePaginationFailedException ex)
         {
             Logger.LogError($"An error occurred during the Pagination for all posts: {ex.Message}");
             throw new PostGeneralException("An error occurred during the Pagination for all posts.", ex);
@@ -203,7 +203,7 @@ public class PostService : IPostService
                 $"A database error occurred while fetching the posts. UserID {userId}",
                 ex);
         }
-        catch(DatabasePaginationFailedException ex)
+        catch (DatabasePaginationFailedException ex)
         {
             throw new PostGeneralException(
                 $"An error occurred during the Pagination for posts of user with ID {userId}",
@@ -238,7 +238,7 @@ public class PostService : IPostService
                 $"A database error occurred while fetching the posts. UserID {forumId}",
                 ex);
         }
-        catch(DatabasePaginationFailedException ex)
+        catch (DatabasePaginationFailedException ex)
         {
             throw new PostGeneralException(
                 $"An error occurred during the Pagination for posts of forum with ID {forumId}",

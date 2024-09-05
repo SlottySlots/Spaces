@@ -3,7 +3,7 @@ using SlottyMedia.LoggingProvider;
 namespace SlottyMedia.Database.Exceptions;
 
 /// <summary>
-///     This exception is thrown when the Pagination fails. 
+///     This exception is thrown when the Pagination fails.
 /// </summary>
 public class DatabasePaginationFailedException : BaseException<DatabasePaginationFailedException>
 {
