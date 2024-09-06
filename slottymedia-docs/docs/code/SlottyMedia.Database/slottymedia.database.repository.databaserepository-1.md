@@ -73,6 +73,20 @@ public Task<List<T>> GetAllElements()
 
 Task&lt;List&lt;T&gt;&gt;<br>
 
+### **GetAllElements(PageRequest)**
+
+```csharp
+public Task<IPage<T>> GetAllElements(PageRequest pageRequest)
+```
+
+#### Parameters
+
+`pageRequest` [PageRequest](./slottymedia.database.pagination.pagerequest.md)<br>
+
+#### Returns
+
+Task&lt;IPage&lt;T&gt;&gt;<br>
+
 ### **AddElement(T)**
 
 ```csharp
@@ -219,22 +233,24 @@ Thrown when the items could not be retrieved from the database.
 [GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
 Thrown when an unexpected error occurs.
 
-### **ApplyPagination(IPostgrestTable&lt;T&gt;, Int32, Int32)**
+### **ApplyPagination(Func&lt;IPostgrestTable&lt;T&gt;&gt;, PageRequest)**
 
 This method applies pagination to a query.
 
 ```csharp
-protected IPostgrestTable<T> ApplyPagination(IPostgrestTable<T> query, int page, int pageSize)
+protected Task<IPage<T>> ApplyPagination(Func<IPostgrestTable<T>> queryBuilder, PageRequest pageRequest)
 ```
 
 #### Parameters
 
-`query` IPostgrestTable&lt;T&gt;<br>
+`queryBuilder` Func&lt;IPostgrestTable&lt;T&gt;&gt;<br>
+A function that builds the needed query. This function needs to return a different
+ object on each invocation, otherwise the pagination will break!
 
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+`pageRequest` [PageRequest](./slottymedia.database.pagination.pagerequest.md)<br>
+The page request
 
 #### Returns
 
-IPostgrestTable&lt;T&gt;<br>
+Task&lt;IPage&lt;T&gt;&gt;<br>
+The [IPage&lt;T&gt;](./slottymedia.database.pagination.ipage-1.md) that corresponds to the given request

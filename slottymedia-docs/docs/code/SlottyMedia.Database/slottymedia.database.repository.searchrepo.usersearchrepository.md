@@ -34,16 +34,18 @@ The database repository helper instance.
 
 ## Methods
 
-### **GetUsersByUserName(String)**
+### **GetUsersByUserName(String, PageRequest)**
 
 ```csharp
-public Task<List<UserDao>> GetUsersByUserName(string userName)
+public Task<IPage<UserDao>> GetUsersByUserName(string userName, PageRequest pageRequest)
 ```
 
 #### Parameters
 
 `userName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+`pageRequest` [PageRequest](./slottymedia.database.pagination.pagerequest.md)<br>
+
 #### Returns
 
-[Task&lt;List&lt;UserDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;UserDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

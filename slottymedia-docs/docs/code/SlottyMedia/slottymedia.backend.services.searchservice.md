@@ -31,30 +31,34 @@ Repo used to retrieve search results specific to a forum
 
 ## Methods
 
-### **SearchByUsername(String)**
+### **SearchByUsernameContaining(String, PageRequest)**
 
 ```csharp
-public Task<SearchDto> SearchByUsername(string searchTerm)
+public Task<IPage<UserDto>> SearchByUsernameContaining(string searchTerm, PageRequest pageRequest)
 ```
 
 #### Parameters
 
 `searchTerm` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+`pageRequest` PageRequest<br>
+
 #### Returns
 
-[Task&lt;SearchDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;UserDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **SearchByTopic(String)**
+### **SearchByForumTopicContaining(String, PageRequest)**
 
 ```csharp
-public Task<SearchDto> SearchByTopic(string searchTerm)
+public Task<IPage<ForumDto>> SearchByForumTopicContaining(string searchTerm, PageRequest pageRequest)
 ```
 
 #### Parameters
 
 `searchTerm` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+`pageRequest` PageRequest<br>
+
 #### Returns
 
-[Task&lt;SearchDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

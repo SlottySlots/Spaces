@@ -31,20 +31,14 @@ else
         }
 
         <!-- all comments that were loaded -->
-        @foreach (var comment in ViewModel.Comments)
-        {
-            <div class="w-full px-5">
-                <Comment Dto="comment"/>
-            </div>
-        }
-
-        <!-- button to load more comments (if available) -->
-        @if (ViewModel.Comments.Count < ViewModel.TotalNumberOfComments)
-        {
-            <button @onclick="ViewModel.LoadMoreComments" class="w-1/2 p-3 bg-raisin-black text-white border-none rounded-[12px]">
-                Load more comments
-            </button>
-        }
+        <Pagination Page="ViewModel!.Comments" OnPageFetch="ViewModel!.LoadCommentsPage" Class="w-full">
+            @foreach (var comment in ViewModel.Comments)
+            {
+                <div class="w-full px-5">
+                    <Comment Dto="comment"/>
+                </div>
+            }
+        </Pagination>
 
     </div>
 }
@@ -75,7 +69,7 @@ else
     protected override async Task OnParametersSetAsync()
     {
         if (PostId is not null)
-            await ViewModel!.LoadPage(PostId.Value);
+            await ViewModel!.Initialize(PostId.Value);
     }
 
 }

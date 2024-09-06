@@ -1,38 +1,35 @@
-@page "/profile"
-@using System.Web
-@using Microsoft.IdentityModel.Tokens
-@using SlottyMedia.Backend.Dtos
-@using SlottyMedia.Backend.Services.Interfaces
+@page "/profile/{UserId:guid}"
 @using SlottyMedia.Backend.ViewModel.Interfaces
-@using Supabase.Gotrue
-@inject NavigationManager NavigationManager
+
 @inject IProfilePageVm ProfilePageVm
-@inject IAuthService AuthService
-@if (!_invalidIdFlag)
+@inject NavigationManager NavigationManager
+
+
+@if (!ProfilePageVm.IsLoadingPage)
 {
     <div class="flex border-b border-athens-gray py-4 w-full">
         <div class="px-4">
-            <Avatar Base64PNG="@UserInformationDto.ProfilePic"></Avatar>
+            <Avatar Base64PNG="@ProfilePageVm.UserInfo!.ProfilePic"></Avatar>
         </div>
 
         <div class="px-4 flex flex-col gap-3">
             <h1 class="text-3xl font-medium w-1/4">
-                @UserInformationDto.Username
+                @ProfilePageVm.UserInfo!.Username
             </h1>
 
-            <p class="text-lg">@UserInformationDto.Description</p>
+            <p class="text-lg">@ProfilePageVm.UserInfo.Description</p>
 
             <div class="flex w-1/2">
-                <h3 class="text-sm text-cadet-gray w-full">Friends: @UserInformationDto.FriendsAmount</h3>
-                <h3 class="text-sm text-cadet-gray w-full">Spaces: @UserInformationDto.SpacesAmount</h3>
-                <h3 class="text-sm text-cadet-gray w-full">Joined at: @UserInformationDto.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
+                <h3 class="text-sm text-cadet-gray w-full">Friends: @ProfilePageVm.UserInfo.FriendsAmount</h3>
+                <h3 class="text-sm text-cadet-gray w-full">Spaces: @ProfilePageVm.UserInfo.SpacesAmount</h3>
+                <h3 class="text-sm text-cadet-gray w-full">Joined at: @ProfilePageVm.UserInfo.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
             </div>
         </div>
-        @if (_followsUserRetrieved != null)
+        @if (ProfilePageVm.AuthPrincipalId is not null)
         {
             <div class="w-1/4">
-                <HotButton OnClick="FollowButtonClicked" Type="button" Class="w-full">
-                    @if (_followsUserRetrieved == true)
+                <HotButton OnClick="_handleFollowButtonClicked" Type="button" Class="w-full">
+                    @if (ProfilePageVm.IsUserFollowed)
                     {
                         <p>Unfollow</p>
                     }
@@ -45,12 +42,14 @@
         }
     </div>
 
-    @if (!_postsOfUser.IsNullOrEmpty() && _currentSession != null)
+    @if (!ProfilePageVm.IsLoadingPosts)
     {
-        @foreach (var post in _postsOfUser)
-        {
-            <Post Dto="post" CurrentUserId=@(Guid.Parse(_currentSession!.User!.Id!))/>
-        }
+        <Pagination Page="ProfilePageVm.Posts" OnPageFetch="ProfilePageVm.LoadPosts" Class="w-full">
+            @foreach (var post in ProfilePageVm.Posts)
+            {
+                <Post Dto="post" CurrentUserId="ProfilePageVm.AuthPrincipalId!.Value" OnPostClick="() => _navigateToPostPage(post.PostId)"/>
+            }
+        </Pagination>
     }
 }
 else
@@ -60,90 +59,25 @@ else
 
 
 @code{
-    private Guid _profileUserId;
+    [Parameter] public Guid UserId { get; set; }
 
-    private Session? _currentSession;
-
-    private bool? _followsUserRetrieved;
-
-    private bool _invalidIdFlag;
-
-    private List<PostDto> _postsOfUser = new();
-
-
-    public UserInformationDto UserInformationDto { get; set; } = new()
+    protected override async Task OnParametersSetAsync()
     {
-        Username = "Username is loading..",
-        Description = "Description is loading..",
-        ProfilePic = null
-    };
-
-    protected override async void OnAfterRender(bool firstRender)
-    {
-        var uri = new Uri(NavigationManager.Uri);
-        var queryParams = HttpUtility.ParseQueryString(uri.Query);
-        _currentSession = AuthService.GetCurrentSession();
-
-        // Retrieve query parameters
-        if (queryParams["id"] != null && !_invalidIdFlag)
-        {
-            try
-            {
-                _profileUserId = Guid.Parse(queryParams["id"]!);
-            }
-            catch (Exception)
-            {
-                _invalidIdFlag = true;
-                StateHasChanged();
-                return;
-            }
-
-            _followsUserRetrieved = await ProfilePageVm.UserFollowRelation(_profileUserId, Guid.Parse(_currentSession!.User!.Id!));
-            if (firstRender || UserInformationDto.Username == "Username is loading..")
-            {
-                var userInfo = await ProfilePageVm.GetUserInfo(_profileUserId);
-                if (userInfo != null)
-                {
-                    UserInformationDto.Username = userInfo.Username;
-                    UserInformationDto.Description = userInfo.Description;
-                    UserInformationDto.ProfilePic = userInfo.ProfilePic;
-                    UserInformationDto.FriendsAmount = userInfo.FriendsAmount;
-                    UserInformationDto.SpacesAmount = userInfo.SpacesAmount;
-                    UserInformationDto.CreatedAt = userInfo.CreatedAt;
-                    StateHasChanged();
-                }
-                else
-                {
-                    _invalidIdFlag = true;
-                    StateHasChanged();
-                }
-
-                if (_postsOfUser.IsNullOrEmpty())
-                {
-                    _postsOfUser = await ProfilePageVm.GetPostsByUserId(_profileUserId, 0, 10);
-                    StateHasChanged();
-                }
-            }
-        }
-        else
-        {
-            _invalidIdFlag = true;
-        }
+        await ProfilePageVm.Initialize(UserId);
     }
 
-    public async void FollowButtonClicked()
+    private void _navigateToPostPage(Guid postId)
     {
-        if (_followsUserRetrieved != null && _followsUserRetrieved == true)
-        {
-            await ProfilePageVm.UnfollowUserById(Guid.Parse(_currentSession!.User!.Id!), _profileUserId);
-        }
-        else
-        {
-            await ProfilePageVm.FollowUserById(Guid.Parse(_currentSession!.User!.Id!), _profileUserId);
-        }
+        NavigationManager.NavigateTo($"/post/{postId}");
+    }
 
-        _followsUserRetrieved = !_followsUserRetrieved;
-        StateHasChanged();
+    private async Task _handleFollowButtonClicked()
+    {
+        if (ProfilePageVm.IsUserFollowed)
+            await ProfilePageVm.UnfollowThisUser();
+        else
+            await ProfilePageVm.FollowThisUser();
+        NavigationManager.Refresh(true);
     }
 
 }

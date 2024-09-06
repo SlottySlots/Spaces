@@ -25,17 +25,18 @@ public class UserLikePostRelationRepostitory : DatabaseRepository<UserLikePostRe
     /// <inheritdoc />
     public async Task<List<UserLikePostRelationDao>> GetLikesForPost(Guid postId)
     {
-        var likes = BaseQuerry
+        var likes = Supabase
+            .From<UserLikePostRelationDao>()
             .Filter(posts => posts.PostId!, Constants.Operator.Equals, postId.ToString())
             .Select(x => new object[] { x.UserId! });
-        return
-            await ExecuteQuery(likes);
+        return await ExecuteQuery(likes);
     }
 
     /// <inheritdoc />
     public async Task<UserLikePostRelationDao> GetLikeByUserIdAndPostId(Guid userId, Guid postId)
     {
-        var userLikeDao = BaseQuerry
+        var userLikeDao = Supabase
+            .From<UserLikePostRelationDao>()
             .Filter(post => post.PostId!, Constants.Operator.Equals, postId.ToString())
             .Filter(post => post.UserId!, Constants.Operator.Equals, userId.ToString());
         return await ExecuteSingleQuery(userLikeDao);

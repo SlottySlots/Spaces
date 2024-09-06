@@ -186,22 +186,6 @@ public class UserServiceTests
     }
 
     /// <summary>
-    ///     Tests if GetUser method throws UserNotFoundException when DatabaseMissingItemException is thrown.
-    /// </summary>
-    [Test]
-    public void GetUser_ShouldThrowUserNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
-    {
-        var userId = Guid.NewGuid();
-
-        _mockUserRepository.Setup(x =>
-                x.GetElementById(It.IsAny<Guid>(), It.IsAny<Expression<Func<UserDao, object[]>>>()))
-            .ThrowsAsync(new DatabaseMissingItemException());
-
-        Assert.ThrowsAsync<UserNotFoundException>(
-            async () => await _userService.GetUser(userId));
-    }
-
-    /// <summary>
     ///     Tests if GetUser method throws UserGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
@@ -214,7 +198,7 @@ public class UserServiceTests
             .ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<UserGeneralException>(
-            async () => await _userService.GetUser(userId));
+            async () => await _userService.GetUserDtoById(userId));
     }
 
     /// <summary>

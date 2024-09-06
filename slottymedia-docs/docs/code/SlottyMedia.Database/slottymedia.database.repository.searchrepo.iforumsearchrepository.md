@@ -12,12 +12,12 @@ Implements [IDatabaseRepository&lt;ForumDao&gt;](./slottymedia.database.reposito
 
 ## Methods
 
-### **GetForumsByTopic(String)**
+### **GetForumsByTopic(String, PageRequest)**
 
 Gets forums by a specific topic with pagination.
 
 ```csharp
-Task<List<ForumDao>> GetForumsByTopic(string topic)
+Task<IPage<ForumDao>> GetForumsByTopic(string topic, PageRequest pageRequest)
 ```
 
 #### Parameters
@@ -25,9 +25,12 @@ Task<List<ForumDao>> GetForumsByTopic(string topic)
 `topic` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The topic to search for.
 
+`pageRequest` [PageRequest](./slottymedia.database.pagination.pagerequest.md)<br>
+The page request
+
 #### Returns
 
-[Task&lt;List&lt;ForumDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;ForumDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of forums.
 
 #### Exceptions
@@ -37,6 +40,3 @@ Thrown when the entity is not found in the database.
 
 [GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
 Thrown when an unexpected error occurs.
-
-[DatabaseJsonConvertFailed](./slottymedia.database.exceptions.databasejsonconvertfailed.md)<br>
-Thrown when the Database Result was not able to be converted to a Class Dao

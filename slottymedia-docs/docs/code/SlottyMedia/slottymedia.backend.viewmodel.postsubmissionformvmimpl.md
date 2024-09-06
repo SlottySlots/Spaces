@@ -83,12 +83,12 @@ public string ServerErrorMessage { get; set; }
 
 ## Constructors
 
-### **PostSubmissionFormVmImpl(IAuthService, IPostService, IForumService, NavigationManager)**
+### **PostSubmissionFormVmImpl(IAuthService, IPostService, IForumService, ISearchService, NavigationManager)**
 
 Ctor used for dep inject
 
 ```csharp
-public PostSubmissionFormVmImpl(IAuthService authService, IPostService postService, IForumService forumService, NavigationManager navigationManager)
+public PostSubmissionFormVmImpl(IAuthService authService, IPostService postService, IForumService forumService, ISearchService searchService, NavigationManager navigationManager)
 ```
 
 #### Parameters
@@ -98,6 +98,8 @@ public PostSubmissionFormVmImpl(IAuthService authService, IPostService postServi
 `postService` [IPostService](./slottymedia.backend.services.interfaces.ipostservice.md)<br>
 
 `forumService` [IForumService](./slottymedia.backend.services.interfaces.iforumservice.md)<br>
+
+`searchService` [ISearchService](./slottymedia.backend.services.interfaces.isearchservice.md)<br>
 
 `navigationManager` NavigationManager<br>
 

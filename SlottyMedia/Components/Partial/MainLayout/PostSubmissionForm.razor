@@ -11,10 +11,10 @@
     @if (!_isLoading)
     {
         <div @onclick="OnClickAvatar">
-            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Size="50"></Avatar>
-        </div> 
+            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
+        </div>
     }
-    
+
 
     <!-- the form -->
     <form class="col-span-9" @onsubmit="ViewModel!.SubmitForm">
@@ -116,7 +116,7 @@
     /// An event that is invoked whenever this input field's value changes
     [Parameter]
     public EventCallback<string?> ValueChanged { get; set; }
-    
+
     public UserInformationDto UserInformationDto { get; set; } = new()
     {
         Username = "Username is loading..",
@@ -125,10 +125,10 @@
     };
 
     private bool _isLoading = true;
-    
+
     protected override async void OnAfterRender(bool firstRender)
     {
-        if ((firstRender || UserInformationDto.Username == "Username is loading.."))
+        if (firstRender || UserInformationDto.Username == "Username is loading..")
         {
             var userInfo = await UserService.GetUserInfo(Guid.Parse(AuthService!.GetCurrentSession()!.User!.Id!));
             if (userInfo != null)
@@ -149,7 +149,7 @@
     {
         NavigationManager.NavigateTo($"/profile?id={UserInformationDto.UserId.ToString()}");
     }
-    
+
     async Task _handleInput(ChangeEventArgs e)
     {
         await ViewModel!.HandleSpacePromptChange(e, ValueChanged);

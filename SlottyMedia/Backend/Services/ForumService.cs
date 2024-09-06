@@ -3,6 +3,7 @@ using SlottyMedia.Backend.Exceptions.Services.ForumExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Database.Pagination;
 using SlottyMedia.Database.Repository.ForumRepo;
 using SlottyMedia.LoggingProvider;
 
@@ -25,7 +26,6 @@ public class ForumService : IForumService
         _topForumRepository = topForumRepository;
         _searchService = searchService;
     }
-
 
     /// <inheritdoc />
     public async Task InsertForum(Guid creatorUserId, string forumTopic)
@@ -93,7 +93,7 @@ public class ForumService : IForumService
         try
         {
             Logger.LogDebug($"Fetching forum with name '{forumName}'...");
-            var dao = await _forumRepository.GetElementById(forumName);
+            var dao = await _forumRepository.GetForumByName(forumName);
             return new ForumDto().Mapper(dao);
         }
         catch (DatabaseMissingItemException ex)
@@ -111,57 +111,13 @@ public class ForumService : IForumService
     }
 
     /// <inheritdoc />
-    public async Task<List<ForumDto>> GetForumsByNameContaining(string name, int page, int pageSize = 10)
-    {
-        try
-        {
-            Logger.LogDebug(
-                $"Fetching all forums containing the substring '{name}' (page {page} with size {pageSize})");
-            var forums = await _searchService.SearchByTopic(name);
-
-            return forums.Forums;
-        }
-        catch (DatabaseMissingItemException ex)
-        {
-            throw new ForumNotFoundException($"No forums found containing the substring '{name}'", ex);
-        }
-        catch (GeneralDatabaseException ex)
-        {
-            throw new ForumGeneralException(
-                $"An error occurred while fetching forums containing the substring '{name}'", ex);
-        }
-        catch (Exception ex)
-        {
-            throw new ForumGeneralException(
-                $"An unexpected error occurred while fetching forums containing the substring '{name}'", ex);
-        }
-
-        //TODO use searchservice for this type of stuff
-
-        // var query = await _supabase
-        //     .From<ForumDao>()
-        //     .Filter(dao => dao.ForumTopic!, Constants.Operator.ILike, $"%{name}%")
-        //     .Range((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
-        //     .Get();
-        // return query.Models
-        //     .Select(forum => new ForumDto().Mapper(forum))
-        //     .ToList();
-    }
-
-
-    /// <summary>
-    ///     Retrieves all forums from the database.
-    /// </summary>
-    /// <returns>A list of ForumDto objects representing all forums.</returns>
-    public async Task<List<ForumDto>> GetForums()
+    public async Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest)
     {
         try
         {
             Logger.LogDebug("Fetching all forums...");
-            var forumDaos = await _forumRepository.GetAllElements();
-
-            // Map ForumDao to ForumDto
-            return forumDaos.Select(dao => new ForumDto().Mapper(dao)).ToList();
+            var forums = await _forumRepository.GetAllElements(pageRequest);
+            return forums.Map(dao => new ForumDto().Mapper(dao));
         }
         catch (DatabaseMissingItemException ex)
         {

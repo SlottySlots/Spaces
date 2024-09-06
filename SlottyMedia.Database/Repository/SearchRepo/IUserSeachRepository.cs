@@ -12,8 +12,6 @@ public interface IUserSeachRepository : IDatabaseRepository<UserDao>
     ///     Gets users by their username with pagination.
     /// </summary>
     /// <param name="userName">The username to search for.</param>
-    /// <param name="page">The page number.</param>
-    /// <param name="pageSize">The size of the page.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of users.</returns>
     /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
     /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>

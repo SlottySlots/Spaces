@@ -25,7 +25,8 @@ public class RoleRepository : DatabaseRepository<RoleDao>, IRoleRepository
     /// <inheritdoc />
     public async Task<Guid> GetRoleIdByName(string roleName)
     {
-        var query = BaseQuerry
+        var query = Supabase
+            .From<RoleDao>()
             .Filter(role => role.RoleName!, Constants.Operator.Equals, roleName)
             .Select(x => new object[] { x.RoleId! });
 

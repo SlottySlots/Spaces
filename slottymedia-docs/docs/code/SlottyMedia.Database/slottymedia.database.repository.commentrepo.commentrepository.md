@@ -48,20 +48,18 @@ public Task<int> CountCommentsInPost(Guid postId)
 
 [Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **GetCommentsInPost(Guid, Int32, Int32)**
+### **GetCommentsInPost(Guid, PageRequest)**
 
 ```csharp
-public Task<List<CommentDao>> GetCommentsInPost(Guid postId, int page, int pageSize)
+public Task<IPage<CommentDao>> GetCommentsInPost(Guid postId, PageRequest pageRequest)
 ```
 
 #### Parameters
 
 `postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+`pageRequest` [PageRequest](./slottymedia.database.pagination.pagerequest.md)<br>
 
 #### Returns
 
-[Task&lt;List&lt;CommentDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;CommentDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
