@@ -1,6 +1,8 @@
 ﻿using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
+using SlottyMedia.Database.Pagination;
+using SlottyMedia.Database.Repository.ForumRepo;
 using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
@@ -10,9 +12,11 @@ namespace SlottyMedia.Backend.ViewModel;
 /// </summary>
 public class SpaceVmImpl : ISpaceVm
 {
-    private static readonly Logging<SpaceVmImpl> Logger = new();
+    private static readonly Logging<SpaceVmImpl> _logger = new();
     private readonly IForumService _forumService;
     private readonly IPostService _postService;
+    private readonly IAuthService _authService;
+    private readonly IForumRepository _forumRepository;
     
     public DateTime CreatedAt { get; private set; }
     public string Topic { get; private set; } = string.Empty;
@@ -23,66 +27,61 @@ public class SpaceVmImpl : ISpaceVm
     /// <summary>
     /// Initializes the ViewModel with the necessary services.
     /// </summary>
-    public SpaceVmImpl(IForumService forumService, IPostService postService)
+    public SpaceVmImpl(IForumService forumService, IPostService postService, IAuthService authService)
     {
         _forumService = forumService ?? throw new ArgumentNullException(nameof(forumService));
         _postService = postService ?? throw new ArgumentNullException(nameof(postService));
-    }
-
-    /// <inheritdoc />
-    public async Task<ForumDto?> GetSpaceInformation(string name)
-    {
-        try
-        {
-            return await _forumService.GetForumByName(name);
-        }
-        catch (Exception ex)
-        {
-            Logger.LogError($"An error occurred while fetching space information for '{name}': {ex.Message}");
-            return null;
-        }
-    }
-
-    /// <inheritdoc />
-    public async Task LoadSpaceDetails(string name)
-    {
-        try
-        {
-            var space = await GetSpaceInformation(name);
-            if (space != null)
-            {
-                PostCount = space.PostCount;
-                CreatedAt = space.CreatedAt;
-                Topic = space.Topic;
-                // CreatedBy = space.CreatedBy; 
-            }
-        }
-        catch (Exception ex)
-        {
-            Logger.LogError($"An error occurred while loading space details for '{name}': {ex.Message}");
-        }
+        _authService = authService?? throw new ArgumentNullException(nameof(authService));
     }
     
+    /// <inheritdoc />
+    public bool IsLoadingPosts { get; private set; }
     
-    /// <summary>
-    /// Gets post by forum id
-    /// </summary>
-    /// <param name="forumId">
-    /// Forum the posts belongs to
-    /// </param>
-    /// <param name="startOfSet">
-    /// Starting index on which the follows are retrieved (they are sorted by date)
-    /// </param>
-    /// <param name="endOfSet">
-    /// Ending index used to slice the posts in a specific intervall
-    /// </param>
-    /// <returns>
-    /// List of PostDtos
-    /// </returns>
-    public async Task<List<PostDto>> GetPostsByForumId(Guid forumId, int startOfSet, int endOfSet)
+    /// <inheritdoc />
+    public bool IsLoadingPage { get; private set; }
+    
+    /// <inheritdoc />
+    public Guid? AuthPrincipalId { get; private set; }
+    
+    
+    /// <inheritdoc />
+    public UserInformationDto? UserInfo { get; private set; }
+    
+    /// <inheritdoc />
+    public IPage<PostDto> Posts { get; private set; } = PageImpl<PostDto>.Empty();
+    
+    
+    /// <inheritdoc />
+    public async Task Initialize(Guid forumId)
     {
-        var posts = await _postService.GetPostsByForumId(forumId, startOfSet, endOfSet);
-        return posts;
+        IsLoadingPage = true;
+        _logger.LogInfo("Space Page: Loading necessary space-related information...");
+        var authPrincipalIdStr = _authService.GetCurrentSession()?.User?.Id;
+        AuthPrincipalId = authPrincipalIdStr is null ? null : new Guid(authPrincipalIdStr);
+        await LoadSpaceDetails(forumId);
+        _logger.LogInfo("Space Page: Successfully loaded all space-related information");
+        IsLoadingPage = false;
+        await LoadPosts(0);
+    }
+   
+
+    /// <inheritdoc />
+    public async Task LoadSpaceDetails(Guid forumId)
+    {
+        _logger.LogDebug($"Space Page: Fetching space information for space with ID '{forumId}'");
+        var forumDto = await _forumService.GetForumById(forumId);
+    }
+    
+    /// <inheritdoc />
+    public async Task LoadPosts(int pageNumber)
+    {
+        IsLoadingPosts = true;
+        _logger.LogInfo($"Profile Page: Loading posts for user '{UserInfo!.Username}'. Loading page {pageNumber}...");
+        Posts = await _postService.GetPostsByForumId(
+            UserInfo.UserId!.Value,
+            PageRequest.Of(pageNumber, 10));
+        _logger.LogInfo($"Space Page: Successfully loaded page {pageNumber}, which contains {Posts.Count()} posts");
+        IsLoadingPosts = false;
     }
     
     

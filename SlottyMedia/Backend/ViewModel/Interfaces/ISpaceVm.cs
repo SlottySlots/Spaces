@@ -1,5 +1,6 @@
 ﻿using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Components.Pages;
+using SlottyMedia.Database.Pagination;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 
@@ -10,42 +11,49 @@ namespace SlottyMedia.Backend.ViewModel.Interfaces;
 public interface ISpaceVm
 {
     /// <summary>
-    /// Gets ForumDTO based on provided name
+    ///     Whether the whole page is being loaded
     /// </summary>
-    /// <param name="name">
-    /// Forumname to look up in db
-    /// </param>
-    /// <returns>
-    /// ForumDto?
-    /// </returns>
-  
-    public Task<ForumDto?> GetSpaceInformation(string name);
-
+    public bool IsLoadingPage { get; }
+    
+    
     /// <summary>
-    ///     Fetches the details of a specific space based on its name
+    ///     Whether the posts on the page are being loaded
+    /// </summary>
+    public bool IsLoadingPosts { get; }
+    
+    /// <summary>
+    ///     The authentication principal's user ID (i.e. the user that's logged in)
+    /// </summary>
+    public Guid? AuthPrincipalId { get; }
+    
+    /// <summary>
+    ///     Fetches the details of a specific space based on its id
     ///     and populates the <see cref="Space" /> property.
     /// </summary>
-    /// <param name="name">The name of the space to load information for.</param>
-    public Task LoadSpaceDetails(string name);
+    /// <param name="id">The id of the space to load information for.</param>
+    public Task LoadSpaceDetails(Guid id);
+    
+    /// <summary>
+    ///     The posts that are currently being rendered
+    /// </summary>
+    public IPage<PostDto> Posts { get; }
+
+    /// <summary>
+    ///     Initialized the page's state. This fetches all space-related information and loads
+    ///     the first posts for the visited space. Also initializes the <see cref="AuthPrincipalId" />
+    ///     if one is present.
+    /// </summary>
+    /// <param name="forumId">The ID of the space whose page should be visited</param>
+    public Task Initialize(Guid forumId);
+    
     string Topic { get; }
     int PostCount { get; }
     DateTime CreatedAt { get; }
+  
     /// <summary>
-    /// Gets forums of a user by their id and enables slicing via offsets
+    ///     Loads more <see cref="Posts" /> for the visited space by changing the current
+    ///     page (as in pagination).
     /// </summary>
-    /// <param name="forumId">
-    /// Forum that the posts belong to
-    /// </param>
-    /// <param name="startOfSet">
-    /// Startindex of the posts sorted by date
-    /// </param>
-    /// <param name="endOfSet">
-    /// Endindex of the posts sorted by data
-    /// </param>
-    /// <returns>
-    /// List of PostDtos
-    /// </returns>
-    public Task<List<PostDto>> GetPostsByForumId(Guid forumId, int startOfSet, int endOfSet);
-    
-    
+    /// <param name="pageNumber">The page number</param>
+    public Task LoadPosts(int pageNumber);
 }

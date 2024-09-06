@@ -25,4 +25,6 @@ public class ForumRepository : DatabaseRepository<ForumDao>, IForumRepository
     {
         return base.GetElementByField("forumTopic", name);
     }
+    
+    
 }

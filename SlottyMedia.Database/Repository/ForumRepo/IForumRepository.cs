@@ -13,4 +13,5 @@ public interface IForumRepository : IDatabaseRepository<ForumDao>
     /// <param name="name">The forum's name</param>
     /// <returns>The forum</returns>
     Task<ForumDao> GetForumByName(string name);
+    
 }

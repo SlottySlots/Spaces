@@ -36,6 +36,8 @@ public interface IForumService
     /// <exception cref="ForumNotFoundException">Thrown when the forum is not found.</exception>
     /// <exception cref="ForumGeneralException">Thrown when a general error occurs.</exception>
     Task<ForumDto> GetForumByName(string forumName);
+    
+    Task<ForumDto> GetForumById(Guid forumId); 
 
     Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest);
 
@@ -60,4 +62,5 @@ public interface IForumService
     /// <exception cref="ForumNotFoundException">Thrown when the forums are not found.</exception>
     /// <exception cref="ForumGeneralException">Thrown when a general error occurs.</exception>
     Task<List<ForumDto>> GetTopForums();
+    
 }

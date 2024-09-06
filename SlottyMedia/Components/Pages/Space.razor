@@ -9,79 +9,41 @@
 
 <PageTitle>Slotty Media | @SpaceVm.Topic</PageTitle>
 
-@if (_isLoading)
+@if (!SpaceVm.IsLoadingPage)
 {
-<p>Loading space details...</p>
-}
-else if (_invalidSpaceFlag)
-{
-<p>Space not found!</p>
+
+    <p class="text-lg">@SpaceVm.Topic</p>
+    
+    <div class="flex w-1/2">
+        <h3 class="text-sm text-cadet-gray w-full">Posts: @SpaceVm.PostCount</h3>
+        <h3 class="text-sm text-cadet-gray w-full">Created at: @SpaceVm.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
+    </div>
+    
+    <div class="w-full border-b border-athens-gray my-3"></div>
+    
+    
+    
+    @if (!SpaceVm.IsLoadingPosts)
+    {
+        <Pagination Page="SpaceVm.Posts" OnPageFetch="SpaceVm.LoadPosts" Class="w-full">
+            @foreach (var post in SpaceVm.Posts)
+            {
+                <Post Dto="post" CurrentUserId="SpaceVm.AuthPrincipalId!.Value" OnPostClick="() => _navigateToPostPage(post.PostId)"/>
+            }
+        </Pagination>
+    }
 }
 else
 {
-<div class="space-details">
-    <h3 class="text-sm font-medium text-center text-cadet-gray w-fit">@SpaceVm.Topic</h3>
-    <h3 class="text-sm font-medium text-center text-cadet-gray w-fit">Created at: @SpaceVm.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
-    <h3 class="text-sm font-medium text-center text-cadet-gray w-fit">Posts: @SpaceVm.PostCount</h3>
-</div>
+<p class="text-3xl font-medium text-center">Space not found!</p>
 }
-
+    
 @code {
-    private bool _isLoading = true;
-    private bool _invalidSpaceFlag = false;
-    private Guid _forumId;
-    private List<PostDto> posts = new List<PostDto>();
-
-    protected override async Task OnInitializedAsync()
+    [Parameter] public Guid UserId { get; set; }
+    
+    private void _navigateToPostPage(Guid postId)
     {
-        var uri = new Uri(NavigationManager.Uri);
-        var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);
-        var spaceName = queryParams["name"];
-
-        if (queryParams["id"] != null && !_invalidSpaceFlag)
-        {
-            try
-            {
-                _forumId = Guid.Parse(queryParams["id"]!);
-            }
-            catch (Exception)
-            {
-                _invalidSpaceFlag = true;
-                StateHasChanged();
-                return;
-            }
-
-
-            if (!string.IsNullOrEmpty(spaceName))
-            {
-                try
-                {
-                    await SpaceVm.LoadSpaceDetails(spaceName);
-                    if (SpaceVm.Topic != null)
-                    {
-                        posts = await SpaceVm.GetPostsByForumId(_forumId, 0, 10); // Lädt die ersten 10 Posts
-                    }
-                    else
-                    {
-                        _invalidSpaceFlag = true;
-                    }
-                }
-                catch (Exception ex)
-                {
-
-                    _invalidSpaceFlag = true;
-                }
-                finally
-                {
-                    _isLoading = false;
-                }
-            }
-            else
-            {
-                _invalidSpaceFlag = true;
-                _isLoading = false;
-            }
-        }
+        NavigationManager.NavigateTo($"/post/{postId}");
     }
 
 }
