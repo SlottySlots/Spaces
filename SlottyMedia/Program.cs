@@ -10,6 +10,7 @@ using SlottyMedia.Components;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Helper;
+using SlottyMedia.Database.Repository.CommentRepo;
 using SlottyMedia.Database.Repository.FollowerUserRelatioRepo;
 using SlottyMedia.Database.Repository.ForumRepo;
 using SlottyMedia.Database.Repository.PostRepo;
@@ -62,6 +63,8 @@ try
     builder.Services.AddSingleton<IUserSeachRepository, UserSearchRepository>();
     builder.Services.AddSingleton<IForumSearchRepository, ForumSearchRepository>();
     builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
+    builder.Services.AddSingleton<ICommentRepository, CommentRepository>();
+
     
 
     // Daos
@@ -93,6 +96,8 @@ try
     builder.Services.AddScoped<ISearchService, SearchService>();
     builder.Services.AddScoped<IForumService, ForumService>();
     builder.Services.AddScoped<ILikeService, LikeService>();
+    builder.Services.AddScoped<ICommentService, CommentService>();
+    builder.Services.AddScoped<IProfilePageVm, ProfilePageVmImpl>();
 
     // Viewmodel
     logger.LogInfo("Adding Viewmodels to the container");
@@ -104,9 +109,11 @@ try
     builder.Services.AddScoped<ISpaceVm, SpaceVmImpl>();
     builder.Services.AddScoped<IPostSubmissionFormVm, PostSubmissionFormVmImpl>();
     builder.Services.AddScoped<IHomePageVm, HomePageVmImpl>();
-    builder.Services.AddScoped<IAuthVm, AuthVmImpl>();
-    builder.Services.AddScoped<IUserVm, UserVm>();
-    
+    builder.Services.AddScoped<IAuthVmImpl, AuthVmImpl>();
+    builder.Services.AddScoped<IUserVmImpl, UserVmImpl>();
+    builder.Services.AddScoped<IPostPageVm, PostPageVmImpl>();
+    builder.Services.AddScoped<ICommentSubmissionFormVm, CommentSubmissionFormVmImpl>();
+
 
     var app = builder.Build();
 

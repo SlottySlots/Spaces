@@ -5,11 +5,11 @@ Namespace: SlottyMedia.Database.Repository.SearchRepo
 Repository class for managing forum searches in the database.
 
 ```csharp
-public class ForumSearchRepository : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.ForumDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.ForumDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], IForumSearchRepository
+public class ForumSearchRepository : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.ForumDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.Repository.IDatabaseRepository`1[[SlottyMedia.Database.Daos.ForumDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], IForumSearchRepository
 ```
 
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [DatabaseRepository&lt;ForumDao&gt;](./slottymedia.database.repository.databaserepository-1.md) → [ForumSearchRepository](./slottymedia.database.repository.searchrepo.forumsearchrepository.md)<br>
-Implements [IDatabaseRepository&lt;ForumDao&gt;](./slottymedia.database.idatabaserepository-1.md), [IForumSearchRepository](./slottymedia.database.repository.searchrepo.iforumsearchrepository.md)
+Implements [IDatabaseRepository&lt;ForumDao&gt;](./slottymedia.database.repository.idatabaserepository-1.md), [IForumSearchRepository](./slottymedia.database.repository.searchrepo.iforumsearchrepository.md)
 
 ## Constructors
 
@@ -34,26 +34,18 @@ The database repository helper instance.
 
 ## Methods
 
-### **GetForumsByTopic(String, Int32, Int32)**
-
-Retrieves forums by their topic with pagination.
+### **GetForumsByTopic(String, PageRequest)**
 
 ```csharp
-public Task<List<ForumDao>> GetForumsByTopic(string topic, int page, int pageSize)
+public Task<IPage<ForumDao>> GetForumsByTopic(string topic, PageRequest pageRequest)
 ```
 
 #### Parameters
 
 `topic` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The topic to search for.
 
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The page number for pagination.
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The number of items per page.
+`pageRequest` [PageRequest](./slottymedia.database.pagination.pagerequest.md)<br>
 
 #### Returns
 
-[Task&lt;List&lt;ForumDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains a list of forums.
+[Task&lt;IPage&lt;ForumDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

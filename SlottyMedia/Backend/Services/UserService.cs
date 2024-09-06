@@ -15,6 +15,7 @@ namespace SlottyMedia.Backend.Services;
 public class UserService : IUserService
 {
     private static readonly Logging<UserService> Logger = new();
+    private readonly IAuthService _authService;
     private readonly IFollowerUserRelationRepository _followerUserRelationRepository;
     private readonly IPostService _postService;
     private readonly IUserRepository _userRepository;
@@ -22,8 +23,9 @@ public class UserService : IUserService
     /// <summary>
     ///     This constructor creates a new UserService object.
     /// </summary>
-    /// <param name="databaseActions">This parameter is used to interact with the database</param>
+    /// <param name="userRepository">Repository used to fetch user table</param>
     /// <param name="postService">This parameter is used to interact with the post service</param>
+    /// <param name="followerUserRelationRepository">Repository used to fetch follower user relations</param>
     public UserService(IUserRepository userRepository, IPostService postService,
         IFollowerUserRelationRepository followerUserRelationRepository)
     {
@@ -50,7 +52,7 @@ public class UserService : IUserService
 
         try
         {
-            Logger.LogInfo($"Creating a new user {user}");
+            Logger.LogDebug($"Creating a new user {user}");
 
             await _userRepository.AddElement(user);
         }
@@ -78,7 +80,7 @@ public class UserService : IUserService
         try
         {
             var userDao = user.Mapper();
-            Logger.LogInfo($"Deleting a user {userDao}");
+            Logger.LogDebug($"Deleting a user {userDao}");
             await _userRepository.DeleteElement(userDao);
         }
         catch (DatabaseIudActionException ex)
@@ -100,7 +102,7 @@ public class UserService : IUserService
     {
         try
         {
-            Logger.LogInfo($"Fetching user with ID {userId}");
+            Logger.LogDebug($"Fetching user with ID {userId}");
             var user = await _userRepository.GetElementById(userId);
             return new UserDto().Mapper(user);
         }
@@ -123,7 +125,7 @@ public class UserService : IUserService
     {
         try
         {
-            Logger.LogInfo($"Fetching user with username {username}");
+            Logger.LogDebug($"Fetching user with username {username}");
             await _userRepository.GetUserByUsername(username);
             return true;
         }
@@ -148,7 +150,7 @@ public class UserService : IUserService
     {
         try
         {
-            Logger.LogInfo($"Updating user {user}");
+            Logger.LogDebug($"Updating user {user}");
             await _userRepository.UpdateElement(user);
         }
         catch (DatabaseIudActionException ex)
@@ -172,7 +174,7 @@ public class UserService : IUserService
         {
             var userDao = await _userRepository.GetElementById(user.UserId);
             userDao.Description = user.Description;
-            Logger.LogInfo($"Updating user {user}");
+            Logger.LogDebug($"Updating user {user}");
             await _userRepository.UpdateElement(userDao);
         }
         catch (DatabaseIudActionException ex)
@@ -190,11 +192,35 @@ public class UserService : IUserService
     }
 
     /// <inheritdoc />
+    public async Task<bool> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn)
+    {
+        try
+        {
+            await _followerUserRelationRepository.CheckIfUserIsFollowed(userIdToCheck, userIdLoggedIn);
+            return true;
+        }
+        catch (DatabaseMissingItemException)
+        {
+            return false;
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            Logger.LogError(ex, "There was an error trying to check if the follower user is followed.");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "There was an error trying to check if the follower user is followed.");
+            return false;
+        }
+    }
+
+    /// <inheritdoc />
     public async Task<ProfilePicDto> GetProfilePic(Guid userId)
     {
         try
         {
-            Logger.LogInfo($"Fetching profile picture for user with ID {userId}");
+            Logger.LogDebug($"Fetching profile picture for user with ID {userId}");
             var user = await GetUserDaoById(userId);
             return new ProfilePicDto
             {
@@ -213,40 +239,11 @@ public class UserService : IUserService
     }
 
     /// <inheritdoc />
-    public async Task<UserDto> GetUser(Guid userId, int recentForums = 5)
-    {
-        try
-        {
-            Logger.LogInfo($"Fetching user with ID {userId} and recent forums {recentForums}");
-            var result = await _userRepository.GetElementById(userId,
-                x => new object[] { x.UserId!, x.UserName!, x.Description!, x.CreatedAt });
-            var user = new UserDto().Mapper(result);
-
-            Logger.LogInfo($"Fetching recent forums for user with ID {userId}");
-            user.RecentForums = await _postService.GetPostsFromForum(userId, 0, recentForums);
-
-            return user;
-        }
-        catch (DatabaseMissingItemException ex)
-        {
-            throw new UserNotFoundException($"User with the given ID was not found. ID: {userId}", ex);
-        }
-        catch (GeneralDatabaseException ex)
-        {
-            throw new UserGeneralException($"An error occurred while fetching the user. ID: {userId}", ex);
-        }
-        catch (Exception ex)
-        {
-            throw new UserGeneralException($"An error occurred while fetching the user. ID {userId}", ex);
-        }
-    }
-
-    /// <inheritdoc />
     public async Task<FriendsOfUserDto> GetFriends(Guid userId)
     {
         try
         {
-            Logger.LogInfo($"Fetching friends for user with ID {userId}");
+            Logger.LogDebug($"Fetching friends for user with ID {userId}");
             var friends = await _followerUserRelationRepository.GetFriends(userId);
             var friendList = new FriendsOfUserDto
             {
@@ -282,7 +279,7 @@ public class UserService : IUserService
     {
         try
         {
-            Logger.LogInfo($"Fetching friends count for user with ID {userId}");
+            Logger.LogDebug($"Fetching friends count for user with ID {userId}");
             var friends = await _followerUserRelationRepository.GetCountOfUserFriends(userId);
             return friends;
         }
@@ -296,15 +293,7 @@ public class UserService : IUserService
         }
     }
 
-    /// <summary>
-    ///     Gets all spaces a user has wrote in
-    /// </summary>
-    /// <param name="userId">
-    ///     User from which it should be retrieved
-    /// </param>
-    /// <returns>
-    ///     Returns the amount of spaces as task
-    /// </returns>
+    /// <inheritdoc />
     public async Task<int> GetCountOfUserSpaces(Guid userId)
     {
         //TODO: Currently not working
@@ -317,7 +306,7 @@ public class UserService : IUserService
     {
         try
         {
-            Logger.LogInfo($"Fetching user with ID {userId}");
+            Logger.LogDebug($"Fetching user with ID {userId}");
             var user = await _userRepository.GetElementById(userId);
             return user;
         }
@@ -329,5 +318,110 @@ public class UserService : IUserService
         {
             throw new UserGeneralException($"An error occurred while fetching the user. ID: {userId}", ex);
         }
+    }
+
+    /// <inheritdoc />
+    public async Task FollowUserById(Guid userIdFollows, Guid userIdToFollow)
+    {
+        try
+        {
+            var userFollows = new FollowerUserRelationDao
+            {
+                FollowerUserId = userIdFollows,
+                FollowedUserId = userIdToFollow
+            };
+            await _followerUserRelationRepository.AddElement(userFollows);
+        }
+        catch (DatabaseIudActionException ex)
+        {
+            throw new UserIudException(
+                $"An error occurred while following the user. UserIdFollows: {userIdFollows}, UserIdToFollow: {userIdToFollow}",
+                ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new UserGeneralException(
+                $"An error occurred while following the user. UserIdFollows: {userIdFollows}, UserIdToFollow: {userIdToFollow}",
+                ex);
+        }
+        catch (Exception ex)
+        {
+            throw new UserGeneralException(
+                $"An error occurred while following the user. UserIdFollows: {userIdFollows}, UserIdToFollow: {userIdToFollow}",
+                ex);
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow)
+    {
+        try
+        {
+            var userToDelete =
+                await _followerUserRelationRepository.CheckIfUserIsFollowed(userIdToUnfollow, userIdFollows);
+            await _followerUserRelationRepository.DeleteElement(userToDelete);
+        }
+        catch (DatabaseIudActionException ex)
+        {
+            throw new UserIudException(
+                $"An error occurred while unfollowing the user. UserIdFollows: {userIdFollows}, UserIdToUnfollow: {userIdToUnfollow}",
+                ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new UserGeneralException(
+                $"An error occurred while unfollowing the user. UserIdFollows: {userIdFollows}, UserIdToUnfollow: {userIdToUnfollow}",
+                ex);
+        }
+        catch (Exception ex)
+        {
+            throw new UserGeneralException(
+                $"An error occurred while unfollowing the user. UserIdFollows: {userIdFollows}, UserIdToUnfollow: {userIdToUnfollow}",
+                ex);
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<UserInformationDto?> GetUserInfo(Guid userId)
+    {
+        try
+        {
+            var userDao = await GetUserDaoById(userId);
+            var amountOfFriends = await GetCountOfUserFriends(userId);
+            var amountOfSpaces = await GetCountOfUserSpaces(userId);
+            if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
+            {
+                Logger.LogError(
+                    $"User with id {userId.ToString()} retrieved corrupt User entry from database!");
+            }
+            else
+            {
+                var userInformationDto = new UserInformationDto
+                {
+                    UserId = userDao.UserId!,
+                    Username = userDao.UserName!,
+                    Description = userDao.Description!,
+                    ProfilePic = userDao.ProfilePic,
+                    FriendsAmount = amountOfFriends,
+                    SpacesAmount = amountOfSpaces,
+                    CreatedAt = userDao.CreatedAt.LocalDateTime!
+                };
+                return userInformationDto;
+            }
+        }
+        catch (UserNotFoundException ex)
+        {
+            Logger.LogError(ex, $"User with id {userId} not found");
+        }
+        catch (UserGeneralException ex)
+        {
+            Logger.LogError(ex, $"An error occurred while fetching UserInformation with id {userId}");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, $"An error occurred while fetching UserInformation with id {userId}");
+        }
+
+        return null;
     }
 }

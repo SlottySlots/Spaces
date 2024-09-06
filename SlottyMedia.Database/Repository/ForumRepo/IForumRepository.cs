@@ -8,9 +8,9 @@ namespace SlottyMedia.Database.Repository.ForumRepo;
 public interface IForumRepository : IDatabaseRepository<ForumDao>
 {
     /// <summary>
-    ///     Gets a forum element by its name.
+    ///     Fetches a forum by its name.
     /// </summary>
-    /// <param name="forumName">The name of the forum.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the forum element.</returns>
-    public Task<ForumDao> GetElementById(string forumName);
+    /// <param name="name">The forum's name</param>
+    /// <returns>The forum</returns>
+    Task<ForumDao> GetForumByName(string name);
 }

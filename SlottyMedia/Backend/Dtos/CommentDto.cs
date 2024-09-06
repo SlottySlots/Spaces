@@ -59,7 +59,7 @@ public class CommentDto
     /// <returns></returns>
     public CommentDao Mapper()
     {
-        Logger.LogInfo(
+        Logger.LogTrace(
             $"Mapping CommentDto to CommentDao. Parameters: CommentID = {CommentId}, CreatorUserId = {CreatorUserId}, PostId = {PostId}, Content = {Content}, CreatedAt = {CreatedAt}");
         return new CommentDao
         {
@@ -78,15 +78,15 @@ public class CommentDto
     /// <param name="comment"></param>
     public CommentDto Mapper(CommentDao comment)
     {
-        Logger.LogInfo(
+        Logger.LogTrace(
             $"Mapping CommentDao to CommentDto. Parameters: CommentID = {CommentId}, CreatorUserId = {CreatorUserId}, PostId = {PostId}, Content = {Content}, CreatedAt = {CreatedAt}");
 
         CommentId = comment.CommentId ?? Guid.Empty;
-        ParentComment = comment.ParentComment.Select(pc => new CommentDto().Mapper(pc)).ToList();
+        ParentComment = comment.ParentComment.Select(pc => new CommentDto().Mapper(pc!)).ToList();
         CreatorUserId = comment.CreatorUserId;
         PostId = comment.PostId ?? Guid.Empty;
         Content = comment.Content ?? string.Empty;
-        CreatedAt = comment.CreatedAt;
+        CreatedAt = comment.CreatedAt.LocalDateTime;
 
         return this;
     }

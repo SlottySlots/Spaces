@@ -1,5 +1,7 @@
-﻿using SlottyMedia.Database.Daos;
+﻿using Microsoft.IdentityModel.Tokens;
+using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Helper;
+using SlottyMedia.Database.Pagination;
 using Supabase.Postgrest;
 using Client = Supabase.Client;
 
@@ -21,19 +23,17 @@ public class UserSearchRepository : DatabaseRepository<UserDao>, IUserSeachRepos
     {
     }
 
-    /// <summary>
-    ///     Retrieves users by their username with pagination.
-    /// </summary>
-    /// <param name="userName">The username to search for.</param>
-    /// <param name="page">The page number for pagination.</param>
-    /// <param name="pageSize">The number of items per page.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of users.</returns>
-    public async Task<List<UserDao>> GetUsersByUserName(string userName, int page, int pageSize)
+    /// <inheritdoc />
+    public async Task<IPage<UserDao>> GetUsersByUserName(string userName, PageRequest pageRequest)
     {
-        var query = BaseQuerry
-            .Select(x => new object[] { x.UserId!, x.UserName! })
-            .Filter("userName", Constants.Operator.ILike, $"%{userName}%");
+        if (userName.IsNullOrEmpty())
+            return PageImpl<UserDao>.Empty();
 
-        return await ExecuteQuery(ApplyPagination(query, page, pageSize));
+        return await ApplyPagination(
+            () => Supabase
+                .From<UserDao>()
+                .Select(x => new object[] { x.UserId!, x.UserName! })
+                .Filter(user => user.UserName!, Constants.Operator.ILike, $"%{userName}%"),
+            pageRequest);
     }
 }

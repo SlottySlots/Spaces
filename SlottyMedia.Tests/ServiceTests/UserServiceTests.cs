@@ -70,7 +70,7 @@ public class UserServiceTests
     [Test]
     public void DeleteUser_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()
     {
-        var user = new UserDto { UserId = Guid.NewGuid() };
+        var user = new UserDto { UserId = Guid.NewGuid(), CreatedAt = DateTime.Now };
 
         _mockUserRepository.Setup(x => x.DeleteElement(It.IsAny<UserDao>()))
             .ThrowsAsync(new DatabaseIudActionException());
@@ -186,22 +186,6 @@ public class UserServiceTests
     }
 
     /// <summary>
-    ///     Tests if GetUser method throws UserNotFoundException when DatabaseMissingItemException is thrown.
-    /// </summary>
-    [Test]
-    public void GetUser_ShouldThrowUserNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
-    {
-        var userId = Guid.NewGuid();
-
-        _mockUserRepository.Setup(x =>
-                x.GetElementById(It.IsAny<Guid>(), It.IsAny<Expression<Func<UserDao, object[]>>>()))
-            .ThrowsAsync(new DatabaseMissingItemException());
-
-        Assert.ThrowsAsync<UserNotFoundException>(
-            async () => await _userService.GetUser(userId));
-    }
-
-    /// <summary>
     ///     Tests if GetUser method throws UserGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
@@ -214,7 +198,7 @@ public class UserServiceTests
             .ThrowsAsync(new GeneralDatabaseException());
 
         Assert.ThrowsAsync<UserGeneralException>(
-            async () => await _userService.GetUser(userId));
+            async () => await _userService.GetUserDtoById(userId));
     }
 
     /// <summary>
@@ -293,5 +277,125 @@ public class UserServiceTests
 
         // Assert
         Assert.That(result, Is.EqualTo(expectedCount));
+    }
+
+    /// <summary>
+    ///     Tests if FollowUserById method successfully follows a user.
+    /// </summary>
+    [Test]
+    public async Task FollowUserById_ShouldFollowUser()
+    {
+        var userIdFollows = Guid.NewGuid();
+        var userIdToFollow = Guid.NewGuid();
+
+        _mockFollowerUserRelationRepository.Setup(x => x.AddElement(It.IsAny<FollowerUserRelationDao>()))
+            .ReturnsAsync(new FollowerUserRelationDao(userIdToFollow, userIdFollows));
+
+        await _userService.FollowUserById(userIdFollows, userIdToFollow);
+
+        _mockFollowerUserRelationRepository.Verify(x => x.AddElement(It.Is<FollowerUserRelationDao>(dao =>
+            dao.FollowerUserId == userIdFollows && dao.FollowedUserId == userIdToFollow)), Times.Once);
+    }
+
+    /// <summary>
+    ///     Tests if FollowUserById method throws UserIudException when DatabaseIudActionException is thrown.
+    /// </summary>
+    [Test]
+    public void FollowUserById_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()
+    {
+        var userIdFollows = Guid.NewGuid();
+        var userIdToFollow = Guid.NewGuid();
+
+        _mockFollowerUserRelationRepository.Setup(x => x.AddElement(It.IsAny<FollowerUserRelationDao>()))
+            .ThrowsAsync(new DatabaseIudActionException());
+
+        Assert.ThrowsAsync<UserIudException>(
+            async () => await _userService.FollowUserById(userIdFollows, userIdToFollow));
+    }
+
+    /// <summary>
+    ///     Tests if FollowUserById method throws UserGeneralException when GeneralDatabaseException is thrown.
+    /// </summary>
+    [Test]
+    public void FollowUserById_ShouldThrowUserGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+    {
+        var userIdFollows = Guid.NewGuid();
+        var userIdToFollow = Guid.NewGuid();
+
+        _mockFollowerUserRelationRepository.Setup(x => x.AddElement(It.IsAny<FollowerUserRelationDao>()))
+            .ThrowsAsync(new GeneralDatabaseException());
+
+        Assert.ThrowsAsync<UserGeneralException>(
+            async () => await _userService.FollowUserById(userIdFollows, userIdToFollow));
+    }
+
+    /// <summary>
+    ///     Tests if UnfollowUserById method successfully unfollows a user.
+    /// </summary>
+    [Test]
+    public async Task UnfollowUserById_ShouldUnfollowUser()
+    {
+        var userIdFollows = Guid.NewGuid();
+        var userIdToUnfollow = Guid.NewGuid();
+        var followerUserRelationDao = new FollowerUserRelationDao
+        {
+            FollowerUserId = userIdFollows,
+            FollowedUserId = userIdToUnfollow
+        };
+
+        _mockFollowerUserRelationRepository.Setup(x => x.CheckIfUserIsFollowed(userIdToUnfollow, userIdFollows))
+            .ReturnsAsync(followerUserRelationDao);
+        _mockFollowerUserRelationRepository.Setup(x => x.DeleteElement(followerUserRelationDao))
+            .Returns(Task.CompletedTask);
+
+        await _userService.UnfollowUserById(userIdFollows, userIdToUnfollow);
+
+        _mockFollowerUserRelationRepository.Verify(x => x.DeleteElement(followerUserRelationDao), Times.Once);
+    }
+
+    /// <summary>
+    ///     Tests if UnfollowUserById method throws UserIudException when DatabaseIudActionException is thrown.
+    /// </summary>
+    [Test]
+    public void UnfollowUserById_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()
+    {
+        var userIdFollows = Guid.NewGuid();
+        var userIdToUnfollow = Guid.NewGuid();
+        var followerUserRelationDao = new FollowerUserRelationDao
+        {
+            FollowerUserId = userIdFollows,
+            FollowedUserId = userIdToUnfollow
+        };
+
+        _mockFollowerUserRelationRepository.Setup(x => x.CheckIfUserIsFollowed(userIdToUnfollow, userIdFollows))
+            .ReturnsAsync(followerUserRelationDao);
+        _mockFollowerUserRelationRepository.Setup(x => x.DeleteElement(followerUserRelationDao))
+            .ThrowsAsync(new DatabaseIudActionException());
+
+        Assert.ThrowsAsync<UserIudException>(
+            async () => await _userService.UnfollowUserById(userIdFollows, userIdToUnfollow));
+    }
+
+    /// <summary>
+    ///     Tests if UnfollowUserById method throws UserGeneralException when GeneralDatabaseException is thrown.
+    /// </summary>
+    [Test]
+    public void UnfollowUserById_ShouldThrowUserGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+    {
+        var userIdFollows = Guid.NewGuid();
+        var userIdToUnfollow = Guid.NewGuid();
+        var followerUserRelationDao = new FollowerUserRelationDao
+        {
+            FollowerUserId = userIdFollows,
+            FollowedUserId = userIdToUnfollow
+        };
+
+        _mockFollowerUserRelationRepository.Setup(x => x.CheckIfUserIsFollowed(userIdToUnfollow, userIdFollows))
+            .ReturnsAsync(followerUserRelationDao);
+        _mockFollowerUserRelationRepository.Setup(x => x.DeleteElement(followerUserRelationDao))
+            .ThrowsAsync(new GeneralDatabaseException());
+
+        Assert.ThrowsAsync<UserGeneralException>(
+            async () => await _userService.UnfollowUserById(userIdFollows, userIdToUnfollow));
     }
 }

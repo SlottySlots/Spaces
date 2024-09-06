@@ -1,0 +1,83 @@
+@page "/profile/{UserId:guid}"
+@using SlottyMedia.Backend.ViewModel.Interfaces
+
+@inject IProfilePageVm ProfilePageVm
+@inject NavigationManager NavigationManager
+
+
+@if (!ProfilePageVm.IsLoadingPage)
+{
+    <div class="flex border-b border-athens-gray py-4 w-full">
+        <div class="px-4">
+            <Avatar Base64PNG="@ProfilePageVm.UserInfo!.ProfilePic"></Avatar>
+        </div>
+
+        <div class="px-4 flex flex-col gap-3">
+            <h1 class="text-3xl font-medium w-1/4">
+                @ProfilePageVm.UserInfo!.Username
+            </h1>
+
+            <p class="text-lg">@ProfilePageVm.UserInfo.Description</p>
+
+            <div class="flex w-1/2">
+                <h3 class="text-sm text-cadet-gray w-full">Friends: @ProfilePageVm.UserInfo.FriendsAmount</h3>
+                <h3 class="text-sm text-cadet-gray w-full">Spaces: @ProfilePageVm.UserInfo.SpacesAmount</h3>
+                <h3 class="text-sm text-cadet-gray w-full">Joined at: @ProfilePageVm.UserInfo.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
+            </div>
+        </div>
+        @if (ProfilePageVm.AuthPrincipalId is not null)
+        {
+            <div class="w-1/4">
+                <HotButton OnClick="_handleFollowButtonClicked" Type="button" Class="w-full">
+                    @if (ProfilePageVm.IsUserFollowed)
+                    {
+                        <p>Unfollow</p>
+                    }
+                    else
+                    {
+                        <p>Follow</p>
+                    }
+                </HotButton>
+            </div>
+        }
+    </div>
+
+    @if (!ProfilePageVm.IsLoadingPosts)
+    {
+        <Pagination Page="ProfilePageVm.Posts" OnPageFetch="ProfilePageVm.LoadPosts" Class="w-full">
+            @foreach (var post in ProfilePageVm.Posts)
+            {
+                <Post Dto="post" CurrentUserId="ProfilePageVm.AuthPrincipalId!.Value" OnPostClick="() => _navigateToPostPage(post.PostId)"/>
+            }
+        </Pagination>
+    }
+}
+else
+{
+    <p class="text-3xl font-medium text-center">User not found!</p>
+}
+
+
+@code{
+    [Parameter] public Guid UserId { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await ProfilePageVm.Initialize(UserId);
+    }
+
+    private void _navigateToPostPage(Guid postId)
+    {
+        NavigationManager.NavigateTo($"/post/{postId}");
+    }
+
+    private async Task _handleFollowButtonClicked()
+    {
+        if (ProfilePageVm.IsUserFollowed)
+            await ProfilePageVm.UnfollowThisUser();
+        else
+            await ProfilePageVm.FollowThisUser();
+        NavigationManager.Refresh(true);
+    }
+
+}

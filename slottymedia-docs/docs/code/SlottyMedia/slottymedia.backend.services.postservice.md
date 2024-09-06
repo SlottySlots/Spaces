@@ -9,18 +9,6 @@ public class PostService : SlottyMedia.Backend.Services.Interfaces.IPostService
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [PostService](./slottymedia.backend.services.postservice.md)<br>
 Implements [IPostService](./slottymedia.backend.services.interfaces.ipostservice.md)
 
-## Properties
-
-### **PostRepository**
-
-```csharp
-public IPostRepository PostRepository { get; set; }
-```
-
-#### Property Value
-
-IPostRepository<br>
-
 ## Constructors
 
 ### **PostService(IPostRepository)**
@@ -83,24 +71,6 @@ public Task DeletePost(PostsDao post)
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **GetPostsFromForum(Guid, Int32, Int32)**
-
-```csharp
-public Task<List<string>> GetPostsFromForum(Guid userId, int startOfSet, int endOfSet)
-```
-
-#### Parameters
-
-`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-
-`startOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`endOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-#### Returns
-
-[Task&lt;List&lt;String&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-
 ### **GetPostById(Guid)**
 
 ```csharp
@@ -129,87 +99,58 @@ public Task<int> GetForumCountByUserId(Guid userId)
 
 [Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **GetAllPosts(Int32, Int32)**
+### **GetAllPosts(PageRequest)**
 
 ```csharp
-public Task<List<PostDto>> GetAllPosts(int page, int pageSize)
+public Task<IPage<PostDto>> GetAllPosts(PageRequest pageRequest)
 ```
 
 #### Parameters
 
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+`pageRequest` PageRequest<br>
 
 #### Returns
 
-[Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **GetPostsByUserId(Guid, Int32, Int32)**
+### **CountAllPosts()**
 
 ```csharp
-public Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet)
+public Task<int> CountAllPosts()
 ```
 
-#### Parameters
-
-`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-
-`startOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`endOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
 #### Returns
 
-[Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **GetPostsByUserIdByForumId(Guid, Int32, Int32, Guid)**
-
-Retrieves a list of posts from the database based on the given userId and forumId.
+### **GetPostsByUserId(Guid, PageRequest)**
 
 ```csharp
-public Task<List<PostDto>> GetPostsByUserIdByForumId(Guid userId, int startOfSet, int endOfSet, Guid forumId)
+public Task<IPage<PostDto>> GetPostsByUserId(Guid userId, PageRequest pageRequest)
 ```
 
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The ID of the user.
 
-`startOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The starting index of the set.
-
-`endOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The ending index of the set.
-
-`forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The ID of the forum.
+`pageRequest` PageRequest<br>
 
 #### Returns
 
-[Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains a list of PostDto objects.
+[Task&lt;IPage&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **GetPostsByForumId(Guid, Int32, Int32)**
-
-Retrieves a list of posts from the database based on the given forumId.
+### **GetPostsByForumId(Guid, PageRequest)**
 
 ```csharp
-public Task<List<PostDto>> GetPostsByForumId(Guid forumId, int startOfSet, int endOfSet)
+public Task<IPage<PostDto>> GetPostsByForumId(Guid forumId, PageRequest pageRequest)
 ```
 
 #### Parameters
 
 `forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The ID of the forum.
 
-`startOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The starting index of the set.
-
-`endOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The ending index of the set.
+`pageRequest` PageRequest<br>
 
 #### Returns
 
-[Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains a list of PostDto objects.
+[Task&lt;IPage&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

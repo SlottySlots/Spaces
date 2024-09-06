@@ -119,3 +119,35 @@ Tests that a LikeGeneralException is thrown when a GeneralDatabaseException is t
 ```csharp
 public void GetLikesForPost_ShouldThrowLikeGeneralException_WhenGeneralDatabaseExceptionIsThrown()
 ```
+
+### **InsertLike_ShouldThrowLikeGeneralException_WhenGeneralExceptionIsThrown()**
+
+Tests that a LikeGeneralException is thrown when a general exception is thrown in InsertLike.
+
+```csharp
+public void InsertLike_ShouldThrowLikeGeneralException_WhenGeneralExceptionIsThrown()
+```
+
+### **DeleteLike_ShouldThrowLikeNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()**
+
+Tests that a LikeNotFoundException is thrown when a DatabaseMissingItemException is thrown in DeleteLike.
+
+```csharp
+public void DeleteLike_ShouldThrowLikeNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
+```
+
+### **DeleteLike_ShouldThrowLikeGeneralException_WhenGeneralExceptionIsThrown()**
+
+Tests that a LikeGeneralException is thrown when a general exception is thrown in DeleteLike.
+
+```csharp
+public void DeleteLike_ShouldThrowLikeGeneralException_WhenGeneralExceptionIsThrown()
+```
+
+### **GetLikesForPost_ShouldThrowLikeGeneralException_WhenGeneralExceptionIsThrown()**
+
+Tests that a LikeGeneralException is thrown when a general exception is thrown in GetLikesForPost.
+
+```csharp
+public void GetLikesForPost_ShouldThrowLikeGeneralException_WhenGeneralExceptionIsThrown()
+```

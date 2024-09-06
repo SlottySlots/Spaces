@@ -11,19 +11,51 @@ Implements [IHomePageVm](./slottymedia.backend.viewmodel.interfaces.ihomepagevm.
 
 ## Properties
 
+### **IsLoadingPage**
+
+```csharp
+public bool IsLoadingPage { get; private set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### **IsLoadingPosts**
+
+```csharp
+public bool IsLoadingPosts { get; private set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ### **Posts**
 
 ```csharp
-public List<PostDto> Posts { get; set; }
+public List<PostDto> Posts { get; private set; }
 ```
 
 #### Property Value
 
 [List&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
 
+### **TotalNumberOfPosts**
+
+```csharp
+public int TotalNumberOfPosts { get; private set; }
+```
+
+#### Property Value
+
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
 ## Constructors
 
 ### **HomePageVmImpl(IPostService)**
+
+Instantiates this class
 
 ```csharp
 public HomePageVmImpl(IPostService postService)
@@ -35,10 +67,20 @@ public HomePageVmImpl(IPostService postService)
 
 ## Methods
 
-### **FetchPosts()**
+### **Initialize()**
 
 ```csharp
-public Task FetchPosts()
+public Task Initialize()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **LoadMorePosts()**
+
+```csharp
+public Task LoadMorePosts()
 ```
 
 #### Returns

@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Helper;
 using Client = Supabase.Client;
 
@@ -21,25 +23,33 @@ public class TopForumRepository : DatabaseRepository<TopForumDao>, ITopForumRepo
     {
     }
 
-    /// <summary>
-    ///     Determines the most recent spaces.
-    /// </summary>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of recent top forums.</returns>
+    /// <inheritdoc />
     public async Task<List<TopForumDao>> DetermineRecentSpaces()
     {
         var result = await base.ExecuteFunction("determine_recent_spaces");
-        var forums = JsonConvert.DeserializeObject<List<TopForumDao>>(result.ToString());
-        return forums;
+        if (result.ToString() is not null && !result.ToString().IsNullOrEmpty())
+        {
+            var forums = JsonConvert.DeserializeObject<List<TopForumDao>>(result.ToString()!);
+            if (forums is null)
+                throw new DatabaseJsonConvertFailed("Failed to convert the result to a list of top forums.");
+            return forums;
+        }
+
+        throw new DatabaseMissingItemException("No recent spaces found.");
     }
 
-    /// <summary>
-    ///     Retrieves the top forums.
-    /// </summary>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of top forums.</returns>
+    /// <inheritdoc />
     public async Task<List<TopForumDao>> GetTopForums()
     {
         var result = await base.ExecuteFunction("get_top_forums");
-        var forums = JsonConvert.DeserializeObject<List<TopForumDao>>(result.ToString());
-        return forums;
+        if (result.ToString() is not null && !result.ToString().IsNullOrEmpty())
+        {
+            var forums = JsonConvert.DeserializeObject<List<TopForumDao>>(result.ToString()!);
+            if (forums is null)
+                throw new DatabaseJsonConvertFailed("Failed to convert the result to a list of top forums.");
+            return forums;
+        }
+
+        throw new DatabaseMissingItemException("No top forums found.");
     }
 }

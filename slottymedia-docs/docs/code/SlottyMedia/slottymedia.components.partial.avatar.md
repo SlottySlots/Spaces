@@ -13,6 +13,8 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **ChildContent**
 
+RenderFragment to render a pictogram into the avatar when a action should be done on clicking an avatar.
+
 ```csharp
 public RenderFragment ChildContent { get; set; }
 ```
@@ -21,10 +23,13 @@ public RenderFragment ChildContent { get; set; }
 
 RenderFragment<br>
 
-### **Base64PNG**
+### **Base64Png**
+
+Sets a Base64Png. Gets the currently set base64png variable if set. If not set it gets the path of the standard
+ profile picture.
 
 ```csharp
-public string Base64PNG { private get; set; }
+public string Base64Png { private get; set; }
 ```
 
 #### Property Value
@@ -32,6 +37,8 @@ public string Base64PNG { private get; set; }
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **OpensFileDialog**
+
+Flag to mark the avatar as changeable. Hence the onclick event will open a file dialog.
 
 ```csharp
 public bool OpensFileDialog { get; set; }
@@ -43,6 +50,8 @@ public bool OpensFileDialog { get; set; }
 
 ### **Base64Callback**
 
+Callback triggered whenever a User selects a new file. It invokes the image as base64 encoded string
+
 ```csharp
 public EventCallback<string> Base64Callback { get; set; }
 ```
@@ -50,6 +59,18 @@ public EventCallback<string> Base64Callback { get; set; }
 #### Property Value
 
 EventCallback&lt;String&gt;<br>
+
+### **Size**
+
+Sets the size of the avatar
+
+```csharp
+public string Size { get; set; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ## Constructors
 

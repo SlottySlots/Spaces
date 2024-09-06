@@ -71,36 +71,19 @@ public Task<ForumDto> GetForumByName(string forumName)
 
 [Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **GetForumsByNameContaining(String, Int32, Int32)**
+### **GetAllForums(PageRequest)**
 
 ```csharp
-public Task<List<ForumDto>> GetForumsByNameContaining(string name, int page, int pageSize)
+public Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest)
 ```
 
 #### Parameters
 
-`name` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+`pageRequest` PageRequest<br>
 
 #### Returns
 
-[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-
-### **GetForums()**
-
-Retrieves all forums from the database.
-
-```csharp
-public Task<List<ForumDto>> GetForums()
-```
-
-#### Returns
-
-[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A list of ForumDto objects representing all forums.
+[Task&lt;IPage&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **DetermineRecentSpaces()**
 

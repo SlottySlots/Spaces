@@ -46,12 +46,12 @@ public class FollowerUserRelationDao : BaseModel
     [Column("userIsFollowing")]
     public Guid? FollowerUserId { get; set; }
 
-    /// <summary>
-    ///     The User who is being followed. This is a Reference to the User Table.
-    /// </summary>
-    [Reference(typeof(UserDao), ReferenceAttribute.JoinType.Left,
-        foreignKey: "User!Follower_User_Relation_userIsFollowed_fkey")]
-    public UserDao? FollowedUser { get; set; }
+    // /// <summary>
+    // ///     The User who is being followed. This is a Reference to the User Table.
+    // /// </summary>
+    // [Reference(typeof(UserDao), ReferenceAttribute.JoinType.Left,
+    //     foreignKey: "User!Follower_User_Relation_userIsFollowed_fkey")]
+    // public UserDao? FollowedUser { get; set; }
 
     /// <summary>
     ///     The ID of the User who is being followed. This is a Foreign Key to the User Table.
@@ -63,7 +63,7 @@ public class FollowerUserRelationDao : BaseModel
     ///     The Date and Time the Follower_User_Relation was created.
     /// </summary>
     [Column("created_at", ignoreOnInsert: true, ignoreOnUpdate: true)]
-    public DateTime CreatedAt { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
 
     /// <summary>
     ///     The ToString method returns a string representation of the FollowerUserRelationDao object.

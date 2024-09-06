@@ -38,7 +38,7 @@ else
             var userDao = await UserService.GetUserById(Guid.Parse(idOfUser));
             if (DescriptionText != userDao.Description)
             {
-                if (DescriptionText.Length < 200)
+                if (DescriptionText is not null && DescriptionText.Length < 200)
                 {
                     //TODO: Show error message and prevent submission
                     userDao.Description = DescriptionText;

@@ -23,17 +23,14 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
     {
     }
 
-    /// <summary>
-    ///     Gets the count of friends for a specific user.
-    /// </summary>
-    /// <param name="userId">The ID of the user.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the count of friends.</returns>
+    /// <inheritdoc />
     public async Task<int> GetCountOfUserFriends(Guid userId)
     {
         try
         {
-            var result = await BaseQuerry
-                .Filter("userIsFollowed", Constants.Operator.Equals, userId.ToString())
+            var result = await Supabase
+                .From<FollowerUserRelationDao>()
+                .Filter(friends => friends.FollowedUserId!, Constants.Operator.Equals, userId.ToString())
                 .Count(Constants.CountType.Exact);
 
             return result;
@@ -45,17 +42,24 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
         }
     }
 
-    /// <summary>
-    ///     Retrieves the list of friends for a specific user.
-    /// </summary>
-    /// <param name="userId">The ID of the user.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of follower-user relations.</returns>
+    /// <inheritdoc />
     public async Task<List<FollowerUserRelationDao>> GetFriends(Guid userId)
     {
-        var querry = BaseQuerry
-            .Filter("followerUserID", Constants.Operator.Equals, userId.ToString())
+        var query = Supabase
+            .From<FollowerUserRelationDao>()
+            .Filter(friend => friend.FollowedUserId!, Constants.Operator.Equals, userId.ToString())
             .Select(x => new object[] { x.FollowedUserId! });
 
-        return await ExecuteQuery(querry);
+        return await ExecuteQuery(query);
+    }
+
+    /// <inheritdoc />
+    public async Task<FollowerUserRelationDao> CheckIfUserIsFollowed(Guid userId, Guid followedUserId)
+    {
+        var query = Supabase
+            .From<FollowerUserRelationDao>()
+            .Filter(friend => friend.FollowedUserId!, Constants.Operator.Equals, userId.ToString())
+            .Filter(friend => friend.FollowerUserId!, Constants.Operator.Equals, followedUserId.ToString());
+        return await ExecuteSingleQuery(query);
     }
 }

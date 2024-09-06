@@ -68,3 +68,33 @@ public Task DeleteComment(CommentDao comment)
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **CountCommentsInPost(Guid)**
+
+```csharp
+public Task<int> CountCommentsInPost(Guid postId)
+```
+
+#### Parameters
+
+`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetCommentsInPost(Guid, PageRequest)**
+
+```csharp
+public Task<IPage<CommentDto>> GetCommentsInPost(Guid postId, PageRequest pageRequest)
+```
+
+#### Parameters
+
+`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`pageRequest` PageRequest<br>
+
+#### Returns
+
+[Task&lt;IPage&lt;CommentDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

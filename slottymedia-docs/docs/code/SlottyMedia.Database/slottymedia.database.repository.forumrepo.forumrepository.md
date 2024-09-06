@@ -5,11 +5,11 @@ Namespace: SlottyMedia.Database.Repository.ForumRepo
 Repository class for managing forums in the database.
 
 ```csharp
-public class ForumRepository : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.ForumDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.ForumDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], IForumRepository
+public class ForumRepository : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.ForumDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.Repository.IDatabaseRepository`1[[SlottyMedia.Database.Daos.ForumDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], IForumRepository
 ```
 
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [DatabaseRepository&lt;ForumDao&gt;](./slottymedia.database.repository.databaserepository-1.md) → [ForumRepository](./slottymedia.database.repository.forumrepo.forumrepository.md)<br>
-Implements [IDatabaseRepository&lt;ForumDao&gt;](./slottymedia.database.idatabaserepository-1.md), [IForumRepository](./slottymedia.database.repository.forumrepo.iforumrepository.md)
+Implements [IDatabaseRepository&lt;ForumDao&gt;](./slottymedia.database.repository.idatabaserepository-1.md), [IForumRepository](./slottymedia.database.repository.forumrepo.iforumrepository.md)
 
 ## Constructors
 
@@ -34,20 +34,16 @@ The database repository helper instance.
 
 ## Methods
 
-### **GetElementById(String)**
-
-Retrieves a forum element by its topic name.
+### **GetForumByName(String)**
 
 ```csharp
-public Task<ForumDao> GetElementById(string forumName)
+public Task<ForumDao> GetForumByName(string name)
 ```
 
 #### Parameters
 
-`forumName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The name of the forum topic.
+`name` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 #### Returns
 
 [Task&lt;ForumDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains the forum data access object.

@@ -1,24 +1,21 @@
 @using SlottyMedia.Backend.Dtos
 @using SlottyMedia.Backend.Services.Interfaces
-
 @inject IUserService UserService;
 @inject ILikeService LikeService;
+@inject ICommentService CommentService;
+@inject NavigationManager NavigationManager
 
 @if (!_isLoading)
 {
     <div class="w-full p-5 grid grid-cols-10 gap-4">
 
         <!-- profile picture -->
-        <div class="w-[50px] h-[50px] rounded-full border border-athens-gray">
-            <svg width="100%" height="100%" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#000000">
-                <g>
-                    <path d="m 8 1 c -1.65625 0 -3 1.34375 -3 3 s 1.34375 3 3 3 s 3 -1.34375 3 -3 s -1.34375 -3 -3 -3 z m -1.5 7 c -2.492188 0 -4.5 2.007812 -4.5 4.5 v 0.5 c 0 1.109375 0.890625 2 2 2 h 8 c 1.109375 0 2 -0.890625 2 -2 v -0.5 c 0 -2.492188 -2.007812 -4.5 -4.5 -4.5 z m 0 0" fill="#2e3436"></path>
-                </g>
-            </svg>
+        <div @onclick="OnClickAvatar">
+            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
         </div>
 
         <!-- username & time posted -->
-        <div class="col-span-9 flex flex-col justify-between">
+        <div class="col-span-9 flex flex-col justify-between cursor-pointer" @onclick="() => _navigateToProfile(_owner!.UserId)">
             <h3 class="text-xl font-semibold">
                 @(_owner!.Username)
             </h3>
@@ -31,7 +28,7 @@
         <div></div>
 
         <!-- actual text -->
-        <div class="col-span-9">
+        <div class="col-span-9 break-words">
             @(Dto!.Content)
         </div>
 
@@ -42,7 +39,7 @@
         <div class="col-span-9 flex gap-12 select-none">
 
             <!-- comments -->
-            <div class="flex gap-3 items-center">
+            <div @onclick="OnPostClick" class="flex gap-3 items-center cursor-pointer">
 
                 <!-- icon -->
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,7 +50,7 @@
 
                 <!-- number of comments -->
                 <span class="text-cadet-gray">
-                    7.4K
+                    @_commentCount
                 </span>
 
             </div>
@@ -72,7 +69,6 @@
 }
 
 
-
 @if (_isLoading)
 {
     <div>
@@ -86,34 +82,79 @@
     /// The post to be rendered.
     [Parameter]
     public PostDto? Dto { get; set; }
-    
-    ///<summary>
-    ///The current logged in user id to propagate towards like component
+
+    /// <summary>
+    ///     The current logged in user id to propagate towards like component
     /// </summary>
     [Parameter]
     public Guid CurrentUserId { get; set; }
 
+    /// <summary>
+    ///     This event is triggered when the post's comment button is clicked.
+    ///     This event will be used to navigate to the post's dedicated page from the home page (i.e. <c>/post/{ID}</c>).
+    ///     On the post's dedicated page this event should be left unset.
+    /// </summary>
+    [Parameter]
+    public EventCallback OnPostClick { get; set; }
+
     private bool _isLoading = true;
+    private int _commentCount;
     private int _likeCount;
     private bool _initLiked;
-    
+
     UserDto? _owner;
+
+    public UserInformationDto UserInformationDto { get; set; } = new()
+    {
+        Username = "Username is loading..",
+        Description = "Description is loading..",
+        ProfilePic = null
+    };
 
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()
     {
         _isLoading = true;
         //TODO: This should be changed soon!
-        await SetLikeCountState(); 
+        await SetLikeCountState();
         _owner = await UserService.GetUserDtoById(Dto!.UserId);
-        _isLoading = false;
+        _commentCount = await CommentService.CountCommentsInPost(Dto.PostId);
+    }
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if ((firstRender || UserInformationDto.Username == "Username is loading..") && Dto != null)
+        {
+            var userInfo = await UserService.GetUserInfo(Dto!.UserId);
+            if (userInfo != null)
+            {
+                UserInformationDto.Username = userInfo.Username;
+                UserInformationDto.UserId = userInfo.UserId;
+                UserInformationDto.Description = userInfo.Description;
+                UserInformationDto.ProfilePic = userInfo.ProfilePic;
+                UserInformationDto.FriendsAmount = userInfo.FriendsAmount;
+                UserInformationDto.SpacesAmount = userInfo.SpacesAmount;
+                _isLoading = false;
+                StateHasChanged();
+            }
+        }
+    }
+
+    private void OnClickAvatar()
+    {
+        NavigationManager.NavigateTo($"/profile/{UserInformationDto.UserId.ToString()}");
+    }
+
+    private void _navigateToProfile(Guid userId)
+    {
+        NavigationManager.NavigateTo($"/profile/{userId}");
     }
 
     public async Task SetLikeCountState()
     {
         var likeList = await LikeService.GetLikesForPost(Dto!.PostId);
         _likeCount = likeList.Count;
-        _initLiked = likeList.Contains(CurrentUserId); 
+        _initLiked = likeList.Contains(CurrentUserId);
     }
 
     public async void LikeClick(bool wasUnliked)
@@ -125,7 +166,6 @@
         else
         {
             await LikeService.InsertLike(CurrentUserId, Dto!.PostId);
-            
         }
 
         await SetLikeCountState();

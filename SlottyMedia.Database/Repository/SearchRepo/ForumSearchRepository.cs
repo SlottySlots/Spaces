@@ -1,5 +1,7 @@
-﻿using SlottyMedia.Database.Daos;
+﻿using Microsoft.IdentityModel.Tokens;
+using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Helper;
+using SlottyMedia.Database.Pagination;
 using Supabase.Postgrest;
 using Client = Supabase.Client;
 
@@ -21,19 +23,17 @@ public class ForumSearchRepository : DatabaseRepository<ForumDao>, IForumSearchR
     {
     }
 
-    /// <summary>
-    ///     Retrieves forums by their topic with pagination.
-    /// </summary>
-    /// <param name="topic">The topic to search for.</param>
-    /// <param name="page">The page number for pagination.</param>
-    /// <param name="pageSize">The number of items per page.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of forums.</returns>
-    public async Task<List<ForumDao>> GetForumsByTopic(string topic, int page, int pageSize)
+    /// <inheritdoc />
+    public async Task<IPage<ForumDao>> GetForumsByTopic(string topic, PageRequest pageRequest)
     {
-        var query = BaseQuerry
-            .Select(x => new object[] { x.ForumTopic! })
-            .Filter("forumTopic", Constants.Operator.ILike, $"%{topic}%");
+        if (topic.IsNullOrEmpty())
+            return PageImpl<ForumDao>.Empty();
 
-        return await ExecuteQuery(ApplyPagination(query, page, pageSize));
+        return await ApplyPagination(
+            () => Supabase
+                .From<ForumDao>()
+                .Select(x => new object[] { x.ForumTopic! })
+                .Filter(forum => forum.ForumTopic!, Constants.Operator.ILike, $"%{topic}%"),
+            pageRequest);
     }
 }

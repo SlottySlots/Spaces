@@ -83,10 +83,12 @@ public string ServerErrorMessage { get; set; }
 
 ## Constructors
 
-### **PostSubmissionFormVmImpl(IAuthService, IPostService, IForumService, NavigationManager)**
+### **PostSubmissionFormVmImpl(IAuthService, IPostService, IForumService, ISearchService, NavigationManager)**
+
+Ctor used for dep inject
 
 ```csharp
-public PostSubmissionFormVmImpl(IAuthService authService, IPostService postService, IForumService forumService, NavigationManager navigationManager)
+public PostSubmissionFormVmImpl(IAuthService authService, IPostService postService, IForumService forumService, ISearchService searchService, NavigationManager navigationManager)
 ```
 
 #### Parameters
@@ -96,6 +98,8 @@ public PostSubmissionFormVmImpl(IAuthService authService, IPostService postServi
 `postService` [IPostService](./slottymedia.backend.services.interfaces.ipostservice.md)<br>
 
 `forumService` [IForumService](./slottymedia.backend.services.interfaces.iforumservice.md)<br>
+
+`searchService` [ISearchService](./slottymedia.backend.services.interfaces.isearchservice.md)<br>
 
 `navigationManager` NavigationManager<br>
 
@@ -120,16 +124,12 @@ public Task HandleSpacePromptChange(ChangeEventArgs e, EventCallback<string> pro
 ### **HandleSpaceSelection(String)**
 
 ```csharp
-public Task HandleSpaceSelection(string spaceName)
+public void HandleSpaceSelection(string spaceName)
 ```
 
 #### Parameters
 
 `spaceName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **HandleSpaceDeselection()**
 

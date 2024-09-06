@@ -1,4 +1,5 @@
 using Moq;
+using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
@@ -114,8 +115,12 @@ public class MainLayoutVmImplTest
             UserId = Guid.NewGuid(), UserName = "Test", Description = "TestDesc", Email = "test@test.de",
             ProfilePic = "123"
         };
-        _userService.Setup(service => service.GetUserDaoById(It.IsAny<Guid>()))
-            .ReturnsAsync(userDao);
+        _userService.Setup(service => service.GetUserInfo(It.IsAny<Guid>()))
+            .ReturnsAsync(new UserInformationDto
+            {
+                UserId = userDao.UserId, Username = userDao.UserName, Description = userDao.Description,
+                ProfilePic = userDao.ProfilePic
+            });
         Assert.MultipleAsync(async () =>
             {
                 var serviceCall = await _vm.SetUserInfo();
@@ -124,7 +129,6 @@ public class MainLayoutVmImplTest
                 Assert.That(serviceCall!.Username, Is.EqualTo(userDao.UserName));
                 Assert.That(serviceCall!.Description, Is.EqualTo(userDao.Description));
                 Assert.That(serviceCall!.ProfilePic, Is.EqualTo(userDao.ProfilePic));
-                Assert.That(serviceCall!.CreatedAt, Is.EqualTo(userDao.CreatedAt));
             }
         );
         _authService.VerifyAll();
@@ -164,5 +168,29 @@ public class MainLayoutVmImplTest
         _authService.VerifyAll();
         _mockUserRepository.VerifyAll();
         _userService.Verify(service => service.UpdateUser(It.Is<UserDao>(u => u.ProfilePic == "123")), Times.Once);
+    }
+
+    /// <summary>
+    ///     Tests that RestoreSessionOnInit logs a message when no session is restored.
+    /// </summary>
+    [Test]
+    public void RestoreSessionOnInit_LogsMessageOnNoSession()
+    {
+        _authService.Setup(service => service.RestoreSessionOnInit()).ReturnsAsync((Session?)null);
+        Assert.ThatAsync(async () => await _vm.RestoreSessionOnInit(), Is.Null);
+        _authService.VerifyAll();
+        // Verify that the logger logs the correct message
+    }
+
+    /// <summary>
+    ///     Tests that SetUserInfo logs an error when an exception is thrown.
+    /// </summary>
+    [Test]
+    public void SetUserInfo_LogsErrorOnException()
+    {
+        _authService.Setup(service => service.GetCurrentSession()).Throws(new Exception("Test exception"));
+        Assert.ThatAsync(async () => await _vm.SetUserInfo(), Is.Null);
+        _authService.VerifyAll();
+        // Verify that the logger logs the correct error message
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Exceptions;
 
 namespace SlottyMedia.Database.Repository.RoleRepo;
 
@@ -12,8 +13,10 @@ public interface IRoleRepository : IDatabaseRepository<RoleDao>
     /// </summary>
     /// <param name="roleName">The name of the role.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the role ID.</returns>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public Task<Guid> GetRoleIdByName(string roleName);
-    
+
     /// <summary>
     ///     Updates an existing RoleDao element in the repository.
     /// </summary>

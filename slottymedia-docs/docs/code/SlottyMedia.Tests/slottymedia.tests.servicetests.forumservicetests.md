@@ -112,46 +112,6 @@ Tests that a ForumNotFoundException is thrown when a DatabaseMissingItemExceptio
 public void GetForumByName_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()
 ```
 
-### **GetForumsByNameContaining_ShouldReturnForums_WhenForumsExist()**
-
-Tests that forums are returned when forums exist.
-
-```csharp
-public Task GetForumsByNameContaining_ShouldReturnForums_WhenForumsExist()
-```
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
-### **GetForumsByNameContaining_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()**
-
-Tests that a ForumNotFoundException is thrown when a DatabaseMissingItemException is thrown.
-
-```csharp
-public void GetForumsByNameContaining_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()
-```
-
-### **GetForums_ShouldReturnAllForums_WhenForumsExist()**
-
-Tests that all forums are returned when forums exist.
-
-```csharp
-public Task GetForums_ShouldReturnAllForums_WhenForumsExist()
-```
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
-### **GetForums_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()**
-
-Tests that a ForumNotFoundException is thrown when a DatabaseMissingItemException is thrown.
-
-```csharp
-public void GetForums_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()
-```
-
 ### **DetermineRecentSpaces_ShouldReturnRecentForums_WhenForumsExist()**
 
 Tests that recent forums are returned when forums exist.
@@ -190,4 +150,44 @@ Tests that a ForumNotFoundException is thrown when a DatabaseMissingItemExceptio
 
 ```csharp
 public void GetTopForums_ShouldThrowForumGeneralException_WhenDatabaseMissingItemExceptionIsThrown()
+```
+
+### **InsertForum_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()**
+
+Tests that a ForumGeneralException is thrown when a general exception is thrown during forum insertion.
+
+```csharp
+public void InsertForum_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()
+```
+
+### **DeleteForum_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()**
+
+Tests that a ForumGeneralException is thrown when a general exception is thrown during forum deletion.
+
+```csharp
+public void DeleteForum_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()
+```
+
+### **GetForumByName_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()**
+
+Tests that a ForumGeneralException is thrown when a general exception is thrown during forum retrieval by name.
+
+```csharp
+public void GetForumByName_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()
+```
+
+### **DetermineRecentSpaces_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()**
+
+Tests that a ForumGeneralException is thrown when a general exception is thrown during retrieval of recent forums.
+
+```csharp
+public void DetermineRecentSpaces_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()
+```
+
+### **GetTopForums_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()**
+
+Tests that a ForumGeneralException is thrown when a general exception is thrown during retrieval of top forums.
+
+```csharp
+public void GetTopForums_ShouldThrowForumGeneralException_WhenGeneralExceptionIsThrown()
 ```

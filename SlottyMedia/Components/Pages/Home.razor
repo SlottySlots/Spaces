@@ -3,22 +3,41 @@
 @using SlottyMedia.Backend.ViewModel.Interfaces
 @inject IHomePageVm ViewModel
 @inject IAuthService AuthService
+@inject NavigationManager NavigationManager
 
 
 <PageTitle>Slotty Media | Home</PageTitle>
 
-@foreach (var post in ViewModel!.Posts)
+
+@if (AuthService.IsAuthenticated())
 {
-    <Post Dto="post" CurrentUserId=@_currentUserId/>
+    <PostSubmissionForm/>
 }
+
+
+<div class="w-full pb-5 flex flex-col items-center">
+    <Pagination Page="ViewModel!.Page" OnPageFetch="ViewModel!.LoadPage">
+        @foreach (var post in ViewModel!.Page)
+        {
+            <Post Dto="post" CurrentUserId=@_currentUserId OnPostClick="() => _navigateToPostPage(post.PostId)"/>
+        }
+    </Pagination>
+</div>
+
 
 @code
 {
     private Guid _currentUserId;
+
     protected override async Task OnInitializedAsync()
     {
         var _currentSession = AuthService.GetCurrentSession();
         _currentUserId = Guid.Parse(_currentSession!.User!.Id!);
-        await ViewModel.FetchPosts();
+        await ViewModel.Initialize();
+    }
+
+    private void _navigateToPostPage(Guid postId)
+    {
+        NavigationManager.NavigateTo($"/post/{postId}");
     }
 }

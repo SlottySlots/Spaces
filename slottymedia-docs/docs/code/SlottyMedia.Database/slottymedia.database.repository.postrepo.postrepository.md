@@ -5,11 +5,11 @@ Namespace: SlottyMedia.Database.Repository.PostRepo
 Repository class for managing posts in the database.
 
 ```csharp
-public class PostRepository : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.PostsDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.IDatabaseRepository`1[[SlottyMedia.Database.Daos.PostsDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], IPostRepository
+public class PostRepository : SlottyMedia.Database.Repository.DatabaseRepository`1[[SlottyMedia.Database.Daos.PostsDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SlottyMedia.Database.Repository.IDatabaseRepository`1[[SlottyMedia.Database.Daos.PostsDao, SlottyMedia.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], IPostRepository
 ```
 
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [DatabaseRepository&lt;PostsDao&gt;](./slottymedia.database.repository.databaserepository-1.md) → [PostRepository](./slottymedia.database.repository.postrepo.postrepository.md)<br>
-Implements [IDatabaseRepository&lt;PostsDao&gt;](./slottymedia.database.idatabaserepository-1.md), [IPostRepository](./slottymedia.database.repository.postrepo.ipostrepository.md)
+Implements [IDatabaseRepository&lt;PostsDao&gt;](./slottymedia.database.repository.idatabaserepository-1.md), [IPostRepository](./slottymedia.database.repository.postrepo.ipostrepository.md)
 
 ## Constructors
 
@@ -34,6 +34,38 @@ The database repository helper instance.
 
 ## Methods
 
+### **GetAllElements()**
+
+Fetches all posts and orders them by date created in descending order.
+
+```csharp
+public Task<List<PostsDao>> GetAllElements()
+```
+
+#### Returns
+
+[Task&lt;List&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+The posts in a list
+
+### **GetAllElements(PageRequest)**
+
+Fetches all posts and orders them by date created in descending order.
+ Only fetches posts on the specified page of the specified size.
+
+```csharp
+public Task<IPage<PostsDao>> GetAllElements(PageRequest pageRequest)
+```
+
+#### Parameters
+
+`pageRequest` [PageRequest](./slottymedia.database.pagination.pagerequest.md)<br>
+The page request
+
+#### Returns
+
+[Task&lt;IPage&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+The page containing the requested posts
+
 ### **GetForumCountByUserId(Guid)**
 
 ```csharp
@@ -48,44 +80,36 @@ public Task<int> GetForumCountByUserId(Guid userId)
 
 [Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **GetAllElements(Int32, Int32)**
+### **CountAllPosts()**
 
 ```csharp
-public Task<List<PostsDao>> GetAllElements(int page, int pageSize)
+public Task<int> CountAllPosts()
 ```
-
-#### Parameters
-
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 #### Returns
 
-[Task&lt;List&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **GetPostsByUserId(Guid, Int32, Int32)**
+### **GetPostsByUserId(Guid, PageRequest)**
 
 ```csharp
-public Task<List<PostsDao>> GetPostsByUserId(Guid userId, int page, int pageSize)
+public Task<IPage<PostsDao>> GetPostsByUserId(Guid userId, PageRequest pageRequest)
 ```
 
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+`pageRequest` [PageRequest](./slottymedia.database.pagination.pagerequest.md)<br>
 
 #### Returns
 
-[Task&lt;List&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **GetPostsByUserIdByForumId(Guid, Guid, Int32, Int32)**
+### **GetPostsByUserIdByForumId(Guid, Guid, PageRequest)**
 
 ```csharp
-public Task<List<PostsDao>> GetPostsByUserIdByForumId(Guid userId, Guid forumId, int page, int pageSize)
+public Task<IPage<PostsDao>> GetPostsByUserIdByForumId(Guid userId, Guid forumId, PageRequest pageRequest)
 ```
 
 #### Parameters
@@ -94,28 +118,24 @@ public Task<List<PostsDao>> GetPostsByUserIdByForumId(Guid userId, Guid forumId,
 
 `forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+`pageRequest` [PageRequest](./slottymedia.database.pagination.pagerequest.md)<br>
 
 #### Returns
 
-[Task&lt;List&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **GetPostsByForumId(Guid, Int32, Int32)**
+### **GetPostsByForumId(Guid, PageRequest)**
 
 ```csharp
-public Task<List<PostsDao>> GetPostsByForumId(Guid forumId, int page, int pageSize)
+public Task<IPage<PostsDao>> GetPostsByForumId(Guid forumId, PageRequest pageRequest)
 ```
 
 #### Parameters
 
 `forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+`pageRequest` [PageRequest](./slottymedia.database.pagination.pagerequest.md)<br>
 
 #### Returns
 
-[Task&lt;List&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;PostsDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

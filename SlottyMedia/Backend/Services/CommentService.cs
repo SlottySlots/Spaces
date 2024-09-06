@@ -1,7 +1,9 @@
-﻿using SlottyMedia.Backend.Exceptions.Services.CommentExceptions;
+﻿using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Backend.Exceptions.Services.CommentExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Database.Pagination;
 using SlottyMedia.Database.Repository.CommentRepo;
 using SlottyMedia.LoggingProvider;
 
@@ -102,6 +104,49 @@ public class CommentService : ICommentService
         {
             // Handle any other exceptions.
             throw new CommentGeneralException($"An error occurred while deleting the comment. Comment {comment}", ex);
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<int> CountCommentsInPost(Guid postId)
+    {
+        try
+        {
+            return await _commentRepository.CountCommentsInPost(postId);
+        }
+        catch (DatabaseIudActionException ex)
+        {
+            // Handle specific database insert/update/delete action exceptions.
+            throw new CommentIudException(
+                $"An error occurred while counting comments in post with ID '{postId.ToString()}': {ex.Message}", ex);
+        }
+        catch (Exception ex)
+        {
+            // Handle any other exceptions.
+            throw new CommentGeneralException(
+                $"An error occurred while counting comments in post with ID '{postId.ToString()}': {ex.Message}", ex);
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<IPage<CommentDto>> GetCommentsInPost(Guid postId, PageRequest pageRequest)
+    {
+        try
+        {
+            var comments = await _commentRepository.GetCommentsInPost(postId, pageRequest);
+            return comments.Map(dao => new CommentDto().Mapper(dao));
+        }
+        catch (DatabaseIudActionException ex)
+        {
+            // Handle specific database insert/update/delete action exceptions.
+            throw new CommentIudException(
+                $"An error occurred while fetching comments from post with ID '{postId.ToString()}': {ex.Message}", ex);
+        }
+        catch (Exception ex)
+        {
+            // Handle any other exceptions.
+            throw new CommentGeneralException(
+                $"An error occurred while fetching comments from post with ID '{postId.ToString()}': {ex.Message}", ex);
         }
     }
 }

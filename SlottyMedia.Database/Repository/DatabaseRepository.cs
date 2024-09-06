@@ -1,6 +1,8 @@
 ﻿using System.Linq.Expressions;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Helper;
+using SlottyMedia.Database.Pagination;
+using SlottyMedia.LoggingProvider;
 using Supabase.Postgrest;
 using Supabase.Postgrest.Interfaces;
 using Supabase.Postgrest.Models;
@@ -14,12 +16,12 @@ namespace SlottyMedia.Database.Repository;
 /// <typeparam name="T"></typeparam>
 public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : BaseModel, new()
 {
+    private static readonly Logging<DatabaseRepository<T>> _logger = new();
+
     /// <summary>
     ///     This field is used to access the _daoHelper class.
     /// </summary>
     private readonly DaoHelper _daoHelper;
-
-    protected readonly IPostgrestTable<T> BaseQuerry;
 
     /// <summary>
     ///     This field is used to access the DatabaseRepositroyHelper class.
@@ -44,29 +46,6 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         Supabase = supabase;
         _daoHelper = daoHelper;
         DatabaseRepositroyHelper = databaseRepositroyHelper;
-        BaseQuerry = Supabase.From<T>();
-    }
-
-    /// <summary>
-    ///     This method executes a query and returns the result.
-    /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    public async Task<List<T>> ExecuteQuery(IPostgrestTable<T> query)
-    {
-        try
-        {
-            var response = await query.Get();
-
-            response.ResponseMessage?.EnsureSuccessStatusCode();
-
-            return response.Models;
-        }
-        catch (Exception ex)
-        {
-            DatabaseRepositroyHelper.HandleException(ex, "retrieving Multiple");
-            return null;
-        }
     }
 
     /// <inheritdoc />
@@ -105,6 +84,12 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     }
 
     /// <inheritdoc />
+    public virtual Task<IPage<T>> GetAllElements(PageRequest pageRequest)
+    {
+        return ApplyPagination(() => Supabase.From<T>(), pageRequest);
+    }
+
+    /// <inheritdoc />
     public virtual async Task<T> AddElement(T entity)
     {
         try
@@ -117,7 +102,7 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         catch (Exception e)
         {
             DatabaseRepositroyHelper.HandleException(e, "inserting");
-            return null;
+            return null!;
         }
     }
 
@@ -152,11 +137,36 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     }
 
     /// <summary>
-    ///     This method executes a single query and returns the result.
+    ///     Executes a query on the specified table.
     /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    /// <exception cref="DatabaseMissingItemException"></exception>
+    /// <param name="query">The query to execute.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a list of entities.</returns>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
+    protected async Task<List<T>> ExecuteQuery(IPostgrestTable<T> query)
+    {
+        try
+        {
+            var response = await query.Get();
+
+            response.ResponseMessage?.EnsureSuccessStatusCode();
+
+            return response.Models;
+        }
+        catch (Exception ex)
+        {
+            DatabaseRepositroyHelper.HandleException(ex, "retrieving Multiple");
+            return null!;
+        }
+    }
+
+
+    /// <summary>
+    ///     Executes a single query on the specified table.
+    /// </summary>
+    /// <param name="query">The query to execute.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a single entity.</returns>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
     public async Task<T> ExecuteSingleQuery(IPostgrestTable<T> query)
     {
         try
@@ -170,12 +180,18 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         catch (Exception ex)
         {
             DatabaseRepositroyHelper.HandleException(ex, "retrieving Single");
-            return null;
+            return null!;
         }
     }
 
-    /// <inheritdoc />
-    public virtual async Task<object> ExecuteFunction(string nameOfFunction)
+    /// <summary>
+    ///     Executes a function on the database.
+    /// </summary>
+    /// <param name="nameOfFunction">The name of the function to execute.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the result of the function.</returns>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the items could not be retrieved from the database.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
+    protected virtual async Task<object> ExecuteFunction(string nameOfFunction)
     {
         try
         {
@@ -189,12 +205,19 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         catch (Exception e)
         {
             DatabaseRepositroyHelper.HandleException(e, "executing function");
-            return null;
+            return null!;
         }
     }
 
-    /// <inheritdoc />
-    public virtual async Task<object> ExecuteFunction(string nameOfFunction, Dictionary<string, object> parameters)
+    /// <summary>
+    ///     Executes a function on the database with parameters.
+    /// </summary>
+    /// <param name="nameOfFunction">The name of the function to execute.</param>
+    /// <param name="parameters">The parameters to pass to the function.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the result of the function.</returns>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the items could not be retrieved from the database.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
+    protected virtual async Task<object> ExecuteFunction(string nameOfFunction, Dictionary<string, object> parameters)
     {
         try
         {
@@ -208,20 +231,35 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
         catch (Exception e)
         {
             DatabaseRepositroyHelper.HandleException(e, "executing function");
-            return null;
+            return null!;
         }
     }
 
     /// <summary>
     ///     This method applies pagination to a query.
     /// </summary>
-    /// <param name="query"></param>
-    /// <param name="page"></param>
-    /// <param name="pageSize"></param>
-    protected IPostgrestTable<T> ApplyPagination(IPostgrestTable<T> query, int page, int pageSize)
+    /// <param name="queryBuilder">
+    ///     A function that builds the needed query. This function needs to return a different
+    ///     object on each invocation, otherwise the pagination will break!
+    /// </param>
+    /// <param name="pageRequest">The page request</param>
+    /// <param name="totalElements">The total number of queried elements</param>
+    /// <returns>The <see cref="IPage{T}" /> that corresponds to the given request</returns>
+    protected async Task<IPage<T>> ApplyPagination(Func<IPostgrestTable<T>> queryBuilder, PageRequest pageRequest)
     {
-        var start = (page - 1) * pageSize;
-        var end = start + pageSize;
-        return query.Range(start, end);
+        var start = pageRequest.PageNumber * pageRequest.PageSize;
+        var end = start + pageRequest.PageSize - 1;
+
+        _logger.LogDebug($"Paginating query: Fetching entries {start}-{end}");
+
+        var totalElements = await queryBuilder().Count(Constants.CountType.Exact);
+        var content = await ExecuteQuery(queryBuilder().Range(start, end));
+
+        return new PageImpl<T>(
+            content,
+            pageRequest.PageNumber,
+            pageRequest.PageSize,
+            (int)Math.Ceiling((double)totalElements / pageRequest.PageSize),
+            pageNumber => ApplyPagination(queryBuilder, PageRequest.Of(pageNumber, pageRequest.PageSize)));
     }
 }

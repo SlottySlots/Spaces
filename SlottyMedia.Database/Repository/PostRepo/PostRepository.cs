@@ -1,5 +1,6 @@
 ﻿using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Helper;
+using SlottyMedia.Database.Pagination;
 using Supabase.Postgrest;
 using Supabase.Postgrest.Interfaces;
 using Client = Supabase.Client;
@@ -22,6 +23,26 @@ public class PostRepository : DatabaseRepository<PostsDao>, IPostRepository
     {
     }
 
+    /// <summary>
+    ///     Fetches all posts and orders them by date created in descending order.
+    /// </summary>
+    /// <returns>The posts in a list</returns>
+    public override Task<List<PostsDao>> GetAllElements()
+    {
+        return ExecuteQuery(BaseSelectQuery());
+    }
+
+    /// <summary>
+    ///     Fetches all posts and orders them by date created in descending order.
+    ///     Only fetches posts on the specified page of the specified size.
+    /// </summary>
+    /// <param name="pageRequest">The page request</param>
+    /// <returns>The page containing the requested posts</returns>
+    public override Task<IPage<PostsDao>> GetAllElements(PageRequest pageRequest)
+    {
+        return ApplyPagination(BaseSelectQuery, pageRequest);
+    }
+
     /// <inheritdoc />
     public async Task<int> GetForumCountByUserId(Guid userId)
     {
@@ -40,45 +61,46 @@ public class PostRepository : DatabaseRepository<PostsDao>, IPostRepository
     }
 
     /// <inheritdoc />
-    public async Task<List<PostsDao>> GetAllElements(int page, int pageSize)
+    public async Task<int> CountAllPosts()
     {
-        var query = BaseSelectQuery();
-
-        return await ExecuteQuery(ApplyPagination(query, page, pageSize));
+        return await Supabase
+            .From<PostsDao>()
+            .Count(Constants.CountType.Exact);
     }
 
     /// <inheritdoc />
-    public async Task<List<PostsDao>> GetPostsByUserId(Guid userId, int page, int pageSize)
+    public async Task<IPage<PostsDao>> GetPostsByUserId(Guid userId, PageRequest pageRequest)
     {
-        var query = BaseSelectQuery()
-            .Filter("user_id", Constants.Operator.Equals, userId);
-
-        return await ExecuteQuery(ApplyPagination(query, page, pageSize));
+        return await ApplyPagination(
+            () => BaseSelectQuery()
+                .Filter(posts => posts.UserId!, Constants.Operator.Equals, userId.ToString()),
+            pageRequest);
     }
 
     /// <inheritdoc />
-    public async Task<List<PostsDao>> GetPostsByUserIdByForumId(Guid userId, Guid forumId, int page, int pageSize)
+    public async Task<IPage<PostsDao>> GetPostsByUserIdByForumId(Guid userId, Guid forumId, PageRequest pageRequest)
     {
-        var query = BaseSelectQuery()
-            .Filter("creator_userID", Constants.Operator.Equals, userId.ToString())
-            .Filter("associated_forumID", Constants.Operator.Equals, forumId.ToString());
-
-        return await ExecuteQuery(ApplyPagination(query, page, pageSize));
+        return await ApplyPagination(
+            () => BaseSelectQuery()
+                .Filter(post => post.UserId!, Constants.Operator.Equals, userId.ToString())
+                .Filter(post => post.ForumId!, Constants.Operator.Equals, forumId.ToString()),
+            pageRequest);
     }
 
     /// <inheritdoc />
-    public async Task<List<PostsDao>> GetPostsByForumId(Guid forumId, int page, int pageSize)
+    public async Task<IPage<PostsDao>> GetPostsByForumId(Guid forumId, PageRequest pageRequest)
     {
-        var query = BaseSelectQuery()
-            .Filter("associated_forumID", Constants.Operator.Equals, forumId.ToString());
-
-        return await ExecuteQuery(ApplyPagination(query, page, pageSize));
+        return await ApplyPagination(
+            () => BaseSelectQuery()
+                .Filter(post => post.ForumId!, Constants.Operator.Equals, forumId.ToString()),
+            pageRequest);
     }
 
     private IPostgrestTable<PostsDao> BaseSelectQuery()
     {
-        return BaseQuerry
+        return Supabase
+            .From<PostsDao>()
             .Select(x => new object[] { x.PostId!, x.Content!, x.CreatedAt, x.UserId!, x.ForumId! })
-            .Order("created_at", Constants.Ordering.Descending, Constants.NullPosition.Last);
+            .Order(post => post.CreatedAt, Constants.Ordering.Descending, Constants.NullPosition.Last);
     }
 }

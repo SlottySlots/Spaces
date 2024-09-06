@@ -119,3 +119,27 @@ Tests that DeleteComment method throws CommentGeneralException when GeneralDatab
 ```csharp
 public void DeleteComment_ShouldThrowCommentGeneralException_WhenGeneralDatabaseExceptionIsThrown()
 ```
+
+### **InsertComment_ShouldThrowCommentGeneralException_WhenExceptionIsThrown()**
+
+Tests that InsertComment method throws CommentGeneralException when a general exception is thrown.
+
+```csharp
+public void InsertComment_ShouldThrowCommentGeneralException_WhenExceptionIsThrown()
+```
+
+### **UpdateComment_ShouldThrowCommentGeneralException_WhenExceptionIsThrown()**
+
+Tests that UpdateComment method throws CommentGeneralException when a general exception is thrown.
+
+```csharp
+public void UpdateComment_ShouldThrowCommentGeneralException_WhenExceptionIsThrown()
+```
+
+### **DeleteComment_ShouldThrowCommentGeneralException_WhenExceptionIsThrown()**
+
+Tests that DeleteComment method throws CommentGeneralException when a general exception is thrown.
+
+```csharp
+public void DeleteComment_ShouldThrowCommentGeneralException_WhenExceptionIsThrown()
+```

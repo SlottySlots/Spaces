@@ -15,6 +15,8 @@ Implements [IMainLayoutVm](./slottymedia.backend.viewmodel.interfaces.imainlayou
 
 ### **MainLayoutVmImpl(IAuthService, IUserService)**
 
+Ctor used for dep inject
+
 ```csharp
 public MainLayoutVmImpl(IAuthService authService, IUserService userService)
 ```

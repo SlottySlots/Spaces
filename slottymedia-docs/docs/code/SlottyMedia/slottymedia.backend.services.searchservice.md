@@ -18,49 +18,47 @@ Implements [ISearchService](./slottymedia.backend.services.interfaces.isearchser
 Constructor to initialize the database actions dependency.
 
 ```csharp
-public SearchService(IUserSeachRepository userSeachRepository, IForumSearchRepository forumSearchRepository)
+public SearchService(IUserSeachRepository userSearchRepository, IForumSearchRepository forumSearchRepository)
 ```
 
 #### Parameters
 
-`userSeachRepository` IUserSeachRepository<br>
+`userSearchRepository` IUserSeachRepository<br>
+Repo used to retrieve search results.
 
 `forumSearchRepository` IForumSearchRepository<br>
+Repo used to retrieve search results specific to a forum
 
 ## Methods
 
-### **SearchByUsername(String, Int32, Int32)**
+### **SearchByUsernameContaining(String, PageRequest)**
 
 ```csharp
-public Task<SearchDto> SearchByUsername(string searchTerm, int page, int pagesize)
+public Task<IPage<UserDto>> SearchByUsernameContaining(string searchTerm, PageRequest pageRequest)
 ```
 
 #### Parameters
 
 `searchTerm` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`pagesize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+`pageRequest` PageRequest<br>
 
 #### Returns
 
-[Task&lt;SearchDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;UserDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **SearchByTopic(String, Int32, Int32)**
+### **SearchByForumTopicContaining(String, PageRequest)**
 
 ```csharp
-public Task<SearchDto> SearchByTopic(string searchTerm, int page, int pagesize)
+public Task<IPage<ForumDto>> SearchByForumTopicContaining(string searchTerm, PageRequest pageRequest)
 ```
 
 #### Parameters
 
 `searchTerm` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`pagesize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+`pageRequest` PageRequest<br>
 
 #### Returns
 
-[Task&lt;SearchDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

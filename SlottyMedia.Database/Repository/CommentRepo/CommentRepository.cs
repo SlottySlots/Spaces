@@ -1,6 +1,8 @@
 ﻿using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Helper;
-using Supabase;
+using SlottyMedia.Database.Pagination;
+using Supabase.Postgrest;
+using Client = Supabase.Client;
 
 namespace SlottyMedia.Database.Repository.CommentRepo;
 
@@ -18,5 +20,25 @@ public class CommentRepository : DatabaseRepository<CommentDao>, ICommentReposit
     public CommentRepository(Client client, DaoHelper daoHelper, DatabaseRepositroyHelper databaseRepositroyHelper) :
         base(client, daoHelper, databaseRepositroyHelper)
     {
+    }
+
+    /// <inheritdoc />
+    public async Task<int> CountCommentsInPost(Guid postId)
+    {
+        return await Supabase
+            .From<CommentDao>()
+            .Filter(comment => comment.PostId!, Constants.Operator.Equals, postId.ToString())
+            .Count(Constants.CountType.Exact);
+    }
+
+    /// <inheritdoc />
+    public async Task<IPage<CommentDao>> GetCommentsInPost(Guid postId, PageRequest pageRequest)
+    {
+        return await ApplyPagination(
+            () => Supabase
+                .From<CommentDao>()
+                .Filter(comment => comment.PostId!, Constants.Operator.Equals, postId.ToString())
+                .Order(comment => comment.CreatedAt, Constants.Ordering.Descending),
+            pageRequest);
     }
 }
