@@ -91,7 +91,7 @@
 
     private void NavigateToUsersPage(Guid userId)
     {
-        NavigationManager.NavigateTo($"/profile?id={userId}");
+        NavigationManager.NavigateTo($"/profile/{userId}");
         MainLayoutVm!.ClearSearchResults();
     }
 
