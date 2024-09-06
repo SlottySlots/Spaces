@@ -129,6 +129,7 @@
         await SetLikeCountState();
         _owner = await UserService.GetUserDtoById(Dto!.UserId);
         _commentCount = await CommentService.CountCommentsInPost(Dto.PostId);
+        _isLoading = false;
     }
 
     protected override async void OnAfterRender(bool firstRender)
