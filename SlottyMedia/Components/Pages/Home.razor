@@ -16,7 +16,7 @@
 
 
 <div class="w-full pb-5 flex flex-col items-center">
-    <Pagination Page="ViewModel!.Page" OnPageFetch="ViewModel!.LoadPage">
+    <Pagination Page="ViewModel!.Page" OnPageFetch="ViewModel!.LoadPage" Class="w-full px-3 py-5">
         @foreach (var post in ViewModel!.Page)
         {
             <Post Dto="post" CurrentUserId=@_currentUserId OnPostClick="() => _navigateToPostPage(post.PostId)"/>
