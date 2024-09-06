@@ -37,7 +37,7 @@
                 @foreach (var user in MainLayoutVm.SearchResults.Users)
                 {
                     <Tag OnClick="() => NavigateToUsersPage(user.UserId)">
-                        @@ @user.Username
+                        @@@user.Username
                     </Tag>
                 }
             </Card>
@@ -49,14 +49,14 @@
                 {
                     var user = MainLayoutVm.SearchResults.Users[i];
                     <Tag OnClick="() => NavigateToUsersPage(user.UserId)">
-                        @@ @user.Username
+                        @@@user.Username
                     </Tag>
                 }
                 @for (var i = 0; i < 5 && i < MainLayoutVm.SearchResults.Forums.Count; i++)
                 {
                     var forum = MainLayoutVm.SearchResults.Forums[i];
                     <Tag OnClick="() => NavigateToSpacesPage(forum.Topic)">
-                        # @forum.Topic
+                        #@forum.Topic
                     </Tag>
                 }
             </Card>
