@@ -2,7 +2,6 @@
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Database.Pagination;
-using SlottyMedia.Database.Repository.ForumRepo;
 using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
@@ -16,11 +15,6 @@ public class SpaceVmImpl : ISpaceVm
     private readonly IForumService _forumService;
     private readonly IPostService _postService;
     private readonly IAuthService _authService;
-    private readonly IForumRepository _forumRepository;
-    
-    public DateTime CreatedAt { get; private set; }
-    public string Topic { get; private set; } = string.Empty;
-    public int PostCount { get; private set; }
     
     //public string CreatedBy { get; private set; }
 
@@ -42,11 +36,10 @@ public class SpaceVmImpl : ISpaceVm
     
     /// <inheritdoc />
     public Guid? AuthPrincipalId { get; private set; }
-    
-    
+
     /// <inheritdoc />
-    public UserInformationDto? UserInfo { get; private set; }
-    
+    public ForumDto? Space { get; private set; }
+
     /// <inheritdoc />
     public IPage<PostDto> Posts { get; private set; } = PageImpl<PostDto>.Empty();
     
@@ -58,27 +51,19 @@ public class SpaceVmImpl : ISpaceVm
         _logger.LogInfo("Space Page: Loading necessary space-related information...");
         var authPrincipalIdStr = _authService.GetCurrentSession()?.User?.Id;
         AuthPrincipalId = authPrincipalIdStr is null ? null : new Guid(authPrincipalIdStr);
-        await LoadSpaceDetails(forumId);
+        Space = await _forumService.GetForumById(forumId);
         _logger.LogInfo("Space Page: Successfully loaded all space-related information");
         IsLoadingPage = false;
         await LoadPosts(0);
-    }
-   
-
-    /// <inheritdoc />
-    public async Task LoadSpaceDetails(Guid forumId)
-    {
-        _logger.LogDebug($"Space Page: Fetching space information for space with ID '{forumId}'");
-        var forumDto = await _forumService.GetForumById(forumId);
     }
     
     /// <inheritdoc />
     public async Task LoadPosts(int pageNumber)
     {
         IsLoadingPosts = true;
-        _logger.LogInfo($"Profile Page: Loading posts for user '{UserInfo!.Username}'. Loading page {pageNumber}...");
+        _logger.LogInfo($"Space Page: Loading posts for space '{Space!.Topic}'. Loading page {pageNumber}...");
         Posts = await _postService.GetPostsByForumId(
-            UserInfo.UserId!.Value,
+            Space.ForumId,
             PageRequest.Of(pageNumber, 10));
         _logger.LogInfo($"Space Page: Successfully loaded page {pageNumber}, which contains {Posts.Count()} posts");
         IsLoadingPosts = false;

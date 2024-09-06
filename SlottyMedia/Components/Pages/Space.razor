@@ -1,27 +1,24 @@
-﻿@page "/space"
-@using Microsoft.IdentityModel.Tokens
-@using SlottyMedia.Backend.Dtos
-@using SlottyMedia.Backend.Services.Interfaces
+﻿@page "/spaces/{SpaceId:guid}"
+
 @using SlottyMedia.Backend.ViewModel.Interfaces
+
 @inject NavigationManager NavigationManager
 @inject ISpaceVm SpaceVm
-@inject IAuthService AuthService
 
-<PageTitle>Slotty Media | @SpaceVm.Topic</PageTitle>
+
+<PageTitle>Slotty Media | @SpaceVm.Space?.Topic</PageTitle>
 
 @if (!SpaceVm.IsLoadingPage)
 {
 
-    <p class="text-lg">@SpaceVm.Topic</p>
+    <p class="text-lg">@SpaceVm.Space!.Topic</p>
     
     <div class="flex w-1/2">
-        <h3 class="text-sm text-cadet-gray w-full">Posts: @SpaceVm.PostCount</h3>
-        <h3 class="text-sm text-cadet-gray w-full">Created at: @SpaceVm.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
+        <h3 class="text-sm text-cadet-gray w-full">Posts: @SpaceVm.Space.PostCount</h3>
+        <h3 class="text-sm text-cadet-gray w-full">Created at: @SpaceVm.Space.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
     </div>
     
     <div class="w-full border-b border-athens-gray my-3"></div>
-    
-    
     
     @if (!SpaceVm.IsLoadingPosts)
     {
@@ -33,14 +30,17 @@
         </Pagination>
     }
 }
-else
-{
-<p class="text-3xl font-medium text-center">Space not found!</p>
-}
     
+
 @code {
-    [Parameter] public Guid UserId { get; set; }
-    
+    [Parameter]
+    public Guid SpaceId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await SpaceVm.Initialize(SpaceId);
+    }
+
     private void _navigateToPostPage(Guid postId)
     {
         NavigationManager.NavigateTo($"/post/{postId}");

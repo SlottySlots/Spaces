@@ -1,5 +1,4 @@
 ﻿using SlottyMedia.Backend.Dtos;
-using SlottyMedia.Components.Pages;
 using SlottyMedia.Database.Pagination;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
@@ -27,11 +26,9 @@ public interface ISpaceVm
     public Guid? AuthPrincipalId { get; }
     
     /// <summary>
-    ///     Fetches the details of a specific space based on its id
-    ///     and populates the <see cref="Space" /> property.
+    ///     The space whose page is being visited
     /// </summary>
-    /// <param name="id">The id of the space to load information for.</param>
-    public Task LoadSpaceDetails(Guid id);
+    public ForumDto? Space { get; }
     
     /// <summary>
     ///     The posts that are currently being rendered
@@ -45,10 +42,6 @@ public interface ISpaceVm
     /// </summary>
     /// <param name="forumId">The ID of the space whose page should be visited</param>
     public Task Initialize(Guid forumId);
-    
-    string Topic { get; }
-    int PostCount { get; }
-    DateTime CreatedAt { get; }
   
     /// <summary>
     ///     Loads more <see cref="Posts" /> for the visited space by changing the current
