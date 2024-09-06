@@ -16,7 +16,7 @@
         <!-- username & time posted -->
         <div class="flex flex-col justify-between">
             <h3 class="text-xl font-semibold">
-                @(_owner!.Username)
+                @(UserInformationDto!.Username)
             </h3>
             <h3 class="text-sm font-medium text-cadet-gray">
                 @(Dto!.CreatedAt.ToShortTimeString())
@@ -40,18 +40,6 @@
     public CommentDto? Dto { get; set; }
 
     private bool _isLoading = true;
-    private UserDto? _owner;
-
-    /// <summary>
-    ///     Called when the component's parameters are set.
-    ///     Retrieves the user information for the comment's creator.
-    /// </summary>
-    protected override async Task OnParametersSetAsync()
-    {
-        _isLoading = true;
-        _owner = await UserVm.GetUserById(Dto!.CreatorUserId!.Value);
-        _isLoading = false;
-    }
 
     /// <summary>
     ///     The user information data transfer object to be rendered.

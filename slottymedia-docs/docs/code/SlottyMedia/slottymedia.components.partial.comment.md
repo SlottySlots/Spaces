@@ -55,19 +55,6 @@ protected void BuildRenderTree(RenderTreeBuilder __builder)
 
 `__builder` RenderTreeBuilder<br>
 
-### **OnParametersSetAsync()**
-
-Called when the component's parameters are set.
- Retrieves the user information for the comment's creator.
-
-```csharp
-protected Task OnParametersSetAsync()
-```
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
 ### **OnAfterRender(Boolean)**
 
 This method is called after the component has been rendered.
