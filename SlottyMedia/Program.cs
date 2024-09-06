@@ -109,8 +109,8 @@ try
     builder.Services.AddScoped<ISpaceVm, SpaceVmImpl>();
     builder.Services.AddScoped<IPostSubmissionFormVm, PostSubmissionFormVmImpl>();
     builder.Services.AddScoped<IHomePageVm, HomePageVmImpl>();
-    builder.Services.AddScoped<IAuthVmImpl, AuthVmImpl>();
-    builder.Services.AddScoped<IUserVmImpl, UserVmImpl>();
+    builder.Services.AddScoped<IAuthVm, AuthVmImpl>();
+    builder.Services.AddScoped<IUserVm, UserVmImpl>();
     builder.Services.AddScoped<IPostPageVm, PostPageVmImpl>();
     builder.Services.AddScoped<ICommentSubmissionFormVm, CommentSubmissionFormVmImpl>();
 
