@@ -84,20 +84,6 @@ A calback that is used to fetch a page with a specific number
 
 ## Methods
 
-### **Empty()**
-
-Builds an empty page with no content. Throws an [InvalidOperationException](https://docs.microsoft.com/en-us/dotnet/api/system.invalidoperationexception) when
- attempting to fetch another page.
-
-```csharp
-public static IPage<T> Empty()
-```
-
-#### Returns
-
-IPage&lt;T&gt;<br>
-The empty page
-
 ### **Map&lt;TMapped&gt;(Func&lt;T, TMapped&gt;)**
 
 ```csharp
@@ -139,3 +125,17 @@ public IEnumerator<T> GetEnumerator()
 #### Returns
 
 IEnumerator&lt;T&gt;<br>
+
+### **Empty()**
+
+Builds an empty page with no content. Throws an [InvalidOperationException](https://docs.microsoft.com/en-us/dotnet/api/system.invalidoperationexception) when
+ attempting to fetch another page.
+
+```csharp
+public static IPage<T> Empty()
+```
+
+#### Returns
+
+IPage&lt;T&gt;<br>
+The empty page
