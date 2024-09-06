@@ -26,12 +26,7 @@ public class Login
             var (email, password) = ReadLogin();
             if (email == string.Empty || password == string.Empty)
             {
-                var bogus = new Faker();
-                email = bogus.Internet.Email();
-                password = bogus.Internet.Password(24);
-                SaveLogin(email, password);
-                await client.Auth.SignUp(email, password);
-                await client.Auth.SignIn(email, password);
+client = await HandleLogin(client);
             }
             else
             {
@@ -43,13 +38,8 @@ public class Login
             if (ex.Reason == FailureHint.Reason.UserBadLogin)
             {
                 logger.LogDebug("User not found. Creating user for seeding.");
-                
-                var bogus = new Faker();
-                var email = bogus.Internet.Email();
-                var password = bogus.Internet.Password();
-                SaveLogin(email, password);
-                await client.Auth.SignUp(email, password);
-                await client.Auth.SignIn(email, password);
+
+                client = await HandleLogin(client);
             }
         }
         catch (Exception ex)
@@ -66,6 +56,17 @@ public class Login
     {
         logger.LogDebug("Logging out user after seeding.");
         await client.Auth.SignOut();
+    }
+
+    private async Task<Client> HandleLogin(Client client)
+    {
+        var bogus = new Faker();
+        var email = bogus.Internet.Email();
+        var password = bogus.Internet.Password();
+        SaveLogin(email, password);
+        await client.Auth.SignUp(email, password);
+        await client.Auth.SignIn(email, password);
+        return client;
     }
 
     private void SaveLogin(string email, string password)
