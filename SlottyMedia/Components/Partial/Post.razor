@@ -34,6 +34,16 @@
 
         <!-- this cell is just for filling the grid! -->
         <div></div>
+        
+        <!-- the space -->
+        <div class="col-span-9">
+            <Tag Class="w-fit" OnClick="() => _navigateToSpace(Dto.Forum.ForumId)">
+                #@Dto.Forum.Topic
+            </Tag>
+        </div>
+
+        <!-- this cell is just for filling the grid! -->
+        <div></div>
 
         <!-- actions -->
         <div class="col-span-9 flex gap-12 select-none">
@@ -148,6 +158,11 @@
     private void _navigateToProfile(Guid userId)
     {
         NavigationManager.NavigateTo($"/profile/{userId}");
+    }
+
+    void _navigateToSpace(Guid spaceId)
+    {
+        NavigationManager.NavigateTo($"/spaces/{spaceId}");
     }
 
     public async Task SetLikeCountState()
