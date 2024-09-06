@@ -41,6 +41,8 @@ public interface IForumService
 
     Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest);
 
+    Task<bool> ExistsByName(string forumName);
+
     /// <summary>
     ///     Retrieves the 3 most recent forums based on the creation date.
     /// </summary>

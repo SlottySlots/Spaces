@@ -161,6 +161,25 @@ public class ForumService : IForumService
         }
     }
 
+    public async Task<bool> ExistsByName(string forumName)
+    {
+        try
+        {
+            Logger.LogDebug($"Checking if forum with name '{forumName}' exists...");
+            return await _forumRepository.ExistsByName(forumName);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            Logger.LogError($"A general database error occurred: {ex.Message}");
+            throw new ForumGeneralException("An error occurred while retrieving the forums.", ex);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError($"An unexpected error occurred: {ex.Message}");
+            throw new ForumGeneralException("An unexpected error occurred while retrieving the forums.", ex);
+        }
+    }
+
     /// <inheritdoc />
     public async Task<List<ForumDto>> DetermineRecentSpaces()
     {

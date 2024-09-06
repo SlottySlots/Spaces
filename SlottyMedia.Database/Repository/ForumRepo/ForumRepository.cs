@@ -1,5 +1,6 @@
 ﻿using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Helper;
+using Supabase.Postgrest;
 using Client = Supabase.Client;
 
 namespace SlottyMedia.Database.Repository.ForumRepo;
@@ -25,6 +26,13 @@ public class ForumRepository : DatabaseRepository<ForumDao>, IForumRepository
     {
         return base.GetElementByField("forumTopic", name);
     }
-    
-    
+
+    /// <inheritdoc />
+    public async Task<bool> ExistsByName(string forumName)
+    {
+        return 0 != await Supabase
+            .From<ForumDao>()
+            .Filter(forum => forum.ForumTopic!, Constants.Operator.Equals, forumName)
+            .Count(Constants.CountType.Exact);
+    }
 }
