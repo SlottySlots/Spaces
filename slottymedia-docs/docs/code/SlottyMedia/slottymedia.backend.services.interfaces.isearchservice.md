@@ -10,12 +10,12 @@ public interface ISearchService
 
 ## Methods
 
-### **SearchByUsername(String, Int32, Int32)**
+### **SearchByUsernameContaining(String, PageRequest)**
 
 Search function to retrieve all users for a specific search term.
 
 ```csharp
-Task<SearchDto> SearchByUsername(string searchTerm, int page, int pagesize)
+Task<IPage<UserDto>> SearchByUsernameContaining(string searchTerm, PageRequest pageRequest)
 ```
 
 #### Parameters
@@ -23,15 +23,12 @@ Task<SearchDto> SearchByUsername(string searchTerm, int page, int pagesize)
 `searchTerm` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 Search Term used for wildcard selection
 
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Current page retrieved (interval times page)
-
-`pagesize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Size of interval
+`pageRequest` PageRequest<br>
+The page request
 
 #### Returns
 
-[Task&lt;SearchDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;UserDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 SearchDto
 
 #### Exceptions
@@ -39,12 +36,12 @@ SearchDto
 [SearchGeneralExceptions](./slottymedia.backend.exceptions.services.searchexceptions.searchgeneralexceptions.md)<br>
 Thrown when a general error occurs during the search.
 
-### **SearchByTopic(String, Int32, Int32)**
+### **SearchByForumTopicContaining(String, PageRequest)**
 
 Search function to retrieve forums by topic.
 
 ```csharp
-Task<SearchDto> SearchByTopic(string searchTerm, int page, int pagesize)
+Task<IPage<ForumDto>> SearchByForumTopicContaining(string searchTerm, PageRequest pageRequest)
 ```
 
 #### Parameters
@@ -52,15 +49,12 @@ Task<SearchDto> SearchByTopic(string searchTerm, int page, int pagesize)
 `searchTerm` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 Search Term used for wildcard search
 
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Current page retrieved (interval times page)
-
-`pagesize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Size of interval
+`pageRequest` PageRequest<br>
+The page request
 
 #### Returns
 
-[Task&lt;SearchDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 SearchDto
 
 #### Exceptions

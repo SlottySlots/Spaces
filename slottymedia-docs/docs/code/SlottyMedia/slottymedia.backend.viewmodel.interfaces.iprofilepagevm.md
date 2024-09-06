@@ -8,109 +8,141 @@ Interface used for profilepage viewmodel
 public interface IProfilePageVm
 ```
 
+## Properties
+
+### **IsLoadingPage**
+
+Whether the whole page is being loaded
+
+```csharp
+public abstract bool IsLoadingPage { get; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### **IsLoadingPosts**
+
+Whether the posts on the page are being loaded
+
+```csharp
+public abstract bool IsLoadingPosts { get; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### **IsUserFollowed**
+
+Whether the authentication principal is following the user whose profile is being visited
+
+```csharp
+public abstract bool IsUserFollowed { get; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### **AuthPrincipalId**
+
+The authentication principal's user ID (i.e. the user that's logged in)
+
+```csharp
+public abstract Nullable<Guid> AuthPrincipalId { get; }
+```
+
+#### Property Value
+
+[Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+
+### **UserInfo**
+
+Information about the user whose profile is being visited
+
+```csharp
+public abstract UserInformationDto UserInfo { get; }
+```
+
+#### Property Value
+
+[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+
+### **Posts**
+
+The posts that are currently being rendered
+
+```csharp
+public abstract IPage<PostDto> Posts { get; }
+```
+
+#### Property Value
+
+IPage&lt;PostDto&gt;<br>
+
 ## Methods
 
-### **GetUserInfo(Guid)**
+### **Initialize(Guid)**
 
-Gets UserInformationDto based on provided userId
+Initialized the page's state. This fetches all user-related information and loads
+ the first posts for the visited user. Also initializes the [IProfilePageVm.AuthPrincipalId](./slottymedia.backend.viewmodel.interfaces.iprofilepagevm.md#authprincipalid)
+ if one is present.
 
 ```csharp
-Task<UserInformationDto> GetUserInfo(Guid userId)
+Task Initialize(Guid userId)
 ```
 
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-UserId to look up in db
-
-#### Returns
-
-[Task&lt;UserInformationDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-UserInformationDto?
-
-### **UserFollowRelation(Guid, Guid)**
-
-Checks whether a user follows another user based on their ids
-
-```csharp
-Task<Nullable<bool>> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn)
-```
-
-#### Parameters
-
-`userIdToCheck` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-UserId to check
-
-`userIdLoggedIn` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-UserId that may follow the one to check
-
-#### Returns
-
-[Task&lt;Nullable&lt;Boolean&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Boolean representing the state. Returns null if to check id is same as the logged in.
-
-### **FollowUserById(Guid, Guid)**
-
-Method used to follow a user by id
-
-```csharp
-Task FollowUserById(Guid userIdFollows, Guid userIdToFollow)
-```
-
-#### Parameters
-
-`userIdFollows` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The user that tries to follow another
-
-`userIdToFollow` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The user that the user tries to follow
+The ID of the user whose profile should be visited
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-Task
 
-### **UnfollowUserById(Guid, Guid)**
+### **FollowThisUser()**
 
-Method used to unfollow a user by id
+Has the authentication principal follow the visited profile. Does
+ nothing if no authentication principal is present.
 
 ```csharp
-Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow)
+Task FollowThisUser()
 ```
-
-#### Parameters
-
-`userIdFollows` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The user that tries to unfollow another
-
-`userIdToUnfollow` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The user that the user tries to unfollow
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-Task
 
-### **GetPostsByUserId(Guid, Int32, Int32)**
+### **UnfollowThisUser()**
 
-Gets posts of a user by their id and enables slicing via offsets
+Has the authentication principal unfollow the visited profile. Does
+ nothing if no authentication principal is present.
 
 ```csharp
-Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet)
+Task UnfollowThisUser()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **LoadPosts(Int32)**
+
+Loads more [IProfilePageVm.Posts](./slottymedia.backend.viewmodel.interfaces.iprofilepagevm.md#posts) for the visited profile by changing the current
+ page (as in pagination).
+
+```csharp
+Task LoadPosts(int pageNumber)
 ```
 
 #### Parameters
 
-`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-User that the posts belong to
-
-`startOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Startindex of the posts sorted by date
-
-`endOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Endindex of the posts sorted by data
+`pageNumber` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The page number
 
 #### Returns
 
-[Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-List of PostDtos
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>

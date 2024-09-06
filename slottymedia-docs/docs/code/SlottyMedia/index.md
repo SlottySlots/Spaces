@@ -216,6 +216,8 @@
 
 [Link](./slottymedia.components.partial.link.md)
 
+[Pagination&lt;T&gt;](./slottymedia.components.partial.pagination-1.md)
+
 [Post](./slottymedia.components.partial.post.md)
 
 [Tag](./slottymedia.components.partial.tag.md)

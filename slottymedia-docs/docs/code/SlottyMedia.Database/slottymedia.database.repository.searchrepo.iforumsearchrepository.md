@@ -12,12 +12,12 @@ Implements [IDatabaseRepository&lt;ForumDao&gt;](./slottymedia.database.reposito
 
 ## Methods
 
-### **GetForumsByTopic(String, Int32, Int32)**
+### **GetForumsByTopic(String, PageRequest)**
 
 Gets forums by a specific topic with pagination.
 
 ```csharp
-Task<List<ForumDao>> GetForumsByTopic(string topic, int page, int pageSize)
+Task<IPage<ForumDao>> GetForumsByTopic(string topic, PageRequest pageRequest)
 ```
 
 #### Parameters
@@ -25,15 +25,12 @@ Task<List<ForumDao>> GetForumsByTopic(string topic, int page, int pageSize)
 `topic` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The topic to search for.
 
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The page number.
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The size of the page.
+`pageRequest` [PageRequest](./slottymedia.database.pagination.pagerequest.md)<br>
+The page request
 
 #### Returns
 
-[Task&lt;List&lt;ForumDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;ForumDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of forums.
 
 #### Exceptions

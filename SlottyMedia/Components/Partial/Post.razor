@@ -3,7 +3,7 @@
 @inject IUserService UserService;
 @inject ILikeService LikeService;
 @inject ICommentService CommentService;
-@inject NavigationManager NavigationManager;
+@inject NavigationManager NavigationManager
 
 @if (!_isLoading)
 {
@@ -11,11 +11,11 @@
 
         <!-- profile picture -->
         <div @onclick="OnClickAvatar">
-            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Size="50"></Avatar>
+            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
         </div>
 
         <!-- username & time posted -->
-        <div class="col-span-9 flex flex-col justify-between">
+        <div class="col-span-9 flex flex-col justify-between cursor-pointer" @onclick="() => _navigateToProfile(_owner!.UserId)">
             <h3 class="text-xl font-semibold">
                 @(_owner!.Username)
             </h3>
@@ -28,7 +28,7 @@
         <div></div>
 
         <!-- actual text -->
-        <div class="col-span-9">
+        <div class="col-span-9 break-words">
             @(Dto!.Content)
         </div>
 
@@ -142,7 +142,12 @@
 
     private void OnClickAvatar()
     {
-        NavigationManager.NavigateTo($"/profile?id={UserInformationDto.UserId.ToString()}");
+        NavigationManager.NavigateTo($"/profile/{UserInformationDto.UserId.ToString()}");
+    }
+
+    private void _navigateToProfile(Guid userId)
+    {
+        NavigationManager.NavigateTo($"/profile/{userId}");
     }
 
     public async Task SetLikeCountState()

@@ -65,7 +65,7 @@ public class UserInformationDto
     /// <returns></returns>
     public UserDao Mapper()
     {
-        Logger.LogInfo($"Mapping UserInformationDto to UserDao. UserInformationDto: {this}");
+        Logger.LogTrace($"Mapping UserInformationDto to UserDao. UserInformationDto: {this}");
 
         return new UserDao
         {
@@ -83,7 +83,7 @@ public class UserInformationDto
     /// <param name="user"></param>
     public UserInformationDto Mapper(UserDao user)
     {
-        Logger.LogInfo($"Mapping UserDao to UserInformationDto. UserDao: {user}");
+        Logger.LogTrace($"Mapping UserDao to UserInformationDto. UserDao: {user}");
 
         UserId = user.UserId ?? Guid.Empty;
         Username = user.UserName ?? string.Empty;

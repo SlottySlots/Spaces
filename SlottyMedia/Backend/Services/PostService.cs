@@ -3,6 +3,7 @@ using SlottyMedia.Backend.Exceptions.Services.PostExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Database.Pagination;
 using SlottyMedia.Database.Repository.PostRepo;
 using SlottyMedia.LoggingProvider;
 
@@ -13,17 +14,16 @@ public class PostService : IPostService
 {
     private static readonly Logging<PostService> Logger = new();
 
+    private readonly IPostRepository _postRepository;
+
     /// <summary>
     ///     Initializes a new instance of the <see cref="PostService" /> class.
     /// </summary>
     public PostService(IPostRepository postRepository)
     {
         Logger.LogInfo("PostService initialized");
-        PostRepository = postRepository;
+        _postRepository = postRepository;
     }
-
-    /// <inheritdoc />
-    public IPostRepository PostRepository { get; set; }
 
     /// <inheritdoc />
     public async Task InsertPost(string content, Guid creatorUserId, Guid forumId)
@@ -38,7 +38,7 @@ public class PostService : IPostService
                 ForumId = forumId
             };
             Logger.LogInfo($"Inserting a new post into the database {post}");
-            await PostRepository.AddElement(post);
+            await _postRepository.AddElement(post);
         }
         catch (DatabaseIudActionException ex)
         {
@@ -66,7 +66,7 @@ public class PostService : IPostService
         try
         {
             Logger.LogInfo($"Updating the post in the database {post}");
-            await PostRepository.UpdateElement(post);
+            await _postRepository.UpdateElement(post);
         }
         catch (DatabaseIudActionException ex)
         {
@@ -84,7 +84,7 @@ public class PostService : IPostService
         try
         {
             Logger.LogInfo($"Deleting the post from the database {post}");
-            await PostRepository.DeleteElement(post);
+            await _postRepository.DeleteElement(post);
         }
         catch (DatabaseIudActionException ex)
         {
@@ -97,49 +97,12 @@ public class PostService : IPostService
     }
 
     /// <inheritdoc />
-    public async Task<List<string>> GetPostsFromForum(Guid userId, int startOfSet, int endOfSet)
-    {
-        //TODO Fix this method!!
-        try
-        {
-            Logger.LogInfo($"Fetching posts for the user with ID: {userId} from index {startOfSet} to {endOfSet}");
-            var posts = await PostRepository.GetPostsByForumId(userId, startOfSet, endOfSet);
-
-            Logger.LogInfo("Mapping posts to forum topics");
-            var forumTopics = new List<string>();
-            foreach (var post in posts)
-                if (post.Forum is not null && post.Forum.ForumTopic is not null)
-                    forumTopics.Add(post.Forum.ForumTopic);
-
-            return forumTopics;
-        }
-        catch (DatabaseMissingItemException ex)
-        {
-            throw new PostNotFoundException(
-                $"Posts for the given user ID were not found. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
-                ex);
-        }
-        catch (GeneralDatabaseException ex)
-        {
-            throw new PostGeneralException(
-                $"A database error occurred while fetching the posts. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
-                ex);
-        }
-        catch (Exception ex)
-        {
-            throw new PostGeneralException(
-                $"An error occurred while fetching the posts. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
-                ex);
-        }
-    }
-
-    /// <inheritdoc />
     public async Task<PostDto?> GetPostById(Guid postId)
     {
         try
         {
             Logger.LogInfo($"Fetching post with ID: {postId}");
-            var post = await PostRepository.GetElementById(postId);
+            var post = await _postRepository.GetElementById(postId);
             return new PostDto().Mapper(post);
         }
         catch (DatabaseMissingItemException ex)
@@ -162,7 +125,7 @@ public class PostService : IPostService
         try
         {
             Logger.LogInfo($"Counting forums for the user with ID: {userId}");
-            var forumCount = await PostRepository.GetForumCountByUserId(userId);
+            var forumCount = await _postRepository.GetForumCountByUserId(userId);
             return forumCount;
         }
         catch (GeneralDatabaseException ex)
@@ -177,14 +140,15 @@ public class PostService : IPostService
     }
 
     /// <inheritdoc />
-    public async Task<List<PostDto>> GetAllPosts(int page, int pageSize = 10)
+    public async Task<IPage<PostDto>> GetAllPosts(PageRequest pageRequest)
     {
         try
         {
-            Logger.LogInfo($"Fetching all posts for page {page} with page size {pageSize}");
-            var posts = await PostRepository.GetAllElements(page, pageSize);
-
-            return ConvertPostsToPostDtos(posts);
+            Logger.LogInfo(
+                $"Fetching all posts on page {pageRequest.PageNumber} with page size {pageRequest.PageSize}");
+            var posts = await _postRepository.GetAllElements(pageRequest);
+            Logger.LogInfo($"Fetched page {posts.PageNumber}, which contains {posts.Count()} posts");
+            return posts.Map(dao => new PostDto().Mapper(dao));
         }
         catch (DatabaseMissingItemException ex)
         {
@@ -204,7 +168,7 @@ public class PostService : IPostService
         try
         {
             Logger.LogDebug("Counting all posts in the database!");
-            return await PostRepository.CountAllPosts();
+            return await _postRepository.CountAllPosts();
         }
         catch (Exception ex)
         {
@@ -214,115 +178,60 @@ public class PostService : IPostService
     }
 
     /// <inheritdoc />
-    public async Task<List<PostDto>> GetPostsByUserId(Guid userId, int startOfSet, int endOfSet)
+    public async Task<IPage<PostDto>> GetPostsByUserId(Guid userId, PageRequest pageRequest)
     {
         try
         {
-            Logger.LogInfo($"Fetching posts for the user with ID: {userId} from index {startOfSet} to {endOfSet}");
-            var posts = await PostRepository.GetPostsByUserId(userId, startOfSet, endOfSet);
-
-            return ConvertPostsToPostDtos(posts);
+            Logger.LogInfo($"Fetching posts for the user with ID: {userId}");
+            var posts = await _postRepository.GetPostsByUserId(userId, pageRequest);
+            return posts.Map(dao => new PostDto().Mapper(dao));
         }
         catch (DatabaseMissingItemException ex)
         {
             throw new PostNotFoundException(
-                $"Posts for the given user ID were not found. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                $"Posts for the given user ID were not found. UserID {userId}",
                 ex);
         }
         catch (GeneralDatabaseException ex)
         {
             throw new PostGeneralException(
-                $"A database error occurred while fetching the posts. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                $"A database error occurred while fetching the posts. UserID {userId}",
                 ex);
         }
         catch (Exception ex)
         {
             throw new PostGeneralException(
-                $"An error occurred while fetching the posts. UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                $"An error occurred while fetching the posts. UserID {userId}",
                 ex);
         }
     }
 
-    /// <summary>
-    ///     Retrieves a list of posts from the database based on the given userId and forumId.
-    /// </summary>
-    /// <param name="userId">The ID of the user.</param>
-    /// <param name="startOfSet">The starting index of the set.</param>
-    /// <param name="endOfSet">The ending index of the set.</param>
-    /// <param name="forumId">The ID of the forum.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of PostDto objects.</returns>
-    public async Task<List<PostDto>> GetPostsByUserIdByForumId(Guid userId, int startOfSet, int endOfSet, Guid forumId)
+    /// <inheritdoc />
+    public async Task<IPage<PostDto>> GetPostsByForumId(Guid forumId, PageRequest pageRequest)
     {
         try
         {
-            Logger.LogInfo(
-                $"Fetching posts for the user with ID: {userId} and forum with ID: {forumId} from index {startOfSet} to {endOfSet}");
-            var posts = await PostRepository.GetPostsByUserIdByForumId(userId, forumId, startOfSet, endOfSet);
-
-            return ConvertPostsToPostDtos(posts);
+            Logger.LogInfo($"Fetching posts for the forum with ID: {forumId}");
+            var posts = await _postRepository.GetPostsByForumId(forumId, pageRequest);
+            return posts.Map(dao => new PostDto().Mapper(dao));
         }
         catch (DatabaseMissingItemException ex)
         {
             throw new PostNotFoundException(
-                $"Posts for the given user ID and forum ID were not found. User ID: {userId}, Forum ID: {forumId}", ex);
+                $"Posts for the given user ID were not found. UserID {forumId}",
+                ex);
         }
         catch (GeneralDatabaseException ex)
         {
             throw new PostGeneralException(
-                $"A database error occurred while fetching the posts. FormID: {forumId} UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                $"A database error occurred while fetching the posts. UserID {forumId}",
                 ex);
         }
         catch (Exception ex)
         {
             throw new PostGeneralException(
-                $"An error occurred while fetching the posts. FormID: {forumId} UserID {userId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
+                $"An error occurred while fetching the posts. UserID {forumId}",
                 ex);
         }
-    }
-
-    /// <summary>
-    ///     Retrieves a list of posts from the database based on the given forumId.
-    /// </summary>
-    /// <param name="forumId">The ID of the forum.</param>
-    /// <param name="startOfSet">The starting index of the set.</param>
-    /// <param name="endOfSet">The ending index of the set.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of PostDto objects.</returns>
-    public async Task<List<PostDto>> GetPostsByForumId(Guid forumId, int startOfSet, int endOfSet)
-    {
-        try
-        {
-            Logger.LogInfo($"Fetching posts for the forum with ID: {forumId} from index {startOfSet} to {endOfSet}");
-            var posts = await PostRepository.GetPostsByForumId(forumId, startOfSet, endOfSet);
-
-            return ConvertPostsToPostDtos(posts);
-        }
-        catch (DatabaseMissingItemException ex)
-        {
-            throw new PostNotFoundException($"Posts for the given forum ID were not found. Forum ID: {forumId}", ex);
-        }
-        catch (GeneralDatabaseException ex)
-        {
-            throw new PostGeneralException(
-                $"A database error occurred while fetching the posts. FormID: {forumId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
-                ex);
-        }
-        catch (Exception ex)
-        {
-            throw new PostGeneralException(
-                $"An error occurred while fetching the posts. FormID: {forumId} StartOfSet: {startOfSet} EndOfSet: {endOfSet}",
-                ex);
-        }
-    }
-
-
-    /// <summary>
-    ///     Converts a list of PostsDao objects to a list of PostDto objects.
-    /// </summary>
-    /// <param name="posts">The list of PostsDao objects.</param>
-    /// <returns>A list of PostDto objects.</returns>
-    private List<PostDto> ConvertPostsToPostDtos(List<PostsDao> posts)
-    {
-        Logger.LogInfo("Mapping posts to DTOs");
-        return posts.Select(post => new PostDto().Mapper(post)).ToList();
     }
 }

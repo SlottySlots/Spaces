@@ -158,22 +158,6 @@ public Task<ProfilePicDto> GetProfilePic(Guid userId)
 
 [Task&lt;ProfilePicDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **GetUser(Guid, Int32)**
-
-```csharp
-public Task<UserDto> GetUser(Guid userId, int recentForums)
-```
-
-#### Parameters
-
-`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-
-`recentForums` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-#### Returns
-
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-
 ### **GetFriends(Guid)**
 
 ```csharp

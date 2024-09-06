@@ -178,35 +178,6 @@ Thrown when the user is not found.
 [UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
 Thrown when a general error occurs.
 
-### **GetUser(Guid, Int32)**
-
-This method returns a UserDto object from the database based on the given userId.
-
-```csharp
-Task<UserDto> GetUser(Guid userId, int limit)
-```
-
-#### Parameters
-
-`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The Id of the user
-
-`limit` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The maximum number of recent forums to retrieve
-
-#### Returns
-
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns the UserDto object
-
-#### Exceptions
-
-[UserNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.usernotfoundexception.md)<br>
-Thrown when the user is not found.
-
-[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
-Thrown when a general error occurs.
-
 ### **GetFriends(Guid)**
 
 This method returns a list of friends for the given user.

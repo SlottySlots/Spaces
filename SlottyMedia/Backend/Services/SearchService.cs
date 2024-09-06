@@ -1,8 +1,8 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.SearchExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Database.Pagination;
 using SlottyMedia.Database.Repository.SearchRepo;
 using SlottyMedia.LoggingProvider;
 
@@ -31,27 +31,13 @@ public class SearchService : ISearchService
     }
 
     /// <inheritdoc />
-    public async Task<SearchDto> SearchByUsername(string searchTerm, int page, int pagesize)
+    public async Task<IPage<UserDto>> SearchByUsernameContaining(string searchTerm, PageRequest pageRequest)
     {
         try
         {
             Logger.LogInfo($"Searching for users with search term: {searchTerm}");
-
-            if (searchTerm.Length == 0)
-                return new SearchDto();
-            if (searchTerm[0] == '@') searchTerm = searchTerm.Substring(1);
-
-            var userResults = await _userSearchRepository.GetUsersByUserName(searchTerm, page, pagesize);
-
-            if (userResults is null || !userResults.Any())
-                userResults = new List<UserDao>();
-
-            var searchResult = new SearchDto();
-
-            Logger.LogInfo("Mapping search results to DTOs");
-            searchResult.Users.AddRange(userResults.Select(x => new UserDto().Mapper(x)));
-
-            return searchResult;
+            var result = await _userSearchRepository.GetUsersByUserName(searchTerm, pageRequest);
+            return result.Map(dao => new UserDto().Mapper(dao));
         }
         catch (DatabaseMissingItemException ex)
         {
@@ -71,26 +57,13 @@ public class SearchService : ISearchService
     }
 
     /// <inheritdoc />
-    public async Task<SearchDto> SearchByTopic(string searchTerm, int page, int pagesize)
+    public async Task<IPage<ForumDto>> SearchByForumTopicContaining(string searchTerm, PageRequest pageRequest)
     {
         try
         {
             Logger.LogInfo($"Searching for topics with search term: {searchTerm}");
-
-            if (searchTerm.Length == 0)
-                return new SearchDto();
-            if (searchTerm[0] == '#') searchTerm = searchTerm.Substring(1);
-
-            var topicResults = await _forumSearchRepository.GetForumsByTopic(searchTerm, page, pagesize);
-
-            if (topicResults is null || !topicResults.Any())
-                topicResults = new List<ForumDao>();
-
-            var searchResult = new SearchDto();
-
-            searchResult.Forums.AddRange(topicResults.Select(x => new ForumDto().Mapper(x)));
-
-            return searchResult;
+            var result = await _forumSearchRepository.GetForumsByTopic(searchTerm, pageRequest);
+            return result.Map(dao => new ForumDto().Mapper(dao));
         }
         catch (DatabaseMissingItemException ex)
         {

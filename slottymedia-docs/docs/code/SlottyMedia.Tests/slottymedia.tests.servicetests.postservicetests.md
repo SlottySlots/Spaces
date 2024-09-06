@@ -252,34 +252,6 @@ Tests that GetAllPosts throws PostGeneralException when a general exception is t
 public void GetAllPosts_ShouldThrowPostGeneralException_WhenGeneralExceptionIsThrown()
 ```
 
-### **GetPostsByUserIdByForumId_ShouldReturnPosts_WhenPostsAreFound()**
-
-Tests that GetPostsByUserIdByForumId returns posts when posts are found.
-
-```csharp
-public Task GetPostsByUserIdByForumId_ShouldReturnPosts_WhenPostsAreFound()
-```
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
-### **GetPostsByUserIdByForumId_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()**
-
-Tests that GetPostsByUserIdByForumId throws PostNotFoundException when DatabaseMissingItemException is thrown.
-
-```csharp
-public void GetPostsByUserIdByForumId_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
-```
-
-### **GetPostsByUserIdByForumId_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
-
-Tests that GetPostsByUserIdByForumId throws PostGeneralException when GeneralDatabaseException is thrown.
-
-```csharp
-public void GetPostsByUserIdByForumId_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
-```
-
 ### **GetPostsByForumId_ShouldReturnPosts_WhenPostsAreFound()**
 
 Tests that GetPostsByForumId returns posts when posts are found.

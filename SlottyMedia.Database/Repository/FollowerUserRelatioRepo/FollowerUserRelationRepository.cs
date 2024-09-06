@@ -28,7 +28,8 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
     {
         try
         {
-            var result = await BaseQuerry
+            var result = await Supabase
+                .From<FollowerUserRelationDao>()
                 .Filter(friends => friends.FollowedUserId!, Constants.Operator.Equals, userId.ToString())
                 .Count(Constants.CountType.Exact);
 
@@ -44,19 +45,21 @@ public class FollowerUserRelationRepository : DatabaseRepository<FollowerUserRel
     /// <inheritdoc />
     public async Task<List<FollowerUserRelationDao>> GetFriends(Guid userId)
     {
-        var querry = BaseQuerry
+        var query = Supabase
+            .From<FollowerUserRelationDao>()
             .Filter(friend => friend.FollowedUserId!, Constants.Operator.Equals, userId.ToString())
             .Select(x => new object[] { x.FollowedUserId! });
 
-        return await ExecuteQuery(querry);
+        return await ExecuteQuery(query);
     }
 
     /// <inheritdoc />
     public async Task<FollowerUserRelationDao> CheckIfUserIsFollowed(Guid userId, Guid followedUserId)
     {
-        var querry = BaseQuerry
+        var query = Supabase
+            .From<FollowerUserRelationDao>()
             .Filter(friend => friend.FollowedUserId!, Constants.Operator.Equals, userId.ToString())
             .Filter(friend => friend.FollowerUserId!, Constants.Operator.Equals, followedUserId.ToString());
-        return await ExecuteSingleQuery(querry);
+        return await ExecuteSingleQuery(query);
     }
 }
