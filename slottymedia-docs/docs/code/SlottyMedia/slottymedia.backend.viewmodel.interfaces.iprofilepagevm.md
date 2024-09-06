@@ -2,7 +2,7 @@
 
 Namespace: SlottyMedia.Backend.ViewModel.Interfaces
 
-Interface used for profilepage viewmodel
+This ViewModel represents the [Profile](./slottymedia.components.pages.profile.md) page.
 
 ```csharp
 public interface IProfilePageVm

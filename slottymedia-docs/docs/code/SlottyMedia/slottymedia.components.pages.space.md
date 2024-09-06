@@ -9,6 +9,18 @@ public class Space : Microsoft.AspNetCore.Components.ComponentBase, Microsoft.As
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → ComponentBase → [Space](./slottymedia.components.pages.space.md)<br>
 Implements IComponent, IHandleEvent, IHandleAfterRender
 
+## Properties
+
+### **SpaceId**
+
+```csharp
+public Guid SpaceId { get; set; }
+```
+
+#### Property Value
+
+[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
 ## Constructors
 
 ### **Space()**

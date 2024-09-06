@@ -10,94 +10,101 @@ public interface ISpaceVm
 
 ## Properties
 
-### **Topic**
+### **IsLoadingPage**
+
+Whether the whole page is being loaded
 
 ```csharp
-public abstract string Topic { get; }
+public abstract bool IsLoadingPage { get; }
 ```
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **PostCount**
+### **IsLoadingPosts**
+
+Whether the posts on the page are being loaded
 
 ```csharp
-public abstract int PostCount { get; }
+public abstract bool IsLoadingPosts { get; }
 ```
 
 #### Property Value
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **CreatedAt**
+### **AuthPrincipalId**
+
+The authentication principal's user ID (i.e. the user that's logged in)
 
 ```csharp
-public abstract DateTime CreatedAt { get; }
+public abstract Nullable<Guid> AuthPrincipalId { get; }
 ```
 
 #### Property Value
 
-[DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)<br>
+[Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+
+### **Space**
+
+The space whose page is being visited
+
+```csharp
+public abstract ForumDto Space { get; }
+```
+
+#### Property Value
+
+[ForumDto](./slottymedia.backend.dtos.forumdto.md)<br>
+
+### **Posts**
+
+The posts that are currently being rendered
+
+```csharp
+public abstract IPage<PostDto> Posts { get; }
+```
+
+#### Property Value
+
+IPage&lt;PostDto&gt;<br>
 
 ## Methods
 
-### **GetSpaceInformation(String)**
+### **Initialize(Guid)**
 
-Gets ForumDTO based on provided name
-
-```csharp
-Task<ForumDto> GetSpaceInformation(string name)
-```
-
-#### Parameters
-
-`name` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Forumname to look up in db
-
-#### Returns
-
-[Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-ForumDto?
-
-### **LoadSpaceDetails(String)**
-
-Fetches the details of a specific space based on its name
- and populates the [Space](./slottymedia.components.pages.space.md) property.
+Initialized the page's state. This fetches all space-related information and loads
+ the first posts for the visited space. Also initializes the [ISpaceVm.AuthPrincipalId](./slottymedia.backend.viewmodel.interfaces.ispacevm.md#authprincipalid)
+ if one is present.
 
 ```csharp
-Task LoadSpaceDetails(string name)
-```
-
-#### Parameters
-
-`name` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The name of the space to load information for.
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
-### **GetPostsByForumId(Guid, Int32, Int32)**
-
-Gets forums of a user by their id and enables slicing via offsets
-
-```csharp
-Task<List<PostDto>> GetPostsByForumId(Guid forumId, int startOfSet, int endOfSet)
+Task Initialize(Guid forumId)
 ```
 
 #### Parameters
 
 `forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-Forum that the posts belong to
-
-`startOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Startindex of the posts sorted by date
-
-`endOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Endindex of the posts sorted by data
+The ID of the space whose page should be visited
 
 #### Returns
 
-[Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-List of PostDtos
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **LoadPosts(Int32)**
+
+Loads more [ISpaceVm.Posts](./slottymedia.backend.viewmodel.interfaces.ispacevm.md#posts) for the visited space by changing the current
+ page (as in pagination).
+
+```csharp
+Task LoadPosts(int pageNumber)
+```
+
+#### Parameters
+
+`pageNumber` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The page number
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>

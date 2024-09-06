@@ -13,44 +13,64 @@ Implements [ISpaceVm](./slottymedia.backend.viewmodel.interfaces.ispacevm.md)
 
 ## Properties
 
-### **CreatedAt**
+### **IsLoadingPosts**
 
 ```csharp
-public DateTime CreatedAt { get; private set; }
+public bool IsLoadingPosts { get; private set; }
 ```
 
 #### Property Value
 
-[DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)<br>
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **Topic**
+### **IsLoadingPage**
 
 ```csharp
-public string Topic { get; private set; }
+public bool IsLoadingPage { get; private set; }
 ```
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **PostCount**
+### **AuthPrincipalId**
 
 ```csharp
-public int PostCount { get; private set; }
+public Nullable<Guid> AuthPrincipalId { get; private set; }
 ```
 
 #### Property Value
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+[Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+
+### **Space**
+
+```csharp
+public ForumDto Space { get; private set; }
+```
+
+#### Property Value
+
+[ForumDto](./slottymedia.backend.dtos.forumdto.md)<br>
+
+### **Posts**
+
+```csharp
+public IPage<PostDto> Posts { get; private set; }
+```
+
+#### Property Value
+
+IPage&lt;PostDto&gt;<br>
 
 ## Constructors
 
-### **SpaceVmImpl(IForumService, IPostService)**
+### **SpaceVmImpl(IForumService, IPostService, IAuthService)**
 
 Initializes the ViewModel with the necessary services.
 
 ```csharp
-public SpaceVmImpl(IForumService forumService, IPostService postService)
+public SpaceVmImpl(IForumService forumService, IPostService postService, IAuthService authService)
 ```
 
 #### Parameters
@@ -59,56 +79,34 @@ public SpaceVmImpl(IForumService forumService, IPostService postService)
 
 `postService` [IPostService](./slottymedia.backend.services.interfaces.ipostservice.md)<br>
 
+`authService` [IAuthService](./slottymedia.backend.services.interfaces.iauthservice.md)<br>
+
 ## Methods
 
-### **GetSpaceInformation(String)**
+### **Initialize(Guid)**
 
 ```csharp
-public Task<ForumDto> GetSpaceInformation(string name)
-```
-
-#### Parameters
-
-`name` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-#### Returns
-
-[Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-
-### **LoadSpaceDetails(String)**
-
-```csharp
-public Task LoadSpaceDetails(string name)
-```
-
-#### Parameters
-
-`name` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
-### **GetPostsByForumId(Guid, Int32, Int32)**
-
-Gets post by forum id
-
-```csharp
-public Task<List<PostDto>> GetPostsByForumId(Guid forumId, int startOfSet, int endOfSet)
+public Task Initialize(Guid forumId)
 ```
 
 #### Parameters
 
 `forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-Forum the posts belongs to
-
-`startOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Starting index on which the follows are retrieved (they are sorted by date)
-
-`endOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Ending index used to slice the posts in a specific intervall
 
 #### Returns
 
-[Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-List of PostDtos
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **LoadPosts(Int32)**
+
+```csharp
+public Task LoadPosts(int pageNumber)
+```
+
+#### Parameters
+
+`pageNumber` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>

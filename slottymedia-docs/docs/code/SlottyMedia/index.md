@@ -138,7 +138,7 @@
 
 [SpaceVmImpl](./slottymedia.backend.viewmodel.spacevmimpl.md)
 
-[UserVm](./slottymedia.backend.viewmodel.uservm.md)
+[UserVmImpl](./slottymedia.backend.viewmodel.uservmimpl.md)
 
 ## SlottyMedia.Backend.ViewModel.Interfaces
 
