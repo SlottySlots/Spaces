@@ -5,7 +5,7 @@ namespace SlottyMedia.Backend.ViewModel.Interfaces;
 /// <summary>
 ///     Interface for user view model implementation.
 /// </summary>
-public interface IUserVmImpl
+public interface IUserVm
 {
     /// <summary>
     ///     Asynchronously retrieves a user by their unique identifier.

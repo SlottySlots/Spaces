@@ -7,7 +7,7 @@ namespace SlottyMedia.Backend.ViewModel;
 /// <summary>
 ///     This class implements the IAuthVmImpl interface
 /// </summary>
-public class AuthVmImpl : IAuthVmImpl
+public class AuthVmImpl : IAuthVm
 {
     private readonly IAuthService _authService;
 

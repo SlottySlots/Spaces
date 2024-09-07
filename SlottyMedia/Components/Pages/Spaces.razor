@@ -4,6 +4,8 @@
 @layout MainLayout
 
 @inject ISpacesVm SpacesVm
+
+
 <PageTitle>Slotty Media | Spaces</PageTitle>
 
 <!-- Display loading indicator -->
@@ -13,14 +15,18 @@
 }
 else if (SpacesVm.Forums.Any())
 {
-    <ul>
+    <ul> 
         @foreach (var forum in SpacesVm.Forums)
         {
-            <Card class="min-h-[150px] mt-20 mx-7 flex flex-col items-center">
-                <h3 class="font-semibold text-lg">
-                    @(forum.Topic)
-                </h3>
-            </Card>
+            <li> 
+                <NavLink href=@($"/spaces/{forum.ForumId}") class="card-link">
+                    <Card class="min-h-[150px] mt-20 mx-7 flex flex-col items-center">
+                        <h3 class="font-semibold text-lg">
+                            @forum.Topic
+                        </h3>
+                    </Card>
+                </NavLink>
+            </li>
         }
     </ul>
 }
@@ -51,4 +57,5 @@ else
         }
     }
 
+  }
 }

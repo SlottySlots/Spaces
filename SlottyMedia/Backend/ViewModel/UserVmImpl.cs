@@ -8,7 +8,7 @@ namespace SlottyMedia.Backend.ViewModel;
 /// <summary>
 ///     Implementation of the IUserVmImpl interface.
 /// </summary>
-public class UserVmImpl : IUserVmImpl
+public class UserVmImpl : IUserVm
 {
     private static readonly Logging<UserVmImpl> Logger = new();
     private readonly IUserService _userService;
