@@ -37,6 +37,8 @@ public interface IForumService
     /// <exception cref="ForumGeneralException">Thrown when a general error occurs.</exception>
     Task<ForumDto> GetForumByName(string forumName);
 
+    Task<ForumDto> GetForumById(Guid forumId);
+
 
     /// <summary>
     ///     Retrieves all forums with pagination.
@@ -44,6 +46,8 @@ public interface IForumService
     /// <param name="pageRequest">The pagination request details.</param>
     /// <returns>A paginated list of forums.</returns>
     Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest);
+
+    Task<bool> ExistsByName(string forumName);
 
     /// <summary>
     ///     Retrieves the 3 most recent forums based on the creation date.

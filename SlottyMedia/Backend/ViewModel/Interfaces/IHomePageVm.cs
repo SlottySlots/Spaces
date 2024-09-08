@@ -16,6 +16,16 @@ public interface IHomePageVm
     IPage<PostDto> Page { get; }
 
     /// <summary>
+    ///     The ID of the currently logged in user.
+    /// </summary>
+    public Guid CurrentUserId { get; }
+
+    /// <summary>
+    ///     True if the user is authenticated, false otherwise.
+    /// </summary>
+    public bool IsAuthenticated { get; }
+
+    /// <summary>
     ///     Initializes this ViewModel, which counts the total number of existing posts and loads the first few
     ///     posts into the view.
     /// </summary>

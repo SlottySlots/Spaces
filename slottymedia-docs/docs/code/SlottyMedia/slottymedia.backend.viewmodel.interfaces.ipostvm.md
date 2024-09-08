@@ -10,22 +10,24 @@ public interface IPostVm
 
 ## Properties
 
-### **AuthPrincipalId**
+### **CommentCount**
+
+Gets the count of comments on the post.
 
 ```csharp
-public abstract Nullable<Guid> AuthPrincipalId { get; }
+public abstract int CommentCount { get; }
 ```
 
 #### Property Value
 
-[Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### **IsPostLiked**
+### **InitLiked**
 
-Gets a value indicating whether the post was liked by the user.
+Gets a value indicating whether the post was initially liked by the user.
 
 ```csharp
-public abstract bool IsPostLiked { get; }
+public abstract bool InitLiked { get; }
 ```
 
 #### Property Value
@@ -43,28 +45,6 @@ public abstract bool IsLoading { get; }
 #### Property Value
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-### **PostDto**
-
-```csharp
-public abstract PostDto PostDto { get; }
-```
-
-#### Property Value
-
-[PostDto](./slottymedia.backend.dtos.postdto.md)<br>
-
-### **CommentCount**
-
-Gets the count of comments on the post.
-
-```csharp
-public abstract int CommentCount { get; }
-```
-
-#### Property Value
-
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ### **LikeCount**
 
@@ -92,12 +72,12 @@ public abstract UserInformationDto UserInformation { get; }
 
 ## Methods
 
-### **Initialize(Guid, Action)**
+### **Initialize(Guid, Guid, Guid)**
 
 Initializes the post view model.
 
 ```csharp
-Task Initialize(Guid postId, Action onStateChanged)
+Task Initialize(Guid postId, Guid userId, Guid currentUserId)
 ```
 
 #### Parameters
@@ -105,34 +85,58 @@ Task Initialize(Guid postId, Action onStateChanged)
 `postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 The ID of the post.
 
-`onStateChanged` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br>
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the user.
+
+`currentUserId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the user who is logged in
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 A task that represents the asynchronous operation.
 
-### **LikeThisPost()**
+### **LikePost(Guid, Guid, Boolean)**
 
 Likes a post by a user.
 
 ```csharp
-Task LikeThisPost()
+Task LikePost(Guid postId, Guid userId, bool wasUnliked)
 ```
+
+#### Parameters
+
+`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the post.
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the user.
+
+`wasUnliked` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+If the post was unliked or not
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 A task that represents the asynchronous operation.
 
-### **GoToPostPage()**
+### **GetUserInformation(Guid, Boolean)**
+
+Retrieves user information.
 
 ```csharp
-void GoToPostPage()
+Task GetUserInformation(Guid userId, bool firstRender)
 ```
 
-### **GoToProfilePage()**
+#### Parameters
 
-```csharp
-void GoToProfilePage()
-```
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the user.
+
+`firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Indicates if this is the first render.
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+A task that represents the asynchronous operation.

@@ -36,12 +36,12 @@ The teardown method that is called after each test.
 public void TearDown()
 ```
 
-### **SearchByUsernameContaining_ShouldReturnUserIds_WhenUsersFound()**
+### **SearchByUsername_ShouldReturnUserIds_WhenUsersFound()**
 
 Tests if SearchByUsername method returns user IDs when users are found.
 
 ```csharp
-public Task SearchByUsernameContaining_ShouldReturnUserIds_WhenUsersFound()
+public Task SearchByUsername_ShouldReturnUserIds_WhenUsersFound()
 ```
 
 #### Returns
@@ -99,24 +99,24 @@ Tests if SearchByUsername and SearchByTopic methods throw SearchGeneralException
 public void SearchByUsernameOrTopic_ShouldThrowSearchGeneralExceptions_WhenDatabaseExceptionIsThrown()
 ```
 
-### **SearchByUsernameContaining_ShouldReturnEmptyList_WhenSearchTermIsEmpty()**
+### **SearchByUsername_ShouldReturnEmptyList_WhenSearchTermIsEmpty()**
 
 Tests if SearchByUsername and SearchByTopic methods return an empty list when the search term is empty.
 
 ```csharp
-public Task SearchByUsernameContaining_ShouldReturnEmptyList_WhenSearchTermIsEmpty()
+public Task SearchByUsername_ShouldReturnEmptyList_WhenSearchTermIsEmpty()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **SearchByTopicContaining_ShouldReturnEmptyList_WhenSearchTermIsEmpty()**
+### **SearchByTopic_ShouldReturnEmptyList_WhenSearchTermIsEmpty()**
 
 Tests if SearchByUsername and SearchByTopic methods return an empty list when the search term is empty.
 
 ```csharp
-public Task SearchByTopicContaining_ShouldReturnEmptyList_WhenSearchTermIsEmpty()
+public Task SearchByTopic_ShouldReturnEmptyList_WhenSearchTermIsEmpty()
 ```
 
 #### Returns

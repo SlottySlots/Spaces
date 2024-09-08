@@ -49,9 +49,9 @@ public class PostSubmissionFormVmImplTests
     {
         var changeEventArgs = new ChangeEventArgs { Value = "test" };
         var forums = new List<ForumDto> { new() { Topic = "test space" } };
-        var searchResults = new PageImpl<ForumDto>(forums, 1, 10, 1, null!);
-        _mockSearchService.Setup(s => s.SearchByForumTopicContaining("test", It.IsAny<PageRequest>()))
-            .ReturnsAsync(searchResults);
+        var searchDto = new SearchDto { Forums = forums };
+        _mockSearchService.Setup(s => s.SearchByTopic("test"))
+            .ReturnsAsync(searchDto);
 
         await _postSubmissionFormVmImpl.HandleSpacePromptChange(changeEventArgs,
             EventCallback.Factory.Create(this, (Func<string?, Task>)(value => Task.CompletedTask)));

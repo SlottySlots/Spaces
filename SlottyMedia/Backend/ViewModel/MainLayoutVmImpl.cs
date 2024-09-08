@@ -34,6 +34,7 @@ public class MainLayoutVmImpl : IMainLayoutVm
         _userService = userService;
     }
 
+
     /// <summary>
     ///     The user information to be displayed
     /// </summary>

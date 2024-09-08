@@ -5,11 +5,11 @@ Namespace: SlottyMedia.Backend.ViewModel
 Implementation of the IUserVmImpl interface.
 
 ```csharp
-public class UserVmImpl : SlottyMedia.Backend.ViewModel.Interfaces.IUserVmImpl
+public class UserVmImpl : SlottyMedia.Backend.ViewModel.Interfaces.IUserVm
 ```
 
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [UserVmImpl](./slottymedia.backend.viewmodel.uservmimpl.md)<br>
-Implements [IUserVmImpl](./slottymedia.backend.viewmodel.interfaces.iuservmimpl.md)
+Implements [IUserVm](./slottymedia.backend.viewmodel.interfaces.iuservm.md)
 
 ## Constructors
 

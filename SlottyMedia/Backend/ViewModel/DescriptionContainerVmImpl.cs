@@ -44,6 +44,10 @@ public class DescriptionContainerVmImpl : IDescriptionContainerVm
                         await _userService.UpdateUser(user);
                         ShowDescriptionText = true;
                     }
+                    else if (description!.Length > 200)
+                    {
+                        ShowDescriptionText = true;
+                    }
                 }
             }
             catch (Exception e)

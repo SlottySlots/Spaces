@@ -90,7 +90,7 @@ try
     builder.Services.AddScoped<IPostService, PostService>();
     builder.Services.AddScoped<IForumService, ForumService>();
     builder.Services.AddScoped<ICookieService, CookieService>();
-    builder.Services.AddScoped<IAuthService, AuthService>();
+    builder.Services.AddScoped<IAuthService, AuthService>(); // Scoped
     builder.Services.AddScoped<ISignupService, SignupServiceImpl>();
     builder.Services.AddScoped<ISearchService, SearchService>();
     builder.Services.AddScoped<IForumService, ForumService>();
@@ -105,11 +105,13 @@ try
     builder.Services.AddScoped<IMainLayoutVm, MainLayoutVmImpl>();
     builder.Services.AddScoped<ISpacesVm, SpacesVmImpl>();
     builder.Services.AddScoped<ISpacesCardVm, SpacesCardVmImpl>();
+    builder.Services.AddScoped<ISpaceVm, SpaceVmImpl>();
     builder.Services.AddScoped<IPostSubmissionFormVm, PostSubmissionFormVmImpl>();
     builder.Services.AddScoped<IHomePageVm, HomePageVmImpl>();
     builder.Services.AddScoped<IUserVm, UserVm>();
     builder.Services.AddScoped<IPostPageVm, PostPageVmImpl>();
     builder.Services.AddScoped<ICommentSubmissionFormVm, CommentSubmissionFormVmImpl>();
+    builder.Services.AddScoped<ISearchVm, SearchImpl>();
     builder.Services.AddTransient<IPostVm, PostVmImpl>();
     builder.Services.AddScoped<IDescriptionContainerVm, DescriptionContainerVmImpl>();
     builder.Services.AddTransient<ICommentVm, CommentVmImpl>();

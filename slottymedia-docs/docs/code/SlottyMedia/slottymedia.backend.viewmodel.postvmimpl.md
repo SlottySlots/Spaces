@@ -13,20 +13,20 @@ Implements [IPostVm](./slottymedia.backend.viewmodel.interfaces.ipostvm.md)
 
 ## Properties
 
-### **AuthPrincipalId**
+### **CommentCount**
 
 ```csharp
-public Nullable<Guid> AuthPrincipalId { get; private set; }
+public int CommentCount { get; private set; }
 ```
 
 #### Property Value
 
-[Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### **IsPostLiked**
+### **InitLiked**
 
 ```csharp
-public bool IsPostLiked { get; private set; }
+public bool InitLiked { get; private set; }
 ```
 
 #### Property Value
@@ -42,26 +42,6 @@ public bool IsLoading { get; private set; }
 #### Property Value
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-### **PostDto**
-
-```csharp
-public PostDto PostDto { get; private set; }
-```
-
-#### Property Value
-
-[PostDto](./slottymedia.backend.dtos.postdto.md)<br>
-
-### **CommentCount**
-
-```csharp
-public int CommentCount { get; private set; }
-```
-
-#### Property Value
-
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ### **LikeCount**
 
@@ -85,64 +65,75 @@ public UserInformationDto UserInformation { get; private set; }
 
 ## Constructors
 
-### **PostVmImpl(IPostService, IUserService, ILikeService, ICommentService, IAuthService, NavigationManager)**
+### **PostVmImpl(IUserService, ILikeService, ICommentService)**
 
 The constructor for PostVmImpl
 
 ```csharp
-public PostVmImpl(IPostService postService, IUserService userService, ILikeService likeService, ICommentService commentService, IAuthService authService, NavigationManager navigationManager)
+public PostVmImpl(IUserService userService, ILikeService likeService, ICommentService commentService)
 ```
 
 #### Parameters
 
-`postService` [IPostService](./slottymedia.backend.services.interfaces.ipostservice.md)<br>
-
 `userService` [IUserService](./slottymedia.backend.services.interfaces.iuserservice.md)<br>
+Service for user-related operations
 
 `likeService` [ILikeService](./slottymedia.backend.services.interfaces.ilikeservice.md)<br>
+Service for like-related operations
 
 `commentService` [ICommentService](./slottymedia.backend.services.interfaces.icommentservice.md)<br>
-
-`authService` [IAuthService](./slottymedia.backend.services.interfaces.iauthservice.md)<br>
-
-`navigationManager` NavigationManager<br>
+Service for comment-related operations
 
 ## Methods
 
-### **Initialize(Guid, Action)**
+### **Initialize(Guid, Guid, Guid)**
 
 ```csharp
-public Task Initialize(Guid postId, Action onStateChanged)
+public Task Initialize(Guid postId, Guid userId, Guid currentUserId)
 ```
 
 #### Parameters
 
 `postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
-`onStateChanged` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br>
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`currentUserId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **LikeThisPost()**
+### **LikePost(Guid, Guid, Boolean)**
 
 ```csharp
-public Task LikeThisPost()
+public Task LikePost(Guid postId, Guid userId, bool wasUnliked)
 ```
+
+#### Parameters
+
+`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`wasUnliked` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **GoToPostPage()**
+### **GetUserInformation(Guid, Boolean)**
 
 ```csharp
-public void GoToPostPage()
+public Task GetUserInformation(Guid userId, bool firstRender)
 ```
 
-### **GoToProfilePage()**
+#### Parameters
 
-```csharp
-public void GoToProfilePage()
-```
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>

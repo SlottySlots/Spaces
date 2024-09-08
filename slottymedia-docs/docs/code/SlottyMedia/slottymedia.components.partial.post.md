@@ -11,15 +11,55 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ## Properties
 
-### **Id**
+### **Dto**
+
+The post to be rendered.
 
 ```csharp
-public Guid Id { get; set; }
+public PostDto Dto { get; set; }
+```
+
+#### Property Value
+
+[PostDto](./slottymedia.backend.dtos.postdto.md)<br>
+
+### **CurrentUserId**
+
+The current logged in user id to propagate towards like component.
+
+```csharp
+public Guid CurrentUserId { get; set; }
 ```
 
 #### Property Value
 
 [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+### **OnPostClick**
+
+This event is triggered when the post's comment button is clicked.
+ This event will be used to navigate to the post's dedicated page from the home page (i.e. `/post/{ID}`).
+ On the post's dedicated page this event should be left unset.
+
+```csharp
+public EventCallback OnPostClick { get; set; }
+```
+
+#### Property Value
+
+EventCallback<br>
+
+### **PostVm**
+
+Injected instance of the IPostVm interface.
+
+```csharp
+public IPostVm PostVm { get; set; }
+```
+
+#### Property Value
+
+[IPostVm](./slottymedia.backend.viewmodel.interfaces.ipostvm.md)<br>
 
 ## Constructors
 
@@ -50,3 +90,27 @@ protected Task OnParametersSetAsync()
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **OnAfterRender(Boolean)**
+
+This method is called after the component has been rendered.
+
+```csharp
+protected void OnAfterRender(bool firstRender)
+```
+
+#### Parameters
+
+`firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### **LikeClick(Boolean)**
+
+Handles the click event on the like button, adding or removing a like based on the current state.
+
+```csharp
+public void LikeClick(bool wasUnliked)
+```
+
+#### Parameters
+
+`wasUnliked` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>

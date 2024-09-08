@@ -22,78 +22,78 @@ public PostVmImplTests()
 
 ### **SetUp()**
 
-Sets up the test environment by initializing mocks and the PostVmImpl instance.
+Sets up the test environment before each test.
 
 ```csharp
 public void SetUp()
 ```
 
-### **GetOwner_ReturnsUserDto()**
+### **Initialize_LoadsAllPostRelatedInformation()**
 
-Tests that GetOwner method returns the expected UserDto.
+Tests that Initialize method loads all post-related information.
 
 ```csharp
-public Task GetOwner_ReturnsUserDto()
+public Task Initialize_LoadsAllPostRelatedInformation()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **GetCommentsCount_ReturnsCount()**
+### **LikePost_AddsLikeWhenNotPreviouslyLiked()**
 
-Tests that GetCommentsCount method returns the expected count of comments.
+Tests that LikePost method adds a like when the post was not previously liked.
 
 ```csharp
-public Task GetCommentsCount_ReturnsCount()
+public Task LikePost_AddsLikeWhenNotPreviouslyLiked()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **GetUserInformation_ReturnsUserInformationDto()**
+### **LikePost_RemovesLikeWhenPreviouslyLiked()**
 
-Tests that GetUserInformation method returns the expected UserInformationDto.
+Tests that LikePost method removes a like when the post was previously liked.
 
 ```csharp
-public Task GetUserInformation_ReturnsUserInformationDto()
+public Task LikePost_RemovesLikeWhenPreviouslyLiked()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **GetLikes_ReturnsListOfGuids()**
+### **GetUserInformation_SetsUserInformation()**
 
-Tests that GetLikes method returns the expected list of Guids.
+Tests that GetUserInformation method sets the user information.
 
 ```csharp
-public Task GetLikes_ReturnsListOfGuids()
+public Task GetUserInformation_SetsUserInformation()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **AddLike_CallsInsertLike()**
+### **GetCommentsCount_SetsCommentCount()**
 
-Tests that AddLike method calls InsertLike on the ILikeService mock.
+Tests that GetCommentsCount method sets the comment count.
 
 ```csharp
-public Task AddLike_CallsInsertLike()
+public Task GetCommentsCount_SetsCommentCount()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **RemoveLike_CallsDeleteLike()**
+### **GetLikes_SetsLikeCountAndInitLiked()**
 
-Tests that RemoveLike method calls DeleteLike on the ILikeService mock.
+Tests that GetLikes method sets the like count and initializes the liked state.
 
 ```csharp
-public Task RemoveLike_CallsDeleteLike()
+public Task GetLikes_SetsLikeCountAndInitLiked()
 ```
 
 #### Returns

@@ -3,6 +3,7 @@ using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
 using SlottyMedia.Database.Pagination;
+using Supabase.Gotrue;
 
 namespace SlottyMedia.Tests.Viewmodel;
 
@@ -20,12 +21,14 @@ public class PostPageVmImplTests
     {
         _mockPostService = new Mock<IPostService>();
         _mockCommentService = new Mock<ICommentService>();
-        _postPageVmImpl = new PostPageVmImpl(_mockPostService.Object, _mockCommentService.Object);
+        _authService = new Mock<IAuthService>();
+        _postPageVmImpl = new PostPageVmImpl(_mockPostService.Object, _mockCommentService.Object, _authService.Object);
     }
 
     private Mock<IPostService> _mockPostService;
     private Mock<ICommentService> _mockCommentService;
     private PostPageVmImpl _postPageVmImpl;
+    private Mock<IAuthService> _authService;
 
     /// <summary>
     ///     Tests that Initialize method sets the Post and loads the first page of comments.
@@ -44,6 +47,9 @@ public class PostPageVmImplTests
         );
         _mockPostService.Setup(s => s.GetPostById(postId)).ReturnsAsync(post);
         _mockCommentService.Setup(s => s.GetCommentsInPost(postId, It.IsAny<PageRequest>())).ReturnsAsync(comments);
+        _authService.Setup(s => s.IsAuthenticated()).Returns(true);
+        _authService.Setup(s => s.GetCurrentSession())
+            .Returns(new Session { User = new User { Id = Guid.NewGuid().ToString() } });
 
         await _postPageVmImpl.Initialize(postId);
 
@@ -60,6 +66,8 @@ public class PostPageVmImplTests
     {
         var postId = Guid.NewGuid();
         _mockPostService.Setup(s => s.GetPostById(postId)).ReturnsAsync((PostDto?)null);
+        _authService.Setup(s => s.GetCurrentSession())
+            .Returns(new Session { User = new User { Id = Guid.NewGuid().ToString() } });
 
         await _postPageVmImpl.Initialize(postId);
 
@@ -84,6 +92,9 @@ public class PostPageVmImplTests
         );
         _mockPostService.Setup(s => s.GetPostById(postId)).ReturnsAsync(post);
         _mockCommentService.Setup(s => s.GetCommentsInPost(postId, It.IsAny<PageRequest>())).ReturnsAsync(comments);
+        _authService.Setup(s => s.GetCurrentSession())
+            .Returns(new Session { User = new User { Id = Guid.NewGuid().ToString() } });
+
         await _postPageVmImpl.Initialize(postId);
 
         var moreComments = new PageImpl<CommentDto>(

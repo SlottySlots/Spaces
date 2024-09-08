@@ -55,16 +55,6 @@ protected void BuildRenderTree(RenderTreeBuilder __builder)
 
 `__builder` RenderTreeBuilder<br>
 
-### **OnInitializedAsync()**
-
-```csharp
-protected Task OnInitializedAsync()
-```
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
 ### **OnParametersSetAsync()**
 
 ```csharp

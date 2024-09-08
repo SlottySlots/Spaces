@@ -3,6 +3,7 @@ using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
 using SlottyMedia.Database.Pagination;
+using Supabase.Gotrue;
 
 namespace SlottyMedia.Tests.Viewmodel;
 
@@ -19,11 +20,13 @@ public class HomePageVmImplTests
     public void SetUp()
     {
         _mockPostService = new Mock<IPostService>();
-        _homePageVmImpl = new HomePageVmImpl(_mockPostService.Object);
+        _authServiceMock = new Mock<IAuthService>();
+        _homePageVmImpl = new HomePageVmImpl(_mockPostService.Object, _authServiceMock.Object);
     }
 
     private Mock<IPostService> _mockPostService;
     private HomePageVmImpl _homePageVmImpl;
+    private Mock<IAuthService> _authServiceMock;
 
     /// <summary>
     ///     Tests that the Initialize method sets initial values and loads the first page.
@@ -39,6 +42,9 @@ public class HomePageVmImplTests
             pageNumber => Task.FromResult<IPage<PostDto>>(null!) // Callback
         );
         _mockPostService.Setup(s => s.GetAllPosts(It.IsAny<PageRequest>())).ReturnsAsync(page);
+        _authServiceMock.Setup(s => s.GetCurrentSession())
+            .Returns(new Session { User = new User { Id = Guid.NewGuid().ToString() } });
+
 
         await _homePageVmImpl.Initialize();
 
