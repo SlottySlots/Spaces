@@ -19,12 +19,11 @@ public interface IUserService
     Task<UserDto> GetUserDtoById(Guid userId);
 
     /// <summary>
-    ///     Fetches a user by their username. Returns null if no user was found.
+    ///     Checks if a user with the given username exists.
     /// </summary>
     /// <param name="username">The user's username</param>
-    /// <returns>The queried user or null if no such user was found</returns>
-    /// <exception cref="UserGeneralException">Thrown when a general error occurs.</exception>
-    Task<bool> CheckIfUserExistsByUserName(string username);
+    /// <returns>Whether a user with the given username exists</returns>
+    Task<bool> ExistsByUserName(string username);
 
     /// <summary>
     ///     This method creates a new User object in the database and returns the created object.

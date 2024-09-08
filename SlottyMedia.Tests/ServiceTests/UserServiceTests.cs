@@ -120,7 +120,7 @@ public class UserServiceTests
         _mockUserRepository.Setup(x => x.GetUserByUsername(It.IsAny<string>()))
             .ReturnsAsync(new UserDao());
 
-        var result = await _userService.CheckIfUserExistsByUserName(username);
+        var result = await _userService.ExistsByUserName(username);
 
         Assert.That(result, Is.True);
     }
