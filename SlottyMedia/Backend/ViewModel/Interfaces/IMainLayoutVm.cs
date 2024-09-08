@@ -30,7 +30,7 @@ public interface IMainLayoutVm
     ///     Returns a task of type UserInformationDto. The dto is used to update the state in the view. It's null if a error
     ///     occured.
     /// </returns>
-    Task<UserInformationDto?> SetUserInfo();
+    Task SetUserInfo();
 
     /// <summary>
     ///     This function persists a new avatar of the currently authenticated user
@@ -43,12 +43,4 @@ public interface IMainLayoutVm
     ///     occured;
     /// </returns>
     Task<string?> PersistUserAvatarInDb(string base64Encoding);
-
-
-    /// <summary>
-    ///     Initializes the ViewModel with the specified user ID.
-    /// </summary>
-    /// <param name="userId">The ID of the user to load information for.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    public Task Initialize(Guid? userId);
 }

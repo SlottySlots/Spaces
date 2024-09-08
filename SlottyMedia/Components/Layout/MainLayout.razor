@@ -19,7 +19,7 @@
 
 
         <!-- login box -->
-        @if (!AuthService.IsAuthenticated() && MainLayoutVm is not null)
+        @if (!AuthService.IsAuthenticated())
         {
             <Card Class="
                         absolute w-full max-w-[280px]
@@ -98,7 +98,7 @@
 
             </Card>
         }
-        else
+        else if (MainLayoutVm is not null)
         {
             <Card Class="
                         absolute w-full max-w-[280px]
@@ -321,6 +321,7 @@
     protected override async Task OnInitializedAsync()
     {
         await MainLayoutVm!.RestoreSessionOnInit();
+        await MainLayoutVm.SetUserInfo();
     }
 
     /// <summary>
@@ -329,9 +330,9 @@
     /// <param name="firstRender"></param>
     protected override async void OnAfterRender(bool firstRender)
     {
-        if (firstRender && MainLayoutVm is not null && AuthService.IsAuthenticated())
+        if (firstRender && MainLayoutVm is not null)
         {
-            await MainLayoutVm.Initialize(Guid.Parse(AuthService.GetCurrentSession()!.User!.Id!));
+            await MainLayoutVm.SetUserInfo();
             StateHasChanged();
         }
     }
