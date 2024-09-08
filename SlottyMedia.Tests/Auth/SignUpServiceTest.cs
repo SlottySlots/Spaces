@@ -5,6 +5,7 @@ using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Repository.RoleRepo;
+using SlottyMedia.Tests.TestImpl;
 using Supabase.Gotrue;
 using Client = Supabase.Client;
 
@@ -27,7 +28,7 @@ public class SignUpServiceTest
         _roleRepositoryMock = new Mock<IRoleRepository>();
         _userServiceMock = new Mock<IUserService>();
         _signupService = new SignupServiceImpl(_client, _userServiceMock.Object, _cookieServiceMock.Object,
-            _roleRepositoryMock.Object);
+            _roleRepositoryMock.Object, new MockedAvatarGenerator());
     }
 
     /// <summary>
