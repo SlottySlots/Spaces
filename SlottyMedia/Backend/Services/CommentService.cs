@@ -24,6 +24,25 @@ public class CommentService : ICommentService
     }
 
     /// <inheritdoc />
+    public async Task<CommentDto> GetCommentById(Guid commentId)
+    {
+        try
+        {
+            Logger.LogDebug($"Fetching comment with ID {commentId}");
+            var comment = await _commentRepository.GetElementById(commentId);
+            return new CommentDto().Mapper(comment);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new CommentGeneralException("An error occurred while fetching the user", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new CommentGeneralException("An error occurred while fetching the user", ex);
+        }
+    }
+
+    /// <inheritdoc />
     public async Task InsertComment(Guid creatorUserId, Guid postId, string content)
     {
         try

@@ -8,19 +8,29 @@ namespace SlottyMedia.Backend.ViewModel.Interfaces;
 public interface ICommentVm
 {
     /// <summary>
-    ///     Gets the user information data transfer object to be rendered.
-    /// </summary>
-    UserInformationDto UserInformation { get; }
-
-    /// <summary>
-    ///     Gets a value indicating whether the data is still loading.
+    ///     Whether the necessary comment-related data is still being loaded.
     /// </summary>
     bool IsLoading { get; }
+    
+    /// <summary>
+    ///     The comment that should be rendered.
+    /// </summary>
+    CommentDto? Dto { get; }
+    
+    /// <summary>
+    ///     User-related information about the comment's creator.
+    /// </summary>
+    UserInformationDto? UserInfo { get; }
 
     /// <summary>
-    ///     Initializes the ViewModel with the specified user ID.
+    ///     Initializes this view model with the provided comment ID.
+    ///     This loads all comment-related information.
     /// </summary>
-    /// <param name="userId">The ID of the user to load information for.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    Task Initialize(Guid? userId);
+    /// <param name="commentId">The ID of the comment that should be loaded</param>
+    Task Initialize(Guid commentId);
+
+    /// <summary>
+    ///     Navigates to the comment creator's profile page.
+    /// </summary>
+    void GoToCreatorProfile();
 }
