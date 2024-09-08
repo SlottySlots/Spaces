@@ -103,7 +103,7 @@ public class PostVmImpl : IPostVm
     {
         try
         {
-            await _likeService.InsertLike(postId, userId);
+            await _likeService.InsertLike(userId, postId);
         }
         catch (Exception e)
         {
@@ -121,7 +121,7 @@ public class PostVmImpl : IPostVm
     {
         try
         {
-            await _likeService.DeleteLike(postId, userId);
+            await _likeService.DeleteLike(userId, postId);
         }
         catch (Exception e)
         {
@@ -161,7 +161,7 @@ public class PostVmImpl : IPostVm
             var result = await _likeService.GetLikesForPost(postId);
 
             LikeCount = result.Count;
-            InitLiked = result.Exists(x => x == userId);
+            InitLiked = result.Contains(userId);
         }
         catch (Exception e)
         {

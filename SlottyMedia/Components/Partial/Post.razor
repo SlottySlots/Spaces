@@ -2,7 +2,7 @@
 @using SlottyMedia.Backend.ViewModel.Interfaces
 @inject NavigationManager NavigationManager;
 
-@if (Dto is not null && PostVm is not null && !PostVm.IsLoading)
+@if (PostVm is not null && !PostVm.IsLoading)
 {
     <div class="w-full p-5 grid grid-cols-10 gap-4">
 
@@ -66,7 +66,7 @@
 }
 
 
-@if (Dto is not null && PostVm is not null && PostVm.IsLoading)
+@if (PostVm is not null && PostVm.IsLoading)
 {
     <div>
         Loading...
@@ -101,7 +101,7 @@
     ///     Injected instance of the IPostVm interface.
     /// </summary>
     [Inject]
-    public IPostVm? PostVm { get; set; }
+    public IPostVm? PostVm { get; set; } 
 
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()
@@ -114,11 +114,15 @@
         await PostVm.Initialize(Dto.PostId, Dto.UserId);
     }
 
+    /// <summary>
+    /// This method is called after the component has been rendered.
+    /// </summary>
+    /// <param name="firstRender"></param>
     protected override async void OnAfterRender(bool firstRender)
     {
         if (PostVm is null || Dto is null)
             return;
-        if (firstRender || PostVm.UserInformation.Username == "Username is loading..")
+        if (firstRender || PostVm.UserInformation.Username == "Username is loading.." && Dto is not null)
         {
             await PostVm.GetUserInformation(Dto.UserId, firstRender);
             StateHasChanged(); 
@@ -132,7 +136,7 @@
     /// </summary>
     private void OnClickAvatar()
     {
-        NavigationManager.NavigateTo($"/profile/{CurrentUserId.ToString()}");
+        NavigationManager.NavigateTo($"/profile/{PostVm!.UserInformation.UserId}");
     }
 
     private void _navigateToProfile(Guid? userId)
@@ -145,11 +149,12 @@
     /// </summary>
     public async void LikeClick()
     {
-        if (PostVm is null)
+        if (PostVm is null || Dto is null)
         {
             return;
         }
 
         await PostVm.LikePost(Dto.PostId, CurrentUserId);
+        StateHasChanged();
     }
 }
