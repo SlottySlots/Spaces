@@ -115,7 +115,7 @@ public class AuthService : IAuthService
     }
 
     /// <inheritdoc />
-    public Session? GetCurrentSession()
+    public virtual Session? GetCurrentSession()
     {
         Logger.LogDebug("Getting current session");
         var session = _supabaseClient.Auth.CurrentSession;
@@ -132,7 +132,7 @@ public class AuthService : IAuthService
     /// <summary>
     ///     This restores the session on initialization of the page.
     /// </summary>
-    public async Task<Session?> RestoreSessionOnInit()
+    public virtual async Task<Session?> RestoreSessionOnInit()
     {
         if (GetCurrentSession() == null)
             try
