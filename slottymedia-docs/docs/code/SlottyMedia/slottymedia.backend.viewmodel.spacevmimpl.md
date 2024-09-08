@@ -15,6 +15,8 @@ Implements [ISpaceVm](./slottymedia.backend.viewmodel.interfaces.ispacevm.md)
 
 ### **IsLoadingPosts**
 
+A boolean flag indicating whether the posts on the page are being loaded.
+
 ```csharp
 public bool IsLoadingPosts { get; private set; }
 ```
@@ -24,6 +26,8 @@ public bool IsLoadingPosts { get; private set; }
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **IsLoadingPage**
+
+A boolean flag indicating whether the entire page is being loaded.
 
 ```csharp
 public bool IsLoadingPage { get; private set; }
@@ -35,6 +39,8 @@ public bool IsLoadingPage { get; private set; }
 
 ### **AuthPrincipalId**
 
+The ID of the authenticated user (the currently logged-in user).
+
 ```csharp
 public Nullable<Guid> AuthPrincipalId { get; private set; }
 ```
@@ -45,6 +51,8 @@ public Nullable<Guid> AuthPrincipalId { get; private set; }
 
 ### **Space**
 
+Holds the details of the current space (ForumDto).
+
 ```csharp
 public ForumDto Space { get; private set; }
 ```
@@ -54,6 +62,8 @@ public ForumDto Space { get; private set; }
 [ForumDto](./slottymedia.backend.dtos.forumdto.md)<br>
 
 ### **Posts**
+
+Contains the paginated posts belonging to the space.
 
 ```csharp
 public IPage<PostDto> Posts { get; private set; }
@@ -85,6 +95,10 @@ public SpaceVmImpl(IForumService forumService, IPostService postService, IAuthSe
 
 ### **Initialize(Guid)**
 
+Loads the details of a specific space based on the provided forum ID.
+ This method also loads the posts for the space and sets the loading states accordingly.
+ The space to load information from.
+
 ```csharp
 public Task Initialize(Guid forumId)
 ```
@@ -99,6 +113,8 @@ public Task Initialize(Guid forumId)
 
 ### **LoadPosts(Int32)**
 
+Loads the posts for the space. This method is called when loading a specific page of posts.
+
 ```csharp
 public Task LoadPosts(int pageNumber)
 ```
@@ -106,6 +122,7 @@ public Task LoadPosts(int pageNumber)
 #### Parameters
 
 `pageNumber` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+The page number to load posts from.
 
 #### Returns
 

@@ -54,6 +54,12 @@ public class ForumDao : BaseModel
     /// </summary>
     [Column("forumTopic")]
     public string? ForumTopic { get; set; }
+    
+    /// <summary>
+    ///     The Count of Posts in the Forum.
+    /// </summary>
+    [Column("postCount", ignoreOnInsert: true, ignoreOnUpdate: true)]
+    public int? post_count { get; set; }
 
     /// <summary>
     ///     Created Date and Time of the Forum.
