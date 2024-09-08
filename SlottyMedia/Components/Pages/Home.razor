@@ -7,11 +7,10 @@
 <PageTitle>Slotty Media | Home</PageTitle>
 
 
-@if (ViewModel.IsAuthenticated)
+@if (ViewModel.AuthPrincipalId is not null)
 {
-    <PostSubmissionForm UserId="ViewModel.CurrentUserId"></PostSubmissionForm>
+    <PostSubmissionForm UserId="ViewModel.AuthPrincipalId"></PostSubmissionForm>
 }
-
 
 <div class="w-full pb-5 flex flex-col items-center">
     <Pagination Page="ViewModel!.Page" OnPageFetch="ViewModel!.LoadPage" Class="w-full px-3 py-5">

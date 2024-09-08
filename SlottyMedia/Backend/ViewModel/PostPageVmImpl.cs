@@ -36,23 +36,19 @@ public class PostPageVmImpl : IPostPageVm
     public IPage<CommentDto> Comments { get; private set; } = PageImpl<CommentDto>.Empty();
 
     /// <inheritdoc />
-    public Guid CurrentUserId { get; private set; }
-
-    /// <inheritdoc />
-    public bool IsAuthenticated { get; private set; }
+    public Guid? AuthPrincipalId { get; private set; }
 
     /// <inheritdoc />
     public async Task Initialize(Guid postId)
     {
         _logger.LogInfo($"Loading page for post wih ID {postId}");
         IsLoadingPage = true;
+        AuthPrincipalId = _authService.GetAuthPrincipalId();
         Post = await _postService.GetPostById(postId);
         if (Post is null)
             _logger.LogWarn($"Attempting to load page for a nonexistent post ID: {postId}");
         else
             await LoadCommentsPage(0);
-        CurrentUserId = Guid.Parse(_authService.GetCurrentSession()!.User!.Id!);
-        IsAuthenticated = _authService.IsAuthenticated();
         IsLoadingPage = false;
     }
 

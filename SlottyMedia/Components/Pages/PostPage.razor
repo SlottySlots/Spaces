@@ -23,9 +23,9 @@ else
     <div class="w-full pb-5 flex flex-col items-center gap-3">
 
         <!-- comment submission form (if user is logged in) -->
-        @if (ViewModel.IsAuthenticated)
+        @if (ViewModel.AuthPrincipalId is not null)
         {
-            <CommentSubmissionForm PostId="@PostId" UserId="ViewModel.CurrentUserId"/>
+            <CommentSubmissionForm PostId="@PostId" UserId="ViewModel.AuthPrincipalId"/>
         }
 
         <!-- all comments that were loaded -->

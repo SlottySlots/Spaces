@@ -22,21 +22,18 @@ public class HomePageVmImpl : IHomePageVm
     }
 
     /// <inheritdoc />
+    public Guid? AuthPrincipalId { get; private set; }
+
+    /// <inheritdoc />
     public bool IsLoadingPage { get; private set; }
 
     /// <inheritdoc />
     public IPage<PostDto> Page { get; private set; } = PageImpl<PostDto>.Empty();
 
     /// <inheritdoc />
-    public Guid CurrentUserId { get; private set; }
-
-    /// <inheritdoc />
-    public bool IsAuthenticated { get; private set; }
-
-    /// <inheritdoc />
     public async Task Initialize()
     {
-        CurrentUserId = Guid.Parse(_authService.GetCurrentSession()!.User!.Id!);
+        AuthPrincipalId = _authService.GetAuthPrincipalId();
         await LoadPage(0);
     }
 
@@ -46,7 +43,6 @@ public class HomePageVmImpl : IHomePageVm
         Logger.LogInfo($"Home page: Loading posts on page {pageNumber}");
         IsLoadingPage = true;
         Page = await _postService.GetAllPosts(PageRequest.Of(pageNumber, 10));
-        IsAuthenticated = _authService.IsAuthenticated();
         IsLoadingPage = false;
     }
 }

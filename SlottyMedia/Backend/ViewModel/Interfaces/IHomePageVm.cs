@@ -9,21 +9,16 @@ namespace SlottyMedia.Backend.ViewModel.Interfaces;
 /// </summary>
 public interface IHomePageVm
 {
+    /// <summary>
+    ///     The ID of the currently logged in user.
+    /// </summary>
+    public Guid? AuthPrincipalId { get; }
+    
     /// <summary>Indicates whether the page is loading (for the first time)</summary>
     bool IsLoadingPage { get; }
 
     /// <summary>The posts that will be showcased</summary>
     IPage<PostDto> Page { get; }
-
-    /// <summary>
-    ///     The ID of the currently logged in user.
-    /// </summary>
-    public Guid CurrentUserId { get; }
-
-    /// <summary>
-    ///     True if the user is authenticated, false otherwise.
-    /// </summary>
-    public bool IsAuthenticated { get; }
 
     /// <summary>
     ///     Initializes this ViewModel, which counts the total number of existing posts and loads the first few

@@ -24,12 +24,7 @@ public interface IPostPageVm
     /// <summary>
     ///     The ID of the currently logged in user.
     /// </summary>
-    Guid CurrentUserId { get; }
-
-    /// <summary>
-    ///     True if the user is authenticated, false otherwise.
-    /// </summary>
-    public bool IsAuthenticated { get; }
+    Guid? AuthPrincipalId { get; }
 
     /// <summary>
     ///     Attempts to load the given post. If no such post exists, then <see cref="Post" /> will be <c>null</c>.

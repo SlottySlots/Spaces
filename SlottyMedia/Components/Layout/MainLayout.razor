@@ -242,15 +242,7 @@
 
         <!-- main content (center) -->
         <div class="h-full col-span-3 overflow-auto">
-
-            <!-- if user is logged in: show post submission form -->
-            @if (AuthService.IsAuthenticated())
-            {
-                <!-- the body (e.g. posts) -->
-                @Body
-            }
-
-
+            @Body
         </div>
 
         <!-- friends bar on the right -->
