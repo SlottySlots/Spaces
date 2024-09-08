@@ -29,63 +29,77 @@ public class PostVmImpl : IPostVm
     }
 
     /// <inheritdoc />
-    public async Task<UserDto> GetOwner(Guid userId)
+    public int CommentCount { get; private set; }
+
+    /// <inheritdoc />
+    public bool InitLiked { get; private set; }
+
+    /// <inheritdoc />
+    public bool IsLoading { get; private set; }
+
+    /// <inheritdoc />
+    public int LikeCount { get; private set; }
+
+    /// <inheritdoc />
+    public UserInformationDto UserInformation { get; private set; } = new(true);
+
+    /// <inheritdoc />
+    public async Task Initialize(Guid postId, Guid userId)
+    {
+        IsLoading = true;
+        _logger.LogInfo("PostVmImpl: Loading necessary post-related information...");
+        await GetCommentsCount(postId);
+        //  await GetUserInformation(userId);
+        await GetLikes(postId, userId);
+        _logger.LogInfo("PostVmImpl: Successfully loaded all post-related information");
+        IsLoading = false;
+    }
+
+    /// <inheritdoc />
+    public async Task LikePost(Guid postId, Guid userId)
     {
         try
         {
-            return await _userService.GetUserDtoById(userId);
+            if (InitLiked)
+            {
+                await RemoveLike(postId, userId);
+                LikeCount--;
+                InitLiked = false;
+            }
+            else
+            {
+                await AddLike(postId, userId);
+                LikeCount++;
+                InitLiked = true;
+            }
         }
         catch (Exception e)
         {
-            _logger.LogError(e, $"An error occurred while retrieving owner with userId {userId}");
-            return new UserDto();
+            _logger.LogError(e, $"An error occurred while liking postId {postId} by userId {userId}");
         }
     }
 
     /// <inheritdoc />
-    public async Task<int> GetCommentsCount(Guid postId)
+    public async Task GetUserInformation(Guid userId, bool firstRender)
     {
-        try
-        {
-            return await _commentService.CountCommentsInPost(postId);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, $"An error occurred while counting comments for postId {postId}");
-            return 0;
-        }
+
+            try
+            {
+                UserInformation = await _userService.GetUserInfo(userId, false, false) ?? new UserInformationDto();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while retrieving user information for userId {userId}");
+            }
     }
 
-    /// <inheritdoc />
-    public async Task<UserInformationDto> GetUserInformation(Guid userId)
-    {
-        try
-        {
-            return await _userService.GetUserInfo(userId, false, false) ?? new UserInformationDto();
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, $"An error occurred while retrieving user information for userId {userId}");
-            return new UserInformationDto();
-        }
-    }
-
-    /// <inheritdoc />
-    public async Task<List<Guid>?> GetLikes(Guid postId)
-    {
-        try
-        {
-            return await _likeService.GetLikesForPost(postId);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, $"An error occurred while retrieving likes for postId {postId}");
-            return null;
-        }
-    }
-
-    /// <inheritdoc />
-    public async Task AddLike(Guid postId, Guid userId)
+    /// <summary>
+    ///     Adds a like to a post by a user.
+    /// </summary>
+    /// <param name="postId">The ID of the post.</param>
+    /// <param name="userId">The ID of the user.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    private async Task AddLike(Guid postId, Guid userId)
     {
         try
         {
@@ -97,8 +111,13 @@ public class PostVmImpl : IPostVm
         }
     }
 
-    /// <inheritdoc />
-    public async Task RemoveLike(Guid postId, Guid userId)
+    /// <summary>
+    ///     Removes a like from a post by a user.
+    /// </summary>
+    /// <param name="postId">The ID of the post.</param>
+    /// <param name="userId">The ID of the user.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    private async Task RemoveLike(Guid postId, Guid userId)
     {
         try
         {
@@ -107,6 +126,46 @@ public class PostVmImpl : IPostVm
         catch (Exception e)
         {
             _logger.LogError(e, $"An error occurred while removing like from postId {postId} by userId {userId}");
+        }
+    }
+
+    /// <summary>
+    ///     Retrieves the count of comments for a post.
+    /// </summary>
+    /// <param name="postId">The ID of the post.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the count of comments.</returns>
+    private async Task GetCommentsCount(Guid postId)
+    {
+        try
+        {
+            CommentCount = await _commentService.CountCommentsInPost(postId);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, $"An error occurred while counting comments for postId {postId}");
+        }
+    }
+
+    /// <summary>
+    ///     Retrieves the list of likes for a post.
+    /// </summary>
+    /// <param name="postId">The ID of the post.</param>
+    /// <returns>
+    ///     A task that represents the asynchronous operation. The task result contains the list of user IDs who liked the
+    ///     post.
+    /// </returns>
+    private async Task GetLikes(Guid postId, Guid userId)
+    {
+        try
+        {
+            var result = await _likeService.GetLikesForPost(postId);
+
+            LikeCount = result.Count;
+            InitLiked = result.Exists(x => x == userId);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, $"An error occurred while retrieving likes for postId {postId}");
         }
     }
 }

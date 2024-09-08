@@ -11,6 +11,58 @@ public class PostVmImpl : SlottyMedia.Backend.ViewModel.Interfaces.IPostVm
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [PostVmImpl](./slottymedia.backend.viewmodel.postvmimpl.md)<br>
 Implements [IPostVm](./slottymedia.backend.viewmodel.interfaces.ipostvm.md)
 
+## Properties
+
+### **CommentCount**
+
+```csharp
+public int CommentCount { get; private set; }
+```
+
+#### Property Value
+
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+### **InitLiked**
+
+```csharp
+public bool InitLiked { get; private set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### **IsLoading**
+
+```csharp
+public bool IsLoading { get; private set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### **LikeCount**
+
+```csharp
+public int LikeCount { get; private set; }
+```
+
+#### Property Value
+
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+### **UserInformation**
+
+```csharp
+public UserInformationDto UserInformation { get; private set; }
+```
+
+#### Property Value
+
+[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+
 ## Constructors
 
 ### **PostVmImpl(IUserService, ILikeService, ICommentService)**
@@ -31,66 +83,10 @@ public PostVmImpl(IUserService userService, ILikeService likeService, ICommentSe
 
 ## Methods
 
-### **GetOwner(Guid)**
+### **Initialize(Guid, Guid)**
 
 ```csharp
-public Task<UserDto> GetOwner(Guid userId)
-```
-
-#### Parameters
-
-`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-
-#### Returns
-
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-
-### **GetCommentsCount(Guid)**
-
-```csharp
-public Task<int> GetCommentsCount(Guid postId)
-```
-
-#### Parameters
-
-`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-
-#### Returns
-
-[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-
-### **GetUserInformation(Guid)**
-
-```csharp
-public Task<UserInformationDto> GetUserInformation(Guid userId)
-```
-
-#### Parameters
-
-`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-
-#### Returns
-
-[Task&lt;UserInformationDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-
-### **GetLikes(Guid)**
-
-```csharp
-public Task<List<Guid>> GetLikes(Guid postId)
-```
-
-#### Parameters
-
-`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-
-#### Returns
-
-[Task&lt;List&lt;Guid&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-
-### **AddLike(Guid, Guid)**
-
-```csharp
-public Task AddLike(Guid postId, Guid userId)
+public Task Initialize(Guid postId, Guid userId)
 ```
 
 #### Parameters
@@ -103,10 +99,10 @@ public Task AddLike(Guid postId, Guid userId)
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **RemoveLike(Guid, Guid)**
+### **LikePost(Guid, Guid)**
 
 ```csharp
-public Task RemoveLike(Guid postId, Guid userId)
+public Task LikePost(Guid postId, Guid userId)
 ```
 
 #### Parameters
@@ -114,6 +110,22 @@ public Task RemoveLike(Guid postId, Guid userId)
 `postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **GetUserInformation(Guid, Boolean)**
+
+```csharp
+public Task GetUserInformation(Guid userId, bool firstRender)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 #### Returns
 

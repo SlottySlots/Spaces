@@ -2,19 +2,19 @@
 @using SlottyMedia.Backend.ViewModel.Interfaces
 @inject NavigationManager NavigationManager;
 
-@if (!_isLoading)
+@if (Dto is not null && PostVm is not null && !PostVm.IsLoading)
 {
     <div class="w-full p-5 grid grid-cols-10 gap-4">
 
         <!-- profile picture -->
         <div @onclick="OnClickAvatar">
-            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
+            <Avatar OpensFileDialog=false Base64Png="@PostVm.UserInformation.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
         </div>
 
         <!-- username & time posted -->
-        <div class="col-span-9 flex flex-col justify-between cursor-pointer" @onclick="() => _navigateToProfile(UserInformationDto.UserId)">
+        <div class="col-span-9 flex flex-col justify-between cursor-pointer" @onclick="() => _navigateToProfile(PostVm.UserInformation.UserId)">
             <h3 class="text-xl font-semibold">
-                @(UserInformationDto.Username)
+                @(PostVm.UserInformation.Username)
             </h3>
             <h3 class="text-sm font-medium text-cadet-gray">
                 @(Dto!.CreatedAt.ToShortTimeString())
@@ -47,16 +47,16 @@
 
                 <!-- number of comments -->
                 <span class="text-cadet-gray">
-                    @_commentCount
+                    @PostVm.CommentCount
                 </span>
 
             </div>
 
             <!-- like button -->
             <div class="flex gap-3 items-center">
-                <LikeButton Initial="@_initLiked" OnClick="LikeClick"/>
+                <LikeButton Initial="@PostVm.InitLiked" OnClick="LikeClick"/>
                 <span class="text-cadet-gray">
-                    @_likeCount
+                    @PostVm.LikeCount
                 </span>
             </div>
 
@@ -66,7 +66,7 @@
 }
 
 
-@if (_isLoading)
+@if (Dto is not null && PostVm is not null && PostVm.IsLoading)
 {
     <div>
         Loading...
@@ -96,15 +96,6 @@
     [Parameter]
     public EventCallback OnPostClick { get; set; }
 
-    private bool _isLoading = true;
-    private int _commentCount;
-    private int _likeCount;
-    private bool _initLiked;
-
-    /// <summary>
-    ///     The user information DTO containing username, description, and profile picture.
-    /// </summary>
-    public UserInformationDto UserInformationDto { get; set; } = new(true);
 
     /// <summary>
     ///     Injected instance of the IPostVm interface.
@@ -115,45 +106,33 @@
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()
     {
-        if (PostVm is null)
+        if (PostVm is null || Dto is null)
         {
             return;
         }
 
-        _isLoading = true;
-        //TODO: This should be changed soon!
-        await SetLikeCountState();
-
-        if (Dto is not null)
-        {
-            _commentCount = await PostVm.GetCommentsCount(Dto.PostId);
-            _isLoading = false;
-        }
+        await PostVm.Initialize(Dto.PostId, Dto.UserId);
     }
 
-    /// <inheritdoc />
     protected override async void OnAfterRender(bool firstRender)
     {
-        if (PostVm is null)
-        {
+        if (PostVm is null || Dto is null)
             return;
+        if (firstRender || PostVm.UserInformation.Username == "Username is loading..")
+        {
+            await PostVm.GetUserInformation(Dto.UserId, firstRender);
+            StateHasChanged(); 
         }
 
-        if ((firstRender || UserInformationDto.Username == "Username is loading..") && Dto != null)
-        {
-            var userInfo = await PostVm.GetUserInformation(Dto!.UserId);
-            UserInformationDto = userInfo;
-            _isLoading = false;
-            StateHasChanged();
-        }
     }
+
 
     /// <summary>
     ///     Handles the click event on the avatar, navigating to the user's profile page.
     /// </summary>
     private void OnClickAvatar()
     {
-        NavigationManager.NavigateTo($"/profile/{UserInformationDto.UserId.ToString()}");
+        NavigationManager.NavigateTo($"/profile/{CurrentUserId.ToString()}");
     }
 
     private void _navigateToProfile(Guid? userId)
@@ -162,49 +141,15 @@
     }
 
     /// <summary>
-    ///     Sets the like count state by retrieving the list of likes for the post.
-    /// </summary>
-    public async Task SetLikeCountState()
-    {
-        if (PostVm is null)
-        {
-            return;
-        }
-
-        var likeList = await PostVm.GetLikes(Dto!.PostId);
-        if (likeList is not null)
-        {
-            _likeCount = likeList.Count;
-            _initLiked = likeList.Contains(CurrentUserId);
-        }
-        else
-        {
-            _likeCount = 0;
-            _initLiked = false;
-        }
-    }
-
-    /// <summary>
     ///     Handles the click event on the like button, adding or removing a like based on the current state.
     /// </summary>
-    /// <param name="wasUnliked">Indicates whether the post was unliked.</param>
-    public async void LikeClick(bool wasUnliked)
+    public async void LikeClick()
     {
         if (PostVm is null)
         {
             return;
         }
 
-        if (wasUnliked)
-        {
-            await PostVm.RemoveLike(CurrentUserId, Dto!.PostId);
-        }
-        else
-        {
-            await PostVm.AddLike(CurrentUserId, Dto!.PostId);
-        }
-
-        await SetLikeCountState();
-        StateHasChanged();
+        await PostVm.LikePost(Dto.PostId, CurrentUserId);
     }
 }

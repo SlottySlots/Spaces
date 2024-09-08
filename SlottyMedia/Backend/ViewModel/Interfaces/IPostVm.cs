@@ -8,49 +8,51 @@ namespace SlottyMedia.Backend.ViewModel.Interfaces;
 public interface IPostVm
 {
     /// <summary>
-    ///     Retrieves the owner of a post by user ID.
+    ///     Gets the count of comments on the post.
     /// </summary>
-    /// <param name="userId">The ID of the user.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the user DTO.</returns>
-    Task<UserDto> GetOwner(Guid userId);
+    int CommentCount { get; }
 
     /// <summary>
-    ///     Retrieves the count of comments for a post.
+    ///     Gets a value indicating whether the post was initially liked by the user.
     /// </summary>
-    /// <param name="postId">The ID of the post.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the count of comments.</returns>
-    Task<int> GetCommentsCount(Guid postId);
+    bool InitLiked { get; }
 
     /// <summary>
-    ///     Retrieves user information by user ID.
+    ///     Gets a value indicating whether the post view model is currently loading.
     /// </summary>
-    /// <param name="userId">The ID of the user.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the user information DTO.</returns>
-    Task<UserInformationDto> GetUserInformation(Guid userId);
+    bool IsLoading { get; }
 
     /// <summary>
-    ///     Retrieves the list of likes for a post.
+    ///     Gets the count of likes on the post.
     /// </summary>
-    /// <param name="postId">The ID of the post.</param>
-    /// <returns>
-    ///     A task that represents the asynchronous operation. The task result contains the list of user IDs who liked the
-    ///     post.
-    /// </returns>
-    Task<List<Guid>?> GetLikes(Guid postId);
+    int LikeCount { get; }
 
     /// <summary>
-    ///     Adds a like to a post by a user.
+    ///     Gets the user information associated with the post.
+    /// </summary>
+    UserInformationDto UserInformation { get; }
+
+    /// <summary>
+    ///     Initializes the post view model.
     /// </summary>
     /// <param name="postId">The ID of the post.</param>
     /// <param name="userId">The ID of the user.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    Task AddLike(Guid postId, Guid userId);
+    Task Initialize(Guid postId, Guid userId);
 
     /// <summary>
-    ///     Removes a like from a post by a user.
+    ///     Likes a post by a user.
     /// </summary>
     /// <param name="postId">The ID of the post.</param>
     /// <param name="userId">The ID of the user.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    Task RemoveLike(Guid postId, Guid userId);
+    Task LikePost(Guid postId, Guid userId);
+
+    /// <summary>
+    ///     Retrieves user information.
+    /// </summary>
+    /// <param name="userId">The ID of the user.</param>
+    /// <param name="firstRender">Indicates if this is the first render.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    Task GetUserInformation(Guid userId, bool firstRender);
 }

@@ -8,87 +8,76 @@ The interface for post view model implementation.
 public interface IPostVm
 ```
 
+## Properties
+
+### **CommentCount**
+
+Gets the count of comments on the post.
+
+```csharp
+public abstract int CommentCount { get; }
+```
+
+#### Property Value
+
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+### **InitLiked**
+
+Gets a value indicating whether the post was initially liked by the user.
+
+```csharp
+public abstract bool InitLiked { get; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### **IsLoading**
+
+Gets a value indicating whether the post view model is currently loading.
+
+```csharp
+public abstract bool IsLoading { get; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### **LikeCount**
+
+Gets the count of likes on the post.
+
+```csharp
+public abstract int LikeCount { get; }
+```
+
+#### Property Value
+
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+### **UserInformation**
+
+Gets the user information associated with the post.
+
+```csharp
+public abstract UserInformationDto UserInformation { get; }
+```
+
+#### Property Value
+
+[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+
 ## Methods
 
-### **GetOwner(Guid)**
+### **Initialize(Guid, Guid)**
 
-Retrieves the owner of a post by user ID.
-
-```csharp
-Task<UserDto> GetOwner(Guid userId)
-```
-
-#### Parameters
-
-`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The ID of the user.
-
-#### Returns
-
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains the user DTO.
-
-### **GetCommentsCount(Guid)**
-
-Retrieves the count of comments for a post.
+Initializes the post view model.
 
 ```csharp
-Task<int> GetCommentsCount(Guid postId)
-```
-
-#### Parameters
-
-`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The ID of the post.
-
-#### Returns
-
-[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains the count of comments.
-
-### **GetUserInformation(Guid)**
-
-Retrieves user information by user ID.
-
-```csharp
-Task<UserInformationDto> GetUserInformation(Guid userId)
-```
-
-#### Parameters
-
-`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The ID of the user.
-
-#### Returns
-
-[Task&lt;UserInformationDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains the user information DTO.
-
-### **GetLikes(Guid)**
-
-Retrieves the list of likes for a post.
-
-```csharp
-Task<List<Guid>> GetLikes(Guid postId)
-```
-
-#### Parameters
-
-`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The ID of the post.
-
-#### Returns
-
-[Task&lt;List&lt;Guid&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains the list of user IDs who liked the
- post.
-
-### **AddLike(Guid, Guid)**
-
-Adds a like to a post by a user.
-
-```csharp
-Task AddLike(Guid postId, Guid userId)
+Task Initialize(Guid postId, Guid userId)
 ```
 
 #### Parameters
@@ -104,12 +93,12 @@ The ID of the user.
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 A task that represents the asynchronous operation.
 
-### **RemoveLike(Guid, Guid)**
+### **LikePost(Guid, Guid)**
 
-Removes a like from a post by a user.
+Likes a post by a user.
 
 ```csharp
-Task RemoveLike(Guid postId, Guid userId)
+Task LikePost(Guid postId, Guid userId)
 ```
 
 #### Parameters
@@ -119,6 +108,27 @@ The ID of the post.
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 The ID of the user.
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+A task that represents the asynchronous operation.
+
+### **GetUserInformation(Guid, Boolean)**
+
+Retrieves user information.
+
+```csharp
+Task GetUserInformation(Guid userId, bool firstRender)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the user.
+
+`firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Indicates if this is the first render.
 
 #### Returns
 

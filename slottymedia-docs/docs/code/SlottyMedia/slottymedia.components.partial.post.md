@@ -49,18 +49,6 @@ public EventCallback OnPostClick { get; set; }
 
 EventCallback<br>
 
-### **UserInformationDto**
-
-The user information DTO containing username, description, and profile picture.
-
-```csharp
-public UserInformationDto UserInformationDto { get; set; }
-```
-
-#### Property Value
-
-[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
-
 ### **PostVm**
 
 Injected instance of the IPostVm interface.
@@ -113,27 +101,10 @@ protected void OnAfterRender(bool firstRender)
 
 `firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **SetLikeCountState()**
-
-Sets the like count state by retrieving the list of likes for the post.
-
-```csharp
-public Task SetLikeCountState()
-```
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
-### **LikeClick(Boolean)**
+### **LikeClick()**
 
 Handles the click event on the like button, adding or removing a like based on the current state.
 
 ```csharp
-public void LikeClick(bool wasUnliked)
+public void LikeClick()
 ```
-
-#### Parameters
-
-`wasUnliked` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-Indicates whether the post was unliked.
