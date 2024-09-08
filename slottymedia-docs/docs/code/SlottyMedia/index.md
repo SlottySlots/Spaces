@@ -118,6 +118,8 @@
 
 [CommentSubmissionFormVmImpl](./slottymedia.backend.viewmodel.commentsubmissionformvmimpl.md)
 
+[CommentVmImpl](./slottymedia.backend.viewmodel.commentvmimpl.md)
+
 [DescriptionContainerVmImpl](./slottymedia.backend.viewmodel.descriptioncontainervmimpl.md)
 
 [HomePageVmImpl](./slottymedia.backend.viewmodel.homepagevmimpl.md)
@@ -147,6 +149,8 @@
 [IAuthVm](./slottymedia.backend.viewmodel.interfaces.iauthvm.md)
 
 [ICommentSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.icommentsubmissionformvm.md)
+
+[ICommentVm](./slottymedia.backend.viewmodel.interfaces.icommentvm.md)
 
 [IDescriptionContainerVm](./slottymedia.backend.viewmodel.interfaces.idescriptioncontainervm.md)
 

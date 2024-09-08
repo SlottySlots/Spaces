@@ -23,18 +23,6 @@ public CommentDto Dto { get; set; }
 
 [CommentDto](./slottymedia.backend.dtos.commentdto.md)<br>
 
-### **UserInformationDto**
-
-The user information data transfer object to be rendered.
-
-```csharp
-public UserInformationDto UserInformationDto { get; set; }
-```
-
-#### Property Value
-
-[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
-
 ## Constructors
 
 ### **Comment()**
