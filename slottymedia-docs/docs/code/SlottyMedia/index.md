@@ -70,6 +70,12 @@
 
 [EmailAlreadyExistsException](./slottymedia.backend.exceptions.signup.emailalreadyexistsexception.md)
 
+[IllegalCharsInUsernameException](./slottymedia.backend.exceptions.signup.illegalcharsinusernameexception.md)
+
+[IllegalUsernameLengthException](./slottymedia.backend.exceptions.signup.illegalusernamelengthexception.md)
+
+[PasswordTooShortException](./slottymedia.backend.exceptions.signup.passwordtooshortexception.md)
+
 [UsernameAlreadyExistsException](./slottymedia.backend.exceptions.signup.usernamealreadyexistsexception.md)
 
 ## SlottyMedia.Backend.Services
@@ -214,8 +220,6 @@
 
 [Checkbox](./slottymedia.components.partial.checkbox.md)
 
-[Comment](./slottymedia.components.partial.comment.md)
-
 [DescriptionContainer](./slottymedia.components.partial.descriptioncontainer.md)
 
 [HotButton](./slottymedia.components.partial.hotbutton.md)
@@ -247,5 +251,7 @@
 [SpacesCardNoAccount](./slottymedia.components.partial.mainlayout.spacescardnoaccount.md)
 
 ## SlottyMedia.Components.Partial.PostPage
+
+[Comment](./slottymedia.components.partial.postpage.comment.md)
 
 [CommentSubmissionForm](./slottymedia.components.partial.postpage.commentsubmissionform.md)

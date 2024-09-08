@@ -36,12 +36,12 @@ Thrown when the user is not found.
 [UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
 Thrown when a general error occurs.
 
-### **CheckIfUserExistsByUserName(String)**
+### **ExistsByUserName(String)**
 
-Fetches a user by their username. Returns null if no user was found.
+Checks if a user with the given username exists.
 
 ```csharp
-Task<bool> CheckIfUserExistsByUserName(string username)
+Task<bool> ExistsByUserName(string username)
 ```
 
 #### Parameters
@@ -52,12 +52,7 @@ The user's username
 #### Returns
 
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-The queried user or null if no such user was found
-
-#### Exceptions
-
-[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
-Thrown when a general error occurs.
+Whether a user with the given username exists
 
 ### **CreateUser(String, String, String, Guid, String, String)**
 

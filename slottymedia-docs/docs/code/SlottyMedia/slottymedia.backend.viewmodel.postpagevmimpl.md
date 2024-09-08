@@ -51,25 +51,15 @@ public IPage<CommentDto> Comments { get; private set; }
 
 IPage&lt;CommentDto&gt;<br>
 
-### **CurrentUserId**
+### **AuthPrincipalId**
 
 ```csharp
-public Guid CurrentUserId { get; private set; }
+public Nullable<Guid> AuthPrincipalId { get; private set; }
 ```
 
 #### Property Value
 
-[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-
-### **IsAuthenticated**
-
-```csharp
-public bool IsAuthenticated { get; private set; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
 ## Constructors
 

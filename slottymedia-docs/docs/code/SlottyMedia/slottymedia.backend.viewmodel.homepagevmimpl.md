@@ -11,6 +11,16 @@ Implements [IHomePageVm](./slottymedia.backend.viewmodel.interfaces.ihomepagevm.
 
 ## Properties
 
+### **AuthPrincipalId**
+
+```csharp
+public Nullable<Guid> AuthPrincipalId { get; private set; }
+```
+
+#### Property Value
+
+[Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+
 ### **IsLoadingPage**
 
 ```csharp
@@ -30,26 +40,6 @@ public IPage<PostDto> Page { get; private set; }
 #### Property Value
 
 IPage&lt;PostDto&gt;<br>
-
-### **CurrentUserId**
-
-```csharp
-public Guid CurrentUserId { get; private set; }
-```
-
-#### Property Value
-
-[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-
-### **IsAuthenticated**
-
-```csharp
-public bool IsAuthenticated { get; private set; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ## Constructors
 
