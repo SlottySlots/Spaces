@@ -6,9 +6,8 @@ using Client = Supabase.Client;
 
 namespace SlottyMedia.Backend.Services;
 
-/// <summary>
-///     This service is used to authenticate users
-/// </summary>
+
+/// <inheritdoc />
 public class AuthService : IAuthService
 {
     private static readonly Logging<AuthService> Logger = new();
@@ -32,34 +31,7 @@ public class AuthService : IAuthService
         _cookieService = cookieService;
     }
 
-    /// <summary>
-    ///     This method is used to sign up the user. And save the session by using SaveSessionAsync. This will set cookies.
-    /// </summary>
-    /// <param name="email">
-    ///     Email of the user
-    /// </param>
-    /// <param name="password">
-    ///     Password of the user
-    /// </param>
-    /// <returns></returns>
-    public async Task<Session?> SignUp(string email, string password)
-    {
-        Logger.LogDebug($"Signing up user with email: {email}");
-        var session = await _supabaseClient.Auth.SignUp(email, password);
-        if (session != null) await SaveSessionAsync(session);
-        return session;
-    }
-
-    /// <summary>
-    ///     This method is used to sign in the user. And save the session by using SaveSessionAsync. This will set cookies.
-    /// </summary>
-    /// <param name="email">
-    ///     Email of the user
-    /// </param>
-    /// <param name="password">
-    ///     Password of the user
-    /// </param>
-    /// <returns></returns>
+    /// <inheritdoc />
     public async Task<Session?> SignIn(string email, string password)
     {
         Logger.LogDebug($"Signing in user with email: {email}");
@@ -68,12 +40,7 @@ public class AuthService : IAuthService
         return session;
     }
 
-    /// <summary>
-    ///     Used to save cookies of a specific session
-    /// </summary>
-    /// <param name="session">
-    ///     Provides the session information, f.e. accessToken / refreshToken
-    /// </param>
+    /// <inheritdoc />
     public async Task SaveSessionAsync(Session session)
     {
         Logger.LogDebug("Saving session");
@@ -88,12 +55,7 @@ public class AuthService : IAuthService
         }
     }
 
-    /// <summary>
-    ///     Restores a session by cookies, if they exist
-    /// </summary>
-    /// <returns>
-    ///     A session (might be the same as previously called, but can change if accessToken cookie is expired)
-    /// </returns>
+    /// <inheritdoc />
     public async Task<Session?> RestoreSessionAsync()
     {
         Logger.LogDebug("Restoring session");
@@ -120,18 +82,7 @@ public class AuthService : IAuthService
         return null;
     }
 
-    /// <summary>
-    ///     Sets a session on the server-side via supabase client
-    /// </summary>
-    /// <param name="accessToken">
-    ///     Provided AccessToken
-    /// </param>
-    /// <param name="refreshToken">
-    ///     Provided RefreshToken
-    /// </param>
-    /// <returns>
-    ///     Returns the Session set, by AccessToken and RefreshToken
-    /// </returns>
+    /// <inheritdoc />
     public async Task<Session?> SetSession(string accessToken, string refreshToken)
     {
         Logger.LogDebug("Setting session");
@@ -139,9 +90,7 @@ public class AuthService : IAuthService
         return session;
     }
 
-    /// <summary>
-    ///     This method is used to sign out the user. It also removes cookies
-    /// </summary>
+    /// <inheritdoc />
     public async Task SignOut()
     {
         Logger.LogDebug("Signing out");
@@ -150,18 +99,7 @@ public class AuthService : IAuthService
         await _cookieService.RemoveCookie("supabase.auth.refreshToken");
     }
 
-    /// <summary>
-    ///     Sets a session but forces to refresh a new accessToken, and thus a new session
-    /// </summary>
-    /// <param name="accessToken">
-    ///     Provided AccessToken
-    /// </param>
-    /// <param name="refreshToken">
-    ///     Provided RefreshToken
-    /// </param>
-    /// <returns>
-    ///     Returns the session
-    /// </returns>
+    /// <inheritdoc />
     public async Task<Session?> RefreshSession(string accessToken, string refreshToken)
     {
         Logger.LogDebug("Refreshing session");
@@ -169,33 +107,32 @@ public class AuthService : IAuthService
         return session;
     }
 
-    /// <summary>
-    ///     This method is used to check if the user is authenticated.
-    /// </summary>
-    /// <returns></returns>
+    /// <inheritdoc />
     public bool IsAuthenticated()
     {
         Logger.LogDebug("Checking if user is authenticated");
         return _supabaseClient.Auth.CurrentSession != null;
     }
 
-    /// <summary>
-    ///     Gets current user set on server side
-    /// </summary>
-    /// <returns>
-    ///     Returns the session set on server side
-    /// </returns>
-    public virtual Session? GetCurrentSession()
+    /// <inheritdoc />
+    public Session? GetCurrentSession()
     {
         Logger.LogDebug("Getting current session");
         var session = _supabaseClient.Auth.CurrentSession;
         return session;
     }
 
+    /// <inheritdoc />
+    public Guid? GetAuthPrincipalId()
+    {
+        var principalIdStr = GetCurrentSession()?.User?.Id;
+        return principalIdStr is null ? null : Guid.Parse(principalIdStr);
+    }
+
     /// <summary>
     ///     This restores the session on initialization of the page.
     /// </summary>
-    public virtual async Task<Session?> RestoreSessionOnInit()
+    public async Task<Session?> RestoreSessionOnInit()
     {
         if (GetCurrentSession() == null)
             try
