@@ -40,7 +40,7 @@ public class PostVmImplTests
         _mockCommentService.Setup(s => s.CountCommentsInPost(postId)).ReturnsAsync(5);
         _mockLikeService.Setup(s => s.GetLikesForPost(postId)).ReturnsAsync(new List<Guid> { userId });
 
-        await _postVm.Initialize(postId, userId, Guid.NewGuid());
+        await _postVm.Initialize(postId, Guid.NewGuid(), userId);
 
         Assert.That(_postVm.IsLoading, Is.False);
         Assert.That(_postVm.CommentCount, Is.EqualTo(5));
@@ -120,7 +120,7 @@ public class PostVmImplTests
         var likes = new List<Guid> { userId };
         _mockLikeService.Setup(s => s.GetLikesForPost(postId)).ReturnsAsync(likes);
 
-        await _postVm.Initialize(postId, userId, Guid.NewGuid());
+        await _postVm.Initialize(postId, Guid.NewGuid(), userId);
 
         Assert.That(_postVm.LikeCount, Is.EqualTo(1));
         Assert.That(_postVm.InitLiked, Is.True);

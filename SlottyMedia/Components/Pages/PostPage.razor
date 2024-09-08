@@ -1,7 +1,7 @@
 @page "/post/{PostId:guid}"
 @using SlottyMedia.Backend.ViewModel.Interfaces
 @using SlottyMedia.Components.Partial.PostPage
-@inject IAuthVm AuthService
+
 
 
 <PageTitle>Slotty Media | Post</PageTitle>
@@ -18,15 +18,15 @@ else if (ViewModel.Post is null)
 else
 {
     <!-- the post -->
-    <Post Dto="ViewModel.Post" CurrentUserId="_currentUserId"/>
+    <Post Dto="ViewModel.Post" CurrentUserId="ViewModel.CurrentUserId"/>
 
     <!-- comment section -->
     <div class="w-full pb-5 flex flex-col items-center gap-3">
 
         <!-- comment submission form (if user is logged in) -->
-        @if (AuthService.IsAuthenticated())
+        @if (ViewModel.IsAuthenticated)
         {
-            <CommentSubmissionForm PostId="@PostId" UserId="_currentUserId"/>
+            <CommentSubmissionForm PostId="@PostId" UserId="ViewModel.CurrentUserId"/>
         }
 
         <!-- all comments that were loaded -->
@@ -53,17 +53,7 @@ else
     [Inject]
     [SupplyParameterFromForm]
     public IPostPageVm? ViewModel { get; set; }
-
-    Guid _currentUserId;
-
-    /// <inheritdoc />
-    protected override Task OnInitializedAsync()
-    {
-        var currentSession = AuthService.GetCurrentSession();
-        _currentUserId = Guid.Parse(currentSession!.User!.Id!);
-        return Task.CompletedTask;
-    }
-
+    
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()
     {

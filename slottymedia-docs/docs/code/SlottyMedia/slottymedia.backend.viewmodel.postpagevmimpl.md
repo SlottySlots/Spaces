@@ -51,14 +51,34 @@ public IPage<CommentDto> Comments { get; private set; }
 
 IPage&lt;CommentDto&gt;<br>
 
+### **CurrentUserId**
+
+```csharp
+public Guid CurrentUserId { get; private set; }
+```
+
+#### Property Value
+
+[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+### **IsAuthenticated**
+
+```csharp
+public bool IsAuthenticated { get; private set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ## Constructors
 
-### **PostPageVmImpl(IPostService, ICommentService)**
+### **PostPageVmImpl(IPostService, ICommentService, IAuthService)**
 
 Instantiates this VM
 
 ```csharp
-public PostPageVmImpl(IPostService postService, ICommentService commentService)
+public PostPageVmImpl(IPostService postService, ICommentService commentService, IAuthService authService)
 ```
 
 #### Parameters
@@ -66,6 +86,8 @@ public PostPageVmImpl(IPostService postService, ICommentService commentService)
 `postService` [IPostService](./slottymedia.backend.services.interfaces.ipostservice.md)<br>
 
 `commentService` [ICommentService](./slottymedia.backend.services.interfaces.icommentservice.md)<br>
+
+`authService` [IAuthService](./slottymedia.backend.services.interfaces.iauthservice.md)<br>
 
 ## Methods
 

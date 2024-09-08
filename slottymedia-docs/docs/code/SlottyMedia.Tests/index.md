@@ -30,8 +30,6 @@
 
 ## SlottyMedia.Tests.Viewmodel
 
-[AuthVmTests](./slottymedia.tests.viewmodel.authvmtests.md)
-
 [CommentSubmissionFormVmImplTests](./slottymedia.tests.viewmodel.commentsubmissionformvmimpltests.md)
 
 [HomePageVmImplTests](./slottymedia.tests.viewmodel.homepagevmimpltests.md)
@@ -49,8 +47,6 @@
 [SpacesCardVmImplTests](./slottymedia.tests.viewmodel.spacescardvmimpltests.md)
 
 [SpacesVmImplTest](./slottymedia.tests.viewmodel.spacesvmimpltest.md)
-
-[UserVmImplTest](./slottymedia.tests.viewmodel.uservmimpltest.md)
 
 ## SlottyMedia.Tests.Viewmodel.auth
 

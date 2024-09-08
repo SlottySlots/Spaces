@@ -31,19 +31,41 @@ public IPage<PostDto> Page { get; private set; }
 
 IPage&lt;PostDto&gt;<br>
 
+### **CurrentUserId**
+
+```csharp
+public Guid CurrentUserId { get; private set; }
+```
+
+#### Property Value
+
+[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+### **IsAuthenticated**
+
+```csharp
+public bool IsAuthenticated { get; private set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ## Constructors
 
-### **HomePageVmImpl(IPostService)**
+### **HomePageVmImpl(IPostService, IAuthService)**
 
 Instantiates this class
 
 ```csharp
-public HomePageVmImpl(IPostService postService)
+public HomePageVmImpl(IPostService postService, IAuthService authService)
 ```
 
 #### Parameters
 
 `postService` [IPostService](./slottymedia.backend.services.interfaces.ipostservice.md)<br>
+
+`authService` [IAuthService](./slottymedia.backend.services.interfaces.iauthservice.md)<br>
 
 ## Methods
 

@@ -114,8 +114,6 @@
 
 ## SlottyMedia.Backend.ViewModel
 
-[AuthVm](./slottymedia.backend.viewmodel.authvm.md)
-
 [CommentSubmissionFormVmImpl](./slottymedia.backend.viewmodel.commentsubmissionformvmimpl.md)
 
 [CommentVmImpl](./slottymedia.backend.viewmodel.commentvmimpl.md)
@@ -142,11 +140,7 @@
 
 [SpacesVmImpl](./slottymedia.backend.viewmodel.spacesvmimpl.md)
 
-[UserVm](./slottymedia.backend.viewmodel.uservm.md)
-
 ## SlottyMedia.Backend.ViewModel.Interfaces
-
-[IAuthVm](./slottymedia.backend.viewmodel.interfaces.iauthvm.md)
 
 [ICommentSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.icommentsubmissionformvm.md)
 
@@ -173,8 +167,6 @@
 [ISpacesCardVm](./slottymedia.backend.viewmodel.interfaces.ispacescardvm.md)
 
 [ISpacesVm](./slottymedia.backend.viewmodel.interfaces.ispacesvm.md)
-
-[IUserVm](./slottymedia.backend.viewmodel.interfaces.iuservm.md)
 
 ## SlottyMedia.Components
 

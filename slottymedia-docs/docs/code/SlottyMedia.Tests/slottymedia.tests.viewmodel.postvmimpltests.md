@@ -2,6 +2,8 @@
 
 Namespace: SlottyMedia.Tests.Viewmodel
 
+Unit tests for the PostVmImpl class.
+
 ```csharp
 public class PostVmImplTests
 ```
@@ -20,11 +22,15 @@ public PostVmImplTests()
 
 ### **SetUp()**
 
+Sets up the test environment before each test.
+
 ```csharp
 public void SetUp()
 ```
 
 ### **Initialize_LoadsAllPostRelatedInformation()**
+
+Tests that Initialize method loads all post-related information.
 
 ```csharp
 public Task Initialize_LoadsAllPostRelatedInformation()
@@ -36,6 +42,8 @@ public Task Initialize_LoadsAllPostRelatedInformation()
 
 ### **LikePost_AddsLikeWhenNotPreviouslyLiked()**
 
+Tests that LikePost method adds a like when the post was not previously liked.
+
 ```csharp
 public Task LikePost_AddsLikeWhenNotPreviouslyLiked()
 ```
@@ -45,6 +53,8 @@ public Task LikePost_AddsLikeWhenNotPreviouslyLiked()
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **LikePost_RemovesLikeWhenPreviouslyLiked()**
+
+Tests that LikePost method removes a like when the post was previously liked.
 
 ```csharp
 public Task LikePost_RemovesLikeWhenPreviouslyLiked()
@@ -56,6 +66,8 @@ public Task LikePost_RemovesLikeWhenPreviouslyLiked()
 
 ### **GetUserInformation_SetsUserInformation()**
 
+Tests that GetUserInformation method sets the user information.
+
 ```csharp
 public Task GetUserInformation_SetsUserInformation()
 ```
@@ -66,6 +78,8 @@ public Task GetUserInformation_SetsUserInformation()
 
 ### **GetCommentsCount_SetsCommentCount()**
 
+Tests that GetCommentsCount method sets the comment count.
+
 ```csharp
 public Task GetCommentsCount_SetsCommentCount()
 ```
@@ -75,6 +89,8 @@ public Task GetCommentsCount_SetsCommentCount()
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **GetLikes_SetsLikeCountAndInitLiked()**
+
+Tests that GetLikes method sets the like count and initializes the liked state.
 
 ```csharp
 public Task GetLikes_SetsLikeCountAndInitLiked()

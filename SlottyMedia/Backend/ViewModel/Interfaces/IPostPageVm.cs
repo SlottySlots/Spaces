@@ -32,4 +32,16 @@ public interface IPostPageVm
     ///     Attempts to load more comments than were already showcased. Does nothing if no further comments exist.
     /// </summary>
     Task LoadCommentsPage(int pageNumber);
+    
+    /// <summary>
+    /// The ID of the currently logged in user.
+    /// </summary>
+    Guid CurrentUserId { get; }
+    
+    /// <summary>
+    /// True if the user is authenticated, false otherwise.
+    /// </summary>
+    public bool IsAuthenticated {get;}
+    
+    
 }

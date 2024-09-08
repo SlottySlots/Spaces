@@ -25,4 +25,14 @@ public interface IHomePageVm
     ///     Loads more posts to the view. Does nothing if all posts have already been fetched.
     /// </summary>
     Task LoadPage(int pageNumber);
+    
+    /// <summary>
+    /// The ID of the currently logged in user.
+    /// </summary>
+    public Guid CurrentUserId { get; }
+    
+    /// <summary>
+    /// True if the user is authenticated, false otherwise.
+    /// </summary>
+    public bool IsAuthenticated { get; }
 }
