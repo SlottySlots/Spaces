@@ -93,6 +93,8 @@ protected Task OnParametersSetAsync()
 
 ### **OnAfterRender(Boolean)**
 
+This method is called after the component has been rendered.
+
 ```csharp
 protected void OnAfterRender(bool firstRender)
 ```

@@ -23,29 +23,17 @@ public string DescriptionText { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **UserVm**
+### **UserId**
 
-Service for user-related operations.
+The user id to update the description text.
 
 ```csharp
-public IUserVm UserVm { get; private set; }
+public Nullable<Guid> UserId { get; set; }
 ```
 
 #### Property Value
 
-[IUserVm](./slottymedia.backend.viewmodel.interfaces.iuservm.md)<br>
-
-### **AuthVm**
-
-Service for authentication-related operations.
-
-```csharp
-public IAuthVm AuthVm { get; set; }
-```
-
-#### Property Value
-
-[IAuthVm](./slottymedia.backend.viewmodel.interfaces.iauthvm.md)<br>
+[Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
 ## Constructors
 

@@ -1,5 +1,6 @@
 @using SlottyMedia.Backend.ViewModel.Interfaces
-@if (_showDescriptionText)
+
+@if (DescriptionContainerVm is not null && DescriptionContainerVm.ShowDescriptionText)    
 {
     <h3 class="text-sm font-medium text-center text-cadet-gray w-fit" @onclick="SubmitDescriptionText">
         @DescriptionText
@@ -28,58 +29,35 @@ else
     /// </summary>
     [Parameter]
     public string? DescriptionText { get; set; }
-
+    
     /// <summary>
-    ///     Service for user-related operations.
+    ///    The user id to update the description text.
     /// </summary>
-    [Inject]
-    public IUserVm? UserVm { get; private set; }
-
+    [Parameter]
+    public Guid? UserId { get; set; }
+    
     /// <summary>
-    ///     Service for authentication-related operations.
+    /// The Vm to handle the description text.
     /// </summary>
-    [Inject]
-    public IAuthVm? AuthVm { get; set; }
-
-    /// <summary>
-    ///     Flag to determine whether to show the description text or the input field.
-    /// </summary>
-    private bool _showDescriptionText = true;
-
-    /// <summary>
-    ///     Submits the description text. If the user is authenticated and the description text is valid,
-    ///     it updates the user's description.
-    /// </summary>
-    private async void SubmitDescriptionText()
-    {
-        if (AuthVm is null || UserVm is null)
-        {
-            return;
-        }
-
-        var idOfUser = AuthVm.GetCurrentUserId();
-        if (idOfUser != Guid.Empty)
-        {
-            _showDescriptionText = !_showDescriptionText;
-            var userDao = await UserVm.GetUserById(idOfUser);
-            if (DescriptionText != userDao.Description)
-            {
-                if (DescriptionText is not null && DescriptionText.Length < 200)
-                {
-                    // TODO: Show error message and prevent submission
-                    userDao.Description = DescriptionText;
-                    await UserVm.UpdateUser(userDao);
-                }
-            }
-        }
-    }
+    [Inject] private IDescriptionContainerVm? DescriptionContainerVm { get; set; }
 
     /// <summary>
     ///     Handles the enter key click event to submit the description text.
     /// </summary>
-    private void HandleEnterClick()
+    private async Task HandleEnterClick()
     {
-        SubmitDescriptionText();
+        if (DescriptionContainerVm is not null)
+        {
+            await DescriptionContainerVm.SubmitDescriptionAsync(DescriptionText, UserId);
+        }
+    }
+    
+    private async Task SubmitDescriptionText()
+    {
+        if (DescriptionContainerVm is not null)
+        {
+            await DescriptionContainerVm.SubmitDescriptionAsync(DescriptionText, UserId);
+        }
     }
 
 }

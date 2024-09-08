@@ -112,7 +112,7 @@ try
     builder.Services.AddScoped<IPostPageVm, PostPageVmImpl>();
     builder.Services.AddScoped<ICommentSubmissionFormVm, CommentSubmissionFormVmImpl>();
     builder.Services.AddTransient<IPostVm, PostVmImpl>();
-    builder.Services.AddScoped<Func<IPostVm>>(provider => () => provider.GetRequiredService<IPostVm>());
+    builder.Services.AddScoped<IDescriptionContainerVm, DescriptionContainerVmImpl>();
 
 
     var app = builder.Build();
