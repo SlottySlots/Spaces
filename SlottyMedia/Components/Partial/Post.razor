@@ -111,7 +111,7 @@
             return;
         }
 
-        await PostVm.Initialize(Dto.PostId, Dto.UserId);
+        await PostVm.Initialize(Dto.PostId, Dto.UserId, CurrentUserId);
     }
 
     /// <summary>

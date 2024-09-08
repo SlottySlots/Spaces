@@ -44,13 +44,13 @@ public class PostVmImpl : IPostVm
     public UserInformationDto UserInformation { get; private set; } = new(true);
 
     /// <inheritdoc />
-    public async Task Initialize(Guid postId, Guid userId)
+    public async Task Initialize(Guid postId, Guid userId, Guid currentUserId)
     {
         IsLoading = true;
         _logger.LogInfo("PostVmImpl: Loading necessary post-related information...");
         await GetCommentsCount(postId);
         //  await GetUserInformation(userId);
-        await GetLikes(postId, userId);
+        await GetLikes(postId, currentUserId);
         _logger.LogInfo("PostVmImpl: Successfully loaded all post-related information");
         IsLoading = false;
     }

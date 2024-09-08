@@ -37,8 +37,9 @@ public interface IPostVm
     /// </summary>
     /// <param name="postId">The ID of the post.</param>
     /// <param name="userId">The ID of the user.</param>
+    /// <param name="currentUserId">The ID of the user who is logged in</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    Task Initialize(Guid postId, Guid userId);
+    Task Initialize(Guid postId, Guid userId, Guid currentUserId);
 
     /// <summary>
     ///     Likes a post by a user.

@@ -86,10 +86,10 @@ Service for comment-related operations
 
 ## Methods
 
-### **Initialize(Guid, Guid)**
+### **Initialize(Guid, Guid, Guid)**
 
 ```csharp
-public Task Initialize(Guid postId, Guid userId)
+public Task Initialize(Guid postId, Guid userId, Guid currentUserId)
 ```
 
 #### Parameters
@@ -97,6 +97,8 @@ public Task Initialize(Guid postId, Guid userId)
 `postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`currentUserId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 #### Returns
 

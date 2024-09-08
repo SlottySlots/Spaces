@@ -72,12 +72,12 @@ public abstract UserInformationDto UserInformation { get; }
 
 ## Methods
 
-### **Initialize(Guid, Guid)**
+### **Initialize(Guid, Guid, Guid)**
 
 Initializes the post view model.
 
 ```csharp
-Task Initialize(Guid postId, Guid userId)
+Task Initialize(Guid postId, Guid userId, Guid currentUserId)
 ```
 
 #### Parameters
@@ -87,6 +87,9 @@ The ID of the post.
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 The ID of the user.
+
+`currentUserId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the user who is logged in
 
 #### Returns
 
