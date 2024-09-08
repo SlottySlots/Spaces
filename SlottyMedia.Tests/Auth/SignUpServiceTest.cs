@@ -25,7 +25,6 @@ public class SignUpServiceTest
         _client = InitializeSupabaseClient.GetSupabaseClient();
         _cookieServiceMock = new Mock<ICookieService>();
         _roleRepositoryMock = new Mock<IRoleRepository>();
-        var postService = new Mock<IPostService>();
         _userServiceMock = new Mock<IUserService>();
         _signupService = new SignupServiceImpl(_client, _userServiceMock.Object, _cookieServiceMock.Object,
             _roleRepositoryMock.Object);
@@ -99,8 +98,6 @@ public class SignUpServiceTest
         roleDao.RoleId = Guid.NewGuid();
         roleDao.RoleName = "user";
         roleDao.Description = "user";
-
-        var user = new UserDao(Guid.NewGuid(), roleDao.RoleId ?? Guid.Empty, _userName, _email, "TestPassword1!");
 
         _userServiceMock.Setup(userService => userService.CreateUser(It.IsAny<string>(), It.IsAny<string>(),
             It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>()));

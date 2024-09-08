@@ -185,6 +185,29 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     }
 
     /// <summary>
+    ///     Executes a single query on the specified table.
+    /// </summary>
+    /// <param name="query">The query to execute.</param>
+    /// <param name="countType">Determines how exact the Count will be</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a single entity.</returns>
+    /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
+    /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
+    public async Task<int> ExecuteCountQuery(IPostgrestTable<T> query, Constants.CountType countType)
+    {
+        try
+        {
+            var response = await query.Count(countType);
+
+            return response;
+        }
+        catch (Exception ex)
+        {
+            DatabaseRepositroyHelper.HandleException(ex, "retrieving Count");
+            return 0;
+        }
+    }
+
+    /// <summary>
     ///     Executes a function on the database.
     /// </summary>
     /// <param name="nameOfFunction">The name of the function to execute.</param>
@@ -243,23 +266,34 @@ public abstract class DatabaseRepository<T> : IDatabaseRepository<T> where T : B
     ///     object on each invocation, otherwise the pagination will break!
     /// </param>
     /// <param name="pageRequest">The page request</param>
-    /// <param name="totalElements">The total number of queried elements</param>
     /// <returns>The <see cref="IPage{T}" /> that corresponds to the given request</returns>
+    /// <exception cref="DatabasePaginationFailedException">
+    ///     This exception will be thrown, when an error occurs during the
+    ///     Process of Applying the Pagination
+    /// </exception>
     protected async Task<IPage<T>> ApplyPagination(Func<IPostgrestTable<T>> queryBuilder, PageRequest pageRequest)
     {
-        var start = pageRequest.PageNumber * pageRequest.PageSize;
-        var end = start + pageRequest.PageSize - 1;
+        try
+        {
+            var start = pageRequest.PageNumber * pageRequest.PageSize;
+            var end = start + pageRequest.PageSize - 1;
 
-        _logger.LogDebug($"Paginating query: Fetching entries {start}-{end}");
+            _logger.LogDebug($"Paginating query: Fetching entries {start}-{end}");
 
-        var totalElements = await queryBuilder().Count(Constants.CountType.Exact);
-        var content = await ExecuteQuery(queryBuilder().Range(start, end));
+            var totalElements = await queryBuilder().Count(Constants.CountType.Exact);
+            var content = await ExecuteQuery(queryBuilder().Range(start, end));
 
-        return new PageImpl<T>(
-            content,
-            pageRequest.PageNumber,
-            pageRequest.PageSize,
-            (int)Math.Ceiling((double)totalElements / pageRequest.PageSize),
-            pageNumber => ApplyPagination(queryBuilder, PageRequest.Of(pageNumber, pageRequest.PageSize)));
+            return new PageImpl<T>(
+                content,
+                pageRequest.PageNumber,
+                pageRequest.PageSize,
+                (int)Math.Ceiling((double)totalElements / pageRequest.PageSize),
+                pageNumber => ApplyPagination(queryBuilder, PageRequest.Of(pageNumber, pageRequest.PageSize)));
+        }
+        catch (Exception ex)
+        {
+            throw new DatabasePaginationFailedException($"An error occurred while paginating the query {queryBuilder}",
+                ex);
+        }
     }
 }

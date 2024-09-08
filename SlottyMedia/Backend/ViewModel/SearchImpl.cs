@@ -43,9 +43,13 @@ public class SearchImpl : ISearchVm
                 if (newValue is not null)
                 {
                     if (newValue.StartsWith("#"))
+                    {
                         SearchResults = await _searchService.SearchByTopic(newValue);
+                    }
                     else if (newValue.StartsWith("@"))
+                    {
                         SearchResults = await _searchService.SearchByUsername(newValue);
+                    }
                     else
                     {
                         SearchResults = await _searchService.SearchByUsername(newValue);
@@ -59,7 +63,6 @@ public class SearchImpl : ISearchVm
         {
             //TODO Implement error handling
         }
-        
     }
 
     ///inheritdoc />

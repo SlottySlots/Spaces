@@ -18,8 +18,6 @@ public class SignupFormVmImpl : ISignupFormVm
     /// </summary>
     private readonly ISignupService _signupService;
 
-    private Logging<SignupFormVmImpl> logger = new();
-
     /// <summary>
     ///     Standard Constructor used for dependency injection
     /// </summary>

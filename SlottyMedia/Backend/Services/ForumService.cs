@@ -14,17 +14,14 @@ public class ForumService : IForumService
 {
     private static readonly Logging<ForumService> Logger = new();
     private readonly IForumRepository _forumRepository;
-    private readonly ISearchService _searchService;
     private readonly ITopForumRepository _topForumRepository;
 
     /// Constructor to initialize the ForumService with the required database actions.
-    public ForumService(IForumRepository forumRepository, ITopForumRepository topForumRepository,
-        ISearchService searchService)
+    public ForumService(IForumRepository forumRepository, ITopForumRepository topForumRepository)
     {
         Logger.LogInfo("ForumService initialized");
         _forumRepository = forumRepository;
         _topForumRepository = topForumRepository;
-        _searchService = searchService;
     }
 
     /// <inheritdoc />
@@ -109,8 +106,8 @@ public class ForumService : IForumService
             throw new ForumGeneralException("An error occurred while fetching the forum.", ex);
         }
     }
-    
-    
+
+
     /// <inheritdoc />
     public async Task<ForumDto> GetForumById(Guid forumId)
     {
@@ -133,7 +130,7 @@ public class ForumService : IForumService
             throw new ForumGeneralException("An error occurred while fetching the forum.", ex);
         }
     }
-    
+
 
     /// <inheritdoc />
     public async Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest)
@@ -153,6 +150,11 @@ public class ForumService : IForumService
         {
             Logger.LogError($"A general database error occurred: {ex.Message}");
             throw new ForumGeneralException("An error occurred while retrieving the forums.", ex);
+        }
+        catch (DatabasePaginationFailedException ex)
+        {
+            Logger.LogError($"An error occurred while paginating the forums: {ex.Message}");
+            throw new ForumGeneralException("An error occurred while paginating the forums.", ex);
         }
         catch (Exception ex)
         {

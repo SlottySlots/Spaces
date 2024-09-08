@@ -13,6 +13,8 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **Dto**
 
+The post to be rendered.
+
 ```csharp
 public PostDto Dto { get; set; }
 ```
@@ -23,7 +25,7 @@ public PostDto Dto { get; set; }
 
 ### **CurrentUserId**
 
-The current logged in user id to propagate towards like component
+The current logged in user id to propagate towards like component.
 
 ```csharp
 public Guid CurrentUserId { get; set; }
@@ -47,15 +49,17 @@ public EventCallback OnPostClick { get; set; }
 
 EventCallback<br>
 
-### **UserInformationDto**
+### **PostVm**
+
+Injected instance of the IPostVm interface.
 
 ```csharp
-public UserInformationDto UserInformationDto { get; set; }
+public IPostVm PostVm { get; set; }
 ```
 
 #### Property Value
 
-[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+[IPostVm](./slottymedia.backend.viewmodel.interfaces.ipostvm.md)<br>
 
 ## Constructors
 
@@ -89,6 +93,8 @@ protected Task OnParametersSetAsync()
 
 ### **OnAfterRender(Boolean)**
 
+This method is called after the component has been rendered.
+
 ```csharp
 protected void OnAfterRender(bool firstRender)
 ```
@@ -97,17 +103,9 @@ protected void OnAfterRender(bool firstRender)
 
 `firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **SetLikeCountState()**
-
-```csharp
-public Task SetLikeCountState()
-```
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
 ### **LikeClick(Boolean)**
+
+Handles the click event on the like button, adding or removing a like based on the current state.
 
 ```csharp
 public void LikeClick(bool wasUnliked)

@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Helper;
-using Supabase.Postgrest;
 using Client = Supabase.Client;
 
 namespace SlottyMedia.Database.Repository.SearchRepo;
@@ -28,7 +27,7 @@ public class ForumSearchRepository : DatabaseRepository<ForumDao>, IForumSearchR
     public async Task<List<ForumDao>> GetForumsByTopic(string topic)
     {
         var result =
-            await ExecuteFunction("search_forum", new Dictionary<string, object>() { { "search_term", topic } });
+            await ExecuteFunction("search_forum", new Dictionary<string, object> { { "search_term", topic } });
 
         if (result.ToString() is not null && !result.ToString().IsNullOrEmpty())
         {
@@ -37,7 +36,7 @@ public class ForumSearchRepository : DatabaseRepository<ForumDao>, IForumSearchR
                 throw new DatabaseJsonConvertFailed("Failed to convert the result to a list of top forums.");
             return forums;
         }
-        
+
         return new List<ForumDao>();
     }
 }

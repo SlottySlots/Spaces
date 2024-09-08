@@ -23,8 +23,12 @@ public class SpacesVmImpl : ISpacesVm
     public List<ForumDto> Forums { get; private set; }
 
     /// <inheritdoc />
+    public bool IsLoading { get; private set; }
+
+    /// <inheritdoc />
     public async Task LoadForums()
     {
+        IsLoading = true;
         try
         {
             var page = await _forumService.GetAllForums(PageRequest.OfSize(10));
@@ -33,6 +37,10 @@ public class SpacesVmImpl : ISpacesVm
         catch (Exception ex)
         {
             Logger.LogError($"An error occurred while loading forums: {ex.Message}");
+        }
+        finally
+        {
+            IsLoading = false;
         }
     }
 }

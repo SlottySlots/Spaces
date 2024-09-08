@@ -15,7 +15,6 @@ namespace SlottyMedia.Backend.Services;
 public class UserService : IUserService
 {
     private static readonly Logging<UserService> Logger = new();
-    private readonly IAuthService _authService;
     private readonly IFollowerUserRelationRepository _followerUserRelationRepository;
     private readonly IPostService _postService;
     private readonly IUserRepository _userRepository;
@@ -296,7 +295,6 @@ public class UserService : IUserService
     /// <inheritdoc />
     public async Task<int> GetCountOfUserSpaces(Guid userId)
     {
-        //TODO: Currently not working
         var spaces = await _postService.GetForumCountByUserId(userId);
         return spaces;
     }
@@ -382,13 +380,17 @@ public class UserService : IUserService
     }
 
     /// <inheritdoc />
-    public async Task<UserInformationDto?> GetUserInfo(Guid userId)
+    public async Task<UserInformationDto?> GetUserInfo(Guid userId, bool fetchFriends = true, bool fetchSpaces = true)
     {
         try
         {
             var userDao = await GetUserDaoById(userId);
-            var amountOfFriends = await GetCountOfUserFriends(userId);
-            var amountOfSpaces = await GetCountOfUserSpaces(userId);
+            var amountOfFriends = 0;
+            var amountOfSpaces = 0;
+            if (fetchSpaces) amountOfSpaces = await GetCountOfUserSpaces(userId);
+
+            if (fetchFriends) amountOfFriends = await GetCountOfUserFriends(userId);
+
             if (userDao is { UserId: null, UserName: null, Description: null, Email: null })
             {
                 Logger.LogError(
@@ -404,7 +406,7 @@ public class UserService : IUserService
                     ProfilePic = userDao.ProfilePic,
                     FriendsAmount = amountOfFriends,
                     SpacesAmount = amountOfSpaces,
-                    CreatedAt = userDao.CreatedAt.LocalDateTime!
+                    CreatedAt = userDao.CreatedAt.LocalDateTime
                 };
                 return userInformationDto;
             }

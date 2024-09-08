@@ -20,7 +20,7 @@
 
     @if (!MainLayoutVm.SearchPrompt.IsNullOrEmpty() && MainLayoutVm.SearchResults != null)
     {
-        @if (MainLayoutVm.SearchResults.Forums.Count > 0 && MainLayoutVm.SearchResults.Users.Count <0)
+        @if (MainLayoutVm.SearchResults.Forums.Count > 0 && MainLayoutVm.SearchResults.Users.Count < 0)
         {
             <Card Class="absolute left-0 top-full mt-1 p-4 flex flex-col gap-3 w-[400px] z-10">
                 @foreach (var forum in MainLayoutVm.SearchResults.Forums)
@@ -31,7 +31,7 @@
                 }
             </Card>
         }
-        else if (MainLayoutVm.SearchResults.Users.Count > 0 && MainLayoutVm.SearchResults.Forums.Count <0)
+        else if (MainLayoutVm.SearchResults.Users.Count > 0 && MainLayoutVm.SearchResults.Forums.Count < 0)
         {
             <Card Class="absolute left-0 top-full mt-1 p-4 flex flex-col gap-3 w-[400px] z-10">
                 @foreach (var user in MainLayoutVm.SearchResults.Users)
@@ -94,4 +94,3 @@
     }
 
 }
-

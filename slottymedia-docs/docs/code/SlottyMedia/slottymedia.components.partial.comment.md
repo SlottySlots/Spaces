@@ -13,6 +13,8 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **Dto**
 
+The comment data transfer object to be rendered.
+
 ```csharp
 public CommentDto Dto { get; set; }
 ```
@@ -20,16 +22,6 @@ public CommentDto Dto { get; set; }
 #### Property Value
 
 [CommentDto](./slottymedia.backend.dtos.commentdto.md)<br>
-
-### **UserInformationDto**
-
-```csharp
-public UserInformationDto UserInformationDto { get; set; }
-```
-
-#### Property Value
-
-[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
 
 ## Constructors
 
@@ -51,17 +43,9 @@ protected void BuildRenderTree(RenderTreeBuilder __builder)
 
 `__builder` RenderTreeBuilder<br>
 
-### **OnParametersSetAsync()**
-
-```csharp
-protected Task OnParametersSetAsync()
-```
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
 ### **OnAfterRender(Boolean)**
+
+This method is called after the component has been rendered.
 
 ```csharp
 protected void OnAfterRender(bool firstRender)

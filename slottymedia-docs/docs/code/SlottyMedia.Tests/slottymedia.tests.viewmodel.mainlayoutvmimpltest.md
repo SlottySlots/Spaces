@@ -52,22 +52,6 @@ Tests that no session is restored and returns null.
 public void RestoreSessionOnInit_NoSessionRestoredReturnsNull()
 ```
 
-### **SetUserInfo_SessionNotSetReturnsNull()**
-
-Tests that SetUserInfo returns null when no session is set.
-
-```csharp
-public void SetUserInfo_SessionNotSetReturnsNull()
-```
-
-### **SetUserInfo_CorruptUserDaoReturnsNull()**
-
-Tests that SetUserInfo returns null when the user DAO is corrupt.
-
-```csharp
-public void SetUserInfo_CorruptUserDaoReturnsNull()
-```
-
 ### **SetUserInfo_ReturnsUserInfoDto()**
 
 Tests that SetUserInfo returns a UserInfoDto when the user DAO is valid.
@@ -102,20 +86,4 @@ Tests that RestoreSessionOnInit logs a message when no session is restored.
 
 ```csharp
 public void RestoreSessionOnInit_LogsMessageOnNoSession()
-```
-
-### **SetUserInfo_LogsErrorOnException()**
-
-Tests that SetUserInfo logs an error when an exception is thrown.
-
-```csharp
-public void SetUserInfo_LogsErrorOnException()
-```
-
-### **SetUserInfo_SetsCorrectFriendsAndSpaces()**
-
-Tests that SetUserInfo sets the correct number of friends and spaces.
-
-```csharp
-public void SetUserInfo_SetsCorrectFriendsAndSpaces()
 ```

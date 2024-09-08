@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -7,6 +8,7 @@ namespace SlottyMedia.Database.Daos;
 ///     This class represents the Forum table in the database.
 /// </summary>
 [Table("Forum")]
+[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 public class ForumDao : BaseModel
 {
     /// <summary>

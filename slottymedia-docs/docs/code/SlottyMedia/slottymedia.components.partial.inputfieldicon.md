@@ -13,6 +13,8 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **ChildContent**
 
+Gets or sets the content to be rendered inside the input field icon.
+
 ```csharp
 public RenderFragment ChildContent { get; set; }
 ```

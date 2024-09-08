@@ -1,23 +1,17 @@
 @using Microsoft.IdentityModel.Tokens
-@using SlottyMedia.Backend.Dtos
-@using SlottyMedia.Backend.Services.Interfaces
 @using SlottyMedia.Backend.ViewModel.Interfaces
-
-@inject IUserService UserService
 @inject NavigationManager NavigationManager
-@inject IAuthService AuthService
 
 
 <div class="w-full px-5 pt-5 grid grid-cols-10 gap-4 border-b border-athens-gray">
 
     <!-- profile picture -->
-    @if (!_isLoading)
+    @if (ViewModel is not null && !ViewModel.IsLoading)
     {
         <div @onclick="OnClickAvatar">
-            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
+            <Avatar OpensFileDialog=false Base64Png="@ViewModel.UserInformation.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
         </div>
     }
-
 
     <!-- the form -->
     <form class="col-span-9" @onsubmit="ViewModel!.SubmitForm">
@@ -82,7 +76,7 @@
                 <!-- the tooltip -->
                 @if (!ViewModel.SpacePrompt.IsNullOrEmpty())
                 {
-                    <Card Class="absolute left-0 top-full mt-1 p-4 flex flex-col gap-3">
+                    <Card Class="absolute left-0 top-0 translate-y-[40px] p-4 flex flex-col gap-3">
                         @foreach (var spaceName in ViewModel.SearchedSpaces)
                         {
                             <Tag OnClick="() => _selectSpace(spaceName)">
@@ -115,54 +109,62 @@
 
 </div>
 
-
 @code {
+
+    /// <summary>
+    ///     The ViewModel for this component
+    /// </summary>
     [Inject]
     [SupplyParameterFromForm]
     public IPostSubmissionFormVm? ViewModel { get; set; }
 
-    /// An event that is invoked whenever this input field's value changes
+    /// <summary>
+    ///     An event that is invoked whenever this input field's value changes
+    /// </summary>
     [Parameter]
     public EventCallback<string?> ValueChanged { get; set; }
 
-    public UserInformationDto UserInformationDto { get; set; } = new()
-    {
-        Username = "Username is loading..",
-        Description = "Description is loading..",
-        ProfilePic = null
-    };
+    /// <summary>
+    ///     The Id of the User
+    /// </summary>
+    [Parameter]
+    public Guid? UserId { get; set; }
 
-    private bool _isLoading = true;
 
+    /// <summary>
+    ///     Called after the component has been rendered. Fetches user information if it is the first render.
+    /// </summary>
+    /// <param name="firstRender">Indicates whether this is the first render</param>
     protected override async void OnAfterRender(bool firstRender)
     {
-        if (firstRender || UserInformationDto.Username == "Username is loading..")
+        if (firstRender || ViewModel is not null)
         {
-            var userInfo = await UserService.GetUserInfo(Guid.Parse(AuthService!.GetCurrentSession()!.User!.Id!));
-            if (userInfo != null)
-            {
-                UserInformationDto.Username = userInfo.Username;
-                UserInformationDto.UserId = userInfo.UserId;
-                UserInformationDto.Description = userInfo.Description;
-                UserInformationDto.ProfilePic = userInfo.ProfilePic;
-                UserInformationDto.FriendsAmount = userInfo.FriendsAmount;
-                UserInformationDto.SpacesAmount = userInfo.SpacesAmount;
-                _isLoading = false;
-                StateHasChanged();
-            }
+            await ViewModel!.Initialize(UserId);
+            StateHasChanged();
         }
     }
 
+    /// <summary>
+    ///     Navigates to the user's profile page when the avatar is clicked
+    /// </summary>
     private void OnClickAvatar()
     {
-        NavigationManager.NavigateTo($"/profile?id={UserInformationDto.UserId.ToString()}");
+        NavigationManager.NavigateTo($"/profile?id={UserId!.Value}");
     }
 
+    /// <summary>
+    ///     Handles input changes for the space prompt
+    /// </summary>
+    /// <param name="e">The change event arguments</param>
     async Task _handleInput(ChangeEventArgs e)
     {
         await ViewModel!.HandleSpacePromptChange(e, ValueChanged);
     }
 
+    /// <summary>
+    ///     Selects a space based on the provided space name
+    /// </summary>
+    /// <param name="spaceName">The name of the space to select</param>
     void _selectSpace(string spaceName)
     {
         ViewModel!.HandleSpaceSelection(spaceName);

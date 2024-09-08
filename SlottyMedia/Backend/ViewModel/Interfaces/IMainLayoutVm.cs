@@ -9,6 +9,11 @@ namespace SlottyMedia.Backend.ViewModel.Interfaces;
 public interface IMainLayoutVm
 {
     /// <summary>
+    ///     Gets the user information data transfer object to be rendered.
+    /// </summary>
+    UserInformationDto UserInformation { get; }
+
+    /// <summary>
     ///     This sets the session on initialization of the page.
     /// </summary>
     /// <returns>
@@ -25,7 +30,7 @@ public interface IMainLayoutVm
     ///     Returns a task of type UserInformationDto. The dto is used to update the state in the view. It's null if a error
     ///     occured.
     /// </returns>
-    Task<UserInformationDto?> SetUserInfo();
+    Task SetUserInfo();
 
     /// <summary>
     ///     This function persists a new avatar of the currently authenticated user

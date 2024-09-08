@@ -43,19 +43,17 @@ public Dictionary<Guid, int> NumOfPostsInSpace { get; set; }
 
 ## Constructors
 
-### **SpacesCardVmImpl(IForumService, IPostService)**
+### **SpacesCardVmImpl(IForumService)**
 
 Initializes this ViewModel
 
 ```csharp
-public SpacesCardVmImpl(IForumService forumService, IPostService postService)
+public SpacesCardVmImpl(IForumService forumService)
 ```
 
 #### Parameters
 
 `forumService` [IForumService](./slottymedia.backend.services.interfaces.iforumservice.md)<br>
-
-`postService` [IPostService](./slottymedia.backend.services.interfaces.ipostservice.md)<br>
 
 ## Methods
 

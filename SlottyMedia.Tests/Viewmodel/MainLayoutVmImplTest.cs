@@ -27,7 +27,6 @@ public class MainLayoutVmImplTest
         _cookieServiceMock = new Mock<ICookieService>();
         _authService = new Mock<AuthService>(_client, _cookieServiceMock.Object);
         _mockUserRepository = new Mock<IUserRepository>();
-        var postServide = new Mock<IPostService>();
         _userService = new Mock<IUserService>();
         _vm = new MainLayoutVmImpl(_authService.Object, _userService.Object);
     }
@@ -75,34 +74,6 @@ public class MainLayoutVmImplTest
     }
 
     /// <summary>
-    ///     Tests that SetUserInfo returns null when no session is set.
-    /// </summary>
-    [Test]
-    public void SetUserInfo_SessionNotSetReturnsNull()
-    {
-        _authService.Setup(service => service.GetCurrentSession()).Returns((Session?)null);
-        Assert.ThatAsync(async () => await _vm.SetUserInfo(), Is.Null);
-        _authService.VerifyAll();
-        _authService.VerifyNoOtherCalls();
-    }
-
-    /// <summary>
-    ///     Tests that SetUserInfo returns null when the user DAO is corrupt.
-    /// </summary>
-    [Test]
-    public void SetUserInfo_CorruptUserDaoReturnsNull()
-    {
-        _authService.Setup(service => service.GetCurrentSession())
-            .Returns(new Session { User = new User { Email = "test@test.de", Id = Guid.NewGuid().ToString() } });
-        _userService.Setup(service => service.GetUserDaoById(It.IsAny<Guid>()))
-            .ReturnsAsync(new UserDao());
-
-        Assert.ThatAsync(async () => await _vm.SetUserInfo(), Is.Null);
-        _authService.VerifyAll();
-        _authService.VerifyNoOtherCalls();
-    }
-
-    /// <summary>
     ///     Tests that SetUserInfo returns a UserInfoDto when the user DAO is valid.
     /// </summary>
     [Test]
@@ -115,7 +86,7 @@ public class MainLayoutVmImplTest
             UserId = Guid.NewGuid(), UserName = "Test", Description = "TestDesc", Email = "test@test.de",
             ProfilePic = "123"
         };
-        _userService.Setup(service => service.GetUserInfo(It.IsAny<Guid>()))
+        _userService.Setup(service => service.GetUserInfo(It.IsAny<Guid>(), It.IsAny<bool>(), It.IsAny<bool>()))
             .ReturnsAsync(new UserInformationDto
             {
                 UserId = userDao.UserId, Username = userDao.UserName, Description = userDao.Description,
@@ -123,12 +94,15 @@ public class MainLayoutVmImplTest
             });
         Assert.MultipleAsync(async () =>
             {
-                var serviceCall = await _vm.SetUserInfo();
+                await _vm.SetUserInfo();
+                
+                var serviceCall = _vm.UserInformation;
+                
                 Assert.That(serviceCall, Is.Not.Null);
                 Assert.That(serviceCall!.UserId, Is.EqualTo(userDao.UserId));
-                Assert.That(serviceCall!.Username, Is.EqualTo(userDao.UserName));
-                Assert.That(serviceCall!.Description, Is.EqualTo(userDao.Description));
-                Assert.That(serviceCall!.ProfilePic, Is.EqualTo(userDao.ProfilePic));
+                Assert.That(serviceCall.Username, Is.EqualTo(userDao.UserName));
+                Assert.That(serviceCall.Description, Is.EqualTo(userDao.Description));
+                Assert.That(serviceCall.ProfilePic, Is.EqualTo(userDao.ProfilePic));
             }
         );
         _authService.VerifyAll();
@@ -180,17 +154,5 @@ public class MainLayoutVmImplTest
         Assert.ThatAsync(async () => await _vm.RestoreSessionOnInit(), Is.Null);
         _authService.VerifyAll();
         // Verify that the logger logs the correct message
-    }
-
-    /// <summary>
-    ///     Tests that SetUserInfo logs an error when an exception is thrown.
-    /// </summary>
-    [Test]
-    public void SetUserInfo_LogsErrorOnException()
-    {
-        _authService.Setup(service => service.GetCurrentSession()).Throws(new Exception("Test exception"));
-        Assert.ThatAsync(async () => await _vm.SetUserInfo(), Is.Null);
-        _authService.VerifyAll();
-        // Verify that the logger logs the correct error message
     }
 }

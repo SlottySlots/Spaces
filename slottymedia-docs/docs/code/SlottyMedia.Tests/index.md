@@ -30,7 +30,23 @@
 
 ## SlottyMedia.Tests.Viewmodel
 
+[CommentSubmissionFormVmImplTests](./slottymedia.tests.viewmodel.commentsubmissionformvmimpltests.md)
+
+[HomePageVmImplTests](./slottymedia.tests.viewmodel.homepagevmimpltests.md)
+
 [MainLayoutVmImplTest](./slottymedia.tests.viewmodel.mainlayoutvmimpltest.md)
+
+[PostPageVmImplTests](./slottymedia.tests.viewmodel.postpagevmimpltests.md)
+
+[PostSubmissionFormVmImplTests](./slottymedia.tests.viewmodel.postsubmissionformvmimpltests.md)
+
+[PostVmImplTests](./slottymedia.tests.viewmodel.postvmimpltests.md)
+
+[ProfilePageVmImplTests](./slottymedia.tests.viewmodel.profilepagevmimpltests.md)
+
+[SpacesCardVmImplTests](./slottymedia.tests.viewmodel.spacescardvmimpltests.md)
+
+[SpacesVmImplTest](./slottymedia.tests.viewmodel.spacesvmimpltest.md)
 
 ## SlottyMedia.Tests.Viewmodel.auth
 

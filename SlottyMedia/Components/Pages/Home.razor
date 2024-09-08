@@ -1,17 +1,15 @@
 ﻿@page "/"
-@using SlottyMedia.Backend.Services.Interfaces
 @using SlottyMedia.Backend.ViewModel.Interfaces
 @inject IHomePageVm ViewModel
-@inject IAuthService AuthService
 @inject NavigationManager NavigationManager
 
 
 <PageTitle>Slotty Media | Home</PageTitle>
 
 
-@if (AuthService.IsAuthenticated())
+@if (ViewModel.IsAuthenticated)
 {
-    <PostSubmissionForm/>
+    <PostSubmissionForm UserId="ViewModel.CurrentUserId"></PostSubmissionForm>
 }
 
 
@@ -19,7 +17,7 @@
     <Pagination Page="ViewModel!.Page" OnPageFetch="ViewModel!.LoadPage" Class="w-full px-3 py-5">
         @foreach (var post in ViewModel!.Page)
         {
-            <Post Dto="post" CurrentUserId=@_currentUserId OnPostClick="() => _navigateToPostPage(post.PostId)"/>
+            <Post Id="post.PostId"/>
         }
     </Pagination>
 </div>
@@ -27,12 +25,11 @@
 
 @code
 {
-    private Guid _currentUserId;
-
+    /// <summary>
+    ///     This method is called when the component is initialized.
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
-        var _currentSession = AuthService.GetCurrentSession();
-        _currentUserId = Guid.Parse(_currentSession!.User!.Id!);
         await ViewModel.Initialize();
     }
 

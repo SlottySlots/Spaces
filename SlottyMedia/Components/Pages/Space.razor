@@ -1,5 +1,4 @@
 ﻿@page "/spaces/{SpaceId:guid}"
-
 @using SlottyMedia.Backend.ViewModel.Interfaces
 
 @inject NavigationManager NavigationManager
@@ -10,31 +9,29 @@
 
 @if (!SpaceVm.IsLoadingPage)
 {
-
     <p class="text-lg">@SpaceVm.Space!.Topic</p>
-    
+
     <div class="flex w-1/2">
         <h3 class="text-sm text-cadet-gray w-full">Posts: @SpaceVm.Space.PostCount</h3>
         <h3 class="text-sm text-cadet-gray w-full">Created at: @SpaceVm.Space.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
     </div>
-    
+
     <div class="w-full border-b border-athens-gray my-3"></div>
-    
+
     @if (!SpaceVm.IsLoadingPosts)
     {
         <Pagination Page="SpaceVm.Posts" OnPageFetch="SpaceVm.LoadPosts" Class="w-full">
             @foreach (var post in SpaceVm.Posts)
             {
-                <Post Dto="post" CurrentUserId="SpaceVm.AuthPrincipalId!.Value" OnPostClick="() => _navigateToPostPage(post.PostId)"/>
+                <Post Id="post.PostId"/>
             }
         </Pagination>
     }
 }
-    
+
 
 @code {
-    [Parameter]
-    public Guid SpaceId { get; set; }
+    [Parameter] public Guid SpaceId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

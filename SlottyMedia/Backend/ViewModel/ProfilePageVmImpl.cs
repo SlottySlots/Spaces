@@ -50,7 +50,7 @@ public class ProfilePageVmImpl : IProfilePageVm
         IsLoadingPage = true;
         _logger.LogInfo("Profile Page: Loading necessary user-related information...");
         var authPrincipalIdStr = _authService.GetCurrentSession()?.User?.Id;
-        AuthPrincipalId = authPrincipalIdStr is null ? null : new Guid(authPrincipalIdStr);
+        AuthPrincipalId = authPrincipalIdStr is null ? null : Guid.Parse(authPrincipalIdStr);
         await _loadUserInfo(userId);
         await _loadIsUserFollowed();
         _logger.LogInfo("Profile Page: Successfully loaded all user-related information");
@@ -89,7 +89,7 @@ public class ProfilePageVmImpl : IProfilePageVm
         {
             _logger.LogInfo($"Attempting to un-follow user '{UserInfo!.Username}'...");
             await _userService.UnfollowUserById(AuthPrincipalId.Value, UserInfo.UserId.Value);
-            IsUserFollowed = true;
+            IsUserFollowed = false;
             _logger.LogInfo($"Successfully un-followed user '{UserInfo!.Username}'");
         }
     }
@@ -97,20 +97,7 @@ public class ProfilePageVmImpl : IProfilePageVm
     private async Task _loadUserInfo(Guid userId)
     {
         _logger.LogDebug($"Profile Page: Fetching user information for user with ID '{userId}'");
-        var userDao = await _userService.GetUserDaoById(userId);
-        var amountOfFriends = await _userService.GetCountOfUserFriends(userId);
-        var amountOfSpaces = await _userService.GetCountOfUserSpaces(userId);
-        _logger.LogDebug($"Profile Page: Successfully fetched all user information for user with ID '{userId}'");
-        UserInfo = new UserInformationDto
-        {
-            UserId = userDao.UserId!,
-            Username = userDao.UserName!,
-            Description = userDao.Description!,
-            ProfilePic = userDao.ProfilePic,
-            FriendsAmount = amountOfFriends,
-            SpacesAmount = amountOfSpaces,
-            CreatedAt = userDao.CreatedAt.LocalDateTime
-        };
+        UserInfo = await _userService.GetUserInfo(userId);
     }
 
     private async Task _loadIsUserFollowed()

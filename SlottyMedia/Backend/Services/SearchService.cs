@@ -1,7 +1,6 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.SearchExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Repository.SearchRepo;
 using SlottyMedia.LoggingProvider;
@@ -39,7 +38,7 @@ public class SearchService : ISearchService
 
             if (searchTerm.Length == 0)
                 return new SearchDto();
-            
+
             var userResults = await _userSearchRepository.GetUsersByUserName(searchTerm);
 
             if (!userResults.Any())
@@ -61,6 +60,11 @@ public class SearchService : ISearchService
         {
             throw new SearchGeneralExceptions(
                 $"A database error occurred while searching for users or topics. Term {searchTerm}", ex);
+        }
+        catch (DatabasePaginationFailedException ex)
+        {
+            throw new SearchGeneralExceptions(
+                $"An error occurred during the Pagination for search results with term {searchTerm}", ex);
         }
         catch (Exception ex)
         {
@@ -99,6 +103,11 @@ public class SearchService : ISearchService
         {
             throw new SearchGeneralExceptions(
                 $"A database error occurred while searching for users or topics. Term {searchTerm}", ex);
+        }
+        catch (DatabasePaginationFailedException ex)
+        {
+            throw new SearchGeneralExceptions(
+                $"An error occurred during the Pagination for search results with term {searchTerm}", ex);
         }
         catch (Exception ex)
         {
