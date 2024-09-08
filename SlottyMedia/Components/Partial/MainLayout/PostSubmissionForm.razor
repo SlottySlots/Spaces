@@ -2,6 +2,7 @@
 @using SlottyMedia.Backend.ViewModel.Interfaces
 @inject NavigationManager NavigationManager
 
+
 <div class="w-full px-5 pt-5 grid grid-cols-10 gap-4 border-b border-athens-gray">
 
     <!-- profile picture -->
@@ -75,7 +76,7 @@
                 <!-- the tooltip -->
                 @if (!ViewModel.SpacePrompt.IsNullOrEmpty())
                 {
-                    <Card Class="absolute left-0 top-0 translate-y-[40px] p-4 flex flex-col gap-3">
+                    <Card Class="absolute left-0 top-full mt-1 p-4 flex flex-col gap-3">
                         @foreach (var spaceName in ViewModel.SearchedSpaces)
                         {
                             <Tag OnClick="() => _selectSpace(spaceName)">
@@ -87,7 +88,10 @@
                             <div class="m-1 border-b border-athens-gray"></div>
                         }
                         <div class="text-sm">
-                            Your space doesn't exist? Create it!
+                            Your space doesn't exist?
+                            <span @onclick="() => _selectSpace(ViewModel.SpacePrompt!)" class="text-fandango cursor-pointer">
+                                Create It
+                            </span>
                         </div>
                     </Card>
                 }

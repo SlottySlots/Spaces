@@ -3,7 +3,6 @@
 @using SlottyMedia.Components.Partial.PostPage
 
 
-
 <PageTitle>Slotty Media | Post</PageTitle>
 
 
@@ -53,7 +52,7 @@ else
     [Inject]
     [SupplyParameterFromForm]
     public IPostPageVm? ViewModel { get; set; }
-    
+
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()
     {

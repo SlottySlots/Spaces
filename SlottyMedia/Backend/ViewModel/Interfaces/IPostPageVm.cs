@@ -22,6 +22,16 @@ public interface IPostPageVm
     IPage<CommentDto> Comments { get; }
 
     /// <summary>
+    ///     The ID of the currently logged in user.
+    /// </summary>
+    Guid CurrentUserId { get; }
+
+    /// <summary>
+    ///     True if the user is authenticated, false otherwise.
+    /// </summary>
+    public bool IsAuthenticated { get; }
+
+    /// <summary>
     ///     Attempts to load the given post. If no such post exists, then <see cref="Post" /> will be <c>null</c>.
     ///     Otherwise, it will be a <see cref="PostDto" /> that corresponds to the requested post.
     /// </summary>
@@ -32,16 +42,4 @@ public interface IPostPageVm
     ///     Attempts to load more comments than were already showcased. Does nothing if no further comments exist.
     /// </summary>
     Task LoadCommentsPage(int pageNumber);
-    
-    /// <summary>
-    /// The ID of the currently logged in user.
-    /// </summary>
-    Guid CurrentUserId { get; }
-    
-    /// <summary>
-    /// True if the user is authenticated, false otherwise.
-    /// </summary>
-    public bool IsAuthenticated {get;}
-    
-    
 }

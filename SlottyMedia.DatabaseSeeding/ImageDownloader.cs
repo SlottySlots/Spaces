@@ -1,5 +1,4 @@
-﻿using System.Net.Http;
-using SlottyMedia.LoggingProvider;
+﻿using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.DatabaseSeeding;
 
@@ -8,7 +7,7 @@ namespace SlottyMedia.DatabaseSeeding;
 /// </summary>
 public class ImageDownloader
 {
-    private static readonly HttpClient Client = new ();
+    private static readonly HttpClient Client = new();
 
     private static readonly Logging<ImageDownloader> Logger = new();
 

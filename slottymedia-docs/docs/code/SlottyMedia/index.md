@@ -132,6 +132,8 @@
 
 [ProfilePageVmImpl](./slottymedia.backend.viewmodel.profilepagevmimpl.md)
 
+[SearchImpl](./slottymedia.backend.viewmodel.searchimpl.md)
+
 [SignInFormVmImpl](./slottymedia.backend.viewmodel.signinformvmimpl.md)
 
 [SignupFormVmImpl](./slottymedia.backend.viewmodel.signupformvmimpl.md)
@@ -139,6 +141,8 @@
 [SpacesCardVmImpl](./slottymedia.backend.viewmodel.spacescardvmimpl.md)
 
 [SpacesVmImpl](./slottymedia.backend.viewmodel.spacesvmimpl.md)
+
+[SpaceVmImpl](./slottymedia.backend.viewmodel.spacevmimpl.md)
 
 ## SlottyMedia.Backend.ViewModel.Interfaces
 
@@ -160,6 +164,8 @@
 
 [IProfilePageVm](./slottymedia.backend.viewmodel.interfaces.iprofilepagevm.md)
 
+[ISearchVm](./slottymedia.backend.viewmodel.interfaces.isearchvm.md)
+
 [ISignInFormVm](./slottymedia.backend.viewmodel.interfaces.isigninformvm.md)
 
 [ISignupFormVm](./slottymedia.backend.viewmodel.interfaces.isignupformvm.md)
@@ -167,6 +173,8 @@
 [ISpacesCardVm](./slottymedia.backend.viewmodel.interfaces.ispacescardvm.md)
 
 [ISpacesVm](./slottymedia.backend.viewmodel.interfaces.ispacesvm.md)
+
+[ISpaceVm](./slottymedia.backend.viewmodel.interfaces.ispacevm.md)
 
 ## SlottyMedia.Components
 
@@ -193,6 +201,8 @@
 [Profile](./slottymedia.components.pages.profile.md)
 
 [Register](./slottymedia.components.pages.register.md)
+
+[Space](./slottymedia.components.pages.space.md)
 
 [Spaces](./slottymedia.components.pages.spaces.md)
 
@@ -223,6 +233,8 @@
 [Pagination&lt;T&gt;](./slottymedia.components.partial.pagination-1.md)
 
 [Post](./slottymedia.components.partial.post.md)
+
+[Search](./slottymedia.components.partial.search.md)
 
 [Tag](./slottymedia.components.partial.tag.md)
 

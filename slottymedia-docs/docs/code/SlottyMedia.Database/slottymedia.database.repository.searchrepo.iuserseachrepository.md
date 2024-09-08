@@ -12,12 +12,12 @@ Implements [IDatabaseRepository&lt;UserDao&gt;](./slottymedia.database.repositor
 
 ## Methods
 
-### **GetUsersByUserName(String, PageRequest)**
+### **GetUsersByUserName(String)**
 
 Gets users by their username with pagination.
 
 ```csharp
-Task<IPage<UserDao>> GetUsersByUserName(string userName, PageRequest pageRequest)
+Task<List<UserDao>> GetUsersByUserName(string userName)
 ```
 
 #### Parameters
@@ -25,12 +25,9 @@ Task<IPage<UserDao>> GetUsersByUserName(string userName, PageRequest pageRequest
 `userName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The username to search for.
 
-`pageRequest` [PageRequest](./slottymedia.database.pagination.pagerequest.md)<br>
-The page request
-
 #### Returns
 
-[Task&lt;IPage&lt;UserDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;List&lt;UserDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of users.
 
 #### Exceptions
@@ -40,3 +37,6 @@ Thrown when the entity is not found in the database.
 
 [GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
 Thrown when an unexpected error occurs.
+
+[DatabaseJsonConvertFailed](./slottymedia.database.exceptions.databasejsonconvertfailed.md)<br>
+Thrown when the Database Result was not able to be converted to a Class Dao

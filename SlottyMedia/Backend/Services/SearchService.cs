@@ -2,7 +2,6 @@ using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.SearchExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database.Exceptions;
-using SlottyMedia.Database.Pagination;
 using SlottyMedia.Database.Repository.SearchRepo;
 using SlottyMedia.LoggingProvider;
 
@@ -31,13 +30,26 @@ public class SearchService : ISearchService
     }
 
     /// <inheritdoc />
-    public async Task<IPage<UserDto>> SearchByUsernameContaining(string searchTerm, PageRequest pageRequest)
+    public async Task<SearchDto> SearchByUsername(string searchTerm)
     {
         try
         {
             Logger.LogInfo($"Searching for users with search term: {searchTerm}");
-            var result = await _userSearchRepository.GetUsersByUserName(searchTerm, pageRequest);
-            return result.Map(dao => new UserDto().Mapper(dao));
+
+            if (searchTerm.Length == 0)
+                return new SearchDto();
+
+            var userResults = await _userSearchRepository.GetUsersByUserName(searchTerm);
+
+            if (!userResults.Any())
+                return new SearchDto();
+
+            var searchResult = new SearchDto();
+
+            Logger.LogInfo("Mapping search results to DTOs");
+            searchResult.Users.AddRange(userResults.Select(x => new UserDto().Mapper(x)));
+
+            return searchResult;
         }
         catch (DatabaseMissingItemException ex)
         {
@@ -62,13 +74,25 @@ public class SearchService : ISearchService
     }
 
     /// <inheritdoc />
-    public async Task<IPage<ForumDto>> SearchByForumTopicContaining(string searchTerm, PageRequest pageRequest)
+    public async Task<SearchDto> SearchByTopic(string searchTerm)
     {
         try
         {
             Logger.LogInfo($"Searching for topics with search term: {searchTerm}");
-            var result = await _forumSearchRepository.GetForumsByTopic(searchTerm, pageRequest);
-            return result.Map(dao => new ForumDto().Mapper(dao));
+
+            if (searchTerm.Length == 0)
+                return new SearchDto();
+
+            var topicResults = await _forumSearchRepository.GetForumsByTopic(searchTerm);
+
+            if (!topicResults.Any())
+                return new SearchDto();
+
+            var searchResult = new SearchDto();
+
+            searchResult.Forums.AddRange(topicResults.Select(x => new ForumDto().Mapper(x)));
+
+            return searchResult;
         }
         catch (DatabaseMissingItemException ex)
         {

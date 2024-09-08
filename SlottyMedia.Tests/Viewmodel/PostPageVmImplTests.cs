@@ -3,6 +3,7 @@ using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel;
 using SlottyMedia.Database.Pagination;
+using Supabase.Gotrue;
 
 namespace SlottyMedia.Tests.Viewmodel;
 
@@ -47,7 +48,8 @@ public class PostPageVmImplTests
         _mockPostService.Setup(s => s.GetPostById(postId)).ReturnsAsync(post);
         _mockCommentService.Setup(s => s.GetCommentsInPost(postId, It.IsAny<PageRequest>())).ReturnsAsync(comments);
         _authService.Setup(s => s.IsAuthenticated()).Returns(true);
-        _authService.Setup(s => s.GetCurrentSession()).Returns(new Supabase.Gotrue.Session { User = new Supabase.Gotrue.User { Id = Guid.NewGuid().ToString() } });
+        _authService.Setup(s => s.GetCurrentSession())
+            .Returns(new Session { User = new User { Id = Guid.NewGuid().ToString() } });
 
         await _postPageVmImpl.Initialize(postId);
 
@@ -64,7 +66,8 @@ public class PostPageVmImplTests
     {
         var postId = Guid.NewGuid();
         _mockPostService.Setup(s => s.GetPostById(postId)).ReturnsAsync((PostDto?)null);
-        _authService.Setup(s => s.GetCurrentSession()).Returns(new Supabase.Gotrue.Session { User = new Supabase.Gotrue.User { Id = Guid.NewGuid().ToString() } });
+        _authService.Setup(s => s.GetCurrentSession())
+            .Returns(new Session { User = new User { Id = Guid.NewGuid().ToString() } });
 
         await _postPageVmImpl.Initialize(postId);
 
@@ -89,7 +92,8 @@ public class PostPageVmImplTests
         );
         _mockPostService.Setup(s => s.GetPostById(postId)).ReturnsAsync(post);
         _mockCommentService.Setup(s => s.GetCommentsInPost(postId, It.IsAny<PageRequest>())).ReturnsAsync(comments);
-        _authService.Setup(s => s.GetCurrentSession()).Returns(new Supabase.Gotrue.Session { User = new Supabase.Gotrue.User { Id = Guid.NewGuid().ToString() } });
+        _authService.Setup(s => s.GetCurrentSession())
+            .Returns(new Session { User = new User { Id = Guid.NewGuid().ToString() } });
 
         await _postPageVmImpl.Initialize(postId);
 

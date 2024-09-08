@@ -29,3 +29,17 @@ The forum's name
 
 [Task&lt;ForumDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 The forum
+
+### **ExistsByName(String)**
+
+```csharp
+Task<bool> ExistsByName(string forumName)
+```
+
+#### Parameters
+
+`forumName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+#### Returns
+
+[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

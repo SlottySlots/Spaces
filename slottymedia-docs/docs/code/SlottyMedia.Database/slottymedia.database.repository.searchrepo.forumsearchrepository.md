@@ -34,18 +34,16 @@ The database repository helper instance.
 
 ## Methods
 
-### **GetForumsByTopic(String, PageRequest)**
+### **GetForumsByTopic(String)**
 
 ```csharp
-public Task<IPage<ForumDao>> GetForumsByTopic(string topic, PageRequest pageRequest)
+public Task<List<ForumDao>> GetForumsByTopic(string topic)
 ```
 
 #### Parameters
 
 `topic` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-`pageRequest` [PageRequest](./slottymedia.database.pagination.pagerequest.md)<br>
-
 #### Returns
 
-[Task&lt;IPage&lt;ForumDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;List&lt;ForumDao&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

@@ -42,8 +42,9 @@ public class HomePageVmImplTests
             pageNumber => Task.FromResult<IPage<PostDto>>(null!) // Callback
         );
         _mockPostService.Setup(s => s.GetAllPosts(It.IsAny<PageRequest>())).ReturnsAsync(page);
-        _authServiceMock.Setup(s => s.GetCurrentSession()).Returns(new Session { User = new User { Id = Guid.NewGuid().ToString() } });
-        
+        _authServiceMock.Setup(s => s.GetCurrentSession())
+            .Returns(new Session { User = new User { Id = Guid.NewGuid().ToString() } });
+
 
         await _homePageVmImpl.Initialize();
 

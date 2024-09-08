@@ -1,5 +1,4 @@
 using SlottyMedia.Backend.Dtos;
-using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Database.Pagination;
@@ -11,9 +10,9 @@ namespace SlottyMedia.Backend.ViewModel;
 public class HomePageVmImpl : IHomePageVm
 {
     private static readonly Logging<HomePageVmImpl> Logger = new();
+    private readonly IAuthService _authService;
 
     private readonly IPostService _postService;
-    private readonly IAuthService _authService;
 
     /// <summary>Instantiates this class</summary>
     public HomePageVmImpl(IPostService postService, IAuthService authService)
@@ -27,10 +26,10 @@ public class HomePageVmImpl : IHomePageVm
 
     /// <inheritdoc />
     public IPage<PostDto> Page { get; private set; } = PageImpl<PostDto>.Empty();
-    
+
     /// <inheritdoc />
     public Guid CurrentUserId { get; private set; }
-    
+
     /// <inheritdoc />
     public bool IsAuthenticated { get; private set; }
 

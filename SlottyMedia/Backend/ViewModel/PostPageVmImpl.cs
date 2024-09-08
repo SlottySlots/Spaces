@@ -1,5 +1,4 @@
 using SlottyMedia.Backend.Dtos;
-using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Database.Pagination;
@@ -11,8 +10,8 @@ namespace SlottyMedia.Backend.ViewModel;
 public class PostPageVmImpl : IPostPageVm
 {
     private static readonly Logging<PostPageVmImpl> _logger = new();
-    private readonly ICommentService _commentService;
     private readonly IAuthService _authService;
+    private readonly ICommentService _commentService;
 
     private readonly IPostService _postService;
 
@@ -35,12 +34,12 @@ public class PostPageVmImpl : IPostPageVm
 
     /// <inheritdoc />
     public IPage<CommentDto> Comments { get; private set; } = PageImpl<CommentDto>.Empty();
-    
+
     /// <inheritdoc />
     public Guid CurrentUserId { get; private set; }
-    
+
     /// <inheritdoc />
-    public bool IsAuthenticated {get; private set;}
+    public bool IsAuthenticated { get; private set; }
 
     /// <inheritdoc />
     public async Task Initialize(Guid postId)
