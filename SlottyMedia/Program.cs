@@ -90,7 +90,7 @@ try
     builder.Services.AddScoped<IPostService, PostService>();
     builder.Services.AddScoped<IForumService, ForumService>();
     builder.Services.AddScoped<ICookieService, CookieService>();
-    builder.Services.AddSingleton<IAuthService, AuthService>();
+    builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<ISignupService, SignupServiceImpl>();
     builder.Services.AddScoped<ISearchService, SearchService>();
     builder.Services.AddScoped<IForumService, ForumService>();
