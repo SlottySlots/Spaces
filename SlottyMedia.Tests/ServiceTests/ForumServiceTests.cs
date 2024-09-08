@@ -2,7 +2,6 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.ForumExceptions;
 using SlottyMedia.Backend.Services;
-using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Repository.ForumRepo;
@@ -23,9 +22,7 @@ public class ForumServiceTests
     {
         _mockForumRepository = new Mock<IForumRepository>();
         _mockTopForumRepository = new Mock<ITopForumRepository>();
-        _mockSearchService = new Mock<ISearchService>();
-        _forumService = new ForumService(_mockForumRepository.Object, _mockTopForumRepository.Object,
-            _mockSearchService.Object);
+        _forumService = new ForumService(_mockForumRepository.Object, _mockTopForumRepository.Object);
     }
 
     /// <summary>
@@ -36,12 +33,10 @@ public class ForumServiceTests
     {
         _mockForumRepository.Reset();
         _mockTopForumRepository.Reset();
-        _mockSearchService.Reset();
     }
 
     private Mock<IForumRepository> _mockForumRepository;
     private Mock<ITopForumRepository> _mockTopForumRepository;
-    private Mock<ISearchService> _mockSearchService;
     private ForumService _forumService;
 
     /// <summary>

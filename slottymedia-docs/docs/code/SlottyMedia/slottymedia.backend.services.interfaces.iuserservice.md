@@ -386,19 +386,25 @@ Thrown when an error occurs during Insert, Update, or Delete operations.
 [UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
 Thrown when a general error occurs.
 
-### **GetUserInfo(Guid)**
+### **GetUserInfo(Guid, Boolean, Boolean)**
 
 This sets a dto holding information about the current user in order to show the current users infos in the profile
  card
 
 ```csharp
-Task<UserInformationDto> GetUserInfo(Guid userId)
+Task<UserInformationDto> GetUserInfo(Guid userId, bool fetchFriends, bool fetchSpaces)
 ```
 
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 User from which the dto should be retrieved
+
+`fetchFriends` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Determines if the Method should fetch the Friends Count of a User
+
+`fetchSpaces` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Determines if the Method should fetch the Spaces Count of a User
 
 #### Returns
 

@@ -1,3 +1,4 @@
+using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Components.Partial.PostPage;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
@@ -17,10 +18,28 @@ public interface ICommentSubmissionFormVm
     string? ServerErrorMessage { get; }
 
     /// <summary>
+    ///     The user information data transfer object to be rendered.
+    /// </summary>
+    UserInformationDto UserInformation { get; set; }
+
+    /// <summary>
+    ///     Gets a value indicating whether the data is still loading.
+    /// </summary>
+    bool IsLoading { get; set; }
+
+    /// <summary>
     ///     Attempts to submit the form. If successful, the post was created.
     ///     Otherwise, displays an appropriate error message regarding the submission's
     ///     failure.
     /// </summary>
     /// <param name="postId">The ID of the post to submit the comment for</param>
     Task SubmitForm(Guid postId);
+
+
+    /// <summary>
+    ///     Initializes the ViewModel with the specified user ID.
+    /// </summary>
+    /// <param name="userId">The ID of the user to load information for.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    public Task Initialize(Guid? userId);
 }

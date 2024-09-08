@@ -35,16 +35,6 @@ public IMainLayoutVm MainLayoutVm { get; set; }
 
 [IMainLayoutVm](./slottymedia.backend.viewmodel.interfaces.imainlayoutvm.md)<br>
 
-### **UserInformationDto**
-
-```csharp
-public UserInformationDto UserInformationDto { get; set; }
-```
-
-#### Property Value
-
-[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
-
 ### **Body**
 
 ```csharp
@@ -88,6 +78,8 @@ protected Task OnInitializedAsync()
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **OnAfterRender(Boolean)**
+
+Refreshes the user information
 
 ```csharp
 protected void OnAfterRender(bool firstRender)

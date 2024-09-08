@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -7,6 +8,7 @@ namespace SlottyMedia.Database.Daos;
 ///     This class represents the Comment table in the database.
 /// </summary>
 [Table("Comment")]
+[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 public class CommentDao : BaseModel
 {
     /// <summary>
@@ -14,7 +16,7 @@ public class CommentDao : BaseModel
     /// </summary>
     public CommentDao()
     {
-        ParentComment = new List<CommentDao?>();
+        //ParentComment = new List<CommentDao?>();
     }
 
     /// <summary>
@@ -30,7 +32,7 @@ public class CommentDao : BaseModel
         CreatorUserId = creatorUserId;
         PostId = postId;
         Content = content;
-        ParentComment = new List<CommentDao?>();
+        //ParentComment = new List<CommentDao?>();
     }
 
     /// <summary>
@@ -45,11 +47,11 @@ public class CommentDao : BaseModel
     [Column("parent_commentID")]
     public Guid? ParentCommentId { get; set; }
 
-    /// <summary>
-    ///     The list of parent comments.
-    /// </summary>
-    [Reference(typeof(CommentDao), ReferenceAttribute.JoinType.Left, true, "parent_commentID")]
-    public List<CommentDao?> ParentComment { get; set; }
+    // /// <summary>
+    // ///     The list of parent comments.
+    // /// </summary>
+    // [Reference(typeof(CommentDao), ReferenceAttribute.JoinType.Left, true, "parent_commentID")]
+    // public List<CommentDao?> ParentComment { get; set; }
 
     // /// <summary>
     // ///     The User who created the Comment. This is a Reference to the User Table. It is a Foreign Key.

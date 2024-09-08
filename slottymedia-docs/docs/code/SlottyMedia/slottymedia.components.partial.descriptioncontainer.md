@@ -13,6 +13,8 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **DescriptionText**
 
+The description text to be displayed or edited.
+
 ```csharp
 public string DescriptionText { get; set; }
 ```
@@ -21,25 +23,17 @@ public string DescriptionText { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **UserService**
+### **UserId**
+
+The user id to update the description text.
 
 ```csharp
-public IUserVm UserService { get; private set; }
+public Nullable<Guid> UserId { get; set; }
 ```
 
 #### Property Value
 
-[IUserVm](./slottymedia.backend.viewmodel.interfaces.iuservm.md)<br>
-
-### **AuthService**
-
-```csharp
-public IAuthVm AuthService { get; set; }
-```
-
-#### Property Value
-
-[IAuthVm](./slottymedia.backend.viewmodel.interfaces.iauthvm.md)<br>
+[Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
 ## Constructors
 

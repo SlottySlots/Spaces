@@ -2,8 +2,11 @@
     @ChildContent
 </div>
 
-
 @code
 {
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+    /// <summary>
+    ///     Gets or sets the content to be rendered inside the input field icon.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
 }

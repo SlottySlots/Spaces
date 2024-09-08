@@ -173,8 +173,10 @@ public interface IUserService
     ///     card
     /// </summary>
     /// <param name="userId">User from which the dto should be retrieved</param>
+    /// <param name="fetchFriends">Determines if the Method should fetch the Friends Count of a User</param>
+    /// <param name="fetchSpaces">Determines if the Method should fetch the Spaces Count of a User</param>
     /// <returns>
     ///     Returns a task of type UserInformationDto. The dto is used to update the state in the view.
     /// </returns>
-    public Task<UserInformationDto?> GetUserInfo(Guid userId);
+    public Task<UserInformationDto?> GetUserInfo(Guid userId, bool fetchFriends = true, bool fetchSpaces = true);
 }

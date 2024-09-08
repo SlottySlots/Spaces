@@ -96,18 +96,6 @@ public string Content { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **Comments**
-
-Gets or sets the comments on the post.
-
-```csharp
-public List<CommentDto> Comments { get; set; }
-```
-
-#### Property Value
-
-[List&lt;CommentDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
-
 ## Constructors
 
 ### **PostDto()**

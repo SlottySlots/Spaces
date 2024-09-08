@@ -98,13 +98,17 @@ public DateTime CreatedAt { get; set; }
 
 ## Constructors
 
-### **UserInformationDto()**
+### **UserInformationDto(Boolean)**
 
 Initializes a new instance of the [UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md) class.
 
 ```csharp
-public UserInformationDto()
+public UserInformationDto(bool isLoading)
 ```
+
+#### Parameters
+
+`isLoading` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ## Methods
 

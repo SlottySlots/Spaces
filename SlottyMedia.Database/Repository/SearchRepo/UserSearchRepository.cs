@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Helper;
-using Supabase.Postgrest;
 using Client = Supabase.Client;
 
 namespace SlottyMedia.Database.Repository.SearchRepo;
@@ -28,7 +27,7 @@ public class UserSearchRepository : DatabaseRepository<UserDao>, IUserSeachRepos
     public async Task<List<UserDao>> GetUsersByUserName(string userName)
     {
         var result =
-            await ExecuteFunction("search_user", new Dictionary<string, object>() { { "search_term", userName } });
+            await ExecuteFunction("search_user", new Dictionary<string, object> { { "search_term", userName } });
 
         if (result.ToString() is not null && !result.ToString().IsNullOrEmpty())
         {
@@ -37,7 +36,7 @@ public class UserSearchRepository : DatabaseRepository<UserDao>, IUserSeachRepos
                 throw new DatabaseJsonConvertFailed("Failed to convert the result to a list of top forums.");
             return user;
         }
-        
+
         return new List<UserDao>();
     }
 }

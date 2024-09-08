@@ -21,7 +21,6 @@ public class PostDto
         Likes = new List<Guid>();
         CreatedAt = DateTime.MinValue;
         Content = string.Empty;
-        Comments = new List<CommentDto>();
         Headline = string.Empty;
     }
 
@@ -61,11 +60,6 @@ public class PostDto
     public string Content { get; set; }
 
     /// <summary>
-    ///     Gets or sets the comments on the post.
-    /// </summary>
-    public List<CommentDto> Comments { get; set; }
-
-    /// <summary>
     ///     The Mapper for the Post Dto to the Post Dao.
     /// </summary>
     /// <returns></returns>
@@ -98,8 +92,6 @@ public class PostDto
         Content = post.Content ?? string.Empty;
         Forum = post.Forum != null ? new ForumDto().Mapper(post.Forum) : new ForumDto();
         CreatedAt = post.CreatedAt.LocalDateTime;
-        //Comments = post.Comments?.Select(c => new CommentDto().Mapper(c)).ToList() ?? new List<CommentDto>();
-        //TODO Add Comment Mapping
         UserId = post.UserId ?? Guid.Empty;
         Headline = post.Headline ?? string.Empty;
         return this;
@@ -112,6 +104,6 @@ public class PostDto
     public override string ToString()
     {
         return
-            $"PostId: {PostId}, UserId: {UserId}, Likes: {Likes.Count}, CreatedAt: {CreatedAt}, Content: {Content}, Comments: {Comments.Count}, Headline: {Headline}";
+            $"PostId: {PostId}, UserId: {UserId}, Likes: {Likes.Count}, CreatedAt: {CreatedAt}, Content: {Content}, Headline: {Headline}";
     }
 }

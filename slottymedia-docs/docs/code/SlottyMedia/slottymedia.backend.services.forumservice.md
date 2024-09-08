@@ -11,10 +11,10 @@ Implements [IForumService](./slottymedia.backend.services.interfaces.iforumservi
 
 ## Constructors
 
-### **ForumService(IForumRepository, ITopForumRepository, ISearchService)**
+### **ForumService(IForumRepository, ITopForumRepository)**
 
 ```csharp
-public ForumService(IForumRepository forumRepository, ITopForumRepository topForumRepository, ISearchService searchService)
+public ForumService(IForumRepository forumRepository, ITopForumRepository topForumRepository)
 ```
 
 #### Parameters
@@ -22,8 +22,6 @@ public ForumService(IForumRepository forumRepository, ITopForumRepository topFor
 `forumRepository` IForumRepository<br>
 
 `topForumRepository` ITopForumRepository<br>
-
-`searchService` [ISearchService](./slottymedia.backend.services.interfaces.isearchservice.md)<br>
 
 ## Methods
 
@@ -98,6 +96,20 @@ public Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest)
 #### Returns
 
 [Task&lt;IPage&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **ExistsByName(String)**
+
+```csharp
+public Task<bool> ExistsByName(string forumName)
+```
+
+#### Parameters
+
+`forumName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+#### Returns
+
+[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **DetermineRecentSpaces()**
 

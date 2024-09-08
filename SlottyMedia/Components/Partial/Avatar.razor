@@ -1,4 +1,4 @@
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime JsRuntime
 
 
 <div @onclick="OpenFileDialog" class=@("relative w-[80px] h-[80px] cursor-pointer " + Class)>
@@ -57,20 +57,23 @@
     private async void OpenFileDialog()
     {
         if (OpensFileDialog)
-            await JSRuntime.InvokeVoidAsync("OpenFileDialog", "fileInput");
+            await JsRuntime.InvokeVoidAsync("OpenFileDialog", "fileInput");
     }
 
     private async Task OnFileSelected(InputFileChangeEventArgs e)
     {
         var file = e.File;
 
-        if (file is not null)
+        if (file.ContentType.Contains("image"))
         {
             var buffer = new byte[file.Size];
-            await file.OpenReadStream().ReadAsync(buffer);
-            var base64String = Convert.ToBase64String(buffer);
-            Base64Png = base64String;
-            await Base64Callback.InvokeAsync(base64String);
+            var bytesRead = await file.OpenReadStream().ReadAsync(buffer);
+            if (bytesRead != 0)
+            {
+                var base64String = Convert.ToBase64String(buffer);
+                Base64Png = base64String;
+                await Base64Callback.InvokeAsync(base64String);
+            }
         }
     }
 

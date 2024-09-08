@@ -1,5 +1,5 @@
 @using SlottyMedia.Backend.ViewModel.Interfaces
-@if (ShowDescriptionText)
+@if (DescriptionContainerVm is not null && DescriptionContainerVm.ShowDescriptionText)
 {
     <h3 class="text-sm font-medium text-center text-cadet-gray w-fit" @onclick="SubmitDescriptionText">
         @DescriptionText
@@ -21,37 +21,43 @@ else
     </InputField>
 }
 
-
 @code {
-    [Parameter] public string? DescriptionText { get; set; }
-    [Inject] public IUserVm UserService { get; private set; }
-    [Inject] public IAuthVm AuthService { get; set; }
 
-    private bool ShowDescriptionText = true;
+    /// <summary>
+    ///     The description text to be displayed or edited.
+    /// </summary>
+    [Parameter]
+    public string? DescriptionText { get; set; }
 
-    private async void SubmitDescriptionText()
+    /// <summary>
+    ///     The user id to update the description text.
+    /// </summary>
+    [Parameter]
+    public Guid? UserId { get; set; }
+
+    /// <summary>
+    ///     The Vm to handle the description text.
+    /// </summary>
+    [Inject]
+    private IDescriptionContainerVm? DescriptionContainerVm { get; set; }
+
+    /// <summary>
+    ///     Handles the enter key click event to submit the description text.
+    /// </summary>
+    private async Task HandleEnterClick()
     {
-        var idOfUser = AuthService.GetCurrentSession()?.User!.Id;
-        if (idOfUser != null)
+        if (DescriptionContainerVm is not null)
         {
-            ShowDescriptionText = !ShowDescriptionText;
-            var userDao = await UserService.GetUserById(Guid.Parse(idOfUser));
-            if (DescriptionText != userDao.Description)
-            {
-                if (DescriptionText is not null && DescriptionText.Length < 200)
-                {
-                    //TODO: Show error message and prevent submission
-                    userDao.Description = DescriptionText;
-                    await UserService.UpdateUser(userDao);
-                }
-            }
+            await DescriptionContainerVm.SubmitDescriptionAsync(DescriptionText, UserId);
         }
     }
 
-
-    private void HandleEnterClick()
+    private async Task SubmitDescriptionText()
     {
-        SubmitDescriptionText();
+        if (DescriptionContainerVm is not null)
+        {
+            await DescriptionContainerVm.SubmitDescriptionAsync(DescriptionText, UserId);
+        }
     }
 
 }

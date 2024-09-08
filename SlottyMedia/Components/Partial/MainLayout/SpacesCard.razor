@@ -1,5 +1,4 @@
 @using SlottyMedia.Backend.ViewModel.Interfaces
-
 @inject ISpacesCardVm ViewModel
 @inject NavigationManager Navigation
 
@@ -60,6 +59,9 @@
 
 @code
 {
+    /// <summary>
+    ///     Called when the component is initialized.
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         await ViewModel.Fetch();

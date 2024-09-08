@@ -65,7 +65,6 @@ try
     builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
     builder.Services.AddSingleton<ICommentRepository, CommentRepository>();
 
-    
 
     // Daos
     logger.LogInfo("Adding Daos to the container");
@@ -109,11 +108,12 @@ try
     builder.Services.AddScoped<ISpaceVm, SpaceVmImpl>();
     builder.Services.AddScoped<IPostSubmissionFormVm, PostSubmissionFormVmImpl>();
     builder.Services.AddScoped<IHomePageVm, HomePageVmImpl>();
-    builder.Services.AddScoped<IAuthVm, AuthVmImpl>();
-    builder.Services.AddScoped<IUserVm, UserVmImpl>();
     builder.Services.AddScoped<IPostPageVm, PostPageVmImpl>();
     builder.Services.AddScoped<ICommentSubmissionFormVm, CommentSubmissionFormVmImpl>();
     builder.Services.AddScoped<ISearchVm, SearchImpl>();
+    builder.Services.AddTransient<IPostVm, PostVmImpl>();
+    builder.Services.AddScoped<IDescriptionContainerVm, DescriptionContainerVmImpl>();
+    builder.Services.AddTransient<ICommentVm, CommentVmImpl>();
 
 
     var app = builder.Build();

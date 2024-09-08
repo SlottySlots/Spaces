@@ -2,37 +2,15 @@
 
 Namespace: SlottyMedia.Backend.Services.Interfaces
 
-Interface providing a contract to authenticate a user via supabase
+This interface provides functionalities to authenticate a user.
+ In this context, the Principal
+ refers to the currently logged-in user.
 
 ```csharp
 public interface IAuthService
 ```
 
 ## Methods
-
-### **SignUp(String, String)**
-
-#### Caution
-
-This method is deprecated, use ISignupService instead.
-
----
-
-This method is used to sign up the user.
-
-```csharp
-Task<Session> SignUp(string email, string password)
-```
-
-#### Parameters
-
-`email` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-`password` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-#### Returns
-
-[Task&lt;Session&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **SignIn(String, String)**
 
@@ -106,6 +84,20 @@ bool IsAuthenticated()
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### **GetAuthPrincipalId()**
+
+Retrieves the authentication principal's user ID. Returns `null` if no authentication
+ principal is present.
+
+```csharp
+Nullable<Guid> GetAuthPrincipalId()
+```
+
+#### Returns
+
+[Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+The principal's ID or `null` if none was present
 
 ### **SetSession(String, String)**
 

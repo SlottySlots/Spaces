@@ -7,19 +7,19 @@ using SlottyMedia.LoggingProvider;
 namespace SlottyMedia.Backend.ViewModel;
 
 /// <summary>
-/// Implements ISpaceVm to manage the state of the Space Page.
+///     Implements ISpaceVm to manage the state of the Space Page.
 /// </summary>
 public class SpaceVmImpl : ISpaceVm
 {
     private static readonly Logging<SpaceVmImpl> _logger = new();
+    private readonly IAuthService _authService;
     private readonly IForumService _forumService;
     private readonly IPostService _postService;
-    private readonly IAuthService _authService;
 
     //public string CreatedBy { get; private set; }
 
     /// <summary>
-    /// Initializes the ViewModel with the necessary services.
+    ///     Initializes the ViewModel with the necessary services.
     /// </summary>
     public SpaceVmImpl(IForumService forumService, IPostService postService, IAuthService authService)
     {
@@ -29,35 +29,35 @@ public class SpaceVmImpl : ISpaceVm
     }
 
     /// <summary>
-    /// A boolean flag indicating whether the posts on the page are being loaded.
+    ///     A boolean flag indicating whether the posts on the page are being loaded.
     /// </summary>
     public bool IsLoadingPosts { get; private set; }
 
     /// <summary>
-    /// A boolean flag indicating whether the entire page is being loaded.
+    ///     A boolean flag indicating whether the entire page is being loaded.
     /// </summary>
     public bool IsLoadingPage { get; private set; }
-    
+
     /// <summary>
-    /// The ID of the authenticated user (the currently logged-in user).
+    ///     The ID of the authenticated user (the currently logged-in user).
     /// </summary>
     public Guid? AuthPrincipalId { get; private set; }
 
     /// <summary>
-    /// Holds the details of the current space (ForumDto).
+    ///     Holds the details of the current space (ForumDto).
     /// </summary>
     public ForumDto? Space { get; private set; }
 
     /// <summary>
-    /// Contains the paginated posts belonging to the space.
+    ///     Contains the paginated posts belonging to the space.
     /// </summary>
     public IPage<PostDto> Posts { get; private set; } = PageImpl<PostDto>.Empty();
 
 
     /// <summary>
-    /// Loads the details of a specific space based on the provided forum ID.
-    /// This method also loads the posts for the space and sets the loading states accordingly.
-    /// <param name="forumId">The space to load information from.</param>
+    ///     Loads the details of a specific space based on the provided forum ID.
+    ///     This method also loads the posts for the space and sets the loading states accordingly.
+    ///     <param name="forumId">The space to load information from.</param>
     /// </summary>
     public async Task Initialize(Guid forumId)
     {
@@ -87,11 +87,10 @@ public class SpaceVmImpl : ISpaceVm
         {
             IsLoadingPage = false;
         }
-
     }
 
     /// <summary>
-    /// Loads the posts for the space. This method is called when loading a specific page of posts.
+    ///     Loads the posts for the space. This method is called when loading a specific page of posts.
     /// </summary>
     /// <param name="pageNumber">The page number to load posts from.</param>
     public async Task LoadPosts(int pageNumber)
@@ -120,7 +119,5 @@ public class SpaceVmImpl : ISpaceVm
         {
             IsLoadingPosts = false;
         }
-
     }
-
-} 
+}

@@ -16,7 +16,6 @@ public class CommentDto
     public CommentDto()
     {
         CommentId = Guid.Empty;
-        ParentComment = new List<CommentDto>();
         CreatorUserId = null;
         PostId = Guid.Empty;
         Content = string.Empty;
@@ -27,11 +26,6 @@ public class CommentDto
     ///     Gets or sets the Comment Id.
     /// </summary>
     public Guid CommentId { get; set; }
-
-    /// <summary>
-    ///     Gets or sets the list of parent comments.
-    /// </summary>
-    public List<CommentDto> ParentComment { get; set; }
 
     /// <summary>
     ///     Gets or sets the ID of the user who created the comment.
@@ -64,7 +58,6 @@ public class CommentDto
         return new CommentDao
         {
             CommentId = CommentId,
-            ParentCommentId = ParentComment.FirstOrDefault()?.CommentId,
             CreatorUserId = CreatorUserId,
             PostId = PostId,
             Content = Content,
@@ -82,7 +75,6 @@ public class CommentDto
             $"Mapping CommentDao to CommentDto. Parameters: CommentID = {CommentId}, CreatorUserId = {CreatorUserId}, PostId = {PostId}, Content = {Content}, CreatedAt = {CreatedAt}");
 
         CommentId = comment.CommentId ?? Guid.Empty;
-        ParentComment = comment.ParentComment.Select(pc => new CommentDto().Mapper(pc!)).ToList();
         CreatorUserId = comment.CreatorUserId;
         PostId = comment.PostId ?? Guid.Empty;
         Content = comment.Content ?? string.Empty;

@@ -36,9 +36,15 @@ public interface IForumService
     /// <exception cref="ForumNotFoundException">Thrown when the forum is not found.</exception>
     /// <exception cref="ForumGeneralException">Thrown when a general error occurs.</exception>
     Task<ForumDto> GetForumByName(string forumName);
-    
-    Task<ForumDto> GetForumById(Guid forumId); 
 
+    Task<ForumDto> GetForumById(Guid forumId);
+
+
+    /// <summary>
+    ///     Retrieves all forums with pagination.
+    /// </summary>
+    /// <param name="pageRequest">The pagination request details.</param>
+    /// <returns>A paginated list of forums.</returns>
     Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest);
 
     Task<bool> ExistsByName(string forumName);
@@ -64,5 +70,4 @@ public interface IForumService
     /// <exception cref="ForumNotFoundException">Thrown when the forums are not found.</exception>
     /// <exception cref="ForumGeneralException">Thrown when a general error occurs.</exception>
     Task<List<ForumDto>> GetTopForums();
-    
 }

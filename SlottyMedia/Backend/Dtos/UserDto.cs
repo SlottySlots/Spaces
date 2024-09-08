@@ -20,7 +20,6 @@ public class UserDto
         Username = string.Empty;
         Description = string.Empty;
         CreatedAt = DateTime.MinValue;
-        RecentForums = new List<string>();
     }
 
     /// <summary>
@@ -42,11 +41,6 @@ public class UserDto
     ///     Gets or sets the date and time when the User was created.
     /// </summary>
     public DateTime CreatedAt { get; set; }
-
-    /// <summary>
-    ///     Gets or sets a list of the recent forums the User has visited.
-    /// </summary>
-    public List<string> RecentForums { get; set; }
 
     /// <summary>
     ///     This method maps the User Dto to the User Dao.

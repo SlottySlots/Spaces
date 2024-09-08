@@ -1,5 +1,4 @@
-﻿using System.Net;
-using SlottyMedia.LoggingProvider;
+﻿using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.DatabaseSeeding;
 
@@ -8,10 +7,9 @@ namespace SlottyMedia.DatabaseSeeding;
 /// </summary>
 public class ImageDownloader
 {
-    private static readonly WebClient Client = new();
+    private static readonly HttpClient Client = new();
 
     private static readonly Logging<ImageDownloader> Logger = new();
-
 
     /// <summary>
     ///     This method downloads an image from a URL and encodes it to a base64 string.
@@ -22,10 +20,11 @@ public class ImageDownloader
     {
         try
         {
-            await Client.DownloadFileTaskAsync(imageUrl, "temp.png");
-            var imageArray = File.ReadAllBytes("temp.png");
+            var response = await Client.GetAsync(imageUrl);
+            response.EnsureSuccessStatusCode();
+
+            var imageArray = await response.Content.ReadAsByteArrayAsync();
             var base64ImageRepresentation = Convert.ToBase64String(imageArray);
-            File.Delete("temp.png");
             return base64ImageRepresentation;
         }
         catch (Exception e)

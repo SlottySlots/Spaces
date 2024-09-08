@@ -142,6 +142,12 @@ public class CommentService : ICommentService
             throw new CommentIudException(
                 $"An error occurred while fetching comments from post with ID '{postId.ToString()}': {ex.Message}", ex);
         }
+        catch (DatabasePaginationFailedException ex)
+        {
+            // Handle pagination exceptions.
+            throw new CommentGeneralException(
+                $"An error occurred while fetching comments from post with ID '{postId.ToString()}': {ex.Message}", ex);
+        }
         catch (Exception ex)
         {
             // Handle any other exceptions.

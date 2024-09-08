@@ -215,6 +215,8 @@ Thrown when a general error occurs.
 
 ### **GetPostsByForumId(Guid, PageRequest)**
 
+Gets posts by forum ID and enables slicing via offsets.
+
 ```csharp
 Task<IPage<PostDto>> GetPostsByForumId(Guid forumId, PageRequest pageRequest)
 ```
@@ -222,9 +224,20 @@ Task<IPage<PostDto>> GetPostsByForumId(Guid forumId, PageRequest pageRequest)
 #### Parameters
 
 `forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the forum that the posts belong to.
 
 `pageRequest` PageRequest<br>
+The page request
 
 #### Returns
 
 [Task&lt;IPage&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains a list of PostDto objects.
+
+#### Exceptions
+
+[PostNotFoundException](./slottymedia.backend.exceptions.services.postexceptions.postnotfoundexception.md)<br>
+Thrown when the posts are not found.
+
+[PostGeneralException](./slottymedia.backend.exceptions.services.postexceptions.postgeneralexception.md)<br>
+Thrown when a general error occurs.

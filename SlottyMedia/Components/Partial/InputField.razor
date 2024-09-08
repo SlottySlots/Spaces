@@ -50,8 +50,9 @@
         }
     }
 
-    //An Event invoked when Enter is pressed
-    [Parameter] public EventCallback OnEnter { get; set; }
+    ///An Event invoked when Enter is pressed
+    [Parameter]
+    public EventCallback OnEnter { get; set; }
 
     private async Task HandleKeyDown(KeyboardEventArgs e)
     {

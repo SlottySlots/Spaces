@@ -246,15 +246,19 @@ public Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow)
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **GetUserInfo(Guid)**
+### **GetUserInfo(Guid, Boolean, Boolean)**
 
 ```csharp
-public Task<UserInformationDto> GetUserInfo(Guid userId)
+public Task<UserInformationDto> GetUserInfo(Guid userId, bool fetchFriends, bool fetchSpaces)
 ```
 
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`fetchFriends` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+`fetchSpaces` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 #### Returns
 

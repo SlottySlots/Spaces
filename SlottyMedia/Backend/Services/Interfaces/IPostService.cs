@@ -85,5 +85,13 @@ public interface IPostService
     /// <exception cref="PostGeneralException">Thrown when a general error occurs.</exception>
     public Task<IPage<PostDto>> GetPostsByUserId(Guid userId, PageRequest pageRequest);
 
+    /// <summary>
+    ///     Gets posts by forum ID and enables slicing via offsets.
+    /// </summary>
+    /// <param name="forumId">The ID of the forum that the posts belong to.</param>
+    /// <param name="pageRequest">The page request</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a list of PostDto objects.</returns>
+    /// <exception cref="PostNotFoundException">Thrown when the posts are not found.</exception>
+    /// <exception cref="PostGeneralException">Thrown when a general error occurs.</exception>
     public Task<IPage<PostDto>> GetPostsByForumId(Guid forumId, PageRequest pageRequest);
 }

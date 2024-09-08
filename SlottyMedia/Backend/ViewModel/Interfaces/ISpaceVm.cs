@@ -3,7 +3,6 @@ using SlottyMedia.Database.Pagination;
 
 namespace SlottyMedia.Backend.ViewModel.Interfaces;
 
-    
 /// <summary>
 ///     This ViewModel represents the state of the Space Page.
 /// </summary>
@@ -13,23 +12,23 @@ public interface ISpaceVm
     ///     Whether the whole page is being loaded
     /// </summary>
     public bool IsLoadingPage { get; }
-    
-    
+
+
     /// <summary>
     ///     Whether the posts on the page are being loaded
     /// </summary>
     public bool IsLoadingPosts { get; }
-    
+
     /// <summary>
     ///     The authentication principal's user ID (i.e. the user that's logged in)
     /// </summary>
     public Guid? AuthPrincipalId { get; }
-    
+
     /// <summary>
     ///     The space whose page is being visited
     /// </summary>
     public ForumDto? Space { get; }
-    
+
     /// <summary>
     ///     The posts that are currently being rendered
     /// </summary>
@@ -42,7 +41,7 @@ public interface ISpaceVm
     /// </summary>
     /// <param name="forumId">The ID of the space whose page should be visited</param>
     public Task Initialize(Guid forumId);
-  
+
     /// <summary>
     ///     Loads more <see cref="Posts" /> for the visited space by changing the current
     ///     page (as in pagination).

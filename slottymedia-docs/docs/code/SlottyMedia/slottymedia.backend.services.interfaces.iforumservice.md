@@ -107,6 +107,8 @@ Task<ForumDto> GetForumById(Guid forumId)
 
 ### **GetAllForums(PageRequest)**
 
+Retrieves all forums with pagination.
+
 ```csharp
 Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest)
 ```
@@ -114,10 +116,26 @@ Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest)
 #### Parameters
 
 `pageRequest` PageRequest<br>
+The pagination request details.
 
 #### Returns
 
 [Task&lt;IPage&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A paginated list of forums.
+
+### **ExistsByName(String)**
+
+```csharp
+Task<bool> ExistsByName(string forumName)
+```
+
+#### Parameters
+
+`forumName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+#### Returns
+
+[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **DetermineRecentSpaces()**
 

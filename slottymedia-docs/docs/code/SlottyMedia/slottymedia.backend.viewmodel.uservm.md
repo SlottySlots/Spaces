@@ -2,7 +2,7 @@
 
 Namespace: SlottyMedia.Backend.ViewModel
 
-Implementation of the IUserVmImpl interface.
+Implementation of the IUserVm interface.
 
 ```csharp
 public class UserVm : SlottyMedia.Backend.ViewModel.Interfaces.IUserVm
@@ -15,7 +15,7 @@ Implements [IUserVm](./slottymedia.backend.viewmodel.interfaces.iuservm.md)
 
 ### **UserVm(IUserService)**
 
-Initializes a new instance of the UserVmImpl class.
+Initializes a new instance of the UserVm class.
 
 ```csharp
 public UserVm(IUserService userService)
@@ -55,3 +55,17 @@ public Task UpdateUser(UserDto user)
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **GetUserInformation(Guid)**
+
+```csharp
+public Task<UserInformationDto> GetUserInformation(Guid userId)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;UserInformationDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

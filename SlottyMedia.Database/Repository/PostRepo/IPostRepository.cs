@@ -23,7 +23,7 @@ public interface IPostRepository : IDatabaseRepository<PostsDao>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of elements.</returns>
     /// <exception cref="DatabaseMissingItemException">Thrown when the entity is not found in the database.</exception>
     /// <exception cref="GeneralDatabaseException">Thrown when an unexpected error occurs.</exception>
-    public Task<IPage<PostsDao>> GetAllElements(PageRequest pageRequest);
+    public new Task<IPage<PostsDao>> GetAllElements(PageRequest pageRequest);
 
     /// <summary>
     ///     Counts all existing posts.

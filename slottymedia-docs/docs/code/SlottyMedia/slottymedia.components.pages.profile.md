@@ -13,6 +13,8 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **UserId**
 
+The user id of the profile page
+
 ```csharp
 public Guid UserId { get; set; }
 ```
@@ -42,6 +44,8 @@ protected void BuildRenderTree(RenderTreeBuilder __builder)
 `__builder` RenderTreeBuilder<br>
 
 ### **OnParametersSetAsync()**
+
+Called when the component's parameters are set. Initializes the profile page view model with the user ID.
 
 ```csharp
 protected Task OnParametersSetAsync()

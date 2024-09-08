@@ -14,6 +14,11 @@ public interface ISpacesVm
     List<ForumDto> Forums { get; }
 
     /// <summary>
+    ///     Indicates whether the ViewModel is currently loading data.
+    /// </summary>
+    public bool IsLoading { get; }
+
+    /// <summary>
     ///     Fetches all forums and populates the <see cref="Forums" /> property.
     /// </summary>
     Task LoadForums();
