@@ -39,7 +39,7 @@ public class SignUpServiceTest
     {
         var testUuid = Guid.NewGuid();
 
-        _userName = testUuid.ToString();
+        _userName = "IAmBatman123";
         _email = testUuid + "@unittest.de";
         _password = "TestPassword1!";
     }
