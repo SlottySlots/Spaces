@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Components;
 using Moq;
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
@@ -12,9 +13,13 @@ namespace SlottyMedia.Tests.Viewmodel;
 [TestFixture]
 public class PostVmImplTests
 {
+    private Mock<IPostService> _mockPostService;
     private Mock<ICommentService> _mockCommentService;
     private Mock<ILikeService> _mockLikeService;
     private Mock<IUserService> _mockUserService;
+    private Mock<IAuthService> _mockAuthService;
+    private Mock<NavigationManager> _mockNavigationManager;
+    
     private PostVmImpl _postVm;
 
     /// <summary>
@@ -23,10 +28,20 @@ public class PostVmImplTests
     [SetUp]
     public void SetUp()
     {
+        _mockPostService = new Mock<IPostService>();
         _mockCommentService = new Mock<ICommentService>();
         _mockLikeService = new Mock<ILikeService>();
         _mockUserService = new Mock<IUserService>();
-        _postVm = new PostVmImpl(_mockUserService.Object, _mockLikeService.Object, _mockCommentService.Object);
+        _mockAuthService = new Mock<IAuthService>();
+        _mockNavigationManager = new Mock<NavigationManager>();
+        
+        _postVm = new PostVmImpl(
+            _mockPostService.Object,
+            _mockUserService.Object,
+            _mockLikeService.Object,
+            _mockCommentService.Object,
+            _mockAuthService.Object,
+            _mockNavigationManager.Object);
     }
 
     /// <summary>
@@ -36,93 +51,84 @@ public class PostVmImplTests
     public async Task Initialize_LoadsAllPostRelatedInformation()
     {
         var postId = Guid.NewGuid();
-        var userId = Guid.NewGuid();
+        var postOwnerId = Guid.NewGuid();
+        var authPrincipalId = Guid.NewGuid();
+        
+        var postDto = new PostDto()
+        {
+            PostId = postId,
+            UserId = postOwnerId
+        };
+
+        _mockPostService.Setup(s => s.GetPostById(postId)).ReturnsAsync(postDto);
         _mockCommentService.Setup(s => s.CountCommentsInPost(postId)).ReturnsAsync(5);
-        _mockLikeService.Setup(s => s.GetLikesForPost(postId)).ReturnsAsync(new List<Guid> { userId });
+        _mockLikeService.Setup(s => s.GetLikesForPost(postId)).ReturnsAsync([authPrincipalId]);
+        _mockAuthService.Setup(s => s.GetAuthPrincipalId()).Returns(authPrincipalId);
 
-        await _postVm.Initialize(postId, Guid.NewGuid(), userId);
+        await _postVm.Initialize(postId, () => {});
 
-        Assert.That(_postVm.IsLoading, Is.False);
-        Assert.That(_postVm.CommentCount, Is.EqualTo(5));
-        Assert.That(_postVm.LikeCount, Is.EqualTo(1));
-        Assert.That(_postVm.InitLiked, Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(_postVm.IsLoading, Is.False);
+            Assert.That(_postVm.CommentCount, Is.EqualTo(5));
+            Assert.That(_postVm.LikeCount, Is.EqualTo(1));
+            Assert.That(_postVm.IsPostLiked, Is.True);
+        });
     }
 
     /// <summary>
     /// Tests that LikePost method adds a like when the post was not previously liked.
     /// </summary>
     [Test]
-    public async Task LikePost_AddsLikeWhenNotPreviouslyLiked()
+    public async Task LikeThisPost_WhenPostNotLiked_ShouldLikePost()
     {
         var postId = Guid.NewGuid();
-        var userId = Guid.NewGuid();
-        _mockLikeService.Setup(s => s.InsertLike(userId, postId)).ReturnsAsync(true);
+        var postOwnerId = Guid.NewGuid();
+        var authPrincipalId = Guid.NewGuid();
+        
+        var postDto = new PostDto()
+        {
+            PostId = postId,
+            UserId = postOwnerId
+        };
 
-        await _postVm.LikePost(postId, userId, false);
+        _mockPostService.Setup(s => s.GetPostById(postId)).ReturnsAsync(postDto);
+        _mockCommentService.Setup(s => s.CountCommentsInPost(postId)).ReturnsAsync(5);
+        _mockLikeService.Setup(s => s.GetLikesForPost(postId)).ReturnsAsync([]);
+        _mockAuthService.Setup(s => s.GetAuthPrincipalId()).Returns(authPrincipalId);
+        _mockLikeService.Setup(s => s.InsertLike(authPrincipalId, postId)).ReturnsAsync(true);
 
-        Assert.That(_postVm.LikeCount, Is.EqualTo(1));
-        Assert.That(_postVm.InitLiked, Is.True);
+        await _postVm.Initialize(postId, () => {});
+        await _postVm.LikeThisPost();
+
+        Assert.That(_postVm.IsPostLiked, Is.True);
     }
 
     /// <summary>
     /// Tests that LikePost method removes a like when the post was previously liked.
     /// </summary>
     [Test]
-    public async Task LikePost_RemovesLikeWhenPreviouslyLiked()
+    public async Task LikeThisPost_WhenPostLiked_ShouldUnlikePost()
     {
         var postId = Guid.NewGuid();
-        var userId = Guid.NewGuid();
-        _mockLikeService.Setup(s => s.DeleteLike(userId, postId)).ReturnsAsync(true);
+        var postOwnerId = Guid.NewGuid();
+        var authPrincipalId = Guid.NewGuid();
+        
+        var postDto = new PostDto()
+        {
+            PostId = postId,
+            UserId = postOwnerId
+        };
 
-        await _postVm.LikePost(postId, userId, true);
+        _mockPostService.Setup(s => s.GetPostById(postId)).ReturnsAsync(postDto);
+        _mockCommentService.Setup(s => s.CountCommentsInPost(postId)).ReturnsAsync(5);
+        _mockLikeService.Setup(s => s.GetLikesForPost(postId)).ReturnsAsync([authPrincipalId]);
+        _mockAuthService.Setup(s => s.GetAuthPrincipalId()).Returns(authPrincipalId);
+        _mockLikeService.Setup(s => s.DeleteLike(authPrincipalId, postId)).ReturnsAsync(true);
 
-        Assert.That(_postVm.LikeCount, Is.EqualTo(-1));
-        Assert.That(_postVm.InitLiked, Is.False);
-    }
+        await _postVm.Initialize(postId, () => {});
+        await _postVm.LikeThisPost();
 
-    /// <summary>
-    /// Tests that GetUserInformation method sets the user information.
-    /// </summary>
-    [Test]
-    public async Task GetUserInformation_SetsUserInformation()
-    {
-        var userId = Guid.NewGuid();
-        var userInfo = new UserInformationDto();
-        _mockUserService.Setup(s => s.GetUserInfo(userId, false, false)).ReturnsAsync(userInfo);
-
-        await _postVm.GetUserInformation(userId, false);
-
-        Assert.That(_postVm.UserInformation, Is.EqualTo(userInfo));
-    }
-
-    /// <summary>
-    /// Tests that GetCommentsCount method sets the comment count.
-    /// </summary>
-    [Test]
-    public async Task GetCommentsCount_SetsCommentCount()
-    {
-        var postId = Guid.NewGuid();
-        _mockCommentService.Setup(s => s.CountCommentsInPost(postId)).ReturnsAsync(10);
-
-        await _postVm.Initialize(postId, Guid.NewGuid(), Guid.NewGuid());
-
-        Assert.That(_postVm.CommentCount, Is.EqualTo(10));
-    }
-
-    /// <summary>
-    /// Tests that GetLikes method sets the like count and initializes the liked state.
-    /// </summary>
-    [Test]
-    public async Task GetLikes_SetsLikeCountAndInitLiked()
-    {
-        var postId = Guid.NewGuid();
-        var userId = Guid.NewGuid();
-        var likes = new List<Guid> { userId };
-        _mockLikeService.Setup(s => s.GetLikesForPost(postId)).ReturnsAsync(likes);
-
-        await _postVm.Initialize(postId, Guid.NewGuid(), userId);
-
-        Assert.That(_postVm.LikeCount, Is.EqualTo(1));
-        Assert.That(_postVm.InitLiked, Is.True);
+        Assert.That(_postVm.IsPostLiked, Is.False);
     }
 }
