@@ -1,6 +1,7 @@
 using SlottyMedia.Backend.Exceptions.signup;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Database.Repository.RoleRepo;
+using SlottyMedia.DatabaseSeeding.Avatar;
 using SlottyMedia.LoggingProvider;
 using Supabase.Gotrue;
 using Client = Supabase.Client;
@@ -17,17 +18,23 @@ public class SignupServiceImpl : ISignupService
     private readonly IRoleRepository _roleRepository;
     private readonly Client _supabaseClient;
     private readonly IUserService _userService;
+    private readonly IAvatarGenerator _avatarGenerator;
 
     /// <summary>
     ///     Standard Constructor for dependency injection
     /// </summary>
-    public SignupServiceImpl(Client supabaseClient, IUserService userService, ICookieService cookieService,
-        IRoleRepository roleRepository)
+    public SignupServiceImpl(
+        Client supabaseClient,
+        IUserService userService,
+        ICookieService cookieService,
+        IRoleRepository roleRepository,
+        IAvatarGenerator avatarGenerator)
     {
         _supabaseClient = supabaseClient;
         _userService = userService;
         _cookieService = cookieService;
         _roleRepository = roleRepository;
+        _avatarGenerator = avatarGenerator;
     }
 
     /// <inheritdoc />
@@ -79,8 +86,13 @@ public class SignupServiceImpl : ISignupService
         //TODO catch excception if role does not exist
         var roleId = await _roleRepository.GetRoleIdByName("User");
 
-        await _userService.CreateUser(session.User!.Id!, username, session.User.Email!, roleId,
-            "Hey I'm a new user. Mhhm should I add a description?");
+        await _userService.CreateUser(
+            session.User!.Id!,
+            username,
+            session.User.Email!,
+            roleId,
+            "Hey, I'm a new user!",
+            _avatarGenerator.RandomAvatarB64());
 
 
         // save cookies

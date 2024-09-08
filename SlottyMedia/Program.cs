@@ -19,6 +19,7 @@ using SlottyMedia.Database.Repository.SearchRepo;
 using SlottyMedia.Database.Repository.UserLikePostRelationRepo;
 using SlottyMedia.Database.Repository.UserRepo;
 using SlottyMedia.DatabaseSeeding;
+using SlottyMedia.DatabaseSeeding.Avatar;
 using SlottyMedia.LoggingProvider;
 using Supabase;
 
@@ -97,6 +98,7 @@ try
     builder.Services.AddScoped<ILikeService, LikeService>();
     builder.Services.AddScoped<ICommentService, CommentService>();
     builder.Services.AddScoped<IProfilePageVm, ProfilePageVmImpl>();
+    builder.Services.AddScoped<IAvatarGenerator, PredefinedAvatarGenerator>();
 
     // Viewmodel
     logger.LogInfo("Adding Viewmodels to the container");

@@ -10,6 +10,7 @@ using SlottyMedia.Database.Repository.PostRepo;
 using SlottyMedia.Database.Repository.RoleRepo;
 using SlottyMedia.Database.Repository.UserLikePostRelationRepo;
 using SlottyMedia.Database.Repository.UserRepo;
+using SlottyMedia.DatabaseSeeding.Avatar;
 using SlottyMedia.DatabaseSeeding.Exceptions;
 using SlottyMedia.LoggingProvider;
 using Supabase;
@@ -213,7 +214,8 @@ public class Seeding
                 }
                 else
                 {
-                    var result = await ImageDownloader.DownloadAndEncodeImage(users[i].ProfilePic!);
+                    // var result = await ImageDownloader.DownloadAndEncodeImage(users[i].ProfilePic!);
+                    var result = new PredefinedAvatarGenerator().RandomAvatarB64();
                     users[i].ProfilePic = result;
 
                     var user = await userRepository.AddElement(users[i]);
