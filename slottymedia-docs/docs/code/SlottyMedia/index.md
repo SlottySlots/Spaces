@@ -114,8 +114,6 @@
 
 ## SlottyMedia.Backend.ViewModel
 
-[AuthVm](./slottymedia.backend.viewmodel.authvm.md)
-
 [CommentSubmissionFormVmImpl](./slottymedia.backend.viewmodel.commentsubmissionformvmimpl.md)
 
 [CommentVmImpl](./slottymedia.backend.viewmodel.commentvmimpl.md)
@@ -145,8 +143,6 @@
 [UserVm](./slottymedia.backend.viewmodel.uservm.md)
 
 ## SlottyMedia.Backend.ViewModel.Interfaces
-
-[IAuthVm](./slottymedia.backend.viewmodel.interfaces.iauthvm.md)
 
 [ICommentSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.icommentsubmissionformvm.md)
 
