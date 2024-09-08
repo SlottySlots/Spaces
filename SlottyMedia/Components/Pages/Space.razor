@@ -23,7 +23,7 @@
         <Pagination Page="SpaceVm.Posts" OnPageFetch="SpaceVm.LoadPosts" Class="w-full">
             @foreach (var post in SpaceVm.Posts)
             {
-                <Post Dto="post" CurrentUserId="SpaceVm.AuthPrincipalId!.Value" OnPostClick="() => _navigateToPostPage(post.PostId)"/>
+                <Post Id="post.PostId"/>
             }
         </Pagination>
     }
