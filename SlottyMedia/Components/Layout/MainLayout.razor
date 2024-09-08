@@ -16,7 +16,7 @@
 
         <!-- logo -->
         <div class="mb-20">
-            <img src="static/logo/logo-simple-x100.webp" alt=""/>
+            <img src="static/logo/logo-simple-x100.webp" alt="" @onclick="NavigateToRootPage" style="cursor: pointer;"/>
         </div>
 
 
@@ -222,15 +222,9 @@
                 <path d="M26 26L19.9584 19.9584" stroke="#A0A0A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
 
-            <!-- input component -->
-            <input
-                id="search-input"
-                name="search"
-                placeholder="Search..."
-                class="grow h-full outline-none text-cadet-gray-800 font-medium"/>
-
+            <!-- search input -->
+            <Search></Search>
         </div>
-
         <!-- links on right of bar -->
         @if (AuthService.IsAuthenticated())
         {
@@ -311,6 +305,7 @@
     ///     ViewModel to be used in this view
     /// </summary>
     [Inject]
+    [SupplyParameterFromForm]
     public IMainLayoutVm? MainLayoutVm { get; set; }
 
     private readonly Logging<MainLayout> _logger = new();
@@ -377,5 +372,6 @@
     {
         NavigationManager.NavigateTo("/");
     }
+
 
 }

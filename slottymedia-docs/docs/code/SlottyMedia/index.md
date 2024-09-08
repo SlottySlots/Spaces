@@ -128,6 +128,8 @@
 
 [ProfilePageVmImpl](./slottymedia.backend.viewmodel.profilepagevmimpl.md)
 
+[SearchImpl](./slottymedia.backend.viewmodel.searchimpl.md)
+
 [SignInFormVmImpl](./slottymedia.backend.viewmodel.signinformvmimpl.md)
 
 [SignupFormVmImpl](./slottymedia.backend.viewmodel.signupformvmimpl.md)
@@ -155,6 +157,8 @@
 [IPostSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.ipostsubmissionformvm.md)
 
 [IProfilePageVm](./slottymedia.backend.viewmodel.interfaces.iprofilepagevm.md)
+
+[ISearchVm](./slottymedia.backend.viewmodel.interfaces.isearchvm.md)
 
 [ISignInFormVm](./slottymedia.backend.viewmodel.interfaces.isigninformvm.md)
 
@@ -225,6 +229,8 @@
 [Pagination&lt;T&gt;](./slottymedia.components.partial.pagination-1.md)
 
 [Post](./slottymedia.components.partial.post.md)
+
+[Search](./slottymedia.components.partial.search.md)
 
 [Tag](./slottymedia.components.partial.tag.md)
 

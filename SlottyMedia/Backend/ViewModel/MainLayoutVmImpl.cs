@@ -34,6 +34,7 @@ public class MainLayoutVmImpl : IMainLayoutVm
         _userService = userService;
     }
 
+
     /// <summary>
     ///     This sets the session on initialization of the page.
     /// </summary>

@@ -3,7 +3,6 @@ using Microsoft.IdentityModel.Tokens;
 using NLog;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
-using SlottyMedia.Database.Pagination;
 using SlottyMedia.LoggingProvider;
 
 namespace SlottyMedia.Backend.ViewModel;
@@ -66,9 +65,8 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
             var newValue = e.Value.ToString();
             SpacePrompt = newValue;
             await promptValueChanged.InvokeAsync(newValue);
-            var searchResults = await _searchService
-                .SearchByForumTopicContaining(newValue ?? "", PageRequest.OfSize(10));
-            SearchedSpaces = searchResults.Select(space => space.Topic).ToList();
+            var searchResults = await _searchService.SearchByTopic(newValue ?? "");
+            SearchedSpaces = searchResults.Forums.Select(forum => forum.Topic).ToList();
         }
     }
 

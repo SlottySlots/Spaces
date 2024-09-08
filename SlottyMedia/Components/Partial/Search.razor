@@ -1,0 +1,97 @@
+﻿@using Microsoft.IdentityModel.Tokens
+@using SlottyMedia.Backend.Services.Interfaces
+@using SlottyMedia.Backend.ViewModel.Interfaces
+@inherits LayoutComponentBase
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+
+
+<!-- search input -->
+<div class="relative">
+
+    <!-- input component -->
+    <input
+        @bind="MainLayoutVm!.SearchPrompt"
+        @oninput="ExecuteSearch"
+        id="search-input"
+        name="search"
+        placeholder="Search... (start with #space or @@user)"
+        class="grow h-full outline-none text-cadet-gray-800 font-medium" style="width: 300px"/>
+
+    @if (!MainLayoutVm.SearchPrompt.IsNullOrEmpty() && MainLayoutVm.SearchResults != null)
+    {
+        @if (MainLayoutVm.SearchResults.Forums.Count > 0 && MainLayoutVm.SearchResults.Users.Count <0)
+        {
+            <Card Class="absolute left-0 top-full mt-1 p-4 flex flex-col gap-3 w-[400px] z-10">
+                @foreach (var forum in MainLayoutVm.SearchResults.Forums)
+                {
+                    <Tag OnClick="() => NavigateToSpacesPage(forum.ForumId)">
+                        #@forum.Topic
+                    </Tag>
+                }
+            </Card>
+        }
+        else if (MainLayoutVm.SearchResults.Users.Count > 0 && MainLayoutVm.SearchResults.Forums.Count <0)
+        {
+            <Card Class="absolute left-0 top-full mt-1 p-4 flex flex-col gap-3 w-[400px] z-10">
+                @foreach (var user in MainLayoutVm.SearchResults.Users)
+                {
+                    <Tag OnClick="() => NavigateToUsersPage(user.UserId)">
+                        @@@user.Username
+                    </Tag>
+                }
+            </Card>
+        }
+        else
+        {
+            <Card Class="absolute left-0 top-full mt-1 p-4 flex flex-col gap-3 w-[400px] z-10">
+                @for (var i = 0; i < 5 && i < MainLayoutVm.SearchResults.Users.Count; i++)
+                {
+                    var user = MainLayoutVm.SearchResults.Users[i];
+                    <Tag OnClick="() => NavigateToUsersPage(user.UserId)">
+                        @@@user.Username
+                    </Tag>
+                }
+                @foreach (var forum in MainLayoutVm.SearchResults.Forums)
+                {
+                    <Tag OnClick="() => NavigateToSpacesPage(forum.ForumId)">
+                        #@forum.Topic
+                    </Tag>
+                }
+            </Card>
+        }
+    }
+</div>
+
+@code {
+
+    /// <summary>
+    ///     ViewModel to be used in this view
+    /// </summary>
+    [Inject]
+    [SupplyParameterFromForm]
+    public ISearchVm? MainLayoutVm { get; set; }
+
+    /// An event that is invoked whenever this input field's value changes
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    async Task ExecuteSearch(ChangeEventArgs e)
+    {
+        await MainLayoutVm!.GetSearchResults(e, ValueChanged);
+    }
+
+    private void NavigateToSpacesPage(Guid spaceId)
+    {
+        NavigationManager.NavigateTo($"spaces/{spaceId}", true);
+        MainLayoutVm!.ClearSearchResults();
+    }
+
+    private void NavigateToUsersPage(Guid userId)
+    {
+        NavigationManager.NavigateTo($"/profile/{userId}");
+        MainLayoutVm!.ClearSearchResults();
+    }
+
+}
+

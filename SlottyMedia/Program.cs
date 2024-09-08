@@ -113,6 +113,7 @@ try
     builder.Services.AddScoped<IUserVm, UserVmImpl>();
     builder.Services.AddScoped<IPostPageVm, PostPageVmImpl>();
     builder.Services.AddScoped<ICommentSubmissionFormVm, CommentSubmissionFormVmImpl>();
+    builder.Services.AddScoped<ISearchVm, SearchImpl>();
 
 
     var app = builder.Build();
