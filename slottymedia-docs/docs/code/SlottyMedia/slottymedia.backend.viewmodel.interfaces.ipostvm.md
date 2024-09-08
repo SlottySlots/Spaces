@@ -93,12 +93,12 @@ The ID of the user.
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 A task that represents the asynchronous operation.
 
-### **LikePost(Guid, Guid)**
+### **LikePost(Guid, Guid, Boolean)**
 
 Likes a post by a user.
 
 ```csharp
-Task LikePost(Guid postId, Guid userId)
+Task LikePost(Guid postId, Guid userId, bool wasUnliked)
 ```
 
 #### Parameters
@@ -108,6 +108,9 @@ The ID of the post.
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 The ID of the user.
+
+`wasUnliked` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+If the post was unliked or not
 
 #### Returns
 

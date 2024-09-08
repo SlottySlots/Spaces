@@ -102,10 +102,10 @@ public Task Initialize(Guid postId, Guid userId)
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **LikePost(Guid, Guid)**
+### **LikePost(Guid, Guid, Boolean)**
 
 ```csharp
-public Task LikePost(Guid postId, Guid userId)
+public Task LikePost(Guid postId, Guid userId, bool wasUnliked)
 ```
 
 #### Parameters
@@ -113,6 +113,8 @@ public Task LikePost(Guid postId, Guid userId)
 `postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`wasUnliked` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 #### Returns
 

@@ -56,11 +56,11 @@ public class PostVmImpl : IPostVm
     }
 
     /// <inheritdoc />
-    public async Task LikePost(Guid postId, Guid userId)
+    public async Task LikePost(Guid postId, Guid userId, bool wasUnliked)
     {
         try
         {
-            if (InitLiked)
+            if (wasUnliked)
             {
                 await RemoveLike(postId, userId);
                 LikeCount--;

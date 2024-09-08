@@ -146,14 +146,14 @@
     /// <summary>
     ///     Handles the click event on the like button, adding or removing a like based on the current state.
     /// </summary>
-    public async void LikeClick()
+    public async void LikeClick(bool wasUnliked)
     {
         if (PostVm is null || Dto is null)
         {
             return;
         }
 
-        await PostVm.LikePost(Dto.PostId, CurrentUserId);
+        await PostVm.LikePost(Dto.PostId, CurrentUserId, wasUnliked);
         StateHasChanged();
     }
 }

@@ -103,10 +103,14 @@ protected void OnAfterRender(bool firstRender)
 
 `firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **LikeClick()**
+### **LikeClick(Boolean)**
 
 Handles the click event on the like button, adding or removing a like based on the current state.
 
 ```csharp
-public void LikeClick()
+public void LikeClick(bool wasUnliked)
 ```
+
+#### Parameters
+
+`wasUnliked` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
