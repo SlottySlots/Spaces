@@ -102,6 +102,16 @@ public class SignupFormVmImpl : ISignupFormVm
             Logger.LogDebug("Calling signup service");
             await _signupService.SignUp(Username!, Email!, Password!);
         }
+        catch (IllegalUsernameLengthException)
+        {
+            UsernameErrorMessage = "Username should be between 3 and 15 characters long";
+            throw;
+        }
+        catch (IllegalCharsInUsernameException)
+        {
+            UsernameErrorMessage = "Username can only contain alphanumeric characters";
+            throw;
+        }
         catch (UsernameAlreadyExistsException)
         {
             UsernameErrorMessage = "Username already taken";
@@ -110,6 +120,11 @@ public class SignupFormVmImpl : ISignupFormVm
         catch (EmailAlreadyExistsException)
         {
             EmailErrorMessage = "Email already in use";
+            throw;
+        }
+        catch (PasswordTooShortException)
+        {
+            PasswordErrorMessage = "Password should be at least 5 characters long";
             throw;
         }
         catch (Exception ex)

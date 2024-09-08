@@ -74,7 +74,7 @@ public class SignUpServiceTest
     [Test]
     public void SignUp_UserAlreadyExists()
     {
-        _userServiceMock.Setup(userService => userService.CheckIfUserExistsByUserName(_userName)).ReturnsAsync(true);
+        _userServiceMock.Setup(userService => userService.ExistsByUserName(_userName)).ReturnsAsync(true);
         Assert.ThrowsAsync<UsernameAlreadyExistsException>(async () =>
             {
                 await _signupService.SignUp(_userName, _email, _password);
@@ -88,7 +88,7 @@ public class SignUpServiceTest
     [Test]
     public async Task SignUp()
     {
-        _userServiceMock.Setup(userService => userService.CheckIfUserExistsByUserName(_userName)).ReturnsAsync(false);
+        _userServiceMock.Setup(userService => userService.ExistsByUserName(_userName)).ReturnsAsync(false);
 
         _cookieServiceMock.Setup(cookieService =>
             cookieService.SetCookie("supabase.auth.token", It.IsAny<string>(), 7)).Returns(new ValueTask());
@@ -101,7 +101,7 @@ public class SignUpServiceTest
 
         _userServiceMock.Setup(userService => userService.CreateUser(It.IsAny<string>(), It.IsAny<string>(),
             It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>()));
-        _userServiceMock.Setup(x => x.CheckIfUserExistsByUserName(It.IsAny<string>())).ReturnsAsync(false);
+        _userServiceMock.Setup(x => x.ExistsByUserName(It.IsAny<string>())).ReturnsAsync(false);
 
         _roleRepositoryMock.Setup(roleRepo => roleRepo.GetRoleIdByName("User")).ReturnsAsync(Guid.NewGuid());
         _session = await _signupService.SignUp(_userName, _email, _password);

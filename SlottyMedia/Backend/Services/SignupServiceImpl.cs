@@ -7,12 +7,12 @@ using Client = Supabase.Client;
 
 namespace SlottyMedia.Backend.Services;
 
-/// <summary>
-///     Service
-/// </summary>
+
+/// <inheritdoc />
 public class SignupServiceImpl : ISignupService
 {
     private static readonly Logging<SignupServiceImpl> Logger = new();
+    
     private readonly ICookieService _cookieService;
     private readonly IRoleRepository _roleRepository;
     private readonly Client _supabaseClient;
@@ -21,18 +21,6 @@ public class SignupServiceImpl : ISignupService
     /// <summary>
     ///     Standard Constructor for dependency injection
     /// </summary>
-    /// <param name="supabaseClient">
-    ///     Supabase Client used for supabase interactions
-    /// </param>
-    /// <param name="userService">
-    ///     User Service used to retrieve dtos
-    /// </param>
-    /// <param name="cookieService">
-    ///     Cookie Service used to set cookies on client side
-    /// </param>
-    /// <param name="roleRepository">
-    ///     Role Repository used to retrieve roles
-    /// </param>
     public SignupServiceImpl(Client supabaseClient, IUserService userService, ICookieService cookieService,
         IRoleRepository roleRepository)
     {
@@ -42,29 +30,41 @@ public class SignupServiceImpl : ISignupService
         _roleRepository = roleRepository;
     }
 
-    /// <summary>
-    ///     Function used to sign up a user. This must function be virtual in order to being mocked in unit tests!
-    /// </summary>
-    /// <param name="username">
-    ///     Username for the new user
-    /// </param>
-    /// <param name="email">
-    ///     Email for the new user
-    /// </param>
-    /// <param name="password">
-    ///     Password for the new user
-    /// </param>
-    /// <returns></returns>
-    /// <exception cref="UsernameAlreadyExistsException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <inheritdoc />
     public virtual async Task<Session> SignUp(string username, string email, string password)
     {
+        Logger.LogInfo("Attempting to perform signup...");
+        Logger.LogDebug($"Signing up user with username: '{username}', email: '{email}'...");
+        
+        // throw exception if username contains illegal characters
+        if (!username.All(char.IsLetterOrDigit))
+        {
+            Logger.LogInfo("Signup failed because username contained illegal characters");
+            throw new IllegalCharsInUsernameException();
+        }
+        
+        // throw exception if username is too long or too short
+        if (username.Length < 3 || username.Length > 15)
+        {
+            Logger.LogInfo("Signup failed because username was of illegal size (should be between 3 and 15)");
+            throw new IllegalUsernameLengthException();
+        }
+        
+        // throw exception if password is too short
+        if (password.Length < 5)
+        {
+            Logger.LogInfo("Signup failed because password was too short (should be at least 5 characters long)");
+            throw new PasswordTooShortException();
+        }
+        
         // throw exception if username already exists
-        var user = await _userService.CheckIfUserExistsByUserName(username);
-        if (user)
+        var isUsernameTaken = await _userService.ExistsByUserName(username);
+        if (isUsernameTaken)
+        {
+            Logger.LogInfo("Signup failed because username was already taken");
             throw new UsernameAlreadyExistsException(username);
-
-        Logger.LogDebug($"Signing up user with username: {username}, email: {email}");
+        }
+        
         await _supabaseClient.Auth.SignUp(email, password);
         //This is not needed?
         var session = await _supabaseClient.Auth.SignIn(email, password);
