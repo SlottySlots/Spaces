@@ -6,6 +6,9 @@ using SlottyMedia.Backend.ViewModel;
 
 namespace SlottyMedia.Tests.Viewmodel;
 
+/// <summary>
+/// Unit tests for the PostVmImpl class.
+/// </summary>
 [TestFixture]
 public class PostVmImplTests
 {
@@ -14,6 +17,9 @@ public class PostVmImplTests
     private Mock<IUserService> _mockUserService;
     private PostVmImpl _postVm;
 
+    /// <summary>
+    /// Sets up the test environment before each test.
+    /// </summary>
     [SetUp]
     public void SetUp()
     {
@@ -23,6 +29,9 @@ public class PostVmImplTests
         _postVm = new PostVmImpl(_mockUserService.Object, _mockLikeService.Object, _mockCommentService.Object);
     }
 
+    /// <summary>
+    /// Tests that Initialize method loads all post-related information.
+    /// </summary>
     [Test]
     public async Task Initialize_LoadsAllPostRelatedInformation()
     {
@@ -39,6 +48,9 @@ public class PostVmImplTests
         Assert.That(_postVm.InitLiked, Is.True);
     }
 
+    /// <summary>
+    /// Tests that LikePost method adds a like when the post was not previously liked.
+    /// </summary>
     [Test]
     public async Task LikePost_AddsLikeWhenNotPreviouslyLiked()
     {
@@ -52,6 +64,9 @@ public class PostVmImplTests
         Assert.That(_postVm.InitLiked, Is.True);
     }
 
+    /// <summary>
+    /// Tests that LikePost method removes a like when the post was previously liked.
+    /// </summary>
     [Test]
     public async Task LikePost_RemovesLikeWhenPreviouslyLiked()
     {
@@ -65,6 +80,9 @@ public class PostVmImplTests
         Assert.That(_postVm.InitLiked, Is.False);
     }
 
+    /// <summary>
+    /// Tests that GetUserInformation method sets the user information.
+    /// </summary>
     [Test]
     public async Task GetUserInformation_SetsUserInformation()
     {
@@ -77,6 +95,9 @@ public class PostVmImplTests
         Assert.That(_postVm.UserInformation, Is.EqualTo(userInfo));
     }
 
+    /// <summary>
+    /// Tests that GetCommentsCount method sets the comment count.
+    /// </summary>
     [Test]
     public async Task GetCommentsCount_SetsCommentCount()
     {
@@ -88,6 +109,9 @@ public class PostVmImplTests
         Assert.That(_postVm.CommentCount, Is.EqualTo(10));
     }
 
+    /// <summary>
+    /// Tests that GetLikes method sets the like count and initializes the liked state.
+    /// </summary>
     [Test]
     public async Task GetLikes_SetsLikeCountAndInitLiked()
     {
