@@ -25,7 +25,7 @@
             <Card Class="absolute left-0 top-full mt-1 p-4 flex flex-col gap-3 w-[400px] z-10">
                 @foreach (var forum in MainLayoutVm.SearchResults.Forums)
                 {
-                    <Tag OnClick="() => NavigateToSpacesPage(forum.Topic)">
+                    <Tag OnClick="() => NavigateToSpacesPage(forum.ForumId)">
                         #@forum.Topic
                     </Tag>
                 }
@@ -52,10 +52,9 @@
                         @@@user.Username
                     </Tag>
                 }
-                @for (var i = 0; i < 5 && i < MainLayoutVm.SearchResults.Forums.Count; i++)
+                @foreach (var forum in MainLayoutVm.SearchResults.Forums)
                 {
-                    var forum = MainLayoutVm.SearchResults.Forums[i];
-                    <Tag OnClick="() => NavigateToSpacesPage(forum.Topic)">
+                    <Tag OnClick="() => NavigateToSpacesPage(forum.ForumId)">
                         #@forum.Topic
                     </Tag>
                 }
@@ -82,10 +81,9 @@
         await MainLayoutVm!.GetSearchResults(e, ValueChanged);
     }
 
-    private void NavigateToSpacesPage(string spaceName)
+    private void NavigateToSpacesPage(Guid spaceId)
     {
-        //TODO: Navigate to spaces page
-        NavigationManager.NavigateTo("/spaces");
+        NavigationManager.NavigateTo($"spaces/{spaceId}", true);
         MainLayoutVm!.ClearSearchResults();
     }
 
