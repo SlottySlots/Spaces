@@ -5,7 +5,7 @@ namespace SlottyMedia.Backend.ViewModel.Interfaces;
 /// <summary>
 ///     Interface used as auth viewmodel
 /// </summary>
-public interface IAuthVmImpl
+public interface IAuthVm
 {
     /// <summary>
     ///     Gets the current logged in session of a user

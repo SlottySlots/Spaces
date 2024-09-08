@@ -23,6 +23,18 @@ public RenderFragment ChildContent { get; set; }
 
 RenderFragment<br>
 
+### **Class**
+
+Additional CSS classes to add to the avatar's container
+
+```csharp
+public string Class { get; set; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
 ### **Base64Png**
 
 Sets a Base64Png. Gets the currently set base64png variable if set. If not set it gets the path of the standard
@@ -59,18 +71,6 @@ public EventCallback<string> Base64Callback { get; set; }
 #### Property Value
 
 EventCallback&lt;String&gt;<br>
-
-### **Size**
-
-Sets the size of the avatar
-
-```csharp
-public string Size { get; set; }
-```
-
-#### Property Value
-
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ## Constructors
 

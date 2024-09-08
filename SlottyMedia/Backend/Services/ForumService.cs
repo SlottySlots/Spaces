@@ -109,6 +109,31 @@ public class ForumService : IForumService
             throw new ForumGeneralException("An error occurred while fetching the forum.", ex);
         }
     }
+    
+    
+    /// <inheritdoc />
+    public async Task<ForumDto> GetForumById(Guid forumId)
+    {
+        try
+        {
+            Logger.LogDebug($"Fetching forum with name '{forumId}'...");
+            var dao = await _forumRepository.GetElementById(forumId);
+            return new ForumDto().Mapper(dao);
+        }
+        catch (DatabaseMissingItemException ex)
+        {
+            throw new ForumNotFoundException($"No forum found with the name '{forumId}'", ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new ForumGeneralException("An error occurred while fetching the forum.", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new ForumGeneralException("An error occurred while fetching the forum.", ex);
+        }
+    }
+    
 
     /// <inheritdoc />
     public async Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest)
@@ -123,6 +148,25 @@ public class ForumService : IForumService
         {
             Logger.LogError($"No forums found: {ex.Message}");
             throw new ForumNotFoundException("No forums found.", ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            Logger.LogError($"A general database error occurred: {ex.Message}");
+            throw new ForumGeneralException("An error occurred while retrieving the forums.", ex);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError($"An unexpected error occurred: {ex.Message}");
+            throw new ForumGeneralException("An unexpected error occurred while retrieving the forums.", ex);
+        }
+    }
+
+    public async Task<bool> ExistsByName(string forumName)
+    {
+        try
+        {
+            Logger.LogDebug($"Checking if forum with name '{forumName}' exists...");
+            return await _forumRepository.ExistsByName(forumName);
         }
         catch (GeneralDatabaseException ex)
         {

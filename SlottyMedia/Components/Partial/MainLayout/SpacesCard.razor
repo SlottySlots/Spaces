@@ -1,5 +1,7 @@
 @using SlottyMedia.Backend.ViewModel.Interfaces
+
 @inject ISpacesCardVm ViewModel
+@inject NavigationManager Navigation
 
 
 <Card Class="min-h-[250px] mt-20 mx-7 flex flex-col items-center">
@@ -19,9 +21,9 @@
         @foreach (var space in ViewModel.TrendingSpaces)
         {
             <div class="flex flex-col bg-gray-100 rounded-md w-full">
-                <a href="/" class="font-semibold text-l">
+                <span @onclick="() => _navigateToSpace(space.ForumId)" class="font-semibold text-l cursor-pointer">
                     #@(space.Topic)
-                </a>
+                </span>
                 <span h3 class="text-sm font-medium text-center text-cadet-gray w-fit">
                     Activity: @(space.PostCount) Posts
                 </span>
@@ -39,9 +41,9 @@
         @foreach (var space in ViewModel.RecentSpaces)
         {
             <div class="flex flex-col bg-gray-100 rounded-md w-full">
-                <a href="/" class="font-semibold text-l">
+                <span @onclick="() => _navigateToSpace(space.ForumId)" class="font-semibold text-l cursor-pointer">
                     #@(space.Topic)
-                </a>
+                </span>
                 <span h3 class="text-sm font-medium text-center text-cadet-gray w-fit">
                     Activity: @(space.PostCount) Posts
                 </span>
@@ -61,5 +63,10 @@
     protected override async Task OnInitializedAsync()
     {
         await ViewModel.Fetch();
+    }
+
+    void _navigateToSpace(Guid spaceId)
+    {
+        Navigation.NavigateTo($"spaces/{spaceId}", true);
     }
 }

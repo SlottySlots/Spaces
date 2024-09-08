@@ -1,24 +1,24 @@
-# UserVmImpl
+# UserVm
 
 Namespace: SlottyMedia.Backend.ViewModel
 
 Implementation of the IUserVmImpl interface.
 
 ```csharp
-public class UserVmImpl : SlottyMedia.Backend.ViewModel.Interfaces.IUserVm
+public class UserVm : SlottyMedia.Backend.ViewModel.Interfaces.IUserVm
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [UserVmImpl](./slottymedia.backend.viewmodel.uservmimpl.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [UserVm](./slottymedia.backend.viewmodel.uservm.md)<br>
 Implements [IUserVm](./slottymedia.backend.viewmodel.interfaces.iuservm.md)
 
 ## Constructors
 
-### **UserVmImpl(IUserService)**
+### **UserVm(IUserService)**
 
 Initializes a new instance of the UserVmImpl class.
 
 ```csharp
-public UserVmImpl(IUserService userService)
+public UserVm(IUserService userService)
 ```
 
 #### Parameters

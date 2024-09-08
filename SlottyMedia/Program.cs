@@ -65,6 +65,7 @@ try
     builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
     builder.Services.AddSingleton<ICommentRepository, CommentRepository>();
 
+    
 
     // Daos
     logger.LogInfo("Adding Daos to the container");
@@ -105,10 +106,11 @@ try
     builder.Services.AddScoped<IMainLayoutVm, MainLayoutVmImpl>();
     builder.Services.AddScoped<ISpacesVm, SpacesVmImpl>();
     builder.Services.AddScoped<ISpacesCardVm, SpacesCardVmImpl>();
+    builder.Services.AddScoped<ISpaceVm, SpaceVmImpl>();
     builder.Services.AddScoped<IPostSubmissionFormVm, PostSubmissionFormVmImpl>();
     builder.Services.AddScoped<IHomePageVm, HomePageVmImpl>();
-    builder.Services.AddScoped<IAuthVmImpl, AuthVmImpl>();
-    builder.Services.AddScoped<IUserVmImpl, UserVmImpl>();
+    builder.Services.AddScoped<IAuthVm, AuthVmImpl>();
+    builder.Services.AddScoped<IUserVm, UserVmImpl>();
     builder.Services.AddScoped<IPostPageVm, PostPageVmImpl>();
     builder.Services.AddScoped<ICommentSubmissionFormVm, CommentSubmissionFormVmImpl>();
 

@@ -71,6 +71,20 @@ public Task<ForumDto> GetForumByName(string forumName)
 
 [Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
+### **GetForumById(Guid)**
+
+```csharp
+public Task<ForumDto> GetForumById(Guid forumId)
+```
+
+#### Parameters
+
+`forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
 ### **GetAllForums(PageRequest)**
 
 ```csharp

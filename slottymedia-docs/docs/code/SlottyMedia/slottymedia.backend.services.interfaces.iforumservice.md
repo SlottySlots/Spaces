@@ -91,6 +91,20 @@ Thrown when the forum is not found.
 [ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)<br>
 Thrown when a general error occurs.
 
+### **GetForumById(Guid)**
+
+```csharp
+Task<ForumDto> GetForumById(Guid forumId)
+```
+
+#### Parameters
+
+`forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
 ### **GetAllForums(PageRequest)**
 
 ```csharp
