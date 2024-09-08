@@ -35,18 +35,6 @@ public IMainLayoutVm MainLayoutVm { get; set; }
 
 [IMainLayoutVm](./slottymedia.backend.viewmodel.interfaces.imainlayoutvm.md)<br>
 
-### **UserInformationDto**
-
-The user information to be displayed
-
-```csharp
-public UserInformationDto UserInformationDto { get; set; }
-```
-
-#### Property Value
-
-[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
-
 ### **Body**
 
 ```csharp

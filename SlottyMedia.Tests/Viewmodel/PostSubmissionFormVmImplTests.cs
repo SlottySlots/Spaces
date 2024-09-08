@@ -24,12 +24,14 @@ public class PostSubmissionFormVmImplTests
         _mockPostService = new Mock<IPostService>();
         _mockSearchService = new Mock<ISearchService>();
         _mockNavigationManager = new Mock<NavigationManager>();
+        var userService = new Mock<IUserService>();
         _postSubmissionFormVmImpl = new PostSubmissionFormVmImpl(
             _mockAuthService.Object,
             _mockPostService.Object,
             _mockForumService.Object,
             _mockSearchService.Object,
-            _mockNavigationManager.Object);
+            _mockNavigationManager.Object,
+            userService.Object);
     }
 
     private Mock<IAuthService> _mockAuthService;

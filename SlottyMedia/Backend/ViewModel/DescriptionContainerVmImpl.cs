@@ -38,7 +38,7 @@ public class DescriptionContainerVmImpl : IDescriptionContainerVm
                 if (!description.IsNullOrEmpty())
                 {
                     var user = await _userService.GetUserDaoById(userId.Value);
-                    if (description != user.Description && description.Length <= 200)
+                    if (description != user.Description && description!.Length <= 200)
                     {
                         user.Description = description;
                         await _userService.UpdateUser(user);

@@ -21,8 +21,9 @@ public class CommentSubmissionFormVmImplTests
         _mockAuthService = new Mock<IAuthService>();
         _mockCommentService = new Mock<ICommentService>();
         _mockNavigationManager = new Mock<NavigationManager>();
+        var userService = new Mock<IUserService>();
         _commentSubmissionFormVmImpl = new CommentSubmissionFormVmImpl(_mockAuthService.Object,
-            _mockCommentService.Object, _mockNavigationManager.Object);
+            _mockCommentService.Object, _mockNavigationManager.Object, userService.Object);
     }
 
     private Mock<IAuthService> _mockAuthService;

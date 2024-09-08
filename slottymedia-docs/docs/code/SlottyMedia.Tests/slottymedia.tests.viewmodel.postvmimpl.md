@@ -1,6 +1,6 @@
 # PostVmImpl
 
-Namespace: SlottyMedia.Backend.ViewModel
+Namespace: SlottyMedia.Tests.Viewmodel
 
 ViewModel for Post
 
@@ -8,8 +8,8 @@ ViewModel for Post
 public class PostVmImpl : SlottyMedia.Backend.ViewModel.Interfaces.IPostVm
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [PostVmImpl](./slottymedia.backend.viewmodel.postvmimpl.md)<br>
-Implements [IPostVm](./slottymedia.backend.viewmodel.interfaces.ipostvm.md)
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [PostVmImpl](./slottymedia.tests.viewmodel.postvmimpl.md)<br>
+Implements IPostVm
 
 ## Properties
 
@@ -61,7 +61,7 @@ public UserInformationDto UserInformation { get; private set; }
 
 #### Property Value
 
-[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+UserInformationDto<br>
 
 ## Constructors
 
@@ -75,14 +75,14 @@ public PostVmImpl(IUserService userService, ILikeService likeService, ICommentSe
 
 #### Parameters
 
-`userService` [IUserService](./slottymedia.backend.services.interfaces.iuserservice.md)<br>
-Service for user-related operations
+`userService` IUserService<br>
+The user service.
 
-`likeService` [ILikeService](./slottymedia.backend.services.interfaces.ilikeservice.md)<br>
-Service for like-related operations
+`likeService` ILikeService<br>
+The like service.
 
-`commentService` [ICommentService](./slottymedia.backend.services.interfaces.icommentservice.md)<br>
-Service for comment-related operations
+`commentService` ICommentService<br>
+The comment service.
 
 ## Methods
 

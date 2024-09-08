@@ -11,6 +11,20 @@ public class MainLayoutVmImpl : SlottyMedia.Backend.ViewModel.Interfaces.IMainLa
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [MainLayoutVmImpl](./slottymedia.backend.viewmodel.mainlayoutvmimpl.md)<br>
 Implements [IMainLayoutVm](./slottymedia.backend.viewmodel.interfaces.imainlayoutvm.md)
 
+## Properties
+
+### **UserInformation**
+
+The user information to be displayed
+
+```csharp
+public UserInformationDto UserInformation { get; set; }
+```
+
+#### Property Value
+
+[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+
 ## Constructors
 
 ### **MainLayoutVmImpl(IAuthService, IUserService)**
@@ -73,3 +87,21 @@ The base64Encoding to persist to db
 
 [Task&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns a task of type string. The string represents the base64 encoding persisted in db.
+
+### **Initialize(Nullable&lt;Guid&gt;)**
+
+Initializes the ViewModel with the specified user ID.
+
+```csharp
+public Task Initialize(Nullable<Guid> userId)
+```
+
+#### Parameters
+
+`userId` [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+The ID of the user to load information for.
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+A task representing the asynchronous operation.

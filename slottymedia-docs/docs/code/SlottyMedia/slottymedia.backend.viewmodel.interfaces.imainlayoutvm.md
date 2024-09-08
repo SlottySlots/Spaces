@@ -8,6 +8,20 @@ This Interface represents the viewmodel of the MainLayout (root of our applicati
 public interface IMainLayoutVm
 ```
 
+## Properties
+
+### **UserInformation**
+
+Gets the user information data transfer object to be rendered.
+
+```csharp
+public abstract UserInformationDto UserInformation { get; }
+```
+
+#### Property Value
+
+[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+
 ## Methods
 
 ### **RestoreSessionOnInit()**
@@ -56,3 +70,21 @@ The base64Encoding to persist to db
 [Task&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns a task of type string. The string represents the base64 encoding persisted in db. Or null if a error
  occured;
+
+### **Initialize(Nullable&lt;Guid&gt;)**
+
+Initializes the ViewModel with the specified user ID.
+
+```csharp
+Task Initialize(Nullable<Guid> userId)
+```
+
+#### Parameters
+
+`userId` [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+The ID of the user to load information for.
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+A task representing the asynchronous operation.

@@ -42,7 +42,7 @@
 
 [PostSubmissionFormVmImplTests](./slottymedia.tests.viewmodel.postsubmissionformvmimpltests.md)
 
-[PostVmImplTests](./slottymedia.tests.viewmodel.postvmimpltests.md)
+[PostVmImpl](./slottymedia.tests.viewmodel.postvmimpl.md)
 
 [ProfilePageVmImplTests](./slottymedia.tests.viewmodel.profilepagevmimpltests.md)
 

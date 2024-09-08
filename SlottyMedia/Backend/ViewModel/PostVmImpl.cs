@@ -18,9 +18,9 @@ public class PostVmImpl : IPostVm
     /// <summary>
     ///     The constructor for PostVmImpl
     /// </summary>
-    /// <param name="userService"></param>
-    /// <param name="likeService"></param>
-    /// <param name="commentService"></param>
+    /// <param name="userService">Service for user-related operations</param>
+    /// <param name="likeService">Service for like-related operations</param>
+    /// <param name="commentService">Service for comment-related operations</param>
     public PostVmImpl(IUserService userService, ILikeService likeService, ICommentService commentService)
     {
         _userService = userService;
@@ -149,6 +149,7 @@ public class PostVmImpl : IPostVm
     ///     Retrieves the list of likes for a post.
     /// </summary>
     /// <param name="postId">The ID of the post.</param>
+    /// <param name="userId">The ID of the user.</param>
     /// <returns>
     ///     A task that represents the asynchronous operation. The task result contains the list of user IDs who liked the
     ///     post.
