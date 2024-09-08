@@ -62,12 +62,12 @@ This sets a dto holding information about the current user in order to show the 
  card
 
 ```csharp
-public Task<UserInformationDto> SetUserInfo()
+public Task SetUserInfo()
 ```
 
 #### Returns
 
-[Task&lt;UserInformationDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 Returns a task of type UserInformationDto. The dto is used to update the state in the view.
 
 ### **PersistUserAvatarInDb(String)**
@@ -87,21 +87,3 @@ The base64Encoding to persist to db
 
 [Task&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns a task of type string. The string represents the base64 encoding persisted in db.
-
-### **Initialize(Nullable&lt;Guid&gt;)**
-
-Initializes the ViewModel with the specified user ID.
-
-```csharp
-public Task Initialize(Nullable<Guid> userId)
-```
-
-#### Parameters
-
-`userId` [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The ID of the user to load information for.
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-A task representing the asynchronous operation.
