@@ -35,6 +35,11 @@ public class MainLayoutVmImpl : IMainLayoutVm
     }
 
     /// <summary>
+    ///     The user information to be displayed
+    /// </summary>
+    public UserInformationDto UserInformation { get; set; } = new(true);
+
+    /// <summary>
     ///     This sets the session on initialization of the page.
     /// </summary>
     /// <returns>
@@ -99,5 +104,24 @@ public class MainLayoutVmImpl : IMainLayoutVm
 
         _logger.LogDebug("User ProfilePic could not be restored. Caused by NullPointReference on current session");
         return null;
+    }
+
+    /// <summary>
+    ///     Initializes the ViewModel with the specified user ID.
+    /// </summary>
+    /// <param name="userId">The ID of the user to load information for.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    public async Task Initialize(Guid? userId)
+    {
+        if (userId is not null)
+            try
+            {
+                var userInfo = await _userService.GetUserInfo(userId.Value, false, false);
+                if (userInfo is not null) UserInformation = userInfo;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Failed to load user information for user {userId}. In comment view model.");
+            }
     }
 }

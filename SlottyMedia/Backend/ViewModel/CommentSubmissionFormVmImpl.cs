@@ -12,9 +12,9 @@ public class CommentSubmissionFormVmImpl : ICommentSubmissionFormVm
 {
     private readonly IAuthService _authService;
     private readonly ICommentService _commentService;
+    private readonly Logging<CommentSubmissionFormVmImpl> _logger = new();
     private readonly NavigationManager _navigationManager;
     private readonly IUserService _userService;
-    private readonly Logging<CommentSubmissionFormVmImpl> _logger = new();
 
     /// <summary>Instantiates this class</summary>
     public CommentSubmissionFormVmImpl(IAuthService authService, ICommentService commentService,
@@ -34,10 +34,10 @@ public class CommentSubmissionFormVmImpl : ICommentSubmissionFormVm
 
     /// <inheritdoc />
     public string? ServerErrorMessage { get; private set; }
-    
+
     /// <inheritdoc />
     public UserInformationDto UserInformation { get; set; } = new(true);
-    
+
     /// <inheritdoc />
     public bool IsLoading { get; set; }
 
@@ -79,7 +79,7 @@ public class CommentSubmissionFormVmImpl : ICommentSubmissionFormVm
         // if no errors occurred: reload page
         _navigationManager.Refresh(true);
     }
-    
+
     /// <inheritdoc />
     public async Task Initialize(Guid? userId)
     {
@@ -88,17 +88,13 @@ public class CommentSubmissionFormVmImpl : ICommentSubmissionFormVm
             {
                 IsLoading = true;
                 var userInfo = await _userService.GetUserInfo(userId.Value, false, false);
-                if (userInfo is not null)
-                {
-                    UserInformation = userInfo;
-                }
+                if (userInfo is not null) UserInformation = userInfo;
                 IsLoading = false;
             }
             catch (Exception e)
             {
                 _logger.LogError(e, "Failed to load user information");
             }
-
     }
 
     private void _resetErrorMessages()

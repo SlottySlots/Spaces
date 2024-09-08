@@ -29,6 +29,7 @@
 }
 
 @code {
+
     /// <summary>
     ///     The comment data transfer object to be rendered.
     /// </summary>
@@ -36,7 +37,7 @@
     public CommentDto? Dto { get; set; }
 
     /// <summary>
-    /// The ViewModel for the comment
+    ///     The ViewModel for the comment
     /// </summary>
     [Inject]
     private ICommentVm? CommentVm { get; set; }
@@ -58,4 +59,5 @@
     {
         NavigationManager.NavigateTo($"/profile/{Dto!.CreatorUserId.ToString()}");
     }
+
 }

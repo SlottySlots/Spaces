@@ -82,15 +82,14 @@ public class PostVmImpl : IPostVm
     /// <inheritdoc />
     public async Task GetUserInformation(Guid userId, bool firstRender)
     {
-
-            try
-            {
-                UserInformation = await _userService.GetUserInfo(userId, false, false) ?? new UserInformationDto();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"An error occurred while retrieving user information for userId {userId}");
-            }
+        try
+        {
+            UserInformation = await _userService.GetUserInfo(userId, false, false) ?? new UserInformationDto();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, $"An error occurred while retrieving user information for userId {userId}");
+        }
     }
 
     /// <summary>

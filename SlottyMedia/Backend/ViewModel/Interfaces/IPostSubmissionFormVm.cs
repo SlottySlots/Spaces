@@ -32,6 +32,16 @@ public interface IPostSubmissionFormVm
     string? ServerErrorMessage { get; set; }
 
     /// <summary>
+    ///     The user information data transfer object to be rendered.
+    /// </summary>
+    UserInformationDto UserInformation { get; set; }
+
+    /// <summary>
+    ///     Gets a value indicating whether the data is still loading.
+    /// </summary>
+    bool IsLoading { get; set; }
+
+    /// <summary>
     ///     Handles an event that is triggered whenever the user changes the prompt to select a space.
     ///     This updates the list of matching spaces in the tooltip above the prompt's input field.
     /// </summary>
@@ -60,21 +70,11 @@ public interface IPostSubmissionFormVm
     ///     failure.
     /// </summary>
     Task SubmitForm();
-    
+
     /// <summary>
     ///     Initializes the ViewModel with the specified user ID.
     /// </summary>
     /// <param name="userId">The ID of the user to load information for.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
     public Task Initialize(Guid? userId);
-    
-    /// <summary>
-    ///     The user information data transfer object to be rendered.
-    /// </summary>
-    UserInformationDto UserInformation { get; set; }
-
-    /// <summary>
-    ///     Gets a value indicating whether the data is still loading.
-    /// </summary>
-    bool IsLoading { get; set; }
 }

@@ -101,7 +101,7 @@
     ///     Injected instance of the IPostVm interface.
     /// </summary>
     [Inject]
-    public IPostVm? PostVm { get; set; } 
+    public IPostVm? PostVm { get; set; }
 
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()
@@ -115,19 +115,18 @@
     }
 
     /// <summary>
-    /// This method is called after the component has been rendered.
+    ///     This method is called after the component has been rendered.
     /// </summary>
     /// <param name="firstRender"></param>
     protected override async void OnAfterRender(bool firstRender)
     {
         if (PostVm is null || Dto is null)
             return;
-        if (firstRender || PostVm.UserInformation.Username == "Username is loading.." && Dto is not null)
+        if (firstRender || (PostVm.UserInformation.Username == "Username is loading.." && Dto is not null))
         {
             await PostVm.GetUserInformation(Dto.UserId, firstRender);
-            StateHasChanged(); 
+            StateHasChanged();
         }
-
     }
 
 

@@ -9,6 +9,11 @@ namespace SlottyMedia.Backend.ViewModel.Interfaces;
 public interface IMainLayoutVm
 {
     /// <summary>
+    ///     Gets the user information data transfer object to be rendered.
+    /// </summary>
+    UserInformationDto UserInformation { get; }
+
+    /// <summary>
     ///     This sets the session on initialization of the page.
     /// </summary>
     /// <returns>
@@ -38,4 +43,12 @@ public interface IMainLayoutVm
     ///     occured;
     /// </returns>
     Task<string?> PersistUserAvatarInDb(string base64Encoding);
+
+
+    /// <summary>
+    ///     Initializes the ViewModel with the specified user ID.
+    /// </summary>
+    /// <param name="userId">The ID of the user to load information for.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    public Task Initialize(Guid? userId);
 }

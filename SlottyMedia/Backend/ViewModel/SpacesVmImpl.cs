@@ -21,7 +21,7 @@ public class SpacesVmImpl : ISpacesVm
 
     /// <inheritdoc />
     public List<ForumDto> Forums { get; private set; }
-    
+
     /// <inheritdoc />
     public bool IsLoading { get; private set; }
 

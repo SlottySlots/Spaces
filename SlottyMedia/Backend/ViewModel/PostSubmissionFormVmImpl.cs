@@ -15,11 +15,11 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
 
     private readonly IAuthService _authService;
     private readonly IForumService _forumService;
+    private readonly Logging<PostSubmissionFormVmImpl> _logger = new();
     private readonly NavigationManager _navigationManager;
     private readonly IPostService _postService;
     private readonly ISearchService _searchService;
     private readonly IUserService _userService;
-    private readonly Logging<PostSubmissionFormVmImpl> _logger = new();
 
     /// <summary>
     ///     Ctor used for dep inject
@@ -60,10 +60,10 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
 
     /// <inheritdoc />
     public string? ServerErrorMessage { get; set; }
-    
+
     /// <inheritdoc />
     public UserInformationDto UserInformation { get; set; } = new(true);
-    
+
     /// <inheritdoc />
     public bool IsLoading { get; set; }
 
@@ -140,7 +140,7 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
         // if no errors occurred: redirect to index page
         _navigationManager.NavigateTo("/", true);
     }
-    
+
     /// <inheritdoc />
     public async Task Initialize(Guid? userId)
     {
@@ -149,17 +149,13 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
             {
                 IsLoading = true;
                 var userInfo = await _userService.GetUserInfo(userId.Value, false, false);
-                if (userInfo is not null)
-                {
-                    UserInformation = userInfo;
-                }
+                if (userInfo is not null) UserInformation = userInfo;
                 IsLoading = false;
             }
             catch (Exception e)
             {
                 _logger.LogError(e, "Failed to load user information");
             }
-
     }
 
     private void _resetErrorMessages()
