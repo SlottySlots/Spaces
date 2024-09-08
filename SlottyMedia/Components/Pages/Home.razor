@@ -19,7 +19,7 @@
     <Pagination Page="ViewModel!.Page" OnPageFetch="ViewModel!.LoadPage">
         @foreach (var post in ViewModel!.Page)
         {
-            <Post Dto="post" CurrentUserId=@_currentUserId!.Value OnPostClick="() => _navigateToPostPage(post.PostId)"/>
+            <Post Id="post.PostId"/>
         }
     </Pagination>
 </div>

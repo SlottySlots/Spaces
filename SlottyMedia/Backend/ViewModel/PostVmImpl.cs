@@ -1,4 +1,5 @@
-﻿using SlottyMedia.Backend.Dtos;
+﻿using Microsoft.AspNetCore.Components;
+using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.LoggingProvider;
@@ -10,32 +11,50 @@ namespace SlottyMedia.Backend.ViewModel;
 /// </summary>
 public class PostVmImpl : IPostVm
 {
+    private static readonly Logging<PostVmImpl> Logger = new();
+
+    private readonly IPostService _postService;
     private readonly ICommentService _commentService;
     private readonly ILikeService _likeService;
-    private readonly Logging<PostVmImpl> _logger = new();
     private readonly IUserService _userService;
+    private readonly IAuthService _authService;
+    private readonly NavigationManager _navigationManager;
+
+    private Action? _onStateChanged;
 
     /// <summary>
     ///     The constructor for PostVmImpl
     /// </summary>
-    /// <param name="userService">Service for user-related operations</param>
-    /// <param name="likeService">Service for like-related operations</param>
-    /// <param name="commentService">Service for comment-related operations</param>
-    public PostVmImpl(IUserService userService, ILikeService likeService, ICommentService commentService)
+    public PostVmImpl(
+        IPostService postService,
+        IUserService userService,
+        ILikeService likeService,
+        ICommentService commentService,
+        IAuthService authService,
+        NavigationManager navigationManager)
     {
+        _postService = postService;
         _userService = userService;
         _likeService = likeService;
         _commentService = commentService;
+        _authService = authService;
+        _navigationManager = navigationManager;
     }
 
     /// <inheritdoc />
-    public int CommentCount { get; private set; }
+    public Guid? AuthPrincipalId { get; private set; }
 
     /// <inheritdoc />
-    public bool InitLiked { get; private set; }
+    public bool IsPostLiked { get; private set; }
 
     /// <inheritdoc />
     public bool IsLoading { get; private set; }
+
+    /// <inheritdoc />
+    public PostDto? PostDto { get; private set; }
+
+    /// <inheritdoc />
+    public int CommentCount { get; private set; }
 
     /// <inheritdoc />
     public int LikeCount { get; private set; }
@@ -44,128 +63,61 @@ public class PostVmImpl : IPostVm
     public UserInformationDto UserInformation { get; private set; } = new(true);
 
     /// <inheritdoc />
-    public async Task Initialize(Guid postId, Guid userId)
+    public async Task Initialize(Guid postId, Action onStateChanged)
     {
         IsLoading = true;
-        _logger.LogInfo("PostVmImpl: Loading necessary post-related information...");
-        await GetCommentsCount(postId);
-        //  await GetUserInformation(userId);
-        await GetLikes(postId, userId);
-        _logger.LogInfo("PostVmImpl: Successfully loaded all post-related information");
+        Logger.LogInfo("PostVmImpl: Loading necessary post-related information...");
+
+        _onStateChanged = onStateChanged;
+        PostDto = await _postService.GetPostById(postId);
+        AuthPrincipalId = _authService.GetAuthPrincipalId();
+        CommentCount = await _commentService.CountCommentsInPost(postId);
+        
+        var likes = await _likeService.GetLikesForPost(postId);
+        LikeCount = likes.Count;
+        if (AuthPrincipalId is not null)
+            IsPostLiked = likes.Contains(AuthPrincipalId!.Value);
+
+        UserInformation = (await _userService.GetUserInfo(PostDto!.UserId, false, false))!;
+                
+        Logger.LogInfo("PostVmImpl: Successfully loaded all post-related information");
         IsLoading = false;
     }
 
     /// <inheritdoc />
-    public async Task LikePost(Guid postId, Guid userId)
+    public async Task LikeThisPost()
     {
-        try
+        Logger.LogInfo("Attempting to (un)like post...");
+        if (AuthPrincipalId is null)
         {
-            if (InitLiked)
-            {
-                await RemoveLike(postId, userId);
-                LikeCount--;
-                InitLiked = false;
-            }
-            else
-            {
-                await AddLike(postId, userId);
-                LikeCount++;
-                InitLiked = true;
-            }
+            Logger.LogError($"An unauthenticated user attempted to like a post. Aborting liking operation...");
+            return;
         }
-        catch (Exception e)
+        if (IsPostLiked)
         {
-            _logger.LogError(e, $"An error occurred while liking postId {postId} by userId {userId}");
+            await _likeService.DeleteLike(AuthPrincipalId!.Value, PostDto!.PostId);
+            LikeCount--;
+            IsPostLiked = false;
         }
+        else
+        {
+            await _likeService.InsertLike(AuthPrincipalId!.Value, PostDto!.PostId);
+            LikeCount++;
+            IsPostLiked = true;
+        }
+        _onStateChanged?.Invoke();
+        Logger.LogInfo("Successfully (un)liked post");
     }
 
     /// <inheritdoc />
-    public async Task GetUserInformation(Guid userId, bool firstRender)
+    public void GoToPostPage()
     {
-        try
-        {
-            UserInformation = await _userService.GetUserInfo(userId, false, false) ?? new UserInformationDto();
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, $"An error occurred while retrieving user information for userId {userId}");
-        }
+        _navigationManager.NavigateTo($"/post/{PostDto!.PostId}");
     }
-
-    /// <summary>
-    ///     Adds a like to a post by a user.
-    /// </summary>
-    /// <param name="postId">The ID of the post.</param>
-    /// <param name="userId">The ID of the user.</param>
-    /// <returns>A task that represents the asynchronous operation.</returns>
-    private async Task AddLike(Guid postId, Guid userId)
+    
+    /// <inheritdoc />
+    public void GoToProfilePage()
     {
-        try
-        {
-            await _likeService.InsertLike(userId, postId);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, $"An error occurred while adding like to postId {postId} by userId {userId}");
-        }
-    }
-
-    /// <summary>
-    ///     Removes a like from a post by a user.
-    /// </summary>
-    /// <param name="postId">The ID of the post.</param>
-    /// <param name="userId">The ID of the user.</param>
-    /// <returns>A task that represents the asynchronous operation.</returns>
-    private async Task RemoveLike(Guid postId, Guid userId)
-    {
-        try
-        {
-            await _likeService.DeleteLike(userId, postId);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, $"An error occurred while removing like from postId {postId} by userId {userId}");
-        }
-    }
-
-    /// <summary>
-    ///     Retrieves the count of comments for a post.
-    /// </summary>
-    /// <param name="postId">The ID of the post.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the count of comments.</returns>
-    private async Task GetCommentsCount(Guid postId)
-    {
-        try
-        {
-            CommentCount = await _commentService.CountCommentsInPost(postId);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, $"An error occurred while counting comments for postId {postId}");
-        }
-    }
-
-    /// <summary>
-    ///     Retrieves the list of likes for a post.
-    /// </summary>
-    /// <param name="postId">The ID of the post.</param>
-    /// <param name="userId">The ID of the user.</param>
-    /// <returns>
-    ///     A task that represents the asynchronous operation. The task result contains the list of user IDs who liked the
-    ///     post.
-    /// </returns>
-    private async Task GetLikes(Guid postId, Guid userId)
-    {
-        try
-        {
-            var result = await _likeService.GetLikesForPost(postId);
-
-            LikeCount = result.Count;
-            InitLiked = result.Contains(userId);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, $"An error occurred while retrieving likes for postId {postId}");
-        }
+        _navigationManager.NavigateTo($"/profile/{PostDto!.UserId}");
     }
 }

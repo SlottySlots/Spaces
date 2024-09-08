@@ -1,23 +1,25 @@
 @using SlottyMedia.Backend.Dtos
 @using SlottyMedia.Backend.ViewModel.Interfaces
-@inject NavigationManager NavigationManager;
 
-@if (PostVm is not null && !PostVm.IsLoading)
+@inject IPostVm PostVm
+
+
+@if (!PostVm.IsLoading)
 {
     <div class="w-full p-5 grid grid-cols-10 gap-4">
 
         <!-- profile picture -->
-        <div @onclick="OnClickAvatar">
+        <div @onclick="PostVm.GoToProfilePage">
             <Avatar OpensFileDialog=false Base64Png="@PostVm.UserInformation.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
         </div>
 
         <!-- username & time posted -->
-        <div class="col-span-9 flex flex-col justify-between cursor-pointer" @onclick="() => _navigateToProfile(PostVm.UserInformation.UserId)">
+        <div class="col-span-9 flex flex-col justify-between cursor-pointer" @onclick="PostVm.GoToProfilePage">
             <h3 class="text-xl font-semibold">
                 @(PostVm.UserInformation.Username)
             </h3>
             <h3 class="text-sm font-medium text-cadet-gray">
-                @(Dto!.CreatedAt.ToShortTimeString())
+                @(PostVm.PostDto!.CreatedAt.ToShortTimeString())
             </h3>
         </div>
 
@@ -26,7 +28,7 @@
 
         <!-- actual text -->
         <div class="col-span-9 break-words">
-            @(Dto!.Content)
+            @(PostVm.PostDto!.Content)
         </div>
 
         <!-- this cell is just for filling the grid! -->
@@ -36,7 +38,7 @@
         <div class="col-span-9 flex gap-12 select-none">
 
             <!-- comments -->
-            <div @onclick="OnPostClick" class="flex gap-3 items-center cursor-pointer">
+            <div @onclick="PostVm.GoToPostPage" class="flex gap-3 items-center cursor-pointer">
 
                 <!-- icon -->
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -52,13 +54,16 @@
 
             </div>
 
-            <!-- like button -->
-            <div class="flex gap-3 items-center">
-                <LikeButton Initial="@PostVm.InitLiked" OnClick="LikeClick"/>
-                <span class="text-cadet-gray">
-                    @PostVm.LikeCount
-                </span>
-            </div>
+            @if (PostVm.AuthPrincipalId is not null)
+            {
+                <!-- like button -->
+                <div class="flex gap-3 items-center">
+                    <LikeButton Initial="@PostVm.IsPostLiked" OnClick="PostVm.LikeThisPost"/>
+                    <span class="text-cadet-gray">
+                        @PostVm.LikeCount
+                    </span>
+                </div>
+            }
 
         </div>
 
@@ -66,7 +71,7 @@
 }
 
 
-@if (PostVm is not null && PostVm.IsLoading)
+@if (PostVm.IsLoading)
 {
     <div>
         Loading...
@@ -76,84 +81,12 @@
 
 @code
 {
-    /// <summary>
-    ///     The post to be rendered.
-    /// </summary>
     [Parameter]
-    public PostDto? Dto { get; set; }
-
-    /// <summary>
-    ///     The current logged in user id to propagate towards like component.
-    /// </summary>
-    [Parameter]
-    public Guid CurrentUserId { get; set; }
-
-    /// <summary>
-    ///     This event is triggered when the post's comment button is clicked.
-    ///     This event will be used to navigate to the post's dedicated page from the home page (i.e. <c>/post/{ID}</c>).
-    ///     On the post's dedicated page this event should be left unset.
-    /// </summary>
-    [Parameter]
-    public EventCallback OnPostClick { get; set; }
-
-
-    /// <summary>
-    ///     Injected instance of the IPostVm interface.
-    /// </summary>
-    [Inject]
-    public IPostVm? PostVm { get; set; }
+    public Guid Id { get; set; }
 
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()
     {
-        if (PostVm is null || Dto is null)
-        {
-            return;
-        }
-
-        await PostVm.Initialize(Dto.PostId, Dto.UserId);
-    }
-
-    /// <summary>
-    ///     This method is called after the component has been rendered.
-    /// </summary>
-    /// <param name="firstRender"></param>
-    protected override async void OnAfterRender(bool firstRender)
-    {
-        if (PostVm is null || Dto is null)
-            return;
-        if (firstRender || (PostVm.UserInformation.Username == "Username is loading.." && Dto is not null))
-        {
-            await PostVm.GetUserInformation(Dto.UserId, firstRender);
-            StateHasChanged();
-        }
-    }
-
-
-    /// <summary>
-    ///     Handles the click event on the avatar, navigating to the user's profile page.
-    /// </summary>
-    private void OnClickAvatar()
-    {
-        NavigationManager.NavigateTo($"/profile/{PostVm!.UserInformation.UserId}");
-    }
-
-    private void _navigateToProfile(Guid? userId)
-    {
-        NavigationManager.NavigateTo($"/profile/{userId}");
-    }
-
-    /// <summary>
-    ///     Handles the click event on the like button, adding or removing a like based on the current state.
-    /// </summary>
-    public async void LikeClick()
-    {
-        if (PostVm is null || Dto is null)
-        {
-            return;
-        }
-
-        await PostVm.LikePost(Dto.PostId, CurrentUserId);
-        StateHasChanged();
+        await PostVm.Initialize(Id, StateHasChanged);
     }
 }

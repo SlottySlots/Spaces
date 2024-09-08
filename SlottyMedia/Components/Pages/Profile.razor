@@ -46,7 +46,7 @@
         <Pagination Page="ProfilePageVm.Posts" OnPageFetch="ProfilePageVm.LoadPosts" Class="w-full">
             @foreach (var post in ProfilePageVm.Posts)
             {
-                <Post Dto="post" CurrentUserId="ProfilePageVm.AuthPrincipalId!.Value" OnPostClick="() => _navigateToPostPage(post.PostId)"/>
+                <Post Id="post.PostId" />
             }
         </Pagination>
     }
