@@ -26,7 +26,7 @@ else
         <!-- comment submission form (if user is logged in) -->
         @if (AuthService.IsAuthenticated())
         {
-            <CommentSubmissionForm PostId="@PostId"/>
+            <CommentSubmissionForm PostId="@PostId" UserId="_currentUserId"/>
         }
 
         <!-- all comments that were loaded -->

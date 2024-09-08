@@ -35,17 +35,17 @@ public EventCallback<string> ValueChanged { get; set; }
 
 EventCallback&lt;String&gt;<br>
 
-### **UserInformationDto**
+### **UserId**
 
-The user information data transfer object
+The Id of the User
 
 ```csharp
-public UserInformationDto UserInformationDto { get; set; }
+public Nullable<Guid> UserId { get; set; }
 ```
 
 #### Property Value
 
-[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+[Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
 ## Constructors
 

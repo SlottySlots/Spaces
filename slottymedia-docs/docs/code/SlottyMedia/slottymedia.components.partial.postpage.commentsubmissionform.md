@@ -23,6 +23,18 @@ public Nullable<Guid> PostId { get; set; }
 
 [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
+### **UserId**
+
+The UserId of the user to submit the comment for.
+
+```csharp
+public Nullable<Guid> UserId { get; set; }
+```
+
+#### Property Value
+
+[Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+
 ### **ViewModel**
 
 The ViewModel for this component.
@@ -34,18 +46,6 @@ public ICommentSubmissionFormVm ViewModel { get; set; }
 #### Property Value
 
 [ICommentSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.icommentsubmissionformvm.md)<br>
-
-### **UserInformationDto**
-
-The user information data transfer object.
-
-```csharp
-public UserInformationDto UserInformationDto { get; set; }
-```
-
-#### Property Value
-
-[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
 
 ## Constructors
 

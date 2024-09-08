@@ -1,5 +1,4 @@
 @using Microsoft.IdentityModel.Tokens
-@using SlottyMedia.Backend.Dtos
 @using SlottyMedia.Backend.ViewModel.Interfaces
 @inject NavigationManager NavigationManager
 @inject IAuthVm AuthVm
@@ -8,10 +7,10 @@
 <div class="w-full px-5 pt-5 grid grid-cols-10 gap-4 border-b border-athens-gray">
 
     <!-- profile picture -->
-    @if (!_isLoading)
+    @if (ViewModel is not null && !ViewModel.IsLoading)
     {
         <div @onclick="OnClickAvatar">
-            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
+            <Avatar OpensFileDialog=false Base64Png="@ViewModel.UserInformation.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
         </div>
     }
 
@@ -122,16 +121,14 @@
     /// </summary>
     [Parameter]
     public EventCallback<string?> ValueChanged { get; set; }
-
+    
     /// <summary>
-    ///     The user information data transfer object
+    /// The Id of the User
     /// </summary>
-    public UserInformationDto UserInformationDto { get; set; } = new(true);
+    [Parameter]
+    public Guid? UserId { get; set; }
 
-    /// <summary>
-    ///     Indicates whether the component is loading
-    /// </summary>
-    private bool _isLoading = true;
+
 
     /// <summary>
     ///     Called after the component has been rendered. Fetches user information if it is the first render.
@@ -139,15 +136,10 @@
     /// <param name="firstRender">Indicates whether this is the first render</param>
     protected override async void OnAfterRender(bool firstRender)
     {
-        if (firstRender || UserInformationDto.Username == "Username is loading..")
+        if (firstRender || ViewModel is not null)
         {
-            var userInfo = await UserVm.GetUserInformation(AuthVm.GetCurrentUserId());
-            if (userInfo != null)
-            {
-                UserInformationDto = userInfo;
-                _isLoading = false;
-                StateHasChanged();
-            }
+            await ViewModel!.Initialize(UserId);
+            StateHasChanged();
         }
     }
 
@@ -156,7 +148,7 @@
     /// </summary>
     private void OnClickAvatar()
     {
-        NavigationManager.NavigateTo($"/profile?id={UserInformationDto.UserId.ToString()}");
+        NavigationManager.NavigateTo($"/profile?id={UserId!.Value}");
     }
 
     /// <summary>

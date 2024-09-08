@@ -17,4 +17,9 @@ public interface ISpacesVm
     ///     Fetches all forums and populates the <see cref="Forums" /> property.
     /// </summary>
     Task LoadForums();
+    
+    /// <summary>
+    ///    Indicates whether the ViewModel is currently loading data.
+    /// </summary>
+    public bool IsLoading { get; }
 }

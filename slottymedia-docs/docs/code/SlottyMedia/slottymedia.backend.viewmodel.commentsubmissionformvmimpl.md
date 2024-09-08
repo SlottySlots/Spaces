@@ -41,14 +41,34 @@ public string ServerErrorMessage { get; private set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+### **UserInformation**
+
+```csharp
+public UserInformationDto UserInformation { get; set; }
+```
+
+#### Property Value
+
+[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+
+### **IsLoading**
+
+```csharp
+public bool IsLoading { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ## Constructors
 
-### **CommentSubmissionFormVmImpl(IAuthService, ICommentService, NavigationManager)**
+### **CommentSubmissionFormVmImpl(IAuthService, ICommentService, NavigationManager, IUserService)**
 
 Instantiates this class
 
 ```csharp
-public CommentSubmissionFormVmImpl(IAuthService authService, ICommentService commentService, NavigationManager navigationManager)
+public CommentSubmissionFormVmImpl(IAuthService authService, ICommentService commentService, NavigationManager navigationManager, IUserService userService)
 ```
 
 #### Parameters
@@ -58,6 +78,8 @@ public CommentSubmissionFormVmImpl(IAuthService authService, ICommentService com
 `commentService` [ICommentService](./slottymedia.backend.services.interfaces.icommentservice.md)<br>
 
 `navigationManager` NavigationManager<br>
+
+`userService` [IUserService](./slottymedia.backend.services.interfaces.iuserservice.md)<br>
 
 ## Methods
 
@@ -70,6 +92,20 @@ public Task SubmitForm(Guid postId)
 #### Parameters
 
 `postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **Initialize(Nullable&lt;Guid&gt;)**
+
+```csharp
+public Task Initialize(Nullable<Guid> userId)
+```
+
+#### Parameters
+
+`userId` [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
 #### Returns
 

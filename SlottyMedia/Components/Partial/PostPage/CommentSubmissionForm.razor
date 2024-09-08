@@ -1,4 +1,3 @@
-@using SlottyMedia.Backend.Dtos
 @using SlottyMedia.Backend.ViewModel.Interfaces
 @inject NavigationManager NavigationManager
 @inject IAuthVm AuthVm
@@ -7,10 +6,10 @@
 <div class="w-full px-5 py-3 grid grid-cols-10 gap-4 border-y border-athens-gray">
 
     <!-- profile picture -->
-    @if (!_isLoading)
+    @if (ViewModel is not null && !ViewModel.IsLoading)
     {
         <div @onclick="OnClickAvatar">
-            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
+            <Avatar OpensFileDialog=false Base64Png="@ViewModel.UserInformation.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
         </div>
     }
 
@@ -62,6 +61,11 @@
     /// </summary>
     [Parameter]
     public Guid? PostId { get; set; }
+    
+    /// <summary>
+    /// The UserId of the user to submit the comment for.
+    /// </summary>
+    [Parameter] public Guid? UserId { get; set; }
 
     /// <summary>
     ///     The ViewModel for this component.
@@ -71,39 +75,25 @@
     public ICommentSubmissionFormVm? ViewModel { get; set; }
 
     /// <summary>
-    ///     The user information data transfer object.
-    /// </summary>
-    public UserInformationDto UserInformationDto { get; set; } = new(true);
-
-    /// <summary>
-    ///     Indicates whether the component is loading.
-    /// </summary>
-    private bool _isLoading = true;
-
-    /// <summary>
     ///     Called after the component has been rendered. Fetches user information if it is the first render.
     /// </summary>
     /// <param name="firstRender">Indicates whether this is the first render.</param>
     protected override async void OnAfterRender(bool firstRender)
     {
-        if (firstRender || UserInformationDto.Username == "Username is loading..")
+        if (firstRender && ViewModel is not null)
         {
-            var userInfo = await UserVm.GetUserInformation(AuthVm.GetCurrentUserId());
-            if (userInfo != null)
-            {
-                UserInformationDto = userInfo;
-                _isLoading = false;
-                StateHasChanged();
-            }
+            await ViewModel.Initialize(UserId!.Value);
+            StateHasChanged();
         }
     }
+
 
     /// <summary>
     ///     Navigates to the user's profile page when the avatar is clicked.
     /// </summary>
     private void OnClickAvatar()
     {
-        NavigationManager.NavigateTo($"/profile?id={UserInformationDto.UserId.ToString()}");
+        NavigationManager.NavigateTo($"/profile?id={ViewModel!.UserInformation.UserId.ToString()}");
     }
 
 }

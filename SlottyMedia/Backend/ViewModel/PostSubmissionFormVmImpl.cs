@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.IdentityModel.Tokens;
+using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
 using SlottyMedia.Backend.ViewModel.Interfaces;
 using SlottyMedia.Database.Pagination;
@@ -17,6 +18,8 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
     private readonly NavigationManager _navigationManager;
     private readonly IPostService _postService;
     private readonly ISearchService _searchService;
+    private readonly IUserService _userService;
+    private readonly Logging<PostSubmissionFormVmImpl> _logger = new();
 
     /// <summary>
     ///     Ctor used for dep inject
@@ -26,13 +29,15 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
         IPostService postService,
         IForumService forumService,
         ISearchService searchService,
-        NavigationManager navigationManager)
+        NavigationManager navigationManager,
+        IUserService userService)
     {
         _authService = authService;
         _postService = postService;
         _forumService = forumService;
         _searchService = searchService;
         _navigationManager = navigationManager;
+        _userService = userService;
     }
 
     /// <inheritdoc />
@@ -55,6 +60,12 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
 
     /// <inheritdoc />
     public string? ServerErrorMessage { get; set; }
+    
+    /// <inheritdoc />
+    public UserInformationDto UserInformation { get; set; } = new(true);
+    
+    /// <inheritdoc />
+    public bool IsLoading { get; set; }
 
     /// <inheritdoc />
     public async Task HandleSpacePromptChange(ChangeEventArgs e, EventCallback<string?> promptValueChanged)
@@ -128,6 +139,27 @@ public class PostSubmissionFormVmImpl : IPostSubmissionFormVm
 
         // if no errors occurred: redirect to index page
         _navigationManager.NavigateTo("/", true);
+    }
+    
+    /// <inheritdoc />
+    public async Task Initialize(Guid? userId)
+    {
+        if (userId is not null && UserInformation.Username == "Username is loading..")
+            try
+            {
+                IsLoading = true;
+                var userInfo = await _userService.GetUserInfo(userId.Value, false, false);
+                if (userInfo is not null)
+                {
+                    UserInformation = userInfo;
+                }
+                IsLoading = false;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Failed to load user information");
+            }
+
     }
 
     private void _resetErrorMessages()
