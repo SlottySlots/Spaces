@@ -2,8 +2,7 @@
 using Moq;
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Backend.ViewModel;
-using SlottyMedia.Database.Pagination;
+using SlottyMedia.Backend.ViewModel.Partial.MainLayout;
 
 namespace SlottyMedia.Tests.Viewmodel;
 

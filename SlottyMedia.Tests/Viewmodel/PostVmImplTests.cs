@@ -1,9 +1,8 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Moq;
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Backend.ViewModel;
+using SlottyMedia.Backend.ViewModel.Partial.Post;
 
 namespace SlottyMedia.Tests.Viewmodel;
 

@@ -2,7 +2,7 @@ using Moq;
 using SlottyMedia.Backend.Exceptions.signup;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Backend.ViewModel;
+using SlottyMedia.Backend.ViewModel.Partial.SignUp;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Repository.RoleRepo;
 using SlottyMedia.Tests.TestImpl;
