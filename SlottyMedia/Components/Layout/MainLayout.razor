@@ -128,24 +128,8 @@
                 @Body
             </div>
 
-            <!-- friends bar on the right -->
+            <!-- spaces bar on the right -->
             <div class="h-full bg-[#FEFDFE] border-l border-athens-gray">
-
-                <!-- friends card -->
-                <Card Class="min-h-[250px] mt-20 mx-7 flex flex-col items-center">
-
-                    <!-- title -->
-                    <h3 class="font-semibold text-lg">
-                        Friends
-                    </h3>
-
-                    <!-- no friends :( -->
-                    <div class="grow flex flex-col justify-center items-center">
-                        <span>So empty here...</span>
-                        <span>Sign in to see your friends!</span>
-                    </div>
-
-                </Card>
 
                 <!-- spaces card -->
                 @if (!AuthService.IsAuthenticated())
