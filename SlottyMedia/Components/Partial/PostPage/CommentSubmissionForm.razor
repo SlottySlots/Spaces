@@ -94,7 +94,7 @@
     /// </summary>
     private void OnClickAvatar()
     {
-        NavigationManager.NavigateTo($"/profile?id={ViewModel!.UserInformation.UserId.ToString()}");
+        NavigationManager.NavigateTo($"/profile/{ViewModel!.UserInformation.UserId.ToString()}");
     }
 
 }
