@@ -166,12 +166,10 @@
 </div>
 
 @code{
-    /// <summary>
-    ///     Refreshes a session
-    /// </summary>
+    /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
-        await AuthService.RestoreSessionAsync();
+        await AuthService.RestoreSessionOnInit();
     }
 
     private async void SignOut()
@@ -182,7 +180,7 @@
 
     private void _navigateToProfilePage()
     {
-        NavigationManager.NavigateTo($"/profile/{AuthService.GetCurrentSession()!.User!.Id!}");
+        NavigationManager.NavigateTo($"/profile/{AuthService.GetAuthPrincipalId()}");
     }
 
     private void _navigateToHome()
