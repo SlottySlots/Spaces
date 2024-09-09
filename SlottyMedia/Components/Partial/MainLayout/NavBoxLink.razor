@@ -1,0 +1,25 @@
+<a href="@To" class="
+    flex flex-col items-center
+    text-sm text-raisin-black hover:text-fandango
+    stroke-raisin-black hover:stroke-fandango [*_path]:fill-fandango
+    duration-300">
+    
+    @ChildContent
+
+    <span>
+        @Label
+    </span>
+
+</a>
+
+
+@code {
+    [Parameter]
+    public string? Label { get; set; }
+    
+    [Parameter]
+    public string? To { get; set; }
+    
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}
