@@ -97,8 +97,6 @@ public class SignInFormVmImpl : ISignInFormVm
             await _authService.SignOut();
             // perform signin
             await _authService.SignIn(Email!, Password!);
-
-            // TODO display error message when password was invalid! This is urgent!
         }
         catch (GotrueException ex)
         {
@@ -106,7 +104,7 @@ public class SignInFormVmImpl : ISignInFormVm
             var regex = new Regex("\"error_description\"\\s*:\\s*\"([^\"]*)\"");
             var errorDescription = regex.Match(message);
             if (errorDescription.Success && errorDescription.Groups[1].Value == "Invalid login credentials")
-                ServerErrorMessage = "Provided credentials were invalid!";
+                ServerErrorMessage = "Username or password wrong";
             else
                 ServerErrorMessage = "An unknown error occurred. Try again later.";
             return;
@@ -118,12 +116,13 @@ public class SignInFormVmImpl : ISignInFormVm
         }
 
         // if no errors occurred and user was signed in successfully: redirect to home page
-        _navigationManager.NavigateTo("/");
+        _navigationManager.NavigateTo("/", true);
     }
 
     private void _resetErrorMessages()
     {
         EmailErrorMessage = null;
+        PasswordErrorMessage = null;
         ServerErrorMessage = null;
     }
 }

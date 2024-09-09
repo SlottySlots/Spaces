@@ -12,7 +12,7 @@ namespace SlottyMedia.Backend.ViewModel;
 public class ProfilePageVmImpl : IProfilePageVm
 {
     private readonly IAuthService _authService;
-    private readonly Logging<MainLayoutVmImpl> _logger = new();
+    private readonly Logging<ProfilePageVmImpl> _logger = new();
     private readonly IPostService _postService;
     private readonly IUserService _userService;
 

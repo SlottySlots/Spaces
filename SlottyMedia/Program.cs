@@ -104,7 +104,6 @@ try
     logger.LogInfo("Adding Viewmodels to the container");
     builder.Services.AddScoped<ISignupFormVm, SignupFormVmImpl>();
     builder.Services.AddScoped<ISignInFormVm, SignInFormVmImpl>();
-    builder.Services.AddScoped<IMainLayoutVm, MainLayoutVmImpl>();
     builder.Services.AddScoped<ISpacesVm, SpacesVmImpl>();
     builder.Services.AddScoped<ISpacesCardVm, SpacesCardVmImpl>();
     builder.Services.AddScoped<ISpaceVm, SpaceVmImpl>();
