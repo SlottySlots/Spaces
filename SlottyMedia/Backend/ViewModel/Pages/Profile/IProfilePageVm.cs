@@ -23,6 +23,12 @@ public interface IProfilePageVm
     ///     Whether the authentication principal is following the user whose profile is being visited
     /// </summary>
     public bool IsUserFollowed { get; }
+    
+    /// <summary>
+    ///     Whether the visited profile is actually the authentication principal's profile
+    ///     (i.e. if this is your own profile page).
+    /// </summary>
+    public bool IsOwnProfilePage { get; }
 
     /// <summary>
     ///     The authentication principal's user ID (i.e. the user that's logged in)
@@ -65,4 +71,18 @@ public interface IProfilePageVm
     /// </summary>
     /// <param name="pageNumber">The page number</param>
     public Task LoadPosts(int pageNumber);
+
+    /// <summary>
+    ///     An event that is triggered when the avatar is clicked.
+    ///     It should update the profile picture if the user is on their own
+    ///     profile page.
+    /// </summary>
+    /// <param name="imgB64">The new profile page as a base 64 string</param>
+    public Task OnAvatarClick(string imgB64);
+
+    /// <summary>
+    ///     An event that is triggered when the user updates their own description.
+    /// </summary>
+    /// <param name="description">The new description</param>
+    public Task OnDescriptionUpdate(string description);
 }

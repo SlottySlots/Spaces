@@ -35,6 +35,9 @@ public class ProfilePageVmImpl : IProfilePageVm
     public bool IsUserFollowed { get; private set; }
 
     /// <inheritdoc />
+    public bool IsOwnProfilePage { get; private set; }
+
+    /// <inheritdoc />
     public Guid? AuthPrincipalId { get; private set; }
 
     /// <inheritdoc />
@@ -50,6 +53,7 @@ public class ProfilePageVmImpl : IProfilePageVm
         _logger.LogInfo("Profile Page: Loading necessary user-related information...");
         var authPrincipalIdStr = _authService.GetCurrentSession()?.User?.Id;
         AuthPrincipalId = authPrincipalIdStr is null ? null : Guid.Parse(authPrincipalIdStr);
+        IsOwnProfilePage = AuthPrincipalId == userId;
         await _loadUserInfo(userId);
         await _loadIsUserFollowed();
         _logger.LogInfo("Profile Page: Successfully loaded all user-related information");
@@ -91,6 +95,26 @@ public class ProfilePageVmImpl : IProfilePageVm
             IsUserFollowed = false;
             _logger.LogInfo($"Successfully un-followed user '{UserInfo!.Username}'");
         }
+    }
+    
+    /// <inheritdoc />
+    public async Task OnAvatarClick(string imgB64)
+    {
+        if (!IsOwnProfilePage)
+            return;
+        var user = await _userService.GetUserDaoById(AuthPrincipalId!.Value);
+        user.ProfilePic = imgB64;
+        await _userService.UpdateUser(user);
+    }
+
+    /// <inheritdoc />
+    public async Task OnDescriptionUpdate(string description)
+    {
+        if (!IsOwnProfilePage)
+            return;
+        var user = await _userService.GetUserDaoById(AuthPrincipalId!.Value);
+        user.Description = description;
+        await _userService.UpdateUser(user);
     }
 
     private async Task _loadUserInfo(Guid userId)
