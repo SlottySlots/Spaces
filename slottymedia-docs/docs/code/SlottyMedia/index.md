@@ -262,6 +262,10 @@
 
 [LoginCard](./slottymedia.components.partial.mainlayout.logincard.md)
 
+[NavBox](./slottymedia.components.partial.mainlayout.navbox.md)
+
+[NavBoxLink](./slottymedia.components.partial.mainlayout.navboxlink.md)
+
 [PostSubmissionForm](./slottymedia.components.partial.mainlayout.postsubmissionform.md)
 
 [SpacesCard](./slottymedia.components.partial.mainlayout.spacescard.md)

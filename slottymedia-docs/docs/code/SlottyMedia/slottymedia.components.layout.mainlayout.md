@@ -41,11 +41,15 @@ protected void BuildRenderTree(RenderTreeBuilder __builder)
 
 `__builder` RenderTreeBuilder<br>
 
-### **OnInitializedAsync()**
+### **OnAfterRenderAsync(Boolean)**
 
 ```csharp
-protected Task OnInitializedAsync()
+protected Task OnAfterRenderAsync(bool firstRender)
 ```
+
+#### Parameters
+
+`firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 #### Returns
 
