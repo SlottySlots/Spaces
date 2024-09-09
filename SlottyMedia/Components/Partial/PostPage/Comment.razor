@@ -9,7 +9,7 @@
         
         <!-- profile picture -->
         <div @onclick="CommentVm.GoToCreatorProfile">
-            <Avatar OpensFileDialog=false Base64Png="@CommentVm.UserInfo!.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
+            <Avatar Base64="@CommentVm.UserInfo!.ProfilePic" Class="!w-[50px] !h-[50px]" />
         </div>
 
         <!-- username & time posted -->

@@ -17,9 +17,7 @@
         <div class="h-full w-full p-5 flex flex-col justify-center items-center gap-1">
 
             <!-- profile picture -->
-            <div @onclick="_goToProfilePage" class="rounded-full">
-                <Avatar OpensFileDialog="@false" Base64Png="@_userInfo!.ProfilePic" />
-            </div>
+            <Avatar OnClick="_goToProfilePage" Base64="@_userInfo!.ProfilePic" />
 
             <!-- username -->
             <h3 @onclick="_goToProfilePage" class="text-xl font-semibold text-center w-fit cursor-pointer">

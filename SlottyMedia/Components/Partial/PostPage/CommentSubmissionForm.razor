@@ -9,7 +9,7 @@
     @if (ViewModel is not null && !ViewModel.IsLoading)
     {
         <div @onclick="OnClickAvatar">
-            <Avatar OpensFileDialog=false Base64Png="@ViewModel.UserInformation.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
+            <Avatar Base64="@ViewModel.UserInformation.ProfilePic" Class="!w-[50px] !h-[50px]" />
         </div>
     }
 
