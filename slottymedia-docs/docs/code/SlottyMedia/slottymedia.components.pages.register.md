@@ -21,7 +21,7 @@ public ISignupFormVm ViewModel { get; set; }
 
 #### Property Value
 
-[ISignupFormVm](./slottymedia.backend.viewmodel.interfaces.isignupformvm.md)<br>
+[ISignupFormVm](./slottymedia.backend.viewmodel.partial.signup.isignupformvm.md)<br>
 
 ## Constructors
 

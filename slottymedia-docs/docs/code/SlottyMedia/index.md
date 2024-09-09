@@ -118,69 +118,83 @@
 
 [IUserService](./slottymedia.backend.services.interfaces.iuserservice.md)
 
-## SlottyMedia.Backend.ViewModel
+## SlottyMedia.Backend.ViewModel.Pages.Home
 
-[CommentSubmissionFormVmImpl](./slottymedia.backend.viewmodel.commentsubmissionformvmimpl.md)
+[HomePageVmImpl](./slottymedia.backend.viewmodel.pages.home.homepagevmimpl.md)
 
-[CommentVmImpl](./slottymedia.backend.viewmodel.commentvmimpl.md)
+[IHomePageVm](./slottymedia.backend.viewmodel.pages.home.ihomepagevm.md)
 
-[DescriptionContainerVmImpl](./slottymedia.backend.viewmodel.descriptioncontainervmimpl.md)
+## SlottyMedia.Backend.ViewModel.Pages.Post
 
-[HomePageVmImpl](./slottymedia.backend.viewmodel.homepagevmimpl.md)
+[IPostPageVm](./slottymedia.backend.viewmodel.pages.post.ipostpagevm.md)
 
-[MainLayoutVmImpl](./slottymedia.backend.viewmodel.mainlayoutvmimpl.md)
+[PostPageVmImpl](./slottymedia.backend.viewmodel.pages.post.postpagevmimpl.md)
 
-[PostPageVmImpl](./slottymedia.backend.viewmodel.postpagevmimpl.md)
+## SlottyMedia.Backend.ViewModel.Pages.Profile
 
-[PostSubmissionFormVmImpl](./slottymedia.backend.viewmodel.postsubmissionformvmimpl.md)
+[IProfilePageVm](./slottymedia.backend.viewmodel.pages.profile.iprofilepagevm.md)
 
-[PostVmImpl](./slottymedia.backend.viewmodel.postvmimpl.md)
+[ProfilePageVmImpl](./slottymedia.backend.viewmodel.pages.profile.profilepagevmimpl.md)
 
-[ProfilePageVmImpl](./slottymedia.backend.viewmodel.profilepagevmimpl.md)
+## SlottyMedia.Backend.ViewModel.Pages.Space
 
-[SearchImpl](./slottymedia.backend.viewmodel.searchimpl.md)
+[ISpacesVm](./slottymedia.backend.viewmodel.pages.space.ispacesvm.md)
 
-[SignInFormVmImpl](./slottymedia.backend.viewmodel.signinformvmimpl.md)
+[ISpaceVm](./slottymedia.backend.viewmodel.pages.space.ispacevm.md)
 
-[SignupFormVmImpl](./slottymedia.backend.viewmodel.signupformvmimpl.md)
+[SpacesVmImpl](./slottymedia.backend.viewmodel.pages.space.spacesvmimpl.md)
 
-[SpacesCardVmImpl](./slottymedia.backend.viewmodel.spacescardvmimpl.md)
+[SpaceVmImpl](./slottymedia.backend.viewmodel.pages.space.spacevmimpl.md)
 
-[SpacesVmImpl](./slottymedia.backend.viewmodel.spacesvmimpl.md)
+## SlottyMedia.Backend.ViewModel.Partial.DescriptionContainer
 
-[SpaceVmImpl](./slottymedia.backend.viewmodel.spacevmimpl.md)
+[DescriptionContainerVmImpl](./slottymedia.backend.viewmodel.partial.descriptioncontainer.descriptioncontainervmimpl.md)
 
-## SlottyMedia.Backend.ViewModel.Interfaces
+[IDescriptionContainerVm](./slottymedia.backend.viewmodel.partial.descriptioncontainer.idescriptioncontainervm.md)
 
-[ICommentSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.icommentsubmissionformvm.md)
+## SlottyMedia.Backend.ViewModel.Partial.MainLayout
 
-[ICommentVm](./slottymedia.backend.viewmodel.interfaces.icommentvm.md)
+[IPostSubmissionFormVm](./slottymedia.backend.viewmodel.partial.mainlayout.ipostsubmissionformvm.md)
 
-[IDescriptionContainerVm](./slottymedia.backend.viewmodel.interfaces.idescriptioncontainervm.md)
+[ISpacesCardVm](./slottymedia.backend.viewmodel.partial.mainlayout.ispacescardvm.md)
 
-[IHomePageVm](./slottymedia.backend.viewmodel.interfaces.ihomepagevm.md)
+[PostSubmissionFormVmImpl](./slottymedia.backend.viewmodel.partial.mainlayout.postsubmissionformvmimpl.md)
 
-[IMainLayoutVm](./slottymedia.backend.viewmodel.interfaces.imainlayoutvm.md)
+[SpacesCardVmImpl](./slottymedia.backend.viewmodel.partial.mainlayout.spacescardvmimpl.md)
 
-[IPostPageVm](./slottymedia.backend.viewmodel.interfaces.ipostpagevm.md)
+## SlottyMedia.Backend.ViewModel.Partial.Post
 
-[IPostSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.ipostsubmissionformvm.md)
+[IPostVm](./slottymedia.backend.viewmodel.partial.post.ipostvm.md)
 
-[IPostVm](./slottymedia.backend.viewmodel.interfaces.ipostvm.md)
+[PostVmImpl](./slottymedia.backend.viewmodel.partial.post.postvmimpl.md)
 
-[IProfilePageVm](./slottymedia.backend.viewmodel.interfaces.iprofilepagevm.md)
+## SlottyMedia.Backend.ViewModel.Partial.PostPage
 
-[ISearchVm](./slottymedia.backend.viewmodel.interfaces.isearchvm.md)
+[CommentSubmissionFormVmImpl](./slottymedia.backend.viewmodel.partial.postpage.commentsubmissionformvmimpl.md)
 
-[ISignInFormVm](./slottymedia.backend.viewmodel.interfaces.isigninformvm.md)
+[CommentVmImpl](./slottymedia.backend.viewmodel.partial.postpage.commentvmimpl.md)
 
-[ISignupFormVm](./slottymedia.backend.viewmodel.interfaces.isignupformvm.md)
+[ICommentSubmissionFormVm](./slottymedia.backend.viewmodel.partial.postpage.icommentsubmissionformvm.md)
 
-[ISpacesCardVm](./slottymedia.backend.viewmodel.interfaces.ispacescardvm.md)
+[ICommentVm](./slottymedia.backend.viewmodel.partial.postpage.icommentvm.md)
 
-[ISpacesVm](./slottymedia.backend.viewmodel.interfaces.ispacesvm.md)
+## SlottyMedia.Backend.ViewModel.Partial.Search
 
-[ISpaceVm](./slottymedia.backend.viewmodel.interfaces.ispacevm.md)
+[ISearchVm](./slottymedia.backend.viewmodel.partial.search.isearchvm.md)
+
+[SearchImpl](./slottymedia.backend.viewmodel.partial.search.searchimpl.md)
+
+## SlottyMedia.Backend.ViewModel.Partial.SignIn
+
+[ISignInFormVm](./slottymedia.backend.viewmodel.partial.signin.isigninformvm.md)
+
+[SignInFormVmImpl](./slottymedia.backend.viewmodel.partial.signin.signinformvmimpl.md)
+
+## SlottyMedia.Backend.ViewModel.Partial.SignUp
+
+[ISignupFormVm](./slottymedia.backend.viewmodel.partial.signup.isignupformvm.md)
+
+[SignupFormVmImpl](./slottymedia.backend.viewmodel.partial.signup.signupformvmimpl.md)
 
 ## SlottyMedia.Components
 
@@ -243,6 +257,10 @@
 [Tag](./slottymedia.components.partial.tag.md)
 
 ## SlottyMedia.Components.Partial.MainLayout
+
+[AccountCard](./slottymedia.components.partial.mainlayout.accountcard.md)
+
+[LoginCard](./slottymedia.components.partial.mainlayout.logincard.md)
 
 [PostSubmissionForm](./slottymedia.components.partial.mainlayout.postsubmissionform.md)
 

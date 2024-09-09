@@ -11,30 +11,6 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ## Properties
 
-### **ViewModelSignUp**
-
-ViewModelSignUp to be used on auth
-
-```csharp
-public ISignInFormVm ViewModelSignUp { get; set; }
-```
-
-#### Property Value
-
-[ISignInFormVm](./slottymedia.backend.viewmodel.interfaces.isigninformvm.md)<br>
-
-### **MainLayoutVm**
-
-ViewModel to be used in this view
-
-```csharp
-public IMainLayoutVm MainLayoutVm { get; set; }
-```
-
-#### Property Value
-
-[IMainLayoutVm](./slottymedia.backend.viewmodel.interfaces.imainlayoutvm.md)<br>
-
 ### **Body**
 
 ```csharp
@@ -67,8 +43,6 @@ protected void BuildRenderTree(RenderTreeBuilder __builder)
 
 ### **OnInitializedAsync()**
 
-Refreshes a session
-
 ```csharp
 protected Task OnInitializedAsync()
 ```
@@ -76,15 +50,3 @@ protected Task OnInitializedAsync()
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
-### **OnAfterRender(Boolean)**
-
-Refreshes the user information
-
-```csharp
-protected void OnAfterRender(bool firstRender)
-```
-
-#### Parameters
-
-`firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>

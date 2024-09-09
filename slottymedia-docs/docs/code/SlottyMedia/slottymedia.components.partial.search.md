@@ -3,10 +3,10 @@
 Namespace: SlottyMedia.Components.Partial
 
 ```csharp
-public class Search : Microsoft.AspNetCore.Components.LayoutComponentBase, Microsoft.AspNetCore.Components.IComponent, Microsoft.AspNetCore.Components.IHandleEvent, Microsoft.AspNetCore.Components.IHandleAfterRender
+public class Search : Microsoft.AspNetCore.Components.ComponentBase, Microsoft.AspNetCore.Components.IComponent, Microsoft.AspNetCore.Components.IHandleEvent, Microsoft.AspNetCore.Components.IHandleAfterRender
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → ComponentBase → LayoutComponentBase → [Search](./slottymedia.components.partial.search.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → ComponentBase → [Search](./slottymedia.components.partial.search.md)<br>
 Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ## Properties
@@ -21,7 +21,7 @@ public ISearchVm MainLayoutVm { get; set; }
 
 #### Property Value
 
-[ISearchVm](./slottymedia.backend.viewmodel.interfaces.isearchvm.md)<br>
+[ISearchVm](./slottymedia.backend.viewmodel.partial.search.isearchvm.md)<br>
 
 ### **ValueChanged**
 
@@ -32,16 +32,6 @@ public EventCallback<string> ValueChanged { get; set; }
 #### Property Value
 
 EventCallback&lt;String&gt;<br>
-
-### **Body**
-
-```csharp
-public RenderFragment Body { get; set; }
-```
-
-#### Property Value
-
-RenderFragment<br>
 
 ## Constructors
 
