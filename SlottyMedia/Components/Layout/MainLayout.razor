@@ -151,9 +151,12 @@
 
 @code{
     /// <inheritdoc />
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        if (!firstRender)
+            return;
         await AuthService.RestoreSessionOnInit();
+        StateHasChanged();
     }
 
     private async void SignOut()

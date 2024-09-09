@@ -1,17 +1,19 @@
 ﻿@page "/"
 
+@using SlottyMedia.Backend.Services.Interfaces
 @using SlottyMedia.Backend.ViewModel.Pages.Home
 
 @inject IHomePageVm ViewModel
+@inject IAuthService AuthService
 @inject NavigationManager NavigationManager
 
 
 <PageTitle>Slotty Media | Home</PageTitle>
 
 
-@if (ViewModel.AuthPrincipalId is not null)
+@if (AuthService.IsAuthenticated())
 {
-    <PostSubmissionForm UserId="ViewModel.AuthPrincipalId"></PostSubmissionForm>
+    <PostSubmissionForm UserId="AuthService.GetAuthPrincipalId()"></PostSubmissionForm>
 }
 
 <div class="w-full pb-5 flex flex-col items-center">
@@ -32,10 +34,5 @@
     protected override async Task OnInitializedAsync()
     {
         await ViewModel.Initialize();
-    }
-
-    private void _navigateToPostPage(Guid postId)
-    {
-        NavigationManager.NavigateTo($"/post/{postId}");
     }
 }
