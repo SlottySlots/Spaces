@@ -18,12 +18,12 @@ BEGIN
     FROM public."Forum"
     WHERE to_tsvector('german', replace(regexp_replace("forumTopic", '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) @@ to_tsquery('german', replace(regexp_replace(search_term, '[^a-zA-Z0-9 ]', '', 'g'), ' ', ''))
        OR replace(regexp_replace("forumTopic", '[^a-zA-Z0-9 ]', '', 'g'), ' ', '') ILIKE '%' || replace(regexp_replace(search_term, '[^a-zA-Z0-9 ]', '', 'g'), ' ', '') || '%'
-       OR levenshtein(replace(regexp_replace("forumTopic", '[^a-zA-Z0-9 ]', '', 'g'), ' ', ''), replace(regexp_replace(search_term, '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) <= 3
+       --OR c(replace(regexp_replace("forumTopic", '[^a-zA-Z0-9 ]', '', 'g'), ' ', ''), replace(regexp_replace(search_term, '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) <= 3
     ORDER BY 
         -- First, prioritize tsvector matches
-        to_tsvector('german', replace(regexp_replace("forumTopic", '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) @@ to_tsquery('german', replace(regexp_replace(search_term, '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) DESC,
+        to_tsvector('german', replace(regexp_replace("forumTopic", '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) @@ to_tsquery('german', replace(regexp_replace(search_term, '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) DESC--,
         -- Then, sort by Levenshtein distance (lower distance = higher rank)
-        levenshtein(replace(regexp_replace("forumTopic", '[^a-zA-Z0-9 ]', '', 'g'), ' ', ''), replace(regexp_replace(search_term, '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) ASC
+        --levenshtein(replace(regexp_replace("forumTopic", '[^a-zA-Z0-9 ]', '', 'g'), ' ', ''), replace(regexp_replace(search_term, '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) ASC
     LIMIT 10;
 END;
 $function$
@@ -41,12 +41,12 @@ BEGIN
     FROM public."User"
     WHERE to_tsvector('german', replace(regexp_replace("userName", '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) @@ to_tsquery('german', replace(regexp_replace(search_term, '[^a-zA-Z0-9 ]', '', 'g'), ' ', ''))
        OR replace(regexp_replace("userName", '[^a-zA-Z0-9 ]', '', 'g'), ' ', '') ILIKE '%' || replace(regexp_replace(search_term, '[^a-zA-Z0-9 ]', '', 'g'), ' ', '') || '%'
-       OR levenshtein(replace(regexp_replace("userName", '[^a-zA-Z0-9 ]', '', 'g'), ' ', ''), replace(regexp_replace(search_term, '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) <= 3
+       --OR levenshtein(replace(regexp_replace("userName", '[^a-zA-Z0-9 ]', '', 'g'), ' ', ''), replace(regexp_replace(search_term, '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) <= 3
     ORDER BY 
         -- First, prioritize tsvector matches
-        to_tsvector('german', replace(regexp_replace("userName", '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) @@ to_tsquery('german', replace(regexp_replace(search_term, '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) DESC,
+        to_tsvector('german', replace(regexp_replace("userName", '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) @@ to_tsquery('german', replace(regexp_replace(search_term, '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) DESC--,
         -- Then, sort by Levenshtein distance (lower distance = higher rank)
-        levenshtein(replace(regexp_replace("userName", '[^a-zA-Z0-9 ]', '', 'g'), ' ', ''), replace(regexp_replace(search_term, '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) ASC
+        --levenshtein(replace(regexp_replace("userName", '[^a-zA-Z0-9 ]', '', 'g'), ' ', ''), replace(regexp_replace(search_term, '[^a-zA-Z0-9 ]', '', 'g'), ' ', '')) ASC
     LIMIT 10;
 END;
 $function$
