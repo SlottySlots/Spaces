@@ -1,11 +1,11 @@
 <div style="display: flex; align-content: center; justify-content: center;">
-    <h2>Spaces</h2>
+    <h2>Spaces (former: SlottyMedia)</h2>
     <br/>
     <img src="slottymedia-docs/resources/LoginPageScreen.png" alt="Picture of login screen"/>
     <br/>
     <p align="center">
     <br />
-    <a href="https://slottyslots.github.io/SlottyMedia"><strong>Documentation »</strong></a>
+    <a href="https://slottyslots.github.io/Spaces"><strong>Documentation »</strong></a>
     </p>
 </div>
 <br/>
@@ -20,7 +20,7 @@
 <br/>
 <hr>
 <h3 id="docs">Local Documentation</h3>
-If you want to view the current documentation, you may take a look <a href="https://slottyslots.github.io/SlottyMedia/build/">here</a>
+If you want to view the current documentation, you may take a look <a href="https://slottyslots.github.io/Spaces/build/">here</a>
 
 Or run the following commands inside a branch of your desire:
 
