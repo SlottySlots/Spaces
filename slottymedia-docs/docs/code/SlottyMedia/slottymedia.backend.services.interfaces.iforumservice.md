@@ -137,20 +137,6 @@ Task<bool> ExistsByName(string forumName)
 
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **ExistsByName(String)**
-
-```csharp
-Task<bool> ExistsByName(string forumName)
-```
-
-#### Parameters
-
-`forumName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-#### Returns
-
-[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-
 ### **DetermineRecentSpaces()**
 
 Retrieves the 3 most recent forums based on the creation date.
