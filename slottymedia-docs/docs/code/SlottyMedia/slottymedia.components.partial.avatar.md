@@ -23,6 +23,16 @@ public RenderFragment ChildContent { get; set; }
 
 RenderFragment<br>
 
+### **OnClick**
+
+```csharp
+public EventCallback OnClick { get; set; }
+```
+
+#### Property Value
+
+EventCallback<br>
+
 ### **Class**
 
 Additional CSS classes to add to the avatar's container
@@ -35,42 +45,18 @@ public string Class { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **Base64Png**
+### **Base64**
 
 Sets a Base64Png. Gets the currently set base64png variable if set. If not set it gets the path of the standard
  profile picture.
 
 ```csharp
-public string Base64Png { private get; set; }
+public string Base64 { get; set; }
 ```
 
 #### Property Value
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-### **OpensFileDialog**
-
-Flag to mark the avatar as changeable. Hence the onclick event will open a file dialog.
-
-```csharp
-public bool OpensFileDialog { get; set; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-### **Base64Callback**
-
-Callback triggered whenever a User selects a new file. It invokes the image as base64 encoded string
-
-```csharp
-public EventCallback<string> Base64Callback { get; set; }
-```
-
-#### Property Value
-
-EventCallback&lt;String&gt;<br>
 
 ## Constructors
 

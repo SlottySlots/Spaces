@@ -2,8 +2,6 @@
 
 Namespace: SlottyMedia.Backend.ViewModel
 
-The CommentVmImpl class is responsible for handling the logic for the CommentVm.
-
 ```csharp
 public class CommentVmImpl : SlottyMedia.Backend.ViewModel.Interfaces.ICommentVm
 ```
@@ -13,21 +11,7 @@ Implements [ICommentVm](./slottymedia.backend.viewmodel.interfaces.icommentvm.md
 
 ## Properties
 
-### **UserInformation**
-
-The user information data transfer object to be rendered.
-
-```csharp
-public UserInformationDto UserInformation { get; set; }
-```
-
-#### Property Value
-
-[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
-
 ### **IsLoading**
-
-Gets a value indicating whether the data is still loading.
 
 ```csharp
 public bool IsLoading { get; private set; }
@@ -37,37 +21,62 @@ public bool IsLoading { get; private set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
+### **Dto**
+
+```csharp
+public CommentDto Dto { get; private set; }
+```
+
+#### Property Value
+
+[CommentDto](./slottymedia.backend.dtos.commentdto.md)<br>
+
+### **UserInfo**
+
+```csharp
+public UserInformationDto UserInfo { get; private set; }
+```
+
+#### Property Value
+
+[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+
 ## Constructors
 
-### **CommentVmImpl(IUserService)**
+### **CommentVmImpl(ICommentService, IUserService, NavigationManager)**
 
 The constructor for the CommentVmImpl.
 
 ```csharp
-public CommentVmImpl(IUserService userService)
+public CommentVmImpl(ICommentService commentService, IUserService userService, NavigationManager navigationManager)
 ```
 
 #### Parameters
 
+`commentService` [ICommentService](./slottymedia.backend.services.interfaces.icommentservice.md)<br>
+
 `userService` [IUserService](./slottymedia.backend.services.interfaces.iuserservice.md)<br>
-The user service to be used for fetching user information.
+
+`navigationManager` NavigationManager<br>
 
 ## Methods
 
-### **Initialize(Nullable&lt;Guid&gt;)**
-
-Initializes the ViewModel with the specified user ID.
+### **Initialize(Guid)**
 
 ```csharp
-public Task Initialize(Nullable<Guid> userId)
+public Task Initialize(Guid commentId)
 ```
 
 #### Parameters
 
-`userId` [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The ID of the user to load information for.
+`commentId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-A task representing the asynchronous operation.
+
+### **GoToCreatorProfile()**
+
+```csharp
+public void GoToCreatorProfile()
+```

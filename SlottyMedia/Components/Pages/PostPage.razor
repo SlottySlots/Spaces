@@ -1,5 +1,5 @@
 @page "/post/{PostId:guid}"
-@using SlottyMedia.Backend.ViewModel.Interfaces
+@using SlottyMedia.Backend.ViewModel.Pages.Post
 @using SlottyMedia.Components.Partial.PostPage
 
 
@@ -23,9 +23,9 @@ else
     <div class="w-full pb-5 flex flex-col items-center gap-3">
 
         <!-- comment submission form (if user is logged in) -->
-        @if (ViewModel.IsAuthenticated)
+        @if (ViewModel.AuthPrincipalId is not null)
         {
-            <CommentSubmissionForm PostId="@PostId" UserId="ViewModel.CurrentUserId"/>
+            <CommentSubmissionForm PostId="@PostId" UserId="ViewModel.AuthPrincipalId"/>
         }
 
         <!-- all comments that were loaded -->
@@ -33,7 +33,7 @@ else
             @foreach (var comment in ViewModel.Comments)
             {
                 <div class="w-full px-5">
-                    <Comment Dto="comment"/>
+                    <Comment Id="comment.CommentId"/>
                 </div>
             }
         </Pagination>

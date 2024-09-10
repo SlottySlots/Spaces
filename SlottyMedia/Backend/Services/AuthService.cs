@@ -6,7 +6,6 @@ using Client = Supabase.Client;
 
 namespace SlottyMedia.Backend.Services;
 
-
 /// <inheritdoc />
 public class AuthService : IAuthService
 {

@@ -45,7 +45,7 @@ public ICommentSubmissionFormVm ViewModel { get; set; }
 
 #### Property Value
 
-[ICommentSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.icommentsubmissionformvm.md)<br>
+[ICommentSubmissionFormVm](./slottymedia.backend.viewmodel.partial.postpage.icommentsubmissionformvm.md)<br>
 
 ## Constructors
 

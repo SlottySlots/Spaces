@@ -86,10 +86,10 @@ public Task<UserDto> GetUserDtoById(Guid userId)
 
 [Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **CheckIfUserExistsByUserName(String)**
+### **ExistsByUserName(String)**
 
 ```csharp
-public Task<bool> CheckIfUserExistsByUserName(string username)
+public Task<bool> ExistsByUserName(string username)
 ```
 
 #### Parameters

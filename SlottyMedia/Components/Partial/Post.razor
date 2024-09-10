@@ -1,6 +1,4 @@
-@using SlottyMedia.Backend.Dtos
-@using SlottyMedia.Backend.ViewModel.Interfaces
-
+@using SlottyMedia.Backend.ViewModel.Partial.Post
 @inject IPostVm PostVm
 
 
@@ -10,7 +8,7 @@
 
         <!-- profile picture -->
         <div @onclick="PostVm.GoToProfilePage">
-            <Avatar OpensFileDialog=false Base64Png="@PostVm.UserInformation.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
+            <Avatar Base64="@PostVm.UserInformation.ProfilePic" Class="!w-[50px] !h-[50px]"/>
         </div>
 
         <!-- username & time posted -->
@@ -19,7 +17,7 @@
                 @(PostVm.UserInformation.Username)
             </h3>
             <h3 class="text-sm font-medium text-cadet-gray">
-                @(PostVm.PostDto!.CreatedAt.ToShortTimeString())
+                @(PostVm.PostDto!.CreatedAt.ToString("dd MMMM yyyy"))
             </h3>
         </div>
 
@@ -81,8 +79,7 @@
 
 @code
 {
-    [Parameter]
-    public Guid Id { get; set; }
+    [Parameter] public Guid Id { get; set; }
 
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()

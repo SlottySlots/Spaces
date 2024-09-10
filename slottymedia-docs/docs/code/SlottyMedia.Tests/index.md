@@ -26,6 +26,8 @@
 
 ## SlottyMedia.Tests.TestImpl
 
+[MockedAvatarGenerator](./slottymedia.tests.testimpl.mockedavatargenerator.md)
+
 [PageTestImpl&lt;T&gt;](./slottymedia.tests.testimpl.pagetestimpl-1.md)
 
 ## SlottyMedia.Tests.Viewmodel
@@ -33,8 +35,6 @@
 [CommentSubmissionFormVmImplTests](./slottymedia.tests.viewmodel.commentsubmissionformvmimpltests.md)
 
 [HomePageVmImplTests](./slottymedia.tests.viewmodel.homepagevmimpltests.md)
-
-[MainLayoutVmImplTest](./slottymedia.tests.viewmodel.mainlayoutvmimpltest.md)
 
 [PostPageVmImplTests](./slottymedia.tests.viewmodel.postpagevmimpltests.md)
 

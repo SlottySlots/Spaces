@@ -11,6 +11,13 @@ namespace SlottyMedia.Backend.Services.Interfaces;
 public interface ICommentService
 {
     /// <summary>
+    ///     Fetches a comment by its ID.
+    /// </summary>
+    /// <param name="commentId">The comment's ID</param>
+    /// <returns>The comment</returns>
+    Task<CommentDto> GetCommentById(Guid commentId);
+
+    /// <summary>
     ///     Inserts a new comment into the database.
     /// </summary>
     /// <param name="creatorUserId">The ID of the user who created the comment.</param>

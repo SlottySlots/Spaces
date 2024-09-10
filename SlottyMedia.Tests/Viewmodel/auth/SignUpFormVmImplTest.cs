@@ -2,9 +2,10 @@ using Moq;
 using SlottyMedia.Backend.Exceptions.signup;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Backend.ViewModel;
+using SlottyMedia.Backend.ViewModel.Partial.SignUp;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Repository.RoleRepo;
+using SlottyMedia.Tests.TestImpl;
 using Client = Supabase.Client;
 
 namespace SlottyMedia.Tests.Viewmodel.auth;
@@ -26,7 +27,7 @@ public class SignUpFormVmImplTest
         _userServiceMock = new Mock<IUserService>();
         _roleRepositoryMock = new Mock<IRoleRepository>();
         _signUpServiceMock = new Mock<SignupServiceImpl>(_client, _userServiceMock.Object, _cookieServiceMock.Object,
-            _roleRepositoryMock.Object);
+            _roleRepositoryMock.Object, new MockedAvatarGenerator());
 
         _service = new SignupFormVmImpl(_signUpServiceMock.Object);
     }
@@ -57,8 +58,8 @@ public class SignUpFormVmImplTest
     public void SubmitSignUpForm_UsernameNotProvided()
     {
         _service.Username = null;
-        _service.Email = "test";
-        _service.Password = "test";
+        _service.Email = "iambatman@gotham.com";
+        _service.Password = "ThisIsBatmansPassword";
 
         Assert.ThrowsAsync<ArgumentException>(async () => { await _service.SubmitSignupForm(); });
     }
@@ -69,9 +70,9 @@ public class SignUpFormVmImplTest
     [Test]
     public void SubmitSignUpForm_EmailNotProvided()
     {
-        _service.Username = "test";
+        _service.Username = "IAmBatman";
         _service.Email = null;
-        _service.Password = "test";
+        _service.Password = "ThisIsBatmansPassword";
 
         Assert.ThrowsAsync<ArgumentException>(async () => { await _service.SubmitSignupForm(); });
     }
@@ -82,8 +83,8 @@ public class SignUpFormVmImplTest
     [Test]
     public void SubmitSignUpForm_PasswordNotProvided()
     {
-        _service.Username = "test";
-        _service.Email = "test";
+        _service.Username = "IAmBatman";
+        _service.Email = "iambatman@gotham.com";
         _service.Password = null;
 
         Assert.ThrowsAsync<ArgumentException>(async () => { await _service.SubmitSignupForm(); });
@@ -95,9 +96,9 @@ public class SignUpFormVmImplTest
     [Test]
     public void SubmitSignUpForm_UserNameAlreadyExists()
     {
-        _service.Username = "test";
-        _service.Email = "test";
-        _service.Password = "test";
+        _service.Username = "IAmBatman";
+        _service.Email = "iambatman@gotham.com";
+        _service.Password = "ThisIsBatmansPassword";
         _signUpServiceMock.Setup(service => service.SignUp(_service.Username, _service.Email, _service.Password))
             .ThrowsAsync(new UsernameAlreadyExistsException(_service.Username));
 
@@ -110,9 +111,9 @@ public class SignUpFormVmImplTest
     [Test]
     public void SubmitSignUpForm_EmailAlreadyExists()
     {
-        _service.Username = "test";
-        _service.Email = "test";
-        _service.Password = "test";
+        _service.Username = "IAmBatman";
+        _service.Email = "iambatman@gotham.com";
+        _service.Password = "ThisIsBatmansPassword";
         _signUpServiceMock.Setup(service => service.SignUp(_service.Username, _service.Email, _service.Password))
             .ThrowsAsync(new EmailAlreadyExistsException(_service.Username));
 

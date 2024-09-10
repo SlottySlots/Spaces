@@ -120,11 +120,11 @@ public class UserService : IUserService
     }
 
     /// <inheritdoc />
-    public virtual async Task<bool> CheckIfUserExistsByUserName(string username)
+    public virtual async Task<bool> ExistsByUserName(string username)
     {
         try
         {
-            Logger.LogDebug($"Fetching user with username {username}");
+            Logger.LogDebug($"Checking if user with username '{username}' exists...");
             await _userRepository.GetUserByUsername(username);
             return true;
         }

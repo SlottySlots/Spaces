@@ -23,6 +23,20 @@ public CommentService(ICommentRepository commentRepository)
 
 ## Methods
 
+### **GetCommentById(Guid)**
+
+```csharp
+public Task<CommentDto> GetCommentById(Guid commentId)
+```
+
+#### Parameters
+
+`commentId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;CommentDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
 ### **InsertComment(Guid, Guid, String)**
 
 ```csharp

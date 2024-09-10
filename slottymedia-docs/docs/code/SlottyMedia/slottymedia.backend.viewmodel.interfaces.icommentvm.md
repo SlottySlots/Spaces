@@ -10,21 +10,9 @@ public interface ICommentVm
 
 ## Properties
 
-### **UserInformation**
-
-Gets the user information data transfer object to be rendered.
-
-```csharp
-public abstract UserInformationDto UserInformation { get; }
-```
-
-#### Property Value
-
-[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
-
 ### **IsLoading**
 
-Gets a value indicating whether the data is still loading.
+Whether the necessary comment-related data is still being loaded.
 
 ```csharp
 public abstract bool IsLoading { get; }
@@ -34,22 +22,54 @@ public abstract bool IsLoading { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-## Methods
+### **Dto**
 
-### **Initialize(Nullable&lt;Guid&gt;)**
-
-Initializes the ViewModel with the specified user ID.
+The comment that should be rendered.
 
 ```csharp
-Task Initialize(Nullable<Guid> userId)
+public abstract CommentDto Dto { get; }
+```
+
+#### Property Value
+
+[CommentDto](./slottymedia.backend.dtos.commentdto.md)<br>
+
+### **UserInfo**
+
+User-related information about the comment's creator.
+
+```csharp
+public abstract UserInformationDto UserInfo { get; }
+```
+
+#### Property Value
+
+[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+
+## Methods
+
+### **Initialize(Guid)**
+
+Initializes this view model with the provided comment ID.
+ This loads all comment-related information.
+
+```csharp
+Task Initialize(Guid commentId)
 ```
 
 #### Parameters
 
-`userId` [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The ID of the user to load information for.
+`commentId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the comment that should be loaded
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-A task representing the asynchronous operation.
+
+### **GoToCreatorProfile()**
+
+Navigates to the comment creator's profile page.
+
+```csharp
+void GoToCreatorProfile()
+```

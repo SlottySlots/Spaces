@@ -1,32 +1,97 @@
 @page "/profile/{UserId:guid}"
-@using SlottyMedia.Backend.ViewModel.Interfaces
+@using SlottyMedia.Backend.ViewModel.Pages.Profile
 
 @inject IProfilePageVm ProfilePageVm
+@inject IJSRuntime JsRuntime
 @inject NavigationManager NavigationManager
+
 
 @if (!ProfilePageVm.IsLoadingPage)
 {
-    <div class="flex border-b border-athens-gray py-4 w-full">
-        <div class="px-4">
-            <Avatar Base64PNG="@ProfilePageVm.UserInfo!.ProfilePic"></Avatar>
-        </div>
+    <div class="w-full p-4 grid grid-cols-10 gap-5 border-b border-athens-gray">
 
-        <div class="px-4 flex flex-col gap-3">
+        <!-- profile picture -->
+        @if (ProfilePageVm.IsOwnProfilePage)
+        {
+            <Avatar
+                OnClick="_openFileDialog"
+                Base64="@ProfilePageVm.UserInfo!.ProfilePic">
+                <svg width="25" height="25" viewBox="0 0 25 25" fill="none" class="absolute inset-0 z-10 m-auto" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.7568 4.17645H4.75684C4.2264 4.17645 3.7177 4.38716 3.34262 4.76224C2.96755 5.13731 2.75684 5.64602 2.75684 6.17645V20.1764C2.75684 20.7069 2.96755 21.2156 3.34262 21.5907C3.7177 21.9657 4.2264 22.1764 4.75684 22.1764H18.7568C19.2873 22.1764 19.796 21.9657 20.171 21.5907C20.5461 21.2156 20.7568 20.7069 20.7568 20.1764V13.1764" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M19.2568 2.67645C19.6547 2.27863 20.1942 2.05513 20.7568 2.05513C21.3194 2.05513 21.859 2.27863 22.2568 2.67645C22.6547 3.07428 22.8782 3.61384 22.8782 4.17645C22.8782 4.73906 22.6547 5.27863 22.2568 5.67645L12.7568 15.1765L8.75684 16.1765L9.75684 12.1765L19.2568 2.67645Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </Avatar>
+
+            <!-- the (hidden) image upload -->
+            <InputFile id="profile-picture-input" OnChange="_onFileSelected" accept=".png,.jpg" hidden></InputFile>
+        }
+        else
+        {
+            <Avatar Base64="@ProfilePageVm.UserInfo!.ProfilePic"/>
+        }
+
+        <!-- user info -->
+        <div class="col-span-7 px-4 flex flex-col gap-3">
+
+            <!-- username -->
             <h1 class="text-3xl font-medium w-1/4">
                 @ProfilePageVm.UserInfo!.Username
             </h1>
 
-            <p class="text-lg">@ProfilePageVm.UserInfo.Description</p>
+            <!-- description -->
+            @if (ProfilePageVm.IsOwnProfilePage)
+            {
+                @if (!_isEditingDescription)
+                {
+                    <p @onclick="_editDescription" class="break-words cursor-pointer">
+                        @ProfilePageVm.UserInfo.Description
+                    </p>
+                }
+                else
+                {
+                    <form @onsubmit="_handleDescriptionUpdate" class="w-full">
+                        <InputArea
+                            @bind-Value="_ownDescription"
+                            Id="submit-description-textarea"
+                            Name="submit-description-textarea"
+                            Placeholder="Say something about yourself..."
+                            Class="w-full min-h-[50px] max-h-[300px] bg-transparent text-black"/>
+                        <HotButton Type="submit" Class="w-[115px]">
+                            Save
+                        </HotButton>
+                    </form>
+                }
+            }
+            else
+            {
+                <p class="break-words">
+                    @ProfilePageVm.UserInfo.Description
+                </p>
+            }
 
-            <div class="flex w-1/2">
-                <h3 class="text-sm text-cadet-gray w-full">Friends: @ProfilePageVm.UserInfo.FriendsAmount</h3>
-                <h3 class="text-sm text-cadet-gray w-full">Spaces: @ProfilePageVm.UserInfo.SpacesAmount</h3>
-                <h3 class="text-sm text-cadet-gray w-full">Joined at: @ProfilePageVm.UserInfo.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
+            <!-- additional info -->
+            <div class="w-fit flex gap-5 text-sm text-cadet-gray">
+
+                <!-- friends -->
+                <span>
+                    Friends: @ProfilePageVm.UserInfo.FriendsAmount
+                </span>
+
+                <!-- spaces -->
+                <span>
+                    Spaces: @ProfilePageVm.UserInfo.SpacesAmount
+                </span>
+
+                <!-- date joined -->
+                <span>
+                    Joined @ProfilePageVm.UserInfo.CreatedAt.ToString("MMMM yyyy")
+                </span>
+
             </div>
         </div>
-        @if (ProfilePageVm.AuthPrincipalId is not null)
+        @if (ProfilePageVm.AuthPrincipalId is not null && !ProfilePageVm.IsOwnProfilePage)
         {
-            <div class="w-1/4">
+            <div class="col-span-2">
                 <HotButton OnClick="_handleFollowButtonClicked" Type="button" Class="w-full">
                     @if (ProfilePageVm.IsUserFollowed)
                     {
@@ -46,7 +111,7 @@
         <Pagination Page="ProfilePageVm.Posts" OnPageFetch="ProfilePageVm.LoadPosts" Class="w-full">
             @foreach (var post in ProfilePageVm.Posts)
             {
-                <Post Id="post.PostId" />
+                <Post Id="post.PostId"/>
             }
         </Pagination>
     }
@@ -64,6 +129,9 @@ else
     [Parameter]
     public Guid UserId { get; set; }
 
+    string? _ownDescription;
+    bool _isEditingDescription;
+
     /// <summary>
     ///     Called when the component's parameters are set. Initializes the profile page view model with the user ID.
     /// </summary>
@@ -73,23 +141,49 @@ else
     }
 
     /// <summary>
-    ///     Navigates to the post page with the specified post ID.
-    /// </summary>
-    /// <param name="postId">The ID of the post to navigate to.</param>
-    private void _navigateToPostPage(Guid postId)
-    {
-        NavigationManager.NavigateTo($"/post/{postId}");
-    }
-
-    /// <summary>
     ///     Handles the follow button click event. Follows or unfollows the user based on the current state.
     /// </summary>
-    private async Task _handleFollowButtonClicked()
+    async Task _handleFollowButtonClicked()
     {
         if (ProfilePageVm.IsUserFollowed)
             await ProfilePageVm.UnfollowThisUser();
         else
             await ProfilePageVm.FollowThisUser();
+        // NavigationManager.Refresh(true);
+    }
+
+    void _editDescription()
+    {
+        _isEditingDescription = true;
+    }
+
+    async Task _handleDescriptionUpdate()
+    {
+        await ProfilePageVm.OnDescriptionUpdate(_ownDescription!);
+        _isEditingDescription = false;
+        NavigationManager.Refresh(true);
+    }
+
+    async Task _openFileDialog()
+    {
+        if (ProfilePageVm.IsOwnProfilePage)
+            await JsRuntime.InvokeVoidAsync("OpenFileDialog", "profile-picture-input");
+    }
+
+    async Task _onFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (ProfilePageVm.IsOwnProfilePage && file.ContentType.Contains("image"))
+        {
+            var buffer = new byte[file.Size];
+            var bytesRead = await file.OpenReadStream().ReadAsync(buffer);
+            if (bytesRead != 0)
+            {
+                var base64String = Convert.ToBase64String(buffer);
+                await ProfilePageVm.OnAvatarClick(base64String);
+            }
+        }
+
         NavigationManager.Refresh(true);
     }
 

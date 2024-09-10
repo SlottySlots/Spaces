@@ -1,5 +1,5 @@
 ﻿@page "/spaces/{SpaceId:guid}"
-@using SlottyMedia.Backend.ViewModel.Interfaces
+@using SlottyMedia.Backend.ViewModel.Pages.Space
 
 @inject NavigationManager NavigationManager
 @inject ISpaceVm SpaceVm
@@ -9,13 +9,16 @@
 
 @if (!SpaceVm.IsLoadingPage)
 {
-    <p class="text-lg">@SpaceVm.Space!.Topic</p>
+    <div class="w-full flex flex-col gap-5 p-4">
+        <p class="text-3xl font-medium w-1/4">@SpaceVm.Space!.Topic</p>
 
-    <div class="flex w-1/2">
-        <h3 class="text-sm text-cadet-gray w-full">Posts: @SpaceVm.Space.PostCount</h3>
-        <h3 class="text-sm text-cadet-gray w-full">Created at: @SpaceVm.Space.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
+        <div class="flex w-1/2">
+            <h3 class="text-sm text-cadet-gray w-full">Posts: @SpaceVm.Space.PostCount</h3>
+            <h3 class="text-sm text-cadet-gray w-full">Created at: @SpaceVm.Space.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
+        </div>
+
+
     </div>
-
     <div class="w-full border-b border-athens-gray my-3"></div>
 
     @if (!SpaceVm.IsLoadingPosts)

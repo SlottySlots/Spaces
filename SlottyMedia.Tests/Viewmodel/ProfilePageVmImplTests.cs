@@ -1,7 +1,7 @@
 ﻿using Moq;
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Backend.ViewModel;
+using SlottyMedia.Backend.ViewModel.Pages.Profile;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Pagination;
 using Supabase.Gotrue;

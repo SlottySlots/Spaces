@@ -33,7 +33,7 @@ public IPostPageVm ViewModel { get; set; }
 
 #### Property Value
 
-[IPostPageVm](./slottymedia.backend.viewmodel.interfaces.ipostpagevm.md)<br>
+[IPostPageVm](./slottymedia.backend.viewmodel.pages.post.ipostpagevm.md)<br>
 
 ## Constructors
 

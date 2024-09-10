@@ -1,6 +1,6 @@
 ﻿@page "/spaces"
-@using SlottyMedia.Backend.ViewModel.Interfaces
-@layout MainLayout
+@using SlottyMedia.Backend.ViewModel.Pages.Space
+
 @inject ISpacesVm SpacesVm
 
 
@@ -18,10 +18,15 @@ else if (SpacesVm.Forums.Any())
         {
             <li>
                 <NavLink href=@($"/spaces/{forum.ForumId}") class="card-link">
-                    <Card class="min-h-[150px] mt-20 mx-7 flex flex-col items-center">
-                        <h3 class="font-semibold text-lg">
+                    <Card class="min-h-[100px] mt-5 mx-7 flex flex-col justify-center align-middle">
+                        <h3 class="text-3xl mt-3 font-medium text-center">
                             @forum.Topic
                         </h3>
+
+                        <div class="flex w-fit mx-auto my-3">
+                            <h3 class="text-sm text-cadet-gray w-full">Posts: @forum.PostCount</h3>
+                            <h3 class="text-sm text-cadet-gray w-full">Created at: @forum.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
+                        </div>
                     </Card>
                 </NavLink>
             </li>

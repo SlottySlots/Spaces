@@ -4,8 +4,17 @@ using NLog.Web;
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Backend.ViewModel;
-using SlottyMedia.Backend.ViewModel.Interfaces;
+using SlottyMedia.Backend.ViewModel.Pages.Home;
+using SlottyMedia.Backend.ViewModel.Pages.Post;
+using SlottyMedia.Backend.ViewModel.Pages.Profile;
+using SlottyMedia.Backend.ViewModel.Pages.Space;
+using SlottyMedia.Backend.ViewModel.Partial.DescriptionContainer;
+using SlottyMedia.Backend.ViewModel.Partial.MainLayout;
+using SlottyMedia.Backend.ViewModel.Partial.Post;
+using SlottyMedia.Backend.ViewModel.Partial.PostPage;
+using SlottyMedia.Backend.ViewModel.Partial.Search;
+using SlottyMedia.Backend.ViewModel.Partial.SignIn;
+using SlottyMedia.Backend.ViewModel.Partial.SignUp;
 using SlottyMedia.Components;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
@@ -19,6 +28,7 @@ using SlottyMedia.Database.Repository.SearchRepo;
 using SlottyMedia.Database.Repository.UserLikePostRelationRepo;
 using SlottyMedia.Database.Repository.UserRepo;
 using SlottyMedia.DatabaseSeeding;
+using SlottyMedia.DatabaseSeeding.Avatar;
 using SlottyMedia.LoggingProvider;
 using Supabase;
 
@@ -97,12 +107,12 @@ try
     builder.Services.AddScoped<ILikeService, LikeService>();
     builder.Services.AddScoped<ICommentService, CommentService>();
     builder.Services.AddScoped<IProfilePageVm, ProfilePageVmImpl>();
+    builder.Services.AddScoped<IAvatarGenerator, PredefinedAvatarGenerator>();
 
     // Viewmodel
     logger.LogInfo("Adding Viewmodels to the container");
     builder.Services.AddScoped<ISignupFormVm, SignupFormVmImpl>();
     builder.Services.AddScoped<ISignInFormVm, SignInFormVmImpl>();
-    builder.Services.AddScoped<IMainLayoutVm, MainLayoutVmImpl>();
     builder.Services.AddScoped<ISpacesVm, SpacesVmImpl>();
     builder.Services.AddScoped<ISpacesCardVm, SpacesCardVmImpl>();
     builder.Services.AddScoped<ISpaceVm, SpaceVmImpl>();

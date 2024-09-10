@@ -21,7 +21,7 @@ public IPostSubmissionFormVm ViewModel { get; set; }
 
 #### Property Value
 
-[IPostSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.ipostsubmissionformvm.md)<br>
+[IPostSubmissionFormVm](./slottymedia.backend.viewmodel.partial.mainlayout.ipostsubmissionformvm.md)<br>
 
 ### **ValueChanged**
 
