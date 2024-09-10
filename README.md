@@ -1,5 +1,5 @@
 <div style="display: flex; align-content: center; justify-content: center;">
-    <h2>SlottyMedia</h2>
+    <h2>Spaces</h2>
     <br/>
     <img src="slottymedia-docs/resources/LoginPageScreen.png" alt="Picture of login screen"/>
     <br/>
