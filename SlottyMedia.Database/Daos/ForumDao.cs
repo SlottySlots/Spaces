@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -7,6 +8,7 @@ namespace SlottyMedia.Database.Daos;
 ///     This class represents the Forum table in the database.
 /// </summary>
 [Table("Forum")]
+[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 public class ForumDao : BaseModel
 {
     /// <summary>
@@ -54,6 +56,12 @@ public class ForumDao : BaseModel
     /// </summary>
     [Column("forumTopic")]
     public string? ForumTopic { get; set; }
+    
+    /// <summary>
+    ///     The Count of Posts in the Forum.
+    /// </summary>
+    [Column("postCount", ignoreOnInsert: true, ignoreOnUpdate: true)]
+    public int? post_count { get; set; }
 
     /// <summary>
     ///     Created Date and Time of the Forum.

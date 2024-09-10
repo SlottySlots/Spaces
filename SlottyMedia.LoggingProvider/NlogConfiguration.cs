@@ -67,7 +67,7 @@ public static class NlogConfiguration
 
         // Filter out Microsoft logs with level less than or equal to Warn
         consoleRule.Filters.Add(new WhenMethodFilter(logEvent =>
-            logEvent.LoggerName.StartsWith("Microsoft.") && logEvent.Level <= LogLevel.Warn
+            logEvent!.LoggerName!.StartsWith("Microsoft.") && logEvent.Level <= LogLevel.Warn
                 ? FilterResult.Ignore
                 : FilterResult.Log));
         config.AddRule(consoleRule);

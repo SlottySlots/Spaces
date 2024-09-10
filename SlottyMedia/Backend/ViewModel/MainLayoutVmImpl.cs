@@ -34,6 +34,12 @@ public class MainLayoutVmImpl : IMainLayoutVm
         _userService = userService;
     }
 
+
+    /// <summary>
+    ///     The user information to be displayed
+    /// </summary>
+    public UserInformationDto UserInformation { get; set; } = new(true);
+
     /// <summary>
     ///     This sets the session on initialization of the page.
     /// </summary>
@@ -56,19 +62,24 @@ public class MainLayoutVmImpl : IMainLayoutVm
     /// <returns>
     ///     Returns a task of type UserInformationDto. The dto is used to update the state in the view.
     /// </returns>
-    public async Task<UserInformationDto?> SetUserInfo()
+    public async Task SetUserInfo()
     {
         try
         {
             var currentSession = _authService.GetCurrentSession();
-            if (currentSession != null) return await _userService.GetUserInfo(Guid.Parse(currentSession!.User!.Id!));
+            if (currentSession != null)
+            {
+                var userInfo = await _userService.GetUserInfo(Guid.Parse(currentSession.User!.Id!));
+                if (userInfo is not null)
+                { 
+                    UserInformation = userInfo;
+                }
+            }
         }
         catch (Exception e)
         {
             _logger.LogError(e.Message);
         }
-
-        return null;
     }
 
     /// <summary>

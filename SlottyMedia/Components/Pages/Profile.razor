@@ -4,7 +4,6 @@
 @inject IProfilePageVm ProfilePageVm
 @inject NavigationManager NavigationManager
 
-
 @if (!ProfilePageVm.IsLoadingPage)
 {
     <div class="flex border-b border-athens-gray py-4 w-full">
@@ -47,7 +46,7 @@
         <Pagination Page="ProfilePageVm.Posts" OnPageFetch="ProfilePageVm.LoadPosts" Class="w-full">
             @foreach (var post in ProfilePageVm.Posts)
             {
-                <Post Dto="post" CurrentUserId="ProfilePageVm.AuthPrincipalId!.Value" OnPostClick="() => _navigateToPostPage(post.PostId)"/>
+                <Post Id="post.PostId" />
             }
         </Pagination>
     }
@@ -57,20 +56,34 @@ else
     <p class="text-3xl font-medium text-center">User not found!</p>
 }
 
-
 @code{
-    [Parameter] public Guid UserId { get; set; }
 
+    /// <summary>
+    ///     The user id of the profile page
+    /// </summary>
+    [Parameter]
+    public Guid UserId { get; set; }
+
+    /// <summary>
+    ///     Called when the component's parameters are set. Initializes the profile page view model with the user ID.
+    /// </summary>
     protected override async Task OnParametersSetAsync()
     {
         await ProfilePageVm.Initialize(UserId);
     }
 
+    /// <summary>
+    ///     Navigates to the post page with the specified post ID.
+    /// </summary>
+    /// <param name="postId">The ID of the post to navigate to.</param>
     private void _navigateToPostPage(Guid postId)
     {
         NavigationManager.NavigateTo($"/post/{postId}");
     }
 
+    /// <summary>
+    ///     Handles the follow button click event. Follows or unfollows the user based on the current state.
+    /// </summary>
     private async Task _handleFollowButtonClicked()
     {
         if (ProfilePageVm.IsUserFollowed)

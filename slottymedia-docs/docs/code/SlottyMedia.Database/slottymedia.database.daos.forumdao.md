@@ -60,6 +60,18 @@ public string ForumTopic { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+### **post_count**
+
+The Count of Posts in the Forum.
+
+```csharp
+public Nullable<int> post_count { get; set; }
+```
+
+#### Property Value
+
+[Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+
 ### **CreatedAt**
 
 Created Date and Time of the Forum.

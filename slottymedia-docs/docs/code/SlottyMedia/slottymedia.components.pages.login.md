@@ -13,6 +13,8 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **ViewModel**
 
+The ViewModel for the login page
+
 ```csharp
 public ISignInFormVm ViewModel { get; set; }
 ```

@@ -91,7 +91,23 @@ Thrown when the forum is not found.
 [ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)<br>
 Thrown when a general error occurs.
 
+### **GetForumById(Guid)**
+
+```csharp
+Task<ForumDto> GetForumById(Guid forumId)
+```
+
+#### Parameters
+
+`forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
 ### **GetAllForums(PageRequest)**
+
+Retrieves all forums with pagination.
 
 ```csharp
 Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest)
@@ -100,10 +116,26 @@ Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest)
 #### Parameters
 
 `pageRequest` PageRequest<br>
+The pagination request details.
 
 #### Returns
 
 [Task&lt;IPage&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A paginated list of forums.
+
+### **ExistsByName(String)**
+
+```csharp
+Task<bool> ExistsByName(string forumName)
+```
+
+#### Parameters
+
+`forumName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+#### Returns
+
+[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **DetermineRecentSpaces()**
 

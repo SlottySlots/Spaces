@@ -65,7 +65,7 @@ public Nullable<Guid> FollowedUserId { get; set; }
 The Date and Time the Follower_User_Relation was created.
 
 ```csharp
-public DateTimeOffset CreatedAt { get; set; }
+public DateTimeOffset CreatedAt { get; }
 ```
 
 #### Property Value

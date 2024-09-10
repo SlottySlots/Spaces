@@ -178,6 +178,35 @@ Thrown when the entity is not found in the database.
 [GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
 Thrown when an unexpected error occurs.
 
+### **ExecuteCountQuery(IPostgrestTable&lt;T&gt;, CountType)**
+
+Executes a single query on the specified table.
+
+```csharp
+public Task<int> ExecuteCountQuery(IPostgrestTable<T> query, CountType countType)
+```
+
+#### Parameters
+
+`query` IPostgrestTable&lt;T&gt;<br>
+The query to execute.
+
+`countType` CountType<br>
+Determines how exact the Count will be
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains a single entity.
+
+#### Exceptions
+
+[DatabaseMissingItemException](./slottymedia.database.exceptions.databasemissingitemexception.md)<br>
+Thrown when the entity is not found in the database.
+
+[GeneralDatabaseException](./slottymedia.database.exceptions.generaldatabaseexception.md)<br>
+Thrown when an unexpected error occurs.
+
 ### **ExecuteFunction(String)**
 
 Executes a function on the database.
@@ -254,3 +283,9 @@ The page request
 
 Task&lt;IPage&lt;T&gt;&gt;<br>
 The [IPage&lt;T&gt;](./slottymedia.database.pagination.ipage-1.md) that corresponds to the given request
+
+#### Exceptions
+
+[DatabasePaginationFailedException](./slottymedia.database.exceptions.databasepaginationfailedexception.md)<br>
+This exception will be thrown, when an error occurs during the
+ Process of Applying the Pagination

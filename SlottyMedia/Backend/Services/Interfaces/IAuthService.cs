@@ -3,19 +3,12 @@ using Supabase.Gotrue;
 namespace SlottyMedia.Backend.Services.Interfaces;
 
 /// <summary>
-///     Interface providing a contract to authenticate a user via supabase
+///     This interface provides functionalities to authenticate a user.
+///     In this context, the <a href="https://en.wikipedia.org/wiki/Principal_(computer_security)">Principal</a>
+///     refers to the currently logged-in user.
 /// </summary>
 public interface IAuthService
 {
-    /// <summary>
-    ///     This method is used to sign up the user.
-    /// </summary>
-    /// <param name="email"></param>
-    /// <param name="password"></param>
-    /// <returns></returns>
-    [Obsolete("This method is deprecated, use ISignupService instead.")]
-    Task<Session?> SignUp(string email, string password);
-
     /// <summary>
     ///     This method is used to sign in the user.
     /// </summary>
@@ -36,7 +29,7 @@ public interface IAuthService
     /// <returns>
     ///     Returns a supabase session
     /// </returns>
-    public Task<Session?> RestoreSessionAsync();
+    Task<Session?> RestoreSessionAsync();
 
     /// <summary>
     ///     Saves the accessToken, refreshToken in form of a cookie in the clients browser
@@ -47,12 +40,19 @@ public interface IAuthService
     /// <returns>
     ///     Returns the sessions again
     /// </returns>
-    public Task SaveSessionAsync(Session session);
+    Task SaveSessionAsync(Session session);
 
     /// <summary>
     ///     Checks if a session exists
     /// </summary>
     bool IsAuthenticated();
+
+    /// <summary>
+    ///     Retrieves the authentication principal's user ID. Returns <c>null</c> if no authentication
+    ///     principal is present.
+    /// </summary>
+    /// <returns>The principal's ID or <c>null</c> if none was present</returns>
+    Guid? GetAuthPrincipalId();
 
     /// <summary>
     ///     Sets a session in form of a cookie on the client side by using wwwroot/js/cookies.js

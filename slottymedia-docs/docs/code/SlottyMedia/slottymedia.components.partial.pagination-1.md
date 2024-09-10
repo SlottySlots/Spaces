@@ -17,6 +17,8 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **Page**
 
+The paginated list to display.
+
 ```csharp
 public IPage<T> Page { get; set; }
 ```
@@ -26,6 +28,8 @@ public IPage<T> Page { get; set; }
 IPage&lt;T&gt;<br>
 
 ### **OnPageFetch**
+
+The event that is triggered when a page is fetched.
 
 ```csharp
 public EventCallback<int> OnPageFetch { get; set; }
@@ -37,6 +41,8 @@ EventCallback&lt;Int32&gt;<br>
 
 ### **ChildContent**
 
+The content to display in the paginated list.
+
 ```csharp
 public RenderFragment ChildContent { get; set; }
 ```
@@ -46,6 +52,8 @@ public RenderFragment ChildContent { get; set; }
 RenderFragment<br>
 
 ### **Class**
+
+The additional CSS classes to apply to the outer div.
 
 ```csharp
 public string Class { get; set; }

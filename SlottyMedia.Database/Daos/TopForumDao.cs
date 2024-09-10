@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -7,6 +8,7 @@ namespace SlottyMedia.Database.Daos;
 ///     This class represents the Forum table in the database.
 /// </summary>
 [Table("Forum")]
+[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 public class TopForumDao : BaseModel
 {
     /// <summary>
@@ -20,9 +22,8 @@ public class TopForumDao : BaseModel
     /// <summary>
     ///     The constructor with parameters.
     /// </summary>
-    /// <param name="creatorUserId">The Id of the User who created the Forum</param>
     /// <param name="forumTopic">The Topic of the Forum</param>
-    public TopForumDao(Guid creatorUserId, string forumTopic)
+    public TopForumDao(string forumTopic)
     {
         ForumTopic = forumTopic;
     }

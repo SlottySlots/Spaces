@@ -10,14 +10,12 @@ public class SpacesCardVmImpl : ISpacesCardVm
 {
     private static readonly Logging<SpacesCardVmImpl> Logger = new();
     private readonly IForumService _forumService;
-    private readonly IPostService _postService;
 
 
     /// <summary>Initializes this ViewModel</summary>
-    public SpacesCardVmImpl(IForumService forumService, IPostService postService)
+    public SpacesCardVmImpl(IForumService forumService)
     {
         _forumService = forumService;
-        _postService = postService;
         TrendingSpaces = new List<ForumDto>();
         RecentSpaces = new List<ForumDto>();
         NumOfPostsInSpace = new Dictionary<Guid, int>();

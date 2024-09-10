@@ -58,6 +58,30 @@ public abstract IPage<CommentDto> Comments { get; }
 
 IPage&lt;CommentDto&gt;<br>
 
+### **CurrentUserId**
+
+The ID of the currently logged in user.
+
+```csharp
+public abstract Guid CurrentUserId { get; }
+```
+
+#### Property Value
+
+[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+### **IsAuthenticated**
+
+True if the user is authenticated, false otherwise.
+
+```csharp
+public abstract bool IsAuthenticated { get; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ## Methods
 
 ### **Initialize(Guid)**

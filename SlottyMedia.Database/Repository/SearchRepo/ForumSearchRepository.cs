@@ -1,8 +1,8 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Exceptions;
 using SlottyMedia.Database.Helper;
-using SlottyMedia.Database.Pagination;
-using Supabase.Postgrest;
 using Client = Supabase.Client;
 
 namespace SlottyMedia.Database.Repository.SearchRepo;
@@ -24,16 +24,19 @@ public class ForumSearchRepository : DatabaseRepository<ForumDao>, IForumSearchR
     }
 
     /// <inheritdoc />
-    public async Task<IPage<ForumDao>> GetForumsByTopic(string topic, PageRequest pageRequest)
+    public async Task<List<ForumDao>> GetForumsByTopic(string topic)
     {
-        if (topic.IsNullOrEmpty())
-            return PageImpl<ForumDao>.Empty();
+        var result =
+            await ExecuteFunction("search_forum", new Dictionary<string, object> { { "search_term", topic } });
 
-        return await ApplyPagination(
-            () => Supabase
-                .From<ForumDao>()
-                .Select(x => new object[] { x.ForumTopic! })
-                .Filter(forum => forum.ForumTopic!, Constants.Operator.ILike, $"%{topic}%"),
-            pageRequest);
+        if (result.ToString() is not null && !result.ToString().IsNullOrEmpty())
+        {
+            var forums = JsonConvert.DeserializeObject<List<ForumDao>>(result.ToString()!);
+            if (forums is null)
+                throw new DatabaseJsonConvertFailed("Failed to convert the result to a list of top forums.");
+            return forums;
+        }
+
+        return new List<ForumDao>();
     }
 }

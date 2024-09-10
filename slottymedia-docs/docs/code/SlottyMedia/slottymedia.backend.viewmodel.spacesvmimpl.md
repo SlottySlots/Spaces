@@ -21,6 +21,16 @@ public List<ForumDto> Forums { get; private set; }
 
 [List&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
 
+### **IsLoading**
+
+```csharp
+public bool IsLoading { get; private set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ## Constructors
 
 ### **SpacesVmImpl(IForumService)**

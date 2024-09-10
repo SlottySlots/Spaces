@@ -1,26 +1,25 @@
 @using SlottyMedia.Backend.Dtos
-@using SlottyMedia.Backend.Services.Interfaces
-@inject IUserService UserService;
-@inject ILikeService LikeService;
-@inject ICommentService CommentService;
-@inject NavigationManager NavigationManager
+@using SlottyMedia.Backend.ViewModel.Interfaces
 
-@if (!_isLoading)
+@inject IPostVm PostVm
+
+
+@if (!PostVm.IsLoading)
 {
     <div class="w-full p-5 grid grid-cols-10 gap-4">
 
         <!-- profile picture -->
-        <div @onclick="OnClickAvatar">
-            <Avatar OpensFileDialog=false Base64Png="@UserInformationDto.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
+        <div @onclick="PostVm.GoToProfilePage">
+            <Avatar OpensFileDialog=false Base64Png="@PostVm.UserInformation.ProfilePic" Class="!w-[50px] !h-[50px]"></Avatar>
         </div>
 
         <!-- username & time posted -->
-        <div class="col-span-9 flex flex-col justify-between cursor-pointer" @onclick="() => _navigateToProfile(_owner!.UserId)">
+        <div class="col-span-9 flex flex-col justify-between cursor-pointer" @onclick="PostVm.GoToProfilePage">
             <h3 class="text-xl font-semibold">
-                @(_owner!.Username)
+                @(PostVm.UserInformation.Username)
             </h3>
             <h3 class="text-sm font-medium text-cadet-gray">
-                @(Dto!.CreatedAt.ToShortTimeString())
+                @(PostVm.PostDto!.CreatedAt.ToShortTimeString())
             </h3>
         </div>
 
@@ -29,7 +28,7 @@
 
         <!-- actual text -->
         <div class="col-span-9 break-words">
-            @(Dto!.Content)
+            @(PostVm.PostDto!.Content)
         </div>
 
         <!-- this cell is just for filling the grid! -->
@@ -39,7 +38,7 @@
         <div class="col-span-9 flex gap-12 select-none">
 
             <!-- comments -->
-            <div @onclick="OnPostClick" class="flex gap-3 items-center cursor-pointer">
+            <div @onclick="PostVm.GoToPostPage" class="flex gap-3 items-center cursor-pointer">
 
                 <!-- icon -->
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -50,18 +49,21 @@
 
                 <!-- number of comments -->
                 <span class="text-cadet-gray">
-                    @_commentCount
+                    @PostVm.CommentCount
                 </span>
 
             </div>
 
-            <!-- like button -->
-            <div class="flex gap-3 items-center">
-                <LikeButton Initial="@_initLiked" OnClick="LikeClick"/>
-                <span class="text-cadet-gray">
-                    @_likeCount
-                </span>
-            </div>
+            @if (PostVm.AuthPrincipalId is not null)
+            {
+                <!-- like button -->
+                <div class="flex gap-3 items-center">
+                    <LikeButton Initial="@PostVm.IsPostLiked" OnClick="PostVm.LikeThisPost"/>
+                    <span class="text-cadet-gray">
+                        @PostVm.LikeCount
+                    </span>
+                </div>
+            }
 
         </div>
 
@@ -69,7 +71,7 @@
 }
 
 
-@if (_isLoading)
+@if (PostVm.IsLoading)
 {
     <div>
         Loading...
@@ -79,96 +81,12 @@
 
 @code
 {
-    /// The post to be rendered.
     [Parameter]
-    public PostDto? Dto { get; set; }
-
-    /// <summary>
-    ///     The current logged in user id to propagate towards like component
-    /// </summary>
-    [Parameter]
-    public Guid CurrentUserId { get; set; }
-
-    /// <summary>
-    ///     This event is triggered when the post's comment button is clicked.
-    ///     This event will be used to navigate to the post's dedicated page from the home page (i.e. <c>/post/{ID}</c>).
-    ///     On the post's dedicated page this event should be left unset.
-    /// </summary>
-    [Parameter]
-    public EventCallback OnPostClick { get; set; }
-
-    private bool _isLoading = true;
-    private int _commentCount;
-    private int _likeCount;
-    private bool _initLiked;
-
-    UserDto? _owner;
-
-    public UserInformationDto UserInformationDto { get; set; } = new()
-    {
-        Username = "Username is loading..",
-        Description = "Description is loading..",
-        ProfilePic = null
-    };
+    public Guid Id { get; set; }
 
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()
     {
-        _isLoading = true;
-        //TODO: This should be changed soon!
-        await SetLikeCountState();
-        _owner = await UserService.GetUserDtoById(Dto!.UserId);
-        _commentCount = await CommentService.CountCommentsInPost(Dto.PostId);
-    }
-
-    protected override async void OnAfterRender(bool firstRender)
-    {
-        if ((firstRender || UserInformationDto.Username == "Username is loading..") && Dto != null)
-        {
-            var userInfo = await UserService.GetUserInfo(Dto!.UserId);
-            if (userInfo != null)
-            {
-                UserInformationDto.Username = userInfo.Username;
-                UserInformationDto.UserId = userInfo.UserId;
-                UserInformationDto.Description = userInfo.Description;
-                UserInformationDto.ProfilePic = userInfo.ProfilePic;
-                UserInformationDto.FriendsAmount = userInfo.FriendsAmount;
-                UserInformationDto.SpacesAmount = userInfo.SpacesAmount;
-                _isLoading = false;
-                StateHasChanged();
-            }
-        }
-    }
-
-    private void OnClickAvatar()
-    {
-        NavigationManager.NavigateTo($"/profile/{UserInformationDto.UserId.ToString()}");
-    }
-
-    private void _navigateToProfile(Guid userId)
-    {
-        NavigationManager.NavigateTo($"/profile/{userId}");
-    }
-
-    public async Task SetLikeCountState()
-    {
-        var likeList = await LikeService.GetLikesForPost(Dto!.PostId);
-        _likeCount = likeList.Count;
-        _initLiked = likeList.Contains(CurrentUserId);
-    }
-
-    public async void LikeClick(bool wasUnliked)
-    {
-        if (wasUnliked)
-        {
-            await LikeService.DeleteLike(CurrentUserId, Dto!.PostId);
-        }
-        else
-        {
-            await LikeService.InsertLike(CurrentUserId, Dto!.PostId);
-        }
-
-        await SetLikeCountState();
-        StateHasChanged();
+        await PostVm.Initialize(Id, StateHasChanged);
     }
 }

@@ -13,12 +13,22 @@ public class UserInformationDto
     /// <summary>
     ///     Initializes a new instance of the <see cref="UserInformationDto" /> class.
     /// </summary>
-    public UserInformationDto()
+    public UserInformationDto(bool isLoading = false)
     {
+        if (isLoading)
+        {
+            Username = "Username is loading..";
+            Description = "Description is loading..";
+            ProfilePic = null;
+        }
+        else
+        {
+            Username = string.Empty;
+            Description = string.Empty;
+            ProfilePic = null;
+        }
+
         UserId = Guid.Empty;
-        Username = string.Empty;
-        Description = string.Empty;
-        ProfilePic = null;
         CreatedAt = DateTime.MinValue;
     }
 

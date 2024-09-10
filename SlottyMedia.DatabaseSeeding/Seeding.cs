@@ -406,7 +406,7 @@ public class Seeding
         Logger.LogInfo("Checking if role exists.");
         try
         {
-            var result = await roleRepository.GetElementById(Guid.Parse(roleId));
+            await roleRepository.GetElementById(Guid.Parse(roleId));
             Logger.LogInfo("Role exists.");
         }
         catch (DatabaseMissingItemException)

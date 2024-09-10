@@ -10,12 +10,12 @@ public interface ISearchService
 
 ## Methods
 
-### **SearchByUsernameContaining(String, PageRequest)**
+### **SearchByUsername(String)**
 
 Search function to retrieve all users for a specific search term.
 
 ```csharp
-Task<IPage<UserDto>> SearchByUsernameContaining(string searchTerm, PageRequest pageRequest)
+Task<SearchDto> SearchByUsername(string searchTerm)
 ```
 
 #### Parameters
@@ -23,12 +23,9 @@ Task<IPage<UserDto>> SearchByUsernameContaining(string searchTerm, PageRequest p
 `searchTerm` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 Search Term used for wildcard selection
 
-`pageRequest` PageRequest<br>
-The page request
-
 #### Returns
 
-[Task&lt;IPage&lt;UserDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;SearchDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 SearchDto
 
 #### Exceptions
@@ -36,12 +33,12 @@ SearchDto
 [SearchGeneralExceptions](./slottymedia.backend.exceptions.services.searchexceptions.searchgeneralexceptions.md)<br>
 Thrown when a general error occurs during the search.
 
-### **SearchByForumTopicContaining(String, PageRequest)**
+### **SearchByTopic(String)**
 
 Search function to retrieve forums by topic.
 
 ```csharp
-Task<IPage<ForumDto>> SearchByForumTopicContaining(string searchTerm, PageRequest pageRequest)
+Task<SearchDto> SearchByTopic(string searchTerm)
 ```
 
 #### Parameters
@@ -49,12 +46,9 @@ Task<IPage<ForumDto>> SearchByForumTopicContaining(string searchTerm, PageReques
 `searchTerm` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 Search Term used for wildcard search
 
-`pageRequest` PageRequest<br>
-The page request
-
 #### Returns
 
-[Task&lt;IPage&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;SearchDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 SearchDto
 
 #### Exceptions

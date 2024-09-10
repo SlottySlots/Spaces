@@ -60,18 +60,6 @@ public DateTime CreatedAt { get; set; }
 
 [DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)<br>
 
-### **RecentForums**
-
-Gets or sets a list of the recent forums the User has visited.
-
-```csharp
-public List<string> RecentForums { get; set; }
-```
-
-#### Property Value
-
-[List&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
-
 ## Constructors
 
 ### **UserDto()**
