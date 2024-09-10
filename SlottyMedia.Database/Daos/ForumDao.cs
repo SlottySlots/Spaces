@@ -56,7 +56,7 @@ public class ForumDao : BaseModel
     /// </summary>
     [Column("forumTopic")]
     public string? ForumTopic { get; set; }
-    
+
     /// <summary>
     ///     The Count of Posts in the Forum.
     /// </summary>

@@ -23,7 +23,7 @@ public interface IProfilePageVm
     ///     Whether the authentication principal is following the user whose profile is being visited
     /// </summary>
     public bool IsUserFollowed { get; }
-    
+
     /// <summary>
     ///     Whether the visited profile is actually the authentication principal's profile
     ///     (i.e. if this is your own profile page).

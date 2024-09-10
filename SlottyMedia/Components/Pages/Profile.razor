@@ -1,5 +1,4 @@
 @page "/profile/{UserId:guid}"
-
 @using SlottyMedia.Backend.ViewModel.Pages.Profile
 
 @inject IProfilePageVm ProfilePageVm
@@ -10,7 +9,7 @@
 @if (!ProfilePageVm.IsLoadingPage)
 {
     <div class="w-full p-4 grid grid-cols-10 gap-5 border-b border-athens-gray">
-        
+
         <!-- profile picture -->
         @if (ProfilePageVm.IsOwnProfilePage)
         {
@@ -22,7 +21,7 @@
                     <path d="M19.2568 2.67645C19.6547 2.27863 20.1942 2.05513 20.7568 2.05513C21.3194 2.05513 21.859 2.27863 22.2568 2.67645C22.6547 3.07428 22.8782 3.61384 22.8782 4.17645C22.8782 4.73906 22.6547 5.27863 22.2568 5.67645L12.7568 15.1765L8.75684 16.1765L9.75684 12.1765L19.2568 2.67645Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </Avatar>
-            
+
             <!-- the (hidden) image upload -->
             <InputFile id="profile-picture-input" OnChange="_onFileSelected" accept=".png,.jpg" hidden></InputFile>
         }
@@ -112,7 +111,7 @@
         <Pagination Page="ProfilePageVm.Posts" OnPageFetch="ProfilePageVm.LoadPosts" Class="w-full">
             @foreach (var post in ProfilePageVm.Posts)
             {
-                <Post Id="post.PostId" />
+                <Post Id="post.PostId"/>
             }
         </Pagination>
     }
@@ -157,6 +156,7 @@ else
     {
         _isEditingDescription = true;
     }
+
     async Task _handleDescriptionUpdate()
     {
         await ProfilePageVm.OnDescriptionUpdate(_ownDescription!);
@@ -169,7 +169,7 @@ else
         if (ProfilePageVm.IsOwnProfilePage)
             await JsRuntime.InvokeVoidAsync("OpenFileDialog", "profile-picture-input");
     }
-    
+
     async Task _onFileSelected(InputFileChangeEventArgs e)
     {
         var file = e.File;
@@ -183,6 +183,8 @@ else
                 await ProfilePageVm.OnAvatarClick(base64String);
             }
         }
+
         NavigationManager.Refresh(true);
     }
+
 }

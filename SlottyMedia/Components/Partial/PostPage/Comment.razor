@@ -1,15 +1,14 @@
 @using SlottyMedia.Backend.ViewModel.Partial.PostPage
-
 @inject ICommentVm CommentVm
 
 
 @if (!CommentVm.IsLoading)
 {
     <div class="w-full p-3 bg-white-100 rounded-[24px] grid grid-cols-10 gap-4">
-        
+
         <!-- profile picture -->
         <div @onclick="CommentVm.GoToCreatorProfile">
-            <Avatar Base64="@CommentVm.UserInfo!.ProfilePic" Class="!w-[50px] !h-[50px]" />
+            <Avatar Base64="@CommentVm.UserInfo!.ProfilePic" Class="!w-[50px] !h-[50px]"/>
         </div>
 
         <!-- username & time posted -->

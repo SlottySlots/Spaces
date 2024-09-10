@@ -1,5 +1,4 @@
 @using SlottyMedia.Backend.ViewModel.Partial.Post
-
 @inject IPostVm PostVm
 
 
@@ -9,7 +8,7 @@
 
         <!-- profile picture -->
         <div @onclick="PostVm.GoToProfilePage">
-            <Avatar Base64="@PostVm.UserInformation.ProfilePic" Class="!w-[50px] !h-[50px]" />
+            <Avatar Base64="@PostVm.UserInformation.ProfilePic" Class="!w-[50px] !h-[50px]"/>
         </div>
 
         <!-- username & time posted -->
@@ -80,8 +79,7 @@
 
 @code
 {
-    [Parameter]
-    public Guid Id { get; set; }
+    [Parameter] public Guid Id { get; set; }
 
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()

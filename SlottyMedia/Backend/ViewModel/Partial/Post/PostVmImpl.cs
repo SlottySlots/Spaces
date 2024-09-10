@@ -11,13 +11,13 @@ namespace SlottyMedia.Backend.ViewModel.Partial.Post;
 public class PostVmImpl : IPostVm
 {
     private static readonly Logging<PostVmImpl> Logger = new();
-
-    private readonly IPostService _postService;
+    private readonly IAuthService _authService;
     private readonly ICommentService _commentService;
     private readonly ILikeService _likeService;
-    private readonly IUserService _userService;
-    private readonly IAuthService _authService;
     private readonly NavigationManager _navigationManager;
+
+    private readonly IPostService _postService;
+    private readonly IUserService _userService;
 
     private Action? _onStateChanged;
 
@@ -71,14 +71,14 @@ public class PostVmImpl : IPostVm
         PostDto = await _postService.GetPostById(postId);
         AuthPrincipalId = _authService.GetAuthPrincipalId();
         CommentCount = await _commentService.CountCommentsInPost(postId);
-        
+
         var likes = await _likeService.GetLikesForPost(postId);
         LikeCount = likes.Count;
         if (AuthPrincipalId is not null)
             IsPostLiked = likes.Contains(AuthPrincipalId!.Value);
 
         UserInformation = (await _userService.GetUserInfo(PostDto!.UserId, false, false))!;
-                
+
         Logger.LogInfo("PostVmImpl: Successfully loaded all post-related information");
         IsLoading = false;
     }
@@ -89,9 +89,10 @@ public class PostVmImpl : IPostVm
         Logger.LogInfo("Attempting to (un)like post...");
         if (AuthPrincipalId is null)
         {
-            Logger.LogError($"An unauthenticated user attempted to like a post. Aborting liking operation...");
+            Logger.LogError("An unauthenticated user attempted to like a post. Aborting liking operation...");
             return;
         }
+
         if (IsPostLiked)
         {
             await _likeService.DeleteLike(AuthPrincipalId!.Value, PostDto!.PostId);
@@ -104,6 +105,7 @@ public class PostVmImpl : IPostVm
             LikeCount++;
             IsPostLiked = true;
         }
+
         _onStateChanged?.Invoke();
         Logger.LogInfo("Successfully (un)liked post");
     }
@@ -113,7 +115,7 @@ public class PostVmImpl : IPostVm
     {
         _navigationManager.NavigateTo($"/post/{PostDto!.PostId}");
     }
-    
+
     /// <inheritdoc />
     public void GoToProfilePage()
     {

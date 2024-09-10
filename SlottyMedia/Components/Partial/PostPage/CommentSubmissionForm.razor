@@ -1,5 +1,4 @@
 @using SlottyMedia.Backend.ViewModel.Partial.PostPage
-
 @inject NavigationManager NavigationManager
 
 
@@ -9,7 +8,7 @@
     @if (ViewModel is not null && !ViewModel.IsLoading)
     {
         <div @onclick="OnClickAvatar">
-            <Avatar Base64="@ViewModel.UserInformation.ProfilePic" Class="!w-[50px] !h-[50px]" />
+            <Avatar Base64="@ViewModel.UserInformation.ProfilePic" Class="!w-[50px] !h-[50px]"/>
         </div>
     }
 

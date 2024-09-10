@@ -1,6 +1,5 @@
 @using SlottyMedia.Backend.Dtos
 @using SlottyMedia.Backend.Services.Interfaces
-
 @inject IUserService UserService
 @inject IAuthService AuthService
 @inject NavigationManager Navigation
@@ -17,7 +16,7 @@
         <div class="h-full w-full p-5 flex flex-col justify-center items-center gap-1">
 
             <!-- profile picture -->
-            <Avatar OnClick="_goToProfilePage" Base64="@_userInfo!.ProfilePic" />
+            <Avatar OnClick="_goToProfilePage" Base64="@_userInfo!.ProfilePic"/>
 
             <!-- username -->
             <h3 @onclick="_goToProfilePage" class="text-xl font-semibold text-center w-fit cursor-pointer">
@@ -67,7 +66,7 @@
 @code
 {
     UserInformationDto? _userInfo;
-    
+
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {

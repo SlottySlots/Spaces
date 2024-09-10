@@ -1,6 +1,4 @@
 @using SlottyMedia.Backend.ViewModel.Partial.SignIn
-
-
 <Card Class="
     absolute w-full max-w-[280px]
     flex flex-col items-center gap-5
@@ -52,17 +50,17 @@
         <!-- password error message -->
         @if (SignInVm?.PasswordErrorMessage != null)
         {
-        <span class="text-sm text-crayola-orange">
-                            @SignInVm.PasswordErrorMessage
-                        </span>
+            <span class="text-sm text-crayola-orange">
+                @SignInVm.PasswordErrorMessage
+            </span>
         }
 
         <!-- any other internal errors -->
         @if (SignInVm?.ServerErrorMessage != null)
         {
-        <span class="text-sm text-crayola-orange">
-                            @SignInVm.ServerErrorMessage
-                        </span>
+            <span class="text-sm text-crayola-orange">
+                @SignInVm.ServerErrorMessage
+            </span>
         }
 
         <!-- submission button -->
@@ -80,7 +78,5 @@
 
 
 @code {
-    [Inject]
-    [SupplyParameterFromForm]
-    public ISignInFormVm? SignInVm { get; set; }
+    [Inject] [SupplyParameterFromForm] public ISignInFormVm? SignInVm { get; set; }
 }

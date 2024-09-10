@@ -16,7 +16,7 @@ public interface ICommentService
     /// <param name="commentId">The comment's ID</param>
     /// <returns>The comment</returns>
     Task<CommentDto> GetCommentById(Guid commentId);
-    
+
     /// <summary>
     ///     Inserts a new comment into the database.
     /// </summary>

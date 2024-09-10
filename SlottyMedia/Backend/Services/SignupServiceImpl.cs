@@ -8,17 +8,16 @@ using Client = Supabase.Client;
 
 namespace SlottyMedia.Backend.Services;
 
-
 /// <inheritdoc />
 public class SignupServiceImpl : ISignupService
 {
     private static readonly Logging<SignupServiceImpl> Logger = new();
-    
+    private readonly IAvatarGenerator _avatarGenerator;
+
     private readonly ICookieService _cookieService;
     private readonly IRoleRepository _roleRepository;
     private readonly Client _supabaseClient;
     private readonly IUserService _userService;
-    private readonly IAvatarGenerator _avatarGenerator;
 
     /// <summary>
     ///     Standard Constructor for dependency injection
@@ -42,28 +41,28 @@ public class SignupServiceImpl : ISignupService
     {
         Logger.LogInfo("Attempting to perform signup...");
         Logger.LogDebug($"Signing up user with username: '{username}', email: '{email}'...");
-        
+
         // throw exception if username contains illegal characters
         if (!username.All(char.IsLetterOrDigit))
         {
             Logger.LogInfo("Signup failed because username contained illegal characters");
             throw new IllegalCharsInUsernameException();
         }
-        
+
         // throw exception if username is too long or too short
         if (username.Length < 3 || username.Length > 15)
         {
             Logger.LogInfo("Signup failed because username was of illegal size (should be between 3 and 15)");
             throw new IllegalUsernameLengthException();
         }
-        
+
         // throw exception if password is too short
         if (password.Length < 5)
         {
             Logger.LogInfo("Signup failed because password was too short (should be at least 5 characters long)");
             throw new PasswordTooShortException();
         }
-        
+
         // throw exception if username already exists
         var isUsernameTaken = await _userService.ExistsByUserName(username);
         if (isUsernameTaken)
@@ -71,7 +70,7 @@ public class SignupServiceImpl : ISignupService
             Logger.LogInfo("Signup failed because username was already taken");
             throw new UsernameAlreadyExistsException(username);
         }
-        
+
         await _supabaseClient.Auth.SignUp(email, password);
         //This is not needed?
         var session = await _supabaseClient.Auth.SignIn(email, password);

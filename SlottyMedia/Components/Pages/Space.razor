@@ -1,5 +1,4 @@
 ﻿@page "/spaces/{SpaceId:guid}"
-
 @using SlottyMedia.Backend.ViewModel.Pages.Space
 
 @inject NavigationManager NavigationManager
@@ -18,9 +17,9 @@
             <h3 class="text-sm text-cadet-gray w-full">Created at: @SpaceVm.Space.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
         </div>
 
-        
+
     </div>
-    <div class="w-full border-b border-athens-gray my-3"></div> 
+    <div class="w-full border-b border-athens-gray my-3"></div>
 
     @if (!SpaceVm.IsLoadingPosts)
     {

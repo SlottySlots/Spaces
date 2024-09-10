@@ -4,13 +4,12 @@ using SlottyMedia.Backend.Services.Interfaces;
 
 namespace SlottyMedia.Backend.ViewModel.Partial.PostPage;
 
-
 /// <inheritdoc />
 public class CommentVmImpl : ICommentVm
 {
     private readonly ICommentService _commentService;
-    private readonly IUserService _userService;
     private readonly NavigationManager _navigationManager;
+    private readonly IUserService _userService;
 
     /// <summary>
     ///     The constructor for the CommentVmImpl.
@@ -21,7 +20,7 @@ public class CommentVmImpl : ICommentVm
         _userService = userService;
         _navigationManager = navigationManager;
     }
-    
+
     /// <inheritdoc />
     public bool IsLoading { get; private set; }
 

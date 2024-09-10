@@ -1,5 +1,4 @@
 ﻿@using SlottyMedia.Backend.Services.Interfaces
-
 @inherits LayoutComponentBase
 
 @inject IAuthService AuthService
@@ -21,18 +20,18 @@
             <!-- login / account card -->
             @if (!AuthService.IsAuthenticated())
             {
-                <LoginCard />
+                <LoginCard/>
             }
             else
             {
-                <AccountCard />
+                <AccountCard/>
             }
 
         </div>
 
         <!-- bottom box -->
         <div class="w-full h-3/5 flex justify-center items-center bg-[#FAF8FB]">
-            <NavBox />
+            <NavBox/>
         </div>
 
     </div>
@@ -99,6 +98,7 @@
 </div>
 
 @code{
+
     /// <inheritdoc />
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

@@ -21,12 +21,12 @@ public interface IPostVm
     ///     Gets a value indicating whether the post view model is currently loading.
     /// </summary>
     bool IsLoading { get; }
-    
+
     /// <summary>
     ///     The post's corresponding DTO
     /// </summary>
     PostDto? PostDto { get; }
-    
+
     /// <summary>
     ///     Gets the count of comments on the post.
     /// </summary>

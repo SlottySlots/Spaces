@@ -96,7 +96,7 @@ public class ProfilePageVmImpl : IProfilePageVm
             _logger.LogInfo($"Successfully un-followed user '{UserInfo!.Username}'");
         }
     }
-    
+
     /// <inheritdoc />
     public async Task OnAvatarClick(string imgB64)
     {

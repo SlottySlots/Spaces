@@ -13,7 +13,7 @@ public interface IHomePageVm
     ///     The ID of the currently logged in user.
     /// </summary>
     public Guid? AuthPrincipalId { get; }
-    
+
     /// <summary>Indicates whether the page is loading (for the first time)</summary>
     bool IsLoadingPage { get; }
 

@@ -4,5 +4,8 @@ namespace SlottyMedia.Tests.TestImpl;
 
 public class MockedAvatarGenerator : IAvatarGenerator
 {
-    public string RandomAvatarB64() => "1234567";
+    public string RandomAvatarB64()
+    {
+        return "1234567";
+    }
 }
