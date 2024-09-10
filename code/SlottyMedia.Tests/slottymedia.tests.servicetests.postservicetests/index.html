@@ -1,0 +1,1216 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.29">
+    
+    
+      
+        <title>PostServiceTests - SlottyMedia Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.76a95c52.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#postservicetests" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="SlottyMedia Docs" class="md-header__button md-logo" aria-label="SlottyMedia Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SlottyMedia Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PostServiceTests
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="SlottyMedia Docs" class="md-nav__button md-logo" aria-label="SlottyMedia Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    SlottyMedia Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Build
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Database
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Database
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rls/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Role Level Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ldm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Local Database Migration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mvvm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MVVM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guidelines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coding Guidelines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Code Documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Code Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SlottyMedia/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SlottyMedia
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SlottyMedia.Database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SlottyMedia.DatabaseSeeding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Seeding
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SlottyMedia.LoggingProvider/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../exceptions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exception Guidelines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging Guidelines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#constructors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Constructors
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Constructors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#postservicetests_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      PostServiceTests()
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#teardown" class="md-nav__link">
+    <span class="md-ellipsis">
+      TearDown()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insertpost_shouldreturntrue_whenpostisinsertedsuccessfully" class="md-nav__link">
+    <span class="md-ellipsis">
+      InsertPost_ShouldReturnTrue_WhenPostIsInsertedSuccessfully()
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="InsertPost_ShouldReturnTrue_WhenPostIsInsertedSuccessfully()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insertpost_shouldthrowpostiudexception_whendatabaseiudactionexceptionisthrown" class="md-nav__link">
+    <span class="md-ellipsis">
+      InsertPost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insertpost_shouldthrowpostgeneralexception_whengeneraldatabaseexceptionisthrown" class="md-nav__link">
+    <span class="md-ellipsis">
+      InsertPost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deletepost_shouldreturntrue_whenpostisdeletedsuccessfully" class="md-nav__link">
+    <span class="md-ellipsis">
+      DeletePost_ShouldReturnTrue_WhenPostIsDeletedSuccessfully()
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DeletePost_ShouldReturnTrue_WhenPostIsDeletedSuccessfully()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#returns_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deletepost_shouldthrowpostiudexception_whendatabaseiudactionexceptionisthrown" class="md-nav__link">
+    <span class="md-ellipsis">
+      DeletePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deletepost_shouldthrowpostgeneralexception_whengeneraldatabaseexceptionisthrown" class="md-nav__link">
+    <span class="md-ellipsis">
+      DeletePost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getpostsforuser_shouldreturnposts_whenpostsarefound" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetPostsForUser_ShouldReturnPosts_WhenPostsAreFound()
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GetPostsForUser_ShouldReturnPosts_WhenPostsAreFound()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#returns_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getpostsforuser_shouldthrowpostnotfoundexception_whendatabasemissingitemexceptionisthrown" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetPostsForUser_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getpostsforuser_shouldthrowpostgeneralexception_whengeneraldatabaseexceptionisthrown" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetPostsForUser_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updatepost_shouldreturntrue_whenpostisupdatedsuccessfully" class="md-nav__link">
+    <span class="md-ellipsis">
+      UpdatePost_ShouldReturnTrue_WhenPostIsUpdatedSuccessfully()
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="UpdatePost_ShouldReturnTrue_WhenPostIsUpdatedSuccessfully()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#returns_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updatepost_shouldthrowpostiudexception_whendatabaseiudactionexceptionisthrown" class="md-nav__link">
+    <span class="md-ellipsis">
+      UpdatePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updatepost_shouldthrowpostgeneralexception_whengeneraldatabaseexceptionisthrown" class="md-nav__link">
+    <span class="md-ellipsis">
+      UpdatePost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getpostsfromforum_shouldreturnposts_whenpostsarefound" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetPostsFromForum_ShouldReturnPosts_WhenPostsAreFound()
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GetPostsFromForum_ShouldReturnPosts_WhenPostsAreFound()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#returns_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getpostsfromforum_shouldthrowpostnotfoundexception_whendatabasemissingitemexceptionisthrown" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetPostsFromForum_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getpostsfromforum_shouldthrowpostgeneralexception_whengeneraldatabaseexceptionisthrown" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetPostsFromForum_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getpostbyid_shouldreturnpost_whenpostisfound" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetPostById_ShouldReturnPost_WhenPostIsFound()
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GetPostById_ShouldReturnPost_WhenPostIsFound()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#returns_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getpostbyid_shouldthrowpostnotfoundexception_whendatabasemissingitemexceptionisthrown" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetPostById_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getpostbyid_shouldthrowpostgeneralexception_whengeneraldatabaseexceptionisthrown" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetPostById_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getforumcountbyuserid_shouldreturncorrectcount" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetForumCountByUserId_ShouldReturnCorrectCount()
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GetForumCountByUserId_ShouldReturnCorrectCount()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#returns_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getforumcountbyuserid_shouldthrowpostgeneralexception_whengeneraldatabaseexceptionisthrown" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetForumCountByUserId_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getallposts_shouldreturnposts_whenpostsarefound" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetAllPosts_ShouldReturnPosts_WhenPostsAreFound()
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GetAllPosts_ShouldReturnPosts_WhenPostsAreFound()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#returns_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getallposts_shouldthrowpostnotfoundexception_whendatabasemissingitemexceptionisthrown" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetAllPosts_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getallposts_shouldthrowpostgeneralexception_whengeneralexceptionisthrown" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetAllPosts_ShouldThrowPostGeneralException_WhenGeneralExceptionIsThrown()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getpostsbyforumid_shouldreturnposts_whenpostsarefound" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetPostsByForumId_ShouldReturnPosts_WhenPostsAreFound()
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GetPostsByForumId_ShouldReturnPosts_WhenPostsAreFound()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#returns_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getpostsbyforumid_shouldthrowpostnotfoundexception_whendatabasemissingitemexceptionisthrown" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetPostsByForumId_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getpostsbyforumid_shouldthrowpostgeneralexception_whengeneraldatabaseexceptionisthrown" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetPostsByForumId_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="postservicetests">PostServiceTests</h1>
+<p>Namespace: SlottyMedia.Tests.ServiceTests</p>
+<p>Unit tests for the PostService class.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PostServiceTests</span>
+</code></pre></div>
+<p>Inheritance <a href="https://docs.microsoft.com/en-us/dotnet/api/system.object">Object</a> → <a href="./">PostServiceTests</a></p>
+<h2 id="constructors">Constructors</h2>
+<h3 id="postservicetests_1"><strong>PostServiceTests()</strong></h3>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="nf">PostServiceTests</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="methods">Methods</h2>
+<h3 id="setup"><strong>Setup()</strong></h3>
+<p>Sets up the test environment before each test.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Setup</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="teardown"><strong>TearDown()</strong></h3>
+<p>Cleans up the test environment after each test.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">TearDown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="insertpost_shouldreturntrue_whenpostisinsertedsuccessfully"><strong>InsertPost_ShouldReturnTrue_WhenPostIsInsertedSuccessfully()</strong></h3>
+<p>Tests that InsertPost returns true when a post is inserted successfully.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">InsertPost_ShouldReturnTrue_WhenPostIsInsertedSuccessfully</span><span class="p">()</span>
+</code></pre></div>
+<h4 id="returns">Returns</h4>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task">Task</a><br></p>
+<h3 id="insertpost_shouldthrowpostiudexception_whendatabaseiudactionexceptionisthrown"><strong>InsertPost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()</strong></h3>
+<p>Tests that InsertPost throws PostIudException when DatabaseIudActionException is thrown.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">InsertPost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="insertpost_shouldthrowpostgeneralexception_whengeneraldatabaseexceptionisthrown"><strong>InsertPost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()</strong></h3>
+<p>Tests that InsertPost throws PostGeneralException when GeneralDatabaseException is thrown.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">InsertPost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="deletepost_shouldreturntrue_whenpostisdeletedsuccessfully"><strong>DeletePost_ShouldReturnTrue_WhenPostIsDeletedSuccessfully()</strong></h3>
+<p>Tests that DeletePost returns true when a post is deleted successfully.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">DeletePost_ShouldReturnTrue_WhenPostIsDeletedSuccessfully</span><span class="p">()</span>
+</code></pre></div>
+<h4 id="returns_1">Returns</h4>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task">Task</a><br></p>
+<h3 id="deletepost_shouldthrowpostiudexception_whendatabaseiudactionexceptionisthrown"><strong>DeletePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()</strong></h3>
+<p>Tests that DeletePost throws PostIudException when DatabaseIudActionException is thrown.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">DeletePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="deletepost_shouldthrowpostgeneralexception_whengeneraldatabaseexceptionisthrown"><strong>DeletePost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()</strong></h3>
+<p>Tests that DeletePost throws PostGeneralException when GeneralDatabaseException is thrown.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">DeletePost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="getpostsforuser_shouldreturnposts_whenpostsarefound"><strong>GetPostsForUser_ShouldReturnPosts_WhenPostsAreFound()</strong></h3>
+<p>Tests that GetPostsForUser returns posts when posts are found.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">GetPostsForUser_ShouldReturnPosts_WhenPostsAreFound</span><span class="p">()</span>
+</code></pre></div>
+<h4 id="returns_2">Returns</h4>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task">Task</a><br></p>
+<h3 id="getpostsforuser_shouldthrowpostnotfoundexception_whendatabasemissingitemexceptionisthrown"><strong>GetPostsForUser_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()</strong></h3>
+<p>Tests that GetPostsForUser throws PostNotFoundException when DatabaseMissingItemException is thrown.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">GetPostsForUser_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="getpostsforuser_shouldthrowpostgeneralexception_whengeneraldatabaseexceptionisthrown"><strong>GetPostsForUser_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()</strong></h3>
+<p>Tests that GetPostsForUser throws PostGeneralException when GeneralDatabaseException is thrown.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">GetPostsForUser_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="updatepost_shouldreturntrue_whenpostisupdatedsuccessfully"><strong>UpdatePost_ShouldReturnTrue_WhenPostIsUpdatedSuccessfully()</strong></h3>
+<p>Tests that UpdatePost returns true when a post is updated successfully.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">UpdatePost_ShouldReturnTrue_WhenPostIsUpdatedSuccessfully</span><span class="p">()</span>
+</code></pre></div>
+<h4 id="returns_3">Returns</h4>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task">Task</a><br></p>
+<h3 id="updatepost_shouldthrowpostiudexception_whendatabaseiudactionexceptionisthrown"><strong>UpdatePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()</strong></h3>
+<p>Tests that UpdatePost throws PostIudException when DatabaseIudActionException is thrown.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdatePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="updatepost_shouldthrowpostgeneralexception_whengeneraldatabaseexceptionisthrown"><strong>UpdatePost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()</strong></h3>
+<p>Tests that UpdatePost throws PostGeneralException when GeneralDatabaseException is thrown.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdatePost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="getpostsfromforum_shouldreturnposts_whenpostsarefound"><strong>GetPostsFromForum_ShouldReturnPosts_WhenPostsAreFound()</strong></h3>
+<p>Tests that GetPostsFromForum returns posts when posts are found.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">GetPostsFromForum_ShouldReturnPosts_WhenPostsAreFound</span><span class="p">()</span>
+</code></pre></div>
+<h4 id="returns_4">Returns</h4>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task">Task</a><br></p>
+<h3 id="getpostsfromforum_shouldthrowpostnotfoundexception_whendatabasemissingitemexceptionisthrown"><strong>GetPostsFromForum_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()</strong></h3>
+<p>Tests that GetPostsFromForum throws PostNotFoundException when DatabaseMissingItemException is thrown.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">GetPostsFromForum_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="getpostsfromforum_shouldthrowpostgeneralexception_whengeneraldatabaseexceptionisthrown"><strong>GetPostsFromForum_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()</strong></h3>
+<p>Tests that GetPostsFromForum throws PostGeneralException when GeneralDatabaseException is thrown.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">GetPostsFromForum_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="getpostbyid_shouldreturnpost_whenpostisfound"><strong>GetPostById_ShouldReturnPost_WhenPostIsFound()</strong></h3>
+<p>Tests that GetPostById returns a post when a post is found.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">GetPostById_ShouldReturnPost_WhenPostIsFound</span><span class="p">()</span>
+</code></pre></div>
+<h4 id="returns_5">Returns</h4>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task">Task</a><br></p>
+<h3 id="getpostbyid_shouldthrowpostnotfoundexception_whendatabasemissingitemexceptionisthrown"><strong>GetPostById_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()</strong></h3>
+<p>Tests that GetPostById throws PostNotFoundException when DatabaseMissingItemException is thrown.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">GetPostById_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="getpostbyid_shouldthrowpostgeneralexception_whengeneraldatabaseexceptionisthrown"><strong>GetPostById_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()</strong></h3>
+<p>Tests that GetPostById throws PostGeneralException when GeneralDatabaseException is thrown.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">GetPostById_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="getforumcountbyuserid_shouldreturncorrectcount"><strong>GetForumCountByUserId_ShouldReturnCorrectCount()</strong></h3>
+<p>Tests that GetForumCountByUserId returns the correct count.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">GetForumCountByUserId_ShouldReturnCorrectCount</span><span class="p">()</span>
+</code></pre></div>
+<h4 id="returns_6">Returns</h4>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task">Task</a><br></p>
+<h3 id="getforumcountbyuserid_shouldthrowpostgeneralexception_whengeneraldatabaseexceptionisthrown"><strong>GetForumCountByUserId_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()</strong></h3>
+<p>Tests that GetForumCountByUserId throws PostGeneralException when GeneralDatabaseException is thrown.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">GetForumCountByUserId_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="getallposts_shouldreturnposts_whenpostsarefound"><strong>GetAllPosts_ShouldReturnPosts_WhenPostsAreFound()</strong></h3>
+<p>Tests that GetAllPosts returns posts when posts are found.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">GetAllPosts_ShouldReturnPosts_WhenPostsAreFound</span><span class="p">()</span>
+</code></pre></div>
+<h4 id="returns_7">Returns</h4>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task">Task</a><br></p>
+<h3 id="getallposts_shouldthrowpostnotfoundexception_whendatabasemissingitemexceptionisthrown"><strong>GetAllPosts_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()</strong></h3>
+<p>Tests that GetAllPosts throws PostNotFoundException when DatabaseMissingItemException is thrown.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">GetAllPosts_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="getallposts_shouldthrowpostgeneralexception_whengeneralexceptionisthrown"><strong>GetAllPosts_ShouldThrowPostGeneralException_WhenGeneralExceptionIsThrown()</strong></h3>
+<p>Tests that GetAllPosts throws PostGeneralException when a general exception is thrown.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">GetAllPosts_ShouldThrowPostGeneralException_WhenGeneralExceptionIsThrown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="getpostsbyforumid_shouldreturnposts_whenpostsarefound"><strong>GetPostsByForumId_ShouldReturnPosts_WhenPostsAreFound()</strong></h3>
+<p>Tests that GetPostsByForumId returns posts when posts are found.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">GetPostsByForumId_ShouldReturnPosts_WhenPostsAreFound</span><span class="p">()</span>
+</code></pre></div>
+<h4 id="returns_8">Returns</h4>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task">Task</a><br></p>
+<h3 id="getpostsbyforumid_shouldthrowpostnotfoundexception_whendatabasemissingitemexceptionisthrown"><strong>GetPostsByForumId_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()</strong></h3>
+<p>Tests that GetPostsByForumId throws PostNotFoundException when DatabaseMissingItemException is thrown.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">GetPostsByForumId_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="getpostsbyforumid_shouldthrowpostgeneralexception_whengeneraldatabaseexceptionisthrown"><strong>GetPostsByForumId_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()</strong></h3>
+<p>Tests that GetPostsByForumId throws PostGeneralException when GeneralDatabaseException is thrown.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">GetPostsByForumId_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown</span><span class="p">()</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["instant_navigation", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>

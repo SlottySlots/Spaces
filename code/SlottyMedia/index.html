@@ -1,0 +1,1339 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../guidelines/">
+      
+      
+        <link rel="next" href="../SlottyMedia.Database/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.29">
+    
+    
+      
+        <title>SlottyMedia - SlottyMedia Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.76a95c52.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#slottymedia" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SlottyMedia Docs" class="md-header__button md-logo" aria-label="SlottyMedia Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SlottyMedia Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SlottyMedia
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SlottyMedia Docs" class="md-nav__button md-logo" aria-label="SlottyMedia Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    SlottyMedia Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Build
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Database
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Database
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rls/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Role Level Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ldm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Local Database Migration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mvvm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MVVM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guidelines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coding Guidelines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Code Documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Code Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    SlottyMedia
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    SlottyMedia
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackenddtos" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Dtos
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendexceptionsauth" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Exceptions.auth
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendexceptionsservicescommentexceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Exceptions.Services.CommentExceptions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendexceptionsservicesforumexceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Exceptions.Services.ForumExceptions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendexceptionsserviceslikeexceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Exceptions.Services.LikeExceptions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendexceptionsservicespostexceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Exceptions.Services.PostExceptions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendexceptionsservicessearchexceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Exceptions.Services.SearchExceptions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendexceptionsservicesuserexceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Exceptions.Services.UserExceptions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendexceptionssignup" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Exceptions.signup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendservices" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Services
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendservicesinterfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Services.Interfaces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpageshome" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Pages.Home
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpagespost" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Pages.Post
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpagesprofile" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Pages.Profile
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpagesspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Pages.Space
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpartialdescriptioncontainer" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Partial.DescriptionContainer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpartialmainlayout" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Partial.MainLayout
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpartialpost" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Partial.Post
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpartialpostpage" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Partial.PostPage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpartialsearch" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Partial.Search
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpartialsignin" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Partial.SignIn
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpartialsignup" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Partial.SignUp
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediacomponents" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediacomponentslayout" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Components.Layout
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediacomponentspages" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Components.Pages
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediacomponentspartial" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Components.Partial
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediacomponentspartialmainlayout" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Components.Partial.MainLayout
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediacomponentspartialpostpage" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Components.Partial.PostPage
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SlottyMedia.Database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SlottyMedia.DatabaseSeeding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Seeding
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SlottyMedia.LoggingProvider/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SlottyMedia.Tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exceptions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exception Guidelines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging Guidelines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackenddtos" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Dtos
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendexceptionsauth" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Exceptions.auth
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendexceptionsservicescommentexceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Exceptions.Services.CommentExceptions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendexceptionsservicesforumexceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Exceptions.Services.ForumExceptions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendexceptionsserviceslikeexceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Exceptions.Services.LikeExceptions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendexceptionsservicespostexceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Exceptions.Services.PostExceptions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendexceptionsservicessearchexceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Exceptions.Services.SearchExceptions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendexceptionsservicesuserexceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Exceptions.Services.UserExceptions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendexceptionssignup" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Exceptions.signup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendservices" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Services
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendservicesinterfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.Services.Interfaces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpageshome" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Pages.Home
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpagespost" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Pages.Post
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpagesprofile" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Pages.Profile
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpagesspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Pages.Space
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpartialdescriptioncontainer" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Partial.DescriptionContainer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpartialmainlayout" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Partial.MainLayout
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpartialpost" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Partial.Post
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpartialpostpage" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Partial.PostPage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpartialsearch" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Partial.Search
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpartialsignin" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Partial.SignIn
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediabackendviewmodelpartialsignup" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Backend.ViewModel.Partial.SignUp
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediacomponents" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediacomponentslayout" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Components.Layout
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediacomponentspages" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Components.Pages
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediacomponentspartial" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Components.Partial
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediacomponentspartialmainlayout" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Components.Partial.MainLayout
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slottymediacomponentspartialpostpage" class="md-nav__link">
+    <span class="md-ellipsis">
+      SlottyMedia.Components.Partial.PostPage
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="slottymedia">SlottyMedia</h1>
+<h2 id="slottymediabackenddtos">SlottyMedia.Backend.Dtos</h2>
+<p><a href="slottymedia.backend.dtos.commentdto/">CommentDto</a></p>
+<p><a href="slottymedia.backend.dtos.forumdto/">ForumDto</a></p>
+<p><a href="slottymedia.backend.dtos.friendsofuserdto/">FriendsOfUserDto</a></p>
+<p><a href="slottymedia.backend.dtos.postdto/">PostDto</a></p>
+<p><a href="slottymedia.backend.dtos.profilepicdto/">ProfilePicDto</a></p>
+<p><a href="slottymedia.backend.dtos.searchdto/">SearchDto</a></p>
+<p><a href="slottymedia.backend.dtos.userdto/">UserDto</a></p>
+<p><a href="slottymedia.backend.dtos.userinformationdto/">UserInformationDto</a></p>
+<h2 id="slottymediabackendexceptionsauth">SlottyMedia.Backend.Exceptions.auth</h2>
+<p><a href="slottymedia.backend.exceptions.auth.tokennotprovidedexception/">TokenNotProvidedException</a></p>
+<p><a href="slottymedia.backend.exceptions.auth.useralreadysignedinexception/">UserAlreadySignedInException</a></p>
+<h2 id="slottymediabackendexceptionsservicescommentexceptions">SlottyMedia.Backend.Exceptions.Services.CommentExceptions</h2>
+<p><a href="slottymedia.backend.exceptions.services.commentexceptions.commentgeneralexception/">CommentGeneralException</a></p>
+<p><a href="slottymedia.backend.exceptions.services.commentexceptions.commentiudexception/">CommentIudException</a></p>
+<h2 id="slottymediabackendexceptionsservicesforumexceptions">SlottyMedia.Backend.Exceptions.Services.ForumExceptions</h2>
+<p><a href="slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception/">ForumGeneralException</a></p>
+<p><a href="slottymedia.backend.exceptions.services.forumexceptions.forumiudexception/">ForumIudException</a></p>
+<p><a href="slottymedia.backend.exceptions.services.forumexceptions.forumnotfoundexception/">ForumNotFoundException</a></p>
+<h2 id="slottymediabackendexceptionsserviceslikeexceptions">SlottyMedia.Backend.Exceptions.Services.LikeExceptions</h2>
+<p><a href="slottymedia.backend.exceptions.services.likeexceptions.likegeneralexception/">LikeGeneralException</a></p>
+<p><a href="slottymedia.backend.exceptions.services.likeexceptions.likeiudexception/">LikeIudException</a></p>
+<p><a href="slottymedia.backend.exceptions.services.likeexceptions.likenotfoundexception/">LikeNotFoundException</a></p>
+<h2 id="slottymediabackendexceptionsservicespostexceptions">SlottyMedia.Backend.Exceptions.Services.PostExceptions</h2>
+<p><a href="slottymedia.backend.exceptions.services.postexceptions.postgeneralexception/">PostGeneralException</a></p>
+<p><a href="slottymedia.backend.exceptions.services.postexceptions.postiudexception/">PostIudException</a></p>
+<p><a href="slottymedia.backend.exceptions.services.postexceptions.postnotfoundexception/">PostNotFoundException</a></p>
+<h2 id="slottymediabackendexceptionsservicessearchexceptions">SlottyMedia.Backend.Exceptions.Services.SearchExceptions</h2>
+<p><a href="slottymedia.backend.exceptions.services.searchexceptions.searchgeneralexceptions/">SearchGeneralExceptions</a></p>
+<h2 id="slottymediabackendexceptionsservicesuserexceptions">SlottyMedia.Backend.Exceptions.Services.UserExceptions</h2>
+<p><a href="slottymedia.backend.exceptions.services.userexceptions.usergeneralexception/">UserGeneralException</a></p>
+<p><a href="slottymedia.backend.exceptions.services.userexceptions.useriudexception/">UserIudException</a></p>
+<p><a href="slottymedia.backend.exceptions.services.userexceptions.usernotfoundexception/">UserNotFoundException</a></p>
+<h2 id="slottymediabackendexceptionssignup">SlottyMedia.Backend.Exceptions.signup</h2>
+<p><a href="slottymedia.backend.exceptions.signup.emailalreadyexistsexception/">EmailAlreadyExistsException</a></p>
+<p><a href="slottymedia.backend.exceptions.signup.illegalcharsinusernameexception/">IllegalCharsInUsernameException</a></p>
+<p><a href="slottymedia.backend.exceptions.signup.illegalusernamelengthexception/">IllegalUsernameLengthException</a></p>
+<p><a href="slottymedia.backend.exceptions.signup.passwordtooshortexception/">PasswordTooShortException</a></p>
+<p><a href="slottymedia.backend.exceptions.signup.usernamealreadyexistsexception/">UsernameAlreadyExistsException</a></p>
+<h2 id="slottymediabackendservices">SlottyMedia.Backend.Services</h2>
+<p><a href="slottymedia.backend.services.authservice/">AuthService</a></p>
+<p><a href="slottymedia.backend.services.commentservice/">CommentService</a></p>
+<p><a href="slottymedia.backend.services.cookieservice/">CookieService</a></p>
+<p><a href="slottymedia.backend.services.forumservice/">ForumService</a></p>
+<p><a href="slottymedia.backend.services.likeservice/">LikeService</a></p>
+<p><a href="slottymedia.backend.services.postservice/">PostService</a></p>
+<p><a href="slottymedia.backend.services.searchservice/">SearchService</a></p>
+<p><a href="slottymedia.backend.services.signupserviceimpl/">SignupServiceImpl</a></p>
+<p><a href="slottymedia.backend.services.userservice/">UserService</a></p>
+<h2 id="slottymediabackendservicesinterfaces">SlottyMedia.Backend.Services.Interfaces</h2>
+<p><a href="slottymedia.backend.services.interfaces.iauthservice/">IAuthService</a></p>
+<p><a href="slottymedia.backend.services.interfaces.icommentservice/">ICommentService</a></p>
+<p><a href="slottymedia.backend.services.interfaces.icookieservice/">ICookieService</a></p>
+<p><a href="slottymedia.backend.services.interfaces.iforumservice/">IForumService</a></p>
+<p><a href="slottymedia.backend.services.interfaces.ilikeservice/">ILikeService</a></p>
+<p><a href="slottymedia.backend.services.interfaces.ipostservice/">IPostService</a></p>
+<p><a href="slottymedia.backend.services.interfaces.isearchservice/">ISearchService</a></p>
+<p><a href="slottymedia.backend.services.interfaces.isignupservice/">ISignupService</a></p>
+<p><a href="slottymedia.backend.services.interfaces.iuserservice/">IUserService</a></p>
+<h2 id="slottymediabackendviewmodelpageshome">SlottyMedia.Backend.ViewModel.Pages.Home</h2>
+<p><a href="slottymedia.backend.viewmodel.pages.home.homepagevmimpl/">HomePageVmImpl</a></p>
+<p><a href="slottymedia.backend.viewmodel.pages.home.ihomepagevm/">IHomePageVm</a></p>
+<h2 id="slottymediabackendviewmodelpagespost">SlottyMedia.Backend.ViewModel.Pages.Post</h2>
+<p><a href="slottymedia.backend.viewmodel.pages.post.ipostpagevm/">IPostPageVm</a></p>
+<p><a href="slottymedia.backend.viewmodel.pages.post.postpagevmimpl/">PostPageVmImpl</a></p>
+<h2 id="slottymediabackendviewmodelpagesprofile">SlottyMedia.Backend.ViewModel.Pages.Profile</h2>
+<p><a href="slottymedia.backend.viewmodel.pages.profile.iprofilepagevm/">IProfilePageVm</a></p>
+<p><a href="slottymedia.backend.viewmodel.pages.profile.profilepagevmimpl/">ProfilePageVmImpl</a></p>
+<h2 id="slottymediabackendviewmodelpagesspace">SlottyMedia.Backend.ViewModel.Pages.Space</h2>
+<p><a href="slottymedia.backend.viewmodel.pages.space.ispacesvm/">ISpacesVm</a></p>
+<p><a href="slottymedia.backend.viewmodel.pages.space.ispacevm/">ISpaceVm</a></p>
+<p><a href="slottymedia.backend.viewmodel.pages.space.spacesvmimpl/">SpacesVmImpl</a></p>
+<p><a href="slottymedia.backend.viewmodel.pages.space.spacevmimpl/">SpaceVmImpl</a></p>
+<h2 id="slottymediabackendviewmodelpartialdescriptioncontainer">SlottyMedia.Backend.ViewModel.Partial.DescriptionContainer</h2>
+<p><a href="slottymedia.backend.viewmodel.partial.descriptioncontainer.descriptioncontainervmimpl/">DescriptionContainerVmImpl</a></p>
+<p><a href="slottymedia.backend.viewmodel.partial.descriptioncontainer.idescriptioncontainervm/">IDescriptionContainerVm</a></p>
+<h2 id="slottymediabackendviewmodelpartialmainlayout">SlottyMedia.Backend.ViewModel.Partial.MainLayout</h2>
+<p><a href="slottymedia.backend.viewmodel.partial.mainlayout.ipostsubmissionformvm/">IPostSubmissionFormVm</a></p>
+<p><a href="slottymedia.backend.viewmodel.partial.mainlayout.ispacescardvm/">ISpacesCardVm</a></p>
+<p><a href="slottymedia.backend.viewmodel.partial.mainlayout.postsubmissionformvmimpl/">PostSubmissionFormVmImpl</a></p>
+<p><a href="slottymedia.backend.viewmodel.partial.mainlayout.spacescardvmimpl/">SpacesCardVmImpl</a></p>
+<h2 id="slottymediabackendviewmodelpartialpost">SlottyMedia.Backend.ViewModel.Partial.Post</h2>
+<p><a href="slottymedia.backend.viewmodel.partial.post.ipostvm/">IPostVm</a></p>
+<p><a href="slottymedia.backend.viewmodel.partial.post.postvmimpl/">PostVmImpl</a></p>
+<h2 id="slottymediabackendviewmodelpartialpostpage">SlottyMedia.Backend.ViewModel.Partial.PostPage</h2>
+<p><a href="slottymedia.backend.viewmodel.partial.postpage.commentsubmissionformvmimpl/">CommentSubmissionFormVmImpl</a></p>
+<p><a href="slottymedia.backend.viewmodel.partial.postpage.commentvmimpl/">CommentVmImpl</a></p>
+<p><a href="slottymedia.backend.viewmodel.partial.postpage.icommentsubmissionformvm/">ICommentSubmissionFormVm</a></p>
+<p><a href="slottymedia.backend.viewmodel.partial.postpage.icommentvm/">ICommentVm</a></p>
+<h2 id="slottymediabackendviewmodelpartialsearch">SlottyMedia.Backend.ViewModel.Partial.Search</h2>
+<p><a href="slottymedia.backend.viewmodel.partial.search.isearchvm/">ISearchVm</a></p>
+<p><a href="slottymedia.backend.viewmodel.partial.search.searchimpl/">SearchImpl</a></p>
+<h2 id="slottymediabackendviewmodelpartialsignin">SlottyMedia.Backend.ViewModel.Partial.SignIn</h2>
+<p><a href="slottymedia.backend.viewmodel.partial.signin.isigninformvm/">ISignInFormVm</a></p>
+<p><a href="slottymedia.backend.viewmodel.partial.signin.signinformvmimpl/">SignInFormVmImpl</a></p>
+<h2 id="slottymediabackendviewmodelpartialsignup">SlottyMedia.Backend.ViewModel.Partial.SignUp</h2>
+<p><a href="slottymedia.backend.viewmodel.partial.signup.isignupformvm/">ISignupFormVm</a></p>
+<p><a href="slottymedia.backend.viewmodel.partial.signup.signupformvmimpl/">SignupFormVmImpl</a></p>
+<h2 id="slottymediacomponents">SlottyMedia.Components</h2>
+<p><a href="slottymedia.components._imports/">_Imports</a></p>
+<p><a href="slottymedia.components.app/">App</a></p>
+<p><a href="slottymedia.components.routes/">Routes</a></p>
+<h2 id="slottymediacomponentslayout">SlottyMedia.Components.Layout</h2>
+<p><a href="slottymedia.components.layout.loginlayout/">LoginLayout</a></p>
+<p><a href="slottymedia.components.layout.mainlayout/">MainLayout</a></p>
+<h2 id="slottymediacomponentspages">SlottyMedia.Components.Pages</h2>
+<p><a href="slottymedia.components.pages.home/">Home</a></p>
+<p><a href="slottymedia.components.pages.login/">Login</a></p>
+<p><a href="slottymedia.components.pages.postpage/">PostPage</a></p>
+<p><a href="slottymedia.components.pages.profile/">Profile</a></p>
+<p><a href="slottymedia.components.pages.register/">Register</a></p>
+<p><a href="slottymedia.components.pages.space/">Space</a></p>
+<p><a href="slottymedia.components.pages.spaces/">Spaces</a></p>
+<h2 id="slottymediacomponentspartial">SlottyMedia.Components.Partial</h2>
+<p><a href="slottymedia.components.partial.avatar/">Avatar</a></p>
+<p><a href="slottymedia.components.partial.card/">Card</a></p>
+<p><a href="slottymedia.components.partial.checkbox/">Checkbox</a></p>
+<p><a href="slottymedia.components.partial.descriptioncontainer/">DescriptionContainer</a></p>
+<p><a href="slottymedia.components.partial.hotbutton/">HotButton</a></p>
+<p><a href="slottymedia.components.partial.inputarea/">InputArea</a></p>
+<p><a href="slottymedia.components.partial.inputfield/">InputField</a></p>
+<p><a href="slottymedia.components.partial.inputfieldicon/">InputFieldIcon</a></p>
+<p><a href="slottymedia.components.partial.likebutton/">LikeButton</a></p>
+<p><a href="slottymedia.components.partial.link/">Link</a></p>
+<p><a href="slottymedia.components.partial.pagination-1/">Pagination&lt;T&gt;</a></p>
+<p><a href="slottymedia.components.partial.post/">Post</a></p>
+<p><a href="slottymedia.components.partial.search/">Search</a></p>
+<p><a href="slottymedia.components.partial.tag/">Tag</a></p>
+<h2 id="slottymediacomponentspartialmainlayout">SlottyMedia.Components.Partial.MainLayout</h2>
+<p><a href="slottymedia.components.partial.mainlayout.accountcard/">AccountCard</a></p>
+<p><a href="slottymedia.components.partial.mainlayout.logincard/">LoginCard</a></p>
+<p><a href="slottymedia.components.partial.mainlayout.navbox/">NavBox</a></p>
+<p><a href="slottymedia.components.partial.mainlayout.navboxlink/">NavBoxLink</a></p>
+<p><a href="slottymedia.components.partial.mainlayout.postsubmissionform/">PostSubmissionForm</a></p>
+<p><a href="slottymedia.components.partial.mainlayout.spacescard/">SpacesCard</a></p>
+<p><a href="slottymedia.components.partial.mainlayout.spacescardnoaccount/">SpacesCardNoAccount</a></p>
+<h2 id="slottymediacomponentspartialpostpage">SlottyMedia.Components.Partial.PostPage</h2>
+<p><a href="slottymedia.components.partial.postpage.comment/">Comment</a></p>
+<p><a href="slottymedia.components.partial.postpage.commentsubmissionform/">CommentSubmissionForm</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["instant_navigation", "content.code.copy"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>

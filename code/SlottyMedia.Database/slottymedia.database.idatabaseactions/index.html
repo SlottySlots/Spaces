@@ -1,0 +1,1518 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.29">
+    
+    
+      
+        <title>IDatabaseActions - SlottyMedia Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.76a95c52.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#idatabaseactions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="SlottyMedia Docs" class="md-header__button md-logo" aria-label="SlottyMedia Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SlottyMedia Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              IDatabaseActions
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="SlottyMedia Docs" class="md-nav__button md-logo" aria-label="SlottyMedia Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    SlottyMedia Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Build
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Database
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Database
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rls/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Role Level Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ldm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Local Database Migration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../mvvm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MVVM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guidelines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coding Guidelines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Code Documentation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Code Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SlottyMedia/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SlottyMedia
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SlottyMedia.DatabaseSeeding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Seeding
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SlottyMedia.LoggingProvider/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SlottyMedia.Tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../exceptions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exception Guidelines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging Guidelines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inserttt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Insert&lt;T&gt;(T)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Insert<T>(T)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exceptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exceptions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updatett" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update&lt;T&gt;(T)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Update<T>(T)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-parameters_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exceptions_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exceptions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deletett" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete&lt;T&gt;(T)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Delete<T>(T)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-parameters_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exceptions_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exceptions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getentitybyfieldtstring-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetEntityByField&lt;T&gt;(String, String)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GetEntityByField<T>(String, String)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-parameters_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exceptions_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exceptions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getentitiewithselectorbyidtexpressionfunct-object-string-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetEntitieWithSelectorById&lt;T&gt;(Expression&lt;Func&lt;T, Object[]&gt;&gt;, String, String)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GetEntitieWithSelectorById<T>(Expression<Func<T, Object[]>>, String, String)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-parameters_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exceptions_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exceptions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getentitieswithselectorbyidtexpressionfunct-object-string-string-int32-int32-valuetuple3" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetEntitiesWithSelectorById&lt;T&gt;(Expression&lt;Func&lt;T, Object[]&gt;&gt;, String, String, Int32, Int32, ValueTuple`3[])
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GetEntitiesWithSelectorById<T>(Expression<Func<T, Object[]>>, String, String, Int32, Int32, ValueTuple`3[])">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-parameters_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exceptions_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exceptions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getentitieswithselectorbyidtexpressionfunct-object-listvaluetuplestring-operator-string-int32-int32-valuetuple3" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetEntitiesWithSelectorById&lt;T&gt;(Expression&lt;Func&lt;T, Object[]&gt;&gt;, List&lt;ValueTuple&lt;String, Operator, String&gt;&gt;, Int32, Int32, ValueTuple`3[])
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GetEntitiesWithSelectorById<T>(Expression<Func<T, Object[]>>, List<ValueTuple<String, Operator, String>>, Int32, Int32, ValueTuple`3[])">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-parameters_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exceptions_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exceptions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getentitiest" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetEntities&lt;T&gt;()
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GetEntities<T>()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-parameters_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exceptions_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exceptions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checkifentityexistststring-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      CheckIfEntityExists&lt;T&gt;(String, String)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CheckIfEntityExists<T>(String, String)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-parameters_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exceptions_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exceptions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getcountbyfieldtstring-string" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetCountByField&lt;T&gt;(String, String)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GetCountByField<T>(String, String)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-parameters_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exceptions_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exceptions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getcountforuserforumsstring" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetCountForUserForums(String)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GetCountForUserForums(String)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameters_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exceptions_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exceptions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gettotalforumcountstring" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetTotalForumCount(String)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GetTotalForumCount(String)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameters_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exceptions_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exceptions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gettopforums" class="md-nav__link">
+    <span class="md-ellipsis">
+      GetTopForums()
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GetTopForums()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#returns_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exceptions_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exceptions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="idatabaseactions">IDatabaseActions</h1>
+<p>Namespace: SlottyMedia.Database</p>
+<p>Interface for database actions. Provides methods to interact with the database.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">interface</span><span class="w"> </span><span class="n">IDatabaseActions</span>
+</code></pre></div>
+<h2 id="methods">Methods</h2>
+<h3 id="inserttt"><strong>Insert&lt;T&gt;(T)</strong></h3>
+<p>Inserts an item into the database.</p>
+<div class="highlight"><pre><span></span><code><span class="n">Task</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Insert</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">item</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="type-parameters">Type Parameters</h4>
+<p><code>T</code><br>
+The model class of the item.</p>
+<h4 id="parameters">Parameters</h4>
+<p><code>item</code> T<br>
+The item to insert into the database.</p>
+<h4 id="returns">Returns</h4>
+<p>Task&lt;T&gt;<br>
+Returns the inserted item.</p>
+<h4 id="exceptions">Exceptions</h4>
+<p><a href="../slottymedia.database.exceptions.generaldatabaseexception/">GeneralDatabaseException</a><br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.</p>
+<h3 id="updatett"><strong>Update&lt;T&gt;(T)</strong></h3>
+<p>Updates an item in the database.</p>
+<div class="highlight"><pre><span></span><code><span class="n">Task</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Update</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">item</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="type-parameters_1">Type Parameters</h4>
+<p><code>T</code><br>
+The model class of the item.</p>
+<h4 id="parameters_1">Parameters</h4>
+<p><code>item</code> T<br>
+The item to update in the database.</p>
+<h4 id="returns_1">Returns</h4>
+<p>Task&lt;T&gt;<br>
+Returns the updated item.</p>
+<h4 id="exceptions_1">Exceptions</h4>
+<p><a href="../slottymedia.database.exceptions.generaldatabaseexception/">GeneralDatabaseException</a><br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.</p>
+<h3 id="deletett"><strong>Delete&lt;T&gt;(T)</strong></h3>
+<p>Deletes an item from the database.</p>
+<div class="highlight"><pre><span></span><code><span class="n">Task</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Delete</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">item</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="type-parameters_2">Type Parameters</h4>
+<p><code>T</code><br>
+The type of the item object.</p>
+<h4 id="parameters_2">Parameters</h4>
+<p><code>item</code> T<br>
+The item to delete.</p>
+<h4 id="returns_2">Returns</h4>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">Task&lt;Boolean&gt;</a><br>
+Returns true if the operation was successful.</p>
+<h4 id="exceptions_2">Exceptions</h4>
+<p><a href="../slottymedia.database.exceptions.generaldatabaseexception/">GeneralDatabaseException</a><br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.</p>
+<h3 id="getentitybyfieldtstring-string"><strong>GetEntityByField&lt;T&gt;(String, String)</strong></h3>
+<p>Returns an entity from the database based on the given field and value.</p>
+<div class="highlight"><pre><span></span><code><span class="n">Task</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GetEntityByField</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">field</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="type-parameters_3">Type Parameters</h4>
+<p><code>T</code><br>
+The type of the item object.</p>
+<h4 id="parameters_3">Parameters</h4>
+<p><code>field</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a><br>
+The field to search.</p>
+<p><code>value</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a><br>
+The value to search for.</p>
+<h4 id="returns_3">Returns</h4>
+<p>Task&lt;T&gt;<br>
+Returns the entity from the database.</p>
+<h4 id="exceptions_3">Exceptions</h4>
+<p><a href="../slottymedia.database.exceptions.generaldatabaseexception/">GeneralDatabaseException</a><br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.</p>
+<h3 id="getentitiewithselectorbyidtexpressionfunct-object-string-string"><strong>GetEntitieWithSelectorById&lt;T&gt;(Expression&lt;Func&lt;T, Object[]&gt;&gt;, String, String)</strong></h3>
+<p>Returns an entity with a selector from the database based on the given field and value.</p>
+<div class="highlight"><pre><span></span><code><span class="n">Task</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GetEntitieWithSelectorById</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Expression</span><span class="o">&lt;</span><span class="n">Func</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="p">[]</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">selector</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">field</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="type-parameters_4">Type Parameters</h4>
+<p><code>T</code><br>
+The type of the item object.</p>
+<h4 id="parameters_4">Parameters</h4>
+<p><code>selector</code> Expression&lt;Func&lt;T, Object[]&gt;&gt;<br>
+The selector expression to use.</p>
+<p><code>field</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a><br>
+The field to search.</p>
+<p><code>value</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a><br>
+The value to search for.</p>
+<h4 id="returns_4">Returns</h4>
+<p>Task&lt;T&gt;<br>
+Returns the entity from the database.</p>
+<h4 id="exceptions_4">Exceptions</h4>
+<p><a href="../slottymedia.database.exceptions.generaldatabaseexception/">GeneralDatabaseException</a><br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.</p>
+<h3 id="getentitieswithselectorbyidtexpressionfunct-object-string-string-int32-int32-valuetuple3"><strong>GetEntitiesWithSelectorById&lt;T&gt;(Expression&lt;Func&lt;T, Object[]&gt;&gt;, String, String, Int32, Int32, ValueTuple`3[])</strong></h3>
+<p>Returns a list of entities with a selector from the database based on the given field and value.</p>
+<div class="highlight"><pre><span></span><code><span class="n">Task</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">GetEntitiesWithSelectorById</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Expression</span><span class="o">&lt;</span><span class="n">Func</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="p">[]</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">selector</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">field</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="k">value</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">max</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">min</span><span class="p">,</span><span class="w"> </span><span class="n">ValueTuple</span><span class="err">`</span><span class="m">3</span><span class="p">[]</span><span class="w"> </span><span class="n">orderByFields</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="type-parameters_5">Type Parameters</h4>
+<p><code>T</code><br>
+The type of the item object.</p>
+<h4 id="parameters_5">Parameters</h4>
+<p><code>selector</code> Expression&lt;Func&lt;T, Object[]&gt;&gt;<br>
+The selector expression to use.</p>
+<p><code>field</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a><br>
+The field to search.</p>
+<p><code>value</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a><br>
+The value to search for.</p>
+<p><code>max</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">Int32</a><br>
+The maximum number of items to retrieve.</p>
+<p><code>min</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">Int32</a><br>
+The minimum number of items to retrieve</p>
+<p><code>orderByFields</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.valuetuple-3">ValueTuple`3[]</a><br>
+The fields to order by.</p>
+<h4 id="returns_5">Returns</h4>
+<p>Task&lt;List&lt;T&gt;&gt;<br>
+Returns a list of entities from the database.</p>
+<h4 id="exceptions_5">Exceptions</h4>
+<p><a href="../slottymedia.database.exceptions.generaldatabaseexception/">GeneralDatabaseException</a><br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.</p>
+<h3 id="getentitieswithselectorbyidtexpressionfunct-object-listvaluetuplestring-operator-string-int32-int32-valuetuple3"><strong>GetEntitiesWithSelectorById&lt;T&gt;(Expression&lt;Func&lt;T, Object[]&gt;&gt;, List&lt;ValueTuple&lt;String, Operator, String&gt;&gt;, Int32, Int32, ValueTuple`3[])</strong></h3>
+<p>Returns a list of entities with a selector from the database based on the given search criteria.</p>
+<div class="highlight"><pre><span></span><code><span class="n">Task</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">GetEntitiesWithSelectorById</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Expression</span><span class="o">&lt;</span><span class="n">Func</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="p">[]</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">selector</span><span class="p">,</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ValueTuple</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="n">Operator</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">search</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">max</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">min</span><span class="p">,</span><span class="w"> </span><span class="n">ValueTuple</span><span class="err">`</span><span class="m">3</span><span class="p">[]</span><span class="w"> </span><span class="n">orderByFields</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="type-parameters_6">Type Parameters</h4>
+<p><code>T</code><br>
+The type of the item object.</p>
+<h4 id="parameters_6">Parameters</h4>
+<p><code>selector</code> Expression&lt;Func&lt;T, Object[]&gt;&gt;<br>
+The selector expression to use.</p>
+<p><code>search</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1">List&lt;ValueTuple&lt;String, Operator, String&gt;&gt;</a><br>
+The search criteria.</p>
+<p><code>max</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">Int32</a><br>
+The maximum number of items to retrieve.</p>
+<p><code>min</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">Int32</a><br>
+The minimum number of items to retrieve</p>
+<p><code>orderByFields</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.valuetuple-3">ValueTuple`3[]</a><br>
+The fields to order by.</p>
+<h4 id="returns_6">Returns</h4>
+<p>Task&lt;List&lt;T&gt;&gt;<br>
+Returns a list of entities from the database.</p>
+<h4 id="exceptions_6">Exceptions</h4>
+<p><a href="../slottymedia.database.exceptions.generaldatabaseexception/">GeneralDatabaseException</a><br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.</p>
+<h3 id="getentitiest"><strong>GetEntities&lt;T&gt;()</strong></h3>
+<p>Returns a list of all entities from the database.</p>
+<div class="highlight"><pre><span></span><code><span class="n">Task</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">GetEntities</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">()</span>
+</code></pre></div>
+<h4 id="type-parameters_7">Type Parameters</h4>
+<p><code>T</code><br>
+The type of the item object.</p>
+<h4 id="returns_7">Returns</h4>
+<p>Task&lt;List&lt;T&gt;&gt;<br>
+Returns a list of entities from the database.</p>
+<h4 id="exceptions_7">Exceptions</h4>
+<p><a href="../slottymedia.database.exceptions.generaldatabaseexception/">GeneralDatabaseException</a><br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.</p>
+<h3 id="checkifentityexistststring-string"><strong>CheckIfEntityExists&lt;T&gt;(String, String)</strong></h3>
+<p>Checks if an entity exists in the database based on the given field and value.</p>
+<div class="highlight"><pre><span></span><code><span class="n">Task</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CheckIfEntityExists</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">field</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="type-parameters_8">Type Parameters</h4>
+<p><code>T</code><br>
+The type of the item object.</p>
+<h4 id="parameters_7">Parameters</h4>
+<p><code>field</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a><br>
+The field to search.</p>
+<p><code>value</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a><br>
+The value to search for.</p>
+<h4 id="returns_8">Returns</h4>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">Task&lt;Boolean&gt;</a><br>
+Returns true if the entity exists.</p>
+<h4 id="exceptions_8">Exceptions</h4>
+<p><a href="../slottymedia.database.exceptions.generaldatabaseexception/">GeneralDatabaseException</a><br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.</p>
+<h3 id="getcountbyfieldtstring-string"><strong>GetCountByField&lt;T&gt;(String, String)</strong></h3>
+<p>Retrieves the count of entities from the database by a specific field and value.</p>
+<div class="highlight"><pre><span></span><code><span class="n">Task</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GetCountByField</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">field</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="type-parameters_9">Type Parameters</h4>
+<p><code>T</code><br>
+The type of the entities to count.</p>
+<h4 id="parameters_8">Parameters</h4>
+<p><code>field</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a><br>
+The field to filter by.</p>
+<p><code>value</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a><br>
+The value to filter by.</p>
+<h4 id="returns_9">Returns</h4>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">Task&lt;Int32&gt;</a><br>
+The count of entities.</p>
+<h4 id="exceptions_9">Exceptions</h4>
+<p><a href="../slottymedia.database.exceptions.generaldatabaseexception/">GeneralDatabaseException</a><br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.</p>
+<h3 id="getcountforuserforumsstring"><strong>GetCountForUserForums(String)</strong></h3>
+<p>This method retrieves the count of Forums for a specific user.</p>
+<div class="highlight"><pre><span></span><code><span class="n">Task</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GetCountForUserForums</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">userId</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="parameters_9">Parameters</h4>
+<p><code>userId</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a><br></p>
+<h4 id="returns_10">Returns</h4>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">Task&lt;Int32&gt;</a><br></p>
+<h4 id="exceptions_10">Exceptions</h4>
+<p><a href="../slottymedia.database.exceptions.generaldatabaseexception/">GeneralDatabaseException</a><br></p>
+<h3 id="gettotalforumcountstring"><strong>GetTotalForumCount(String)</strong></h3>
+<p>Retrieves the total count of forums for a specific forum ID.</p>
+<div class="highlight"><pre><span></span><code><span class="n">Task</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GetTotalForumCount</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">forumId</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="parameters_10">Parameters</h4>
+<p><code>forumId</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a><br>
+The ID of the forum to count.</p>
+<h4 id="returns_11">Returns</h4>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">Task&lt;Int32&gt;</a><br>
+A task that represents the asynchronous operation. The task result contains the total count of forums.</p>
+<h4 id="exceptions_11">Exceptions</h4>
+<p><a href="../slottymedia.database.exceptions.generaldatabaseexception/">GeneralDatabaseException</a><br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.</p>
+<h3 id="gettopforums"><strong>GetTopForums()</strong></h3>
+<p>Retrieves a list of top forums.</p>
+<div class="highlight"><pre><span></span><code><span class="n">Task</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">TopForumDao</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">GetTopForums</span><span class="p">()</span>
+</code></pre></div>
+<h4 id="returns_12">Returns</h4>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1">Task&lt;List&lt;TopForumDao&gt;&gt;</a><br>
+A task that represents the asynchronous operation. The task result contains a list of TopForumDao objects.</p>
+<h4 id="exceptions_12">Exceptions</h4>
+<p><a href="../slottymedia.database.exceptions.generaldatabaseexception/">GeneralDatabaseException</a><br>
+Thrown when a network error, argument null, invalid operation, timeout, task
+ cancellation, or unexpected error occurs.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["instant_navigation", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+    
+  </body>
+</html>
