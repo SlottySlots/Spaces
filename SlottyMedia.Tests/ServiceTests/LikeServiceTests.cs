@@ -1,11 +1,9 @@
-﻿using System.Linq.Expressions;
-using Moq;
+﻿using Moq;
 using SlottyMedia.Backend.Exceptions.Services.LikeExceptions;
 using SlottyMedia.Backend.Services;
-using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
-using Supabase.Postgrest;
+using SlottyMedia.Database.Repository.UserLikePostRelationRepo;
 
 namespace SlottyMedia.Tests.ServiceTests;
 
@@ -21,10 +19,8 @@ public class LikeServiceTests
     [SetUp]
     public void Setup()
     {
-        // Initialize the mock database actions
-        _mockDatabaseActions = new Mock<IDatabaseActions>();
-        // Initialize the LikeService with the mock database actions
-        _likeService = new LikeService(_mockDatabaseActions.Object);
+        _mockLikeRepository = new Mock<IUserLikePostRelationRepostitory>();
+        _likeService = new LikeService(_mockLikeRepository.Object);
     }
 
     /// <summary>
@@ -33,190 +29,198 @@ public class LikeServiceTests
     [TearDown]
     public void TearDown()
     {
-        // Reset the mock database actions after each test
-        _mockDatabaseActions.Reset();
+        _mockLikeRepository.Reset();
     }
 
-    private Mock<IDatabaseActions> _mockDatabaseActions;
+    private Mock<IUserLikePostRelationRepostitory> _mockLikeRepository;
     private LikeService _likeService;
 
     /// <summary>
-    ///     Tests that InsertLike returns true when the like is inserted successfully.
+    ///     Tests that a like is inserted successfully.
     /// </summary>
     [Test]
     public async Task InsertLike_ShouldReturnTrue_WhenLikeIsInsertedSuccessfully()
     {
-        // Arrange
         var userId = Guid.NewGuid();
         var postId = Guid.NewGuid();
-        // Setup the mock to return a new UserLikePostRelationDao when Insert is called
-        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<UserLikePostRelationDao>()))
-            .ReturnsAsync(new UserLikePostRelationDao(userId, postId));
+        var like = new UserLikePostRelationDao(userId, postId);
+        _mockLikeRepository.Setup(x => x.AddElement(It.IsAny<UserLikePostRelationDao>())).ReturnsAsync(like);
 
-        // Act
         var result = await _likeService.InsertLike(userId, postId);
 
-        // Assert
         Assert.That(result, Is.True);
-        // Verify that Insert was called once
-        _mockDatabaseActions.Verify(x => x.Insert(It.IsAny<UserLikePostRelationDao>()), Times.Once);
+        _mockLikeRepository.Verify(x => x.AddElement(It.IsAny<UserLikePostRelationDao>()), Times.Once);
     }
 
     /// <summary>
-    ///     Tests that InsertLike throws LikeIudException when a DatabaseIudActionException is thrown.
+    ///     Tests that a LikeIudException is thrown when a DatabaseIudActionException is thrown.
     /// </summary>
     [Test]
     public void InsertLike_ShouldThrowLikeIudException_WhenDatabaseIudActionExceptionIsThrown()
     {
-        // Arrange
         var userId = Guid.NewGuid();
         var postId = Guid.NewGuid();
-        // Setup the mock to throw DatabaseIudActionException when Insert is called
-        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<UserLikePostRelationDao>()))
+        _mockLikeRepository.Setup(x => x.AddElement(It.IsAny<UserLikePostRelationDao>()))
             .ThrowsAsync(new DatabaseIudActionException());
 
-        // Act & Assert
-        Assert.That(async () => await _likeService.InsertLike(userId, postId), Throws.TypeOf<LikeIudException>());
+        Assert.ThrowsAsync<LikeIudException>(async () => await _likeService.InsertLike(userId, postId));
     }
 
     /// <summary>
-    ///     Tests that InsertLike throws LikeGeneralException when a GeneralDatabaseException is thrown.
+    ///     Tests that a LikeGeneralException is thrown when a GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void InsertLike_ShouldThrowLikeGeneralException_WhenGeneralDatabaseExceptionIsThrown()
     {
-        // Arrange
         var userId = Guid.NewGuid();
         var postId = Guid.NewGuid();
-        // Setup the mock to throw GeneralDatabaseException when Insert is called
-        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<UserLikePostRelationDao>()))
+        _mockLikeRepository.Setup(x => x.AddElement(It.IsAny<UserLikePostRelationDao>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
-        // Act & Assert
-        Assert.That(async () => await _likeService.InsertLike(userId, postId), Throws.TypeOf<LikeGeneralException>());
+        Assert.ThrowsAsync<LikeGeneralException>(async () => await _likeService.InsertLike(userId, postId));
     }
 
     /// <summary>
-    ///     Tests that DeleteLike returns true when the like is deleted successfully.
+    ///     Tests that a like is deleted successfully.
     /// </summary>
     [Test]
     public async Task DeleteLike_ShouldReturnTrue_WhenLikeIsDeletedSuccessfully()
     {
-        // Arrange
         var userId = Guid.NewGuid();
         var postId = Guid.NewGuid();
-        // Setup the mock to return true when Delete is called
-        _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<UserLikePostRelationDao>())).ReturnsAsync(true);
+        _mockLikeRepository.Setup(x => x.DeleteElement(It.IsAny<UserLikePostRelationDao>()))
+            .Returns(Task.CompletedTask);
 
-        // Act
         var result = await _likeService.DeleteLike(userId, postId);
 
-        // Assert
         Assert.That(result, Is.True);
-        // Verify that Delete was called once
-        _mockDatabaseActions.Verify(x => x.Delete(It.IsAny<UserLikePostRelationDao>()), Times.Once);
+        _mockLikeRepository.Verify(x => x.DeleteElement(It.IsAny<UserLikePostRelationDao>()), Times.Once);
     }
 
     /// <summary>
-    ///     Tests that DeleteLike throws LikeIudException when a DatabaseIudActionException is thrown.
+    ///     Tests that a LikeIudException is thrown when a DatabaseIudActionException is thrown.
     /// </summary>
     [Test]
     public void DeleteLike_ShouldThrowLikeIudException_WhenDatabaseIudActionExceptionIsThrown()
     {
-        // Arrange
         var userId = Guid.NewGuid();
         var postId = Guid.NewGuid();
-        // Setup the mock to throw DatabaseIudActionException when Delete is called
-        _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<UserLikePostRelationDao>()))
+        _mockLikeRepository.Setup(x => x.DeleteElement(It.IsAny<UserLikePostRelationDao>()))
             .ThrowsAsync(new DatabaseIudActionException());
 
-        // Act & Assert
-        Assert.That(async () => await _likeService.DeleteLike(userId, postId), Throws.TypeOf<LikeIudException>());
+        Assert.ThrowsAsync<LikeIudException>(async () => await _likeService.DeleteLike(userId, postId));
     }
 
     /// <summary>
-    ///     Tests that DeleteLike throws LikeGeneralException when a GeneralDatabaseException is thrown.
+    ///     Tests that a LikeGeneralException is thrown when a GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void DeleteLike_ShouldThrowLikeGeneralException_WhenGeneralDatabaseExceptionIsThrown()
     {
-        // Arrange
         var userId = Guid.NewGuid();
         var postId = Guid.NewGuid();
-        // Setup the mock to throw GeneralDatabaseException when Delete is called
-        _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<UserLikePostRelationDao>()))
+        _mockLikeRepository.Setup(x => x.DeleteElement(It.IsAny<UserLikePostRelationDao>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
-        // Act & Assert
-        Assert.That(async () => await _likeService.DeleteLike(userId, postId), Throws.TypeOf<LikeGeneralException>());
+        Assert.ThrowsAsync<LikeGeneralException>(async () => await _likeService.DeleteLike(userId, postId));
     }
 
     /// <summary>
-    ///     Tests that GetLikesForPost returns a list of user IDs when likes are found.
+    ///     Tests that user IDs are returned when likes are found for a post.
     /// </summary>
     [Test]
     public async Task GetLikesForPost_ShouldReturnUserIds_WhenLikesAreFound()
     {
-        // Arrange
         var postId = Guid.NewGuid();
         var userId = Guid.NewGuid();
         var likes = new List<UserLikePostRelationDao> { new(userId, postId) };
-        // Setup the mock to return a list of UserLikePostRelationDao when GetEntitiesWithSelectorById is called
-        _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(
-            It.IsAny<Expression<Func<UserLikePostRelationDao, object[]>>>(),
-            It.IsAny<List<(string, Constants.Operator, string)>>(),
-            It.IsAny<int>(),
-            It.IsAny<int>(),
-            It.IsAny<(string, Constants.Ordering, Constants.NullPosition)[]>())).ReturnsAsync(likes);
+        _mockLikeRepository.Setup(x => x.GetLikesForPost(It.IsAny<Guid>())).ReturnsAsync(likes);
 
-        // Act
         var result = await _likeService.GetLikesForPost(postId);
 
-        // Assert
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Count, Is.EqualTo(1));
         Assert.That(result[0], Is.EqualTo(userId));
     }
 
     /// <summary>
-    ///     Tests that GetLikesForPost throws LikeNotFoundException when a DatabaseMissingItemException is thrown.
+    ///     Tests that a LikeNotFoundException is thrown when a DatabaseMissingItemException is thrown.
     /// </summary>
     [Test]
     public void GetLikesForPost_ShouldThrowLikeNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
     {
-        // Arrange
         var postId = Guid.NewGuid();
-        // Setup the mock to throw DatabaseMissingItemException when GetEntitiesWithSelectorById is called
-        _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(
-                It.IsAny<Expression<Func<UserLikePostRelationDao, object[]>>>(),
-                It.IsAny<List<(string, Constants.Operator, string)>>(),
-                It.IsAny<int>(),
-                It.IsAny<int>(),
-                It.IsAny<(string, Constants.Ordering, Constants.NullPosition)[]>()))
+        _mockLikeRepository.Setup(x => x.GetLikesForPost(It.IsAny<Guid>()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
-        // Act & Assert
-        Assert.That(async () => await _likeService.GetLikesForPost(postId), Throws.TypeOf<LikeNotFoundException>());
+        Assert.ThrowsAsync<LikeNotFoundException>(async () => await _likeService.GetLikesForPost(postId));
     }
 
     /// <summary>
-    ///     Tests that GetLikesForPost throws LikeGeneralException when a GeneralDatabaseException is thrown.
+    ///     Tests that a LikeGeneralException is thrown when a GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void GetLikesForPost_ShouldThrowLikeGeneralException_WhenGeneralDatabaseExceptionIsThrown()
     {
-        // Arrange
         var postId = Guid.NewGuid();
-        // Setup the mock to throw GeneralDatabaseException when GetEntitiesWithSelectorById is called
-        _mockDatabaseActions.Setup(x => x.GetEntitiesWithSelectorById(
-                It.IsAny<Expression<Func<UserLikePostRelationDao, object[]>>>(),
-                It.IsAny<List<(string, Constants.Operator, string)>>(),
-                It.IsAny<int>(),
-                It.IsAny<int>(),
-                It.IsAny<(string, Constants.Ordering, Constants.NullPosition)[]>()))
+        _mockLikeRepository.Setup(x => x.GetLikesForPost(It.IsAny<Guid>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
-        // Act & Assert
-        Assert.That(async () => await _likeService.GetLikesForPost(postId), Throws.TypeOf<LikeGeneralException>());
+        Assert.ThrowsAsync<LikeGeneralException>(async () => await _likeService.GetLikesForPost(postId));
+    }
+
+    /// <summary>
+    ///     Tests that a LikeGeneralException is thrown when a general exception is thrown in InsertLike.
+    /// </summary>
+    [Test]
+    public void InsertLike_ShouldThrowLikeGeneralException_WhenGeneralExceptionIsThrown()
+    {
+        var userId = Guid.NewGuid();
+        var postId = Guid.NewGuid();
+        _mockLikeRepository.Setup(x => x.AddElement(It.IsAny<UserLikePostRelationDao>()))
+            .ThrowsAsync(new Exception());
+
+        Assert.ThrowsAsync<LikeGeneralException>(async () => await _likeService.InsertLike(userId, postId));
+    }
+
+    /// <summary>
+    ///     Tests that a LikeNotFoundException is thrown when a DatabaseMissingItemException is thrown in DeleteLike.
+    /// </summary>
+    [Test]
+    public void DeleteLike_ShouldThrowLikeNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
+    {
+        var userId = Guid.NewGuid();
+        var postId = Guid.NewGuid();
+        _mockLikeRepository.Setup(x => x.GetLikeByUserIdAndPostId(It.IsAny<Guid>(), It.IsAny<Guid>()))
+            .ThrowsAsync(new DatabaseMissingItemException());
+
+        Assert.ThrowsAsync<LikeNotFoundException>(async () => await _likeService.DeleteLike(userId, postId));
+    }
+
+    /// <summary>
+    ///     Tests that a LikeGeneralException is thrown when a general exception is thrown in DeleteLike.
+    /// </summary>
+    [Test]
+    public void DeleteLike_ShouldThrowLikeGeneralException_WhenGeneralExceptionIsThrown()
+    {
+        var userId = Guid.NewGuid();
+        var postId = Guid.NewGuid();
+        _mockLikeRepository.Setup(x => x.GetLikeByUserIdAndPostId(It.IsAny<Guid>(), It.IsAny<Guid>()))
+            .ThrowsAsync(new Exception());
+
+        Assert.ThrowsAsync<LikeGeneralException>(async () => await _likeService.DeleteLike(userId, postId));
+    }
+
+    /// <summary>
+    ///     Tests that a LikeGeneralException is thrown when a general exception is thrown in GetLikesForPost.
+    /// </summary>
+    [Test]
+    public void GetLikesForPost_ShouldThrowLikeGeneralException_WhenGeneralExceptionIsThrown()
+    {
+        var postId = Guid.NewGuid();
+        _mockLikeRepository.Setup(x => x.GetLikesForPost(It.IsAny<Guid>()))
+            .ThrowsAsync(new Exception());
+
+        Assert.ThrowsAsync<LikeGeneralException>(async () => await _likeService.GetLikesForPost(postId));
     }
 }

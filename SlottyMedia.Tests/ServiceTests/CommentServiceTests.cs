@@ -1,10 +1,9 @@
 ﻿using Moq;
-using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.CommentExceptions;
 using SlottyMedia.Backend.Services;
-using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Database.Repository.CommentRepo;
 
 namespace SlottyMedia.Tests.ServiceTests;
 
@@ -15,223 +14,207 @@ namespace SlottyMedia.Tests.ServiceTests;
 public class CommentServiceTests
 {
     /// <summary>
-    ///     Sets up the test environment before each test.
+    ///     Initializes the mock objects and the CommentService instance before each test.
     /// </summary>
     [SetUp]
     public void Setup()
     {
-        // Initialize the mock object for IDatabaseActions
-        _mockDatabaseActions = new Mock<IDatabaseActions>();
-        // Initialize the CommentService with the mock object
-        _commentService = new CommentService(_mockDatabaseActions.Object);
+        _mockICommentRepository = new Mock<ICommentRepository>();
+        _commentService = new CommentService(_mockICommentRepository.Object);
     }
 
     /// <summary>
-    ///     Cleans up the test environment after each test.
+    ///     Resets the mock objects after each test.
     /// </summary>
     [TearDown]
     public void TearDown()
     {
-        // Reset the mock object after each test
-        _mockDatabaseActions.Reset();
+        _mockICommentRepository.Reset();
     }
 
-    private Mock<IDatabaseActions> _mockDatabaseActions;
+    private Mock<ICommentRepository> _mockICommentRepository;
     private CommentService _commentService;
 
     /// <summary>
-    ///     Tests that InsertComment returns the correct comment when the comment is successfully inserted.
+    ///     Tests that InsertComment method inserts a comment when the comment is valid.
     /// </summary>
     [Test]
-    public async Task InsertComment_ShouldReturnComment_WhenCommentIsInserted()
+    public async Task InsertComment_ShouldInsertComment_WhenCommentIsValid()
     {
-        // Arrange
-        var commentDto = new CommentDto
-        {
-            CommentId = Guid.NewGuid(),
-            Content = "Test Content",
-            CreatorUserId = Guid.NewGuid(),
-            PostId = Guid.NewGuid()
-        };
-        var commentDao = commentDto.Mapper();
-        // Setup the mock to return the commentDao when Insert is called
-        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<CommentDao>())).ReturnsAsync(commentDao);
+        var creatorUserId = Guid.NewGuid();
+        var postId = Guid.NewGuid();
+        var content = "Test Content";
+        var commentDao = new CommentDao { CommentId = Guid.NewGuid(), Content = content };
 
-        // Act
-        var result = await _commentService.InsertComment(commentDto.CreatorUserId ?? Guid.Empty, commentDto.PostId,
-            commentDto.Content);
+        _mockICommentRepository.Setup(x => x.AddElement(It.IsAny<CommentDao>())).ReturnsAsync(commentDao);
 
-        // Assert
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.Content, Is.EqualTo(commentDto.Content));
-        Assert.That(result.CreatorUserId, Is.EqualTo(commentDto.CreatorUserId));
-        Assert.That(result.PostId, Is.EqualTo(commentDto.PostId));
-        // Verify that all setups were called
-        _mockDatabaseActions.VerifyAll();
+        await _commentService.InsertComment(creatorUserId, postId, content);
+
+        _mockICommentRepository.Verify(x => x.AddElement(It.IsAny<CommentDao>()), Times.Once);
     }
 
     /// <summary>
-    ///     Tests that InsertComment throws CommentIudException when a DatabaseIudActionException is thrown.
+    ///     Tests that InsertComment method throws CommentIudException when DatabaseIudActionException is thrown.
     /// </summary>
     [Test]
     public void InsertComment_ShouldThrowCommentIudException_WhenDatabaseIudActionExceptionIsThrown()
     {
-        // Arrange
-        var commentDto = new CommentDto
-        {
-            CreatorUserId = Guid.NewGuid(),
-            PostId = Guid.NewGuid(),
-            Content = "Test Content"
-        };
-        // Setup the mock to throw DatabaseIudActionException when Insert is called
-        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<CommentDao>())).ThrowsAsync(new DatabaseIudActionException());
+        var creatorUserId = Guid.NewGuid();
+        var postId = Guid.NewGuid();
+        var content = "Test Content";
 
-        // Act & Assert
+        _mockICommentRepository.Setup(x => x.AddElement(It.IsAny<CommentDao>()))
+            .ThrowsAsync(new DatabaseIudActionException());
+
         Assert.ThrowsAsync<CommentIudException>(async () =>
-            await _commentService.InsertComment(commentDto.CreatorUserId ?? Guid.Empty, commentDto.PostId,
-                commentDto.Content));
+            await _commentService.InsertComment(creatorUserId, postId, content));
     }
 
     /// <summary>
-    ///     Tests that InsertComment throws CommentGeneralException when a GeneralDatabaseException is thrown.
+    ///     Tests that InsertComment method throws CommentGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void InsertComment_ShouldThrowCommentGeneralException_WhenGeneralDatabaseExceptionIsThrown()
     {
-        // Arrange
-        var commentDto = new CommentDto
-        {
-            CreatorUserId = Guid.NewGuid(),
-            PostId = Guid.NewGuid(),
-            Content = "Test Content"
-        };
-        // Setup the mock to throw GeneralDatabaseException when Insert is called
-        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<CommentDao>())).ThrowsAsync(new DatabaseIudActionException());
+        var creatorUserId = Guid.NewGuid();
+        var postId = Guid.NewGuid();
+        var content = "Test Content";
 
-        // Act & Assert
-        Assert.ThrowsAsync<CommentIudException>(async () =>
-            await _commentService.InsertComment(commentDto.CreatorUserId ?? Guid.Empty, commentDto.PostId,
-                commentDto.Content));
+        _mockICommentRepository.Setup(x => x.AddElement(It.IsAny<CommentDao>()))
+            .ThrowsAsync(new GeneralDatabaseException());
+
+        Assert.ThrowsAsync<CommentGeneralException>(async () =>
+            await _commentService.InsertComment(creatorUserId, postId, content));
     }
 
     /// <summary>
-    ///     Tests that UpdateComment returns the correct comment when the comment is successfully updated.
+    ///     Tests that UpdateComment method updates a comment when the comment is valid.
     /// </summary>
     [Test]
-    public async Task UpdateComment_ShouldReturnComment_WhenCommentIsUpdated()
+    public async Task UpdateComment_ShouldUpdateComment_WhenCommentIsValid()
     {
-        // Arrange
-        var commentDto = new CommentDto
-        {
-            /* Initialize properties */
-        };
-        var commentDao = commentDto.Mapper();
-        // Setup the mock to return the commentDao when Update is called
-        _mockDatabaseActions.Setup(x => x.Update(It.IsAny<CommentDao>())).ReturnsAsync(commentDao);
+        var comment = new CommentDao { CommentId = Guid.NewGuid(), Content = "Updated Content" };
 
-        // Act
-        var result = await _commentService.UpdateComment(commentDto);
+        _mockICommentRepository.Setup(x => x.UpdateElement(It.IsAny<CommentDao>())).Returns(Task.CompletedTask);
 
-        // Assert
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.CommentId, Is.EqualTo(commentDto.CommentId));
-        Assert.That(result.Content, Is.EqualTo(commentDto.Content));
-        Assert.That(result.CreatorUserId, Is.EqualTo(commentDto.CreatorUserId));
-        Assert.That(result.PostId, Is.EqualTo(commentDto.PostId));
-        // Verify that all setups were called
-        _mockDatabaseActions.VerifyAll();
+        await _commentService.UpdateComment(comment);
+
+        _mockICommentRepository.Verify(x => x.UpdateElement(It.IsAny<CommentDao>()), Times.Once);
     }
 
     /// <summary>
-    ///     Tests that UpdateComment throws CommentIudException when a DatabaseIudActionException is thrown.
+    ///     Tests that UpdateComment method throws CommentIudException when DatabaseIudActionException is thrown.
     /// </summary>
     [Test]
     public void UpdateComment_ShouldThrowCommentIudException_WhenDatabaseIudActionExceptionIsThrown()
     {
-        // Arrange
-        var commentDto = new CommentDto
-        {
-            /* Initialize properties */
-        };
-        // Setup the mock to throw DatabaseIudActionException when Update is called
-        _mockDatabaseActions.Setup(x => x.Update(It.IsAny<CommentDao>())).ThrowsAsync(new DatabaseIudActionException());
+        var comment = new CommentDao { CommentId = Guid.NewGuid(), Content = "Updated Content" };
 
-        // Act & Assert
-        Assert.ThrowsAsync<CommentIudException>(async () => await _commentService.UpdateComment(commentDto));
+        _mockICommentRepository.Setup(x => x.UpdateElement(It.IsAny<CommentDao>()))
+            .ThrowsAsync(new DatabaseIudActionException());
+
+        Assert.ThrowsAsync<CommentIudException>(async () => await _commentService.UpdateComment(comment));
     }
 
     /// <summary>
-    ///     Tests that UpdateComment throws CommentGeneralException when a GeneralDatabaseException is thrown.
+    ///     Tests that UpdateComment method throws CommentGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void UpdateComment_ShouldThrowCommentGeneralException_WhenGeneralDatabaseExceptionIsThrown()
     {
-        // Arrange
-        var commentDto = new CommentDto
-        {
-            /* Initialize properties */
-        };
-        // Setup the mock to throw GeneralDatabaseException when Update is called
-        _mockDatabaseActions.Setup(x => x.Update(It.IsAny<CommentDao>())).ThrowsAsync(new GeneralDatabaseException());
+        var comment = new CommentDao { CommentId = Guid.NewGuid(), Content = "Updated Content" };
 
-        // Act & Assert
-        Assert.ThrowsAsync<CommentGeneralException>(async () => await _commentService.UpdateComment(commentDto));
+        _mockICommentRepository.Setup(x => x.UpdateElement(It.IsAny<CommentDao>()))
+            .ThrowsAsync(new GeneralDatabaseException());
+
+        Assert.ThrowsAsync<CommentGeneralException>(async () => await _commentService.UpdateComment(comment));
     }
 
     /// <summary>
-    ///     Tests that DeleteComment returns true when the comment is successfully deleted.
+    ///     Tests that DeleteComment method deletes a comment when the comment is valid.
     /// </summary>
     [Test]
-    public async Task DeleteComment_ShouldReturnTrue_WhenCommentIsDeleted()
+    public async Task DeleteComment_ShouldDeleteComment_WhenCommentIsValid()
     {
-        // Arrange
-        var commentDto = new CommentDto
-        {
-            /* Initialize properties */
-        };
-        // Setup the mock to return true when Delete is called
-        _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<CommentDao>())).ReturnsAsync(true);
+        var comment = new CommentDao { CommentId = Guid.NewGuid(), Content = "Test Content" };
 
-        // Act
-        await _commentService.DeleteComment(commentDto);
+        _mockICommentRepository.Setup(x => x.DeleteElement(It.IsAny<CommentDao>())).Returns(Task.CompletedTask);
 
-        // Assert
-        _mockDatabaseActions.VerifyAll();
+        await _commentService.DeleteComment(comment);
+
+        _mockICommentRepository.Verify(x => x.DeleteElement(It.IsAny<CommentDao>()), Times.Once);
     }
 
     /// <summary>
-    ///     Tests that DeleteComment throws CommentIudException when a DatabaseIudActionException is thrown.
+    ///     Tests that DeleteComment method throws CommentIudException when DatabaseIudActionException is thrown.
     /// </summary>
     [Test]
     public void DeleteComment_ShouldThrowCommentIudException_WhenDatabaseIudActionExceptionIsThrown()
     {
-        // Arrange
-        var commentDto = new CommentDto
-        {
-            /* Initialize properties */
-        };
-        // Setup the mock to throw DatabaseIudActionException when Delete is called
-        _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<CommentDao>())).ThrowsAsync(new DatabaseIudActionException());
+        var comment = new CommentDao { CommentId = Guid.NewGuid(), Content = "Test Content" };
 
-        // Act & Assert
-        Assert.ThrowsAsync<CommentIudException>(async () => await _commentService.DeleteComment(commentDto));
+        _mockICommentRepository.Setup(x => x.DeleteElement(It.IsAny<CommentDao>()))
+            .ThrowsAsync(new DatabaseIudActionException());
+
+        Assert.ThrowsAsync<CommentIudException>(async () => await _commentService.DeleteComment(comment));
     }
 
     /// <summary>
-    ///     Tests that DeleteComment throws CommentGeneralException when a GeneralDatabaseException is thrown.
+    ///     Tests that DeleteComment method throws CommentGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void DeleteComment_ShouldThrowCommentGeneralException_WhenGeneralDatabaseExceptionIsThrown()
     {
-        // Arrange
-        var commentDto = new CommentDto
-        {
-            /* Initialize properties */
-        };
-        // Setup the mock to throw GeneralDatabaseException when Delete is called
-        _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<CommentDao>())).ThrowsAsync(new GeneralDatabaseException());
+        var comment = new CommentDao { CommentId = Guid.NewGuid(), Content = "Test Content" };
 
-        // Act & Assert
-        Assert.ThrowsAsync<CommentGeneralException>(async () => await _commentService.DeleteComment(commentDto));
+        _mockICommentRepository.Setup(x => x.DeleteElement(It.IsAny<CommentDao>()))
+            .ThrowsAsync(new GeneralDatabaseException());
+
+        Assert.ThrowsAsync<CommentGeneralException>(async () => await _commentService.DeleteComment(comment));
+    }
+
+    /// <summary>
+    ///     Tests that InsertComment method throws CommentGeneralException when a general exception is thrown.
+    /// </summary>
+    [Test]
+    public void InsertComment_ShouldThrowCommentGeneralException_WhenExceptionIsThrown()
+    {
+        var creatorUserId = Guid.NewGuid();
+        var postId = Guid.NewGuid();
+        var content = "Test Content";
+
+        _mockICommentRepository.Setup(x => x.AddElement(It.IsAny<CommentDao>()))
+            .ThrowsAsync(new Exception());
+
+        Assert.ThrowsAsync<CommentGeneralException>(async () =>
+            await _commentService.InsertComment(creatorUserId, postId, content));
+    }
+
+    /// <summary>
+    ///     Tests that UpdateComment method throws CommentGeneralException when a general exception is thrown.
+    /// </summary>
+    [Test]
+    public void UpdateComment_ShouldThrowCommentGeneralException_WhenExceptionIsThrown()
+    {
+        var comment = new CommentDao { CommentId = Guid.NewGuid(), Content = "Updated Content" };
+
+        _mockICommentRepository.Setup(x => x.UpdateElement(It.IsAny<CommentDao>()))
+            .ThrowsAsync(new Exception());
+
+        Assert.ThrowsAsync<CommentGeneralException>(async () => await _commentService.UpdateComment(comment));
+    }
+
+    /// <summary>
+    ///     Tests that DeleteComment method throws CommentGeneralException when a general exception is thrown.
+    /// </summary>
+    [Test]
+    public void DeleteComment_ShouldThrowCommentGeneralException_WhenExceptionIsThrown()
+    {
+        var comment = new CommentDao { CommentId = Guid.NewGuid(), Content = "Test Content" };
+
+        _mockICommentRepository.Setup(x => x.DeleteElement(It.IsAny<CommentDao>()))
+            .ThrowsAsync(new Exception());
+
+        Assert.ThrowsAsync<CommentGeneralException>(async () => await _commentService.DeleteComment(comment));
     }
 }

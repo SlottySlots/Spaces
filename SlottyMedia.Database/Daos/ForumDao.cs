@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -7,6 +8,7 @@ namespace SlottyMedia.Database.Daos;
 ///     This class represents the Forum table in the database.
 /// </summary>
 [Table("Forum")]
+[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 public class ForumDao : BaseModel
 {
     /// <summary>
@@ -16,7 +18,7 @@ public class ForumDao : BaseModel
     {
         CreatorUserId = Guid.Empty;
         ForumTopic = string.Empty;
-        CreatedAt = DateTime.MinValue;
+        CreatedAt = DateTimeOffset.MinValue;
     }
 
     /// <summary>
@@ -56,10 +58,16 @@ public class ForumDao : BaseModel
     public string? ForumTopic { get; set; }
 
     /// <summary>
+    ///     The Count of Posts in the Forum.
+    /// </summary>
+    [Column("postCount", ignoreOnInsert: true, ignoreOnUpdate: true)]
+    public int? post_count { get; set; }
+
+    /// <summary>
     ///     Created Date and Time of the Forum.
     /// </summary>
-    [Column("created_at")]
-    public DateTime CreatedAt { get; set; }
+    [Column("created_at", ignoreOnInsert: true, ignoreOnUpdate: true)]
+    public DateTimeOffset CreatedAt { get; set; }
 
     /// <summary>
     ///     The ToString method returns a string representation of the object.

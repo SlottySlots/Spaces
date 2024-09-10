@@ -13,15 +13,19 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **ViewModel**
 
+The ViewModel for this component
+
 ```csharp
 public IPostSubmissionFormVm ViewModel { get; set; }
 ```
 
 #### Property Value
 
-[IPostSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.ipostsubmissionformvm.md)<br>
+[IPostSubmissionFormVm](./slottymedia.backend.viewmodel.partial.mainlayout.ipostsubmissionformvm.md)<br>
 
 ### **ValueChanged**
+
+An event that is invoked whenever this input field's value changes
 
 ```csharp
 public EventCallback<string> ValueChanged { get; set; }
@@ -30,6 +34,18 @@ public EventCallback<string> ValueChanged { get; set; }
 #### Property Value
 
 EventCallback&lt;String&gt;<br>
+
+### **UserId**
+
+The Id of the User
+
+```csharp
+public Nullable<Guid> UserId { get; set; }
+```
+
+#### Property Value
+
+[Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
 ## Constructors
 
@@ -50,3 +66,16 @@ protected void BuildRenderTree(RenderTreeBuilder __builder)
 #### Parameters
 
 `__builder` RenderTreeBuilder<br>
+
+### **OnAfterRender(Boolean)**
+
+Called after the component has been rendered. Fetches user information if it is the first render.
+
+```csharp
+protected void OnAfterRender(bool firstRender)
+```
+
+#### Parameters
+
+`firstRender` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Indicates whether this is the first render

@@ -96,6 +96,30 @@ public abstract string ServerErrorMessage { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+### **UserInformation**
+
+The user information data transfer object to be rendered.
+
+```csharp
+public abstract UserInformationDto UserInformation { get; set; }
+```
+
+#### Property Value
+
+[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+
+### **IsLoading**
+
+Gets a value indicating whether the data is still loading.
+
+```csharp
+public abstract bool IsLoading { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ## Methods
 
 ### **HandleSpacePromptChange(ChangeEventArgs, EventCallback&lt;String&gt;)**
@@ -127,17 +151,13 @@ Handles an event that is triggered when the user selects a space from the list o
  actually exists!
 
 ```csharp
-Task HandleSpaceSelection(string spaceName)
+void HandleSpaceSelection(string spaceName)
 ```
 
 #### Parameters
 
 `spaceName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The name of the selected space (without hashtag!)
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **HandleSpaceDeselection()**
 
@@ -161,3 +181,21 @@ Task SubmitForm()
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **Initialize(Nullable&lt;Guid&gt;)**
+
+Initializes the ViewModel with the specified user ID.
+
+```csharp
+Task Initialize(Nullable<Guid> userId)
+```
+
+#### Parameters
+
+`userId` [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+The ID of the user to load information for.
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+A task representing the asynchronous operation.

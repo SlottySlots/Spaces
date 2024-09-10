@@ -1,4 +1,5 @@
 using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Backend.Exceptions.Services.SearchExceptions;
 
 namespace SlottyMedia.Backend.Services.Interfaces;
 
@@ -8,9 +9,26 @@ namespace SlottyMedia.Backend.Services.Interfaces;
 public interface ISearchService
 {
     /// <summary>
-    ///     This method searches for a user by username or topic.
+    ///     Search function to retrieve all users for a specific search term.
     /// </summary>
-    /// <param name="searchTerm"></param>
-    /// <returns></returns>
-    public Task<SearchDto> SearchByUsernameOrTopic(string searchTerm);
+    /// <param name="searchTerm">
+    ///     Search Term used for wildcard selection
+    /// </param>
+    /// <returns>
+    ///     SearchDto
+    /// </returns>
+    /// <exception cref="SearchGeneralExceptions">Thrown when a general error occurs during the search.</exception>
+    Task<SearchDto> SearchByUsername(string searchTerm);
+
+    /// <summary>
+    ///     Search function to retrieve forums by topic.
+    /// </summary>
+    /// <param name="searchTerm">
+    ///     Search Term used for wildcard search
+    /// </param>
+    /// <returns>
+    ///     SearchDto
+    /// </returns>
+    /// <exception cref="SearchGeneralExceptions">Thrown when a general error occurs during the search.</exception>
+    Task<SearchDto> SearchByTopic(string searchTerm);
 }

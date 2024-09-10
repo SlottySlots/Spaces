@@ -1,19 +1,37 @@
 ﻿@page "/"
-@using SlottyMedia.Backend.ViewModel.Interfaces
+@using SlottyMedia.Backend.Services.Interfaces
+@using SlottyMedia.Backend.ViewModel.Pages.Home
+
 @inject IHomePageVm ViewModel
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
 
 
 <PageTitle>Slotty Media | Home</PageTitle>
 
-@foreach (var post in ViewModel!.Posts)
+
+@if (AuthService.IsAuthenticated())
 {
-    <Post Dto="post"/>
+    <PostSubmissionForm UserId="AuthService.GetAuthPrincipalId()"></PostSubmissionForm>
 }
+
+<div class="w-full pb-5 flex flex-col items-center">
+    <Pagination Page="ViewModel!.Page" OnPageFetch="ViewModel!.LoadPage" Class="w-full px-3 py-5">
+        @foreach (var post in ViewModel!.Page)
+        {
+            <Post Id="post.PostId"/>
+        }
+    </Pagination>
+</div>
+
 
 @code
 {
+    /// <summary>
+    ///     This method is called when the component is initialized.
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
-        await ViewModel.FetchPosts();
+        await ViewModel.Initialize();
     }
 }

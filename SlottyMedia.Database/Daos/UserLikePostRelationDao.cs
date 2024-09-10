@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -7,6 +8,7 @@ namespace SlottyMedia.Database.Daos;
 ///     This class represents the User_Like_Post_Relation table in the database.
 /// </summary>
 [Table("User_Like_Post_Relation")]
+[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 public class UserLikePostRelationDao : BaseModel
 {
     /// <summary>
@@ -51,8 +53,8 @@ public class UserLikePostRelationDao : BaseModel
     /// <summary>
     ///     The Date and Time the User_Like_Post_Relation was created.
     /// </summary>
-    [Column("created_at")]
-    public DateTime CreatedAt { get; set; }
+    [Column("created_at", ignoreOnInsert: true, ignoreOnUpdate: true)]
+    public DateTimeOffset CreatedAt { get; set; }
 
     /// <summary>
     ///     The ToString method returns a string representation of the object.

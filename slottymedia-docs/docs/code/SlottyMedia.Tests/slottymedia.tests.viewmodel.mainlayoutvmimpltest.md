@@ -52,22 +52,6 @@ Tests that no session is restored and returns null.
 public void RestoreSessionOnInit_NoSessionRestoredReturnsNull()
 ```
 
-### **SetUserInfo_SessionNotSetReturnsNull()**
-
-Tests that SetUserInfo returns null when no session is set.
-
-```csharp
-public void SetUserInfo_SessionNotSetReturnsNull()
-```
-
-### **SetUserInfo_CorruptUserDaoReturnsNull()**
-
-Tests that SetUserInfo returns null when the user DAO is corrupt.
-
-```csharp
-public void SetUserInfo_CorruptUserDaoReturnsNull()
-```
-
 ### **SetUserInfo_ReturnsUserInfoDto()**
 
 Tests that SetUserInfo returns a UserInfoDto when the user DAO is valid.
@@ -95,3 +79,11 @@ public Task PersistsUserAvatarInDb()
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **RestoreSessionOnInit_LogsMessageOnNoSession()**
+
+Tests that RestoreSessionOnInit logs a message when no session is restored.
+
+```csharp
+public void RestoreSessionOnInit_LogsMessageOnNoSession()
+```

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -7,6 +8,7 @@ namespace SlottyMedia.Database.Daos;
 ///     This class represents the Comment table in the database.
 /// </summary>
 [Table("Comment")]
+[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 public class CommentDao : BaseModel
 {
     /// <summary>
@@ -14,7 +16,7 @@ public class CommentDao : BaseModel
     /// </summary>
     public CommentDao()
     {
-        ParentComment = new List<CommentDao?>();
+        //ParentComment = new List<CommentDao?>();
     }
 
     /// <summary>
@@ -30,7 +32,7 @@ public class CommentDao : BaseModel
         CreatorUserId = creatorUserId;
         PostId = postId;
         Content = content;
-        ParentComment = new List<CommentDao?>();
+        //ParentComment = new List<CommentDao?>();
     }
 
     /// <summary>
@@ -45,17 +47,17 @@ public class CommentDao : BaseModel
     [Column("parent_commentID")]
     public Guid? ParentCommentId { get; set; }
 
-    /// <summary>
-    ///     The list of parent comments.
-    /// </summary>
-    [Reference(typeof(CommentDao), ReferenceAttribute.JoinType.Left, true, "parent_commentID")]
-    public List<CommentDao?> ParentComment { get; set; }
+    // /// <summary>
+    // ///     The list of parent comments.
+    // /// </summary>
+    // [Reference(typeof(CommentDao), ReferenceAttribute.JoinType.Left, true, "parent_commentID")]
+    // public List<CommentDao?> ParentComment { get; set; }
 
-    /// <summary>
-    ///     The User who created the Comment. This is a Reference to the User Table. It is a Foreign Key.
-    /// </summary>
-    [Reference(typeof(UserDao), ReferenceAttribute.JoinType.Inner, true, "userID")]
-    public UserDao? CreatorUser { get; set; }
+    // /// <summary>
+    // ///     The User who created the Comment. This is a Reference to the User Table. It is a Foreign Key.
+    // /// </summary>
+    // [Reference(typeof(UserDao), ReferenceAttribute.JoinType.Inner, true, "userID")]
+    // public UserDao? CreatorUser { get; set; }
 
     /// <summary>
     ///     The ID of the User who created the Comment. This is a Foreign Key to the User Table.
@@ -63,11 +65,11 @@ public class CommentDao : BaseModel
     [Column("creator_UserID")]
     public Guid? CreatorUserId { get; set; }
 
-    /// <summary>
-    ///     The Post the Comment is related to. This is a Reference to the Post Table. It is a Foreign Key.
-    /// </summary>
-    [Reference(typeof(PostsDao), ReferenceAttribute.JoinType.Inner, true, "postID")]
-    public PostsDao? Post { get; set; }
+    // /// <summary>
+    // ///     The Post the Comment is related to. This is a Reference to the Post Table. It is a Foreign Key.
+    // /// </summary>
+    // [Reference(typeof(PostsDao), ReferenceAttribute.JoinType.Inner, true, "postID")]
+    // public PostsDao? Post { get; set; }
 
     /// <summary>
     ///     The ID of the Post the Comment is related to. This is a Foreign Key to the Post Table.
@@ -84,8 +86,8 @@ public class CommentDao : BaseModel
     /// <summary>
     ///     The Date and Time the Comment was created.
     /// </summary>
-    [Column("created_at")]
-    public DateTime CreatedAt { get; set; }
+    [Column("created_at", ignoreOnInsert: true, ignoreOnUpdate: true)]
+    public DateTimeOffset CreatedAt { get; set; }
 
     /// <summary>
     ///     The ToString method is used to return a string representation of the CommentDao object.

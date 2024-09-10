@@ -5,11 +5,11 @@ Namespace: SlottyMedia.Backend.ViewModel
 Implementation of the IUserVmImpl interface.
 
 ```csharp
-public class UserVmImpl : SlottyMedia.Backend.ViewModel.Interfaces.IUserVmImpl
+public class UserVmImpl : SlottyMedia.Backend.ViewModel.Interfaces.IUserVm
 ```
 
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [UserVmImpl](./slottymedia.backend.viewmodel.uservmimpl.md)<br>
-Implements [IUserVmImpl](./slottymedia.backend.viewmodel.interfaces.iuservmimpl.md)
+Implements [IUserVm](./slottymedia.backend.viewmodel.interfaces.iuservm.md)
 
 ## Constructors
 
@@ -45,7 +45,7 @@ public Task<UserDto> GetUserById(Guid userId)
 ### **UpdateUser(UserDto)**
 
 ```csharp
-public Task<UserDto> UpdateUser(UserDto user)
+public Task UpdateUser(UserDto user)
 ```
 
 #### Parameters
@@ -54,4 +54,4 @@ public Task<UserDto> UpdateUser(UserDto user)
 
 #### Returns
 
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>

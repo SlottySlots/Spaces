@@ -2,7 +2,7 @@
 
 Namespace: SlottyMedia.Tests.ServiceTests
 
-Tests the PostService used for CRUD operations on posts.
+Unit tests for the PostService class.
 
 ```csharp
 public class PostServiceTests
@@ -22,7 +22,7 @@ public PostServiceTests()
 
 ### **Setup()**
 
-The setup method that is called before each test.
+Sets up the test environment before each test.
 
 ```csharp
 public void Setup()
@@ -30,18 +30,18 @@ public void Setup()
 
 ### **TearDown()**
 
-The teardown method that is called after each test.
+Cleans up the test environment after each test.
 
 ```csharp
 public void TearDown()
 ```
 
-### **InsertPost_ShouldReturnInsertedPost()**
+### **InsertPost_ShouldReturnTrue_WhenPostIsInsertedSuccessfully()**
 
-Tests if InsertPost method returns the inserted post correctly.
+Tests that InsertPost returns true when a post is inserted successfully.
 
 ```csharp
-public Task InsertPost_ShouldReturnInsertedPost()
+public Task InsertPost_ShouldReturnTrue_WhenPostIsInsertedSuccessfully()
 ```
 
 #### Returns
@@ -50,54 +50,26 @@ public Task InsertPost_ShouldReturnInsertedPost()
 
 ### **InsertPost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()**
 
-Tests if InsertPost method throws PostIudException when DatabaseIudActionException is thrown.
+Tests that InsertPost throws PostIudException when DatabaseIudActionException is thrown.
 
 ```csharp
 public void InsertPost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()
 ```
 
-### **InsertPost_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()**
+### **InsertPost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
 
-Tests if InsertPost method throws PostGeneralException when GeneralDatabaseException is thrown.
+Tests that InsertPost throws PostGeneralException when GeneralDatabaseException is thrown.
 
 ```csharp
-public void InsertPost_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()
+public void InsertPost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
 ```
 
-### **UpdatePost_ShouldReturnUpdatedPost()**
+### **DeletePost_ShouldReturnTrue_WhenPostIsDeletedSuccessfully()**
 
-Tests if UpdatePost method returns the updated post correctly.
-
-```csharp
-public Task UpdatePost_ShouldReturnUpdatedPost()
-```
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
-### **UpdatePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()**
-
-Tests if UpdatePost method throws PostIudException when DatabaseIudActionException is thrown.
+Tests that DeletePost returns true when a post is deleted successfully.
 
 ```csharp
-public void UpdatePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()
-```
-
-### **UpdatePost_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()**
-
-Tests if UpdatePost method throws PostGeneralException when GeneralDatabaseException is thrown.
-
-```csharp
-public void UpdatePost_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()
-```
-
-### **DeletePost_ShouldReturnTrue()**
-
-Tests if DeletePost method returns true when post is deleted successfully.
-
-```csharp
-public Task DeletePost_ShouldReturnTrue()
+public Task DeletePost_ShouldReturnTrue_WhenPostIsDeletedSuccessfully()
 ```
 
 #### Returns
@@ -106,26 +78,82 @@ public Task DeletePost_ShouldReturnTrue()
 
 ### **DeletePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()**
 
-Tests if DeletePost method throws PostIudException when DatabaseIudActionException is thrown.
+Tests that DeletePost throws PostIudException when DatabaseIudActionException is thrown.
 
 ```csharp
 public void DeletePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()
 ```
 
-### **DeletePost_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()**
+### **DeletePost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
 
-Tests if DeletePost method throws PostGeneralException when GeneralDatabaseException is thrown.
+Tests that DeletePost throws PostGeneralException when GeneralDatabaseException is thrown.
 
 ```csharp
-public void DeletePost_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()
+public void DeletePost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
 ```
 
-### **GetPostsFromForum_ShouldReturnListOfPostTitles()**
+### **GetPostsForUser_ShouldReturnPosts_WhenPostsAreFound()**
 
-Tests if GetPostsFromForum method returns a list of post titles from a forum.
+Tests that GetPostsForUser returns posts when posts are found.
 
 ```csharp
-public Task GetPostsFromForum_ShouldReturnListOfPostTitles()
+public Task GetPostsForUser_ShouldReturnPosts_WhenPostsAreFound()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **GetPostsForUser_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()**
+
+Tests that GetPostsForUser throws PostNotFoundException when DatabaseMissingItemException is thrown.
+
+```csharp
+public void GetPostsForUser_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
+```
+
+### **GetPostsForUser_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
+
+Tests that GetPostsForUser throws PostGeneralException when GeneralDatabaseException is thrown.
+
+```csharp
+public void GetPostsForUser_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+```
+
+### **UpdatePost_ShouldReturnTrue_WhenPostIsUpdatedSuccessfully()**
+
+Tests that UpdatePost returns true when a post is updated successfully.
+
+```csharp
+public Task UpdatePost_ShouldReturnTrue_WhenPostIsUpdatedSuccessfully()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **UpdatePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()**
+
+Tests that UpdatePost throws PostIudException when DatabaseIudActionException is thrown.
+
+```csharp
+public void UpdatePost_ShouldThrowPostIudException_WhenDatabaseIudActionExceptionIsThrown()
+```
+
+### **UpdatePost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
+
+Tests that UpdatePost throws PostGeneralException when GeneralDatabaseException is thrown.
+
+```csharp
+public void UpdatePost_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+```
+
+### **GetPostsFromForum_ShouldReturnPosts_WhenPostsAreFound()**
+
+Tests that GetPostsFromForum returns posts when posts are found.
+
+```csharp
+public Task GetPostsFromForum_ShouldReturnPosts_WhenPostsAreFound()
 ```
 
 #### Returns
@@ -134,76 +162,120 @@ public Task GetPostsFromForum_ShouldReturnListOfPostTitles()
 
 ### **GetPostsFromForum_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()**
 
-Tests if GetPostsFromForum method throws PostNotFoundException when DatabaseMissingItemException is thrown.
+Tests that GetPostsFromForum throws PostNotFoundException when DatabaseMissingItemException is thrown.
 
 ```csharp
 public void GetPostsFromForum_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
 ```
 
-### **GetPostsFromForum_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()**
+### **GetPostsFromForum_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
 
-Tests if GetPostsFromForum method throws PostGeneralException when GeneralDatabaseException is thrown.
+Tests that GetPostsFromForum throws PostGeneralException when GeneralDatabaseException is thrown.
 
 ```csharp
-public void GetPostsFromForum_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()
+public void GetPostsFromForum_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
 ```
 
-### **GetPostsByUserId_ShouldReturnListOfPostDtos()**
+### **GetPostById_ShouldReturnPost_WhenPostIsFound()**
 
-Tests if GetPostsByUserId method returns a list of post DTOs by user ID.
-
-```csharp
-public Task GetPostsByUserId_ShouldReturnListOfPostDtos()
-```
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
-
-### **GetPostsByUserId_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()**
-
-Tests if GetPostsByUserId method throws PostGeneralException when GeneralDatabaseException is thrown.
+Tests that GetPostById returns a post when a post is found.
 
 ```csharp
-public void GetPostsByUserId_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()
-```
-
-### **GetPostsByUserIdByForumId_ShouldReturnListOfPostDtos()**
-
-Tests if GetPostsByUserIdByForumId method returns a list of post DTOs by user ID and forum ID.
-
-```csharp
-public Task GetPostsByUserIdByForumId_ShouldReturnListOfPostDtos()
+public Task GetPostById_ShouldReturnPost_WhenPostIsFound()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **GetPostsByUserIdByForumId_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()**
+### **GetPostById_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()**
 
-Tests if GetPostsByUserIdByForumId method throws PostNotFoundException when DatabaseMissingItemException is thrown.
+Tests that GetPostById throws PostNotFoundException when DatabaseMissingItemException is thrown.
 
 ```csharp
-public void GetPostsByUserIdByForumId_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
+public void GetPostById_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
 ```
 
-### **GetPostsByForumId_ShouldReturnListOfPostDtos()**
+### **GetPostById_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
 
-Tests if GetPostsByForumId method returns a list of post DTOs by forum ID.
+Tests that GetPostById throws PostGeneralException when GeneralDatabaseException is thrown.
 
 ```csharp
-public Task GetPostsByForumId_ShouldReturnListOfPostDtos()
+public void GetPostById_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+```
+
+### **GetForumCountByUserId_ShouldReturnCorrectCount()**
+
+Tests that GetForumCountByUserId returns the correct count.
+
+```csharp
+public Task GetForumCountByUserId_ShouldReturnCorrectCount()
 ```
 
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **GetPostsByForumId_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()**
+### **GetForumCountByUserId_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
 
-Tests if GetPostsByForumId method throws PostGeneralException when GeneralDatabaseException is thrown.
+Tests that GetForumCountByUserId throws PostGeneralException when GeneralDatabaseException is thrown.
 
 ```csharp
-public void GetPostsByForumId_ShouldThrowPostGeneralException_WhenDatabaseExceptionIsThrown()
+public void GetForumCountByUserId_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+```
+
+### **GetAllPosts_ShouldReturnPosts_WhenPostsAreFound()**
+
+Tests that GetAllPosts returns posts when posts are found.
+
+```csharp
+public Task GetAllPosts_ShouldReturnPosts_WhenPostsAreFound()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **GetAllPosts_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()**
+
+Tests that GetAllPosts throws PostNotFoundException when DatabaseMissingItemException is thrown.
+
+```csharp
+public void GetAllPosts_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
+```
+
+### **GetAllPosts_ShouldThrowPostGeneralException_WhenGeneralExceptionIsThrown()**
+
+Tests that GetAllPosts throws PostGeneralException when a general exception is thrown.
+
+```csharp
+public void GetAllPosts_ShouldThrowPostGeneralException_WhenGeneralExceptionIsThrown()
+```
+
+### **GetPostsByForumId_ShouldReturnPosts_WhenPostsAreFound()**
+
+Tests that GetPostsByForumId returns posts when posts are found.
+
+```csharp
+public Task GetPostsByForumId_ShouldReturnPosts_WhenPostsAreFound()
+```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **GetPostsByForumId_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()**
+
+Tests that GetPostsByForumId throws PostNotFoundException when DatabaseMissingItemException is thrown.
+
+```csharp
+public void GetPostsByForumId_ShouldThrowPostNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
+```
+
+### **GetPostsByForumId_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()**
+
+Tests that GetPostsByForumId throws PostGeneralException when GeneralDatabaseException is thrown.
+
+```csharp
+public void GetPostsByForumId_ShouldThrowPostGeneralException_WhenGeneralDatabaseExceptionIsThrown()
 ```

@@ -47,7 +47,8 @@ public static class NlogConfiguration
         };
         var logconsole = new ColoredConsoleTarget("console")
         {
-            Layout = @"${date:format=HH\:mm\:ss} [${level}] ${logger} ${message}",
+            Layout = @"${date:format=HH\:mm\:ss} [${level}] ${logger} ${message} 
+                        ${exception: format=Tostring, Data:maxInnerExceptionLevel=10}",
             UseDefaultRowHighlightingRules = false,
             EnableAnsiOutput = true
         };
@@ -66,7 +67,7 @@ public static class NlogConfiguration
 
         // Filter out Microsoft logs with level less than or equal to Warn
         consoleRule.Filters.Add(new WhenMethodFilter(logEvent =>
-            logEvent.LoggerName.StartsWith("Microsoft.") && logEvent.Level <= LogLevel.Warn
+            logEvent!.LoggerName!.StartsWith("Microsoft.") && logEvent.Level <= LogLevel.Warn
                 ? FilterResult.Ignore
                 : FilterResult.Log));
         config.AddRule(consoleRule);

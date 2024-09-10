@@ -81,12 +81,34 @@ public string ServerErrorMessage { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-## Constructors
-
-### **PostSubmissionFormVmImpl(IAuthService, IPostService, IForumService, NavigationManager)**
+### **UserInformation**
 
 ```csharp
-public PostSubmissionFormVmImpl(IAuthService authService, IPostService postService, IForumService forumService, NavigationManager navigationManager)
+public UserInformationDto UserInformation { get; set; }
+```
+
+#### Property Value
+
+[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+
+### **IsLoading**
+
+```csharp
+public bool IsLoading { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+## Constructors
+
+### **PostSubmissionFormVmImpl(IAuthService, IPostService, IForumService, ISearchService, NavigationManager, IUserService)**
+
+Ctor used for dep inject
+
+```csharp
+public PostSubmissionFormVmImpl(IAuthService authService, IPostService postService, IForumService forumService, ISearchService searchService, NavigationManager navigationManager, IUserService userService)
 ```
 
 #### Parameters
@@ -97,7 +119,11 @@ public PostSubmissionFormVmImpl(IAuthService authService, IPostService postServi
 
 `forumService` [IForumService](./slottymedia.backend.services.interfaces.iforumservice.md)<br>
 
+`searchService` [ISearchService](./slottymedia.backend.services.interfaces.isearchservice.md)<br>
+
 `navigationManager` NavigationManager<br>
+
+`userService` [IUserService](./slottymedia.backend.services.interfaces.iuserservice.md)<br>
 
 ## Methods
 
@@ -120,16 +146,12 @@ public Task HandleSpacePromptChange(ChangeEventArgs e, EventCallback<string> pro
 ### **HandleSpaceSelection(String)**
 
 ```csharp
-public Task HandleSpaceSelection(string spaceName)
+public void HandleSpaceSelection(string spaceName)
 ```
 
 #### Parameters
 
 `spaceName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-#### Returns
-
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **HandleSpaceDeselection()**
 
@@ -142,6 +164,20 @@ public void HandleSpaceDeselection()
 ```csharp
 public Task SubmitForm()
 ```
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **Initialize(Nullable&lt;Guid&gt;)**
+
+```csharp
+public Task Initialize(Nullable<Guid> userId)
+```
+
+#### Parameters
+
+`userId` [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
 #### Returns
 

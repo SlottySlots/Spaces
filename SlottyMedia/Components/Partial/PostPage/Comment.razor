@@ -1,0 +1,48 @@
+@using SlottyMedia.Backend.ViewModel.Partial.PostPage
+@inject ICommentVm CommentVm
+
+
+@if (!CommentVm.IsLoading)
+{
+    <div class="w-full p-3 bg-white-100 rounded-[24px] grid grid-cols-10 gap-4">
+
+        <!-- profile picture -->
+        <div @onclick="CommentVm.GoToCreatorProfile">
+            <Avatar Base64="@CommentVm.UserInfo!.ProfilePic" Class="!w-[50px] !h-[50px]"/>
+        </div>
+
+        <!-- username & time posted -->
+        <div class="col-span-9 flex flex-col justify-between cursor-pointer" @onclick="CommentVm.GoToCreatorProfile">
+            <h3 class="text-xl font-semibold">
+                @(CommentVm.UserInfo!.Username)
+            </h3>
+            <h3 class="text-sm font-medium text-cadet-gray">
+                @(CommentVm.Dto!.CreatedAt.ToString("dd MMMM yyyy"))
+            </h3>
+        </div>
+
+        <!-- this cell is just for filling the grid! -->
+        <div></div>
+
+        <!-- comment text -->
+        <div class="col-span-9 break-words">
+            @(CommentVm.Dto!.Content)
+        </div>
+    </div>
+}
+
+@code {
+
+    /// <summary>
+    ///     The ID of the comment to render
+    /// </summary>
+    [Parameter]
+    public Guid Id { get; set; }
+
+    /// <inheritdoc />
+    protected override async Task OnParametersSetAsync()
+    {
+        await CommentVm.Initialize(Id);
+    }
+
+}

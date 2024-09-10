@@ -1,13 +1,13 @@
 ﻿@page "/spaces"
-@using SlottyMedia.Backend.ViewModel.Interfaces
-@using SlottyMedia.LoggingProvider
-@layout MainLayout
+@using SlottyMedia.Backend.ViewModel.Pages.Space
 
 @inject ISpacesVm SpacesVm
+
+
 <PageTitle>Slotty Media | Spaces</PageTitle>
 
 <!-- Display loading indicator -->
-@if (isLoading)
+@if (SpacesVm.IsLoading)
 {
     <p>Loading...</p>
 }
@@ -16,11 +16,20 @@ else if (SpacesVm.Forums.Any())
     <ul>
         @foreach (var forum in SpacesVm.Forums)
         {
-            <Card class="min-h-[150px] mt-20 mx-7 flex flex-col items-center">
-                <h3 class="font-semibold text-lg">
-                    @(forum.Topic)
-                </h3>
-            </Card>
+            <li>
+                <NavLink href=@($"/spaces/{forum.ForumId}") class="card-link">
+                    <Card class="min-h-[100px] mt-5 mx-7 flex flex-col justify-center align-middle">
+                        <h3 class="text-3xl mt-3 font-medium text-center">
+                            @forum.Topic
+                        </h3>
+
+                        <div class="flex w-fit mx-auto my-3">
+                            <h3 class="text-sm text-cadet-gray w-full">Posts: @forum.PostCount</h3>
+                            <h3 class="text-sm text-cadet-gray w-full">Created at: @forum.CreatedAt.ToString("dd-MMMM-yyyy")</h3>
+                        </div>
+                    </Card>
+                </NavLink>
+            </li>
         }
     </ul>
 }
@@ -30,25 +39,15 @@ else
 }
 
 @code {
-    private bool isLoading;
-    private static readonly Logging<Spaces> Logger = new();
 
+    /// <summary>
+    ///     This method is called when the page is initialized.
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
-        isLoading = true; // Set loading state
-        try
-        {
-            await SpacesVm.LoadForums(); // Load forums automatically when the page is initialized
-        }
-        catch (Exception ex)
-        {
-            // Log the error and provide feedback to the user
-            Logger.LogError($"An error occurred while loading forums: {ex.Message}");
-        }
-        finally
-        {
-            isLoading = false; // Unset loading state
-        }
+        await SpacesVm.LoadForums(); // Load forums automatically when the page is initialized
     }
+
+}
 
 }

@@ -4,10 +4,10 @@ using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.UserExceptions;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
-using SlottyMedia.Tests.DatabaseTests;
+using SlottyMedia.Database.Repository.FollowerUserRelatioRepo;
+using SlottyMedia.Database.Repository.UserRepo;
 
 namespace SlottyMedia.Tests.ServiceTests;
 
@@ -23,10 +23,11 @@ public class UserServiceTests
     [SetUp]
     public void Setup()
     {
-        _mockDatabaseActions = new Mock<IDatabaseActions>();
+        _mockUserRepository = new Mock<IUserRepository>();
         _mockPostService = new Mock<IPostService>();
-        _mockPostService.Object.DatabaseActions = _mockDatabaseActions.Object;
-        _userService = new UserService(_mockDatabaseActions.Object, _mockPostService.Object);
+        _mockFollowerUserRelationRepository = new Mock<IFollowerUserRelationRepository>();
+        _userService = new UserService(_mockUserRepository.Object, _mockPostService.Object,
+            _mockFollowerUserRelationRepository.Object);
     }
 
     /// <summary>
@@ -35,58 +36,15 @@ public class UserServiceTests
     [TearDown]
     public void TearDown()
     {
-        _mockDatabaseActions.Reset();
+        _mockUserRepository.Reset();
         _mockPostService.Reset();
+        _mockFollowerUserRelationRepository.Reset();
     }
 
-    private Mock<IDatabaseActions> _mockDatabaseActions;
-    private IUserService _userService;
+    private Mock<IUserRepository> _mockUserRepository;
     private Mock<IPostService> _mockPostService;
-
-    /// <summary>
-    ///     Tests if CreateUser method returns the created user correctly.
-    /// </summary>
-    [Test]
-    public async Task CreateUser_ShouldReturnUser_WhenUserIsCreated()
-    {
-        var userId = Guid.NewGuid();
-        var username = "testUsername";
-        var email = "testEmail";
-        var user = new UserDao
-        {
-            UserId = userId, UserName = username, Email = email,
-            RoleId = InitializeModels.GetRoleDto().RoleId ?? Guid.Empty
-        };
-        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<UserDao>())).ReturnsAsync(user);
-
-        var result = await _userService.CreateUser(userId.ToString(), username, email,
-            InitializeModels.GetRoleDto().RoleId ?? Guid.Empty);
-
-        var resultDao = result.Mapper();
-
-        Assert.That(result, Is.Not.Null);
-        Assert.Multiple(() =>
-        {
-            Assert.That(resultDao.UserId ?? Guid.Empty, Is.EqualTo(userId));
-            Assert.That(resultDao.UserName, Is.EqualTo(username));
-        });
-        _mockDatabaseActions.VerifyAll();
-    }
-
-    /// <summary>
-    ///     Tests if CreateUser method throws UserIudException when DatabaseIudActionException is thrown.
-    /// </summary>
-    [Test]
-    public void CreateUser_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()
-    {
-        var userId = Guid.NewGuid();
-        var username = "testUsername";
-        var email = "testEmail";
-        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<UserDao>())).ThrowsAsync(new DatabaseIudActionException());
-
-        Assert.ThrowsAsync<UserIudException>(async () => await _userService.CreateUser(userId.ToString(), username,
-            email, InitializeModels.GetRoleDto().RoleId ?? Guid.Empty));
-    }
+    private Mock<IFollowerUserRelationRepository> _mockFollowerUserRelationRepository;
+    private IUserService _userService;
 
     /// <summary>
     ///     Tests if CreateUser method throws UserGeneralException when GeneralDatabaseException is thrown.
@@ -95,28 +53,15 @@ public class UserServiceTests
     public void CreateUser_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
-        var username = "testUsername";
-        var email = "testEmail";
-        _mockDatabaseActions.Setup(x => x.Insert(It.IsAny<UserDao>())).ThrowsAsync(new GeneralDatabaseException());
+        var username = "testUser";
+        var email = "test@example.com";
+        var roleId = Guid.NewGuid();
 
-        Assert.ThrowsAsync<UserGeneralException>(async () =>
-            await _userService.CreateUser(userId.ToString(), username, email,
-                InitializeModels.GetRoleDto().RoleId ?? Guid.Empty));
-    }
+        _mockUserRepository.Setup(x => x.AddElement(It.IsAny<UserDao>()))
+            .ThrowsAsync(new GeneralDatabaseException());
 
-    /// <summary>
-    ///     Tests if DeleteUser method returns true when user is deleted successfully.
-    /// </summary>
-    [Test]
-    public async Task DeleteUser_ShouldReturnTrue_WhenUserIsDeleted()
-    {
-        var user = new UserDao { UserId = Guid.NewGuid() };
-        _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<UserDao>())).ReturnsAsync(true);
-
-        var result = await _userService.DeleteUser(new UserDto().Mapper(user));
-
-        Assert.That(result, Is.True);
-        _mockDatabaseActions.VerifyAll();
+        Assert.ThrowsAsync<UserGeneralException>(
+            async () => await _userService.CreateUser(userId.ToString(), username, email, roleId));
     }
 
     /// <summary>
@@ -125,67 +70,43 @@ public class UserServiceTests
     [Test]
     public void DeleteUser_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()
     {
-        var user = new UserDao { UserId = Guid.NewGuid() };
-        _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<UserDao>())).ThrowsAsync(new DatabaseIudActionException());
+        var user = new UserDto { UserId = Guid.NewGuid(), CreatedAt = DateTime.Now };
 
-        Assert.ThrowsAsync<UserIudException>(async () => await _userService.DeleteUser(new UserDto().Mapper(user)));
+        _mockUserRepository.Setup(x => x.DeleteElement(It.IsAny<UserDao>()))
+            .ThrowsAsync(new DatabaseIudActionException());
+
+        Assert.ThrowsAsync<UserIudException>(
+            async () => await _userService.DeleteUser(user));
     }
 
     /// <summary>
-    ///     Tests if DeleteUser method throws UserGeneralException when GeneralDatabaseException is thrown.
-    /// </summary>
-    [Test]
-    public void DeleteUser_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
-    {
-        var user = new UserDao { UserId = Guid.NewGuid() };
-        _mockDatabaseActions.Setup(x => x.Delete(It.IsAny<UserDao>())).ThrowsAsync(new GeneralDatabaseException());
-
-        Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.DeleteUser(new UserDto().Mapper(user)));
-    }
-
-    /// <summary>
-    ///     Tests if GetUserById method returns the user correctly when user exists.
-    /// </summary>
-    [Test]
-    public async Task GetUserById_ShouldReturnUser_WhenUserExists()
-    {
-        var userId = Guid.NewGuid();
-        var user = new UserDao { UserId = userId };
-        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString())).ReturnsAsync(user);
-
-        var result = await _userService.GetUserById(userId);
-
-        var resultDao = result.Mapper();
-
-        Assert.That(resultDao, Is.Not.Null);
-        Assert.That(resultDao.UserId ?? Guid.Empty, Is.EqualTo(userId));
-        _mockDatabaseActions.VerifyAll();
-    }
-
-    /// <summary>
-    ///     Tests if GetUserById method throws UserNotFoundException when DatabaseMissingItemException is thrown.
+    ///     Tests if GetUserDtoById method throws UserNotFoundException when DatabaseMissingItemException is thrown.
     /// </summary>
     [Test]
     public void GetUserById_ShouldThrowUserNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
-        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString()))
+
+        _mockUserRepository.Setup(x => x.GetElementById(It.IsAny<Guid>()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
-        Assert.ThrowsAsync<UserNotFoundException>(async () => await _userService.GetUserById(userId));
+        Assert.ThrowsAsync<UserNotFoundException>(
+            async () => await _userService.GetUserDtoById(userId));
     }
 
     /// <summary>
-    ///     Tests if GetUserById method throws UserGeneralException when GeneralDatabaseException is thrown.
+    ///     Tests if GetUserDtoById method throws UserGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
     [Test]
     public void GetUserById_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
-        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString()))
+
+        _mockUserRepository.Setup(x => x.GetElementById(It.IsAny<Guid>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
-        Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.GetUserById(userId));
+        Assert.ThrowsAsync<UserGeneralException>(
+            async () => await _userService.GetUserDtoById(userId));
     }
 
     /// <summary>
@@ -194,30 +115,14 @@ public class UserServiceTests
     [Test]
     public async Task GetUserByUsername_ShouldBeTrue_WhenUserExists()
     {
-        var username = "testUsername";
-        var user = new UserDao { UserName = username };
-        _mockDatabaseActions.Setup(x => x.CheckIfEntityExists<UserDao>("userName", username)).ReturnsAsync(true);
+        var username = "testUser";
 
-        var result = await _userService.CheckIfUserExistsByUserName(username);
+        _mockUserRepository.Setup(x => x.GetUserByUsername(It.IsAny<string>()))
+            .ReturnsAsync(new UserDao());
+
+        var result = await _userService.ExistsByUserName(username);
+
         Assert.That(result, Is.True);
-        _mockDatabaseActions.VerifyAll();
-    }
-
-    /// <summary>
-    ///     Tests if UpdateUser method returns the updated user correctly.
-    /// </summary>
-    [Test]
-    public async Task UpdateUser_ShouldReturnUpdatedUser_WhenUserIsUpdated()
-    {
-        var user = new UserDao { UserId = Guid.NewGuid(), UserName = "updatedUsername" };
-        _mockDatabaseActions.Setup(x => x.Update(It.IsAny<UserDao>())).ReturnsAsync(user);
-
-        var result = await _userService.UpdateUser(user);
-        var resultDao = result.Mapper();
-
-        Assert.That(resultDao, Is.Not.Null);
-        Assert.That(resultDao.UserName, Is.EqualTo("updatedUsername"));
-        _mockDatabaseActions.VerifyAll();
     }
 
     /// <summary>
@@ -226,10 +131,13 @@ public class UserServiceTests
     [Test]
     public void UpdateUser_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()
     {
-        var user = new UserDao { UserId = Guid.NewGuid(), UserName = "updatedUsername" };
-        _mockDatabaseActions.Setup(x => x.Update(It.IsAny<UserDao>())).ThrowsAsync(new DatabaseIudActionException());
+        var user = new UserDao { UserId = Guid.NewGuid() };
 
-        Assert.ThrowsAsync<UserIudException>(async () => await _userService.UpdateUser(user));
+        _mockUserRepository.Setup(x => x.UpdateElement(It.IsAny<UserDao>()))
+            .ThrowsAsync(new DatabaseIudActionException());
+
+        Assert.ThrowsAsync<UserIudException>(
+            async () => await _userService.UpdateUser(user));
     }
 
     /// <summary>
@@ -238,27 +146,13 @@ public class UserServiceTests
     [Test]
     public void UpdateUser_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
     {
-        var user = new UserDao { UserId = Guid.NewGuid(), UserName = "updatedUsername" };
-        _mockDatabaseActions.Setup(x => x.Update(It.IsAny<UserDao>())).ThrowsAsync(new GeneralDatabaseException());
+        var user = new UserDao { UserId = Guid.NewGuid() };
 
-        Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.UpdateUser(user));
-    }
+        _mockUserRepository.Setup(x => x.UpdateElement(It.IsAny<UserDao>()))
+            .ThrowsAsync(new GeneralDatabaseException());
 
-    /// <summary>
-    ///     Tests if GetProfilePic method returns the profile picture correctly when user exists.
-    /// </summary>
-    [Test]
-    public async Task GetProfilePic_ShouldReturnProfilePic_WhenUserExists()
-    {
-        var userId = Guid.NewGuid();
-        var user = new UserDao { UserId = userId, ProfilePic = "123" };
-        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString())).ReturnsAsync(user);
-
-        var result = await _userService.GetProfilePic(userId);
-
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.ProfilePic, Is.EqualTo("123"));
-        _mockDatabaseActions.VerifyAll();
+        Assert.ThrowsAsync<UserGeneralException>(
+            async () => await _userService.UpdateUser(user));
     }
 
     /// <summary>
@@ -268,10 +162,12 @@ public class UserServiceTests
     public void GetProfilePic_ShouldThrowUserNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
-        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString()))
+
+        _mockUserRepository.Setup(x => x.GetElementById(It.IsAny<Guid>()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
-        Assert.ThrowsAsync<UserNotFoundException>(async () => await _userService.GetProfilePic(userId));
+        Assert.ThrowsAsync<UserNotFoundException>(
+            async () => await _userService.GetProfilePic(userId));
     }
 
     /// <summary>
@@ -281,61 +177,12 @@ public class UserServiceTests
     public void GetProfilePic_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
-        _mockDatabaseActions.Setup(x => x.GetEntityByField<UserDao>("userID", userId.ToString()))
+
+        _mockUserRepository.Setup(x => x.GetElementById(It.IsAny<Guid>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
-        Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.GetProfilePic(userId));
-    }
-
-    /// <summary>
-    ///     Tests if GetUser method returns the user DTO correctly when user exists.
-    /// </summary>
-    [Test]
-    public async Task GetUser_ShouldReturnUserDto_WhenUserExists()
-    {
-        var userId = Guid.NewGuid();
-        var user = new UserDao
-        {
-            UserId = userId, UserName = "testUsername", Description = "testDescription",
-            CreatedAt = DateTime.Now
-        };
-
-        var forum = new ForumDao { ForumId = Guid.NewGuid(), ForumTopic = "Test Forum" };
-
-        var forumName = new List<string> { forum.ForumTopic };
-
-        _mockDatabaseActions
-            .Setup(x => x.GetEntitieWithSelectorById(It.IsAny<Expression<Func<UserDao, object[]>>>(), "userID",
-                userId.ToString())).ReturnsAsync(user);
-        _mockPostService
-            .Setup(x => x.GetPostsFromForum(userId, 0, 5)).ReturnsAsync(forumName);
-
-        var result = await _userService.GetUser(userId);
-
-        Assert.That(result, Is.Not.Null);
-        Assert.Multiple(() =>
-        {
-            Assert.That(result.UserId, Is.EqualTo(userId));
-            Assert.That(result.Username, Is.EqualTo("testUsername"));
-            Assert.That(result.Description, Is.EqualTo("testDescription"));
-            Assert.That(result.CreatedAt, Is.EqualTo(user.CreatedAt));
-            Assert.That(result.RecentForums, Is.EqualTo(forumName));
-        });
-        _mockDatabaseActions.VerifyAll();
-    }
-
-    /// <summary>
-    ///     Tests if GetUser method throws UserNotFoundException when DatabaseMissingItemException is thrown.
-    /// </summary>
-    [Test]
-    public void GetUser_ShouldThrowUserNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
-    {
-        var userId = Guid.NewGuid();
-        _mockDatabaseActions
-            .Setup(x => x.GetEntitieWithSelectorById(It.IsAny<Expression<Func<UserDao, object[]>>>(), "userID",
-                userId.ToString())).ThrowsAsync(new DatabaseMissingItemException());
-
-        Assert.ThrowsAsync<UserNotFoundException>(async () => await _userService.GetUser(userId));
+        Assert.ThrowsAsync<UserGeneralException>(
+            async () => await _userService.GetProfilePic(userId));
     }
 
     /// <summary>
@@ -345,35 +192,13 @@ public class UserServiceTests
     public void GetUser_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
-        _mockDatabaseActions
-            .Setup(x => x.GetEntitieWithSelectorById(It.IsAny<Expression<Func<UserDao, object[]>>>(), "userID",
-                userId.ToString())).ThrowsAsync(new GeneralDatabaseException());
 
-        Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.GetUser(userId));
-    }
+        _mockUserRepository.Setup(x =>
+                x.GetElementById(It.IsAny<Guid>(), It.IsAny<Expression<Func<UserDao, object[]>>>()))
+            .ThrowsAsync(new GeneralDatabaseException());
 
-    /// <summary>
-    ///     Tests if GetFriends method returns the friends list correctly when user has friends.
-    /// </summary>
-    [Test]
-    public async Task GetFriends_ShouldReturnFriendsList_WhenUserHasFriends()
-    {
-        var userId = Guid.NewGuid();
-        var friendId = Guid.NewGuid();
-        var friendUser = new UserDao { UserId = friendId, UserName = "friendUsername" };
-        var friends = new List<FollowerUserRelationDao>
-            { new() { FollowerUserId = userId, FollowedUserId = friendId, FollowerUser = friendUser } };
-        _mockDatabaseActions
-            .Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<FollowerUserRelationDao, object[]>>>(),
-                "followerUserID", userId.ToString(), -1, -1))!
-            .ReturnsAsync(friends);
-
-        var result = await _userService.GetFriends(userId);
-
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.Friends, Has.Count.EqualTo(1));
-        Assert.That(result.Friends[0].Username, Is.EqualTo("friendUsername"));
-        _mockDatabaseActions.VerifyAll();
+        Assert.ThrowsAsync<UserGeneralException>(
+            async () => await _userService.GetUserDtoById(userId));
     }
 
     /// <summary>
@@ -383,12 +208,12 @@ public class UserServiceTests
     public void GetFriends_ShouldThrowUserNotFoundException_WhenDatabaseMissingItemExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
-        _mockDatabaseActions
-            .Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<FollowerUserRelationDao, object[]>>>(),
-                "followerUserID", userId.ToString(), -1, -1))
+
+        _mockFollowerUserRelationRepository.Setup(x => x.GetFriends(It.IsAny<Guid>()))
             .ThrowsAsync(new DatabaseMissingItemException());
 
-        Assert.ThrowsAsync<UserNotFoundException>(async () => await _userService.GetFriends(userId));
+        Assert.ThrowsAsync<UserNotFoundException>(
+            async () => await _userService.GetFriends(userId));
     }
 
     /// <summary>
@@ -398,76 +223,43 @@ public class UserServiceTests
     public void GetFriends_ShouldThrowUserGeneralException_WhenDatabaseExceptionIsThrown()
     {
         var userId = Guid.NewGuid();
-        _mockDatabaseActions
-            .Setup(x => x.GetEntitiesWithSelectorById(It.IsAny<Expression<Func<FollowerUserRelationDao, object[]>>>(),
-                "followerUserID", userId.ToString(), -1, -1))
+
+        _mockFollowerUserRelationRepository.Setup(x => x.GetFriends(It.IsAny<Guid>()))
             .ThrowsAsync(new GeneralDatabaseException());
 
-        Assert.ThrowsAsync<UserGeneralException>(async () => await _userService.GetFriends(userId));
-    }
-
-    /// <summary>
-    ///     Tests if GetCountOfUserFriends method returns the correct count of user friends.
-    /// </summary>
-    /// <remarks>
-    ///     This test ensures that the GetCountOfUserFriends method correctly returns the expected count of friends for a user.
-    /// </remarks>
-    [Test]
-    public async Task GetCountOfUserFriends_ReturnsCorrectCount()
-    {
-        // Arrange
-        var userId = Guid.NewGuid();
-        var expectedCount = 5;
-        _mockDatabaseActions.Setup(d => d.GetCountByField<FollowerUserRelationDao>("userIsFollowed", userId.ToString()))
-            .ReturnsAsync(expectedCount);
-
-        // Act
-        var result = await _userService.GetCountOfUserFriends(userId);
-
-        // Assert
-        Assert.That(result, Is.EqualTo(expectedCount));
+        Assert.ThrowsAsync<UserGeneralException>(
+            async () => await _userService.GetFriends(userId));
     }
 
     /// <summary>
     ///     Tests if GetCountOfUserFriends method throws UserGeneralException when GeneralDatabaseException is thrown.
     /// </summary>
-    /// <remarks>
-    ///     This test ensures that the GetCountOfUserFriends method throws a UserGeneralException when a
-    ///     GeneralDatabaseException occurs.
-    /// </remarks>
     [Test]
     public void GetCountOfUserFriends_ThrowsUserGeneralException_OnGeneralDatabaseException()
     {
-        // Arrange
         var userId = Guid.NewGuid();
-        _mockDatabaseActions.Setup(d => d.GetCountByField<FollowerUserRelationDao>("userIsFollowed", userId.ToString()))
-            .ThrowsAsync(new GeneralDatabaseException("Database error"));
 
-        // Act & Assert
-        var ex = Assert.ThrowsAsync<UserGeneralException>(() => _userService.GetCountOfUserFriends(userId));
-        Assert.That(ex.Message, Is.EqualTo($"An error occurred while fetching the friends count. ID {userId}"));
+        _mockFollowerUserRelationRepository.Setup(x => x.GetCountOfUserFriends(It.IsAny<Guid>()))
+            .ThrowsAsync(new GeneralDatabaseException());
+
+        Assert.ThrowsAsync<UserGeneralException>(
+            async () => await _userService.GetCountOfUserFriends(userId));
     }
 
     /// <summary>
     ///     Tests if GetCountOfUserFriends method throws UserGeneralException when an unexpected exception is thrown.
     /// </summary>
-    /// <remarks>
-    ///     This test ensures that the GetCountOfUserFriends method throws a UserGeneralException when an unexpected exception
-    ///     occurs.
-    /// </remarks>
     [Test]
     public void GetCountOfUserFriends_ThrowsUserGeneralException_OnUnexpectedException()
     {
-        // Arrange
         var userId = Guid.NewGuid();
-        _mockDatabaseActions.Setup(d => d.GetCountByField<FollowerUserRelationDao>("userIsFollowed", userId.ToString()))
-            .ThrowsAsync(new Exception("Unexpected error"));
 
-        // Act & Assert
-        var ex = Assert.ThrowsAsync<UserGeneralException>(() => _userService.GetCountOfUserFriends(userId));
-        Assert.That(ex.Message, Is.EqualTo($"An error occurred while fetching the friends count. ID {userId}"));
+        _mockFollowerUserRelationRepository.Setup(x => x.GetCountOfUserFriends(It.IsAny<Guid>()))
+            .ThrowsAsync(new Exception());
+
+        Assert.ThrowsAsync<UserGeneralException>(
+            async () => await _userService.GetCountOfUserFriends(userId));
     }
-
 
     /// <summary>
     ///     Tests if GetCountOfUserSpaces method returns the correct count of user spaces.
@@ -485,5 +277,125 @@ public class UserServiceTests
 
         // Assert
         Assert.That(result, Is.EqualTo(expectedCount));
+    }
+
+    /// <summary>
+    ///     Tests if FollowUserById method successfully follows a user.
+    /// </summary>
+    [Test]
+    public async Task FollowUserById_ShouldFollowUser()
+    {
+        var userIdFollows = Guid.NewGuid();
+        var userIdToFollow = Guid.NewGuid();
+
+        _mockFollowerUserRelationRepository.Setup(x => x.AddElement(It.IsAny<FollowerUserRelationDao>()))
+            .ReturnsAsync(new FollowerUserRelationDao(userIdToFollow, userIdFollows));
+
+        await _userService.FollowUserById(userIdFollows, userIdToFollow);
+
+        _mockFollowerUserRelationRepository.Verify(x => x.AddElement(It.Is<FollowerUserRelationDao>(dao =>
+            dao.FollowerUserId == userIdFollows && dao.FollowedUserId == userIdToFollow)), Times.Once);
+    }
+
+    /// <summary>
+    ///     Tests if FollowUserById method throws UserIudException when DatabaseIudActionException is thrown.
+    /// </summary>
+    [Test]
+    public void FollowUserById_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()
+    {
+        var userIdFollows = Guid.NewGuid();
+        var userIdToFollow = Guid.NewGuid();
+
+        _mockFollowerUserRelationRepository.Setup(x => x.AddElement(It.IsAny<FollowerUserRelationDao>()))
+            .ThrowsAsync(new DatabaseIudActionException());
+
+        Assert.ThrowsAsync<UserIudException>(
+            async () => await _userService.FollowUserById(userIdFollows, userIdToFollow));
+    }
+
+    /// <summary>
+    ///     Tests if FollowUserById method throws UserGeneralException when GeneralDatabaseException is thrown.
+    /// </summary>
+    [Test]
+    public void FollowUserById_ShouldThrowUserGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+    {
+        var userIdFollows = Guid.NewGuid();
+        var userIdToFollow = Guid.NewGuid();
+
+        _mockFollowerUserRelationRepository.Setup(x => x.AddElement(It.IsAny<FollowerUserRelationDao>()))
+            .ThrowsAsync(new GeneralDatabaseException());
+
+        Assert.ThrowsAsync<UserGeneralException>(
+            async () => await _userService.FollowUserById(userIdFollows, userIdToFollow));
+    }
+
+    /// <summary>
+    ///     Tests if UnfollowUserById method successfully unfollows a user.
+    /// </summary>
+    [Test]
+    public async Task UnfollowUserById_ShouldUnfollowUser()
+    {
+        var userIdFollows = Guid.NewGuid();
+        var userIdToUnfollow = Guid.NewGuid();
+        var followerUserRelationDao = new FollowerUserRelationDao
+        {
+            FollowerUserId = userIdFollows,
+            FollowedUserId = userIdToUnfollow
+        };
+
+        _mockFollowerUserRelationRepository.Setup(x => x.CheckIfUserIsFollowed(userIdToUnfollow, userIdFollows))
+            .ReturnsAsync(followerUserRelationDao);
+        _mockFollowerUserRelationRepository.Setup(x => x.DeleteElement(followerUserRelationDao))
+            .Returns(Task.CompletedTask);
+
+        await _userService.UnfollowUserById(userIdFollows, userIdToUnfollow);
+
+        _mockFollowerUserRelationRepository.Verify(x => x.DeleteElement(followerUserRelationDao), Times.Once);
+    }
+
+    /// <summary>
+    ///     Tests if UnfollowUserById method throws UserIudException when DatabaseIudActionException is thrown.
+    /// </summary>
+    [Test]
+    public void UnfollowUserById_ShouldThrowUserIudException_WhenDatabaseIudActionExceptionIsThrown()
+    {
+        var userIdFollows = Guid.NewGuid();
+        var userIdToUnfollow = Guid.NewGuid();
+        var followerUserRelationDao = new FollowerUserRelationDao
+        {
+            FollowerUserId = userIdFollows,
+            FollowedUserId = userIdToUnfollow
+        };
+
+        _mockFollowerUserRelationRepository.Setup(x => x.CheckIfUserIsFollowed(userIdToUnfollow, userIdFollows))
+            .ReturnsAsync(followerUserRelationDao);
+        _mockFollowerUserRelationRepository.Setup(x => x.DeleteElement(followerUserRelationDao))
+            .ThrowsAsync(new DatabaseIudActionException());
+
+        Assert.ThrowsAsync<UserIudException>(
+            async () => await _userService.UnfollowUserById(userIdFollows, userIdToUnfollow));
+    }
+
+    /// <summary>
+    ///     Tests if UnfollowUserById method throws UserGeneralException when GeneralDatabaseException is thrown.
+    /// </summary>
+    [Test]
+    public void UnfollowUserById_ShouldThrowUserGeneralException_WhenGeneralDatabaseExceptionIsThrown()
+    {
+        var userIdFollows = Guid.NewGuid();
+        var userIdToUnfollow = Guid.NewGuid();
+        var followerUserRelationDao = new FollowerUserRelationDao
+        {
+            FollowerUserId = userIdFollows,
+            FollowedUserId = userIdToUnfollow
+        };
+
+        _mockFollowerUserRelationRepository.Setup(x => x.CheckIfUserIsFollowed(userIdToUnfollow, userIdFollows))
+            .ReturnsAsync(followerUserRelationDao);
+        _mockFollowerUserRelationRepository.Setup(x => x.DeleteElement(followerUserRelationDao))
+            .ThrowsAsync(new GeneralDatabaseException());
+
+        Assert.ThrowsAsync<UserGeneralException>(
+            async () => await _userService.UnfollowUserById(userIdFollows, userIdToUnfollow));
     }
 }

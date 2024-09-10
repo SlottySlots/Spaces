@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Moq;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Backend.ViewModel;
+using SlottyMedia.Backend.ViewModel.Partial.SignIn;
 using SlottyMedia.Database;
 using Supabase;
 

@@ -20,14 +20,65 @@ public class Rules
     /// <returns>A Faker&lt;\<see cref="UserDao" />&gt; object with predefined rules.</returns>
     public Faker<UserDao> UserRules()
     {
+        var existingUserIds = new HashSet<Guid>();
+        var existingEmails = new HashSet<string>();
+        var existingUserNames = new HashSet<string>();
         var userFaker = new Faker<UserDao>("de")
-            .RuleFor(u => u.UserId, f => f.Random.Guid())
+            .RuleFor(u => u.UserId, f =>
+            {
+                Guid userId;
+                do
+                {
+                    userId = f.Random.Guid();
+                } while (existingUserIds.Contains(userId));
+
+                existingUserIds.Add(userId);
+                return userId;
+            })
             .RuleFor(u => u.RoleId, Guid.Parse("c0589855-a81c-451d-8587-3061926a1f3a"))
-            .RuleFor(u => u.UserName, f => f.Internet.UserName())
+            .RuleFor(u => u.UserName, f =>
+            {
+                string userName;
+                do
+                {
+                    userName = f.Internet.UserName();
+                } while (existingUserNames.Contains(userName));
+
+                existingUserNames.Add(userName);
+                return userName;
+            })
             .RuleFor(u => u.Description, f => f.WaffleTitle())
-            .RuleFor(u => u.ProfilePic, f => null)
+            .RuleFor(u => u.ProfilePic, f =>
+            {
+                var rand = f.Random.Int(1, 2);
+                var url = string.Empty;
+                switch (rand)
+                {
+                    case 1:
+                        url = f.DiceBear().Lorelei("png", f.Random.Guid().ToString(), 256);
+                        break;
+                    case 2:
+                        url = f.DiceBear().Adventurer("png", f.Random.Guid().ToString(), 256);
+                        break;
+                    case 3:
+                        url = f.DiceBear().Bottts("png", f.Random.Guid().ToString(), 256);
+                        break;
+                }
+
+                return url;
+            })
             .RuleFor(u => u.CreatedAt, f => f.Date.Past())
-            .RuleFor(u => u.Email, f => f.Internet.Email());
+            .RuleFor(u => u.Email, f =>
+            {
+                string email;
+                do
+                {
+                    email = f.Internet.Email();
+                } while (existingEmails.Contains(email));
+
+                existingEmails.Add(email);
+                return email;
+            });
         return userFaker;
     }
 
@@ -42,10 +93,33 @@ public class Rules
     /// <returns>A Faker&lt;\<see cref="ForumDao" />&gt; object with predefined rules.</returns>
     public Faker<ForumDao> ForumRules(List<Guid> userIds)
     {
+        var existingForumIds = new HashSet<Guid>();
+        var existingForumTopics = new HashSet<string>();
+
         var forumFaker = new Faker<ForumDao>()
-            .RuleFor(f => f.ForumId, f => f.Random.Guid())
+            .RuleFor(f => f.ForumId, f =>
+            {
+                Guid forumId;
+                do
+                {
+                    forumId = f.Random.Guid();
+                } while (existingForumIds.Contains(forumId));
+
+                existingForumIds.Add(forumId);
+                return forumId;
+            })
             .RuleFor(f => f.CreatorUserId, f => userIds[f.Random.Int(0, userIds.Count - 1)])
-            .RuleFor(f => f.ForumTopic, f => f.Internet.DomainWord())
+            .RuleFor(f => f.ForumTopic, f =>
+            {
+                string forumTopic;
+                do
+                {
+                    forumTopic = f.Internet.DomainWord();
+                } while (existingForumTopics.Contains(forumTopic));
+
+                existingForumTopics.Add(forumTopic);
+                return forumTopic;
+            })
             .RuleFor(f => f.CreatedAt, f => f.Date.Past());
         return forumFaker;
     }
@@ -64,8 +138,19 @@ public class Rules
     /// <returns>A Faker&lt;\<see cref="PostsDao" />&gt; object with predefined rules.</returns>
     public Faker<PostsDao> PostRules(List<Guid> userIds, List<Guid> forumIds)
     {
+        var existingPostIds = new HashSet<Guid>();
         var postFaker = new Faker<PostsDao>()
-            .RuleFor(p => p.PostId, f => f.Random.Guid())
+            .RuleFor(p => p.PostId, f =>
+            {
+                Guid postId;
+                do
+                {
+                    postId = f.Random.Guid();
+                } while (existingPostIds.Contains(postId));
+
+                existingPostIds.Add(postId);
+                return postId;
+            })
             .RuleFor(p => p.UserId, f => userIds[f.Random.Int(0, userIds.Count - 1)])
             .RuleFor(p => p.ForumId, f => forumIds[f.Random.Int(0, forumIds.Count - 1)])
             .RuleFor(p => p.Headline, f => f.Lorem.Sentence())
@@ -87,10 +172,22 @@ public class Rules
     /// <returns>A Faker&lt;\<see cref="CommentDao" />&gt; object with predefined rules.</returns>
     public Faker<CommentDao> CommentRules(List<Guid> userIds, List<Guid> postIds)
     {
+        var existingCommentIds = new HashSet<Guid>();
+
         var commentFaker = new Faker<CommentDao>()
-            .RuleFor(c => c.CommentId, f => f.Random.Guid())
+            .RuleFor(c => c.CommentId, f =>
+            {
+                Guid commentId;
+                do
+                {
+                    commentId = f.Random.Guid();
+                } while (existingCommentIds.Contains(commentId));
+
+                existingCommentIds.Add(commentId);
+                return commentId;
+            })
             .RuleFor(c => c.CreatorUserId, f => userIds[f.Random.Int(0, userIds.Count - 1)])
-            .RuleFor(c => c.PostId, f => postIds[f.Random.Int(0, userIds.Count - 1)])
+            .RuleFor(c => c.PostId, f => postIds[f.Random.Int(0, postIds.Count - 1)])
             .RuleFor(c => c.Content, f => f.Lorem.Paragraph())
             .RuleFor(c => c.CreatedAt, f => f.Date.Past());
         return commentFaker;
@@ -111,9 +208,20 @@ public class Rules
         if (userIds.Count < 2)
             throw new ArgumentException("At least two userIds are required to generate follower relations.");
 
+        var exisitingFollowerUserRelationId = new HashSet<Guid>();
         var existingRelations = new HashSet<(Guid, Guid)>();
         var followerUserRelationFaker = new Faker<FollowerUserRelationDao>()
-            .RuleFor(f => f.FollowerUserRelationId, f => f.Random.Guid())
+            .RuleFor(f => f.FollowerUserRelationId, f =>
+            {
+                Guid followerUserRelationId;
+                do
+                {
+                    followerUserRelationId = f.Random.Guid();
+                } while (exisitingFollowerUserRelationId.Contains(followerUserRelationId));
+
+                exisitingFollowerUserRelationId.Add(followerUserRelationId);
+                return followerUserRelationId;
+            })
             .RuleFor(f => f.FollowerUserId, f =>
             {
                 Guid followerId;
@@ -149,9 +257,20 @@ public class Rules
     /// <returns>A Faker&lt;\<see cref="UserLikePostRelationDao" />&gt; object with predefined rules.</returns>
     public Faker<UserLikePostRelationDao> UserLikePostRelationRules(List<Guid> userIds, List<Guid> postIds)
     {
+        var existingUserLikePostRelationIds = new HashSet<Guid>();
         var existingRelations = new HashSet<(Guid, Guid)>();
         var userLikePostRelationFaker = new Faker<UserLikePostRelationDao>()
-            .RuleFor(ul => ul.UserLikePostRelationId, f => f.Random.Guid())
+            .RuleFor(ul => ul.UserLikePostRelationId, f =>
+            {
+                Guid userLikePostRelationIds;
+                do
+                {
+                    userLikePostRelationIds = f.Random.Guid();
+                } while (existingUserLikePostRelationIds.Contains(userLikePostRelationIds));
+
+                existingUserLikePostRelationIds.Add(userLikePostRelationIds);
+                return userLikePostRelationIds;
+            })
             .RuleFor(ul => ul.UserId, f =>
             {
                 Guid userId;

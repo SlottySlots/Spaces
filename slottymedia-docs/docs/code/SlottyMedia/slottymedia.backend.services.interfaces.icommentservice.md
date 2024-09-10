@@ -10,12 +10,30 @@ public interface ICommentService
 
 ## Methods
 
+### **GetCommentById(Guid)**
+
+Fetches a comment by its ID.
+
+```csharp
+Task<CommentDto> GetCommentById(Guid commentId)
+```
+
+#### Parameters
+
+`commentId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The comment's ID
+
+#### Returns
+
+[Task&lt;CommentDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+The comment
+
 ### **InsertComment(Guid, Guid, String)**
 
 Inserts a new comment into the database.
 
 ```csharp
-Task<CommentDto> InsertComment(Guid creatorUserId, Guid postId, string content)
+Task InsertComment(Guid creatorUserId, Guid postId, string content)
 ```
 
 #### Parameters
@@ -31,48 +49,54 @@ The content of the comment.
 
 #### Returns
 
-[Task&lt;CommentDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 Returns the inserted CommentDto object.
 
 #### Exceptions
 
-T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
-Throws an exception if an error occurs while inserting the comment.
+[CommentIudException](./slottymedia.backend.exceptions.services.commentexceptions.commentiudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
 
-### **UpdateComment(CommentDto)**
+[CommentGeneralException](./slottymedia.backend.exceptions.services.commentexceptions.commentgeneralexception.md)<br>
+Thrown when a general error occurs.
+
+### **UpdateComment(CommentDao)**
 
 Updates an existing comment in the database.
 
 ```csharp
-Task<CommentDto> UpdateComment(CommentDto comment)
+Task UpdateComment(CommentDao comment)
 ```
 
 #### Parameters
 
-`comment` [CommentDto](./slottymedia.backend.dtos.commentdto.md)<br>
+`comment` CommentDao<br>
 The CommentDto object containing the updated comment details.
 
 #### Returns
 
-[Task&lt;CommentDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 Returns the updated CommentDto object.
 
 #### Exceptions
 
-T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
-Throws an exception if an error occurs while updating the comment.
+[CommentIudException](./slottymedia.backend.exceptions.services.commentexceptions.commentiudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
 
-### **DeleteComment(CommentDto)**
+[CommentGeneralException](./slottymedia.backend.exceptions.services.commentexceptions.commentgeneralexception.md)<br>
+Thrown when a general error occurs.
+
+### **DeleteComment(CommentDao)**
 
 Deletes a comment from the database.
 
 ```csharp
-Task DeleteComment(CommentDto comment)
+Task DeleteComment(CommentDao comment)
 ```
 
 #### Parameters
 
-`comment` [CommentDto](./slottymedia.backend.dtos.commentdto.md)<br>
+`comment` CommentDao<br>
 The CommentDto object containing the comment details.
 
 #### Returns
@@ -82,5 +106,48 @@ Returns a Task representing the asynchronous operation.
 
 #### Exceptions
 
-T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
-Throws an exception if an error occurs while deleting the comment.
+[CommentIudException](./slottymedia.backend.exceptions.services.commentexceptions.commentiudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
+
+[CommentGeneralException](./slottymedia.backend.exceptions.services.commentexceptions.commentgeneralexception.md)<br>
+Thrown when a general error occurs.
+
+### **CountCommentsInPost(Guid)**
+
+Counts the total number of comments in the given post.
+
+```csharp
+Task<int> CountCommentsInPost(Guid postId)
+```
+
+#### Parameters
+
+`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The post to query
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+The total number of comments
+
+### **GetCommentsInPost(Guid, PageRequest)**
+
+Fetches all comments in the given post. Utilizes pagination in order to limit
+ the total number of queried posts: Only posts on the given page will be fetched.
+
+```csharp
+Task<IPage<CommentDto>> GetCommentsInPost(Guid postId, PageRequest pageRequest)
+```
+
+#### Parameters
+
+`postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The post whose comments should be fetched
+
+`pageRequest` PageRequest<br>
+The page request
+
+#### Returns
+
+[Task&lt;IPage&lt;CommentDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A list containing the queried posts

@@ -1,5 +1,7 @@
-﻿using SlottyMedia.Backend.Dtos;
-using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Backend.Dtos;
+using SlottyMedia.Backend.Exceptions.Services.CommentExceptions;
+using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Pagination;
 
 namespace SlottyMedia.Backend.Services.Interfaces;
 
@@ -9,28 +11,54 @@ namespace SlottyMedia.Backend.Services.Interfaces;
 public interface ICommentService
 {
     /// <summary>
+    ///     Fetches a comment by its ID.
+    /// </summary>
+    /// <param name="commentId">The comment's ID</param>
+    /// <returns>The comment</returns>
+    Task<CommentDto> GetCommentById(Guid commentId);
+
+    /// <summary>
     ///     Inserts a new comment into the database.
     /// </summary>
     /// <param name="creatorUserId">The ID of the user who created the comment.</param>
     /// <param name="postId">The ID of the post to which the comment belongs.</param>
     /// <param name="content">The content of the comment.</param>
     /// <returns>Returns the inserted CommentDto object.</returns>
-    /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while inserting the comment.</exception>
-    Task<CommentDto> InsertComment(Guid creatorUserId, Guid postId, string content);
+    /// <exception cref="CommentIudException">Thrown when an error occurs during Insert, Update, or Delete operations.</exception>
+    /// <exception cref="CommentGeneralException">Thrown when a general error occurs.</exception>
+    Task InsertComment(Guid creatorUserId, Guid postId, string content);
 
     /// <summary>
     ///     Updates an existing comment in the database.
     /// </summary>
     /// <param name="comment">The CommentDto object containing the updated comment details.</param>
     /// <returns>Returns the updated CommentDto object.</returns>
-    /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while updating the comment.</exception>
-    Task<CommentDto> UpdateComment(CommentDto comment);
+    /// <exception cref="CommentIudException">Thrown when an error occurs during Insert, Update, or Delete operations.</exception>
+    /// <exception cref="CommentGeneralException">Thrown when a general error occurs.</exception>
+    Task UpdateComment(CommentDao comment);
 
     /// <summary>
     ///     Deletes a comment from the database.
     /// </summary>
     /// <param name="comment">The CommentDto object containing the comment details.</param>
     /// <returns>Returns a Task representing the asynchronous operation.</returns>
-    /// <exception cref="GeneralDatabaseException">Throws an exception if an error occurs while deleting the comment.</exception>
-    Task DeleteComment(CommentDto comment);
+    /// <exception cref="CommentIudException">Thrown when an error occurs during Insert, Update, or Delete operations.</exception>
+    /// <exception cref="CommentGeneralException">Thrown when a general error occurs.</exception>
+    Task DeleteComment(CommentDao comment);
+
+    /// <summary>
+    ///     Counts the total number of comments in the given post.
+    /// </summary>
+    /// <param name="postId">The post to query</param>
+    /// <returns>The total number of comments</returns>
+    Task<int> CountCommentsInPost(Guid postId);
+
+    /// <summary>
+    ///     Fetches all comments in the given post. Utilizes pagination in order to limit
+    ///     the total number of queried posts: Only posts on the given page will be fetched.
+    /// </summary>
+    /// <param name="postId">The post whose comments should be fetched</param>
+    /// <param name="pageRequest">The page request</param>
+    /// <returns>A list containing the queried posts</returns>
+    Task<IPage<CommentDto>> GetCommentsInPost(Guid postId, PageRequest pageRequest);
 }

@@ -31,10 +31,6 @@ public class AuthServiceTest
     [SetUp]
     public void Setup()
     {
-        var testUuid = Guid.NewGuid();
-
-        _userName = testUuid.ToString();
-        _email = testUuid + "@unittest.de";
     }
 
     /// <summary>
@@ -50,9 +46,6 @@ public class AuthServiceTest
     private IAuthService _authService;
     private Client _client;
     private Mock<ICookieService> _cookieServiceMock;
-
-    private string _userName;
-    private string _email;
 
     private Session? _session;
 

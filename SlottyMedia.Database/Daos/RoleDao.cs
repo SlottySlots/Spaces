@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -7,6 +8,7 @@ namespace SlottyMedia.Database.Daos;
 ///     This class represents the Role table in the database.
 /// </summary>
 [Table("Role")]
+[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 public class RoleDao : BaseModel
 {
     /// <summary>
@@ -30,6 +32,6 @@ public class RoleDao : BaseModel
     /// <summary>
     ///     The Date and Time the Role was created.
     /// </summary>
-    [Column("created_at")]
-    public DateTime CreatedAt { get; set; }
+    [Column("created_at", ignoreOnInsert: true, ignoreOnUpdate: true)]
+    public DateTimeOffset CreatedAt { get; set; }
 }

@@ -1,10 +1,9 @@
 ﻿using SlottyMedia.Backend.Exceptions.Services.LikeExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Database.Repository.UserLikePostRelationRepo;
 using SlottyMedia.LoggingProvider;
-using Supabase.Postgrest;
 
 namespace SlottyMedia.Backend.Services;
 
@@ -14,17 +13,17 @@ namespace SlottyMedia.Backend.Services;
 public class LikeService : ILikeService
 {
     private static readonly Logging<LikeService> Logger = new();
-    private readonly IDatabaseActions _databaseActions;
+    private readonly IUserLikePostRelationRepostitory _likeRepository;
 
 
     /// <summary>
     ///     The constructor for the LikeService.
     /// </summary>
-    /// <param name="databaseActions"></param>
-    public LikeService(IDatabaseActions databaseActions)
+    /// <param name="likeRepository"></param>
+    public LikeService(IUserLikePostRelationRepostitory likeRepository)
     {
         Logger.LogInfo("LikeService initialized");
-        _databaseActions = databaseActions;
+        _likeRepository = likeRepository;
     }
 
     ///<inheritdoc />
@@ -34,7 +33,7 @@ public class LikeService : ILikeService
         {
             Logger.LogDebug($"Inserting like for user {userId} and post {postId}");
             var like = new UserLikePostRelationDao(userId, postId);
-            await _databaseActions.Insert(like);
+            await _likeRepository.AddElement(like);
             return true;
         }
         catch (DatabaseIudActionException ex)
@@ -59,9 +58,14 @@ public class LikeService : ILikeService
     {
         try
         {
-            var like = new UserLikePostRelationDao(userId, postId);
-            var result = await _databaseActions.Delete(like);
-            return result;
+            var like = await _likeRepository.GetLikeByUserIdAndPostId(userId, postId);
+            await _likeRepository.DeleteElement(like);
+            return true;
+        }
+        catch (DatabaseMissingItemException ex)
+        {
+            throw new LikeNotFoundException(
+                $"An error occurred while deleting the like. Parameters: UserID {userId}, PostID {postId}", ex);
         }
         catch (DatabaseIudActionException ex)
         {
@@ -85,13 +89,7 @@ public class LikeService : ILikeService
     {
         try
         {
-            var likes = await _databaseActions.GetEntitiesWithSelectorById<UserLikePostRelationDao>(
-                x => new object[] { x.UserId! },
-                new List<(string, Constants.Operator, string)>
-                {
-                    ("PostId", Constants.Operator.Equals, postId.ToString())
-                },
-                0, 0
+            var likes = await _likeRepository.GetLikesForPost(postId
             );
             var userIds = new List<Guid>();
             foreach (var like in likes)

@@ -24,18 +24,6 @@ public Guid CommentId { get; set; }
 
 [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
-### **ParentComment**
-
-Gets or sets the list of parent comments.
-
-```csharp
-public List<CommentDto> ParentComment { get; set; }
-```
-
-#### Property Value
-
-[List&lt;CommentDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)<br>
-
 ### **CreatorUserId**
 
 Gets or sets the ID of the user who created the comment.

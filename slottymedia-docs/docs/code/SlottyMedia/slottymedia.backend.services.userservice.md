@@ -13,28 +13,31 @@ Implements [IUserService](./slottymedia.backend.services.interfaces.iuserservice
 
 ## Constructors
 
-### **UserService(IDatabaseActions, IPostService)**
+### **UserService(IUserRepository, IPostService, IFollowerUserRelationRepository)**
 
 This constructor creates a new UserService object.
 
 ```csharp
-public UserService(IDatabaseActions databaseActions, IPostService postService)
+public UserService(IUserRepository userRepository, IPostService postService, IFollowerUserRelationRepository followerUserRelationRepository)
 ```
 
 #### Parameters
 
-`databaseActions` IDatabaseActions<br>
-This parameter is used to interact with the database
+`userRepository` IUserRepository<br>
+Repository used to fetch user table
 
 `postService` [IPostService](./slottymedia.backend.services.interfaces.ipostservice.md)<br>
 This parameter is used to interact with the post service
+
+`followerUserRelationRepository` IFollowerUserRelationRepository<br>
+Repository used to fetch follower user relations
 
 ## Methods
 
 ### **CreateUser(String, String, String, Guid, String, String)**
 
 ```csharp
-public Task<UserDto> CreateUser(string userId, string username, string email, Guid roleId, string description, string profilePicture)
+public Task CreateUser(string userId, string username, string email, Guid roleId, string description, string profilePicture)
 ```
 
 #### Parameters
@@ -53,12 +56,12 @@ public Task<UserDto> CreateUser(string userId, string username, string email, Gu
 
 #### Returns
 
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **DeleteUser(UserDto)**
 
 ```csharp
-public Task<bool> DeleteUser(UserDto user)
+public Task DeleteUser(UserDto user)
 ```
 
 #### Parameters
@@ -67,12 +70,12 @@ public Task<bool> DeleteUser(UserDto user)
 
 #### Returns
 
-[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **GetUserById(Guid)**
+### **GetUserDtoById(Guid)**
 
 ```csharp
-public Task<UserDto> GetUserById(Guid userId)
+public Task<UserDto> GetUserDtoById(Guid userId)
 ```
 
 #### Parameters
@@ -83,10 +86,10 @@ public Task<UserDto> GetUserById(Guid userId)
 
 [Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **CheckIfUserExistsByUserName(String)**
+### **ExistsByUserName(String)**
 
 ```csharp
-public Task<bool> CheckIfUserExistsByUserName(string username)
+public Task<bool> ExistsByUserName(string username)
 ```
 
 #### Parameters
@@ -100,7 +103,7 @@ public Task<bool> CheckIfUserExistsByUserName(string username)
 ### **UpdateUser(UserDao)**
 
 ```csharp
-public Task<UserDto> UpdateUser(UserDao user)
+public Task UpdateUser(UserDao user)
 ```
 
 #### Parameters
@@ -109,12 +112,12 @@ public Task<UserDto> UpdateUser(UserDao user)
 
 #### Returns
 
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **UpdateUser(UserDto)**
 
 ```csharp
-public Task<UserDto> UpdateUser(UserDto user)
+public Task UpdateUser(UserDto user)
 ```
 
 #### Parameters
@@ -123,25 +126,23 @@ public Task<UserDto> UpdateUser(UserDto user)
 
 #### Returns
 
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
-### **GetUserBy(Nullable&lt;Guid&gt;, String, String)**
+### **UserFollowRelation(Guid, Guid)**
 
 ```csharp
-public Task<UserDao> GetUserBy(Nullable<Guid> userID, string username, string email)
+public Task<bool> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn)
 ```
 
 #### Parameters
 
-`userID` [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+`userIdToCheck` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
-`username` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-`email` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+`userIdLoggedIn` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 #### Returns
 
-[Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **GetProfilePic(Guid)**
 
@@ -156,22 +157,6 @@ public Task<ProfilePicDto> GetProfilePic(Guid userId)
 #### Returns
 
 [Task&lt;ProfilePicDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-
-### **GetUser(Guid, Int32)**
-
-```csharp
-public Task<UserDto> GetUser(Guid userId, int recentForums)
-```
-
-#### Parameters
-
-`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-
-`recentForums` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-#### Returns
-
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **GetFriends(Guid)**
 
@@ -203,8 +188,6 @@ public Task<int> GetCountOfUserFriends(Guid userId)
 
 ### **GetCountOfUserSpaces(Guid)**
 
-Gets all spaces a user has wrote in
-
 ```csharp
 public Task<int> GetCountOfUserSpaces(Guid userId)
 ```
@@ -212,9 +195,71 @@ public Task<int> GetCountOfUserSpaces(Guid userId)
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-User from which it should be retrieved
 
 #### Returns
 
 [Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns the amount of spaces as task
+
+### **GetUserDaoById(Guid)**
+
+```csharp
+public Task<UserDao> GetUserDaoById(Guid userId)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **FollowUserById(Guid, Guid)**
+
+```csharp
+public Task FollowUserById(Guid userIdFollows, Guid userIdToFollow)
+```
+
+#### Parameters
+
+`userIdFollows` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`userIdToFollow` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **UnfollowUserById(Guid, Guid)**
+
+```csharp
+public Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow)
+```
+
+#### Parameters
+
+`userIdFollows` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`userIdToUnfollow` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+### **GetUserInfo(Guid, Boolean, Boolean)**
+
+```csharp
+public Task<UserInformationDto> GetUserInfo(Guid userId, bool fetchFriends, bool fetchSpaces)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+
+`fetchFriends` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+`fetchSpaces` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+#### Returns
+
+[Task&lt;UserInformationDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

@@ -1,4 +1,4 @@
-@using SlottyMedia.Backend.ViewModel.Interfaces
+@using SlottyMedia.Backend.ViewModel.Partial.MainLayout
 @inject ISpacesCardVm ViewModel
 
 
@@ -16,9 +16,9 @@
 
     <!-- trending spaces elements -->
     <div class="space-y-4">
-        @foreach (var space in ViewModel.RecentSpaces)
+        @foreach (var space in ViewModel.TrendingSpaces)
         {
-            <div class="flex flex-col p-4 bg-gray-100 rounded-md w-full">
+            <div class="flex flex-col bg-gray-100 rounded-md w-full">
                 <a href="/" class="font-semibold text-l">
                     #@(space.Topic)
                 </a>
@@ -44,6 +44,9 @@
 
 @code
 {
+    /// <summary>
+    ///     Called when the component is initialized.
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         await ViewModel.Fetch();

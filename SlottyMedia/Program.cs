@@ -4,14 +4,34 @@ using NLog.Web;
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Services;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Backend.ViewModel;
-using SlottyMedia.Backend.ViewModel.Interfaces;
+using SlottyMedia.Backend.ViewModel.Pages.Home;
+using SlottyMedia.Backend.ViewModel.Pages.Post;
+using SlottyMedia.Backend.ViewModel.Pages.Profile;
+using SlottyMedia.Backend.ViewModel.Pages.Space;
+using SlottyMedia.Backend.ViewModel.Partial.DescriptionContainer;
+using SlottyMedia.Backend.ViewModel.Partial.MainLayout;
+using SlottyMedia.Backend.ViewModel.Partial.Post;
+using SlottyMedia.Backend.ViewModel.Partial.PostPage;
+using SlottyMedia.Backend.ViewModel.Partial.Search;
+using SlottyMedia.Backend.ViewModel.Partial.SignIn;
+using SlottyMedia.Backend.ViewModel.Partial.SignUp;
 using SlottyMedia.Components;
 using SlottyMedia.Database;
 using SlottyMedia.Database.Daos;
+using SlottyMedia.Database.Helper;
+using SlottyMedia.Database.Repository.CommentRepo;
+using SlottyMedia.Database.Repository.FollowerUserRelatioRepo;
+using SlottyMedia.Database.Repository.ForumRepo;
+using SlottyMedia.Database.Repository.PostRepo;
+using SlottyMedia.Database.Repository.RoleRepo;
+using SlottyMedia.Database.Repository.SearchRepo;
+using SlottyMedia.Database.Repository.UserLikePostRelationRepo;
+using SlottyMedia.Database.Repository.UserRepo;
 using SlottyMedia.DatabaseSeeding;
+using SlottyMedia.DatabaseSeeding.Avatar;
 using SlottyMedia.LoggingProvider;
 using Supabase;
+
 
 // Early init of NLog to allow startup and exception logging, before host is built
 Logging<Program> logger = new();
@@ -37,9 +57,24 @@ try
     builder.Services.AddSingleton(_ =>
         InitializeSupabaseClient.GetSupabaseClient());
 
-    // Database
-    logger.LogInfo("Adding Database to the container");
-    builder.Services.AddSingleton<IDatabaseActions, DatabaseActions>();
+    //Helpers
+    logger.LogInfo("Adding Helpers to the container");
+    builder.Services.AddSingleton<DaoHelper>();
+    builder.Services.AddSingleton<DatabaseRepositroyHelper>();
+
+    // Repositories
+    logger.LogInfo("Adding Repositories to the container");
+    builder.Services.AddSingleton<IUserRepository, UserRepository>();
+    builder.Services.AddSingleton<IPostRepository, PostRepository>();
+    builder.Services.AddSingleton<IForumRepository, ForumRepository>();
+    builder.Services.AddSingleton<ITopForumRepository, TopForumRepository>();
+    builder.Services.AddSingleton<IFollowerUserRelationRepository, FollowerUserRelationRepository>();
+    builder.Services.AddSingleton<IUserLikePostRelationRepostitory, UserLikePostRelationRepostitory>();
+    builder.Services.AddSingleton<IUserSeachRepository, UserSearchRepository>();
+    builder.Services.AddSingleton<IForumSearchRepository, ForumSearchRepository>();
+    builder.Services.AddSingleton<IRoleRepository, RoleRepository>();
+    builder.Services.AddSingleton<ICommentRepository, CommentRepository>();
+
 
     // Daos
     logger.LogInfo("Adding Daos to the container");
@@ -69,19 +104,27 @@ try
     builder.Services.AddScoped<ISignupService, SignupServiceImpl>();
     builder.Services.AddScoped<ISearchService, SearchService>();
     builder.Services.AddScoped<IForumService, ForumService>();
+    builder.Services.AddScoped<ILikeService, LikeService>();
+    builder.Services.AddScoped<ICommentService, CommentService>();
+    builder.Services.AddScoped<IProfilePageVm, ProfilePageVmImpl>();
+    builder.Services.AddScoped<IAvatarGenerator, PredefinedAvatarGenerator>();
 
     // Viewmodel
     logger.LogInfo("Adding Viewmodels to the container");
     builder.Services.AddScoped<ISignupFormVm, SignupFormVmImpl>();
     builder.Services.AddScoped<ISignInFormVm, SignInFormVmImpl>();
-    builder.Services.AddScoped<IMainLayoutVm, MainLayoutVmImpl>();
     builder.Services.AddScoped<ISpacesVm, SpacesVmImpl>();
     builder.Services.AddScoped<ISpacesCardVm, SpacesCardVmImpl>();
+    builder.Services.AddScoped<ISpaceVm, SpaceVmImpl>();
     builder.Services.AddScoped<IPostSubmissionFormVm, PostSubmissionFormVmImpl>();
     builder.Services.AddScoped<IHomePageVm, HomePageVmImpl>();
-    builder.Services.AddScoped<IAuthVmImpl, AuthVmImpl>();
-    builder.Services.AddScoped<IUserVmImpl, UserVmImpl>();
-    
+    builder.Services.AddScoped<IPostPageVm, PostPageVmImpl>();
+    builder.Services.AddScoped<ICommentSubmissionFormVm, CommentSubmissionFormVmImpl>();
+    builder.Services.AddScoped<ISearchVm, SearchImpl>();
+    builder.Services.AddTransient<IPostVm, PostVmImpl>();
+    builder.Services.AddScoped<IDescriptionContainerVm, DescriptionContainerVmImpl>();
+    builder.Services.AddTransient<ICommentVm, CommentVmImpl>();
+
 
     var app = builder.Build();
 
@@ -92,7 +135,9 @@ try
         {
             logger.LogInfo("Starting to seed the database");
             var seeder = scope.ServiceProvider.GetRequiredService<Client>();
-            Seeding seeding = new(seeder);
+            var daoHelper = scope.ServiceProvider.GetRequiredService<DaoHelper>();
+            var databaseRepositroyHelper = scope.ServiceProvider.GetRequiredService<DatabaseRepositroyHelper>();
+            Seeding seeding = new(seeder, daoHelper, databaseRepositroyHelper);
             await seeding.Seed();
         }
         catch (Exception e)

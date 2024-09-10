@@ -52,12 +52,12 @@ RenderFragment<br>
 An event that is triggered when this button is clicked.
 
 ```csharp
-public Nullable<EventCallback> OnClick { get; set; }
+public EventCallback OnClick { get; set; }
 ```
 
 #### Property Value
 
-[Nullable&lt;EventCallback&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+EventCallback<br>
 
 ## Constructors
 

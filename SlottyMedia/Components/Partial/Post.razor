@@ -1,29 +1,23 @@
-@using SlottyMedia.Backend.Dtos
-@using SlottyMedia.Backend.ViewModel
-@using SlottyMedia.Backend.ViewModel.Interfaces
-@inject IUserVmImpl UserService;
+@using SlottyMedia.Backend.ViewModel.Partial.Post
+@inject IPostVm PostVm
 
 
-@if (!_isLoading)
+@if (!PostVm.IsLoading)
 {
     <div class="w-full p-5 grid grid-cols-10 gap-4">
 
         <!-- profile picture -->
-        <div class="w-[50px] h-[50px] rounded-full border border-athens-gray">
-            <svg width="100%" height="100%" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#000000">
-                <g>
-                    <path d="m 8 1 c -1.65625 0 -3 1.34375 -3 3 s 1.34375 3 3 3 s 3 -1.34375 3 -3 s -1.34375 -3 -3 -3 z m -1.5 7 c -2.492188 0 -4.5 2.007812 -4.5 4.5 v 0.5 c 0 1.109375 0.890625 2 2 2 h 8 c 1.109375 0 2 -0.890625 2 -2 v -0.5 c 0 -2.492188 -2.007812 -4.5 -4.5 -4.5 z m 0 0" fill="#2e3436"></path>
-                </g>
-            </svg>
+        <div @onclick="PostVm.GoToProfilePage">
+            <Avatar Base64="@PostVm.UserInformation.ProfilePic" Class="!w-[50px] !h-[50px]"/>
         </div>
 
         <!-- username & time posted -->
-        <div class="col-span-9 flex flex-col justify-between">
+        <div class="col-span-9 flex flex-col justify-between cursor-pointer" @onclick="PostVm.GoToProfilePage">
             <h3 class="text-xl font-semibold">
-                @(_owner!.Username)
+                @(PostVm.UserInformation.Username)
             </h3>
             <h3 class="text-sm font-medium text-cadet-gray">
-                @(Dto!.CreatedAt.ToShortTimeString())
+                @(PostVm.PostDto!.CreatedAt.ToString("dd MMMM yyyy"))
             </h3>
         </div>
 
@@ -31,8 +25,8 @@
         <div></div>
 
         <!-- actual text -->
-        <div class="col-span-9">
-            @(Dto!.Content)
+        <div class="col-span-9 break-words">
+            @(PostVm.PostDto!.Content)
         </div>
 
         <!-- this cell is just for filling the grid! -->
@@ -42,7 +36,7 @@
         <div class="col-span-9 flex gap-12 select-none">
 
             <!-- comments -->
-            <div class="flex gap-3 items-center">
+            <div @onclick="PostVm.GoToPostPage" class="flex gap-3 items-center cursor-pointer">
 
                 <!-- icon -->
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,18 +47,21 @@
 
                 <!-- number of comments -->
                 <span class="text-cadet-gray">
-                    7.4K
+                    @PostVm.CommentCount
                 </span>
 
             </div>
 
-            <!-- like button -->
-            <div class="flex gap-3 items-center">
-                <LikeButton/>
-                <span class="text-cadet-gray">
-                    3.2K
-                </span>
-            </div>
+            @if (PostVm.AuthPrincipalId is not null)
+            {
+                <!-- like button -->
+                <div class="flex gap-3 items-center">
+                    <LikeButton Initial="@PostVm.IsPostLiked" OnClick="PostVm.LikeThisPost"/>
+                    <span class="text-cadet-gray">
+                        @PostVm.LikeCount
+                    </span>
+                </div>
+            }
 
         </div>
 
@@ -72,7 +69,7 @@
 }
 
 
-@if (_isLoading)
+@if (PostVm.IsLoading)
 {
     <div>
         Loading...
@@ -82,19 +79,11 @@
 
 @code
 {
-    /// The post to be rendered.
-    [Parameter]
-    public PostDto? Dto { get; set; }
-
-    bool _isLoading = true;
-
-    UserDto? _owner;
+    [Parameter] public Guid Id { get; set; }
 
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()
     {
-        _isLoading = true;
-        _owner = await UserService.GetUserById(Dto!.UserId);
-        _isLoading = false;
+        await PostVm.Initialize(Id, StateHasChanged);
     }
 }

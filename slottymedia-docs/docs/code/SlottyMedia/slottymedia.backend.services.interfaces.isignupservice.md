@@ -40,3 +40,12 @@ If a user with the provided username already exists
 
 [EmailAlreadyExistsException](./slottymedia.backend.exceptions.signup.emailalreadyexistsexception.md)<br>
 If a user with the provided email already exists
+
+[IllegalCharsInUsernameException](./slottymedia.backend.exceptions.signup.illegalcharsinusernameexception.md)<br>
+If the provided username contains illegal characters
+
+[IllegalUsernameLengthException](./slottymedia.backend.exceptions.signup.illegalusernamelengthexception.md)<br>
+If the provided username is of illegal length
+
+[PasswordTooShortException](./slottymedia.backend.exceptions.signup.passwordtooshortexception.md)<br>
+If the provided password was too short

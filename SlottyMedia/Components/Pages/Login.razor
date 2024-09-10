@@ -1,5 +1,6 @@
 @page "/login"
-@using SlottyMedia.Backend.ViewModel.Interfaces
+@using SlottyMedia.Backend.ViewModel.Partial.SignIn
+
 @layout LoginLayout
 
 
@@ -69,14 +70,6 @@
         </span>
     }
 
-    <!-- Remember & Forgot password -->
-    <div class="w-full flex justify-between items-center text-sm">
-        <Checkbox Id="rememberLogin" Label="Remember"/>
-        <span class="h-fit underline cursor-pointer">
-            Forgot Password?
-        </span>
-    </div>
-
     <!-- Submission Button -->
     <HotButton Type="submit" Class="w-full max-w-[300px]">
         Login
@@ -91,5 +84,10 @@
 
 @code
 {
-    [Inject] [SupplyParameterFromForm] public ISignInFormVm? ViewModel { get; set; }
+    /// <summary>
+    ///     The ViewModel for the login page
+    /// </summary>
+    [Inject]
+    [SupplyParameterFromForm]
+    public ISignInFormVm? ViewModel { get; set; }
 }

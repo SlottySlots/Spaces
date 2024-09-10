@@ -10,12 +10,12 @@ public interface IUserService
 
 ## Methods
 
-### **GetUserById(Guid)**
+### **GetUserDtoById(Guid)**
 
 This method returns a User object from the database based on the given userId.
 
 ```csharp
-Task<UserDto> GetUserById(Guid userId)
+Task<UserDto> GetUserDtoById(Guid userId)
 ```
 
 #### Parameters
@@ -28,12 +28,20 @@ The UserID inside the Database
 [Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 UserDao
 
-### **CheckIfUserExistsByUserName(String)**
+#### Exceptions
 
-Fetches a user by their username. Returns null if no user was found.
+[UserNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.usernotfoundexception.md)<br>
+Thrown when the user is not found.
+
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
+Thrown when a general error occurs.
+
+### **ExistsByUserName(String)**
+
+Checks if a user with the given username exists.
 
 ```csharp
-Task<bool> CheckIfUserExistsByUserName(string username)
+Task<bool> ExistsByUserName(string username)
 ```
 
 #### Parameters
@@ -44,14 +52,14 @@ The user's username
 #### Returns
 
 [Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-The queried user or null if no such user was found
+Whether a user with the given username exists
 
 ### **CreateUser(String, String, String, Guid, String, String)**
 
 This method creates a new User object in the database and returns the created object.
 
 ```csharp
-Task<UserDto> CreateUser(string userId, string username, string email, Guid roleId, string description, string profilePicture)
+Task CreateUser(string userId, string username, string email, Guid roleId, string description, string profilePicture)
 ```
 
 #### Parameters
@@ -76,15 +84,23 @@ The ProfilePicture
 
 #### Returns
 
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 UserDto
+
+#### Exceptions
+
+[UserIudException](./slottymedia.backend.exceptions.services.userexceptions.useriudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
+
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
+Thrown when a general error occurs.
 
 ### **UpdateUser(UserDao)**
 
 This method updates the given User object in the database and returns the updated object.
 
 ```csharp
-Task<UserDto> UpdateUser(UserDao user)
+Task UpdateUser(UserDao user)
 ```
 
 #### Parameters
@@ -94,15 +110,23 @@ The User object
 
 #### Returns
 
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 UserDao
+
+#### Exceptions
+
+[UserIudException](./slottymedia.backend.exceptions.services.userexceptions.useriudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
+
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
+Thrown when a general error occurs.
 
 ### **DeleteUser(UserDto)**
 
 This method deletes the given User object from the database.
 
 ```csharp
-Task<bool> DeleteUser(UserDto user)
+Task DeleteUser(UserDto user)
 ```
 
 #### Parameters
@@ -112,8 +136,16 @@ The User Object
 
 #### Returns
 
-[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 Return if the User got deleted or not
+
+#### Exceptions
+
+[UserIudException](./slottymedia.backend.exceptions.services.userexceptions.useriudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
+
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
+Thrown when a general error occurs.
 
 ### **GetProfilePic(Guid)**
 
@@ -133,26 +165,13 @@ The ID of the User
 [Task&lt;ProfilePicDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns the Profile Picture of the User
 
-### **GetUser(Guid, Int32)**
+#### Exceptions
 
-This method returns a UserDto object from the database based on the given userId.
+[UserNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.usernotfoundexception.md)<br>
+Thrown when the user is not found.
 
-```csharp
-Task<UserDto> GetUser(Guid userId, int limit)
-```
-
-#### Parameters
-
-`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The Id of the user
-
-`limit` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The maximum number of recent forums to retrieve
-
-#### Returns
-
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns the UserDto object
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
+Thrown when a general error occurs.
 
 ### **GetFriends(Guid)**
 
@@ -172,37 +191,13 @@ The ID of the user
 [Task&lt;FriendsOfUserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns a FriendsOfUserDto object containing the list of friends
 
-### **GetUserBy(Nullable&lt;Guid&gt;, String, String)**
-
-Retrieves a user from the database based on the provided criteria (ID, username, or email).
-
-```csharp
-Task<UserDao> GetUserBy(Nullable<Guid> userID, string username, string email)
-```
-
-#### Parameters
-
-`userID` [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The ID of the user to retrieve (optional).
-
-`username` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The username of the user to retrieve (optional).
-
-`email` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The email of the user to retrieve (optional).
-
-#### Returns
-
-[Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-Returns the UserDao object if found, otherwise null.
-
 #### Exceptions
 
 [UserNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.usernotfoundexception.md)<br>
-Thrown when no user is found with the provided criteria.
+Thrown when the user is not found.
 
 [UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
-Thrown when a general database error occurs.
+Thrown when a general error occurs.
 
 ### **GetCountOfUserFriends(Guid)**
 
@@ -245,12 +240,17 @@ User from which it should be retrieved
 [Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 Returns the amount of spaces as task
 
+#### Exceptions
+
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
+Thrown when a general error occurs.
+
 ### **UpdateUser(UserDto)**
 
 Updates the given UserDto object in the database and returns the updated object.
 
 ```csharp
-Task<UserDto> UpdateUser(UserDto user)
+Task UpdateUser(UserDto user)
 ```
 
 #### Parameters
@@ -260,5 +260,148 @@ The UserDto object to be updated.
 
 #### Returns
 
-[Task&lt;UserDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 A task that represents the asynchronous operation. The task result contains the updated UserDto object.
+
+#### Exceptions
+
+[UserIudException](./slottymedia.backend.exceptions.services.userexceptions.useriudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
+
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
+Thrown when a general error occurs.
+
+### **UserFollowRelation(Guid, Guid)**
+
+Checks whether a user follows another user based on their ids
+
+```csharp
+Task<bool> UserFollowRelation(Guid userIdToCheck, Guid userIdLoggedIn)
+```
+
+#### Parameters
+
+`userIdToCheck` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+UserId to check
+
+`userIdLoggedIn` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+UserId that may follow the one to check
+
+#### Returns
+
+[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Boolean representing the state
+
+#### Exceptions
+
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
+Thrown when a general error occurs.
+
+### **GetUserDaoById(Guid)**
+
+Gets a user dao based on the user id
+
+```csharp
+Task<UserDao> GetUserDaoById(Guid userId)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+Id to retrieve
+
+#### Returns
+
+[Task&lt;UserDao&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns a user dao
+
+#### Exceptions
+
+[UserNotFoundException](./slottymedia.backend.exceptions.services.userexceptions.usernotfoundexception.md)<br>
+Thrown when the user is not found.
+
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
+Thrown when a general error occurs.
+
+### **FollowUserById(Guid, Guid)**
+
+Method used to follow a user by id
+
+```csharp
+Task FollowUserById(Guid userIdFollows, Guid userIdToFollow)
+```
+
+#### Parameters
+
+`userIdFollows` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The user that tries to follow another
+
+`userIdToFollow` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The user that the user tries to follow
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+Task
+
+#### Exceptions
+
+[UserIudException](./slottymedia.backend.exceptions.services.userexceptions.useriudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
+
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
+Thrown when a general error occurs.
+
+### **UnfollowUserById(Guid, Guid)**
+
+Method used to unfollow a user by id
+
+```csharp
+Task UnfollowUserById(Guid userIdFollows, Guid userIdToUnfollow)
+```
+
+#### Parameters
+
+`userIdFollows` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The user that tries to unfollow another
+
+`userIdToUnfollow` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The user that the user tries to unfollow
+
+#### Returns
+
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+Task
+
+#### Exceptions
+
+[UserIudException](./slottymedia.backend.exceptions.services.userexceptions.useriudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
+
+[UserGeneralException](./slottymedia.backend.exceptions.services.userexceptions.usergeneralexception.md)<br>
+Thrown when a general error occurs.
+
+### **GetUserInfo(Guid, Boolean, Boolean)**
+
+This sets a dto holding information about the current user in order to show the current users infos in the profile
+ card
+
+```csharp
+Task<UserInformationDto> GetUserInfo(Guid userId, bool fetchFriends, bool fetchSpaces)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+User from which the dto should be retrieved
+
+`fetchFriends` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Determines if the Method should fetch the Friends Count of a User
+
+`fetchSpaces` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Determines if the Method should fetch the Spaces Count of a User
+
+#### Returns
+
+[Task&lt;UserInformationDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+Returns a task of type UserInformationDto. The dto is used to update the state in the view.

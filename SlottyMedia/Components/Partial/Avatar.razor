@@ -1,68 +1,38 @@
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime JsRuntime
 
-<div class="h-[80px] w-[80px]" @onmouseenter="MouseOver" @onmouseleave="MouseLeave" @onclick="OpenFileDialog">
-    @if (!_mouseOverAvatar)
-    {
-        <img class="h-full w-full rounded-full" src=@Base64PNG alt="Profile Picture">
-    }
-    else
-    {
-        <div class="relative opacity-50 h-[80px] w-[80px]">
-            <img class="h-full w-full rounded-full" src="@Base64PNG" alt="Profile Picture">
-            @ChildContent
-        </div>
-    }
+
+<div @onclick="OnClick" class=@("relative w-[80px] h-[80px] cursor-pointer " + Class)>
+
+    <!-- the white mask on hover -->
+    <div class="absolute top-0 left-0 w-full h-full rounded-full bg-white opacity-0 hover:opacity-50 duration-300 z-10">
+        @ChildContent
+    </div>
+
+    <!-- the image -->
+    <img class="h-full w-full rounded-full" src=@($"data:image/png;base64, {Base64}") alt="Profile Picture">
+
 </div>
-<InputFile id="fileInput" OnChange="OnFileSelected" accept=".png,.jpg" hidden></InputFile>
 
 
 @code {
-    [Parameter] public RenderFragment? ChildContent { get; set; }
 
-    private string? _base64Png;
-
+    /// <summary>
+    ///     RenderFragment to render a pictogram into the avatar when a action should be done on clicking an avatar.
+    /// </summary>
     [Parameter]
-    public string Base64PNG
-    {
-        private get => string.IsNullOrEmpty(_base64Png) ? "static/profilePic.png" : $"data:image/png;base64, {_base64Png}";
-        set => _base64Png = value;
-    }
+    public RenderFragment? ChildContent { get; set; }
 
-    [Parameter] public bool OpensFileDialog { get; set; }
+    [Parameter] public EventCallback OnClick { get; set; }
 
-    [Parameter] public EventCallback<string> Base64Callback { get; set; }
+    /// <summary>Additional CSS classes to add to the avatar's container</summary>
+    [Parameter]
+    public string? Class { get; set; }
 
-    private async void OpenFileDialog()
-    {
-        if (OpensFileDialog)
-            await JSRuntime.InvokeVoidAsync("OpenFileDialog", "fileInput");
-    }
-
-    private async Task OnFileSelected(InputFileChangeEventArgs e)
-    {
-        var file = e.File;
-
-        if (file != null)
-        {
-            var buffer = new byte[file.Size];
-            await file.OpenReadStream().ReadAsync(buffer);
-            var base64String = Convert.ToBase64String(buffer);
-            Base64PNG = base64String;
-            await Base64Callback.InvokeAsync(base64String);
-        }
-    }
-
-
-    private bool _mouseOverAvatar = false;
-
-    private void MouseOver()
-    {
-        _mouseOverAvatar = true;
-    }
-
-    private void MouseLeave()
-    {
-        _mouseOverAvatar = false;
-    }
+    /// <summary>
+    ///     Sets a Base64Png. Gets the currently set base64png variable if set. If not set it gets the path of the standard
+    ///     profile picture.
+    /// </summary>
+    [Parameter]
+    public string Base64 { get; set; }
 
 }

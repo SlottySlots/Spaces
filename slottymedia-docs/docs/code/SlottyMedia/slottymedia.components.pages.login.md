@@ -13,13 +13,15 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ### **ViewModel**
 
+The ViewModel for the login page
+
 ```csharp
 public ISignInFormVm ViewModel { get; set; }
 ```
 
 #### Property Value
 
-[ISignInFormVm](./slottymedia.backend.viewmodel.interfaces.isigninformvm.md)<br>
+[ISignInFormVm](./slottymedia.backend.viewmodel.partial.signin.isigninformvm.md)<br>
 
 ## Constructors
 

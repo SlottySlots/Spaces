@@ -11,19 +11,33 @@ public class MainLayoutVmImpl : SlottyMedia.Backend.ViewModel.Interfaces.IMainLa
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [MainLayoutVmImpl](./slottymedia.backend.viewmodel.mainlayoutvmimpl.md)<br>
 Implements [IMainLayoutVm](./slottymedia.backend.viewmodel.interfaces.imainlayoutvm.md)
 
-## Constructors
+## Properties
 
-### **MainLayoutVmImpl(IAuthService, IDatabaseActions, IUserService)**
+### **UserInformation**
+
+The user information to be displayed
 
 ```csharp
-public MainLayoutVmImpl(IAuthService authService, IDatabaseActions databaseActions, IUserService userService)
+public UserInformationDto UserInformation { get; set; }
+```
+
+#### Property Value
+
+[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+
+## Constructors
+
+### **MainLayoutVmImpl(IAuthService, IUserService)**
+
+Ctor used for dep inject
+
+```csharp
+public MainLayoutVmImpl(IAuthService authService, IUserService userService)
 ```
 
 #### Parameters
 
 `authService` [IAuthService](./slottymedia.backend.services.interfaces.iauthservice.md)<br>
-
-`databaseActions` IDatabaseActions<br>
 
 `userService` [IUserService](./slottymedia.backend.services.interfaces.iuserservice.md)<br>
 
@@ -48,12 +62,12 @@ This sets a dto holding information about the current user in order to show the 
  card
 
 ```csharp
-public Task<UserInformationDto> SetUserInfo()
+public Task SetUserInfo()
 ```
 
 #### Returns
 
-[Task&lt;UserInformationDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 Returns a task of type UserInformationDto. The dto is used to update the state in the view.
 
 ### **PersistUserAvatarInDb(String)**

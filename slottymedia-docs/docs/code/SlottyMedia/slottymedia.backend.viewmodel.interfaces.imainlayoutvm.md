@@ -8,6 +8,20 @@ This Interface represents the viewmodel of the MainLayout (root of our applicati
 public interface IMainLayoutVm
 ```
 
+## Properties
+
+### **UserInformation**
+
+Gets the user information data transfer object to be rendered.
+
+```csharp
+public abstract UserInformationDto UserInformation { get; }
+```
+
+#### Property Value
+
+[UserInformationDto](./slottymedia.backend.dtos.userinformationdto.md)<br>
+
 ## Methods
 
 ### **RestoreSessionOnInit()**
@@ -29,12 +43,12 @@ This sets a dto holding information about the current user in order to show the 
  card
 
 ```csharp
-Task<UserInformationDto> SetUserInfo()
+Task SetUserInfo()
 ```
 
 #### Returns
 
-[Task&lt;UserInformationDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 Returns a task of type UserInformationDto. The dto is used to update the state in the view. It's null if a error
  occured.
 

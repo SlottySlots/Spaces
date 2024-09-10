@@ -15,7 +15,7 @@ public interface IForumService
 Inserts a new forum into the database.
 
 ```csharp
-Task<ForumDto> InsertForum(Guid creatorUserId, string forumTopic)
+Task InsertForum(Guid creatorUserId, string forumTopic)
 ```
 
 #### Parameters
@@ -28,13 +28,16 @@ The Topic from the Forum
 
 #### Returns
 
-[Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 Returns the inserted ForumDto object.
 
 #### Exceptions
 
-T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
-Throws an exception if an error occurs while inserting the forum.
+[ForumIudException](./slottymedia.backend.exceptions.services.forumexceptions.forumiudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
+
+[ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)<br>
+Thrown when a general error occurs.
 
 ### **DeleteForum(ForumDto)**
 
@@ -56,8 +59,11 @@ Returns a Task representing the asynchronous operation.
 
 #### Exceptions
 
-T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
-Throws an exception if an error occurs while deleting the forum.
+[ForumIudException](./slottymedia.backend.exceptions.services.forumexceptions.forumiudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
+
+[ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)<br>
+Thrown when a general error occurs.
 
 ### **GetForumByName(String)**
 
@@ -77,18 +83,59 @@ The forum's name.
 [Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 The requested forum
 
-### **GetForums()**
+#### Exceptions
 
-Retrieves a list of all forums.
+[ForumNotFoundException](./slottymedia.backend.exceptions.services.forumexceptions.forumnotfoundexception.md)<br>
+Thrown when the forum is not found.
+
+[ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)<br>
+Thrown when a general error occurs.
+
+### **GetForumById(Guid)**
 
 ```csharp
-Task<List<ForumDto>> GetForums()
+Task<ForumDto> GetForumById(Guid forumId)
 ```
+
+#### Parameters
+
+`forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 #### Returns
 
-[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains a list of ForumDto objects.
+[Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetAllForums(PageRequest)**
+
+Retrieves all forums with pagination.
+
+```csharp
+Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest)
+```
+
+#### Parameters
+
+`pageRequest` PageRequest<br>
+The pagination request details.
+
+#### Returns
+
+[Task&lt;IPage&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A paginated list of forums.
+
+### **ExistsByName(String)**
+
+```csharp
+Task<bool> ExistsByName(string forumName)
+```
+
+#### Parameters
+
+`forumName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+#### Returns
+
+[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **DetermineRecentSpaces()**
 
@@ -104,6 +151,14 @@ Task<List<ForumDto>> DetermineRecentSpaces()
 A task that represents the asynchronous operation. The task result contains a list of the 3 most recent
  ForumDto objects.
 
+#### Exceptions
+
+[ForumNotFoundException](./slottymedia.backend.exceptions.services.forumexceptions.forumnotfoundexception.md)<br>
+Thrown when the forums are not found.
+
+[ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)<br>
+Thrown when a general error occurs.
+
 ### **GetTopForums()**
 
 Retrieves the top forums.
@@ -117,3 +172,11 @@ Task<List<ForumDto>> GetTopForums()
 [Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 A task that represents the asynchronous operation. The task result contains a list of ForumDto objects
  representing the top forums.
+
+#### Exceptions
+
+[ForumNotFoundException](./slottymedia.backend.exceptions.services.forumexceptions.forumnotfoundexception.md)<br>
+Thrown when the forums are not found.
+
+[ForumGeneralException](./slottymedia.backend.exceptions.services.forumexceptions.forumgeneralexception.md)<br>
+Thrown when a general error occurs.

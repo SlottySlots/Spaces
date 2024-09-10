@@ -1,11 +1,9 @@
 using SlottyMedia.Backend.Dtos;
 using SlottyMedia.Backend.Exceptions.Services.SearchExceptions;
 using SlottyMedia.Backend.Services.Interfaces;
-using SlottyMedia.Database;
-using SlottyMedia.Database.Daos;
 using SlottyMedia.Database.Exceptions;
+using SlottyMedia.Database.Repository.SearchRepo;
 using SlottyMedia.LoggingProvider;
-using Supabase.Postgrest;
 
 namespace SlottyMedia.Backend.Services;
 
@@ -15,51 +13,83 @@ namespace SlottyMedia.Backend.Services;
 public class SearchService : ISearchService
 {
     private static readonly Logging<SearchService> Logger = new();
-    private readonly IDatabaseActions _databaseActions;
+    private readonly IForumSearchRepository _forumSearchRepository;
+    private readonly IUserSeachRepository _userSearchRepository;
 
 
     /// <summary>
     ///     Constructor to initialize the database actions dependency.
     /// </summary>
-    /// <param name="databaseActions">The database actions dependency.</param>
-    public SearchService(IDatabaseActions databaseActions)
+    /// <param name="userSearchRepository">Repo used to retrieve search results.</param>
+    /// <param name="forumSearchRepository">Repo used to retrieve search results specific to a forum</param>
+    public SearchService(IUserSeachRepository userSearchRepository, IForumSearchRepository forumSearchRepository)
     {
         Logger.LogInfo("SearchService initialized");
-        _databaseActions = databaseActions;
+        _userSearchRepository = userSearchRepository;
+        _forumSearchRepository = forumSearchRepository;
     }
 
     /// <inheritdoc />
-    public async Task<SearchDto> SearchByUsernameOrTopic(string searchTerm)
+    public async Task<SearchDto> SearchByUsername(string searchTerm)
     {
         try
         {
-            Logger.LogInfo($"Searching for users or topics with search term: {searchTerm}");
-            var userSearch = new List<(string, Constants.Operator, string)>
-            {
-                ("userName", Constants.Operator.Equals, searchTerm)
-            };
+            Logger.LogInfo($"Searching for users with search term: {searchTerm}");
 
-            var topicSearch = new List<(string, Constants.Operator, string)>
-            {
-                ("forumTopic", Constants.Operator.Equals, searchTerm)
-            };
+            if (searchTerm.Length == 0)
+                return new SearchDto();
 
-            Logger.LogDebug($"Searching for users or topics with search term: {searchTerm}");
-            var userResults = await _databaseActions.GetEntitiesWithSelectorById<UserDao>(
-                u => new object[] { u.UserId! }, userSearch);
-            var topicResults = await _databaseActions.GetEntitiesWithSelectorById<ForumDao>(
-                f => new object[] { f.ForumId! }, topicSearch);
+            var userResults = await _userSearchRepository.GetUsersByUserName(searchTerm);
 
-            if (userResults is null || !userResults.Any())
-                userResults = new List<UserDao>();
-
-            if (topicResults is null || !topicResults.Any())
-                topicResults = new List<ForumDao>();
+            if (!userResults.Any())
+                return new SearchDto();
 
             var searchResult = new SearchDto();
 
             Logger.LogInfo("Mapping search results to DTOs");
             searchResult.Users.AddRange(userResults.Select(x => new UserDto().Mapper(x)));
+
+            return searchResult;
+        }
+        catch (DatabaseMissingItemException ex)
+        {
+            throw new SearchGeneralExceptions(
+                $"A database error occurred while searching for users or topics. Term: {searchTerm}", ex);
+        }
+        catch (GeneralDatabaseException ex)
+        {
+            throw new SearchGeneralExceptions(
+                $"A database error occurred while searching for users or topics. Term {searchTerm}", ex);
+        }
+        catch (DatabasePaginationFailedException ex)
+        {
+            throw new SearchGeneralExceptions(
+                $"An error occurred during the Pagination for search results with term {searchTerm}", ex);
+        }
+        catch (Exception ex)
+        {
+            throw new SearchGeneralExceptions(
+                $"An error occurred while searching for users or topics. Term {searchTerm}", ex);
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<SearchDto> SearchByTopic(string searchTerm)
+    {
+        try
+        {
+            Logger.LogInfo($"Searching for topics with search term: {searchTerm}");
+
+            if (searchTerm.Length == 0)
+                return new SearchDto();
+
+            var topicResults = await _forumSearchRepository.GetForumsByTopic(searchTerm);
+
+            if (!topicResults.Any())
+                return new SearchDto();
+
+            var searchResult = new SearchDto();
+
             searchResult.Forums.AddRange(topicResults.Select(x => new ForumDto().Mapper(x)));
 
             return searchResult;
@@ -73,6 +103,11 @@ public class SearchService : ISearchService
         {
             throw new SearchGeneralExceptions(
                 $"A database error occurred while searching for users or topics. Term {searchTerm}", ex);
+        }
+        catch (DatabasePaginationFailedException ex)
+        {
+            throw new SearchGeneralExceptions(
+                $"An error occurred during the Pagination for search results with term {searchTerm}", ex);
         }
         catch (Exception ex)
         {

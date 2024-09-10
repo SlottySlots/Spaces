@@ -48,18 +48,6 @@ public Nullable<Guid> FollowerUserId { get; set; }
 
 [Nullable&lt;Guid&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
-### **FollowedUser**
-
-The User who is being followed. This is a Reference to the User Table.
-
-```csharp
-public UserDao FollowedUser { get; set; }
-```
-
-#### Property Value
-
-[UserDao](./slottymedia.database.daos.userdao.md)<br>
-
 ### **FollowedUserId**
 
 The ID of the User who is being followed. This is a Foreign Key to the User Table.
@@ -77,12 +65,12 @@ public Nullable<Guid> FollowedUserId { get; set; }
 The Date and Time the Follower_User_Relation was created.
 
 ```csharp
-public DateTime CreatedAt { get; set; }
+public DateTimeOffset CreatedAt { get; }
 ```
 
 #### Property Value
 
-[DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)<br>
+[DateTimeOffset](https://docs.microsoft.com/en-us/dotnet/api/system.datetimeoffset)<br>
 
 ### **BaseUrl**
 

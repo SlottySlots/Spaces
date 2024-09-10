@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -7,6 +8,7 @@ namespace SlottyMedia.Database.Daos;
 ///     This class represents the Follower_User_Relation table in the database.
 /// </summary>
 [Table("Follower_User_Relation")]
+[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 public class FollowerUserRelationDao : BaseModel
 {
     /// <summary>
@@ -46,12 +48,12 @@ public class FollowerUserRelationDao : BaseModel
     [Column("userIsFollowing")]
     public Guid? FollowerUserId { get; set; }
 
-    /// <summary>
-    ///     The User who is being followed. This is a Reference to the User Table.
-    /// </summary>
-    [Reference(typeof(UserDao), ReferenceAttribute.JoinType.Left,
-        foreignKey: "User!Follower_User_Relation_userIsFollowed_fkey")]
-    public UserDao? FollowedUser { get; set; }
+    // /// <summary>
+    // ///     The User who is being followed. This is a Reference to the User Table.
+    // /// </summary>
+    // [Reference(typeof(UserDao), ReferenceAttribute.JoinType.Left,
+    //     foreignKey: "User!Follower_User_Relation_userIsFollowed_fkey")]
+    // public UserDao? FollowedUser { get; set; }
 
     /// <summary>
     ///     The ID of the User who is being followed. This is a Foreign Key to the User Table.
@@ -62,8 +64,8 @@ public class FollowerUserRelationDao : BaseModel
     /// <summary>
     ///     The Date and Time the Follower_User_Relation was created.
     /// </summary>
-    [Column("created_at")]
-    public DateTime CreatedAt { get; set; }
+    [Column("created_at", ignoreOnInsert: true, ignoreOnUpdate: true)]
+    public DateTimeOffset CreatedAt { get; }
 
     /// <summary>
     ///     The ToString method returns a string representation of the FollowerUserRelationDao object.

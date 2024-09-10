@@ -8,64 +8,47 @@ Interface for post-related services.
 public interface IPostService
 ```
 
-## Properties
-
-### **DatabaseActions**
-
-DatabaseActions property.
-
-```csharp
-public abstract IDatabaseActions DatabaseActions { get; set; }
-```
-
-#### Property Value
-
-IDatabaseActions<br>
-
 ## Methods
 
-### **GetPostsFromForum(Guid, Int32, Int32)**
-
-Retrieves a list of post titles from a forum for a given user, limited by the specified number.
-
-```csharp
-Task<List<string>> GetPostsFromForum(Guid userId, int startOfSet, int endOfSet)
-```
-
-#### Parameters
-
-`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The ID of the user.
-
-`startOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`endOfSet` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-#### Returns
-
-[Task&lt;List&lt;String&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A task that represents the asynchronous operation. The task result contains a list of post titles.
-
-### **GetAllPosts(Int32, Int32)**
+### **GetAllPosts(PageRequest)**
 
 Fetches all posts sorted by date in descending order. Fetches only a specified number of posts
  on the specified page.
 
 ```csharp
-Task<List<PostDto>> GetAllPosts(int page, int pageSize)
+Task<IPage<PostDto>> GetAllPosts(PageRequest pageRequest)
 ```
 
 #### Parameters
 
-`page` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The page to fetch (one-based)
-
-`pageSize` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-The number of posts per page (default is 10)
+`pageRequest` PageRequest<br>
+The page request
 
 #### Returns
 
-[Task&lt;List&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains a list of PostDto objects.
+
+#### Exceptions
+
+[PostNotFoundException](./slottymedia.backend.exceptions.services.postexceptions.postnotfoundexception.md)<br>
+Thrown when the posts are not found.
+
+[PostGeneralException](./slottymedia.backend.exceptions.services.postexceptions.postgeneralexception.md)<br>
+Thrown when a general error occurs.
+
+### **CountAllPosts()**
+
+Counts all existing posts.
+
+```csharp
+Task<int> CountAllPosts()
+```
+
+#### Returns
+
+[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+The total number of existing posts
 
 ### **GetPostById(Guid)**
 
@@ -78,73 +61,105 @@ Task<PostDto> GetPostById(Guid postId)
 #### Parameters
 
 `postId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The post's ID
+The post's ID.
 
 #### Returns
 
 [Task&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-The post or null if not found
+A task that represents the asynchronous operation. The task result contains the post or null if not found.
+
+#### Exceptions
+
+[PostNotFoundException](./slottymedia.backend.exceptions.services.postexceptions.postnotfoundexception.md)<br>
+Thrown when the post is not found.
+
+[PostGeneralException](./slottymedia.backend.exceptions.services.postexceptions.postgeneralexception.md)<br>
+Thrown when a general error occurs.
 
 ### **InsertPost(String, Guid, Guid)**
 
 Inserts a new post into the database.
 
 ```csharp
-Task<PostDto> InsertPost(string content, Guid creatorUserId, Guid forumId)
+Task InsertPost(string content, Guid creatorUserId, Guid forumId)
 ```
 
 #### Parameters
 
 `content` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The content of the post
+The content of the post.
 
 `creatorUserId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The UserId who created the post
+The UserId who created the post.
 
 `forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
-The ID of the forum the post should belong to
+The ID of the forum the post should belong to.
 
 #### Returns
 
-[Task&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 A task that represents the asynchronous operation. The task result contains the inserted post.
 
-### **UpdatePost(PostDto)**
+#### Exceptions
+
+[PostIudException](./slottymedia.backend.exceptions.services.postexceptions.postiudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
+
+[PostGeneralException](./slottymedia.backend.exceptions.services.postexceptions.postgeneralexception.md)<br>
+Thrown when a general error occurs.
+
+### **UpdatePost(PostsDao)**
 
 Updates an existing post in the database.
 
 ```csharp
-Task<PostDto> UpdatePost(PostDto post)
+Task UpdatePost(PostsDao post)
 ```
 
 #### Parameters
 
-`post` [PostDto](./slottymedia.backend.dtos.postdto.md)<br>
+`post` PostsDao<br>
 The post to update.
 
 #### Returns
 
-[Task&lt;PostDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 A task that represents the asynchronous operation. The task result contains the updated post.
 
-### **DeletePost(PostDto)**
+#### Exceptions
+
+[PostIudException](./slottymedia.backend.exceptions.services.postexceptions.postiudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
+
+[PostGeneralException](./slottymedia.backend.exceptions.services.postexceptions.postgeneralexception.md)<br>
+Thrown when a general error occurs.
+
+### **DeletePost(PostsDao)**
 
 Deletes a post from the database.
 
 ```csharp
-Task<bool> DeletePost(PostDto post)
+Task DeletePost(PostsDao post)
 ```
 
 #### Parameters
 
-`post` [PostDto](./slottymedia.backend.dtos.postdto.md)<br>
-The the post to delete.
+`post` PostsDao<br>
+The post to delete.
 
 #### Returns
 
-[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 A task that represents the asynchronous operation. The task result indicates whether the deletion was
  successful.
+
+#### Exceptions
+
+[PostIudException](./slottymedia.backend.exceptions.services.postexceptions.postiudexception.md)<br>
+Thrown when an error occurs during Insert, Update, or Delete operations.
+
+[PostGeneralException](./slottymedia.backend.exceptions.services.postexceptions.postgeneralexception.md)<br>
+Thrown when a general error occurs.
 
 ### **GetForumCountByUserId(Guid)**
 
@@ -157,21 +172,72 @@ Task<int> GetForumCountByUserId(Guid userId)
 #### Parameters
 
 `userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the user.
 
 #### Returns
 
 [Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains the number of forums.
 
-### **GetPostCountByForumId(Guid)**
+#### Exceptions
+
+[PostGeneralException](./slottymedia.backend.exceptions.services.postexceptions.postgeneralexception.md)<br>
+Thrown when a general error occurs.
+
+### **GetPostsByUserId(Guid, PageRequest)**
+
+Gets posts of a user by their id and enables slicing via offsets.
 
 ```csharp
-Task<int> GetPostCountByForumId(Guid forumId)
+Task<IPage<PostDto>> GetPostsByUserId(Guid userId, PageRequest pageRequest)
+```
+
+#### Parameters
+
+`userId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the user that the posts belong to.
+
+`pageRequest` PageRequest<br>
+The page request
+
+#### Returns
+
+[Task&lt;IPage&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains a list of PostDto objects.
+
+#### Exceptions
+
+[PostNotFoundException](./slottymedia.backend.exceptions.services.postexceptions.postnotfoundexception.md)<br>
+Thrown when the posts are not found.
+
+[PostGeneralException](./slottymedia.backend.exceptions.services.postexceptions.postgeneralexception.md)<br>
+Thrown when a general error occurs.
+
+### **GetPostsByForumId(Guid, PageRequest)**
+
+Gets posts by forum ID and enables slicing via offsets.
+
+```csharp
+Task<IPage<PostDto>> GetPostsByForumId(Guid forumId, PageRequest pageRequest)
 ```
 
 #### Parameters
 
 `forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+The ID of the forum that the posts belong to.
+
+`pageRequest` PageRequest<br>
+The page request
 
 #### Returns
 
-[Task&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task&lt;IPage&lt;PostDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+A task that represents the asynchronous operation. The task result contains a list of PostDto objects.
+
+#### Exceptions
+
+[PostNotFoundException](./slottymedia.backend.exceptions.services.postexceptions.postnotfoundexception.md)<br>
+Thrown when the posts are not found.
+
+[PostGeneralException](./slottymedia.backend.exceptions.services.postexceptions.postgeneralexception.md)<br>
+Thrown when a general error occurs.

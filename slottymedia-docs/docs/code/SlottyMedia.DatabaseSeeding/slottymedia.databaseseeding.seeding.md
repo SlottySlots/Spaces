@@ -12,17 +12,24 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Constructors
 
-### **Seeding(Client)**
+### **Seeding(Client, DaoHelper, DatabaseRepositroyHelper)**
 
-The constructor with parameters.
+This is the constructor for the Seeding class.
 
 ```csharp
-public Seeding(Client client)
+public Seeding(Client client, DaoHelper daoHelper, DatabaseRepositroyHelper databaseRepositroyHelper)
 ```
 
 #### Parameters
 
 `client` Client<br>
+The Supabase client.
+
+`daoHelper` DaoHelper<br>
+The DAO helper instance.
+
+`databaseRepositroyHelper` DatabaseRepositroyHelper<br>
+The database repository helper instance.
 
 ## Methods
 
@@ -37,3 +44,20 @@ public Task Seed()
 #### Returns
 
 [Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
+
+#### Exceptions
+
+T:SlottyMedia.Database.Exceptions.GeneralDatabaseException<br>
+Thrown when an unexpected error occurs.
+
+[DatabaseSeedingRepositoryCreationFailed](./slottymedia.databaseseeding.exceptions.databaseseedingrepositorycreationfailed.md)<br>
+Thrown when repository creation fails.
+
+[DatabaseSeedingUserDosentContainProfilePic](./slottymedia.databaseseeding.exceptions.databaseseedinguserdosentcontainprofilepic.md)<br>
+Thrown when a user does not contain a profile pic.
+
+T:SlottyMedia.Database.Exceptions.DatabaseIudActionException<br>
+Thrown when an error occurs while deleting the entity.
+
+T:SlottyMedia.Database.Exceptions.DatabaseMissingItemException<br>
+Thrown when the entity is not found in the database.

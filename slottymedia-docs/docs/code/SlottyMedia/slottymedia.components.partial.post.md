@@ -11,15 +11,15 @@ Implements IComponent, IHandleEvent, IHandleAfterRender
 
 ## Properties
 
-### **Dto**
+### **Id**
 
 ```csharp
-public PostDto Dto { get; set; }
+public Guid Id { get; set; }
 ```
 
 #### Property Value
 
-[PostDto](./slottymedia.backend.dtos.postdto.md)<br>
+[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 ## Constructors
 

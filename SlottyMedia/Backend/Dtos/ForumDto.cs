@@ -35,6 +35,9 @@ public class ForumDto
     /// </summary>
     public DateTime CreatedAt { get; set; }
 
+    /// <summary>
+    ///     Amount of posts the forum has
+    /// </summary>
     public int PostCount { get; set; }
 
     /// <summary>
@@ -43,7 +46,7 @@ public class ForumDto
     /// <returns></returns>
     public ForumDao Mapper()
     {
-        Logger.LogInfo($"Mapping ForumDto to ForumDao. ForumDto: {this}");
+        Logger.LogTrace($"Mapping ForumDto to ForumDao. ForumDto: {this}");
 
         return new ForumDao
         {
@@ -60,13 +63,14 @@ public class ForumDto
     /// <returns></returns>
     public ForumDto Mapper(ForumDao forumDao)
     {
-        Logger.LogInfo($"Mapping ForumDao to ForumDto. ForumDao: {forumDao}");
+        Logger.LogTrace($"Mapping ForumDao to ForumDto. ForumDao: {forumDao}");
 
         return new ForumDto
         {
             ForumId = forumDao.ForumId ?? Guid.Empty,
             Topic = forumDao.ForumTopic ?? string.Empty,
-            CreatedAt = forumDao.CreatedAt
+            CreatedAt = forumDao.CreatedAt.LocalDateTime,
+            PostCount = forumDao.post_count ?? 0
         };
     }
 
@@ -77,13 +81,13 @@ public class ForumDto
     /// <returns></returns>
     public ForumDto Mapper(TopForumDao forumDao)
     {
-        Logger.LogInfo($"Mapping ForumDao to ForumDto. ForumDao: {forumDao}");
+        Logger.LogTrace($"Mapping ForumDao to ForumDto. ForumDao: {forumDao}");
 
         return new ForumDto
         {
             ForumId = forumDao.ForumId ?? Guid.Empty,
             Topic = forumDao.ForumTopic ?? string.Empty,
-            PostCount = forumDao.PostCount ?? 0
+            PostCount = forumDao.post_count ?? 0
         };
     }
 

@@ -36,6 +36,8 @@
 
 [ForumIudException](./slottymedia.backend.exceptions.services.forumexceptions.forumiudexception.md)
 
+[ForumNotFoundException](./slottymedia.backend.exceptions.services.forumexceptions.forumnotfoundexception.md)
+
 ## SlottyMedia.Backend.Exceptions.Services.LikeExceptions
 
 [LikeGeneralException](./slottymedia.backend.exceptions.services.likeexceptions.likegeneralexception.md)
@@ -67,6 +69,12 @@
 ## SlottyMedia.Backend.Exceptions.signup
 
 [EmailAlreadyExistsException](./slottymedia.backend.exceptions.signup.emailalreadyexistsexception.md)
+
+[IllegalCharsInUsernameException](./slottymedia.backend.exceptions.signup.illegalcharsinusernameexception.md)
+
+[IllegalUsernameLengthException](./slottymedia.backend.exceptions.signup.illegalusernamelengthexception.md)
+
+[PasswordTooShortException](./slottymedia.backend.exceptions.signup.passwordtooshortexception.md)
 
 [UsernameAlreadyExistsException](./slottymedia.backend.exceptions.signup.usernamealreadyexistsexception.md)
 
@@ -110,45 +118,83 @@
 
 [IUserService](./slottymedia.backend.services.interfaces.iuserservice.md)
 
-## SlottyMedia.Backend.ViewModel
+## SlottyMedia.Backend.ViewModel.Pages.Home
 
-[AuthVmImpl](./slottymedia.backend.viewmodel.authvmimpl.md)
+[HomePageVmImpl](./slottymedia.backend.viewmodel.pages.home.homepagevmimpl.md)
 
-[HomePageVmImpl](./slottymedia.backend.viewmodel.homepagevmimpl.md)
+[IHomePageVm](./slottymedia.backend.viewmodel.pages.home.ihomepagevm.md)
 
-[MainLayoutVmImpl](./slottymedia.backend.viewmodel.mainlayoutvmimpl.md)
+## SlottyMedia.Backend.ViewModel.Pages.Post
 
-[PostSubmissionFormVmImpl](./slottymedia.backend.viewmodel.postsubmissionformvmimpl.md)
+[IPostPageVm](./slottymedia.backend.viewmodel.pages.post.ipostpagevm.md)
 
-[SignInFormVmImpl](./slottymedia.backend.viewmodel.signinformvmimpl.md)
+[PostPageVmImpl](./slottymedia.backend.viewmodel.pages.post.postpagevmimpl.md)
 
-[SignupFormVmImpl](./slottymedia.backend.viewmodel.signupformvmimpl.md)
+## SlottyMedia.Backend.ViewModel.Pages.Profile
 
-[SpacesCardVmImpl](./slottymedia.backend.viewmodel.spacescardvmimpl.md)
+[IProfilePageVm](./slottymedia.backend.viewmodel.pages.profile.iprofilepagevm.md)
 
-[SpacesVmImpl](./slottymedia.backend.viewmodel.spacesvmimpl.md)
+[ProfilePageVmImpl](./slottymedia.backend.viewmodel.pages.profile.profilepagevmimpl.md)
 
-[UserVmImpl](./slottymedia.backend.viewmodel.uservmimpl.md)
+## SlottyMedia.Backend.ViewModel.Pages.Space
 
-## SlottyMedia.Backend.ViewModel.Interfaces
+[ISpacesVm](./slottymedia.backend.viewmodel.pages.space.ispacesvm.md)
 
-[IAuthVmImpl](./slottymedia.backend.viewmodel.interfaces.iauthvmimpl.md)
+[ISpaceVm](./slottymedia.backend.viewmodel.pages.space.ispacevm.md)
 
-[IHomePageVm](./slottymedia.backend.viewmodel.interfaces.ihomepagevm.md)
+[SpacesVmImpl](./slottymedia.backend.viewmodel.pages.space.spacesvmimpl.md)
 
-[IMainLayoutVm](./slottymedia.backend.viewmodel.interfaces.imainlayoutvm.md)
+[SpaceVmImpl](./slottymedia.backend.viewmodel.pages.space.spacevmimpl.md)
 
-[IPostSubmissionFormVm](./slottymedia.backend.viewmodel.interfaces.ipostsubmissionformvm.md)
+## SlottyMedia.Backend.ViewModel.Partial.DescriptionContainer
 
-[ISignInFormVm](./slottymedia.backend.viewmodel.interfaces.isigninformvm.md)
+[DescriptionContainerVmImpl](./slottymedia.backend.viewmodel.partial.descriptioncontainer.descriptioncontainervmimpl.md)
 
-[ISignupFormVm](./slottymedia.backend.viewmodel.interfaces.isignupformvm.md)
+[IDescriptionContainerVm](./slottymedia.backend.viewmodel.partial.descriptioncontainer.idescriptioncontainervm.md)
 
-[ISpacesCardVm](./slottymedia.backend.viewmodel.interfaces.ispacescardvm.md)
+## SlottyMedia.Backend.ViewModel.Partial.MainLayout
 
-[ISpacesVm](./slottymedia.backend.viewmodel.interfaces.ispacesvm.md)
+[IPostSubmissionFormVm](./slottymedia.backend.viewmodel.partial.mainlayout.ipostsubmissionformvm.md)
 
-[IUserVmImpl](./slottymedia.backend.viewmodel.interfaces.iuservmimpl.md)
+[ISpacesCardVm](./slottymedia.backend.viewmodel.partial.mainlayout.ispacescardvm.md)
+
+[PostSubmissionFormVmImpl](./slottymedia.backend.viewmodel.partial.mainlayout.postsubmissionformvmimpl.md)
+
+[SpacesCardVmImpl](./slottymedia.backend.viewmodel.partial.mainlayout.spacescardvmimpl.md)
+
+## SlottyMedia.Backend.ViewModel.Partial.Post
+
+[IPostVm](./slottymedia.backend.viewmodel.partial.post.ipostvm.md)
+
+[PostVmImpl](./slottymedia.backend.viewmodel.partial.post.postvmimpl.md)
+
+## SlottyMedia.Backend.ViewModel.Partial.PostPage
+
+[CommentSubmissionFormVmImpl](./slottymedia.backend.viewmodel.partial.postpage.commentsubmissionformvmimpl.md)
+
+[CommentVmImpl](./slottymedia.backend.viewmodel.partial.postpage.commentvmimpl.md)
+
+[ICommentSubmissionFormVm](./slottymedia.backend.viewmodel.partial.postpage.icommentsubmissionformvm.md)
+
+[ICommentVm](./slottymedia.backend.viewmodel.partial.postpage.icommentvm.md)
+
+## SlottyMedia.Backend.ViewModel.Partial.Search
+
+[ISearchVm](./slottymedia.backend.viewmodel.partial.search.isearchvm.md)
+
+[SearchImpl](./slottymedia.backend.viewmodel.partial.search.searchimpl.md)
+
+## SlottyMedia.Backend.ViewModel.Partial.SignIn
+
+[ISignInFormVm](./slottymedia.backend.viewmodel.partial.signin.isigninformvm.md)
+
+[SignInFormVmImpl](./slottymedia.backend.viewmodel.partial.signin.signinformvmimpl.md)
+
+## SlottyMedia.Backend.ViewModel.Partial.SignUp
+
+[ISignupFormVm](./slottymedia.backend.viewmodel.partial.signup.isignupformvm.md)
+
+[SignupFormVmImpl](./slottymedia.backend.viewmodel.partial.signup.signupformvmimpl.md)
 
 ## SlottyMedia.Components
 
@@ -170,7 +216,13 @@
 
 [Login](./slottymedia.components.pages.login.md)
 
+[PostPage](./slottymedia.components.pages.postpage.md)
+
+[Profile](./slottymedia.components.pages.profile.md)
+
 [Register](./slottymedia.components.pages.register.md)
+
+[Space](./slottymedia.components.pages.space.md)
 
 [Spaces](./slottymedia.components.pages.spaces.md)
 
@@ -196,14 +248,32 @@
 
 [Link](./slottymedia.components.partial.link.md)
 
+[Pagination&lt;T&gt;](./slottymedia.components.partial.pagination-1.md)
+
 [Post](./slottymedia.components.partial.post.md)
+
+[Search](./slottymedia.components.partial.search.md)
 
 [Tag](./slottymedia.components.partial.tag.md)
 
 ## SlottyMedia.Components.Partial.MainLayout
+
+[AccountCard](./slottymedia.components.partial.mainlayout.accountcard.md)
+
+[LoginCard](./slottymedia.components.partial.mainlayout.logincard.md)
+
+[NavBox](./slottymedia.components.partial.mainlayout.navbox.md)
+
+[NavBoxLink](./slottymedia.components.partial.mainlayout.navboxlink.md)
 
 [PostSubmissionForm](./slottymedia.components.partial.mainlayout.postsubmissionform.md)
 
 [SpacesCard](./slottymedia.components.partial.mainlayout.spacescard.md)
 
 [SpacesCardNoAccount](./slottymedia.components.partial.mainlayout.spacescardnoaccount.md)
+
+## SlottyMedia.Components.Partial.PostPage
+
+[Comment](./slottymedia.components.partial.postpage.comment.md)
+
+[CommentSubmissionForm](./slottymedia.components.partial.postpage.commentsubmissionform.md)

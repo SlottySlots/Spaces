@@ -10,26 +10,6 @@
 
 [SignUpServiceTest](./slottymedia.tests.auth.signupservicetest.md)
 
-## SlottyMedia.Tests.DatabaseTests
-
-[BaseDatabaseTestClass](./slottymedia.tests.databasetests.basedatabasetestclass.md)
-
-[DatabaseActionTests](./slottymedia.tests.databasetests.databaseactiontests.md)
-
-[InitializeModels](./slottymedia.tests.databasetests.initializemodels.md)
-
-## SlottyMedia.Tests.DatabaseTests.DatabaseModelsTests
-
-[CommentDaoTest](./slottymedia.tests.databasetests.databasemodelstests.commentdaotest.md)
-
-[FollowerUserRelationDaoTest](./slottymedia.tests.databasetests.databasemodelstests.followeruserrelationdaotest.md)
-
-[ForumDaoTest](./slottymedia.tests.databasetests.databasemodelstests.forumdaotest.md)
-
-[PostDtoTest](./slottymedia.tests.databasetests.databasemodelstests.postdtotest.md)
-
-[UserLikePostRelationDaoTest](./slottymedia.tests.databasetests.databasemodelstests.userlikepostrelationdaotest.md)
-
 ## SlottyMedia.Tests.ServiceTests
 
 [CommentServiceTests](./slottymedia.tests.servicetests.commentservicetests.md)
@@ -44,9 +24,29 @@
 
 [UserServiceTests](./slottymedia.tests.servicetests.userservicetests.md)
 
+## SlottyMedia.Tests.TestImpl
+
+[MockedAvatarGenerator](./slottymedia.tests.testimpl.mockedavatargenerator.md)
+
+[PageTestImpl&lt;T&gt;](./slottymedia.tests.testimpl.pagetestimpl-1.md)
+
 ## SlottyMedia.Tests.Viewmodel
 
-[MainLayoutVmImplTest](./slottymedia.tests.viewmodel.mainlayoutvmimpltest.md)
+[CommentSubmissionFormVmImplTests](./slottymedia.tests.viewmodel.commentsubmissionformvmimpltests.md)
+
+[HomePageVmImplTests](./slottymedia.tests.viewmodel.homepagevmimpltests.md)
+
+[PostPageVmImplTests](./slottymedia.tests.viewmodel.postpagevmimpltests.md)
+
+[PostSubmissionFormVmImplTests](./slottymedia.tests.viewmodel.postsubmissionformvmimpltests.md)
+
+[PostVmImplTests](./slottymedia.tests.viewmodel.postvmimpltests.md)
+
+[ProfilePageVmImplTests](./slottymedia.tests.viewmodel.profilepagevmimpltests.md)
+
+[SpacesCardVmImplTests](./slottymedia.tests.viewmodel.spacescardvmimpltests.md)
+
+[SpacesVmImplTest](./slottymedia.tests.viewmodel.spacesvmimpltest.md)
 
 ## SlottyMedia.Tests.Viewmodel.auth
 

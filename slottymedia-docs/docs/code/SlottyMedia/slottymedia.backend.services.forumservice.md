@@ -11,22 +11,24 @@ Implements [IForumService](./slottymedia.backend.services.interfaces.iforumservi
 
 ## Constructors
 
-### **ForumService(IDatabaseActions)**
+### **ForumService(IForumRepository, ITopForumRepository)**
 
 ```csharp
-public ForumService(IDatabaseActions databaseActions)
+public ForumService(IForumRepository forumRepository, ITopForumRepository topForumRepository)
 ```
 
 #### Parameters
 
-`databaseActions` IDatabaseActions<br>
+`forumRepository` IForumRepository<br>
+
+`topForumRepository` ITopForumRepository<br>
 
 ## Methods
 
 ### **InsertForum(Guid, String)**
 
 ```csharp
-public Task<ForumDto> InsertForum(Guid creatorUserId, string forumTopic)
+public Task InsertForum(Guid creatorUserId, string forumTopic)
 ```
 
 #### Parameters
@@ -37,7 +39,7 @@ public Task<ForumDto> InsertForum(Guid creatorUserId, string forumTopic)
 
 #### Returns
 
-[Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>
 
 ### **DeleteForum(ForumDto)**
 
@@ -67,18 +69,47 @@ public Task<ForumDto> GetForumByName(string forumName)
 
 [Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
-### **GetForums()**
-
-Retrieves all forums from the database.
+### **GetForumById(Guid)**
 
 ```csharp
-public Task<List<ForumDto>> GetForums()
+public Task<ForumDto> GetForumById(Guid forumId)
 ```
+
+#### Parameters
+
+`forumId` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
 
 #### Returns
 
-[Task&lt;List&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
-A list of ForumDto objects representing all forums.
+[Task&lt;ForumDto&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **GetAllForums(PageRequest)**
+
+```csharp
+public Task<IPage<ForumDto>> GetAllForums(PageRequest pageRequest)
+```
+
+#### Parameters
+
+`pageRequest` PageRequest<br>
+
+#### Returns
+
+[Task&lt;IPage&lt;ForumDto&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
+
+### **ExistsByName(String)**
+
+```csharp
+public Task<bool> ExistsByName(string forumName)
+```
+
+#### Parameters
+
+`forumName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+#### Returns
+
+[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **DetermineRecentSpaces()**
 

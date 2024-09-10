@@ -1,0 +1,60 @@
+@using SlottyMedia.Database.Pagination
+@typeparam T
+
+
+<div class=@("flex flex-col gap-3 " + Class)>
+
+    <!-- the (paginated) list -->
+    <div class="w-full flex flex-col gap-3">
+        @ChildContent
+    </div>
+
+    <!-- the pagination index -->
+    <div class="w-full flex justify-center gap-1">
+        @for (var i = 0; i < Page!.TotalPages; i++)
+        {
+            var pageNumber = i;
+            <button
+                type="button"
+                @onclick="async () => await OnPageFetch.InvokeAsync(pageNumber)"
+                class=@("w-[40px] h-[40px] p-2 rounded-[12px] text-white text-center " + ComputeButtonClass(pageNumber))>
+                @(pageNumber + 1)
+            </button>
+        }
+    </div>
+
+</div>
+
+
+@code {
+
+    /// <summary>
+    ///     The paginated list to display.
+    /// </summary>
+    [Parameter]
+    public IPage<T>? Page { get; set; }
+
+    /// <summary>
+    ///     The event that is triggered when a page is fetched.
+    /// </summary>
+    [Parameter]
+    public EventCallback<int> OnPageFetch { get; set; }
+
+    /// <summary>
+    ///     The content to display in the paginated list.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    ///     The additional CSS classes to apply to the outer div.
+    /// </summary>
+    [Parameter]
+    public string? Class { get; set; }
+
+    string ComputeButtonClass(int pageNumber)
+    {
+        return pageNumber == Page!.PageNumber ? "bg-raisin-black" : "bg-raisin-black-900";
+    }
+
+}

@@ -1,0 +1,63 @@
+@page "/post/{PostId:guid}"
+@using SlottyMedia.Backend.ViewModel.Pages.Post
+@using SlottyMedia.Components.Partial.PostPage
+
+
+<PageTitle>Slotty Media | Post</PageTitle>
+
+
+@if (ViewModel!.IsLoadingPage)
+{
+    <span>loading...</span>
+}
+else if (ViewModel.Post is null)
+{
+    <span>post not found...</span>
+}
+else
+{
+    <!-- the post -->
+    <Post Id="ViewModel.Post.PostId"/>
+
+    <!-- comment section -->
+    <div class="w-full pb-5 flex flex-col items-center gap-3">
+
+        <!-- comment submission form (if user is logged in) -->
+        @if (ViewModel.AuthPrincipalId is not null)
+        {
+            <CommentSubmissionForm PostId="@PostId" UserId="ViewModel.AuthPrincipalId"/>
+        }
+
+        <!-- all comments that were loaded -->
+        <Pagination Page="ViewModel!.Comments" OnPageFetch="ViewModel!.LoadCommentsPage" Class="w-full">
+            @foreach (var comment in ViewModel.Comments)
+            {
+                <div class="w-full px-5">
+                    <Comment Id="comment.CommentId"/>
+                </div>
+            }
+        </Pagination>
+
+    </div>
+}
+
+
+@code {
+
+    /// <summary>The ID of the post to showcase</summary>
+    [Parameter]
+    public Guid? PostId { get; set; }
+
+    /// <summary>The ViewModel for this component</summary>
+    [Inject]
+    [SupplyParameterFromForm]
+    public IPostPageVm? ViewModel { get; set; }
+
+    /// <inheritdoc />
+    protected override async Task OnParametersSetAsync()
+    {
+        if (PostId is not null)
+            await ViewModel!.Initialize(PostId.Value);
+    }
+
+}
